@@ -1,0 +1,12 @@
+{
+  "version": "2",
+  "keys": [
+    {
+      "logicalKeyId": "ed25519-2026Q1",
+      "createdAt": "2026-01-18T06:14:42.896Z",
+      "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAH+ouAsBlvs0WFDRKk6uH2grfofywxomdqgTGzVWuiJ8=\n-----END PUBLIC KEY-----\n",
+      "privateKeyPem": "-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIH/2mKRLravuTR3WlEy2WsOHmOu0WXxxbq7CN6iS7J3k\n-----END PRIVATE KEY-----\n",
+      "alg": "ed25519"
+    }
+  ]
+}

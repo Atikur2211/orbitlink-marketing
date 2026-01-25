@@ -1,0 +1,16 @@
+HTTP/1.1 200 OK
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+vary: Cookie
+cache-control: private, no-cache, max-age=0, must-revalidate
+content-disposition: attachment; filename="ORB-1014-capsule.json"
+content-type: application/json; charset=utf-8
+etag: "046c84cd56e8bbc0b296326d3156ddcf465ff524e29f9a09282a9f6ee388aa39"
+x-capsule-sha256: 046c84cd56e8bbc0b296326d3156ddcf465ff524e29f9a09282a9f6ee388aa39
+x-chain-head: fe6889223ebe6ff2f9778a65a472cfa3060a5eedae55f5d89575788df884fb57
+x-key-id: ed25519:c177fd888e2ea9f0
+x-portal-ts: 2026-01-25T03:19:06.108Z
+Date: Sun, 25 Jan 2026 03:19:06 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+

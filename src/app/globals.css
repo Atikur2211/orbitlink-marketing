@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+/* Orbitlink — Golden Grade base */
+:root {
+  --bg: #09090b;           /* deep security */
+  --fg: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.70);
+  --muted2: rgba(255,255,255,.55);
+
+  --gold: #facc15;         /* premium accent */
+  --blue: #3b82f6;         /* connectivity */
+  --emerald: #10b981;      /* compliance OK */
+
+  --border: rgba(255,255,255,.10);
+  --panel: rgba(255,255,255,.05);
+  --panel2: rgba(255,255,255,.08);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* tasteful selection */
+::selection {
+  background: rgba(250, 204, 21, 0.25);
+}
+
+
+/* Orbitlink Golden Animations (SSR-safe) */
+@keyframes orbit-slide {
+  0% { transform: translate(-30%, -50%); }
+  100% { transform: translate(430%, -50%); }
+}
+
+@keyframes orbit-bar {
+  0%, 100% { opacity: .55; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-6px); }
+}
+
+@keyframes orbit-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.orbit-slide {
+  animation: orbit-slide 2.4s linear infinite;
+}
+
+.orbit-bar {
+  animation: orbit-bar 1.25s ease-in-out infinite;
+}
+
+.orbit-spin {
+  animation: orbit-spin 7s linear infinite;
+}
+
+
+@keyframes orbit-slide {
+  0% { transform: translateX(-25%); }
+  100% { transform: translateX(420%); }
+}
+.orbit-slide {
+  position: relative;
+  animation: orbit-slide 3.6s ease-in-out infinite;
+}
+
+/* Hide scrollbars for horizontal chip rows (premium / clean) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes orbit-slide {
+  0% { transform: translateX(-30%); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateX(130%); opacity: 0; }
+}
+
+.orbit-slide {
+  animation: orbit-slide 3.8s linear infinite;
+}
+
+
+
