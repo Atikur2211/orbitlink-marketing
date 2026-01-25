@@ -3,7 +3,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import crypto from "crypto";
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 type Row = Record<string, any>;
 

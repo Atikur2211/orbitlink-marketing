@@ -4,7 +4,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import crypto from "crypto";
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 type Intent = "early-access" | "verification-pack";
 type Source = "coming-soon" | "trust" | "solutions" | "other";

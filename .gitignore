@@ -39,3 +39,22 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Runtime artifacts / secrets
+portal_*.json
+portal.cookies
+sig.txt
+sig.h
+sig.headers
+capsule.json
+a.json
+b.json
+dl1.h
+dl1.json
+dl2.h
+dl2.json
+download.h
+headers.txt
+verify.json
+waitlist.json
+
