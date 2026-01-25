@@ -2,6 +2,7 @@
 import "./globals.css";
 
 export const metadata = {
+  metadataBase: new URL("https://orbitlink.ca"),
   title: "Orbitlink",
   description: "Audit-Ready Connectivity for Modern Operators",
 };
