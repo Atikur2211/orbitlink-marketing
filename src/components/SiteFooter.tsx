@@ -134,7 +134,7 @@ export default function SiteFooter() {
               <div>
                 Orbitlink is a brand of <span className="text-white/75">TIRAV Technologies Inc.</span>
               </div>
-              <div>30 Eglinton Ave W, Suite 400-A35, Mississauga, ON L5R 3E7 Canada</div>
+              <div>30 Eglinton Ave W, Suite 400-A77, Mississauga, ON L5R 3E7 Canada</div>
               <div className="text-white/45">
                 Controlled intake. Responses are provided during active review windows.
               </div>
