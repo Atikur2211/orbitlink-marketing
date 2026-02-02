@@ -16,7 +16,7 @@ function SocialIcon({
       title={label}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-white/70 transition hover:border-white/20 hover:bg-white/[0.07] hover:text-white"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.035] text-white/70 transition hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
     >
       {children}
     </a>
@@ -55,28 +55,23 @@ function IconFacebook() {
   );
 }
 
-function FooterLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
+function RailTitle({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/45">{children}</div>;
+}
+
+function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link
-      href={href}
-      className="text-white/60 transition hover:text-white"
-    >
+    <Link href={href} className="text-white/60 transition hover:text-white">
       {children}
     </Link>
   );
 }
 
-function RailTitle({ children }: { children: React.ReactNode }) {
+function Chip({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-[11px] tracking-[0.26em] text-white/45">
+    <span className="inline-flex items-center rounded-2xl border border-white/10 bg-white/[0.035] px-3 py-2 text-[11px] tracking-[0.18em] text-white/60">
       {children}
-    </div>
+    </span>
   );
 }
 
@@ -85,17 +80,26 @@ export default function SiteFooter() {
 
   return (
     <footer className="border-t border-white/10 bg-black/30">
-      <div className="mx-auto max-w-6xl px-5 sm:px-7 py-10">
-        {/* Top surface */}
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-          {/* Brand block */}
+      {/* subtle top glow line */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+      <div className="relative mx-auto max-w-6xl px-5 sm:px-7 py-10">
+        {/* ambient blobs (very subtle) */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-24 left-8 h-64 w-64 rounded-full bg-blue-500/8 blur-3xl" />
+          <div className="absolute top-4 right-8 h-64 w-64 rounded-full bg-emerald-500/7 blur-3xl" />
+          <div className="absolute -bottom-28 left-1/2 h-80 w-[50rem] -translate-x-1/2 rounded-full bg-[#FACC15]/8 blur-3xl" />
+        </div>
+
+        <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-12">
+          {/* Brand / identity block */}
           <div className="lg:col-span-5">
             <div className="flex items-center gap-3">
               <span className="relative inline-flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/30" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/25" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
               </span>
-              <div className="text-[11px] tracking-[0.30em] text-white/70">ORBITLINK</div>
+              <div className="text-[11px] tracking-[0.32em] text-white/75">ORBITLINK</div>
             </div>
 
             <div className="mt-4 max-w-md text-sm sm:text-[15px] leading-6 text-white/70">
@@ -104,15 +108,9 @@ export default function SiteFooter() {
             </div>
 
             <div className="mt-4 flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] tracking-[0.18em] text-white/60">
-                TELECOMMUNICATIONS
-              </span>
-              <span className="inline-flex items-center rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] tracking-[0.18em] text-white/60">
-                OPERATIONS-FIRST
-              </span>
-              <span className="inline-flex items-center rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] tracking-[0.18em] text-white/60">
-                AUDIT-READY
-              </span>
+              <Chip>TELECOMMUNICATIONS</Chip>
+              <Chip>OPERATIONS-FIRST</Chip>
+              <Chip>AUDIT-READY</Chip>
             </div>
 
             <div className="mt-5 flex items-center gap-2">
@@ -130,37 +128,64 @@ export default function SiteFooter() {
               </SocialIcon>
             </div>
 
-            <div className="mt-6 space-y-1 text-xs text-white/55">
-              <div>
-                Orbitlink is a brand of <span className="text-white/75">TIRAV Technologies Inc.</span>
+            {/* HQ block (requested) */}
+            <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.035] p-5">
+              <div className="text-[11px] tracking-[0.28em] text-white/45">HEADQUARTERS</div>
+              <div className="mt-3 text-sm text-white/80">
+                <div className="font-medium text-white/90">TIRAV Technologies Inc.</div>
+                <div className="mt-1 text-white/65 leading-6">
+                  30 Eglinton Ave W, Suite 400-A35
+                  <br />
+                  Mississauga, ON L5R 3E7
+                  <br />
+                  Canada
+                </div>
               </div>
-              <div>Mississauga, Ontario, Canada</div>
-              <div className="text-white/45">
+
+              <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+              <div className="mt-4 text-xs text-white/50 leading-5">
                 Controlled intake. Responses are provided during active review windows.
               </div>
             </div>
           </div>
 
-          {/* Link rails */}
+          {/* rails */}
           <div className="lg:col-span-7">
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
               <div>
                 <RailTitle>COMPANY</RailTitle>
                 <ul className="mt-4 space-y-2.5 text-sm">
-                  <li><FooterLink href="/about">About</FooterLink></li>
-                  <li><FooterLink href="/solutions">Solutions</FooterLink></li>
-                  <li><FooterLink href="/network">Network</FooterLink></li>
-                  <li><FooterLink href="/trust">Trust</FooterLink></li>
+                  <li>
+                    <FooterLink href="/about">About</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/solutions">Solutions</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/network">Network</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/trust">Trust</FooterLink>
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <RailTitle>LEGAL</RailTitle>
                 <ul className="mt-4 space-y-2.5 text-sm">
-                  <li><FooterLink href="/legal/privacy">Privacy</FooterLink></li>
-                  <li><FooterLink href="/legal/terms">Terms</FooterLink></li>
-                  <li><FooterLink href="/legal/acceptable-use">Acceptable use</FooterLink></li>
-                  <li><FooterLink href="/legal/cookies">Cookies</FooterLink></li>
+                  <li>
+                    <FooterLink href="/legal/privacy">Privacy</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/legal/terms">Terms</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/legal/acceptable-use">Acceptable use</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/legal/cookies">Cookies</FooterLink>
+                  </li>
                 </ul>
               </div>
 
@@ -168,71 +193,79 @@ export default function SiteFooter() {
                 <RailTitle>CONTACT</RailTitle>
                 <ul className="mt-4 space-y-2.5 text-sm">
                   <li>
-                    <a
-                      className="text-white/60 transition hover:text-white"
-                      href="mailto:concierge@orbitlink.ca"
-                    >
+                    <a className="text-white/60 transition hover:text-white" href="mailto:concierge@orbitlink.ca">
                       concierge@orbitlink.ca
                     </a>
                   </li>
                   <li>
-                    <a
-                      className="text-white/60 transition hover:text-white"
-                      href="mailto:sales@orbitlink.ca"
-                    >
+                    <a className="text-white/60 transition hover:text-white" href="mailto:sales@orbitlink.ca">
                       sales@orbitlink.ca
                     </a>
                   </li>
-
-                  {/* If you want phone visible, keep this. Otherwise delete this <li>. */}
                   <li>
-                    <a
-                      className="text-white/60 transition hover:text-white"
-                      href="tel:+18888672480"
-                    >
+                    <a className="text-white/60 transition hover:text-white" href="tel:+18888672480">
                       1-888-8-ORBIT-0
                     </a>
                   </li>
-
-                  <li className="pt-2 text-xs leading-5 text-white/45">
-                    Canada-first operations. Services are delivered in accordance with applicable Canadian
-                    requirements.
-                  </li>
                 </ul>
+
+                {/* Enterprise micro CTA (premium, not loud) */}
+                <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="text-[11px] tracking-[0.28em] text-white/45">CONCIERGE DESK</div>
+                      <div className="mt-2 text-sm text-white/80">
+                        Enterprise onboarding and provisioning coordination.
+                      </div>
+                      <div className="mt-2 text-xs text-white/50 leading-5">
+                        One response when your request matches an active intake window.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-4">
+                    <Link
+                      href="/coming-soon"
+                      className="inline-flex w-full items-center justify-center rounded-2xl border border-[#FACC15]/35 bg-[#FACC15]/10 px-4 py-3 text-sm font-medium text-[#FDE68A] transition hover:border-[#FACC15]/55 hover:bg-[#FACC15]/15"
+                    >
+                      Request Access
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Micro CTA */}
-            <div className="mt-8 rounded-3xl border border-white/10 bg-white/[0.035] p-5 sm:p-6">
+            {/* Optional: remove if you want ultra-minimal */}
+            <div className="mt-8 rounded-3xl border border-white/10 bg-black/20 p-5 sm:p-6">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <div className="text-[11px] tracking-[0.26em] text-white/45">CONCIERGE DESK</div>
-                  <div className="mt-2 text-sm text-white/80">
-                    Request access for enterprise onboarding and provisioning.
-                  </div>
+                <div className="text-sm text-white/70">
+                  Built for disciplined operations — engineered for reliability, transparency, and regulated delivery.
                 </div>
-
                 <Link
-                  href="/coming-soon"
-                  className="inline-flex items-center justify-center rounded-2xl border border-[#FACC15]/35 bg-[#FACC15]/10 px-4 py-2.5 text-sm font-medium text-[#FDE68A] transition hover:border-[#FACC15]/55 hover:bg-[#FACC15]/15"
+                  href="/solutions"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white/80 transition hover:bg-white/[0.06] hover:text-white"
                 >
-                  Request Access
+                  Explore solutions
                 </Link>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="text-xs text-white/45">© {year} TIRAV Technologies Inc. All rights reserved.</div>
+        {/* bottom bar */}
+        <div className="mt-10 border-t border-white/10 pt-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="text-xs text-white/45">© {year} TIRAV Technologies Inc. All rights reserved.</div>
 
-          <div className="flex flex-wrap gap-3 text-xs text-white/45">
-            <span>Canada</span>
-            <span aria-hidden="true">•</span>
-            <span>Operations-first</span>
-            <span aria-hidden="true">•</span>
-            <span>Audit-ready posture</span>
+            <div className="flex flex-wrap items-center gap-3 text-xs text-white/45">
+              <span>Mississauga, ON</span>
+              <span aria-hidden="true">•</span>
+              <span>Ontario, Canada</span>
+              <span aria-hidden="true">•</span>
+              <span>Operations-first</span>
+              <span aria-hidden="true">•</span>
+              <span>Audit-ready posture</span>
+            </div>
           </div>
         </div>
       </div>
