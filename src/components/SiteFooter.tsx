@@ -25,7 +25,7 @@ function SocialIcon({
 function IconLinkedIn() {
   return (
     <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
-      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.05-1.86-3.05-1.86 0-2.14 1.45-2.14 2.95v5.67H9.31V9h3.41v1.6h.05c.48-.9 1.66-1.85 3.41-1.85 3.65 0 4.33 2.4 4.33 5.53v6.17zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
+      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.05-1.86-3.05-1.86 0-1.15 1.45-2.14 2.95v5.67H9.31V9h3.41v1.6h.05c.48-.9 1.66-1.85 3.41-1.85 3.65 0 4.33 2.4 4.33 5.53v6.17zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
     </svg>
   );
 }
@@ -72,9 +72,16 @@ export default function SiteFooter() {
           {/* Brand / Social */}
           <div className="lg:col-span-5">
             <div className="text-[11px] tracking-[0.28em] text-white/55">ORBITLINK</div>
+
+            {/* Product clarity (matches your new headline direction) */}
             <div className="mt-3 text-sm sm:text-[15px] leading-6 text-white/70 max-w-md">
-              Premium connectivity engineered for disciplined operations, transparent posture,
-              and compliance-ready delivery.
+              Business-Grade Internet and Connectivity Solutions for Ontario.
+            </div>
+
+            {/* CRTC keyword: visible, calm, enterprise-grade */}
+            <div className="mt-3 inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/70">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" aria-hidden="true" />
+              Telecommunications • Operations-first • Compliance-ready
             </div>
 
             <div className="mt-5 flex items-center gap-2">
@@ -92,8 +99,12 @@ export default function SiteFooter() {
               </SocialIcon>
             </div>
 
-            <div className="mt-6 text-xs text-white/55">
-              Orbitlink is a brand of <span className="text-white/75">TIRAV Technologies Inc.</span>
+            {/* Location + legal identity */}
+            <div className="mt-6 text-xs text-white/55 leading-relaxed">
+              <div>
+                Orbitlink is a brand of <span className="text-white/75">TIRAV Technologies Inc.</span>
+              </div>
+              <div className="mt-1">Mississauga, Ontario, Canada</div>
             </div>
 
             <div className="mt-2 text-xs text-white/45 leading-5">
@@ -131,8 +142,19 @@ export default function SiteFooter() {
                     concierge@orbitlink.ca
                   </a>
                 </li>
+
+                {/* OPTIONAL: Toll-free (remove if you don’t want phone shown yet) */}
+                <li>
+                  <a
+                    className="text-white/60 hover:text-white transition"
+                    href="tel:+18888867480"
+                  >
+                    📞 1-888-8-ORBIT-0
+                  </a>
+                </li>
+
                 <li className="text-xs text-white/45 leading-5">
-                  Canada-first operations. Services are delivered in accordance with applicable Canadian requirements.
+                  Canada-first operations. Telecommunications services are delivered in accordance with applicable Canadian requirements.
                 </li>
               </ul>
             </div>
