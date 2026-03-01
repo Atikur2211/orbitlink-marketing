@@ -13,11 +13,19 @@ export type TrustDisclosure = {
   note?: string;
 };
 
-// ===== TRUST PAGE COPY (Golden grade + regulator-safe) =====
+// ===== TRUST PAGE COPY (Golden grade + regulator-safe + enterprise posture) =====
+// Updated: BITS + TSP approved (kept conservative, no overclaiming)
 
 export const TRUST_TILES: TrustTile[] = [
   { label: "TRANSPARENCY POSTURE", value: "DISCLOSURE-FIRST", tone: "info" },
-  { label: "BITS LICENCE", value: "IN PROCESS • TRACKED", tone: "inprogress" },
+
+  // ✅ Approved
+  { label: "BITS LICENCE", value: "APPROVED • ACTIVE", tone: "ok" },
+
+  // ✅ Approved
+  { label: "TSP REGISTRATION", value: "APPROVED • ACTIVE", tone: "ok" },
+
+  // Conservative unless you can truthfully claim fully operational end-to-end
   { label: "9-1-1 OBLIGATIONS", value: "SUBMITTED • MONITORED", tone: "info" },
 ];
 
@@ -26,55 +34,57 @@ export const TRUST_DISCLOSURES: TrustDisclosure[] = [
     heading: "REGULATORY READINESS",
     bullets: [
       "Regulatory items are tracked as milestones — with dates and scope notes",
-      "BITS licence progress is updated only when confirmations are received",
+      "BITS licence: approved and maintained under documented operational controls",
+      "TSP registration: approved and maintained under documented operational controls",
       "9-1-1 obligations are maintained where applicable to the service scope",
       "Accessibility posture is reviewed, logged, and documented",
+      "Public statements reflect confirmed scope — not internal roadmap",
     ],
     note:
-      "We avoid optimistic language. Statements update only when they can be supported.",
+      "We publish conservatively. Status is updated only when it can be supported by confirmation and evidence.",
   },
   {
     heading: "OPERATIONAL GOVERNANCE",
     bullets: [
-      "Least-privilege access and role-scoped administration",
+      "Least-privilege access with role-scoped administration",
       "Change control with staged releases and rollback posture",
       "Incident handling guided by documented escalation paths",
       "Audit-friendly logging with retention discipline",
+      "Operational exceptions are documented instead of hidden",
     ],
     note:
       "Trust is an operations practice: repeatable controls, accountable handling, reviewable outcomes.",
   },
 
-  // ✅ “Million-dollar move” (credibility) — but still conservative
+  // ✅ “Million-dollar move” — credibility without oversharing
   {
     heading: "VERIFICATION PACK (REQUEST-ONLY)",
     bullets: [
-      "A one-page disclosure memo: what is live vs. what is planned (no overclaiming)",
+      "One-page disclosure memo: live scope vs. planned scope (no overclaiming)",
       "Operational posture summary: onboarding, change policy, escalation path",
       "Evidence samples where available (redacted, scope-appropriate)",
-      "A direct contact path for auditor/regulator review questions",
+      "Direct contact path for auditor/regulator review questions",
     ],
     note:
       "Delivered on request to keep sensitive details out of public navigation. Contents vary by module and readiness.",
   },
 
-  // ✅ The real “million-dollar move” for enterprise trust
+  // ✅ Enterprise trust mechanism
   {
     heading: "SCOPE-LOCKED COMMITMENTS",
     bullets: [
-      "Service commitments are written per engagement (site + scope + responsibilities)",
+      "Commitments are written per engagement (site + scope + responsibilities)",
       "We confirm what we will measure, what we will report, and what we will not claim",
       "Milestones are timeboxed and communicated as windows — not promises",
-      "Operational exceptions are documented instead of hidden",
+      "No surprise claims or silent launches",
     ],
     note:
-      "Enterprises don’t buy hype — they buy clarity. This section is designed to make reviews faster and safer.",
+      "Enterprises don’t buy hype — they buy clarity. This posture is designed to make reviews faster and safer.",
   },
 ];
 
 export const TRUST_ASSURANCE =
-  "Orbitlink keeps a strict separation between public statements and confirmed status. We publish conservative disclosures, update when milestones are verified, and onboard through controlled windows with documented operational posture.";
-
+  "Orbitlink keeps a strict separation between public statements and confirmed status. Where approvals are confirmed, we reflect them plainly — while keeping sensitive operational internals request-only. We publish conservative disclosures, update when milestones are verified, and onboard through controlled windows with documented operational posture.";
 
 // ===== ORBITLINK — GLOBAL TELEMETRY (single source of truth) =====
 
@@ -315,6 +325,3 @@ export const ABOUT_STORY = {
     },
   ],
 };
-
-
-
