@@ -57,4 +57,4 @@ download.h
 headers.txt
 verify.json
 waitlist.json
-
+waitlist_export.csv
