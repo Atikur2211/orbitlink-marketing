@@ -9,8 +9,9 @@ import { usePathname } from "next/navigation";
  * LAUNCH NAV (Golden-grade)
  * - Removed "Coming Soon" (launch posture)
  * - Added "Contact"
- * - Primary CTA upgraded to "Talk to Sales" (operator-grade)
- * - Mobile menu closes on click (polish)
+ * - Primary CTA routes to /contact#intake (conversion-focused)
+ * - Optional secondary CTA: call enterprise line (desktop)
+ * - Mobile menu closes on click + Escape + route change
  * - Keeps enterprise phone CTA + accessibility
  */
 
@@ -27,6 +28,9 @@ const SUPPORT_PHONE_DISPLAY = "📞 1-888-8-ORBIT-0";
 const SUPPORT_PHONE_TEL = "tel:+18888827480"; // numeric form of 1-888-8-ORBIT-0
 const SUPPORT_PHONE_ARIA = "Call Orbitlink Client Care at 1 888 8 ORBIT 0";
 
+// ✅ Where “Talk to Sales” lands (intake form anchor)
+const INTAKE_HREF = "/contact#intake";
+
 export default function TopNav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -37,7 +41,7 @@ export default function TopNav() {
     setOpen(false);
   }, [pathname]);
 
-  // lock background scroll when menu is open
+  // Lock background scroll when menu is open
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -47,7 +51,7 @@ export default function TopNav() {
     };
   }, [open]);
 
-  // escape to close
+  // Escape to close
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -81,10 +85,7 @@ export default function TopNav() {
                   key={i.href}
                   href={i.href}
                   aria-current={active ? "page" : undefined}
-                  className={[
-                    "hover:text-white transition",
-                    active ? "text-white" : "",
-                  ].join(" ")}
+                  className={["hover:text-white transition", active ? "text-white" : ""].join(" ")}
                 >
                   {i.name}
                 </Link>
@@ -94,6 +95,7 @@ export default function TopNav() {
 
           {/* Right side */}
           <div className="flex items-center gap-2">
+            {/* Mobile menu button */}
             <button
               ref={openBtnRef}
               className="md:hidden rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10 transition"
@@ -105,9 +107,18 @@ export default function TopNav() {
               ☰
             </button>
 
-            {/* Launch CTA */}
+            {/* Optional: desktop call CTA (premium touch) */}
+            <a
+              href={SUPPORT_PHONE_TEL}
+              aria-label={SUPPORT_PHONE_ARIA}
+              className="hidden sm:inline-flex rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10 transition"
+            >
+              {SUPPORT_PHONE_DISPLAY}
+            </a>
+
+            {/* Primary CTA -> intake form */}
             <Link
-              href="/contact"
+              href={INTAKE_HREF}
               className="rounded-xl bg-[#FACC15] text-black px-3 py-2 text-sm font-medium hover:bg-[#FDE047] transition"
             >
               Talk to Sales
@@ -118,12 +129,7 @@ export default function TopNav() {
 
       {/* Mobile overlay */}
       {open && (
-        <div
-          className="fixed inset-0 z-50 md:hidden"
-          role="dialog"
-          aria-modal="true"
-          id="orbitlink-mobile-menu"
-        >
+        <div className="fixed inset-0 z-50 md:hidden" role="dialog" aria-modal="true" id="orbitlink-mobile-menu">
           {/* backdrop */}
           <button
             className="absolute inset-0 bg-black/70"
@@ -161,7 +167,7 @@ export default function TopNav() {
                       <Link
                         key={i.href}
                         href={i.href}
-                        onClick={() => setOpen(false)} // ✅ close on click
+                        onClick={() => setOpen(false)}
                         aria-current={active ? "page" : undefined}
                         className={[
                           "rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm hover:bg-white/10 transition flex items-center justify-between",
@@ -175,6 +181,7 @@ export default function TopNav() {
                   })}
                 </div>
 
+                {/* Conversion / contact panel */}
                 <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
                   <div className="text-[11px] tracking-[0.22em] text-white/55">CONTACT</div>
                   <div className="mt-2 text-sm text-white/80">
@@ -183,20 +190,26 @@ export default function TopNav() {
 
                   <div className="mt-3 grid gap-2">
                     <Link
-                      href="/contact"
-                      onClick={() => setOpen(false)} // ✅ close on click
+                      href={INTAKE_HREF}
+                      onClick={() => setOpen(false)}
                       className="rounded-2xl bg-[#FACC15] text-black px-4 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
                     >
                       Talk to Sales
                     </Link>
 
-                    {/* ✅ Enterprise call-to-action */}
                     <a
                       href={SUPPORT_PHONE_TEL}
                       aria-label={SUPPORT_PHONE_ARIA}
                       className="rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-sm text-white hover:bg-white/10 transition text-center"
                     >
                       {SUPPORT_PHONE_DISPLAY}
+                    </a>
+
+                    <a
+                      href="mailto:concierge@orbitlink.ca"
+                      className="rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-sm text-white hover:bg-white/10 transition text-center"
+                    >
+                      concierge@orbitlink.ca
                     </a>
                   </div>
                 </div>
