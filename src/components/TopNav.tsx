@@ -5,13 +5,22 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
+/**
+ * LAUNCH NAV (Golden-grade)
+ * - Removed "Coming Soon" (launch posture)
+ * - Added "Contact"
+ * - Primary CTA upgraded to "Talk to Sales" (operator-grade)
+ * - Mobile menu closes on click (polish)
+ * - Keeps enterprise phone CTA + accessibility
+ */
+
 const NAV = [
   { name: "Network", href: "/network" },
   { name: "Trust", href: "/trust" },
   { name: "Solutions", href: "/solutions" },
   { name: "About", href: "/about" },
-  { name: "Coming Soon", href: "/coming-soon" },
-];
+  { name: "Contact", href: "/contact" },
+] as const;
 
 // ✅ Enterprise contact constants (single source of truth)
 const SUPPORT_PHONE_DISPLAY = "📞 1-888-8-ORBIT-0";
@@ -72,7 +81,10 @@ export default function TopNav() {
                   key={i.href}
                   href={i.href}
                   aria-current={active ? "page" : undefined}
-                  className={["hover:text-white transition", active ? "text-white" : ""].join(" ")}
+                  className={[
+                    "hover:text-white transition",
+                    active ? "text-white" : "",
+                  ].join(" ")}
                 >
                   {i.name}
                 </Link>
@@ -93,11 +105,12 @@ export default function TopNav() {
               ☰
             </button>
 
+            {/* Launch CTA */}
             <Link
-              href="/coming-soon"
-              className="rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-sm text-white hover:bg-white/10 transition"
+              href="/contact"
+              className="rounded-xl bg-[#FACC15] text-black px-3 py-2 text-sm font-medium hover:bg-[#FDE047] transition"
             >
-              Request Access
+              Talk to Sales
             </Link>
           </div>
         </div>
@@ -105,7 +118,12 @@ export default function TopNav() {
 
       {/* Mobile overlay */}
       {open && (
-        <div className="fixed inset-0 z-50 md:hidden" role="dialog" aria-modal="true" id="orbitlink-mobile-menu">
+        <div
+          className="fixed inset-0 z-50 md:hidden"
+          role="dialog"
+          aria-modal="true"
+          id="orbitlink-mobile-menu"
+        >
           {/* backdrop */}
           <button
             className="absolute inset-0 bg-black/70"
@@ -137,33 +155,42 @@ export default function TopNav() {
                 <div className="text-[11px] tracking-[0.28em] text-white/55">NAVIGATION</div>
 
                 <div className="mt-3 grid gap-2">
-                  {NAV.map((i) => (
-                    <Link
-                      key={i.href}
-                      href={i.href}
-                      className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/85 hover:bg-white/10 transition flex items-center justify-between"
-                    >
-                      <span>{i.name}</span>
-                      <span className="text-[#FACC15]">→</span>
-                    </Link>
-                  ))}
+                  {NAV.map((i) => {
+                    const active = pathname === i.href;
+                    return (
+                      <Link
+                        key={i.href}
+                        href={i.href}
+                        onClick={() => setOpen(false)} // ✅ close on click
+                        aria-current={active ? "page" : undefined}
+                        className={[
+                          "rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm hover:bg-white/10 transition flex items-center justify-between",
+                          active ? "text-white" : "text-white/85",
+                        ].join(" ")}
+                      >
+                        <span>{i.name}</span>
+                        <span className="text-[#FACC15]">→</span>
+                      </Link>
+                    );
+                  })}
                 </div>
 
                 <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
                   <div className="text-[11px] tracking-[0.22em] text-white/55">CONTACT</div>
                   <div className="mt-2 text-sm text-white/80">
-                    Enterprise onboarding • controlled rollout
+                    Enterprise onboarding • regulated delivery posture
                   </div>
 
                   <div className="mt-3 grid gap-2">
                     <Link
                       href="/contact"
+                      onClick={() => setOpen(false)} // ✅ close on click
                       className="rounded-2xl bg-[#FACC15] text-black px-4 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
                     >
                       Talk to Sales
                     </Link>
 
-                    {/* ✅ Enterprise call-to-action (replaces 647) */}
+                    {/* ✅ Enterprise call-to-action */}
                     <a
                       href={SUPPORT_PHONE_TEL}
                       aria-label={SUPPORT_PHONE_ARIA}
