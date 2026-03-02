@@ -58,7 +58,7 @@ type Store = { value: Submission[]; Count: number };
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 const INTAKE_STORE_LOCAL =
-  (process.env.INTAKE_STORE_LOCAL || "true").toLowerCase() === "true";
+  (process.env.INTAKE_STORE_LOCAL || "false").toLowerCase() === "true";
 
 const WAITLIST_FILE = process.env.WAITLIST_FILE || "waitlist.json";
 const LOCK_FILE = process.env.WAITLIST_LOCK_FILE || "waitlist.lock";
