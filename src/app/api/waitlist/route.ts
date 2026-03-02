@@ -1,20 +1,20 @@
 // src/app/api/waitlist/route.ts
 import { NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
 import crypto from "crypto";
 import { Resend } from "resend";
 
-export const runtime = "nodejs"; // ✅ REQUIRED (fs/path + email)
-
 /**
- * ORBITLINK — INTAKE / WAITLIST (Golden-grade)
- * - Local JSON store (dev + single node)
- * - Node runtime (Vercel serverless) for fs/path + Resend
- * - Conservative redirects (no open redirect)
- * - Deduping + spam guard + optional rate limit
- * - Email notify outside lock; storage always wins
+ * ORBITLINK — INTAKE / WAITLIST (Golden-grade, production-safe)
+ * - Node runtime (Resend + optional fs)
+ * - INTAKE_STORE_LOCAL=true  => write to local waitlist.json (dev)
+ * - INTAKE_STORE_LOCAL=false => NO fs writes (prod-safe), email still sends
+ * - Safe redirects (no open redirect)
+ * - Dedupe + spam-guard + optional rate limit
  */
+
+export const runtime = "nodejs";
+
+// ---------------- types
 
 type Intent = "early-access" | "verification-pack" | "onboarding";
 type Source = "coming-soon" | "trust" | "solutions" | "contact" | "other";
@@ -62,16 +62,22 @@ export type Submission = {
 
 type Store = { value: Submission[]; Count: number };
 
+// ---------------- env
+
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
-// env-driven storage locations (with safe defaults)
+// toggle local storage (default true in dev)
+const INTAKE_STORE_LOCAL =
+  (process.env.INTAKE_STORE_LOCAL || "true").toLowerCase() === "true";
+
+// storage locations (only used if INTAKE_STORE_LOCAL=true)
 const WAITLIST_FILE = process.env.WAITLIST_FILE || "waitlist.json";
 const LOCK_FILE = process.env.WAITLIST_LOCK_FILE || "waitlist.lock";
 
 // rate limit (minutes); default 10
-const RATE_LIMIT_MIN = clampInt(process.env.INTAKE_RATE_LIMIT_MINUTES, 10, 1, 120);
+const RATE_LIMIT_MIN = clampInt(process.env.INTAKE_RATE_LIMIT_MINUTES, 10, 0, 120);
 
-// -------- helpers
+// ---------------- helpers
 
 function clampInt(v: string | undefined, fallback: number, min: number, max: number) {
   const n = Number(v);
@@ -106,7 +112,7 @@ function normalizeSource(v: string): Source {
 }
 
 function safeReturnTo(v: string): string {
-  // allow only local paths; default to /contact
+  // allow only local paths; default /contact
   const s = v.trim();
   if (!s) return "/contact";
   if (!s.startsWith("/")) return "/contact";
@@ -118,7 +124,7 @@ function buildRedirect(reqUrl: string, returnTo: string, params: Record<string, 
   const base = safeReturnTo(returnTo);
   const url = new URL(base, reqUrl);
   for (const [k, v] of Object.entries(params)) {
-    if (!url.searchParams.has(k)) url.searchParams.set(k, v);
+    url.searchParams.set(k, v);
   }
   return url;
 }
@@ -132,44 +138,40 @@ function escapeHtml(s: string) {
     .replaceAll("'", "&#039;");
 }
 
-// -------- store (supports legacy formats)
+// ---------------- local store (only when INTAKE_STORE_LOCAL=true)
+// Note: dynamic import so production can run even if fs is restricted.
 
-async function readStore(filePath: string): Promise<Store> {
+async function readStoreLocal(filePath: string): Promise<Store> {
+  const fs = await import("fs/promises");
   try {
     const raw = await fs.readFile(filePath, "utf8");
     const parsed = JSON.parse(raw);
 
-    // legacy array format
     if (Array.isArray(parsed)) {
       return { value: parsed as Submission[], Count: (parsed as Submission[]).length };
     }
-
-    // current { value, Count } format
     if (parsed && Array.isArray(parsed.value)) {
       return {
         value: parsed.value as Submission[],
         Count: Number(parsed.Count ?? parsed.value.length),
       };
     }
-
     return { value: [], Count: 0 };
   } catch {
     return { value: [], Count: 0 };
   }
 }
 
-async function writeStoreAtomic(filePath: string, list: Submission[]) {
+async function writeStoreAtomicLocal(filePath: string, list: Submission[]) {
+  const fs = await import("fs/promises");
   const tmp = `${filePath}.tmp`;
   const payload: Store = { value: list, Count: list.length };
   await fs.writeFile(tmp, JSON.stringify(payload, null, 2), "utf8");
   await fs.rename(tmp, filePath);
 }
 
-/**
- * Simple lock file for single process safety.
- * If you scale horizontally, move to DB/KV.
- */
-async function withFileLock<T>(lockPath: string, fn: () => Promise<T>) {
+async function withFileLockLocal<T>(lockPath: string, fn: () => Promise<T>) {
+  const fs = await import("fs/promises");
   const start = Date.now();
   const timeoutMs = 2500;
 
@@ -195,7 +197,7 @@ async function withFileLock<T>(lockPath: string, fn: () => Promise<T>) {
   }
 }
 
-// -------- ops notify (email)
+// ---------------- ops notify (email)
 
 async function notifyOps(sub: Submission, isUpdate: boolean) {
   if (!resend) return;
@@ -227,24 +229,42 @@ async function notifyOps(sub: Submission, isUpdate: boolean) {
   ].join("\n");
 
   const html = `
-  <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; line-height:1.5;">
-    <h2 style="margin:0 0 12px;">Orbitlink Intake ${isUpdate ? "(Update)" : ""}</h2>
-    <table style="border-collapse:collapse;">
-      <tr><td style="padding:6px 10px;color:#666;">Email</td><td style="padding:6px 10px;">${escapeHtml(sub.email)}</td></tr>
-      <tr><td style="padding:6px 10px;color:#666;">Name</td><td style="padding:6px 10px;">${escapeHtml(sub.fullName || "N/A")}</td></tr>
-      <tr><td style="padding:6px 10px;color:#666;">Company</td><td style="padding:6px 10px;">${escapeHtml(sub.company || "N/A")}</td></tr>
-      <tr><td style="padding:6px 10px;color:#666;">Role</td><td style="padding:6px 10px;">${escapeHtml(sub.role || "N/A")}</td></tr>
-      <tr><td style="padding:6px 10px;color:#666;">Location</td><td style="padding:6px 10px;">${escapeHtml(sub.location || "N/A")}</td></tr>
-      <tr><td style="padding:6px 10px;color:#666;">Module</td><td style="padding:6px 10px;">${escapeHtml(sub.module || "N/A")}</td></tr>
-      <tr><td style="padding:6px 10px;color:#666;">Source</td><td style="padding:6px 10px;">${escapeHtml(sub.lastSource || sub.source || "N/A")}</td></tr>
-      <tr><td style="padding:6px 10px;color:#666;">Intent</td><td style="padding:6px 10px;">${escapeHtml(sub.lastIntent || sub.intent || "N/A")}</td></tr>
-      <tr><td style="padding:6px 10px;color:#666;">When</td><td style="padding:6px 10px;">${escapeHtml(when)}</td></tr>
-    </table>
-    <h3 style="margin:18px 0 8px;">Notes</h3>
-    <div style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:10px;">${escapeHtml(
-      sub.notes || "(none)"
-    )}</div>
-  </div>
+    <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; line-height:1.5;">
+      <h2 style="margin:0 0 12px;">Orbitlink Intake ${isUpdate ? "(Update)" : ""}</h2>
+      <table style="border-collapse:collapse;">
+        <tr><td style="padding:6px 10px;color:#666;">Email</td><td style="padding:6px 10px;">${escapeHtml(
+          sub.email
+        )}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Name</td><td style="padding:6px 10px;">${escapeHtml(
+          sub.fullName || "N/A"
+        )}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Company</td><td style="padding:6px 10px;">${escapeHtml(
+          sub.company || "N/A"
+        )}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Role</td><td style="padding:6px 10px;">${escapeHtml(
+          sub.role || "N/A"
+        )}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Location</td><td style="padding:6px 10px;">${escapeHtml(
+          sub.location || "N/A"
+        )}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Module</td><td style="padding:6px 10px;">${escapeHtml(
+          sub.module || "N/A"
+        )}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Source</td><td style="padding:6px 10px;">${escapeHtml(
+          sub.lastSource || sub.source || "N/A"
+        )}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Intent</td><td style="padding:6px 10px;">${escapeHtml(
+          sub.lastIntent || sub.intent || "N/A"
+        )}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">When</td><td style="padding:6px 10px;">${escapeHtml(
+          when
+        )}</td></tr>
+      </table>
+      <h3 style="margin:18px 0 8px;">Notes</h3>
+      <div style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:10px;">${escapeHtml(
+        sub.notes || "(none)"
+      )}</div>
+    </div>
   `;
 
   await resend.emails.send({
@@ -257,7 +277,7 @@ async function notifyOps(sub: Submission, isUpdate: boolean) {
   });
 }
 
-// -------- main handler
+// ---------------- main
 
 export async function POST(req: Request) {
   const headers = new Headers(req.headers);
@@ -273,8 +293,7 @@ export async function POST(req: Request) {
     // Honeypot
     const honeypot = clean(form.get("company_website"), 120);
     if (honeypot) {
-      const url = buildRedirect(req.url, "/contact", { ok: "1" });
-      return NextResponse.redirect(url, 303);
+      return NextResponse.redirect(buildRedirect(req.url, "/contact", { ok: "1" }), 303);
     }
 
     // Inputs
@@ -282,8 +301,7 @@ export async function POST(req: Request) {
     const returnTo = clean(form.get("returnTo"), 120) || "/contact";
 
     if (!isValidEmail(email)) {
-      const url = buildRedirect(req.url, returnTo, { error: "invalid" });
-      return NextResponse.redirect(url, 303);
+      return NextResponse.redirect(buildRedirect(req.url, returnTo, { error: "invalid" }), 303);
     }
 
     // Funnel
@@ -299,19 +317,58 @@ export async function POST(req: Request) {
     const volume = clean(form.get("volume"), 120) || undefined;
     const notes = clean(form.get("notes"), 800) || undefined;
 
-    const filePath = path.join(process.cwd(), WAITLIST_FILE);
-    const lockPath = path.join(process.cwd(), LOCK_FILE);
     const now = new Date().toISOString();
+
+    // Build an in-memory submission (used for notify + prod-safe path)
+    const draft: Submission = {
+      id: crypto.randomBytes(8).toString("hex"),
+      createdAt: now,
+      source,
+      intent,
+      lastSource: source,
+      lastIntent: intent,
+      email,
+      fullName,
+      company,
+      role,
+      location,
+      module,
+      volume,
+      notes,
+      userAgent: userAgent || undefined,
+      ip: ip || undefined,
+    };
 
     let notify: { sub: Submission; isUpdate: boolean } | null = null;
 
-    await withFileLock(lockPath, async () => {
-      const store = await readStore(filePath);
+    // ✅ PROD-SAFE: no filesystem writes if disabled
+    if (!INTAKE_STORE_LOCAL) {
+      // spam guard: still avoid re-notifying if someone hammers the form
+      // (simple: notify always, because we don't have storage to compare)
+      notify = { sub: { ...draft, lastNotifiedAt: now }, isUpdate: false };
+
+      try {
+        await notifyOps(notify.sub, notify.isUpdate);
+      } catch (e) {
+        console.error("Intake email notify failed (prod no-store):", e);
+        // still succeed
+      }
+
+      return NextResponse.redirect(buildRedirect(req.url, returnTo, { ok: "1" }), 303);
+    }
+
+    // ✅ DEV/LOCAL STORE PATH (writes waitlist.json)
+    const { default: pathMod } = await import("path");
+    const filePath = pathMod.join(process.cwd(), WAITLIST_FILE);
+    const lockPath = pathMod.join(process.cwd(), LOCK_FILE);
+
+    let rateLimited = false;
+
+    await withFileLockLocal(lockPath, async () => {
+      const store = await readStoreLocal(filePath);
       const list = store.value;
 
-      // -------- optional rate limit
-      // Rate-limit on (email + ip) by checking latest record timestamps.
-      // Conservative: only blocks if a record exists within RATE_LIMIT_MIN minutes.
+      // rate limit (email OR ip) within RATE_LIMIT_MIN
       if (RATE_LIMIT_MIN > 0) {
         const cutoff = Date.now() - RATE_LIMIT_MIN * 60 * 1000;
         const recent = list.find((x) => {
@@ -323,12 +380,12 @@ export async function POST(req: Request) {
         });
 
         if (recent) {
-          // store nothing new; just redirect success (quietly)
+          rateLimited = true;
           return;
         }
       }
 
-      // -------- dedupe match
+      // dedupe
       const matchIndex = list.findIndex((x) => {
         const sameEmail = String(x.email ?? "").toLowerCase() === email;
         if (!sameEmail) return false;
@@ -338,7 +395,6 @@ export async function POST(req: Request) {
         const aModule = x.module ?? "";
         const bModule = module ?? "";
 
-        // Most specific -> least specific
         if (bIntent && bModule) return aIntent === bIntent && aModule === bModule;
         if (bIntent) return aIntent === bIntent;
         if (bModule) return aModule === bModule;
@@ -370,7 +426,7 @@ export async function POST(req: Request) {
           ip: prev.ip || ip || undefined,
         };
 
-        // spam guard: notify if not notified within 10 minutes
+        // notify guard: 10 min
         const lastNotify = prev.lastNotifiedAt ? Date.parse(prev.lastNotifiedAt) : 0;
         const okToNotify = !lastNotify || Date.now() - lastNotify > 10 * 60 * 1000;
 
@@ -383,38 +439,24 @@ export async function POST(req: Request) {
         next.splice(matchIndex, 1);
         next.unshift(updated);
 
-        await writeStoreAtomic(filePath, next);
+        await writeStoreAtomicLocal(filePath, next);
         return;
       }
 
       // new submission
       const submission: Submission = {
-        id: crypto.randomBytes(8).toString("hex"),
-        createdAt: now,
-
-        source,
-        intent,
-        lastSource: source,
-        lastIntent: intent,
-
-        email,
-        fullName,
-        company,
-        role,
-        location,
-        module,
-        volume,
-        notes,
-
-        userAgent: userAgent || undefined,
-        ip: ip || undefined,
-
-        lastNotifiedAt: now, // new lead should notify
+        ...draft,
+        lastNotifiedAt: now,
       };
 
       notify = { sub: submission, isUpdate: false };
-      await writeStoreAtomic(filePath, [submission, ...list]);
+      await writeStoreAtomicLocal(filePath, [submission, ...list]);
     });
+
+    // If rate-limited, quietly succeed (luxury posture)
+    if (rateLimited) {
+      return NextResponse.redirect(buildRedirect(req.url, returnTo, { ok: "1" }), 303);
+    }
 
     // Notify outside lock
     if (notify) {
@@ -422,16 +464,12 @@ export async function POST(req: Request) {
         await notifyOps(notify.sub, notify.isUpdate);
       } catch (e) {
         console.error("Intake email notify failed:", e);
-        // still succeed — stored already
       }
     }
 
-    // ✅ clean success redirect (no duplicate ?ok=1)
-    const okUrl = buildRedirect(req.url, returnTo, { ok: "1" });
-    return NextResponse.redirect(okUrl, 303);
+    return NextResponse.redirect(buildRedirect(req.url, returnTo, { ok: "1" }), 303);
   } catch (e) {
     console.error("waitlist POST error", e);
-    const errUrl = buildRedirect(req.url, "/contact", { error: "server" });
-    return NextResponse.redirect(errUrl, 303);
+    return NextResponse.redirect(buildRedirect(req.url, "/contact", { error: "server" }), 303);
   }
 }
