@@ -58,3 +58,8 @@ headers.txt
 verify.json
 waitlist.json
 waitlist_export.csv
+
+# local exports
+waitlist_export.csv
+*.csv
+
