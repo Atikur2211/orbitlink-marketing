@@ -5,13 +5,12 @@ import { Resend } from "resend";
 
 /**
  * ORBITLINK — INTAKE / WAITLIST (Golden-grade, production-safe)
- * - Node runtime (Resend + optional fs)
- * - INTAKE_STORE_LOCAL=true  => write to local waitlist.json (dev)
- * - INTAKE_STORE_LOCAL=false => NO fs writes (prod-safe), email still sends
+ * - runtime=nodejs
+ * - INTAKE_STORE_LOCAL=true  => write to local waitlist.json (dev only)
+ * - INTAKE_STORE_LOCAL=false => no fs writes (Vercel-safe), email still sends
  * - Safe redirects (no open redirect)
  * - Dedupe + spam-guard + optional rate limit
  */
-
 export const runtime = "nodejs";
 
 // ---------------- types
@@ -22,41 +21,33 @@ type Source = "coming-soon" | "trust" | "solutions" | "contact" | "other";
 export type Submission = {
   id: string;
 
-  // timestamps
-  createdAt?: string; // current
-  ts?: string; // legacy
+  createdAt?: string;
+  ts?: string;
   updatedAt?: string;
 
-  // ops review
   reviewedAt?: string;
   reviewedBy?: string;
   reviewNote?: string;
 
-  // funnel
   source: Source;
   intent?: Intent;
 
-  // contact
   email: string;
   fullName?: string;
   company?: string;
   role?: string;
 
-  // fit
   location?: string;
   module?: string;
   volume?: string;
   notes?: string;
 
-  // light telemetry
   userAgent?: string;
   ip?: string;
 
-  // latest touchpoint
   lastSource?: Source;
   lastIntent?: Intent;
 
-  // notification guard
   lastNotifiedAt?: string;
 };
 
@@ -66,15 +57,12 @@ type Store = { value: Submission[]; Count: number };
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
-// toggle local storage (default true in dev)
 const INTAKE_STORE_LOCAL =
   (process.env.INTAKE_STORE_LOCAL || "true").toLowerCase() === "true";
 
-// storage locations (only used if INTAKE_STORE_LOCAL=true)
 const WAITLIST_FILE = process.env.WAITLIST_FILE || "waitlist.json";
 const LOCK_FILE = process.env.WAITLIST_LOCK_FILE || "waitlist.lock";
 
-// rate limit (minutes); default 10
 const RATE_LIMIT_MIN = clampInt(process.env.INTAKE_RATE_LIMIT_MINUTES, 10, 0, 120);
 
 // ---------------- helpers
@@ -112,7 +100,6 @@ function normalizeSource(v: string): Source {
 }
 
 function safeReturnTo(v: string): string {
-  // allow only local paths; default /contact
   const s = v.trim();
   if (!s) return "/contact";
   if (!s.startsWith("/")) return "/contact";
@@ -123,9 +110,7 @@ function safeReturnTo(v: string): string {
 function buildRedirect(reqUrl: string, returnTo: string, params: Record<string, string>) {
   const base = safeReturnTo(returnTo);
   const url = new URL(base, reqUrl);
-  for (const [k, v] of Object.entries(params)) {
-    url.searchParams.set(k, v);
-  }
+  for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
   return url;
 }
 
@@ -138,8 +123,7 @@ function escapeHtml(s: string) {
     .replaceAll("'", "&#039;");
 }
 
-// ---------------- local store (only when INTAKE_STORE_LOCAL=true)
-// Note: dynamic import so production can run even if fs is restricted.
+// ---------------- local store (only if INTAKE_STORE_LOCAL=true)
 
 async function readStoreLocal(filePath: string): Promise<Store> {
   const fs = await import("fs/promises");
@@ -181,7 +165,7 @@ async function withFileLockLocal<T>(lockPath: string, fn: () => Promise<T>) {
       await handle.close();
       break;
     } catch {
-      if (Date.now() - start > timeoutMs) break; // fail-open
+      if (Date.now() - start > timeoutMs) break;
       await new Promise((r) => setTimeout(r, 60));
     }
   }
@@ -191,9 +175,7 @@ async function withFileLockLocal<T>(lockPath: string, fn: () => Promise<T>) {
   } finally {
     try {
       await fs.unlink(lockPath);
-    } catch {
-      // ignore
-    }
+    } catch {}
   }
 }
 
@@ -232,38 +214,18 @@ async function notifyOps(sub: Submission, isUpdate: boolean) {
     <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; line-height:1.5;">
       <h2 style="margin:0 0 12px;">Orbitlink Intake ${isUpdate ? "(Update)" : ""}</h2>
       <table style="border-collapse:collapse;">
-        <tr><td style="padding:6px 10px;color:#666;">Email</td><td style="padding:6px 10px;">${escapeHtml(
-          sub.email
-        )}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Name</td><td style="padding:6px 10px;">${escapeHtml(
-          sub.fullName || "N/A"
-        )}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Company</td><td style="padding:6px 10px;">${escapeHtml(
-          sub.company || "N/A"
-        )}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Role</td><td style="padding:6px 10px;">${escapeHtml(
-          sub.role || "N/A"
-        )}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Location</td><td style="padding:6px 10px;">${escapeHtml(
-          sub.location || "N/A"
-        )}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Module</td><td style="padding:6px 10px;">${escapeHtml(
-          sub.module || "N/A"
-        )}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Source</td><td style="padding:6px 10px;">${escapeHtml(
-          sub.lastSource || sub.source || "N/A"
-        )}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Intent</td><td style="padding:6px 10px;">${escapeHtml(
-          sub.lastIntent || sub.intent || "N/A"
-        )}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">When</td><td style="padding:6px 10px;">${escapeHtml(
-          when
-        )}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Email</td><td style="padding:6px 10px;">${escapeHtml(sub.email)}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Name</td><td style="padding:6px 10px;">${escapeHtml(sub.fullName || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Company</td><td style="padding:6px 10px;">${escapeHtml(sub.company || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Role</td><td style="padding:6px 10px;">${escapeHtml(sub.role || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Location</td><td style="padding:6px 10px;">${escapeHtml(sub.location || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Module</td><td style="padding:6px 10px;">${escapeHtml(sub.module || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Source</td><td style="padding:6px 10px;">${escapeHtml(sub.lastSource || sub.source || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Intent</td><td style="padding:6px 10px;">${escapeHtml(sub.lastIntent || sub.intent || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">When</td><td style="padding:6px 10px;">${escapeHtml(when)}</td></tr>
       </table>
       <h3 style="margin:18px 0 8px;">Notes</h3>
-      <div style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:10px;">${escapeHtml(
-        sub.notes || "(none)"
-      )}</div>
+      <div style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:10px;">${escapeHtml(sub.notes || "(none)")}</div>
     </div>
   `;
 
@@ -287,16 +249,18 @@ export async function POST(req: Request) {
     headers.get("x-real-ip") ??
     "";
 
+  // ✅ GOLDEN FIX: avoid union-object notify state (prevents TS "never")
+  let notifySub: Submission | null = null;
+  let notifyIsUpdate = false;
+
   try {
     const form = await req.formData();
 
-    // Honeypot
     const honeypot = clean(form.get("company_website"), 120);
     if (honeypot) {
       return NextResponse.redirect(buildRedirect(req.url, "/contact", { ok: "1" }), 303);
     }
 
-    // Inputs
     const email = clean(form.get("email"), 180).toLowerCase();
     const returnTo = clean(form.get("returnTo"), 120) || "/contact";
 
@@ -304,11 +268,9 @@ export async function POST(req: Request) {
       return NextResponse.redirect(buildRedirect(req.url, returnTo, { error: "invalid" }), 303);
     }
 
-    // Funnel
     const source = normalizeSource(clean(form.get("source") || "contact", 80));
     const intent = normalizeIntent(clean(form.get("intent") || "onboarding", 80));
 
-    // Optional fields
     const fullName = clean(form.get("fullName"), 120) || undefined;
     const company = clean(form.get("company"), 160) || undefined;
     const role = clean(form.get("role"), 80) || undefined;
@@ -319,7 +281,6 @@ export async function POST(req: Request) {
 
     const now = new Date().toISOString();
 
-    // Build an in-memory submission (used for notify + prod-safe path)
     const draft: Submission = {
       id: crypto.randomBytes(8).toString("hex"),
       createdAt: now,
@@ -339,25 +300,23 @@ export async function POST(req: Request) {
       ip: ip || undefined,
     };
 
-    let notify: { sub: Submission; isUpdate: boolean } | null = null;
-
-    // ✅ PROD-SAFE: no filesystem writes if disabled
+    // PROD SAFE: no filesystem writes
     if (!INTAKE_STORE_LOCAL) {
-      // spam guard: still avoid re-notifying if someone hammers the form
-      // (simple: notify always, because we don't have storage to compare)
-      notify = { sub: { ...draft, lastNotifiedAt: now }, isUpdate: false };
+      notifySub = { ...draft, lastNotifiedAt: now };
+      notifyIsUpdate = false;
 
-      try {
-        await notifyOps(notify.sub, notify.isUpdate);
-      } catch (e) {
-        console.error("Intake email notify failed (prod no-store):", e);
-        // still succeed
+      if (notifySub) {
+        try {
+          await notifyOps(notifySub, notifyIsUpdate);
+        } catch (e) {
+          console.error("Intake email notify failed (prod no-store):", e);
+        }
       }
 
       return NextResponse.redirect(buildRedirect(req.url, returnTo, { ok: "1" }), 303);
     }
 
-    // ✅ DEV/LOCAL STORE PATH (writes waitlist.json)
+    // DEV/LOCAL STORE PATH
     const { default: pathMod } = await import("path");
     const filePath = pathMod.join(process.cwd(), WAITLIST_FILE);
     const lockPath = pathMod.join(process.cwd(), LOCK_FILE);
@@ -368,7 +327,6 @@ export async function POST(req: Request) {
       const store = await readStoreLocal(filePath);
       const list = store.value;
 
-      // rate limit (email OR ip) within RATE_LIMIT_MIN
       if (RATE_LIMIT_MIN > 0) {
         const cutoff = Date.now() - RATE_LIMIT_MIN * 60 * 1000;
         const recent = list.find((x) => {
@@ -385,7 +343,6 @@ export async function POST(req: Request) {
         }
       }
 
-      // dedupe
       const matchIndex = list.findIndex((x) => {
         const sameEmail = String(x.email ?? "").toLowerCase() === email;
         if (!sameEmail) return false;
@@ -407,8 +364,6 @@ export async function POST(req: Request) {
         const updated: Submission = {
           ...prev,
           updatedAt: now,
-
-          // preserve earliest source/intent; track latest touchpoint
           source: prev.source || source,
           intent: prev.intent || intent,
           lastSource: source,
@@ -426,13 +381,13 @@ export async function POST(req: Request) {
           ip: prev.ip || ip || undefined,
         };
 
-        // notify guard: 10 min
         const lastNotify = prev.lastNotifiedAt ? Date.parse(prev.lastNotifiedAt) : 0;
         const okToNotify = !lastNotify || Date.now() - lastNotify > 10 * 60 * 1000;
 
         if (okToNotify) {
           updated.lastNotifiedAt = now;
-          notify = { sub: updated, isUpdate: true };
+          notifySub = updated;
+          notifyIsUpdate = true;
         }
 
         const next = list.slice();
@@ -443,25 +398,20 @@ export async function POST(req: Request) {
         return;
       }
 
-      // new submission
-      const submission: Submission = {
-        ...draft,
-        lastNotifiedAt: now,
-      };
+      const submission: Submission = { ...draft, lastNotifiedAt: now };
+      notifySub = submission;
+      notifyIsUpdate = false;
 
-      notify = { sub: submission, isUpdate: false };
       await writeStoreAtomicLocal(filePath, [submission, ...list]);
     });
 
-    // If rate-limited, quietly succeed (luxury posture)
     if (rateLimited) {
       return NextResponse.redirect(buildRedirect(req.url, returnTo, { ok: "1" }), 303);
     }
 
-    // Notify outside lock
-    if (notify) {
+    if (notifySub) {
       try {
-        await notifyOps(notify.sub, notify.isUpdate);
+        await notifyOps(notifySub, notifyIsUpdate);
       } catch (e) {
         console.error("Intake email notify failed:", e);
       }
