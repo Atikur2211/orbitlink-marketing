@@ -155,7 +155,7 @@ export default function TrustPage() {
           {/* Funnel tags */}
           <input type="hidden" name="source" value="trust" />
           <input type="hidden" name="intent" value="verification-pack" />
-          <input type="hidden" name="returnTo" value="/trust?ok=1" />
+          <input type="hidden" name="returnTo" value="/trust" />
 
           {/* Honeypot */}
           <input

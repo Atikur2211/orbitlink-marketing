@@ -123,7 +123,7 @@ export default function ContactPage() {
             {/* Funnel */}
             <input type="hidden" name="source" value="contact" />
             <input type="hidden" name="intent" value="onboarding" />
-            <input type="hidden" name="returnTo" value="/contact?ok=1" />
+            <input type="hidden" name="returnTo" value="/contact" />
 
             {/* Honeypot */}
             <input
