@@ -27,6 +27,7 @@ function getFocusable(container: HTMLElement) {
     'textarea:not([disabled]):not([tabindex="-1"])',
     '[tabindex]:not([tabindex="-1"])',
   ].join(",");
+
   return Array.from(container.querySelectorAll<HTMLElement>(selector)).filter(
     (el) => !el.hasAttribute("disabled") && el.offsetParent !== null
   );
@@ -40,21 +41,9 @@ export default function TopNav() {
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const scrollYRef = useRef(0);
 
-  // Close menu on route change WITHOUT setState-in-effect lint issues:
-  // store "last pathname" and close via state transition only when it actually changes.
-  const lastPathRef = useRef<string | null>(null);
-  useEffect(() => {
-    if (lastPathRef.current === null) {
-      lastPathRef.current = pathname;
-      return;
-    }
-    if (lastPathRef.current !== pathname) {
-      lastPathRef.current = pathname;
-      if (open) setOpen(false);
-    }
-  }, [pathname, open]);
+  const activeHref = useMemo(() => pathname, [pathname]);
 
-  // iOS-safe scroll lock + restore
+  // iOS-safe scroll lock + restore (no warnings)
   useEffect(() => {
     if (!open) return;
 
@@ -80,19 +69,20 @@ export default function TopNav() {
     };
   }, [open]);
 
-  // Focus management: move focus into dialog on open; return focus to button on close
+  // Focus on open + return focus on close (snapshot opener to avoid ref cleanup warning)
   useEffect(() => {
     if (!open) return;
 
     const dlg = dialogRef.current;
     if (!dlg) return;
 
+    const opener = openBtnRef.current; // ✅ snapshot
+
     const focusables = getFocusable(dlg);
-    const first = focusables[0];
-    first?.focus();
+    focusables[0]?.focus();
 
     return () => {
-      openBtnRef.current?.focus();
+      opener?.focus();
     };
   }, [open]);
 
@@ -135,8 +125,6 @@ export default function TopNav() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
-
-  const activeHref = useMemo(() => pathname, [pathname]);
 
   return (
     <header className="sticky top-0 z-[80]">
@@ -208,6 +196,12 @@ export default function TopNav() {
           aria-labelledby="orbitlink-menu-title"
           aria-describedby="orbitlink-menu-desc"
           id="orbitlink-mobile-menu"
+          onClickCapture={(e) => {
+            // ✅ hard-close on ANY link click, avoids route-change setState-in-effect
+            const target = e.target as HTMLElement | null;
+            const link = target?.closest?.("a");
+            if (link) setOpen(false);
+          }}
         >
           {/* Backdrop */}
           <button
