@@ -8,24 +8,45 @@ import {
   MODULE_SPECS,
 } from "@/lib/siteStatus";
 
+/** ✅ Million-dollar SEO metadata */
 export const metadata: Metadata = {
   title: "Trust & Compliance",
   description:
-    "A transparency-first posture for audit readiness, operational integrity, and controlled rollout. Regulatory credibility by design.",
-  alternates: { canonical: "/trust" },
+    "Transparency-first posture for audit readiness, operational integrity, and controlled rollout. Regulatory credibility by design for Ontario enterprises.",
+  alternates: { canonical: "https://orbitlink.ca/trust" },
   openGraph: {
     title: "Trust & Compliance · Orbitlink",
     description:
-      "Transparency-first posture for audit readiness, operational integrity, and controlled rollout. Regulatory credibility by design.",
+      "Audit-ready posture: controlled rollout, verifiable status statements, evidence-friendly operations, and disciplined change management.",
     url: "https://orbitlink.ca/trust",
     type: "website",
     siteName: "Orbitlink",
+    locale: "en_CA",
+    images: [
+      {
+        url: "https://orbitlink.ca/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink Trust & Compliance",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Trust & Compliance · Orbitlink",
     description:
-      "Transparency-first posture for audit readiness, operational integrity, and controlled rollout. Regulatory credibility by design.",
+      "Audit-ready posture: evidence-first operations, controlled rollout, and disciplined change management.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -114,12 +135,139 @@ function Pill({ children }: { children: React.ReactNode }) {
 export default function TrustPage() {
   const moduleOptions = MODULE_SPECS.map((m) => m.name);
 
+  /**
+   * ✅ Authority Schema Pack:
+   * - Organization (brand authority)
+   * - TelecomService (operator/service signal)
+   * - BreadcrumbList (indexing clarity)
+   * - FAQPage (rich results potential)
+   *
+   * Conservative wording: avoids overclaiming coverage, speeds, or regulatory status.
+   */
+  const schemaOrg = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://orbitlink.ca/#org",
+    name: "Orbitlink",
+    url: "https://orbitlink.ca",
+    logo: "https://orbitlink.ca/logo.png",
+    sameAs: [
+      // add socials when ready (LinkedIn / X / Facebook)
+    ],
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        email: "sales@orbitlink.ca",
+        availableLanguage: ["English"],
+        areaServed: "CA-ON",
+      },
+      {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        email: "support@orbitlink.ca",
+        availableLanguage: ["English"],
+        areaServed: "CA-ON",
+      },
+    ],
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "CA",
+      addressRegion: "ON",
+      addressLocality: "Mississauga",
+    },
+  };
+
+  const schemaTelecom = {
+    "@context": "https://schema.org",
+    "@type": "TelecomService",
+    "@id": "https://orbitlink.ca/trust#telecom",
+    name: "Business Fibre & Network Infrastructure",
+    provider: { "@id": "https://orbitlink.ca/#org" },
+    serviceType: [
+      "Business Internet",
+      "Fibre Connectivity",
+      "Managed Network Services",
+      "Operational Escalation & Support",
+      "Compliance-first Delivery Posture",
+    ],
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "Ontario, Canada" },
+      { "@type": "City", name: "Mississauga" },
+    ],
+    audience: { "@type": "Audience", audienceType: "Business" },
+    termsOfService: "https://orbitlink.ca/legal/terms",
+  };
+
+  const schemaBreadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://orbitlink.ca/" },
+      { "@type": "ListItem", position: 2, name: "Trust & Compliance", item: "https://orbitlink.ca/trust" },
+    ],
+  };
+
+  const schemaFaq = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What does “controlled rollout” mean?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "It means Orbitlink publishes conservatively and confirms scope only when verifiable. Availability, timelines, and operational claims are updated after milestones complete.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do you provide audit-ready documentation?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Yes. Orbitlink emphasizes evidence-friendly operations, structured change posture, and scope-locked commitments. Review material may be provided in redacted form when appropriate.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Can regulators, auditors, or enterprise buyers request verification materials?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Yes. Verification packs are request-only and tailored to the engagement scope. Sensitive operational details remain private and are shared only when necessary.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How are public statements updated?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Statements are maintained as a living disclosure and updated only when milestones are complete and verifiable.",
+        },
+      },
+    ],
+  };
+
+  const schemaGraph = {
+    "@context": "https://schema.org",
+    "@graph": [schemaOrg, schemaTelecom, schemaBreadcrumbs, schemaFaq],
+  };
+
   return (
     <PageShell
       eyebrow="TRUST & COMPLIANCE"
       title="Regulatory credibility by design"
       subtitle="A transparency-first posture for audit readiness, operational integrity, and controlled rollout."
     >
+      {/* ✅ Authority JSON-LD graph */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+      />
+
       {/* Status tiles */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
         {TRUST_TILES.map((t) => (
@@ -236,7 +384,7 @@ export default function TrustPage() {
             </button>
 
             <a
-              href="/coming-soon?intent=early-access"
+              href="/coming-soon?intent=early-access&source=trust"
               className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white hover:bg-white/10 transition text-center"
             >
               Request early access
@@ -300,9 +448,7 @@ export default function TrustPage() {
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/55">OUTCOME</div>
-            <div className="mt-1 text-sm text-white/80">
-              Faster review • Lower risk • Cleaner go-live
-            </div>
+            <div className="mt-1 text-sm text-white/80">Faster review • Lower risk • Cleaner go-live</div>
           </div>
         </div>
 
