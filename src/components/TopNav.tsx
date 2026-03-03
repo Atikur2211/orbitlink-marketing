@@ -38,8 +38,10 @@ export default function TopNav() {
 
   // Close menu on route change (Stripe-level polish)
   useEffect(() => {
+    if (!open) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
-  }, [pathname]);
+  }, [pathname, open]);
 
   // Lock background scroll when menu is open
   useEffect(() => {

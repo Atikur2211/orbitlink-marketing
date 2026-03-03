@@ -249,7 +249,6 @@ export async function POST(req: Request) {
     headers.get("x-real-ip") ??
     "";
 
-  // ✅ GOLDEN FIX: avoid union-object notify state (prevents TS "never")
   let notifySub: Submission | null = null;
   let notifyIsUpdate = false;
 
@@ -275,7 +274,10 @@ export async function POST(req: Request) {
     const company = clean(form.get("company"), 160) || undefined;
     const role = clean(form.get("role"), 80) || undefined;
     const location = clean(form.get("location"), 120) || undefined;
-    const module = clean(form.get("module"), 120) || undefined;
+
+    // ✅ LINT-SAFE: never use local variable name `module`
+    const moduleName = clean(form.get("module"), 120) || undefined;
+
     const volume = clean(form.get("volume"), 120) || undefined;
     const notes = clean(form.get("notes"), 800) || undefined;
 
@@ -293,7 +295,7 @@ export async function POST(req: Request) {
       company,
       role,
       location,
-      module,
+      module: moduleName,
       volume,
       notes,
       userAgent: userAgent || undefined,
@@ -305,12 +307,10 @@ export async function POST(req: Request) {
       notifySub = { ...draft, lastNotifiedAt: now };
       notifyIsUpdate = false;
 
-      if (notifySub) {
-        try {
-          await notifyOps(notifySub, notifyIsUpdate);
-        } catch (e) {
-          console.error("Intake email notify failed (prod no-store):", e);
-        }
+      try {
+        await notifyOps(notifySub, notifyIsUpdate);
+      } catch (e) {
+        console.error("Intake email notify failed (prod no-store):", e);
       }
 
       return NextResponse.redirect(buildRedirect(req.url, returnTo, { ok: "1" }), 303);
@@ -350,7 +350,7 @@ export async function POST(req: Request) {
         const aIntent = x.intent ?? "";
         const bIntent = intent ?? "";
         const aModule = x.module ?? "";
-        const bModule = module ?? "";
+        const bModule = moduleName ?? "";
 
         if (bIntent && bModule) return aIntent === bIntent && aModule === bModule;
         if (bIntent) return aIntent === bIntent;
@@ -373,7 +373,7 @@ export async function POST(req: Request) {
           company: company ?? prev.company,
           role: role ?? prev.role,
           location: location ?? prev.location,
-          module: module ?? prev.module,
+          module: moduleName ?? prev.module,
           volume: volume ?? prev.volume,
           notes: notes ?? prev.notes,
 

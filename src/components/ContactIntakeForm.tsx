@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
+    gtag?: (command: string, ...args: unknown[]) => void;
   }
 }
 
