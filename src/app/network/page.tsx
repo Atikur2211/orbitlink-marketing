@@ -1,4 +1,5 @@
 // src/app/network/page.tsx
+import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import {
   NETWORK_CAPABILITIES,
@@ -6,6 +7,28 @@ import {
   NETWORK_METRICS,
   NETWORK_CHANGELOG,
 } from "@/lib/siteStatus";
+
+/** Golden-Grade SEO */
+export const metadata: Metadata = {
+  title: "Network Posture",
+  description:
+    "A calm view of Orbitlink’s operational surface: telemetry, routing discipline, controlled rollout, and predictable escalation.",
+  alternates: { canonical: "/network" },
+  openGraph: {
+    title: "Network Posture · Orbitlink",
+    description:
+      "Operational surface: telemetry, routing discipline, controlled rollout, and predictable escalation.",
+    url: "https://orbitlink.ca/network",
+    type: "website",
+    siteName: "Orbitlink",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Network Posture · Orbitlink",
+    description:
+      "Operational surface: telemetry, routing discipline, controlled rollout, and predictable escalation.",
+  },
+};
 
 function toneClass(tone: "ok" | "info" | "warn") {
   if (tone === "ok") return "text-emerald-300";
@@ -42,9 +65,11 @@ function PopNode({
   return (
     <div className="absolute" style={{ left, top }}>
       <div className={`relative h-3 w-3 rounded-full ${dot}`}>
-        <div className={`absolute inset-0 rounded-full ${dot}/40 animate-ping`} />
+        {/* Golden-Grade: slower + softer pulse (feels “operator”, not “app”) */}
+        <div className={`absolute inset-0 rounded-full ${dot}/25 animate-[ping_2.6s_ease-in-out_infinite]`} />
       </div>
-      <div className="mt-2 rounded-xl border border-white/10 bg-black/40 px-3 py-2">
+
+      <div className="mt-2 rounded-xl border border-white/10 bg-black/45 px-3 py-2 backdrop-blur-[2px]">
         <div className="text-[10px] tracking-[0.22em] text-white/55">{label}</div>
         <div className="mt-1 text-xs text-white/75">{role}</div>
       </div>
@@ -58,9 +83,7 @@ function PopMap() {
       <div className="p-6 sm:p-7">
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
           <div>
-            <div className="text-[11px] tracking-[0.28em] text-white/55">
-              NETWORK MAP
-            </div>
+            <div className="text-[11px] tracking-[0.28em] text-white/55">NETWORK MAP</div>
             <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
               POP posture & routing surface
             </h2>
@@ -89,7 +112,7 @@ function PopMap() {
         {/* Fiber line (calm pulse) */}
         <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2">
           <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-400/45 to-transparent" />
-          <div className="h-[3px] w-32 bg-blue-400/35 blur-md orbit-slide" />
+          <div className="h-[3px] w-32 bg-blue-400/30 blur-md orbit-slide" />
         </div>
 
         {/* Nodes */}
@@ -264,16 +287,13 @@ function ChangeLogStrip() {
     <div className="rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
         <div>
-          <div className="text-[11px] tracking-[0.28em] text-white/55">
-            CHANGE LOG
-          </div>
+          <div className="text-[11px] tracking-[0.28em] text-white/55">CHANGE LOG</div>
           <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
             Controlled updates, disclosed responsibly
           </h2>
           <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
-            Orbitlink maintains a conservative change posture. We disclose maintenance windows and
-            updates when they are confirmed, and we document what changed, what was observed, and
-            what stabilized.
+            We disclose maintenance windows and updates when confirmed, and document what changed,
+            what was observed, and what stabilized.
           </p>
         </div>
 
@@ -281,41 +301,73 @@ function ChangeLogStrip() {
           <div className="text-[11px] tracking-[0.22em] text-white/55">
             {NETWORK_CHANGELOG.policy.eyebrow}
           </div>
-          <div className="mt-1 text-sm text-white/80">
-            {NETWORK_CHANGELOG.policy.value}
-          </div>
+          <div className="mt-1 text-sm text-white/80">{NETWORK_CHANGELOG.policy.value}</div>
         </div>
       </div>
 
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
         {items.map((i) => (
-          <div
-            key={i.label}
-            className="rounded-2xl border border-white/10 bg-white/[0.045] p-5"
-          >
+          <div key={i.label} className="rounded-2xl border border-white/10 bg-white/[0.045] p-5">
             <div className="flex items-start justify-between gap-4">
-              <div className="text-[11px] tracking-[0.22em] text-white/55">
-                {i.label}
-              </div>
-              <div
-                className={`rounded-full border px-3 py-1.5 text-[11px] ${tonePill(
-                  i.tone
-                )}`}
-              >
+              <div className="text-[11px] tracking-[0.22em] text-white/55">{i.label}</div>
+              <div className={`rounded-full border px-3 py-1.5 text-[11px] ${tonePill(i.tone)}`}>
                 {i.tone === "ok" ? "STABLE" : i.tone === "warn" ? "PENDING" : "LOGGED"}
               </div>
             </div>
 
-            <div className={`mt-3 text-sm font-medium ${toneClass(i.tone)}`}>
-              {i.value}
-            </div>
+            <div className={`mt-3 text-sm font-medium ${toneClass(i.tone)}`}>{i.value}</div>
             <p className="mt-3 text-sm leading-6 text-white/65">{i.note}</p>
           </div>
         ))}
       </div>
 
-      <div className="mt-5 text-xs text-white/55">
-        {NETWORK_CHANGELOG.policy.detail}
+      <div className="mt-5 text-xs text-white/55">{NETWORK_CHANGELOG.policy.detail}</div>
+    </div>
+  );
+}
+
+function TelemetryDisclosureStrip() {
+  return (
+    <div className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+        <div>
+          <div className="text-[11px] tracking-[0.28em] text-white/55">
+            TELEMETRY & DISCLOSURE
+          </div>
+          <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
+            Status is reported conservatively
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
+            We avoid “always/never” claims. When we publish network posture, it reflects observed
+            signals, change windows, and support readiness — not marketing coverage.
+          </p>
+        </div>
+
+        <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+          <div className="text-[11px] tracking-[0.22em] text-white/55">STANDARD</div>
+          <div className="mt-1 text-sm text-white/80">Evidence-first • Scope-locked</div>
+        </div>
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+        <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
+          <div className="text-[11px] tracking-[0.22em] text-white/55">WHAT WE PUBLISH</div>
+          <p className="mt-3 text-sm leading-6 text-white/65">
+            Verified posture, change windows, and operational readiness.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
+          <div className="text-[11px] tracking-[0.22em] text-white/55">WHAT WE AVOID</div>
+          <p className="mt-3 text-sm leading-6 text-white/65">
+            Broad availability claims and unverified performance promises.
+          </p>
+        </div>
+        <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
+          <div className="text-[11px] tracking-[0.22em] text-white/55">WHEN IT UPDATES</div>
+          <p className="mt-3 text-sm leading-6 text-white/65">
+            Only after milestones complete and change outcomes are confirmed.
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -326,9 +378,7 @@ function NetworkIntegrityFooter() {
     <div className="rounded-3xl border border-white/10 bg-black/30 p-6 sm:p-7">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
         <div>
-          <div className="text-[11px] tracking-[0.28em] text-white/55">
-            INTEGRITY NOTICE
-          </div>
+          <div className="text-[11px] tracking-[0.28em] text-white/55">INTEGRITY NOTICE</div>
           <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
             This page reflects operational posture and telemetry-driven status statements. Coverage,
             timelines, and milestones are disclosed conservatively and updated only when confirmed.
@@ -337,9 +387,7 @@ function NetworkIntegrityFooter() {
 
         <div className="shrink-0 rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3">
           <div className="text-[11px] tracking-[0.22em] text-white/55">DISCLOSURE</div>
-          <div className="mt-1 text-sm text-white/80">
-            No overclaiming • Controlled rollout
-          </div>
+          <div className="mt-1 text-sm text-white/80">No overclaiming • Controlled rollout</div>
         </div>
       </div>
 
@@ -362,12 +410,31 @@ function NetworkIntegrityFooter() {
 }
 
 export default function NetworkPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Network Posture",
+    url: "https://orbitlink.ca/network",
+    isPartOf: {
+      "@type": "WebSite",
+      name: "Orbitlink",
+      url: "https://orbitlink.ca",
+    },
+    about: {
+      "@type": "Thing",
+      name: "Telecommunications network operations and posture",
+    },
+  };
+
   return (
     <PageShell
       eyebrow="NETWORK"
       title="Operational Surface"
       subtitle="A calm view of delivery posture: telemetry, routing discipline, controlled rollout, and predictable escalation."
     >
+      {/* JSON-LD (server-safe) */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
       {/* Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
         {NETWORK_METRICS.map((m) => (
@@ -429,10 +496,15 @@ export default function NetworkPage() {
       <div className="mt-4 sm:mt-6">
         <EscalationModel />
       </div>
-      
+
       {/* Change log strip */}
       <div className="mt-4 sm:mt-6">
         <ChangeLogStrip />
+      </div>
+
+      {/* Premium: telemetry disclosure (enterprise trust signal) */}
+      <div className="mt-4 sm:mt-6">
+        <TelemetryDisclosureStrip />
       </div>
 
       {/* Coverage / note strip */}
@@ -462,7 +534,6 @@ export default function NetworkPage() {
       <div className="mt-4 sm:mt-6">
         <NetworkIntegrityFooter />
       </div>
-
-      </PageShell>
-      );
-      }
+    </PageShell>
+  );
+}
