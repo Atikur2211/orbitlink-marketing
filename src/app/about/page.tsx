@@ -1,5 +1,28 @@
+// src/app/about/page.tsx
+import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import { ABOUT_STORY } from "@/lib/siteStatus";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Orbitlink is engineered with a disciplined operator posture — calm, precise, and reliability-first. A brand of TIRAV Technologies Inc.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About · Orbitlink",
+    description:
+      "A disciplined operator posture: calm, precise, reliability-first. Orbitlink is a brand of TIRAV Technologies Inc.",
+    url: "https://orbitlink.ca/about",
+    type: "website",
+    siteName: "Orbitlink",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About · Orbitlink",
+    description:
+      "A disciplined operator posture: calm, precise, reliability-first. Orbitlink is a brand of TIRAV Technologies Inc.",
+  },
+};
 
 export default function AboutPage() {
   return (
