@@ -3,34 +3,35 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 
+const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
+const SITE_DESC = "Audit-Ready Connectivity for Modern Operators";
+const GA_MEASUREMENT_ID = "G-1VWDS0BMLY";
+
 export const viewport: Viewport = {
   themeColor: "#09090B",
   colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://orbitlink.ca"),
+  metadataBase: new URL(SITE_URL),
+
   title: {
-    default: "Orbitlink",
-    template: "%s · Orbitlink",
+    default: SITE_NAME,
+    template: `%s · ${SITE_NAME}`,
   },
-  description: "Audit-Ready Connectivity for Modern Operators",
+  description: SITE_DESC,
 
-  // ✅ Golden-grade: DO NOT set a global canonical to "/"
-  // Per-page canonicals belong in each page's `export const metadata`.
+  // ✅ Golden-grade: do NOT set a global canonical to "/"
+  // Each page should define its own canonical via `export const metadata` in that page.
 
-  openGraph: {
-    type: "website",
-    url: "https://orbitlink.ca",
-    siteName: "Orbitlink",
-    title: "Orbitlink",
-    description: "Audit-Ready Connectivity for Modern Operators",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Orbitlink",
-    description: "Audit-Ready Connectivity for Modern Operators",
-  },
+  applicationName: SITE_NAME,
+  category: "Telecommunications",
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+
   robots: {
     index: true,
     follow: true,
@@ -42,19 +43,86 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-};
 
-const GA_MEASUREMENT_ID = "G-1VWDS0BMLY";
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESC,
+    locale: "en_CA",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESC,
+  },
+
+  // If you have icons/manifest later, enable these:
+  // icons: {
+  //   icon: "/favicon.ico",
+  //   apple: "/apple-touch-icon.png",
+  // },
+  // manifest: "/site.webmanifest",
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const isDev = process.env.NODE_ENV !== "production";
 
+  // ✅ Golden-grade: JSON-LD identity (Organization + WebSite)
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: SITE_URL,
+    brand: { "@type": "Brand", name: SITE_NAME },
+    parentOrganization: { "@type": "Organization", name: "TIRAV Technologies Inc." },
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        email: "sales@orbitlink.ca",
+        availableLanguage: ["en"],
+        areaServed: "CA",
+      },
+      {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        telephone: "+18888672480",
+        email: "concierge@orbitlink.ca",
+        availableLanguage: ["en"],
+        areaServed: "CA",
+      },
+    ],
+    // Add real social links when ready:
+    // sameAs: ["https://www.linkedin.com/company/orbitlink"],
+  };
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: SITE_URL,
+    publisher: { "@type": "Organization", name: SITE_NAME },
+  };
+
   return (
     <html lang="en">
       <head>
-        {/* Performance: preconnect to GA endpoints */}
+        {/* Performance: preconnect */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
+
+        {/* ✅ Golden-grade: JSON-LD (site identity) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
 
         {/* Google Analytics (GA4) */}
         <Script
