@@ -1,9 +1,31 @@
 // src/app/contact/page.tsx
+import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import WaitlistBanner from "@/components/WaitlistBanner";
 import { MODULE_SPECS } from "@/lib/siteStatus";
 import { Suspense } from "react";
 import ContactIntakeForm from "@/components/ContactIntakeForm";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Sales & onboarding intake for business fibre and network infrastructure. Enterprise-first qualification, controlled rollout, and disciplined delivery posture.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Contact · Orbitlink",
+    description:
+      "Enterprise-first intake for sales, provisioning coordination, and onboarding. Controlled rollout posture and disciplined delivery.",
+    url: "https://orbitlink.ca/contact",
+    type: "website",
+    siteName: "Orbitlink",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact · Orbitlink",
+    description:
+      "Enterprise-first intake for sales, provisioning coordination, and onboarding. Controlled rollout posture and disciplined delivery.",
+  },
+};
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
