@@ -1,4 +1,5 @@
 // src/app/trust/page.tsx
+import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import {
   TRUST_ASSURANCE,
@@ -6,6 +7,27 @@ import {
   TRUST_TILES,
   MODULE_SPECS,
 } from "@/lib/siteStatus";
+
+export const metadata: Metadata = {
+  title: "Trust & Compliance",
+  description:
+    "A transparency-first posture for audit readiness, operational integrity, and controlled rollout. Regulatory credibility by design.",
+  alternates: { canonical: "/trust" },
+  openGraph: {
+    title: "Trust & Compliance · Orbitlink",
+    description:
+      "Transparency-first posture for audit readiness, operational integrity, and controlled rollout. Regulatory credibility by design.",
+    url: "https://orbitlink.ca/trust",
+    type: "website",
+    siteName: "Orbitlink",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Trust & Compliance · Orbitlink",
+    description:
+      "Transparency-first posture for audit readiness, operational integrity, and controlled rollout. Regulatory credibility by design.",
+  },
+};
 
 function StatusTile({
   label,
@@ -34,9 +56,7 @@ function StatusTile({
     <div className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <div className="text-[11px] tracking-[0.28em] text-white/55">
-            {label}
-          </div>
+          <div className="text-[11px] tracking-[0.28em] text-white/55">{label}</div>
           <div className={`mt-3 text-sm font-medium ${toneClass}`}>{value}</div>
         </div>
 
@@ -78,9 +98,7 @@ function EvidenceCard({
           <li key={b}>• {b}</li>
         ))}
       </ul>
-      {note ? (
-        <p className="mt-4 text-xs leading-5 text-white/55">{note}</p>
-      ) : null}
+      {note ? <p className="mt-4 text-xs leading-5 text-white/55">{note}</p> : null}
     </div>
   );
 }
@@ -109,7 +127,7 @@ export default function TrustPage() {
         ))}
       </div>
 
-      {/* “Million-dollar move” credibility card + REAL request form */}
+      {/* Verification pack card */}
       <div className="mt-4 sm:mt-6 rounded-3xl border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-7">
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
           <div className="min-w-0">
@@ -146,18 +164,16 @@ export default function TrustPage() {
           </div>
         </div>
 
-        {/* Request form (luxury: minimal fields, high signal) */}
+        {/* Request form (server-safe, no handlers) */}
         <form
           className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-3"
           action="/api/waitlist"
           method="post"
         >
-          {/* Funnel tags */}
           <input type="hidden" name="source" value="trust" />
           <input type="hidden" name="intent" value="verification-pack" />
           <input type="hidden" name="returnTo" value="/trust" />
 
-          {/* Honeypot */}
           <input
             type="text"
             name="company_website"
@@ -166,7 +182,6 @@ export default function TrustPage() {
             className="hidden"
           />
 
-          {/* Minimal, high-signal fields */}
           <input
             name="email"
             type="email"
@@ -212,7 +227,6 @@ export default function TrustPage() {
             ))}
           </select>
 
-          {/* CTAs */}
           <div className="lg:col-span-12 mt-1 flex flex-col sm:flex-row gap-3">
             <button
               type="submit"
