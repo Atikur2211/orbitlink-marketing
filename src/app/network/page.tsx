@@ -8,25 +8,45 @@ import {
   NETWORK_CHANGELOG,
 } from "@/lib/siteStatus";
 
-/** Golden-Grade SEO */
+/** ✅ Million-dollar SEO metadata */
 export const metadata: Metadata = {
-  title: "Network Posture",
+  title: "Network Posture & Operations",
   description:
-    "A calm view of Orbitlink’s operational surface: telemetry, routing discipline, controlled rollout, and predictable escalation.",
-  alternates: { canonical: "/network" },
+    "Operator-grade network posture for enterprises in Ontario: telemetry-driven operations, routing discipline, controlled rollout, and predictable escalation.",
+  alternates: { canonical: "https://orbitlink.ca/network" },
   openGraph: {
-    title: "Network Posture · Orbitlink",
+    title: "Network Posture & Operations · Orbitlink",
     description:
-      "Operational surface: telemetry, routing discipline, controlled rollout, and predictable escalation.",
+      "Operational surface: telemetry, routing discipline, controlled rollout, and predictable escalation — expressed conservatively and updated only when verifiable.",
     url: "https://orbitlink.ca/network",
     type: "website",
     siteName: "Orbitlink",
+    locale: "en_CA",
+    images: [
+      {
+        url: "https://orbitlink.ca/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink Network Posture & Operations",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Network Posture · Orbitlink",
+    title: "Network Posture & Operations · Orbitlink",
     description:
-      "Operational surface: telemetry, routing discipline, controlled rollout, and predictable escalation.",
+      "Operator-grade posture: telemetry, routing discipline, controlled rollout, and predictable escalation.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -56,17 +76,14 @@ function PopNode({
   role: string;
 }) {
   const dot =
-    tone === "ok"
-      ? "bg-emerald-400"
-      : tone === "warn"
-      ? "bg-[#FACC15]"
-      : "bg-blue-400";
+    tone === "ok" ? "bg-emerald-400" : tone === "warn" ? "bg-[#FACC15]" : "bg-blue-400";
 
   return (
     <div className="absolute" style={{ left, top }}>
       <div className={`relative h-3 w-3 rounded-full ${dot}`}>
-        {/* Golden-Grade: slower + softer pulse (feels “operator”, not “app”) */}
-        <div className={`absolute inset-0 rounded-full ${dot}/25 animate-[ping_2.6s_ease-in-out_infinite]`} />
+        <div
+          className={`absolute inset-0 rounded-full ${dot}/25 animate-[ping_2.6s_ease-in-out_infinite]`}
+        />
       </div>
 
       <div className="mt-2 rounded-xl border border-white/10 bg-black/45 px-3 py-2 backdrop-blur-[2px]">
@@ -95,27 +112,22 @@ function PopMap() {
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/55">MODE</div>
-            <div className="mt-1 text-sm text-white/80">
-              Measured rollout • Evidence-first
-            </div>
+            <div className="mt-1 text-sm text-white/80">Measured rollout • Evidence-first</div>
           </div>
         </div>
       </div>
 
       <div className="relative h-[260px] sm:h-[320px] lg:h-[360px] border-t border-white/10">
-        {/* Ambient gradient + grid */}
         <div className="absolute inset-0 opacity-[0.22]">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(250,204,21,0.15),transparent_55%),radial-gradient(circle_at_70%_35%,rgba(59,130,246,0.18),transparent_60%),radial-gradient(circle_at_55%_75%,rgba(16,185,129,0.12),transparent_55%)]" />
           <div className="absolute inset-0 [background-image:linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:56px_56px]" />
         </div>
 
-        {/* Fiber line (calm pulse) */}
         <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2">
           <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-400/45 to-transparent" />
           <div className="h-[3px] w-32 bg-blue-400/30 blur-md orbit-slide" />
         </div>
 
-        {/* Nodes */}
         <PopNode left="18%" top="56%" label="MISSISSAUGA" tone="ok" role="Primary edge" />
         <PopNode left="44%" top="42%" label="TORONTO" tone="info" role="Interconnect" />
         <PopNode left="68%" top="62%" label="OTTAWA" tone="warn" role="Expansion path" />
@@ -131,30 +143,10 @@ function PopMap() {
 
 function PopList() {
   const pops = [
-    {
-      name: "Mississauga (Primary Edge)",
-      status: "Operational",
-      tone: "ok" as const,
-      note: "Primary monitoring & escalation anchor.",
-    },
-    {
-      name: "Toronto (Interconnect)",
-      status: "Observed",
-      tone: "info" as const,
-      note: "Interconnect posture and telemetry alignment.",
-    },
-    {
-      name: "Montreal (Transit Peer)",
-      status: "Observed",
-      tone: "info" as const,
-      note: "Transit posture and routing discipline.",
-    },
-    {
-      name: "Ottawa (Expansion Path)",
-      status: "Planned",
-      tone: "warn" as const,
-      note: "Expansion remains milestone-driven (no overclaiming).",
-    },
+    { name: "Mississauga (Primary Edge)", status: "Operational", tone: "ok" as const, note: "Primary monitoring & escalation anchor." },
+    { name: "Toronto (Interconnect)", status: "Observed", tone: "info" as const, note: "Interconnect posture and telemetry alignment." },
+    { name: "Montreal (Transit Peer)", status: "Observed", tone: "info" as const, note: "Transit posture and routing discipline." },
+    { name: "Ottawa (Expansion Path)", status: "Planned", tone: "warn" as const, note: "Expansion remains milestone-driven (no overclaiming)." },
   ];
 
   return (
@@ -223,30 +215,9 @@ function LatencyPosture() {
 
 function EscalationModel() {
   const steps = [
-    {
-      level: "L1 — Intake & Confirmation",
-      bullets: [
-        "Confirm scope: single site vs area signal",
-        "Verify power, link state, and basic path tests",
-        "Collect timestamps and a simple description of symptoms",
-      ],
-    },
-    {
-      level: "L2 — Network Diagnosis",
-      bullets: [
-        "Telemetry review: path stability and error posture",
-        "Route / upstream checks (as applicable)",
-        "Determine whether issue is local, upstream, or equipment-related",
-      ],
-    },
-    {
-      level: "L3 — Provider & Remediation",
-      bullets: [
-        "Engage upstream/partner escalation when required",
-        "Maintain documented timeline and client updates",
-        "Close-out report with resolution summary and prevention notes",
-      ],
-    },
+    { level: "L1 — Intake & Confirmation", bullets: ["Confirm scope: single site vs area signal", "Verify power, link state, and basic path tests", "Collect timestamps and a simple description of symptoms"] },
+    { level: "L2 — Network Diagnosis", bullets: ["Telemetry review: path stability and error posture", "Route / upstream checks (as applicable)", "Determine whether issue is local, upstream, or equipment-related"] },
+    { level: "L3 — Provider & Remediation", bullets: ["Engage upstream/partner escalation when required", "Maintain documented timeline and client updates", "Close-out report with resolution summary and prevention notes"] },
   ];
 
   return (
@@ -256,8 +227,8 @@ function EscalationModel() {
         Predictable response, disciplined updates
       </h2>
       <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
-        We keep escalation structured and calm: clear ownership, clear timestamps, and a predictable
-        sequence of checks before vendor escalation.
+        Structured escalation: clear ownership, clear timestamps, and a predictable sequence of checks
+        before vendor escalation.
       </p>
 
       <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
@@ -277,11 +248,7 @@ function EscalationModel() {
 }
 
 function ChangeLogStrip() {
-  const items = [
-    NETWORK_CHANGELOG.last_change,
-    NETWORK_CHANGELOG.current_posture,
-    NETWORK_CHANGELOG.next_window,
-  ];
+  const items = [NETWORK_CHANGELOG.last_change, NETWORK_CHANGELOG.current_posture, NETWORK_CHANGELOG.next_window];
 
   return (
     <div className="rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
@@ -331,15 +298,13 @@ function TelemetryDisclosureStrip() {
     <div className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
         <div>
-          <div className="text-[11px] tracking-[0.28em] text-white/55">
-            TELEMETRY & DISCLOSURE
-          </div>
+          <div className="text-[11px] tracking-[0.28em] text-white/55">TELEMETRY & DISCLOSURE</div>
           <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
             Status is reported conservatively
           </h2>
           <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
-            We avoid “always/never” claims. When we publish network posture, it reflects observed
-            signals, change windows, and support readiness — not marketing coverage.
+            We avoid broad “always/never” claims. Network posture reflects observed signals, change
+            windows, and support readiness — not marketing coverage.
           </p>
         </div>
 
@@ -365,7 +330,7 @@ function TelemetryDisclosureStrip() {
         <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
           <div className="text-[11px] tracking-[0.22em] text-white/55">WHEN IT UPDATES</div>
           <p className="mt-3 text-sm leading-6 text-white/65">
-            Only after milestones complete and change outcomes are confirmed.
+            Only after milestones complete and outcomes are confirmed.
           </p>
         </div>
       </div>
@@ -393,7 +358,7 @@ function NetworkIntegrityFooter() {
 
       <div className="mt-5 flex flex-col sm:flex-row gap-3">
         <a
-          href="/coming-soon"
+          href="/coming-soon?intent=access&source=network_footer"
           className="rounded-2xl bg-[#FACC15] text-black px-5 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
         >
           Request Access
@@ -410,20 +375,137 @@ function NetworkIntegrityFooter() {
 }
 
 export default function NetworkPage() {
-  const jsonLd = {
+  /**
+   * ✅ Authority Schema Pack:
+   * - Organization (brand)
+   * - TelecomService (real operator signal)
+   * - BreadcrumbList (indexing clarity)
+   * - FAQPage (rich results potential)
+   *
+   * Note: Keep claims conservative. Don’t list speeds/coverage you can’t prove publicly.
+   */
+  const schemaOrg = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: "Network Posture",
-    url: "https://orbitlink.ca/network",
-    isPartOf: {
-      "@type": "WebSite",
-      name: "Orbitlink",
-      url: "https://orbitlink.ca",
+    "@type": "Organization",
+    "@id": "https://orbitlink.ca/#org",
+    name: "Orbitlink",
+    url: "https://orbitlink.ca",
+    logo: "https://orbitlink.ca/logo.png",
+    sameAs: [
+      // add socials when ready (LinkedIn / X / Facebook)
+    ],
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        email: "sales@orbitlink.ca",
+        availableLanguage: ["English"],
+        areaServed: "CA-ON",
+      },
+      {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        email: "support@orbitlink.ca",
+        availableLanguage: ["English"],
+        areaServed: "CA-ON",
+      },
+    ],
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "CA",
+      addressRegion: "ON",
+      addressLocality: "Mississauga",
     },
-    about: {
-      "@type": "Thing",
-      name: "Telecommunications network operations and posture",
+  };
+
+  const schemaTelecom = {
+    "@context": "https://schema.org",
+    "@type": "TelecomService",
+    "@id": "https://orbitlink.ca/network#telecom",
+    name: "Business Fibre & Network Infrastructure",
+    provider: { "@id": "https://orbitlink.ca/#org" },
+    serviceType: [
+      "Business Internet",
+      "Fibre Connectivity",
+      "Managed Network Services",
+      "Network Monitoring and Escalation",
+    ],
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "Ontario, Canada" },
+      { "@type": "City", name: "Mississauga" },
+    ],
+    audience: {
+      "@type": "Audience",
+      audienceType: "Business",
     },
+    termsOfService: "https://orbitlink.ca/legal/terms",
+  };
+
+  const schemaBreadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://orbitlink.ca/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Network",
+        item: "https://orbitlink.ca/network",
+      },
+    ],
+  };
+
+  const schemaFaq = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Is this a coverage map?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "No. The network page is a posture view. It reflects operational roles, telemetry discipline, and controlled rollout, not broad availability claims.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How does Orbitlink handle outages or incidents?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Escalation follows a structured model: intake & confirmation, network diagnosis, then provider remediation when required. Updates are timestamped and disciplined.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do you publish performance claims like latency numbers?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "We treat latency as an operational signal and publish conservatively. Measurements are contextual and tied to route, time windows, and upstream conditions.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Where do services operate?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Orbitlink focuses on Ontario with controlled onboarding windows. Availability is confirmed per address and engagement scope.",
+        },
+      },
+    ],
+  };
+
+  const schemaGraph = {
+    "@context": "https://schema.org",
+    "@graph": [schemaOrg, schemaTelecom, schemaBreadcrumbs, schemaFaq],
   };
 
   return (
@@ -432,16 +514,16 @@ export default function NetworkPage() {
       title="Operational Surface"
       subtitle="A calm view of delivery posture: telemetry, routing discipline, controlled rollout, and predictable escalation."
     >
-      {/* JSON-LD (server-safe) */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {/* ✅ Authority JSON-LD graph */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+      />
 
       {/* Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
         {NETWORK_METRICS.map((m) => (
-          <div
-            key={m.label}
-            className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7"
-          >
+          <div key={m.label} className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
             <div className="flex items-start justify-between gap-6">
               <div className="text-[11px] tracking-[0.22em] text-white/55">{m.label}</div>
               <div className="flex items-center gap-2">
@@ -456,15 +538,8 @@ export default function NetworkPage() {
         ))}
       </div>
 
-      {/* Map */}
-      <div className="mt-4 sm:mt-6">
-        <PopMap />
-      </div>
-
-      {/* POP list */}
-      <div className="mt-4 sm:mt-6">
-        <PopList />
-      </div>
+      <div className="mt-4 sm:mt-6"><PopMap /></div>
+      <div className="mt-4 sm:mt-6"><PopList /></div>
 
       {/* Capability grid */}
       <div className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
@@ -487,27 +562,14 @@ export default function NetworkPage() {
         </div>
       </div>
 
-      {/* Latency posture */}
-      <div className="mt-4 sm:mt-6">
-        <LatencyPosture />
-      </div>
+      <div className="mt-4 sm:mt-6"><LatencyPosture /></div>
+      <div className="mt-4 sm:mt-6"><EscalationModel /></div>
+      <div className="mt-4 sm:mt-6"><ChangeLogStrip /></div>
 
-      {/* Escalation model */}
-      <div className="mt-4 sm:mt-6">
-        <EscalationModel />
-      </div>
+      {/* Premium trust strip */}
+      <div className="mt-4 sm:mt-6"><TelemetryDisclosureStrip /></div>
 
-      {/* Change log strip */}
-      <div className="mt-4 sm:mt-6">
-        <ChangeLogStrip />
-      </div>
-
-      {/* Premium: telemetry disclosure (enterprise trust signal) */}
-      <div className="mt-4 sm:mt-6">
-        <TelemetryDisclosureStrip />
-      </div>
-
-      {/* Coverage / note strip */}
+      {/* Coverage note */}
       <div className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
         <div className="text-[11px] tracking-[0.28em] text-white/55">COVERAGE</div>
         <div className="mt-3 text-sm sm:text-[15px] leading-6 text-white/70">
@@ -516,7 +578,7 @@ export default function NetworkPage() {
 
         <div className="mt-5 flex flex-col sm:flex-row gap-3">
           <a
-            href="/coming-soon"
+            href="/coming-soon?intent=access&source=network"
             className="rounded-2xl bg-[#FACC15] text-black px-5 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
           >
             Request Access
@@ -530,10 +592,7 @@ export default function NetworkPage() {
         </div>
       </div>
 
-      {/* Network integrity footer */}
-      <div className="mt-4 sm:mt-6">
-        <NetworkIntegrityFooter />
-      </div>
+      <div className="mt-4 sm:mt-6"><NetworkIntegrityFooter /></div>
     </PageShell>
   );
 }
