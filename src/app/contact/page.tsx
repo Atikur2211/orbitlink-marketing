@@ -3,6 +3,7 @@ import PageShell from "@/components/PageShell";
 import WaitlistBanner from "@/components/WaitlistBanner";
 import { MODULE_SPECS } from "@/lib/siteStatus";
 import { Suspense } from "react";
+import ContactIntakeForm from "@/components/ContactIntakeForm";
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (

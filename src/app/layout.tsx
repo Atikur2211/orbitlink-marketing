@@ -31,28 +31,38 @@ export const metadata: Metadata = {
   },
 };
 
+const GA_MEASUREMENT_ID = "G-1VWDS0BMLY";
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const isDev = process.env.NODE_ENV !== "production";
+
   return (
     <html lang="en">
       <head>
-        {/* Google Analytics */}
+        {/* Google Analytics (GA4) */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-1VWDS0BMLY"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            window.gtag = window.gtag || gtag;
+
             gtag('js', new Date());
-            gtag('config', 'G-1VWDS0BMLY');
+            gtag('config', '${GA_MEASUREMENT_ID}', {
+              anonymize_ip: true,
+              debug_mode: ${isDev ? "true" : "false"}
+            });
           `}
         </Script>
       </head>
+
       <body className="min-h-screen bg-[#09090B] text-white antialiased">
         {children}
       </body>
