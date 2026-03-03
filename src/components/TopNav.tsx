@@ -20,16 +20,24 @@ const INTAKE_HREF = "/contact#intake";
 
 export default function TopNav() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
   const openBtnRef = useRef<HTMLButtonElement | null>(null);
 
-  // Close on route change (only when already open)
-  useEffect(() => {
-    if (!open) return;
-    setOpen(false);
-  }, [pathname]); // intentionally only pathname
+  // ✅ Route-bound open state: closes automatically when pathname changes (no effects needed)
+  const [openForPath, setOpenForPath] = useState<string | null>(null);
+  const open = openForPath === pathname;
 
-  // Lock scroll when open
+  const mobileLabel = useMemo(() => (open ? "Close menu" : "Open menu"), [open]);
+
+  const close = () => {
+    setOpenForPath(null);
+    openBtnRef.current?.focus();
+  };
+
+  const toggle = () => {
+    setOpenForPath((prev) => (prev === pathname ? null : pathname));
+  };
+
+  // Lock scroll only while open (allowed: effect updates external system)
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -39,20 +47,16 @@ export default function TopNav() {
     };
   }, [open]);
 
-  // Escape closes
+  // Escape closes (event subscription is valid)
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-        openBtnRef.current?.focus();
-      }
+      if (e.key === "Escape") close();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  const mobileLabel = useMemo(() => (open ? "Close menu" : "Open menu"), [open]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]); // close is stable enough for this use
 
   return (
     <header className="sticky top-0 z-[100]">
@@ -91,7 +95,7 @@ export default function TopNav() {
               ref={openBtnRef}
               type="button"
               className="md:hidden rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10 transition"
-              onClick={() => setOpen((v) => !v)}
+              onClick={toggle}
               aria-label={mobileLabel}
               aria-expanded={open}
               aria-controls="orbitlink-mobile-menu"
@@ -119,7 +123,7 @@ export default function TopNav() {
         </div>
       </div>
 
-      {/* Mobile overlay — absolute top authority */}
+      {/* Mobile overlay — top authority */}
       {open && (
         <div
           id="orbitlink-mobile-menu"
@@ -128,12 +132,11 @@ export default function TopNav() {
           aria-modal="true"
         >
           {/* Backdrop */}
-          <div
+          <button
+            type="button"
             className="absolute inset-0 bg-black/70"
-            onClick={() => {
-              setOpen(false);
-              openBtnRef.current?.focus();
-            }}
+            onClick={close}
+            aria-label="Close menu"
           />
 
           {/* Sheet */}
@@ -148,10 +151,7 @@ export default function TopNav() {
                 <button
                   type="button"
                   className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10 transition"
-                  onClick={() => {
-                    setOpen(false);
-                    openBtnRef.current?.focus();
-                  }}
+                  onClick={close}
                   aria-label="Close menu"
                 >
                   ✕
@@ -168,7 +168,7 @@ export default function TopNav() {
                       <Link
                         key={i.href}
                         href={i.href}
-                        onClick={() => setOpen(false)}
+                        onClick={() => setOpenForPath(null)}
                         aria-current={active ? "page" : undefined}
                         className={[
                           "rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm hover:bg-white/10 transition flex items-center justify-between",
@@ -192,7 +192,7 @@ export default function TopNav() {
                   <div className="mt-3 grid gap-2">
                     <Link
                       href={INTAKE_HREF}
-                      onClick={() => setOpen(false)}
+                      onClick={() => setOpenForPath(null)}
                       className="rounded-2xl bg-[#FACC15] text-black px-4 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
                     >
                       Talk to Sales
