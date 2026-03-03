@@ -8,34 +8,90 @@ import SiteFooter from "@/components/SiteFooter";
 
 import type { Metadata } from "next";
 
+const SITE_URL = "https://orbitlink.ca";
+
 export const metadata: Metadata = {
   title: "Orbitlink",
-  description: "Audit-Ready Connectivity for Modern Operators",
+  description:
+    "Business Fibre Internet, Managed Network Infrastructure, and Compliance-Ready Connectivity for modern enterprises in Ontario, Canada.",
   alternates: {
-    canonical: "https://orbitlink.ca/",
+    canonical: `${SITE_URL}/`,
   },
   openGraph: {
-    title: "Orbitlink",
-    description: "Audit-Ready Connectivity for Modern Operators",
-    url: "https://orbitlink.ca/",
+    title: "Orbitlink — Business Fibre & Network Infrastructure",
+    description:
+      "Audit-ready connectivity, enterprise fibre internet, and infrastructure-grade operations for modern businesses in Ontario.",
+    url: `${SITE_URL}/`,
     siteName: "Orbitlink",
     type: "website",
     locale: "en_CA",
+    images: [
+      {
+        url: `${SITE_URL}/og-image.jpg`, // Add later if you want
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink — Business Fibre & Network Infrastructure",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Orbitlink",
-    description: "Audit-Ready Connectivity for Modern Operators",
+    title: "Orbitlink — Business Fibre & Network Infrastructure",
+    description:
+      "Enterprise fibre internet and audit-ready connectivity for modern operators in Ontario.",
   },
 };
 
 export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "Orbitlink",
+    url: SITE_URL,
+    areaServed: "Ontario, Canada",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "30 Eglinton Ave W, Suite 400-A77",
+      addressLocality: "Mississauga",
+      addressRegion: "ON",
+      postalCode: "L5R 3E7",
+      addressCountry: "CA",
+    },
+    telephone: "+18888672480",
+    email: "concierge@orbitlink.ca",
+    parentOrganization: {
+      "@type": "Organization",
+      name: "TIRAV Technologies Inc.",
+    },
+    makesOffer: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Business Fibre Internet",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Managed Network Infrastructure",
+        },
+      },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-[#09090B] text-white">
+      {/* JSON-LD (SEO authority signal) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <TopNav />
       <StickyStatusStrip />
 
-      {/* ✅ Client-safe (no SSR hydration mismatch, no dynamic) */}
       <StatusBandClient />
 
       {/* HERO */}
@@ -53,13 +109,16 @@ export default function Home() {
           </div>
 
           <h1 className="mt-6 text-[2.1rem] leading-[1.05] sm:text-5xl sm:leading-[1.05] lg:text-6xl lg:leading-[1.02] font-semibold tracking-tight">
-            Audit-Ready Connectivity
-            <span className="block text-white/70">for Modern Operators</span>
+            Business Fibre & Audit-Ready Connectivity
+            <span className="block text-white/70">
+              for Modern Enterprises in Ontario
+            </span>
           </h1>
 
           <p className="mt-5 max-w-2xl text-[15px] leading-6 sm:text-lg sm:leading-7 text-white/70">
             Precision network services engineered for reliability, clean operations,
-            and compliance-first delivery — built for modern businesses in Mississauga.
+            and compliance-first delivery — built for modern businesses in Mississauga
+            and across Ontario.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
