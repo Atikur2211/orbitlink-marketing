@@ -5,15 +5,6 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
-/**
- * LAUNCH NAV (Golden-grade)
- * - Mobile overlay must always win stacking context (z-index)
- * - Close on route change (without setState-in-effect lint issue)
- * - Close on backdrop, Escape, and link click
- * - Body scroll lock while open
- * - Premium micro-interactions: pulse indicator + smooth motion
- */
-
 const NAV = [
   { name: "Network", href: "/network" },
   { name: "Trust", href: "/trust" },
@@ -22,32 +13,22 @@ const NAV = [
   { name: "Contact", href: "/contact" },
 ] as const;
 
-// ✅ Enterprise contact constants (single source of truth)
 const SUPPORT_PHONE_DISPLAY = "📞 1-888-8-ORBIT-0";
 const SUPPORT_PHONE_TEL = "tel:+18888827480";
 const SUPPORT_PHONE_ARIA = "Call Orbitlink Client Care at 1 888 8 ORBIT 0";
-
-// ✅ Where “Talk to Sales” lands (intake form anchor)
 const INTAKE_HREF = "/contact#intake";
 
 export default function TopNav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-
   const openBtnRef = useRef<HTMLButtonElement | null>(null);
-  const prevPathRef = useRef<string | null>(null);
 
-  // Close menu on route change — clean (no lint hack)
+  // Close menu on route change (only if open)
   useEffect(() => {
-    if (prevPathRef.current === null) {
-      prevPathRef.current = pathname;
-      return;
-    }
-    if (prevPathRef.current !== pathname) {
-      prevPathRef.current = pathname;
-      setOpen(false);
-    }
-  }, [pathname]);
+    if (!open) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setOpen(false);
+  }, [pathname, open]);
 
   // Lock background scroll when menu is open
   useEffect(() => {
@@ -71,15 +52,8 @@ export default function TopNav() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  function closeMenu() {
-    setOpen(false);
-    // return focus to the opener for accessibility polish
-    setTimeout(() => openBtnRef.current?.focus(), 0);
-  }
-
   return (
-    // ✅ Raise header above other sticky components
-    <header className="sticky top-0 z-[80]">
+    <header className="sticky top-0 z-[60]">
       <div className="border-b border-white/10 bg-black/40 backdrop-blur-xl">
         <div className="mx-auto max-w-6xl px-5 sm:px-7 h-14 flex items-center justify-between">
           {/* Brand */}
@@ -92,10 +66,7 @@ export default function TopNav() {
           </Link>
 
           {/* Desktop nav */}
-          <nav
-            className="hidden md:flex items-center gap-6 text-sm text-white/70"
-            aria-label="Primary"
-          >
+          <nav className="hidden md:flex items-center gap-6 text-sm text-white/70" aria-label="Primary">
             {NAV.map((i) => {
               const active = pathname === i.href;
               return (
@@ -113,20 +84,16 @@ export default function TopNav() {
 
           {/* Right side */}
           <div className="flex items-center gap-2">
-            {/* Mobile menu button (premium pulse) */}
+            {/* Mobile menu button (toggle) */}
             <button
               ref={openBtnRef}
-              className="md:hidden relative rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10 transition"
-              onClick={() => setOpen(true)}
-              aria-label="Open menu"
+              className="md:hidden rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10 transition"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               aria-controls="orbitlink-mobile-menu"
             >
-              ☰
-              <span className="pointer-events-none absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/40" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
-              </span>
+              {open ? "✕" : "☰"}
             </button>
 
             {/* Desktop call CTA */}
@@ -138,7 +105,7 @@ export default function TopNav() {
               {SUPPORT_PHONE_DISPLAY}
             </a>
 
-            {/* Primary CTA -> intake form */}
+            {/* Primary CTA */}
             <Link
               href={INTAKE_HREF}
               className="rounded-xl bg-[#FACC15] text-black px-3 py-2 text-sm font-medium hover:bg-[#FDE047] transition"
@@ -149,26 +116,27 @@ export default function TopNav() {
         </div>
       </div>
 
-      {/* Mobile overlay */}
+      {/* Mobile overlay (highest layer) */}
       {open && (
         <div
-          // ✅ Must beat every other sticky/fixed layer (status strip etc.)
-          className="fixed inset-0 z-[120] md:hidden"
+          className="fixed inset-0 z-[80] md:hidden"
           role="dialog"
           aria-modal="true"
           id="orbitlink-mobile-menu"
         >
-          {/* backdrop (fade) */}
+          {/* backdrop */}
           <button
-            className="absolute inset-0 bg-black/70 animate-[fadeIn_160ms_ease-out]"
-            onClick={closeMenu}
+            className="absolute inset-0 bg-black/70"
+            onClick={() => {
+              setOpen(false);
+              openBtnRef.current?.focus();
+            }}
             aria-label="Close menu"
           />
 
-          {/* sheet container */}
+          {/* sheet */}
           <div className="absolute top-0 left-0 right-0 mx-auto max-w-6xl px-5 sm:px-7">
-            {/* sheet (drop + soften) */}
-            <div className="mt-3 rounded-3xl border border-white/10 bg-[#09090B]/95 backdrop-blur-xl shadow-2xl animate-[sheetIn_180ms_ease-out]">
+            <div className="mt-3 rounded-3xl border border-white/10 bg-[#09090B]/95 backdrop-blur-xl shadow-2xl">
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
                 <div className="flex items-center gap-3">
                   <span className="h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
@@ -176,7 +144,10 @@ export default function TopNav() {
                 </div>
                 <button
                   className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10 transition"
-                  onClick={closeMenu}
+                  onClick={() => {
+                    setOpen(false);
+                    openBtnRef.current?.focus();
+                  }}
                   aria-label="Close menu"
                 >
                   ✕
@@ -246,29 +217,6 @@ export default function TopNav() {
               </div>
             </div>
           </div>
-
-          {/* lightweight keyframes (no global css needed if Tailwind JIT allows arbitrary animation names)
-              If your Tailwind build strips these, add them to globals.css (below). */}
-          <style jsx global>{`
-            @keyframes fadeIn {
-              from {
-                opacity: 0;
-              }
-              to {
-                opacity: 1;
-              }
-            }
-            @keyframes sheetIn {
-              from {
-                opacity: 0;
-                transform: translateY(-8px);
-              }
-              to {
-                opacity: 1;
-                transform: translateY(0);
-              }
-            }
-          `}</style>
         </div>
       )}
     </header>

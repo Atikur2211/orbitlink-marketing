@@ -94,7 +94,7 @@ export default function StickyStatusStrip({
   return (
     <div
       className={[
-        "fixed left-0 right-0 z-40",
+        "fixed left-0 right-0 z-20",
         "transition-all duration-250 ease-out",
         show ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none",
       ].join(" ")}
