@@ -6,6 +6,29 @@ import BentoServices from "@/components/BentoServices";
 import ConciergeBlock from "@/components/ConciergeBlock";
 import SiteFooter from "@/components/SiteFooter";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Orbitlink",
+  description: "Audit-Ready Connectivity for Modern Operators",
+  alternates: {
+    canonical: "https://orbitlink.ca/",
+  },
+  openGraph: {
+    title: "Orbitlink",
+    description: "Audit-Ready Connectivity for Modern Operators",
+    url: "https://orbitlink.ca/",
+    siteName: "Orbitlink",
+    type: "website",
+    locale: "en_CA",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Orbitlink",
+    description: "Audit-Ready Connectivity for Modern Operators",
+  },
+};
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#09090B] text-white">
