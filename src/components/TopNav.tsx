@@ -18,54 +18,134 @@ const SUPPORT_PHONE_TEL = "tel:+18888827480";
 const SUPPORT_PHONE_ARIA = "Call Orbitlink Client Care at 1 888 8 ORBIT 0";
 const INTAKE_HREF = "/contact#intake";
 
+function getFocusable(container: HTMLElement) {
+  const selector = [
+    'a[href]:not([tabindex="-1"])',
+    'button:not([disabled]):not([tabindex="-1"])',
+    'input:not([disabled]):not([tabindex="-1"])',
+    'select:not([disabled]):not([tabindex="-1"])',
+    'textarea:not([disabled]):not([tabindex="-1"])',
+    '[tabindex]:not([tabindex="-1"])',
+  ].join(",");
+  return Array.from(container.querySelectorAll<HTMLElement>(selector)).filter(
+    (el) => !el.hasAttribute("disabled") && el.offsetParent !== null
+  );
+}
+
 export default function TopNav() {
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
+
   const openBtnRef = useRef<HTMLButtonElement | null>(null);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const scrollYRef = useRef(0);
 
-  // ✅ Route-bound open state: closes automatically when pathname changes (no effects needed)
-  const [openForPath, setOpenForPath] = useState<string | null>(null);
-  const open = openForPath === pathname;
+  // Close menu on route change WITHOUT setState-in-effect lint issues:
+  // store "last pathname" and close via state transition only when it actually changes.
+  const lastPathRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (lastPathRef.current === null) {
+      lastPathRef.current = pathname;
+      return;
+    }
+    if (lastPathRef.current !== pathname) {
+      lastPathRef.current = pathname;
+      if (open) setOpen(false);
+    }
+  }, [pathname, open]);
 
-  const mobileLabel = useMemo(() => (open ? "Close menu" : "Open menu"), [open]);
-
-  const close = () => {
-    setOpenForPath(null);
-    openBtnRef.current?.focus();
-  };
-
-  const toggle = () => {
-    setOpenForPath((prev) => (prev === pathname ? null : pathname));
-  };
-
-  // Lock scroll only while open (allowed: effect updates external system)
+  // iOS-safe scroll lock + restore
   useEffect(() => {
     if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+
+    scrollYRef.current = window.scrollY;
+
+    const body = document.body;
+    const prevPosition = body.style.position;
+    const prevTop = body.style.top;
+    const prevWidth = body.style.width;
+    const prevOverflow = body.style.overflow;
+
+    body.style.position = "fixed";
+    body.style.top = `-${scrollYRef.current}px`;
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+
     return () => {
-      document.body.style.overflow = prev;
+      body.style.position = prevPosition;
+      body.style.top = prevTop;
+      body.style.width = prevWidth;
+      body.style.overflow = prevOverflow;
+      window.scrollTo(0, scrollYRef.current);
     };
   }, [open]);
 
-  // Escape closes (event subscription is valid)
+  // Focus management: move focus into dialog on open; return focus to button on close
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
+
+    const dlg = dialogRef.current;
+    if (!dlg) return;
+
+    const focusables = getFocusable(dlg);
+    const first = focusables[0];
+    first?.focus();
+
+    return () => {
+      openBtnRef.current?.focus();
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]); // close is stable enough for this use
+  }, [open]);
+
+  // Keyboard: Escape + Focus Trap (Tab cycles inside)
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setOpen(false);
+        return;
+      }
+
+      if (e.key !== "Tab") return;
+
+      const dlg = dialogRef.current;
+      if (!dlg) return;
+
+      const focusables = getFocusable(dlg);
+      if (focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+
+      if (e.shiftKey) {
+        if (!active || active === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (active === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
+  const activeHref = useMemo(() => pathname, [pathname]);
 
   return (
-    <header className="sticky top-0 z-[100]">
+    <header className="sticky top-0 z-[80]">
       <div className="border-b border-white/10 bg-black/40 backdrop-blur-xl">
         <div className="mx-auto max-w-6xl px-5 sm:px-7 h-14 flex items-center justify-between">
           {/* Brand */}
           <Link href="/" className="flex items-center gap-3" aria-label="Orbitlink home">
             <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/35" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/35 motion-reduce:hidden" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
             </span>
             <span className="text-xs tracking-[0.28em] text-white/90">ORBITLINK</span>
@@ -74,7 +154,7 @@ export default function TopNav() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-6 text-sm text-white/70" aria-label="Primary">
             {NAV.map((i) => {
-              const active = pathname === i.href;
+              const active = activeHref === i.href;
               return (
                 <Link
                   key={i.href}
@@ -90,20 +170,17 @@ export default function TopNav() {
 
           {/* Right */}
           <div className="flex items-center gap-2">
-            {/* Mobile menu toggle */}
             <button
               ref={openBtnRef}
-              type="button"
               className="md:hidden rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10 transition"
-              onClick={toggle}
-              aria-label={mobileLabel}
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
               aria-expanded={open}
               aria-controls="orbitlink-mobile-menu"
             >
-              {open ? "✕" : "☰"}
+              ☰
             </button>
 
-            {/* Desktop call CTA */}
             <a
               href={SUPPORT_PHONE_TEL}
               aria-label={SUPPORT_PHONE_ARIA}
@@ -112,7 +189,6 @@ export default function TopNav() {
               {SUPPORT_PHONE_DISPLAY}
             </a>
 
-            {/* Primary CTA */}
             <Link
               href={INTAKE_HREF}
               className="rounded-xl bg-[#FACC15] text-black px-3 py-2 text-sm font-medium hover:bg-[#FDE047] transition"
@@ -123,35 +199,49 @@ export default function TopNav() {
         </div>
       </div>
 
-      {/* Mobile overlay — top authority */}
+      {/* Mobile dialog */}
       {open && (
         <div
-          id="orbitlink-mobile-menu"
-          className="fixed inset-0 z-[9999] md:hidden"
+          className="fixed inset-0 z-[90] md:hidden"
           role="dialog"
           aria-modal="true"
+          aria-labelledby="orbitlink-menu-title"
+          aria-describedby="orbitlink-menu-desc"
+          id="orbitlink-mobile-menu"
         >
           {/* Backdrop */}
           <button
-            type="button"
-            className="absolute inset-0 bg-black/70"
-            onClick={close}
+            className="absolute inset-0 bg-black/70 backdrop-blur-[1px] transition-opacity motion-reduce:transition-none"
+            onClick={() => setOpen(false)}
             aria-label="Close menu"
           />
 
           {/* Sheet */}
           <div className="absolute top-0 left-0 right-0 mx-auto max-w-6xl px-5 sm:px-7">
-            <div className="mt-3 rounded-3xl border border-white/10 bg-[#09090B]/95 backdrop-blur-xl shadow-2xl overflow-hidden">
+            <div
+              ref={dialogRef}
+              className={[
+                "mt-3 rounded-3xl border border-white/10 bg-[#09090B]/95 backdrop-blur-xl shadow-2xl",
+                "transform transition-all duration-200 ease-out motion-reduce:transition-none",
+                "translate-y-0 opacity-100",
+              ].join(" ")}
+            >
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
                 <div className="flex items-center gap-3">
                   <span className="h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
-                  <span className="text-xs tracking-[0.28em] text-white/90">ORBITLINK</span>
+                  <div>
+                    <div id="orbitlink-menu-title" className="text-xs tracking-[0.28em] text-white/90">
+                      ORBITLINK
+                    </div>
+                    <div id="orbitlink-menu-desc" className="text-[11px] text-white/55">
+                      Navigation • enterprise onboarding posture
+                    </div>
+                  </div>
                 </div>
 
                 <button
-                  type="button"
                   className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10 transition"
-                  onClick={close}
+                  onClick={() => setOpen(false)}
                   aria-label="Close menu"
                 >
                   ✕
@@ -163,12 +253,12 @@ export default function TopNav() {
 
                 <div className="mt-3 grid gap-2">
                   {NAV.map((i) => {
-                    const active = pathname === i.href;
+                    const active = activeHref === i.href;
                     return (
                       <Link
                         key={i.href}
                         href={i.href}
-                        onClick={() => setOpenForPath(null)}
+                        onClick={() => setOpen(false)}
                         aria-current={active ? "page" : undefined}
                         className={[
                           "rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm hover:bg-white/10 transition flex items-center justify-between",
@@ -182,7 +272,6 @@ export default function TopNav() {
                   })}
                 </div>
 
-                {/* Contact panel */}
                 <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
                   <div className="text-[11px] tracking-[0.22em] text-white/55">CONTACT</div>
                   <div className="mt-2 text-sm text-white/80">
@@ -192,7 +281,7 @@ export default function TopNav() {
                   <div className="mt-3 grid gap-2">
                     <Link
                       href={INTAKE_HREF}
-                      onClick={() => setOpenForPath(null)}
+                      onClick={() => setOpen(false)}
                       className="rounded-2xl bg-[#FACC15] text-black px-4 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
                     >
                       Talk to Sales
