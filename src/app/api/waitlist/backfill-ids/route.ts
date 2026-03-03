@@ -1,47 +1,78 @@
+// src/app/api/waitlist/backfill-ids/route.ts
 import { NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
 import crypto from "crypto";
 
 export const runtime = "nodejs";
 
-type Row = Record<string, any>;
+type SubmissionLike = {
+  id?: string;
+  email?: string;
+  createdAt?: string;
+  ts?: string;
+  updatedAt?: string;
+  [k: string]: unknown;
+};
 
-async function readJSON(filePath: string): Promise<Row[]> {
-  try {
-    const raw = await fs.readFile(filePath, "utf8");
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+type StoreLike =
+  | SubmissionLike[]
+  | {
+      value?: SubmissionLike[];
+      Count?: number;
+      [k: string]: unknown;
+    };
+
+function isObject(v: unknown): v is Record<string, unknown> {
+  return typeof v === "object" && v !== null;
 }
 
-async function writeJSONAtomic(filePath: string, data: unknown) {
-  const tmp = `${filePath}.tmp`;
-  await fs.writeFile(tmp, JSON.stringify(data, null, 2), "utf8");
-  await fs.rename(tmp, filePath);
+function isSubmissionArray(v: unknown): v is SubmissionLike[] {
+  return Array.isArray(v) && v.every((x) => isObject(x));
+}
+
+function readList(parsed: unknown): SubmissionLike[] {
+  if (isSubmissionArray(parsed)) return parsed;
+  if (isObject(parsed) && Array.isArray(parsed.value) && isSubmissionArray(parsed.value)) {
+    return parsed.value;
+  }
+  return [];
+}
+
+function writePayload(list: SubmissionLike[]) {
+  return { value: list, Count: list.length };
 }
 
 export async function POST() {
-  const filePath = path.join(process.cwd(), "waitlist.json");
-  const list = await readJSON(filePath);
+  // This endpoint is intended for DEV/local use only.
+  // If you deploy it, protect with auth in front of it.
+  const fs = await import("fs/promises");
+  const path = await import("path");
 
-  let changed = 0;
+  const WAITLIST_FILE = process.env.WAITLIST_FILE || "waitlist.json";
+  const filePath = path.join(process.cwd(), WAITLIST_FILE);
 
-  const next = list.map((x) => {
-    if (!x || typeof x !== "object") return x;
-    if (typeof x.id === "string" && x.id.trim()) return x;
+  try {
+    const raw = await fs.readFile(filePath, "utf8");
+    const parsed: StoreLike = JSON.parse(raw) as StoreLike;
 
-    changed += 1;
-    return {
-      ...x,
-      id: crypto.randomBytes(8).toString("hex"),
-      updatedAt: new Date().toISOString(),
-    };
-  });
+    const list = readList(parsed);
 
-  if (changed) await writeJSONAtomic(filePath, next);
+    const updated = list.map((s) => {
+      if (s.id && String(s.id).trim()) return s;
+      return {
+        ...s,
+        id: crypto.randomBytes(8).toString("hex"),
+      };
+    });
 
-  return NextResponse.json({ ok: true, changed });
+    await fs.writeFile(filePath, JSON.stringify(writePayload(updated), null, 2), "utf8");
+
+    return NextResponse.json({
+      ok: true,
+      Count: updated.length,
+      backfilled: updated.filter((x) => !list.find((o) => o === x)).length,
+    });
+  } catch (e: unknown) {
+    console.error("backfill-ids error:", e);
+    return NextResponse.json({ ok: false }, { status: 500 });
+  }
 }

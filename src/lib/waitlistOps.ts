@@ -28,41 +28,61 @@ export type WaitlistRecord = {
   ts?: string;
 };
 
-export function normalizeRecord(x: any): WaitlistRecord | null {
-  if (!x || typeof x !== "object") return null;
+type UnknownRecord = Record<string, unknown>;
 
-  const email = typeof x.email === "string" ? x.email.trim().toLowerCase() : "";
+function isRecord(v: unknown): v is UnknownRecord {
+  return typeof v === "object" && v !== null;
+}
+
+function asString(v: unknown): string | undefined {
+  return typeof v === "string" ? v : undefined;
+}
+
+function cleanEmail(v: unknown): string {
+  const s = typeof v === "string" ? v.trim().toLowerCase() : "";
+  return s;
+}
+
+/**
+ * Normalize unknown input into a stable WaitlistRecord.
+ * - No `any`
+ * - Defensive parsing
+ * - Rejects missing/invalid email
+ */
+export function normalizeRecord(x: unknown): WaitlistRecord | null {
+  if (!isRecord(x)) return null;
+
+  const email = cleanEmail(x.email);
   if (!email) return null;
 
   const createdAt =
-    typeof x.createdAt === "string"
-      ? x.createdAt
-      : typeof x.ts === "string"
-      ? x.ts
-      : undefined;
+    asString(x.createdAt) ??
+    asString(x.ts) ??
+    undefined;
 
   return {
-    id: typeof x.id === "string" ? x.id : undefined,
+    id: asString(x.id),
     createdAt,
-    updatedAt: typeof x.updatedAt === "string" ? x.updatedAt : undefined,
+    updatedAt: asString(x.updatedAt),
 
-    source: typeof x.source === "string" ? x.source : undefined,
-    intent: typeof x.intent === "string" ? x.intent : undefined,
+    source: asString(x.source),
+    intent: asString(x.intent),
 
     email,
-    fullName: typeof x.fullName === "string" ? x.fullName : undefined,
-    company: typeof x.company === "string" ? x.company : undefined,
-    role: typeof x.role === "string" ? x.role : undefined,
-    location: typeof x.location === "string" ? x.location : undefined,
-    module: typeof x.module === "string" ? x.module : undefined,
-    volume: typeof x.volume === "string" ? x.volume : undefined,
-    notes: typeof x.notes === "string" ? x.notes : undefined,
+    fullName: asString(x.fullName),
+    company: asString(x.company),
+    role: asString(x.role),
+    location: asString(x.location),
+    module: asString(x.module),
+    volume: asString(x.volume),
+    notes: asString(x.notes),
 
-    reviewedAt: typeof x.reviewedAt === "string" ? x.reviewedAt : undefined,
-    reviewedBy: typeof x.reviewedBy === "string" ? x.reviewedBy : undefined,
-    reviewNote: typeof x.reviewNote === "string" ? x.reviewNote : undefined,
-    lastContactedAt:
-      typeof x.lastContactedAt === "string" ? x.lastContactedAt : undefined,
+    reviewedAt: asString(x.reviewedAt),
+    reviewedBy: asString(x.reviewedBy),
+    reviewNote: asString(x.reviewNote),
+    lastContactedAt: asString(x.lastContactedAt),
+
+    ts: asString(x.ts),
   };
 }
 

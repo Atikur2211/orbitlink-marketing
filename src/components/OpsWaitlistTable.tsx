@@ -1,3 +1,4 @@
+// src/components/OpsWaitlistTable.tsx
 "use client";
 
 import ReviewToggleButton from "@/components/ReviewToggleButton";
@@ -13,12 +14,24 @@ import {
   uniqSorted,
 } from "@/lib/waitlistOps";
 
+type BadgeTone = "gold" | "blue" | "emerald";
+type ReviewedFilter = "all" | "unreviewed" | "reviewed";
+type ContactedFilter = "all" | "not" | "yes";
+
+function isReviewedFilter(v: string): v is ReviewedFilter {
+  return v === "all" || v === "unreviewed" || v === "reviewed";
+}
+
+function isContactedFilter(v: string): v is ContactedFilter {
+  return v === "all" || v === "not" || v === "yes";
+}
+
 function Badge({
   children,
-  tone,
+  tone = "gold",
 }: {
   children: React.ReactNode;
-  tone?: "gold" | "blue" | "emerald";
+  tone?: BadgeTone;
 }) {
   const cls =
     tone === "emerald"
@@ -50,7 +63,9 @@ function CopyButton({ text, label }: { text: string; label: string }) {
           await navigator.clipboard.writeText(text);
           setCopied(true);
           setTimeout(() => setCopied(false), 900);
-        } catch {}
+        } catch {
+          // ignore
+        }
       }}
       className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/80 hover:bg-white/10 transition"
     >
@@ -86,7 +101,9 @@ function ContactedPill({ lastContactedAt }: { lastContactedAt?: string }) {
           ? "border-blue-400/20 bg-blue-500/10 text-blue-200"
           : "border-white/15 bg-white/5 text-white/70",
       ].join(" ")}
-      title={lastContactedAt ? `Last contacted at ${lastContactedAt}` : "Not contacted yet"}
+      title={
+        lastContactedAt ? `Last contacted at ${lastContactedAt}` : "Not contacted yet"
+      }
     >
       {contacted ? `CONTACTED ${formatShortDate(lastContactedAt)}` : "NOT CONTACTED"}
     </span>
@@ -107,8 +124,8 @@ export default function OpsWaitlistTable({ entries }: { entries: WaitlistRecord[
   const [minScore, setMinScore] = useState(0);
 
   // default: focus ops queue
-  const [reviewed, setReviewed] = useState<"all" | "unreviewed" | "reviewed">("unreviewed");
-  const [contacted, setContacted] = useState<"all" | "not" | "yes">("all");
+  const [reviewed, setReviewed] = useState<ReviewedFilter>("unreviewed");
+  const [contacted, setContacted] = useState<ContactedFilter>("all");
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -178,7 +195,10 @@ export default function OpsWaitlistTable({ entries }: { entries: WaitlistRecord[
 
         <select
           value={reviewed}
-          onChange={(e) => setReviewed(e.target.value as any)}
+          onChange={(e) => {
+            const v = e.target.value;
+            setReviewed(isReviewedFilter(v) ? v : "all");
+          }}
           className="lg:col-span-2 w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none focus:border-[#FACC15]/40"
         >
           <option value="all">Reviewed (all)</option>
@@ -188,7 +208,10 @@ export default function OpsWaitlistTable({ entries }: { entries: WaitlistRecord[
 
         <select
           value={contacted}
-          onChange={(e) => setContacted(e.target.value as any)}
+          onChange={(e) => {
+            const v = e.target.value;
+            setContacted(isContactedFilter(v) ? v : "all");
+          }}
           className="lg:col-span-2 w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none focus:border-[#FACC15]/40"
         >
           <option value="all">Contacted (all)</option>
@@ -301,9 +324,10 @@ export default function OpsWaitlistTable({ entries }: { entries: WaitlistRecord[
 
         <div className="divide-y divide-white/10 bg-black/20">
           {filtered.map(({ e, score }) => {
-            const intentTone =
+            const intentTone: BadgeTone =
               e.intent === "verification-pack" ? "gold" : e.intent ? "blue" : "gold";
-            const srcTone =
+
+            const srcTone: BadgeTone =
               e.source === "trust" ? "emerald" : e.source ? "blue" : "gold";
 
             const replyText = makeReplyTemplate(e);
@@ -314,28 +338,26 @@ export default function OpsWaitlistTable({ entries }: { entries: WaitlistRecord[
 
             return (
               <div
-                key={(e.id || "") + e.email + (e.createdAt || "")}
+                key={[e.id || "", e.email, e.createdAt || ""].join("|")}
                 className="grid grid-cols-12 gap-2 px-4 py-4"
               >
                 <div className="col-span-12 md:col-span-3 min-w-0">
                   <div className="text-sm text-white/85 truncate">{e.email}</div>
                   <div className="mt-1 text-xs text-white/55 truncate">
-                    {(e.fullName || "—")}
+                    {e.fullName || "—"}
                     {e.company ? ` • ${e.company}` : ""}
                   </div>
                 </div>
 
                 <div className="col-span-6 md:col-span-2 flex flex-col gap-1">
-                  <Badge tone={intentTone as any}>{e.intent || "—"}</Badge>
-                  {e.role ? (
-                    <div className="text-xs text-white/55">{e.role}</div>
-                  ) : null}
+                  <Badge tone={intentTone}>{e.intent || "—"}</Badge>
+                  {e.role ? <div className="text-xs text-white/55">{e.role}</div> : null}
                 </div>
 
                 <div className="col-span-6 md:col-span-2 flex flex-col gap-1">
-                  <Badge tone={srcTone as any}>{e.source || "—"}</Badge>
+                  <Badge tone={srcTone}>{e.source || "—"}</Badge>
                   <div className="text-xs text-white/55 truncate">
-                    {(e.location || "—")}
+                    {e.location || "—"}
                     {e.module ? ` • ${e.module}` : ""}
                   </div>
                 </div>
@@ -364,9 +386,7 @@ export default function OpsWaitlistTable({ entries }: { entries: WaitlistRecord[
                   <ReviewedPill reviewedAt={e.reviewedAt} />
                   <ContactedPill lastContactedAt={e.lastContactedAt} />
 
-                  {e.id ? (
-                    <ReviewToggleButton id={e.id} reviewedAt={e.reviewedAt} />
-                  ) : null}
+                  {e.id ? <ReviewToggleButton id={e.id} reviewedAt={e.reviewedAt} /> : null}
 
                   {e.id ? (
                     <ContactedToggleButton
@@ -376,10 +396,9 @@ export default function OpsWaitlistTable({ entries }: { entries: WaitlistRecord[
                     />
                   ) : null}
 
-                    
                   <CopyButton text={replyText} label="Copy reply" />
 
-                  {/* GOLDEN MOVE: stamp contact first, then open mailto */}
+                  {/* Stamp contact first, then open mailto */}
                   <button
                     type="button"
                     onClick={async () => {
@@ -398,7 +417,9 @@ export default function OpsWaitlistTable({ entries }: { entries: WaitlistRecord[
                       }
                     }}
                     className="rounded-2xl bg-[#FACC15] text-black px-3 py-2 text-xs font-medium hover:bg-[#FDE047] transition"
-                    title={e.id ? "Stamp lastContactedAt, then open mail client" : "Open mail client"}
+                    title={
+                      e.id ? "Stamp lastContactedAt, then open mail client" : "Open mail client"
+                    }
                   >
                     Email
                   </button>
