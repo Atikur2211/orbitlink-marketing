@@ -1,7 +1,12 @@
 // src/app/layout.tsx
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+
+export const viewport: Viewport = {
+  themeColor: "#09090B",
+  colorScheme: "dark",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://orbitlink.ca"),
@@ -10,9 +15,10 @@ export const metadata: Metadata = {
     template: "%s · Orbitlink",
   },
   description: "Audit-Ready Connectivity for Modern Operators",
-  alternates: {
-    canonical: "/",
-  },
+
+  // ✅ Golden-grade: DO NOT set a global canonical to "/"
+  // Per-page canonicals belong in each page's `export const metadata`.
+
   openGraph: {
     type: "website",
     url: "https://orbitlink.ca",
@@ -28,21 +34,28 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
 const GA_MEASUREMENT_ID = "G-1VWDS0BMLY";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const isDev = process.env.NODE_ENV !== "production";
 
   return (
     <html lang="en">
       <head>
+        {/* Performance: preconnect to GA endpoints */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+
         {/* Google Analytics (GA4) */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
