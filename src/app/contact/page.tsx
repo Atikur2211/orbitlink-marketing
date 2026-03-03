@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Sales & onboarding intake for business fibre and network infrastructure. Enterprise-first qualification, controlled rollout, and disciplined delivery posture.",
-  alternates: { canonical: "/contact" },
+  alternates: { canonical: "https://orbitlink.ca/contact" },
   openGraph: {
     title: "Contact · Orbitlink",
     description:
@@ -18,12 +18,24 @@ export const metadata: Metadata = {
     url: "https://orbitlink.ca/contact",
     type: "website",
     siteName: "Orbitlink",
+    locale: "en_CA",
   },
   twitter: {
     card: "summary_large_image",
     title: "Contact · Orbitlink",
     description:
       "Enterprise-first intake for sales, provisioning coordination, and onboarding. Controlled rollout posture and disciplined delivery.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
