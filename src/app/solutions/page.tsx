@@ -1,7 +1,29 @@
 // src/app/solutions/page.tsx
+import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import StickyModuleNav from "@/components/StickyModuleNav";
 import { MODULE_SPECS } from "@/lib/siteStatus";
+
+export const metadata: Metadata = {
+  title: "Solutions",
+  description:
+    "Service modules for business fibre and network infrastructure. Controlled onboarding, clear documentation, and operator-grade support posture.",
+  alternates: { canonical: "/solutions" },
+  openGraph: {
+    title: "Solutions · Orbitlink",
+    description:
+      "Service modules delivered with controlled onboarding, clear documentation, and operator-grade support posture.",
+    url: "https://orbitlink.ca/solutions",
+    type: "website",
+    siteName: "Orbitlink",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Solutions · Orbitlink",
+    description:
+      "Service modules delivered with controlled onboarding, clear documentation, and operator-grade support posture.",
+  },
+};
 
 function toneStyles(tone: "blue" | "gold" | "emerald") {
   if (tone === "blue")
@@ -38,14 +60,12 @@ function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
     <section
       id={m.id}
       className={[
-        // So TopNav + StickyModuleNav never cover headings on hash jump
         "scroll-mt-[168px] md:scroll-mt-[184px]",
         "rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7",
         "transition hover:border-white/15",
         s.glow,
       ].join(" ")}
     >
-      {/* Accent header */}
       <div className="relative">
         <div className={`h-px w-full bg-gradient-to-r ${s.line}`} />
 
@@ -80,7 +100,6 @@ function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
         </div>
       </div>
 
-      {/* Body */}
       <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
         <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
           <div className="text-[11px] tracking-[0.22em] text-white/55">PURPOSE</div>
@@ -108,7 +127,6 @@ function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
         </div>
       </div>
 
-      {/* CTA strip */}
       <div className="mt-6 rounded-2xl border border-white/10 bg-black/25 p-5">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
@@ -159,10 +177,8 @@ export default function SolutionsPage() {
       title="Service Modules"
       subtitle="Each module is delivered with controlled onboarding, clear documentation, and an operator-grade support posture."
     >
-      {/* TOP GATE: nav appears after this scrolls out */}
       <div id="solutions-sentinel" className="h-px w-full" />
 
-      {/* Sticky index (auto-highlight + sliding indicator + progress + gates) */}
       <StickyModuleNav
         modules={modules}
         watchOffsetTop={72}
@@ -170,17 +186,14 @@ export default function SolutionsPage() {
         bottomWatchId="solutions-bottom-sentinel"
       />
 
-      {/* Modules */}
       <div className="mt-6 grid gap-4 sm:gap-5">
         {MODULE_SPECS.map((m) => (
           <SpecCard key={m.id} m={m} />
         ))}
       </div>
 
-      {/* BOTTOM GATE: nav fades out when this enters */}
       <div id="solutions-bottom-sentinel" className="h-px w-full" />
 
-      {/* Integrity footer */}
       <div className="mt-5 rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
           <div>
