@@ -119,7 +119,17 @@ export default function ContactPage() {
           </div>
 
           {/* Form */}
-          <form className="mt-4 grid gap-3" action="/api/waitlist" method="post">
+          <form
+            className="mt-4 grid gap-3"
+            action="/api/waitlist"
+            method="post"
+            onSubmit={() => {
+              window.gtag?.("event", "lead_submit", {
+                location: "contact_page",
+                module: "onboarding",
+             });
+           }}
+        >
             {/* Funnel */}
             <input type="hidden" name="source" value="contact" />
             <input type="hidden" name="intent" value="onboarding" />
