@@ -5,23 +5,45 @@ import StickyModuleNav from "@/components/StickyModuleNav";
 import { MODULE_SPECS } from "@/lib/siteStatus";
 
 export const metadata: Metadata = {
-  title: "Solutions",
+  title: "Business Fibre & Network Solutions",
   description:
-    "Service modules for business fibre and network infrastructure. Controlled onboarding, clear documentation, and operator-grade support posture.",
-  alternates: { canonical: "/solutions" },
+    "Business Fibre Internet, Managed Network Infrastructure, and compliance-ready connectivity solutions for enterprises in Ontario, Canada. Controlled onboarding and operator-grade support.",
+  alternates: {
+    canonical: "https://orbitlink.ca/solutions",
+  },
   openGraph: {
-    title: "Solutions · Orbitlink",
+    title: "Business Fibre & Network Solutions · Orbitlink",
     description:
-      "Service modules delivered with controlled onboarding, clear documentation, and operator-grade support posture.",
+      "Enterprise fibre internet and infrastructure-grade network services delivered with controlled onboarding and disciplined operations.",
     url: "https://orbitlink.ca/solutions",
     type: "website",
     siteName: "Orbitlink",
+    locale: "en_CA",
+    images: [
+      {
+        url: "https://orbitlink.ca/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink Business Fibre & Network Solutions",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Solutions · Orbitlink",
+    title: "Business Fibre & Network Solutions · Orbitlink",
     description:
-      "Service modules delivered with controlled onboarding, clear documentation, and operator-grade support posture.",
+      "Enterprise fibre internet and compliance-ready network infrastructure in Ontario.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -140,7 +162,7 @@ function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
 
           <div className="flex flex-col sm:flex-row gap-3">
             <a
-              href="/coming-soon"
+              href="/coming-soon?intent=access&source=solutions"
               className="rounded-2xl bg-[#FACC15] text-black px-5 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
             >
               Request Access
@@ -171,12 +193,41 @@ export default function SolutionsPage() {
     tone: m.tone,
   }));
 
+  // ✅ Million-dollar SEO: structured data for Google
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Orbitlink Network Solutions",
+    url: "https://orbitlink.ca/solutions",
+    itemListElement: MODULE_SPECS.map((m, index) => ({
+      "@type": "Service",
+      position: index + 1,
+      name: m.name,
+      description: m.tagline,
+      provider: {
+        "@type": "Organization",
+        name: "Orbitlink",
+        url: "https://orbitlink.ca",
+      },
+      areaServed: {
+        "@type": "AdministrativeArea",
+        name: "Ontario, Canada",
+      },
+    })),
+  };
+
   return (
     <PageShell
       eyebrow="SOLUTIONS"
       title="Service Modules"
       subtitle="Each module is delivered with controlled onboarding, clear documentation, and an operator-grade support posture."
     >
+      {/* JSON-LD schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <div id="solutions-sentinel" className="h-px w-full" />
 
       <StickyModuleNav
@@ -216,7 +267,7 @@ export default function SolutionsPage() {
 
         <div className="mt-5 flex flex-col sm:flex-row gap-3">
           <a
-            href="/coming-soon"
+            href="/coming-soon?intent=access&source=solutions_footer"
             className="rounded-2xl bg-[#FACC15] text-black px-5 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
           >
             Request Access
