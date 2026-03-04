@@ -222,7 +222,7 @@ export default function MiltonLocationPage() {
               <p>
                 Milton includes established employment areas such as the Milton 401 Business Park and Derry Green Corporate
                 Business Park, where building infrastructure and feasibility can vary by site. Orbitlink confirms service
-                availability per address and scopes constraints before activation—no overclaims. :contentReference[oaicite:3]{index=3}
+                availability per address and scopes constraints before activation—no overclaims.
               </p>
 
               <h3 className="pt-2 text-lg font-semibold tracking-tight text-white">
