@@ -204,7 +204,6 @@ export default function SiteFooter() {
                       </a>
                     </li>
                     <li className="pt-2 text-xs leading-5 text-white/45">
-                      Canada-first operations. Services are delivered in accordance with applicable Canadian requirements.
                     </li>
                   </ul>
                 </div>
