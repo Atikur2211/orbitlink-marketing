@@ -153,8 +153,8 @@ export default function SiteFooter() {
                 <ul className="mt-4 space-y-2.5 text-sm">
                   <li><FooterLink href="/services">All services</FooterLink></li>
                   <li><FooterLink href="/services/business-fibre-internet">Business fibre</FooterLink></li>
-                  <li><FooterLink href="/services/dedicated-internet-access">Dedicated Internet Access</FooterLink></li>
-                  <li><FooterLink href="/services/managed-lan-wifi">Managed LAN & Wi-Fi</FooterLink></li>
+                  <li><FooterLink href="/services/dedicated-internet-access">Dedicated Internet</FooterLink></li>
+                  <li><FooterLink href="/services/managed-lan-wifi">Managed Wi-Fi</FooterLink></li>
                   <li><FooterLink href="/services/lte-5g-continuity">LTE / 5G continuity</FooterLink></li>
                   <li><FooterLink href="/services/voip-cloud-voice">VoIP & cloud voice</FooterLink></li>
                 </ul>
@@ -191,11 +191,6 @@ export default function SiteFooter() {
                     <li>
                       <a className="text-white/60 transition hover:text-white" href="mailto:concierge@orbitlink.ca">
                         concierge@orbitlink.ca
-                      </a>
-                    </li>
-                    <li>
-                      <a className="text-white/60 transition hover:text-white" href="mailto:sales@orbitlink.ca">
-                        sales@orbitlink.ca
                       </a>
                     </li>
                     <li>
