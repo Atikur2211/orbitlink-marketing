@@ -1,12 +1,7 @@
-import TopNav from "@/components/TopNav";
-import SiteFooter from "@/components/SiteFooter";
-
+// src/app/services/layout.tsx
 export default function ServicesLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <TopNav />
-      {children}
-      <SiteFooter />
-    </>
-  );
+  // Important:
+  // PageShell already renders TopNav + StatusBand + ConciergeBlock + SiteFooter.
+  // If we render chrome here too, you'll get double header/footer.
+  return <>{children}</>;
 }
