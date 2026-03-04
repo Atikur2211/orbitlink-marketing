@@ -221,7 +221,7 @@ export default function HamiltonLocationPage() {
 
               <p className="text-white/60 text-sm">
                 Local context: Hamilton business parks and employment lands are actively tracked and promoted by the City
-                and Invest in Hamilton. :contentReference[oaicite:0]{index=0}
+                and Invest in Hamilton.
               </p>
 
               <h3 className="pt-2 text-lg font-semibold tracking-tight text-white">
