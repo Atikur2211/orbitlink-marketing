@@ -7,8 +7,10 @@ import { usePathname } from "next/navigation";
 
 const NAV = [
   { name: "Network", href: "/network" },
-  { name: "Trust", href: "/trust" },
+  { name: "Services", href: "/services" },
+  { name: "Locations", href: "/locations" },
   { name: "Solutions", href: "/solutions" },
+  { name: "Trust", href: "/trust" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
 ] as const;
@@ -43,7 +45,13 @@ export default function TopNav() {
 
   const activeHref = useMemo(() => pathname, [pathname]);
 
-  // iOS-safe scroll lock + restore (no warnings)
+  // Close mobile menu on route change (defensive)
+  useEffect(() => {
+    setOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
+  // iOS-safe scroll lock + restore
   useEffect(() => {
     if (!open) return;
 
@@ -69,15 +77,14 @@ export default function TopNav() {
     };
   }, [open]);
 
-  // Focus on open + return focus on close (snapshot opener to avoid ref cleanup warning)
+  // Focus on open + return focus on close
   useEffect(() => {
     if (!open) return;
 
     const dlg = dialogRef.current;
     if (!dlg) return;
 
-    const opener = openBtnRef.current; // ✅ snapshot
-
+    const opener = openBtnRef.current; // snapshot
     const focusables = getFocusable(dlg);
     focusables[0]?.focus();
 
@@ -86,7 +93,7 @@ export default function TopNav() {
     };
   }, [open]);
 
-  // Keyboard: Escape + Focus Trap (Tab cycles inside)
+  // Keyboard: Escape + Focus Trap
   useEffect(() => {
     if (!open) return;
 
@@ -137,6 +144,9 @@ export default function TopNav() {
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
             </span>
             <span className="text-xs tracking-[0.28em] text-white/90">ORBITLINK</span>
+            <span className="hidden sm:inline-flex ml-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] tracking-wide text-white/70">
+              Operator-grade
+            </span>
           </Link>
 
           {/* Desktop nav */}
@@ -148,7 +158,10 @@ export default function TopNav() {
                   key={i.href}
                   href={i.href}
                   aria-current={active ? "page" : undefined}
-                  className={["hover:text-white transition", active ? "text-white" : ""].join(" ")}
+                  className={[
+                    "hover:text-white transition",
+                    active ? "text-white" : "",
+                  ].join(" ")}
                 >
                   {i.name}
                 </Link>
@@ -197,7 +210,7 @@ export default function TopNav() {
           aria-describedby="orbitlink-menu-desc"
           id="orbitlink-mobile-menu"
           onClickCapture={(e) => {
-            // ✅ hard-close on ANY link click, avoids route-change setState-in-effect
+            // hard-close on ANY link click
             const target = e.target as HTMLElement | null;
             const link = target?.closest?.("a");
             if (link) setOpen(false);
@@ -228,7 +241,7 @@ export default function TopNav() {
                       ORBITLINK
                     </div>
                     <div id="orbitlink-menu-desc" className="text-[11px] text-white/55">
-                      Navigation • enterprise onboarding posture
+                      Navigation • operator-grade delivery posture
                     </div>
                   </div>
                 </div>
@@ -266,10 +279,46 @@ export default function TopNav() {
                   })}
                 </div>
 
+                {/* Quick links for conversion + SEO */}
+                <div className="mt-4 grid gap-2">
+                  <div className="text-[11px] tracking-[0.28em] text-white/55">QUICK LINKS</div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <Link
+                      href="/locations/ontario"
+                      onClick={() => setOpen(false)}
+                      className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/85 hover:bg-white/10 transition"
+                    >
+                      Ontario Hub
+                    </Link>
+                    <Link
+                      href="/services/dedicated-internet-access"
+                      onClick={() => setOpen(false)}
+                      className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/85 hover:bg-white/10 transition"
+                    >
+                      DIA
+                    </Link>
+                    <Link
+                      href="/services/managed-lan-wifi"
+                      onClick={() => setOpen(false)}
+                      className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/85 hover:bg-white/10 transition"
+                    >
+                      Managed LAN/Wi-Fi
+                    </Link>
+                    <Link
+                      href="/services/business-fibre-internet"
+                      onClick={() => setOpen(false)}
+                      className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/85 hover:bg-white/10 transition"
+                    >
+                      Business Fibre
+                    </Link>
+                  </div>
+                </div>
+
                 <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
                   <div className="text-[11px] tracking-[0.22em] text-white/55">CONTACT</div>
                   <div className="mt-2 text-sm text-white/80">
-                    Enterprise onboarding • regulated delivery posture
+                    Structured onboarding • documented delivery • enterprise support posture
                   </div>
 
                   <div className="mt-3 grid gap-2">

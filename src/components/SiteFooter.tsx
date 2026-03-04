@@ -55,29 +55,12 @@ function IconFacebook() {
   );
 }
 
-function FooterLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      className="text-white/60 transition hover:text-white"
-    >
-      {children}
-    </Link>
-  );
+function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return <Link href={href} className="text-white/60 transition hover:text-white">{children}</Link>;
 }
 
 function RailTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="text-[11px] tracking-[0.26em] text-white/45">
-      {children}
-    </div>
-  );
+  return <div className="text-[11px] tracking-[0.26em] text-white/45">{children}</div>;
 }
 
 export default function SiteFooter() {
@@ -92,27 +75,29 @@ export default function SiteFooter() {
           <div className="lg:col-span-5">
             <div className="flex items-center gap-3">
               <span className="relative inline-flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/30" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/30 motion-reduce:hidden" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
               </span>
               <div className="text-[11px] tracking-[0.30em] text-white/70">ORBITLINK</div>
+              <span className="ml-2 hidden sm:inline-flex rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] tracking-wide text-white/70">
+                Operator-grade
+              </span>
             </div>
 
             <div className="mt-4 max-w-md text-sm sm:text-[15px] leading-6 text-white/70">
-              Premium connectivity engineered for disciplined operations and compliance-ready delivery — built for
-              Ontario.
+              Premium connectivity engineered for disciplined operations — structured onboarding, documented delivery,
+              and an enterprise support posture across Ontario.
             </div>
 
             <div className="mt-4 flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] tracking-[0.18em] text-white/60">
-                TELECOMMUNICATIONS
-              </span>
-              <span className="inline-flex items-center rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] tracking-[0.18em] text-white/60">
-                OPERATIONS-FIRST
-              </span>
-              <span className="inline-flex items-center rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] tracking-[0.18em] text-white/60">
-                AUDIT-READY
-              </span>
+              {["TELECOMMUNICATIONS", "OPERATIONS-FIRST", "AUDIT-READY"].map((t) => (
+                <span
+                  key={t}
+                  className="inline-flex items-center rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] tracking-[0.18em] text-white/60"
+                >
+                  {t}
+                </span>
+              ))}
             </div>
 
             <div className="mt-5 flex items-center gap-2">
@@ -130,20 +115,28 @@ export default function SiteFooter() {
               </SocialIcon>
             </div>
 
+            {/* NAP + posture (Local SEO) */}
             <div className="mt-6 space-y-1 text-xs text-white/55">
               <div>
                 Orbitlink is a brand of <span className="text-white/75">TIRAV Technologies Inc.</span>
               </div>
-              <div>30 Eglinton Ave W, Suite 400-A77, Mississauga, ON L5R 3E7, Canada</div>
-              <div className="text-white/45">
-                Controlled intake. Responses are provided during active review windows.
+              <div className="text-white/70">
+                <span className="text-white/55">Address:</span> 30 Eglinton Ave W, Suite 400-A77, Mississauga, ON L5R 3E7, Canada
               </div>
+              <div className="text-white/70">
+                <span className="text-white/55">Phone:</span>{" "}
+                <a className="text-white/75 hover:text-white transition" href="tel:+18888672480">
+                  1-888-8-ORBIT-0
+                </a>
+              </div>
+              <div className="text-white/45">Availability is confirmed per address. No overclaims.</div>
             </div>
           </div>
 
           {/* Link rails */}
           <div className="lg:col-span-7">
-            <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+            <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+              {/* Company */}
               <div>
                 <RailTitle>COMPANY</RailTitle>
                 <ul className="mt-4 space-y-2.5 text-sm">
@@ -154,6 +147,35 @@ export default function SiteFooter() {
                 </ul>
               </div>
 
+              {/* Services */}
+              <div>
+                <RailTitle>SERVICES</RailTitle>
+                <ul className="mt-4 space-y-2.5 text-sm">
+                  <li><FooterLink href="/services">All services</FooterLink></li>
+                  <li><FooterLink href="/services/business-fibre-internet">Business fibre</FooterLink></li>
+                  <li><FooterLink href="/services/dedicated-internet-access">Dedicated Internet Access</FooterLink></li>
+                  <li><FooterLink href="/services/managed-lan-wifi">Managed LAN & Wi-Fi</FooterLink></li>
+                  <li><FooterLink href="/services/lte-5g-continuity">LTE / 5G continuity</FooterLink></li>
+                  <li><FooterLink href="/services/voip-cloud-voice">VoIP & cloud voice</FooterLink></li>
+                </ul>
+              </div>
+
+              {/* Locations */}
+              <div>
+                <RailTitle>LOCATIONS</RailTitle>
+                <ul className="mt-4 space-y-2.5 text-sm">
+                  <li><FooterLink href="/locations">All locations</FooterLink></li>
+                  <li><FooterLink href="/locations/ontario">Ontario hub</FooterLink></li>
+                  <li><FooterLink href="/locations/mississauga">Mississauga</FooterLink></li>
+                  <li><FooterLink href="/locations/brampton">Brampton</FooterLink></li>
+                  <li><FooterLink href="/locations/toronto">Toronto</FooterLink></li>
+                  <li><FooterLink href="/locations/markham">Markham</FooterLink></li>
+                  <li><FooterLink href="/locations/vaughan">Vaughan</FooterLink></li>
+                  <li><FooterLink href="/locations/oakville">Oakville</FooterLink></li>
+                </ul>
+              </div>
+
+              {/* Legal + Contact */}
               <div>
                 <RailTitle>LEGAL</RailTitle>
                 <ul className="mt-4 space-y-2.5 text-sm">
@@ -162,43 +184,30 @@ export default function SiteFooter() {
                   <li><FooterLink href="/legal/acceptable-use">Acceptable use</FooterLink></li>
                   <li><FooterLink href="/legal/cookies">Cookies</FooterLink></li>
                 </ul>
-              </div>
 
-              <div>
-                <RailTitle>CONTACT</RailTitle>
-                <ul className="mt-4 space-y-2.5 text-sm">
-                  <li>
-                    <a
-                      className="text-white/60 transition hover:text-white"
-                      href="mailto:concierge@orbitlink.ca"
-                    >
-                      concierge@orbitlink.ca
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-white/60 transition hover:text-white"
-                      href="mailto:sales@orbitlink.ca"
-                    >
-                      sales@orbitlink.ca
-                    </a>
-                  </li>
-
-                  {/* If you want phone visible, keep this. Otherwise delete this <li>. */}
-                  <li>
-                    <a
-                      className="text-white/60 transition hover:text-white"
-                      href="tel:+18888672480"
-                    >
-                      1-888-8-ORBIT-0
-                    </a>
-                  </li>
-
-                  <li className="pt-2 text-xs leading-5 text-white/45">
-                    Canada-first operations. Services are delivered in accordance with applicable Canadian
-                    requirements.
-                  </li>
-                </ul>
+                <div className="mt-8">
+                  <RailTitle>CONTACT</RailTitle>
+                  <ul className="mt-4 space-y-2.5 text-sm">
+                    <li>
+                      <a className="text-white/60 transition hover:text-white" href="mailto:concierge@orbitlink.ca">
+                        concierge@orbitlink.ca
+                      </a>
+                    </li>
+                    <li>
+                      <a className="text-white/60 transition hover:text-white" href="mailto:sales@orbitlink.ca">
+                        sales@orbitlink.ca
+                      </a>
+                    </li>
+                    <li>
+                      <a className="text-white/60 transition hover:text-white" href="tel:+18888672480">
+                        1-888-8-ORBIT-0
+                      </a>
+                    </li>
+                    <li className="pt-2 text-xs leading-5 text-white/45">
+                      Canada-first operations. Services are delivered in accordance with applicable Canadian requirements.
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
 
@@ -208,12 +217,15 @@ export default function SiteFooter() {
                 <div>
                   <div className="text-[11px] tracking-[0.26em] text-white/45">CONCIERGE DESK</div>
                   <div className="mt-2 text-sm text-white/80">
-                    Request access for enterprise onboarding and provisioning.
+                    Request access for structured onboarding and provisioning.
+                  </div>
+                  <div className="mt-1 text-xs text-white/55">
+                    Include address • module (Fibre/DIA) • static IP • managed LAN/Wi-Fi • continuity
                   </div>
                 </div>
 
                 <Link
-                  href="/coming-soon"
+                  href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl border border-[#FACC15]/35 bg-[#FACC15]/10 px-4 py-2.5 text-sm font-medium text-[#FDE68A] transition hover:border-[#FACC15]/55 hover:bg-[#FACC15]/15"
                 >
                   Request Access
@@ -228,11 +240,11 @@ export default function SiteFooter() {
           <div className="text-xs text-white/45">© {year} TIRAV Technologies Inc. All rights reserved.</div>
 
           <div className="flex flex-wrap gap-3 text-xs text-white/45">
-            <span>Canada</span>
+            <span>Ontario</span>
             <span aria-hidden="true">•</span>
-            <span>Operations-first</span>
+            <span>Availability by building</span>
             <span aria-hidden="true">•</span>
-            <span>Audit-ready posture</span>
+            <span>Documented delivery</span>
           </div>
         </div>
       </div>
