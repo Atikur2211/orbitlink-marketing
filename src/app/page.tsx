@@ -1,12 +1,12 @@
 // src/app/page.tsx
+import type { Metadata } from "next";
+
 import TopNav from "@/components/TopNav";
 import StickyStatusStrip from "@/components/StickyStatusStrip";
 import StatusBandClient from "@/components/StatusBandClient";
 import BentoServices from "@/components/BentoServices";
 import ConciergeBlock from "@/components/ConciergeBlock";
 import SiteFooter from "@/components/SiteFooter";
-
-import type { Metadata } from "next";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
@@ -17,18 +17,21 @@ const OG_DESC =
   "Audit-ready connectivity, enterprise fibre internet, and infrastructure-grade operations for modern businesses in Ontario.";
 const TWITTER_DESC =
   "Enterprise fibre internet and audit-ready connectivity for modern operators in Ontario.";
+
+const CANONICAL_URL = `${SITE_URL}/`;
 const OG_IMAGE = `${SITE_URL}/opengraph-image.png?v=2`;
+const TWITTER_IMAGE = `${SITE_URL}/twitter-image.png?v=2`;
 
 export const metadata: Metadata = {
   title: "Orbitlink",
   description: SITE_DESC,
   alternates: {
-    canonical: `${SITE_URL}/`,
+    canonical: CANONICAL_URL,
   },
   openGraph: {
     title: OG_TITLE,
     description: OG_DESC,
-    url: `${SITE_URL}/`,
+    url: CANONICAL_URL,
     siteName: SITE_NAME,
     type: "website",
     locale: "en_CA",
@@ -45,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: OG_TITLE,
     description: TWITTER_DESC,
-    images: [OG_IMAGE],
+    images: [TWITTER_IMAGE],
   },
 };
 
@@ -55,7 +58,7 @@ export default function Home() {
     "@type": "LocalBusiness",
     "@id": `${SITE_URL}/#localbusiness`,
     name: SITE_NAME,
-    url: `${SITE_URL}/`,
+    url: CANONICAL_URL,
     image: `${SITE_URL}/opengraph-image.png`,
     telephone: "+18888672480",
     email: "concierge@orbitlink.ca",
@@ -122,9 +125,9 @@ export default function Home() {
           </h1>
 
           <p className="mt-5 max-w-2xl text-[15px] leading-6 text-white/70 sm:text-lg sm:leading-7">
-            Precision network services engineered for reliability, clean operations,
-            and compliance-first delivery — built for modern businesses in Mississauga
-            and across Ontario.
+            Precision network services engineered for reliability, clean
+            operations, and compliance-first delivery — built for modern
+            businesses in Mississauga and across Ontario.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
@@ -147,9 +150,12 @@ export default function Home() {
               <div className="text-[11px] tracking-[0.22em] text-white/55">
                 RELIABILITY
               </div>
-              <div className="mt-2 text-sm text-white/90">SLA-first delivery</div>
+              <div className="mt-2 text-sm text-white/90">
+                SLA-first delivery
+              </div>
               <div className="mt-2 text-sm text-white/65">
-                Designed for uptime, predictable routing, and disciplined escalation.
+                Designed for uptime, predictable routing, and disciplined
+                escalation.
               </div>
             </div>
 
