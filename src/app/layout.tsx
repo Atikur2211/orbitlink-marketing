@@ -7,6 +7,7 @@ const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
 const SITE_DESC = "Audit-Ready Connectivity for Modern Operators";
 const GA_MEASUREMENT_ID = "G-1VWDS0BMLY";
+const OG_IMAGE = `${SITE_URL}/opengraph-image.png`;
 
 export const viewport: Viewport = {
   themeColor: "#09090B",
@@ -29,6 +30,17 @@ export const metadata: Metadata = {
   creator: SITE_NAME,
   publisher: SITE_NAME,
 
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/favicon.ico"],
+  },
+
+  manifest: "/manifest.webmanifest",
+
   robots: {
     index: true,
     follow: true,
@@ -48,12 +60,21 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESC,
     locale: "en_CA",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink",
+      },
+    ],
   },
 
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESC,
+    images: [OG_IMAGE],
   },
 
   verification: {
@@ -61,26 +82,22 @@ export const metadata: Metadata = {
       "msvalidate.01": "695CB2CE20F126C050AEEA5E84135A79",
     },
   },
-
-  // Optional later:
-  // icons: {
-  //   icon: "/favicon.ico",
-  //   apple: "/apple-touch-icon.png",
-  // },
-  // manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const isDev = process.env.NODE_ENV !== "production";
 
-  // ✅ Million-dollar identity graph
   const orgJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${SITE_URL}/#org`,
     name: SITE_NAME,
     url: `${SITE_URL}/`,
-    logo: `${SITE_URL}/logo.png`,
+    logo: `${SITE_URL}/icon.png`,
     brand: {
       "@type": "Brand",
       name: SITE_NAME,
@@ -120,8 +137,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       "@type": "AdministrativeArea",
       name: "Ontario, Canada",
     },
-    // Add real social links when ready:
-    // sameAs: ["https://www.linkedin.com/company/orbitlink"],
   };
 
   const websiteJsonLd = {
@@ -139,11 +154,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        {/* Performance: preconnect */}
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://www.google-analytics.com" />
-
-        {/* ✅ Site identity JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
@@ -153,7 +163,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
 
-        {/* Google Analytics (GA4) */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"

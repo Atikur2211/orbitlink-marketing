@@ -1,0 +1,21 @@
+{
+  "name": "Orbitlink",
+  "short_name": "Orbitlink",
+  "description": "Audit-Ready Connectivity for Modern Operators",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090B",
+  "theme_color": "#09090B",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
