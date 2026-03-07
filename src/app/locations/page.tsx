@@ -161,12 +161,31 @@ const serviceModules = [
   {
     t: "Managed LAN & Enterprise Wi-Fi",
     d: "Segmentation posture, stability, and support.",
-    href: "/services",
+    href: "/services/managed-lan-wifi",
   },
   {
     t: "LTE / 5G Continuity",
     d: "Uptime patterns for disruption events.",
     href: "/services/lte-5g-continuity",
+  },
+] as const;
+
+const premiumSignals = [
+  {
+    t: "Availability by building",
+    d: "Feasibility is confirmed per address before activation.",
+  },
+  {
+    t: "Business-first posture",
+    d: "Structured onboarding and documented delivery for commercial environments.",
+  },
+  {
+    t: "Service-module clarity",
+    d: "Business Fibre, DIA, managed networking, and continuity aligned to operational need.",
+  },
+  {
+    t: "Ontario-focused execution",
+    d: "Priority city hubs designed for local search, service discovery, and conversion.",
   },
 ] as const;
 
@@ -285,9 +304,9 @@ export default function LocationsHubPage() {
 
         <p className="mt-4 max-w-3xl text-base md:text-lg text-white/70 leading-relaxed">
           Browse city pages and request availability for business internet across Ontario.
-          Orbitlink delivers business fibre, DIA, and network service modules with structured
-          onboarding, documented acceptance, and a premium support posture. Coverage is confirmed
-          per building and serviceability, not assumed generically.
+          Orbitlink delivers business fibre, Dedicated Internet Access, and managed network
+          service modules with structured onboarding, documented acceptance, and a premium
+          support posture. Coverage is confirmed per building and serviceability, not assumed generically.
         </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
@@ -326,6 +345,26 @@ export default function LocationsHubPage() {
           >
             Explore Services
           </Link>
+        </div>
+      </section>
+
+      {/* Premium signals */}
+      <section className="mx-auto max-w-6xl px-6 pb-10">
+        <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
+          <h2 className="text-2xl font-semibold tracking-tight">Discovery posture</h2>
+          <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
+            `/locations` is your premium discovery hub: a clean directory for Ontario city pages,
+            local relevance, and the shortest path into availability checks and service modules.
+          </p>
+
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            {premiumSignals.map((x) => (
+              <div key={x.t} className="rounded-3xl border border-white/10 bg-white/[0.04] p-5">
+                <div className="text-sm font-semibold text-white/90">{x.t}</div>
+                <div className="mt-2 text-sm text-white/70 leading-relaxed">{x.d}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -374,7 +413,7 @@ export default function LocationsHubPage() {
           <div className="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-6">
             <h3 className="text-lg font-semibold tracking-tight">Choose the right service module</h3>
             <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
-              Location pages create local relevance. Service modules capture the actual buyer intent.
+              Location pages create local relevance. Service modules capture actual buyer intent.
               Choose the delivery posture that matches your operational needs.
             </p>
 
@@ -395,14 +434,14 @@ export default function LocationsHubPage() {
         </div>
       </section>
 
-      {/* Local authority strip */}
+      {/* Hub authority strip */}
       <section className="mx-auto max-w-6xl px-6 pb-10">
         <div className="rounded-3xl border border-white/10 bg-black/20 p-6 md:p-8">
-          <h2 className="text-xl font-semibold tracking-tight">Local authority signals</h2>
+          <h2 className="text-xl font-semibold tracking-tight">Hub authority signals</h2>
           <p className="mt-3 max-w-3xl text-sm text-white/70 leading-relaxed">
             Orbitlink’s business presence is anchored in Mississauga and focused on Ontario business
-            connectivity. The best next step is always to submit your address and service needs so
-            serviceability can be confirmed clearly before activation.
+            connectivity. This page works as the main city-directory layer, while the Ontario hub
+            strengthens province-level authority and the city pages capture local demand.
           </p>
 
           <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -425,7 +464,7 @@ export default function LocationsHubPage() {
         <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
           <h2 className="text-2xl font-semibold tracking-tight">Locations FAQs</h2>
           <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
-            Quick answers to move from “search” to “request access” without ambiguity.
+            Quick answers to move from search to availability review without ambiguity.
           </p>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
