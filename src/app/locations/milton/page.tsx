@@ -4,6 +4,7 @@ import Link from "next/link";
 const SITE_URL = "https://orbitlink.ca";
 const PAGE_PATH = "/locations/milton";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
+const ORG_ID = `${SITE_URL}/#org`;
 
 const BUSINESS = {
   name: "Orbitlink™",
@@ -27,57 +28,59 @@ const BUSINESS = {
 };
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet in Milton, ON | Orbitlink™",
+  title: "Business Internet & Fibre in Milton, ON | Orbitlink™",
   description:
-    "Operator-grade business fibre internet in Milton with structured onboarding, documented delivery, and enterprise support posture. Check availability.",
+    "Business internet and fibre in Milton for industrial, warehouse, logistics, and office environments. Structured onboarding, documented delivery, and availability confirmed per building.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
-    title: "Business Fibre Internet in Milton, ON | Orbitlink™",
+    title: "Business Internet & Fibre in Milton, ON | Orbitlink™",
     description:
-      "Business connectivity in Milton: fibre, DIA, managed LAN & Wi-Fi, continuity architecture, and voice. Availability by building.",
-    url: PAGE_PATH,
+      "Operator-grade business connectivity in Milton including fibre internet, DIA, managed LAN & Wi-Fi, continuity architecture, and voice.",
+    url: PAGE_URL,
     type: "website",
+    siteName: "Orbitlink",
+    locale: "en_CA",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Fibre Internet in Milton, ON | Orbitlink™",
+    title: "Business Internet & Fibre in Milton, ON | Orbitlink™",
     description:
-      "Operator-grade business connectivity in Milton delivered with structured onboarding, documented acceptance, and enterprise support posture.",
+      "Business connectivity in Milton for industrial and office environments with structured onboarding and enterprise support posture.",
   },
 };
 
 const FAQ = [
   {
     q: "Do you service my address in Milton?",
-    a: "Coverage depends on building infrastructure and upstream feasibility. Orbitlink is available on-net where possible, with clear scoping when additional build work is required. Submit an availability request and we’ll confirm feasibility.",
+    a: "Coverage depends on building infrastructure and upstream feasibility. Orbitlink is available on-net where possible, with clear scoping when additional build work is required. Submit an availability request and Orbitlink will confirm feasibility.",
   },
   {
     q: "Do you support industrial and logistics sites in Milton?",
-    a: "Yes—Milton includes major employment areas and industrial corridors where uptime and stability matter. We confirm feasibility per site and recommend broadband fibre or DIA based on your operational requirements.",
+    a: "Yes. Milton includes major employment areas and industrial corridors where uptime and stability matter. Orbitlink confirms feasibility per site and recommends broadband fibre or Dedicated Internet Access based on your operational requirements.",
   },
   {
     q: "Do you offer Dedicated Internet Access (DIA) in Milton?",
-    a: "Yes—DIA is available for performance-critical environments requiring deterministic throughput/latency and formal delivery posture, subject to feasibility.",
+    a: "Yes. Dedicated Internet Access is available for performance-critical environments requiring more deterministic throughput, cleaner delivery posture, and structured onboarding, subject to feasibility.",
   },
   {
     q: "Do you provide static IPs?",
-    a: "Static IP options are available where feasible and depend on the underlying access type and location. We’ll confirm options during onboarding.",
+    a: "Static IP options are available where feasible and depend on the underlying access type and location. Orbitlink confirms options during onboarding.",
   },
   {
-    q: "Can you manage my LAN and enterprise Wi-Fi across office + floor devices?",
-    a: "Yes—Orbitlink provides Managed LAN & Enterprise Wi-Fi including segmentation posture, guest access, and coverage planning aligned with an operator-grade support posture.",
+    q: "Can you manage LAN and enterprise Wi-Fi across office and floor devices?",
+    a: "Yes. Orbitlink provides managed LAN and enterprise Wi-Fi including segmentation posture, guest access, and coverage planning aligned with an operator-grade support posture.",
   },
   {
     q: "How long does installation take in Milton?",
     a: "Timelines vary by building readiness, access type, and upstream coordination. Orbitlink uses structured onboarding and documented acceptance so expectations are clear before activation.",
   },
   {
-    q: "Do you offer continuity/failover options?",
-    a: "Yes—Orbitlink designs LTE/5G continuity patterns for sites that require operational uptime during access disruptions. Feasibility depends on site constraints and design.",
+    q: "Do you offer continuity and failover options?",
+    a: "Yes. Orbitlink designs LTE and 5G continuity patterns for sites that require operational uptime during access disruptions. Feasibility depends on site constraints and continuity design.",
   },
   {
-    q: "Are you a reseller?",
-    a: "Orbitlink is the customer-facing operator responsible for onboarding posture, documentation, and support experience. Certain access products (e.g., Starlink) may be delivered via an agent/reseller model and are clearly labeled as such.",
+    q: "Do you provide business internet for warehouses in Milton?",
+    a: "Yes. Orbitlink frequently evaluates warehouse, logistics, and industrial environments in Milton where voice systems, cloud platforms, cameras, scanners, VPNs, and line-of-business applications rely on stable internet service.",
   },
 ] as const;
 
@@ -86,7 +89,7 @@ function jsonLd() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
       { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
       { "@type": "ListItem", position: 3, name: "Milton", item: PAGE_URL },
     ],
@@ -95,10 +98,13 @@ function jsonLd() {
   const localBusiness = {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "TelecomCompany"],
+    "@id": `${PAGE_URL}#business`,
     name: BUSINESS.name,
     legalName: BUSINESS.legalName,
     url: SITE_URL,
     telephone: BUSINESS.phoneE164,
+    email: "concierge@orbitlink.ca",
+    parentOrganization: { "@id": ORG_ID },
     address: {
       "@type": "PostalAddress",
       streetAddress: BUSINESS.address.street,
@@ -107,7 +113,10 @@ function jsonLd() {
       postalCode: BUSINESS.address.postal,
       addressCountry: BUSINESS.address.country,
     },
-    areaServed: [{ "@type": "City", name: "Milton" }, { "@type": "AdministrativeArea", name: "Ontario" }],
+    areaServed: [
+      { "@type": "City", name: "Milton" },
+      { "@type": "AdministrativeArea", name: "Ontario" },
+    ],
     openingHoursSpecification: BUSINESS.hours.map((h) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: `https://schema.org/${h.day}`,
@@ -118,12 +127,24 @@ function jsonLd() {
 
   const telecomService = {
     "@context": "https://schema.org",
-    "@type": "Service",
-    name: "Business Fibre Internet in Milton",
-    provider: { "@type": "Organization", name: BUSINESS.name, url: SITE_URL },
+    "@type": "TelecomService",
+    "@id": `${PAGE_URL}#service`,
+    name: "Business Internet & Fibre in Milton",
+    url: PAGE_URL,
+    provider: { "@id": ORG_ID },
     areaServed: { "@type": "City", name: "Milton" },
-    serviceType: ["Business Fibre Internet", "Dedicated Internet Access (DIA)", "Managed LAN & Enterprise Wi-Fi"],
-    availableChannel: { "@type": "ServiceChannel", serviceUrl: PAGE_URL },
+    serviceType: [
+      "Business Fibre Internet",
+      "Dedicated Internet Access",
+      "Managed LAN and Enterprise Wi-Fi",
+      "LTE and 5G Continuity",
+      "VoIP and Cloud Voice",
+      "Static IP Routing",
+    ],
+    availableChannel: {
+      "@type": "ServiceChannel",
+      serviceUrl: PAGE_URL,
+    },
   };
 
   const faqPage = {
@@ -139,45 +160,56 @@ function jsonLd() {
   return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
+const serviceModules = [
+  { t: "Business Fibre Internet", href: "/services/business-fibre-internet" },
+  { t: "Dedicated Internet Access (DIA)", href: "/services/dedicated-internet-access" },
+  { t: "Managed LAN & Enterprise Wi-Fi", href: "/services/managed-lan-wifi" },
+  { t: "LTE / 5G Continuity Architecture", href: "/services/lte-5g-continuity" },
+  { t: "VoIP & Cloud Voice", href: "/services/voip-cloud-voice" },
+  { t: "Static IP Routing", href: "/services/static-ip-routing" },
+] as const;
+
 export default function MiltonLocationPage() {
   return (
     <main className="min-h-screen bg-[#0B0F14] text-white">
-      {/* JSON-LD */}
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-        <div className="inline-flex items-center gap-2">
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
           <span className="h-2 w-2 rounded-full bg-white/60" />
           <span className="text-sm tracking-wide text-white/60">Service Area</span>
         </div>
 
         <h1 className="mt-5 text-4xl md:text-5xl font-semibold tracking-tight">
-          Business Fibre Internet in Milton, ON
+          Business Internet & Fibre in Milton, ON
         </h1>
 
         <p className="mt-4 max-w-3xl text-base md:text-lg text-white/70 leading-relaxed">
-          Orbitlink provides operator-grade business connectivity in Milton with a disciplined delivery posture:
-          structured onboarding, documented acceptance, and enterprise support posture. Availability is{" "}
-          <span className="text-white/85 font-medium">on-net where available</span>, with clear feasibility scoping
-          when additional build work is required.
+          Orbitlink provides operator-grade business connectivity in Milton with a disciplined delivery
+          posture: structured onboarding, documented acceptance, and enterprise support posture.
+          Availability is <span className="text-white/85 font-medium">confirmed per building</span>,
+          with clear feasibility scoping when additional build work is required.
         </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
-          {["On-net where available", "Structured onboarding", "Documented delivery", "Enterprise support posture"].map(
-            (x) => (
-              <span
-                key={x}
-                className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
-              >
-                {x}
-              </span>
-            )
-          )}
+          {[
+            "Availability by building",
+            "Structured onboarding",
+            "Documented delivery",
+            "Enterprise support posture",
+            "Industrial and warehouse fit",
+          ].map((x) => (
+            <span
+              key={x}
+              className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
+            >
+              {x}
+            </span>
+          ))}
         </div>
 
         <div className="mt-7 flex flex-col sm:flex-row gap-3">
@@ -207,22 +239,60 @@ export default function MiltonLocationPage() {
 
             <div className="mt-3 space-y-4 text-white/70 leading-relaxed">
               <p>
-                Milton continues to expand as an employment and industrial market, with major business park footprints and
-                logistics-friendly corridors. Orbitlink’s posture is built for operations: feasibility confirmation first,
-                scope clarity, and delivery that is documented end-to-end.
+                Milton continues to expand as a major employment and industrial market, with logistics,
+                warehousing, transportation, and mixed office-and-floor environments that depend on
+                stable business internet. In these environments, the difference between a good outcome
+                and a weak one is delivery posture: feasibility confirmation, scope clarity, and
+                documented activation.
               </p>
 
               <p>
-                Many Milton sites operate across mixed environments—office teams plus floor devices, scanners, cameras,
-                IoT endpoints, and voice systems. A stable outcome often requires more than “internet”: proper service
-                selection (broadband fibre vs DIA), segmentation posture, managed LAN/Wi-Fi planning, and continuity design
-                when uptime matters.
+                Many Milton sites operate across mixed environments — office teams, scanners, cameras,
+                IoT endpoints, voice systems, cloud applications, and operational platforms. That often
+                means the real requirement is not just internet access, but the right combination of
+                broadband fibre, DIA, managed LAN and Wi-Fi, segmentation, and continuity design.
               </p>
 
               <p>
-                Milton includes established employment areas such as the Milton 401 Business Park and Derry Green Corporate
-                Business Park, where building infrastructure and feasibility can vary by site. Orbitlink confirms service
-                availability per address and scopes constraints before activation—no overclaims.
+                Established employment zones such as the Milton 401 Business Park and Derry Green
+                Corporate Business Park often vary by building infrastructure and last-mile feasibility.
+                Orbitlink confirms service availability per address and scopes constraints before
+                activation, without blanket coverage claims.
+              </p>
+
+              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
+                Milton business connectivity environments
+              </h3>
+              <p>
+                Warehouse, industrial, and logistics environments often need stable support for voice,
+                cameras, VPNs, handheld devices, scanning systems, cloud platforms, and internal network
+                segmentation. Orbitlink evaluates site feasibility and delivery posture before activation
+                so the right model is selected from the start.
+              </p>
+
+              <p>
+                Orbitlink also supports nearby business markets including{" "}
+                <Link
+                  href="/locations/oakville"
+                  className="text-white/85 hover:text-white underline underline-offset-4"
+                >
+                  Oakville
+                </Link>
+                ,{" "}
+                <Link
+                  href="/locations/mississauga"
+                  className="text-white/85 hover:text-white underline underline-offset-4"
+                >
+                  Mississauga
+                </Link>
+                , and{" "}
+                <Link
+                  href="/locations/brampton"
+                  className="text-white/85 hover:text-white underline underline-offset-4"
+                >
+                  Brampton
+                </Link>
+                .
               </p>
 
               <h3 className="pt-2 text-lg font-semibold tracking-tight text-white">
@@ -230,18 +300,14 @@ export default function MiltonLocationPage() {
               </h3>
 
               <ul className="mt-2 space-y-2">
-                {[
-                  { t: "Business Fibre Internet", href: "/services/business-fibre-internet" },
-                  { t: "Dedicated Internet Access (DIA)", href: "/services/dedicated-internet-access" },
-                  { t: "Managed LAN & Enterprise Wi-Fi", href: "/services/managed-lan-wifi" },
-                  { t: "LTE / 5G Continuity Architecture", href: "/services/lte-5g-continuity" },
-                  { t: "VoIP & Cloud Voice", href: "/services/voip-cloud-voice" },
-                  { t: "Static IP Routing", href: "/services/static-ip-routing" },
-                ].map((x) => (
+                {serviceModules.map((x) => (
                   <li key={x.t} className="flex items-start gap-2">
                     <span className="mt-2 h-1.5 w-1.5 rounded-full bg-white/40" />
                     <span>
-                      <Link href={x.href} className="text-white/85 hover:text-white underline underline-offset-4">
+                      <Link
+                        href={x.href}
+                        className="text-white/85 hover:text-white underline underline-offset-4"
+                      >
                         {x.t}
                       </Link>
                     </span>
@@ -249,23 +315,32 @@ export default function MiltonLocationPage() {
                 ))}
               </ul>
 
-              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">Broadband fibre vs DIA</h3>
+              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
+                Broadband fibre vs DIA
+              </h3>
               <p>
-                Broadband fibre is ideal when you want strong value with a professional delivery posture. DIA is the fit
-                when deterministic performance and formal delivery requirements are needed (critical systems, regulated
-                environments, multi-site routing, or environments where broadband variance is unacceptable).
+                Broadband fibre is often ideal when you want strong value with a professional delivery
+                posture. Dedicated Internet Access is the better fit when deterministic performance,
+                cleaner enterprise handoff, or more formal delivery requirements are needed for
+                critical systems and uptime-sensitive operations.
               </p>
 
-              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">Managed network posture</h3>
+              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
+                Managed network posture
+              </h3>
               <p>
-                For industrial environments, managed LAN/Wi-Fi reduces day-to-day issues: segmentation between office/ops/IoT,
-                stable coverage planning, and a support posture aligned with operations—not consumer troubleshooting.
+                For industrial and mixed office-floor environments, managed LAN and Wi-Fi can reduce
+                day-to-day issues through segmentation between office, operations, guest, and IoT
+                traffic, plus better coverage planning and a more disciplined support model.
               </p>
 
-              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">Continuity architecture</h3>
+              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
+                Continuity architecture
+              </h3>
               <p>
-                If uptime matters, Orbitlink can design LTE/5G continuity patterns aligned to your critical traffic. We scope
-                constraints and feasibility before activation so there are no surprises.
+                If uptime matters, Orbitlink can design LTE and 5G continuity patterns aligned to your
+                critical traffic and operational priorities. Constraints and feasibility are scoped
+                before activation so there are no surprises.
               </p>
             </div>
           </div>
@@ -306,7 +381,8 @@ export default function MiltonLocationPage() {
             <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5">
               <h3 className="text-sm font-semibold tracking-tight">Recommended starting point</h3>
               <p className="mt-2 text-sm text-white/70 leading-relaxed">
-                Start with feasibility confirmation. If performance is critical, request a DIA assessment and continuity review.
+                Start with feasibility confirmation. If performance is critical, request a DIA
+                assessment and continuity review.
               </p>
 
               <div className="mt-4 flex flex-col gap-2">
@@ -327,12 +403,25 @@ export default function MiltonLocationPage() {
 
             <div className="mt-6 text-sm text-white/60">
               Nearby:{" "}
-              <Link href="/locations/oakville" className="text-white/80 hover:text-white underline underline-offset-4">
+              <Link
+                href="/locations/oakville"
+                className="text-white/80 hover:text-white underline underline-offset-4"
+              >
                 Oakville
               </Link>
               {", "}
-              <Link href="/locations/mississauga" className="text-white/80 hover:text-white underline underline-offset-4">
+              <Link
+                href="/locations/mississauga"
+                className="text-white/80 hover:text-white underline underline-offset-4"
+              >
                 Mississauga
+              </Link>
+              {", "}
+              <Link
+                href="/locations/brampton"
+                className="text-white/80 hover:text-white underline underline-offset-4"
+              >
+                Brampton
               </Link>
               .
             </div>
@@ -345,7 +434,7 @@ export default function MiltonLocationPage() {
         <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
           <h2 className="text-2xl font-semibold tracking-tight">Milton FAQs</h2>
           <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
-            Clear, operational answers—coverage confirmed per site, with scope and feasibility defined before activation.
+            Clear, operational answers — coverage confirmed per site, with scope and feasibility defined before activation.
           </p>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
