@@ -4,6 +4,7 @@ import Link from "next/link";
 const SITE_URL = "https://orbitlink.ca";
 const PAGE_PATH = "/locations/brampton";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
+const ORG_ID = `${SITE_URL}/#org`;
 
 const BUSINESS = {
   name: "Orbitlink™",
@@ -29,55 +30,61 @@ const BUSINESS = {
 export const metadata: Metadata = {
   title: "Business Fibre Internet in Brampton, ON | Orbitlink™",
   description:
-    "Operator-grade business fibre internet in Brampton with structured onboarding, documented delivery, and enterprise support posture. Check availability.",
+    "Business fibre internet in Brampton with structured onboarding, enterprise support posture, and availability confirmed per building. Fibre, DIA, managed networking, and continuity options.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
     title: "Business Fibre Internet in Brampton, ON | Orbitlink™",
     description:
-      "Business connectivity in Brampton: fibre, DIA, managed LAN & Wi-Fi, continuity architecture, and voice. Availability by building.",
-    url: PAGE_PATH,
+      "Operator-grade business connectivity in Brampton including fibre internet, DIA, managed LAN & Wi-Fi, continuity architecture, and voice.",
+    url: PAGE_URL,
     type: "website",
+    siteName: "Orbitlink",
+    locale: "en_CA",
   },
   twitter: {
     card: "summary_large_image",
     title: "Business Fibre Internet in Brampton, ON | Orbitlink™",
     description:
-      "Operator-grade business connectivity in Brampton delivered with structured onboarding, documented acceptance, and enterprise support posture.",
+      "Operator-grade business connectivity in Brampton with structured onboarding, documented delivery, and enterprise support posture.",
   },
 };
 
 const FAQ = [
   {
     q: "Do you service my address in Brampton?",
-    a: "Coverage depends on building infrastructure and upstream feasibility. Orbitlink is available on-net where possible, with clear scoping when additional build work is required. Submit an availability request and we’ll confirm feasibility.",
+    a: "Coverage depends on building infrastructure and upstream feasibility. Orbitlink is available on-net where possible, with clear scoping when additional build work is required. Submit an availability request and Orbitlink will confirm feasibility.",
   },
   {
     q: "Do you support industrial and logistics sites in Brampton?",
-    a: "Yes—Brampton includes many industrial and logistics environments where connectivity stability matters. We confirm feasibility per site and recommend broadband fibre or DIA based on operational requirements.",
+    a: "Yes. Brampton includes many industrial, warehouse, and logistics environments where connectivity stability is essential. Orbitlink confirms feasibility per site and recommends broadband fibre or Dedicated Internet Access based on operational requirements.",
   },
   {
     q: "Do you offer Dedicated Internet Access (DIA) in Brampton?",
-    a: "Yes—DIA is available for business-critical environments where deterministic performance and a formal delivery posture are required, subject to feasibility.",
+    a: "Yes. Dedicated Internet Access is available for business-critical environments where deterministic performance and a more formal delivery posture are required, subject to feasibility.",
   },
   {
     q: "Do you provide static IPs?",
-    a: "Static IP options are available where feasible and depend on the underlying access type and location. We’ll confirm options during onboarding.",
+    a: "Static IP options are available where feasible and depend on the underlying access type, site design, and location. Orbitlink confirms options during onboarding.",
   },
   {
     q: "How long does installation take in Brampton?",
-    a: "Timelines vary by building readiness, access type, and upstream coordination. Orbitlink uses structured onboarding and documented acceptance so expectations are clear before activation.",
+    a: "Timelines vary by building readiness, access type, landlord coordination, and upstream feasibility. Orbitlink uses structured onboarding and documented acceptance so expectations are clear before activation.",
   },
   {
-    q: "Can you manage my LAN and Wi-Fi across the office and warehouse floor?",
-    a: "Yes—Orbitlink provides Managed LAN & Enterprise Wi-Fi, including segmentation posture and coverage planning suited to business environments, aligned with an operator-grade support posture.",
+    q: "Can you manage my LAN and Wi-Fi across office and warehouse environments?",
+    a: "Yes. Orbitlink provides managed LAN and enterprise Wi-Fi, including segmentation posture and coverage planning suited to business environments, aligned with an operator-grade support posture.",
   },
   {
-    q: "Do you offer failover/continuity options?",
-    a: "Yes—Orbitlink designs LTE/5G continuity patterns for sites that require operational uptime during access disruptions. Feasibility depends on site constraints and design.",
+    q: "Do you offer failover and continuity options?",
+    a: "Yes. Orbitlink designs LTE and 5G continuity patterns for sites that require operational uptime during access disruptions. Feasibility depends on site constraints and continuity design.",
   },
   {
     q: "Are you a reseller?",
-    a: "Orbitlink is the customer-facing operator responsible for onboarding posture, documentation, and support experience. Certain access products (e.g., Starlink) may be delivered via an agent/reseller model and are clearly labeled as such.",
+    a: "Orbitlink is the customer-facing operator responsible for onboarding posture, documentation, and support experience. Certain access products may be delivered via agent or reseller models and are clearly labeled as such.",
+  },
+  {
+    q: "Do you provide business internet for warehouses in Brampton?",
+    a: "Yes. Orbitlink frequently evaluates warehouse and logistics environments across Brampton where voice, cloud platforms, cameras, VPNs, and line-of-business systems rely on stable internet service. Availability depends on building infrastructure and upstream feasibility.",
   },
 ] as const;
 
@@ -86,7 +93,7 @@ function jsonLd() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
       { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
       { "@type": "ListItem", position: 3, name: "Brampton", item: PAGE_URL },
     ],
@@ -95,10 +102,13 @@ function jsonLd() {
   const localBusiness = {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "TelecomCompany"],
+    "@id": `${PAGE_URL}#business`,
     name: BUSINESS.name,
     legalName: BUSINESS.legalName,
     url: SITE_URL,
     telephone: BUSINESS.phoneE164,
+    email: "concierge@orbitlink.ca",
+    parentOrganization: { "@id": ORG_ID },
     address: {
       "@type": "PostalAddress",
       streetAddress: BUSINESS.address.street,
@@ -107,7 +117,10 @@ function jsonLd() {
       postalCode: BUSINESS.address.postal,
       addressCountry: BUSINESS.address.country,
     },
-    areaServed: [{ "@type": "City", name: "Brampton" }, { "@type": "AdministrativeArea", name: "Ontario" }],
+    areaServed: [
+      { "@type": "City", name: "Brampton" },
+      { "@type": "AdministrativeArea", name: "Ontario" },
+    ],
     openingHoursSpecification: BUSINESS.hours.map((h) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: `https://schema.org/${h.day}`,
@@ -118,12 +131,24 @@ function jsonLd() {
 
   const telecomService = {
     "@context": "https://schema.org",
-    "@type": "Service",
+    "@type": "TelecomService",
+    "@id": `${PAGE_URL}#service`,
     name: "Business Fibre Internet in Brampton",
-    provider: { "@type": "Organization", name: BUSINESS.name, url: SITE_URL },
+    url: PAGE_URL,
+    provider: { "@id": ORG_ID },
     areaServed: { "@type": "City", name: "Brampton" },
-    serviceType: ["Business Fibre Internet", "Dedicated Internet Access (DIA)", "Managed LAN & Enterprise Wi-Fi"],
-    availableChannel: { "@type": "ServiceChannel", serviceUrl: PAGE_URL },
+    serviceType: [
+      "Business Fibre Internet",
+      "Dedicated Internet Access",
+      "Managed LAN and Enterprise Wi-Fi",
+      "LTE and 5G Continuity",
+      "VoIP and Cloud Voice",
+      "Static IP Routing",
+    ],
+    availableChannel: {
+      "@type": "ServiceChannel",
+      serviceUrl: PAGE_URL,
+    },
   };
 
   const faqPage = {
@@ -139,19 +164,26 @@ function jsonLd() {
   return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
+const serviceModules = [
+  { t: "Business Fibre Internet", href: "/services/business-fibre-internet" },
+  { t: "Dedicated Internet Access (DIA)", href: "/services/dedicated-internet-access" },
+  { t: "Managed LAN & Enterprise Wi-Fi", href: "/services/managed-lan-wifi" },
+  { t: "LTE / 5G Continuity Architecture", href: "/services/lte-5g-continuity" },
+  { t: "VoIP & Cloud Voice", href: "/services/voip-cloud-voice" },
+  { t: "Static IP Routing", href: "/services/static-ip-routing" },
+] as const;
+
 export default function BramptonLocationPage() {
   return (
     <main className="min-h-screen bg-[#0B0F14] text-white">
-      {/* JSON-LD */}
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-        <div className="inline-flex items-center gap-2">
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
           <span className="h-2 w-2 rounded-full bg-white/60" />
           <span className="text-sm tracking-wide text-white/60">Service Area</span>
         </div>
@@ -161,23 +193,27 @@ export default function BramptonLocationPage() {
         </h1>
 
         <p className="mt-4 max-w-3xl text-base md:text-lg text-white/70 leading-relaxed">
-          Orbitlink provides operator-grade business connectivity in Brampton with a disciplined delivery posture:
-          structured onboarding, documented acceptance, and enterprise support posture. Availability is{" "}
-          <span className="text-white/85 font-medium">on-net where available</span>, with clear feasibility scoping
-          when additional build work is required.
+          Orbitlink provides operator-grade business connectivity in Brampton with a disciplined
+          delivery posture: structured onboarding, documented acceptance, and enterprise support
+          posture. Availability is <span className="text-white/85 font-medium">on-net where available</span>,
+          with clear feasibility scoping when additional build work is required.
         </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
-          {["On-net where available", "Structured onboarding", "Documented delivery", "Enterprise support posture"].map(
-            (x) => (
-              <span
-                key={x}
-                className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
-              >
-                {x}
-              </span>
-            )
-          )}
+          {[
+            "On-net where available",
+            "Structured onboarding",
+            "Documented delivery",
+            "Enterprise support posture",
+            "Industrial and warehouse fit",
+          ].map((x) => (
+            <span
+              key={x}
+              className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
+            >
+              {x}
+            </span>
+          ))}
         </div>
 
         <div className="mt-7 flex flex-col sm:flex-row gap-3">
@@ -201,39 +237,80 @@ export default function BramptonLocationPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Main */}
           <div className="lg:col-span-2 rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-            <h2 className="text-xl font-semibold tracking-tight">Brampton connectivity for operations-heavy environments</h2>
+            <h2 className="text-xl font-semibold tracking-tight">
+              Brampton connectivity for operations-heavy environments
+            </h2>
+
             <div className="mt-3 space-y-4 text-white/70 leading-relaxed">
               <p>
-                Brampton is a high-throughput commercial market—manufacturing, warehousing, logistics, and multi-site
-                businesses that depend on stable connectivity. The best outcome comes from clear feasibility confirmation,
-                appropriate service selection (broadband fibre vs DIA), and a delivery posture that’s documented end-to-end.
+                Brampton is one of Ontario’s strongest industrial and logistics markets, with major
+                warehouse, manufacturing, transportation, and multi-site business environments. In
+                this type of market, connectivity is not just about price — it is about stable
+                operations, clear delivery posture, and serviceability confirmed before activation.
               </p>
+
               <p>
-                Orbitlink uses a controlled onboarding model: confirm building feasibility, align requirements, and then
-                coordinate delivery with acceptance checkpoints. This reduces install friction and avoids “surprise scope”
-                after activation.
+                Orbitlink uses a controlled onboarding model: confirm building feasibility, align
+                service requirements, choose the correct access posture, and coordinate delivery
+                with documented acceptance checkpoints. This reduces install friction and helps avoid
+                surprise scope after activation.
               </p>
+
               <p>
-                For operations-heavy environments, we often recommend validating continuity posture (LTE/5G failover patterns)
-                and ensuring network segmentation is appropriate (office vs floor devices, guest access, IoT endpoints).
+                Commercial areas around Airport Road, Steeles Avenue, Queen Street corridors, and
+                major industrial and logistics zones often require more than generic broadband.
+                Business fibre, DIA, managed LAN, segmentation, and continuity planning can all
+                matter depending on the site’s operational profile.
+              </p>
+
+              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
+                Brampton business connectivity environments
+              </h3>
+              <p>
+                Brampton has a high concentration of industrial parks, warehouse footprints, and
+                logistics-heavy operations where line-of-business applications, voice systems, cloud
+                platforms, VPNs, cameras, and IoT endpoints need dependable internet access. Orbitlink
+                evaluates site feasibility and delivery posture before activation so the correct model
+                is selected from the start.
+              </p>
+
+              <p>
+                Orbitlink also supports nearby business markets including{" "}
+                <Link
+                  href="/locations/mississauga"
+                  className="text-white/85 hover:text-white underline underline-offset-4"
+                >
+                  Mississauga
+                </Link>
+                ,{" "}
+                <Link
+                  href="/locations/toronto"
+                  className="text-white/85 hover:text-white underline underline-offset-4"
+                >
+                  Toronto
+                </Link>
+                , and{" "}
+                <Link
+                  href="/locations/vaughan"
+                  className="text-white/85 hover:text-white underline underline-offset-4"
+                >
+                  Vaughan
+                </Link>
+                .
               </p>
 
               <h3 className="pt-2 text-lg font-semibold tracking-tight text-white">
                 Service modules commonly deployed in Brampton
               </h3>
               <ul className="mt-2 space-y-2">
-                {[
-                  { t: "Business Fibre Internet", href: "/services/business-fibre-internet" },
-                  { t: "Dedicated Internet Access (DIA)", href: "/services/dedicated-internet-access" },
-                  { t: "Managed LAN & Enterprise Wi-Fi", href: "/services/managed-lan-wifi" },
-                  { t: "LTE / 5G Continuity Architecture", href: "/services/lte-5g-continuity" },
-                  { t: "VoIP & Cloud Voice", href: "/services/voip-cloud-voice" },
-                  { t: "Static IP Routing", href: "/services/static-ip-routing" },
-                ].map((x) => (
+                {serviceModules.map((x) => (
                   <li key={x.t} className="flex items-start gap-2">
                     <span className="mt-2 h-1.5 w-1.5 rounded-full bg-white/40" />
                     <span>
-                      <Link href={x.href} className="text-white/85 hover:text-white underline underline-offset-4">
+                      <Link
+                        href={x.href}
+                        className="text-white/85 hover:text-white underline underline-offset-4"
+                      >
                         {x.t}
                       </Link>
                     </span>
@@ -241,16 +318,23 @@ export default function BramptonLocationPage() {
                 ))}
               </ul>
 
-              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">When DIA is the right fit</h3>
+              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
+                When DIA is the right fit
+              </h3>
               <p>
-                DIA is a strong fit when performance and delivery posture must be deterministic—critical systems, regulated
-                operations, multi-site routing, or environments where broadband variance is unacceptable.
+                Dedicated Internet Access is a strong fit when performance and delivery posture must
+                be more deterministic — critical systems, regulated environments, multi-site routing,
+                high-priority voice, or warehouse and logistics operations where broadband variance is
+                operationally unacceptable.
               </p>
 
-              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">Continuity posture</h3>
+              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
+                Continuity posture
+              </h3>
               <p>
-                For Brampton operations, uptime planning matters. Orbitlink can design LTE/5G continuity patterns to reduce
-                downtime during access disruptions, aligned with your critical applications and operational priorities.
+                For Brampton operations, uptime planning matters. Orbitlink can design LTE and 5G
+                continuity patterns to reduce downtime during access disruptions, aligned with your
+                critical applications, business workflows, and operational priorities.
               </p>
             </div>
           </div>
@@ -262,7 +346,10 @@ export default function BramptonLocationPage() {
             <div className="mt-4 space-y-3 text-sm text-white/70">
               <div>
                 <div className="text-white/60">Phone</div>
-                <a className="text-white/85 hover:text-white underline underline-offset-4" href={`tel:${BUSINESS.phoneE164}`}>
+                <a
+                  className="text-white/85 hover:text-white underline underline-offset-4"
+                  href={`tel:${BUSINESS.phoneE164}`}
+                >
                   {BUSINESS.phoneDisplay}
                 </a>
               </div>
@@ -288,8 +375,8 @@ export default function BramptonLocationPage() {
             <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5">
               <h3 className="text-sm font-semibold tracking-tight">Recommended starting point</h3>
               <p className="mt-2 text-sm text-white/70 leading-relaxed">
-                Start with feasibility confirmation. If your site is performance-critical, request a DIA assessment and
-                continuity posture review.
+                Start with feasibility confirmation. If your site is performance-critical, request a
+                DIA assessment and continuity posture review.
               </p>
               <div className="mt-4 flex flex-col gap-2">
                 <Link
@@ -309,12 +396,25 @@ export default function BramptonLocationPage() {
 
             <div className="mt-6 text-sm text-white/60">
               Nearby:{" "}
-              <Link href="/locations/mississauga" className="text-white/80 hover:text-white underline underline-offset-4">
+              <Link
+                href="/locations/mississauga"
+                className="text-white/80 hover:text-white underline underline-offset-4"
+              >
                 Mississauga
               </Link>
               {", "}
-              <Link href="/locations/vaughan" className="text-white/80 hover:text-white underline underline-offset-4">
+              <Link
+                href="/locations/vaughan"
+                className="text-white/80 hover:text-white underline underline-offset-4"
+              >
                 Vaughan
+              </Link>
+              {", "}
+              <Link
+                href="/locations/toronto"
+                className="text-white/80 hover:text-white underline underline-offset-4"
+              >
+                Toronto
               </Link>
               .
             </div>
@@ -327,7 +427,7 @@ export default function BramptonLocationPage() {
         <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
           <h2 className="text-2xl font-semibold tracking-tight">Brampton FAQs</h2>
           <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
-            Clear, operational answers—coverage confirmed per site, with scope and feasibility defined before activation.
+            Clear, operational answers — coverage confirmed per site, with scope and feasibility defined before activation.
           </p>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
