@@ -10,19 +10,24 @@ import type { Metadata } from "next";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
-const OG_IMAGE = `${SITE_URL}/opengraph-image.png`;
+const SITE_DESC =
+  "Business Fibre Internet, Managed Network Infrastructure, and Compliance-Ready Connectivity for modern enterprises in Ontario, Canada.";
+const OG_TITLE = "Orbitlink — Business Fibre & Network Infrastructure";
+const OG_DESC =
+  "Audit-ready connectivity, enterprise fibre internet, and infrastructure-grade operations for modern businesses in Ontario.";
+const TWITTER_DESC =
+  "Enterprise fibre internet and audit-ready connectivity for modern operators in Ontario.";
+const OG_IMAGE = `${SITE_URL}/opengraph-image.png?v=2`;
 
 export const metadata: Metadata = {
   title: "Orbitlink",
-  description:
-    "Business Fibre Internet, Managed Network Infrastructure, and Compliance-Ready Connectivity for modern enterprises in Ontario, Canada.",
+  description: SITE_DESC,
   alternates: {
     canonical: `${SITE_URL}/`,
   },
   openGraph: {
-    title: "Orbitlink — Business Fibre & Network Infrastructure",
-    description:
-      "Audit-ready connectivity, enterprise fibre internet, and infrastructure-grade operations for modern businesses in Ontario.",
+    title: OG_TITLE,
+    description: OG_DESC,
     url: `${SITE_URL}/`,
     siteName: SITE_NAME,
     type: "website",
@@ -32,15 +37,14 @@ export const metadata: Metadata = {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Orbitlink — Business Fibre & Network Infrastructure",
+        alt: OG_TITLE,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Orbitlink — Business Fibre & Network Infrastructure",
-    description:
-      "Enterprise fibre internet and audit-ready connectivity for modern operators in Ontario.",
+    title: OG_TITLE,
+    description: TWITTER_DESC,
     images: [OG_IMAGE],
   },
 };
@@ -49,8 +53,12 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "Orbitlink",
-    url: SITE_URL,
+    "@id": `${SITE_URL}/#localbusiness`,
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+    image: `${SITE_URL}/opengraph-image.png`,
+    telephone: "+18888672480",
+    email: "concierge@orbitlink.ca",
     areaServed: "Ontario, Canada",
     address: {
       "@type": "PostalAddress",
@@ -60,8 +68,6 @@ export default function Home() {
       postalCode: "L5R 3E7",
       addressCountry: "CA",
     },
-    telephone: "+18888672480",
-    email: "concierge@orbitlink.ca",
     parentOrganization: {
       "@type": "Organization",
       name: "TIRAV Technologies Inc.",
@@ -98,7 +104,7 @@ export default function Home() {
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -top-24 left-10 h-72 w-72 rounded-full bg-blue-500/12 blur-3xl" />
-          <div className="absolute top-12 right-10 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
+          <div className="absolute right-10 top-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
           <div className="absolute bottom-[-140px] left-1/2 h-80 w-[56rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
         </div>
 
