@@ -188,7 +188,7 @@ const serviceModules = [
   },
   {
     t: "Managed LAN & Enterprise Wi-Fi",
-    href: "/services",
+    href: "/services/managed-lan-wifi",
     d: "Segmentation posture, stability, and internal network support.",
   },
   {
@@ -339,10 +339,10 @@ export default function OntarioHubPage() {
         </h1>
 
         <p className="mt-4 max-w-3xl text-base md:text-lg text-white/70 leading-relaxed">
-          Orbitlink supports Ontario businesses with operator-grade onboarding, documented delivery,
-          and premium support posture. Coverage is confirmed per address and building feasibility,
-          not assumed generically. Use this hub to navigate priority city pages and the right
-          service modules for your environment.
+          Orbitlink supports Ontario businesses with operator-grade business internet, business fibre,
+          Dedicated Internet Access, documented delivery, and premium support posture. Availability is
+          confirmed per address and building feasibility rather than assumed generically. Use this hub
+          to navigate priority city pages and the right service modules for your environment.
         </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
@@ -474,6 +474,44 @@ export default function OntarioHubPage() {
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
             >
               Browse Locations
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Popular searches / authority strip */}
+      <section className="mx-auto max-w-6xl px-6 pb-10">
+        <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
+          <h2 className="text-xl font-semibold tracking-tight">Popular Ontario business connectivity paths</h2>
+          <p className="mt-3 max-w-3xl text-sm text-white/70 leading-relaxed">
+            Buyers often start with a city, a service type, or a broad “internet near me” search.
+            These pages provide the clearest next step into Orbitlink’s Ontario delivery footprint.
+          </p>
+
+          <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <Link
+              href="/internet-near-me"
+              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/85 hover:bg-white/[0.06] transition"
+            >
+              Internet Near Me
+            </Link>
+            <Link
+              href="/services/business-fibre-internet"
+              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/85 hover:bg-white/[0.06] transition"
+            >
+              Business Fibre Internet
+            </Link>
+            <Link
+              href="/services/dedicated-internet-access"
+              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/85 hover:bg-white/[0.06] transition"
+            >
+              Dedicated Internet Access
+            </Link>
+            <Link
+              href="/locations/mississauga"
+              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/85 hover:bg-white/[0.06] transition"
+            >
+              Mississauga
             </Link>
           </div>
         </div>
