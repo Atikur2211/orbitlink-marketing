@@ -24,9 +24,6 @@ export const metadata: Metadata = {
   },
   description: SITE_DESC,
 
-  // ✅ Golden-grade: do NOT set a global canonical to "/"
-  // Each page should define its own canonical via `export const metadata` in that page.
-
   applicationName: SITE_NAME,
   category: "Telecommunications",
   creator: SITE_NAME,
@@ -59,7 +56,13 @@ export const metadata: Metadata = {
     description: SITE_DESC,
   },
 
-  // If you have icons/manifest later, enable these:
+  verification: {
+    other: {
+      "msvalidate.01": "695CB2CE20F126C050AEEA5E84135A79",
+    },
+  },
+
+  // Optional later:
   // icons: {
   //   icon: "/favicon.ico",
   //   apple: "/apple-touch-icon.png",
@@ -70,14 +73,24 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const isDev = process.env.NODE_ENV !== "production";
 
-  // ✅ Golden-grade: JSON-LD identity (Organization + WebSite)
+  // ✅ Million-dollar identity graph
   const orgJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${SITE_URL}/#org`,
     name: SITE_NAME,
-    url: SITE_URL,
-    brand: { "@type": "Brand", name: SITE_NAME },
-    parentOrganization: { "@type": "Organization", name: "TIRAV Technologies Inc." },
+    url: `${SITE_URL}/`,
+    logo: `${SITE_URL}/logo.png`,
+    brand: {
+      "@type": "Brand",
+      name: SITE_NAME,
+    },
+    parentOrganization: {
+      "@type": "Organization",
+      name: "TIRAV Technologies Inc.",
+    },
+    telephone: "+18888672480",
+    email: "concierge@orbitlink.ca",
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -95,6 +108,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         areaServed: "CA",
       },
     ],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "30 Eglinton Ave W, Suite 400-A77",
+      addressLocality: "Mississauga",
+      addressRegion: "ON",
+      postalCode: "L5R 3E7",
+      addressCountry: "CA",
+    },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: "Ontario, Canada",
+    },
     // Add real social links when ready:
     // sameAs: ["https://www.linkedin.com/company/orbitlink"],
   };
@@ -102,9 +127,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
     name: SITE_NAME,
-    url: SITE_URL,
-    publisher: { "@type": "Organization", name: SITE_NAME },
+    url: `${SITE_URL}/`,
+    publisher: {
+      "@id": `${SITE_URL}/#org`,
+    },
+    inLanguage: "en-CA",
   };
 
   return (
@@ -114,7 +143,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
 
-        {/* ✅ Golden-grade: JSON-LD (site identity) */}
+        {/* ✅ Site identity JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
