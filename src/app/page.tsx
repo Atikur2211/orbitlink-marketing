@@ -10,17 +10,17 @@ import SiteFooter from "@/components/SiteFooter";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
+const CANONICAL_URL = `${SITE_URL}/`;
+
 const SITE_DESC =
   "Business Fibre Internet, Managed Network Infrastructure, and Compliance-Ready Connectivity for modern enterprises in Ontario, Canada.";
+
 const OG_TITLE = "Orbitlink — Business Fibre & Network Infrastructure";
 const OG_DESC =
   "Audit-ready connectivity, enterprise fibre internet, and infrastructure-grade operations for modern businesses in Ontario.";
+
 const TWITTER_DESC =
   "Enterprise fibre internet and audit-ready connectivity for modern operators in Ontario.";
-
-const CANONICAL_URL = `${SITE_URL}/`;
-const OG_IMAGE = `${SITE_URL}/opengraph-image.png?v=2`;
-const TWITTER_IMAGE = `${SITE_URL}/twitter-image.png?v=2`;
 
 export const metadata: Metadata = {
   title: "Orbitlink",
@@ -35,20 +35,11 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     type: "website",
     locale: "en_CA",
-    images: [
-      {
-        url: OG_IMAGE,
-        width: 1200,
-        height: 630,
-        alt: OG_TITLE,
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: OG_TITLE,
     description: TWITTER_DESC,
-    images: [TWITTER_IMAGE],
   },
 };
 
@@ -59,7 +50,7 @@ export default function Home() {
     "@id": `${SITE_URL}/#localbusiness`,
     name: SITE_NAME,
     url: CANONICAL_URL,
-    image: `${SITE_URL}/opengraph-image.png`,
+    image: `${SITE_URL}/opengraph-image`,
     telephone: "+18888672480",
     email: "concierge@orbitlink.ca",
     areaServed: "Ontario, Canada",
