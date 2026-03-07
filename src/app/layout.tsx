@@ -7,7 +7,6 @@ const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
 const SITE_DESC = "Audit-Ready Connectivity for Modern Operators";
 const GA_MEASUREMENT_ID = "G-1VWDS0BMLY";
-const OG_IMAGE = `${SITE_URL}/opengraph-image.png`;
 
 export const viewport: Viewport = {
   themeColor: "#09090B",
@@ -55,32 +54,27 @@ export const metadata: Metadata = {
 
   openGraph: {
     type: "website",
-    url: SITE_URL,
+    url: `${SITE_URL}/`,
     siteName: SITE_NAME,
     title: SITE_NAME,
     description: SITE_DESC,
     locale: "en_CA",
-    images: [
-      {
-        url: OG_IMAGE,
-        width: 1200,
-        height: 630,
-        alt: "Orbitlink",
-      },
-    ],
   },
 
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESC,
-    images: [OG_IMAGE],
   },
 
   verification: {
     other: {
       "msvalidate.01": "695CB2CE20F126C050AEEA5E84135A79",
     },
+  },
+
+  alternates: {
+    canonical: `${SITE_URL}/`,
   },
 };
 
@@ -98,6 +92,7 @@ export default function RootLayout({
     name: SITE_NAME,
     url: `${SITE_URL}/`,
     logo: `${SITE_URL}/icon.png`,
+    image: `${SITE_URL}/opengraph-image`,
     brand: {
       "@type": "Brand",
       name: SITE_NAME,
