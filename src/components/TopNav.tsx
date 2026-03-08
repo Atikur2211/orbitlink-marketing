@@ -16,7 +16,7 @@ const NAV = [
 ] as const;
 
 const SUPPORT_PHONE_DISPLAY = "📞 1-888-8-ORBIT-0";
-const SUPPORT_PHONE_TEL = "tel:+18888827480";
+const SUPPORT_PHONE_TEL = "tel:+18888672480";
 const SUPPORT_PHONE_ARIA = "Call Orbitlink Client Care at 1 888 8 ORBIT 0";
 const INTAKE_HREF = "/contact#intake";
 
@@ -45,13 +45,10 @@ export default function TopNav() {
 
   const activeHref = useMemo(() => pathname, [pathname]);
 
-  // Close mobile menu on route change (defensive)
   useEffect(() => {
     setOpen(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  // iOS-safe scroll lock + restore
   useEffect(() => {
     if (!open) return;
 
@@ -77,14 +74,13 @@ export default function TopNav() {
     };
   }, [open]);
 
-  // Focus on open + return focus on close
   useEffect(() => {
     if (!open) return;
 
     const dlg = dialogRef.current;
     if (!dlg) return;
 
-    const opener = openBtnRef.current; // snapshot
+    const opener = openBtnRef.current;
     const focusables = getFocusable(dlg);
     focusables[0]?.focus();
 
@@ -93,7 +89,6 @@ export default function TopNav() {
     };
   }, [open]);
 
-  // Keyboard: Escape + Focus Trap
   useEffect(() => {
     if (!open) return;
 
@@ -134,23 +129,21 @@ export default function TopNav() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-[80]">
+    <header className="sticky top-0 z-[140]">
       <div className="border-b border-white/10 bg-black/40 backdrop-blur-xl">
-        <div className="mx-auto max-w-6xl px-5 sm:px-7 h-14 flex items-center justify-between">
-          {/* Brand */}
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5 sm:px-7">
           <Link href="/" className="flex items-center gap-3" aria-label="Orbitlink home">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/35 motion-reduce:hidden" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
             </span>
             <span className="text-xs tracking-[0.28em] text-white/90">ORBITLINK</span>
-            <span className="hidden sm:inline-flex ml-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] tracking-wide text-white/70">
+            <span className="ml-2 hidden rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] tracking-wide text-white/70 sm:inline-flex">
               Operator-grade
             </span>
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-6 text-sm text-white/70" aria-label="Primary">
+          <nav className="hidden items-center gap-6 text-sm text-white/70 md:flex" aria-label="Primary">
             {NAV.map((i) => {
               const active = activeHref === i.href;
               return (
@@ -158,10 +151,7 @@ export default function TopNav() {
                   key={i.href}
                   href={i.href}
                   aria-current={active ? "page" : undefined}
-                  className={[
-                    "hover:text-white transition",
-                    active ? "text-white" : "",
-                  ].join(" ")}
+                  className={`transition hover:text-white ${active ? "text-white" : ""}`}
                 >
                   {i.name}
                 </Link>
@@ -169,11 +159,10 @@ export default function TopNav() {
             })}
           </nav>
 
-          {/* Right */}
           <div className="flex items-center gap-2">
             <button
               ref={openBtnRef}
-              className="md:hidden rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10 transition"
+              className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10 md:hidden"
               onClick={() => setOpen(true)}
               aria-label="Open menu"
               aria-expanded={open}
@@ -185,14 +174,14 @@ export default function TopNav() {
             <a
               href={SUPPORT_PHONE_TEL}
               aria-label={SUPPORT_PHONE_ARIA}
-              className="hidden sm:inline-flex rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10 transition"
+              className="hidden rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10 sm:inline-flex"
             >
               {SUPPORT_PHONE_DISPLAY}
             </a>
 
             <Link
               href={INTAKE_HREF}
-              className="rounded-xl bg-[#FACC15] text-black px-3 py-2 text-sm font-medium hover:bg-[#FDE047] transition"
+              className="rounded-xl bg-[#FACC15] px-3 py-2 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
               Talk to Sales
             </Link>
@@ -200,54 +189,59 @@ export default function TopNav() {
         </div>
       </div>
 
-      {/* Mobile dialog */}
       {open && (
         <div
-          className="fixed inset-0 z-[90] md:hidden"
+          className="fixed inset-0 z-[220] md:hidden"
           role="dialog"
           aria-modal="true"
           aria-labelledby="orbitlink-menu-title"
           aria-describedby="orbitlink-menu-desc"
           id="orbitlink-mobile-menu"
           onClickCapture={(e) => {
-            // hard-close on ANY link click
             const target = e.target as HTMLElement | null;
             const link = target?.closest?.("a");
             if (link) setOpen(false);
           }}
         >
-          {/* Backdrop */}
           <button
-            className="absolute inset-0 bg-black/70 backdrop-blur-[1px] transition-opacity motion-reduce:transition-none"
+            className="absolute inset-0 bg-black/80 backdrop-blur-[3px]"
             onClick={() => setOpen(false)}
             aria-label="Close menu"
           />
 
-          {/* Sheet */}
-          <div className="absolute top-0 left-0 right-0 mx-auto max-w-6xl px-5 sm:px-7">
+          <div className="absolute inset-x-0 top-0 z-[230] mx-auto max-w-6xl px-4 pt-3 pb-3 sm:px-6">
             <div
               ref={dialogRef}
-              className={[
-                "mt-3 rounded-3xl border border-white/10 bg-[#09090B]/95 backdrop-blur-xl shadow-2xl",
-                "transform transition-all duration-200 ease-out motion-reduce:transition-none",
-                "translate-y-0 opacity-100",
-              ].join(" ")}
+              className="relative flex max-h-[calc(100dvh-1.5rem)] min-h-[calc(100dvh-1.5rem)] flex-col overflow-hidden rounded-[30px] border border-white/10 bg-[#09090B]/96 shadow-[0_24px_90px_rgba(0,0,0,0.58)] backdrop-blur-2xl"
             >
-              <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[radial-gradient(circle_at_top,rgba(56,253,254,0.09),transparent_62%)]" />
+              <div className="pointer-events-none absolute inset-x-0 top-[72px] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+              <div className="relative flex items-center justify-between border-b border-white/10 px-5 py-4">
                 <div className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
+                  <span className="relative inline-flex h-2.5 w-2.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/35 motion-reduce:hidden" />
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
+                  </span>
+
                   <div>
-                    <div id="orbitlink-menu-title" className="text-xs tracking-[0.28em] text-white/90">
+                    <div
+                      id="orbitlink-menu-title"
+                      className="text-[11px] tracking-[0.30em] text-white/88"
+                    >
                       ORBITLINK
                     </div>
-                    <div id="orbitlink-menu-desc" className="text-[11px] text-white/55">
-                      Navigation • operator-grade delivery posture
+                    <div
+                      id="orbitlink-menu-desc"
+                      className="mt-1 text-[11px] text-white/50"
+                    >
+                      Tier-1 navigation surface
                     </div>
                   </div>
                 </div>
 
                 <button
-                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 hover:bg-white/10 transition"
+                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10"
                   onClick={() => setOpen(false)}
                   aria-label="Close menu"
                 >
@@ -255,100 +249,144 @@ export default function TopNav() {
                 </button>
               </div>
 
-              <div className="px-5 py-4">
-                <div className="text-[11px] tracking-[0.28em] text-white/55">NAVIGATION</div>
-
-                <div className="mt-3 grid gap-2">
-                  {NAV.map((i) => {
-                    const active = activeHref === i.href;
-                    return (
-                      <Link
-                        key={i.href}
-                        href={i.href}
-                        onClick={() => setOpen(false)}
-                        aria-current={active ? "page" : undefined}
-                        className={[
-                          "rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm hover:bg-white/10 transition flex items-center justify-between",
-                          active ? "text-white" : "text-white/85",
-                        ].join(" ")}
-                      >
-                        <span>{i.name}</span>
-                        <span className="text-[#FACC15]">→</span>
-                      </Link>
-                    );
-                  })}
-                </div>
-
-                {/* Quick links for conversion + SEO */}
-                <div className="mt-4 grid gap-2">
-                  <div className="text-[11px] tracking-[0.28em] text-white/55">QUICK LINKS</div>
-
-                  <div className="grid grid-cols-2 gap-2">
-                    <Link
-                      href="/locations/ontario"
-                      onClick={() => setOpen(false)}
-                      className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/85 hover:bg-white/10 transition"
-                    >
-                      Ontario Hub
-                    </Link>
-                    <Link
-                      href="/services/dedicated-internet-access"
-                      onClick={() => setOpen(false)}
-                      className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/85 hover:bg-white/10 transition"
-                    >
-                      DIA
-                    </Link>
-                    <Link
-                      href="/services/managed-lan-wifi"
-                      onClick={() => setOpen(false)}
-                      className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/85 hover:bg-white/10 transition"
-                    >
-                      Managed LAN/Wi-Fi
-                    </Link>
-                    <Link
-                      href="/services/business-fibre-internet"
-                      onClick={() => setOpen(false)}
-                      className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/85 hover:bg-white/10 transition"
-                    >
-                      Business Fibre
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="text-[11px] tracking-[0.22em] text-white/55">CONTACT</div>
-                  <div className="mt-2 text-sm text-white/80">
-                    Structured onboarding • documented delivery • enterprise support posture
-                  </div>
+              <div className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5">
+                <div className="relative">
+                  <div className="text-[11px] tracking-[0.28em] text-white/50">PRIMARY</div>
 
                   <div className="mt-3 grid gap-2">
-                    <Link
-                      href={INTAKE_HREF}
-                      onClick={() => setOpen(false)}
-                      className="rounded-2xl bg-[#FACC15] text-black px-4 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
-                    >
-                      Talk to Sales
-                    </Link>
+                    {NAV.map((i) => {
+                      const active = activeHref === i.href;
 
-                    <a
-                      href={SUPPORT_PHONE_TEL}
-                      aria-label={SUPPORT_PHONE_ARIA}
-                      className="rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-sm text-white hover:bg-white/10 transition text-center"
-                    >
-                      {SUPPORT_PHONE_DISPLAY}
-                    </a>
+                      return (
+                        <Link
+                          key={i.href}
+                          href={i.href}
+                          onClick={() => setOpen(false)}
+                          aria-current={active ? "page" : undefined}
+                          className={[
+                            "group flex items-center justify-between rounded-2xl border px-4 py-3.5 transition",
+                            active
+                              ? "border-white/15 bg-white/[0.08] text-white"
+                              : "border-white/10 bg-white/[0.04] text-white/82 hover:border-white/15 hover:bg-white/[0.07] hover:text-white",
+                          ].join(" ")}
+                        >
+                          <div className="flex items-center gap-3">
+                            <span
+                              className={[
+                                "h-1.5 w-1.5 rounded-full transition",
+                                active ? "bg-[#FACC15]" : "bg-white/25 group-hover:bg-white/45",
+                              ].join(" ")}
+                            />
+                            <span className="text-sm">{i.name}</span>
+                          </div>
 
-                    <a
-                      href="mailto:concierge@orbitlink.ca"
-                      className="rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-sm text-white hover:bg-white/10 transition text-center"
-                    >
-                      concierge@orbitlink.ca
-                    </a>
+                          <span
+                            className={[
+                              "text-sm transition",
+                              active ? "text-[#FACC15]" : "text-white/30 group-hover:text-white/60",
+                            ].join(" ")}
+                          >
+                            →
+                          </span>
+                        </Link>
+                      );
+                    })}
                   </div>
-                </div>
 
-                <div className="mt-4 text-xs text-white/55">
-                  Orbitlink is a brand of TIRAV Technologies Inc.
+                  <div className="mt-6">
+                    <div className="text-[11px] tracking-[0.28em] text-white/50">QUICK ACCESS</div>
+
+                    <div className="mt-3 grid grid-cols-2 gap-2">
+                      <Link
+                        href="/locations/ontario"
+                        onClick={() => setOpen(false)}
+                        className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82 transition hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
+                      >
+                        Ontario Hub
+                      </Link>
+                      <Link
+                        href="/services/dedicated-internet-access"
+                        onClick={() => setOpen(false)}
+                        className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82 transition hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
+                      >
+                        DIA
+                      </Link>
+                      <Link
+                        href="/services/managed-lan-wifi"
+                        onClick={() => setOpen(false)}
+                        className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82 transition hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
+                      >
+                        Managed LAN
+                      </Link>
+                      <Link
+                        href="/services/business-fibre-internet"
+                        onClick={() => setOpen(false)}
+                        className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82 transition hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
+                      >
+                        Business Fibre
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 rounded-[26px] border border-white/10 bg-white/[0.04] p-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="text-[11px] tracking-[0.24em] text-white/50">
+                          CONCIERGE DESK
+                        </div>
+                        <div className="mt-2 text-sm font-medium text-white/90">
+                          Structured onboarding for enterprise buyers
+                        </div>
+                        <p className="mt-2 text-sm leading-6 text-white/62">
+                          Clean intake. Clear scoping. Documented delivery.
+                        </p>
+                      </div>
+
+                      <div className="rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 px-3 py-1.5 text-[11px] text-[#FDE68A]">
+                        ACTIVE
+                      </div>
+                    </div>
+
+                    <div className="mt-4 grid gap-2">
+                      <Link
+                        href={INTAKE_HREF}
+                        onClick={() => setOpen(false)}
+                        className="rounded-2xl bg-[#FACC15] px-4 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
+                      >
+                        Talk to Sales
+                      </Link>
+
+                      <a
+                        href={SUPPORT_PHONE_TEL}
+                        aria-label={SUPPORT_PHONE_ARIA}
+                        className="rounded-2xl border border-white/12 bg-black/20 px-4 py-3 text-center text-sm text-white transition hover:bg-white/10"
+                      >
+                        {SUPPORT_PHONE_DISPLAY}
+                      </a>
+
+                      <a
+                        href="mailto:concierge@orbitlink.ca"
+                        className="rounded-2xl border border-white/12 bg-black/20 px-4 py-3 text-center text-sm text-white transition hover:bg-white/10"
+                      >
+                        concierge@orbitlink.ca
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 border-t border-white/10 pt-4">
+                    <div className="flex flex-col gap-2 text-[11px] text-white/45">
+                      <div className="flex items-center justify-between gap-3">
+                        <span>Operator-grade surface</span>
+                        <span>Ontario</span>
+                      </div>
+                      <div className="flex items-center justify-between gap-3">
+                        <span>Availability by building</span>
+                        <span>TIRAV Technologies Inc.</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="h-4" />
                 </div>
               </div>
             </div>

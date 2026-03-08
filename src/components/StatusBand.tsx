@@ -15,47 +15,67 @@ function tonePill(tone: "ok" | "warn" | "info") {
 
 export default function StatusBand() {
   return (
-    <section className="mx-auto max-w-6xl px-5 sm:px-7 mt-7 sm:mt-10">
-      <div className="rounded-[28px] border border-white/10 bg-white/[0.035] backdrop-blur-xl">
+    <section className="relative z-[20] mx-auto max-w-6xl px-5 sm:px-7 mt-4 sm:mt-6">
+      <div className="overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.035] backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.22)]">
+        {/* premium top edge */}
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/12 to-transparent" />
+
         {/* Header strip */}
-        <div className="flex items-center justify-between gap-4 px-5 sm:px-6 py-4 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <span className="relative inline-flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-[#FACC15]/35 animate-ping" />
+        <div className="flex items-center justify-between gap-4 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-white/10 bg-black/15">
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="relative inline-flex h-2.5 w-2.5 shrink-0">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[#FACC15]/35 animate-ping motion-reduce:hidden" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
             </span>
-            <div className="text-[11px] tracking-[0.28em] text-white/55">LIVE POSTURE</div>
+
+            <div className="min-w-0">
+              <div className="text-[10px] sm:text-[11px] tracking-[0.28em] text-white/55">
+                LIVE POSTURE
+              </div>
+            </div>
           </div>
 
-          <div className="text-[11px] tracking-[0.22em] text-white/45">
+          <div className="hidden sm:block text-[11px] tracking-[0.22em] text-white/45 text-right">
             Operator surface • conservative statements
+          </div>
+
+          <div className="sm:hidden text-[10px] tracking-[0.18em] text-white/40 text-right">
+            Conservative
           </div>
         </div>
 
         {/* Tiles */}
-        <div className="p-4 sm:p-5">
+        <div className="p-3 sm:p-5">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {STATUS_BAND.map((i) => (
               <div
                 key={i.label}
-                className="group rounded-2xl border border-white/10 bg-black/25 p-4 sm:p-5 transition hover:bg-black/30 hover:border-white/15"
+                className="group rounded-2xl border border-white/10 bg-black/25 p-3.5 sm:p-5 transition hover:bg-black/30 hover:border-white/15"
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="text-[11px] tracking-[0.22em] text-white/55">{i.label}</div>
+                <div className="flex items-start justify-between gap-2 sm:gap-3">
+                  <div className="min-w-0 text-[10px] sm:text-[11px] tracking-[0.20em] sm:tracking-[0.22em] text-white/55">
+                    {i.label}
+                  </div>
 
-                  <div className={`rounded-full border px-3 py-1.5 text-[11px] ${tonePill(i.tone)}`}>
+                  <div
+                    className={`shrink-0 rounded-full border px-2.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-[11px] ${tonePill(i.tone)}`}
+                  >
                     {i.tone === "ok" ? "OK" : i.tone === "warn" ? "WATCH" : "INFO"}
                   </div>
                 </div>
 
-                <div className={`mt-3 text-base sm:text-[17px] font-medium ${toneText(i.tone)}`}>
+                <div className={`mt-3 text-[15px] sm:text-[17px] font-medium ${toneText(i.tone)}`}>
                   {i.value}
                 </div>
 
                 {i.note ? (
-                  <div className="mt-2 text-xs text-white/55 leading-5 max-w-[34ch]">{i.note}</div>
+                  <div className="mt-2 text-[11px] sm:text-xs text-white/55 leading-5 max-w-[34ch]">
+                    {i.note}
+                  </div>
                 ) : (
-                  <div className="mt-2 text-xs text-white/40 leading-5">Telemetry-aligned disclosure</div>
+                  <div className="mt-2 text-[11px] sm:text-xs text-white/40 leading-5">
+                    Telemetry-aligned disclosure
+                  </div>
                 )}
 
                 <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
