@@ -17,18 +17,15 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-
   title: {
     default: SITE_NAME,
     template: `%s · ${SITE_NAME}`,
   },
   description: SITE_DESC,
-
   applicationName: SITE_NAME,
   category: "Telecommunications",
   creator: SITE_NAME,
   publisher: SITE_NAME,
-
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -37,9 +34,7 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
     shortcut: ["/favicon.ico"],
   },
-
   manifest: "/manifest.webmanifest",
-
   robots: {
     index: true,
     follow: true,
@@ -51,7 +46,6 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-
   openGraph: {
     type: "website",
     url: `${SITE_URL}/`,
@@ -60,19 +54,16 @@ export const metadata: Metadata = {
     description: SITE_DESC,
     locale: "en_CA",
   },
-
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESC,
   },
-
   verification: {
     other: {
       "msvalidate.01": "695CB2CE20F126C050AEEA5E84135A79",
     },
   },
-
   alternates: {
     canonical: `${SITE_URL}/`,
   },

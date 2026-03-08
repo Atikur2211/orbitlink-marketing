@@ -22,6 +22,10 @@ const OG_DESC =
 const TWITTER_DESC =
   "Enterprise fibre internet and audit-ready connectivity for modern operators in Ontario.";
 
+// Explicit dynamic image routes
+const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
+const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
+
 export const metadata: Metadata = {
   title: "Orbitlink",
   description: SITE_DESC,
@@ -35,11 +39,20 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     type: "website",
     locale: "en_CA",
+    images: [
+      {
+        url: OG_IMAGE_URL,
+        width: 1200,
+        height: 630,
+        alt: OG_TITLE,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: OG_TITLE,
     description: TWITTER_DESC,
+    images: [TWITTER_IMAGE_URL],
   },
 };
 
@@ -50,7 +63,7 @@ export default function Home() {
     "@id": `${SITE_URL}/#localbusiness`,
     name: SITE_NAME,
     url: CANONICAL_URL,
-    image: `${SITE_URL}/opengraph-image`,
+    image: OG_IMAGE_URL,
     telephone: "+18888672480",
     email: "concierge@orbitlink.ca",
     areaServed: "Ontario, Canada",
