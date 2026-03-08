@@ -323,7 +323,7 @@ export default function ServicesIndexPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#09090B] text-white">
+    <div className="relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
@@ -516,6 +516,6 @@ export default function ServicesIndexPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
