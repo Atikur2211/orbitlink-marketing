@@ -13,78 +13,67 @@ export type TrustDisclosure = {
   note?: string;
 };
 
-// ===== TRUST PAGE COPY (Golden grade + regulator-safe + enterprise posture) =====
-// Updated: BITS + TSP approved (kept conservative, no overclaiming)
+// ===== TRUST PAGE COPY (Premium + regulator-safe + enterprise posture) =====
 
 export const TRUST_TILES: TrustTile[] = [
   { label: "TRANSPARENCY POSTURE", value: "DISCLOSURE-FIRST", tone: "info" },
-
-  // ✅ Approved
   { label: "BITS LICENCE", value: "APPROVED • ACTIVE", tone: "ok" },
-
-  // ✅ Approved
   { label: "TSP REGISTRATION", value: "APPROVED • ACTIVE", tone: "ok" },
-
-  // Conservative unless you can truthfully claim fully operational end-to-end
-  { label: "9-1-1 OBLIGATIONS", value: "SUBMITTED • MONITORED", tone: "info" },
+  { label: "9-1-1 COMPLIANCE POSTURE", value: "SCOPE-MONITORED", tone: "info" },
 ];
 
 export const TRUST_DISCLOSURES: TrustDisclosure[] = [
   {
     heading: "REGULATORY READINESS",
     bullets: [
-      "Regulatory items are tracked as milestones — with dates and scope notes",
-      "BITS licence: approved and maintained under documented operational controls",
-      "TSP registration: approved and maintained under documented operational controls",
-      "9-1-1 obligations are maintained where applicable to the service scope",
-      "Accessibility posture is reviewed, logged, and documented",
-      "Public statements reflect confirmed scope — not internal roadmap",
+      "Regulatory items are tracked as documented milestones with scope notes and review posture",
+      "BITS licence is approved and maintained under documented operational controls",
+      "TSP registration is approved and maintained under documented operational controls",
+      "9-1-1 obligations are handled according to service scope and applicable requirements",
+      "Accessibility posture is reviewed, logged, and updated through controlled processes",
+      "Public statements reflect confirmed scope rather than internal roadmap assumptions",
     ],
     note:
-      "We publish conservatively. Status is updated only when it can be supported by confirmation and evidence.",
+      "We publish conservatively. Status is updated only when it can be supported by confirmation, documentation, and operational evidence.",
   },
   {
     heading: "OPERATIONAL GOVERNANCE",
     bullets: [
       "Least-privilege access with role-scoped administration",
-      "Change control with staged releases and rollback posture",
+      "Change control with staged releases, validation, and rollback posture",
       "Incident handling guided by documented escalation paths",
-      "Audit-friendly logging with retention discipline",
-      "Operational exceptions are documented instead of hidden",
+      "Audit-friendly logging with retention discipline and reviewability",
+      "Operational exceptions are documented rather than hidden",
     ],
     note:
-      "Trust is an operations practice: repeatable controls, accountable handling, reviewable outcomes.",
+      "Trust is treated as an operating discipline: repeatable controls, accountable handling, and reviewable outcomes.",
   },
-
-  // ✅ “Million-dollar move” — credibility without oversharing
   {
     heading: "VERIFICATION PACK (REQUEST-ONLY)",
     bullets: [
-      "One-page disclosure memo: live scope vs. planned scope (no overclaiming)",
-      "Operational posture summary: onboarding, change policy, escalation path",
-      "Evidence samples where available (redacted, scope-appropriate)",
-      "Direct contact path for auditor/regulator review questions",
+      "One-page disclosure memo clarifying live scope versus planned scope",
+      "Operational posture summary covering onboarding, change policy, and escalation path",
+      "Evidence samples where available in redacted, scope-appropriate form",
+      "Direct contact path for auditor, regulator, partner, or enterprise review questions",
     ],
     note:
-      "Delivered on request to keep sensitive details out of public navigation. Contents vary by module and readiness.",
+      "Delivered on request to keep sensitive details outside public navigation. Contents vary by module, engagement stage, and readiness.",
   },
-
-  // ✅ Enterprise trust mechanism
   {
     heading: "SCOPE-LOCKED COMMITMENTS",
     bullets: [
-      "Commitments are written per engagement (site + scope + responsibilities)",
-      "We confirm what we will measure, what we will report, and what we will not claim",
-      "Milestones are timeboxed and communicated as windows — not promises",
-      "No surprise claims or silent launches",
+      "Commitments are defined per engagement by site, scope, and responsibility model",
+      "We confirm what will be measured, what will be reported, and what will not be claimed",
+      "Milestones are communicated as controlled windows rather than marketing promises",
+      "No surprise claims, silent launches, or inflated public posture",
     ],
     note:
-      "Enterprises don’t buy hype — they buy clarity. This posture is designed to make reviews faster and safer.",
+      "Enterprise buyers do not buy hype. They buy clarity, accountability, and a lower-risk review path.",
   },
 ];
 
 export const TRUST_ASSURANCE =
-  "Orbitlink keeps a strict separation between public statements and confirmed status. Where approvals are confirmed, we reflect them plainly — while keeping sensitive operational internals request-only. We publish conservative disclosures, update when milestones are verified, and onboard through controlled windows with documented operational posture.";
+  "Orbitlink maintains a strict separation between public statements and confirmed status. Where approvals are confirmed, we reflect them plainly while keeping sensitive operational internals request-only. We publish conservative disclosures, update when milestones are verifiable, and onboard through controlled windows with documented operational posture.";
 
 // ===== ORBITLINK — GLOBAL TELEMETRY (single source of truth) =====
 
@@ -105,22 +94,22 @@ export const STATUS_BAND: StatusItem[] = [
     note: "Measured posture • conservative disclosures",
   },
   {
-    label: "EDGE POPs",
-    value: "12 ONLINE",
+    label: "EDGE PRESENCE",
+    value: "MONITORED",
     tone: "info",
-    note: "Presence expressed as operational roles",
+    note: "Operational roles expressed conservatively",
   },
   {
-    label: "LATENCY",
-    value: "18ms",
+    label: "LATENCY POSTURE",
+    value: "MEASURED",
     tone: "info",
-    note: "Contextual measurement (route/time window)",
+    note: "Contextual by route, window, and scope",
   },
   {
-    label: "COMPLIANCE",
-    value: "READY",
+    label: "TRUST POSTURE",
+    value: "AUDIT-READY",
     tone: "ok",
-    note: "Evidence-first • audit-ready workflows",
+    note: "Evidence-first • documented workflows",
   },
 ];
 
@@ -132,10 +121,30 @@ export type NetworkMetric = {
 };
 
 export const NETWORK_METRICS: NetworkMetric[] = [
-  { label: "Uptime Target", value: "99.9%+", note: "SLA-aligned delivery posture.", tone: "ok" },
-  { label: "Observability", value: "Enabled", note: "Telemetry, alerting, escalation paths.", tone: "info" },
-  { label: "Failover", value: "Planned (milestone-driven)", note: "Redundancy options by service scope.", tone: "warn" },
-  { label: "Change Control", value: "Disciplined", note: "Staged releases with rollback posture.", tone: "ok" },
+  {
+    label: "Delivery Target",
+    value: "99.9%+",
+    note: "SLA-aligned delivery posture.",
+    tone: "ok",
+  },
+  {
+    label: "Observability",
+    value: "Active",
+    note: "Telemetry, alerting, and escalation paths.",
+    tone: "info",
+  },
+  {
+    label: "Failover",
+    value: "Planned (milestone-driven)",
+    note: "Redundancy options aligned to service scope.",
+    tone: "warn",
+  },
+  {
+    label: "Change Control",
+    value: "Disciplined",
+    note: "Staged releases with rollback posture.",
+    tone: "ok",
+  },
 ];
 
 export const NETWORK_CHANGELOG = {
@@ -167,25 +176,25 @@ export const NETWORK_CHANGELOG = {
 
 export const NETWORK_CAPABILITIES: { title: string; desc: string }[] = [
   {
-    title: "Edge POP posture",
+    title: "Edge posture",
     desc: "Operational readiness for scaled delivery with clean routing and predictable performance.",
   },
   {
     title: "Latency discipline",
-    desc: "Measured, monitored, and reported with transparency-first communication.",
+    desc: "Measured, monitored, and communicated with a transparency-first posture.",
   },
   {
     title: "Incident response",
-    desc: "Clear escalation path with documented events and post-incident review posture.",
+    desc: "Clear escalation paths with documented events and reviewable outcomes.",
   },
   {
     title: "Customer visibility",
-    desc: "Status surfaces designed to feel like an operator console — not a marketing page.",
+    desc: "Status surfaces designed to feel like an operator console rather than a marketing page.",
   },
 ];
 
 export const NETWORK_COVERAGE_NOTE =
-  "Coverage and availability are introduced through controlled onboarding. If you require a specific site assessment, request access and include your location and service module.";
+  "Coverage and availability are introduced through controlled onboarding. If you require a specific site assessment, request access and include your location, intended service module, and operational requirements.";
 
 export type ModuleSpec = {
   id: "internet" | "voice" | "smart" | "horizon";
@@ -204,62 +213,62 @@ export const MODULE_SPECS: ModuleSpec[] = [
     name: "AUREX Internet",
     tagline: "Enterprise connectivity with disciplined delivery posture.",
     purpose:
-      "Provide predictable connectivity with transparency-first operations and structured escalation.",
+      "Provide predictable business connectivity with transparency-first operations, structured escalation, and measured onboarding.",
     idealFor: [
       "Canadian businesses requiring reliable primary connectivity",
-      "Sites that need clear accountability and support posture",
-      "Operators needing clean rollout and documentation",
+      "Sites that need clear accountability and premium support posture",
+      "Operators seeking clean rollout and documented delivery",
     ],
     deliverables: [
-      "Provisioning coordination & onboarding checklist",
-      "Performance posture (latency/uptime targets where applicable)",
-      "Incident handling posture & escalation path",
+      "Provisioning coordination and onboarding checklist",
+      "Performance posture and operational expectations",
+      "Incident handling posture and escalation path",
       "Service documentation package",
     ],
     onboarding:
-      "Controlled onboarding window. Availability assessed per location and service scope.",
+      "Controlled onboarding window. Availability is assessed per location, service scope, and delivery feasibility.",
     tone: "blue",
   },
   {
     id: "voice",
     name: "AUREX Voice",
-    tagline: "Precision PBX. Professional VoIP for modern teams.",
+    tagline: "Precision PBX. Professional cloud voice for modern teams.",
     purpose:
-      "Deliver a business-grade voice experience with structured routing, greetings, and support.",
+      "Deliver a business-grade voice experience with structured routing, clean call handling, and operationally aligned support.",
     idealFor: [
-      "Teams needing a professional reception experience",
+      "Teams needing a professional reception and call-routing experience",
       "Businesses migrating from legacy phone providers",
-      "Organizations requiring clean call routing & extensions",
+      "Organizations requiring extensions, ring groups, and clean operational handling",
     ],
     deliverables: [
-      "PBX configuration & numbering plan",
-      "Auto-attendant / IVR / business greetings",
-      "Extensions, ring groups, voicemail posture",
+      "PBX configuration and numbering plan",
+      "Auto-attendant, IVR, and business greeting setup",
+      "Extensions, ring groups, and voicemail posture",
       "Operational support contact surface",
     ],
     onboarding:
-      "Provisioned by request. Rollout is sequenced to protect reliability and support response time.",
+      "Provisioned by request. Rollout is sequenced to protect reliability, cutover quality, and support response time.",
     tone: "gold",
   },
   {
     id: "smart",
     name: "AUREX Smart",
-    tagline: "Connected office monitoring with alerting posture.",
+    tagline: "Connected office monitoring with controlled alerting posture.",
     purpose:
-      "Provide IoT integration and facility monitoring for visibility, uptime, and controlled alerts.",
+      "Provide IoT integration and facility monitoring for visibility, uptime signals, and controlled operational alerts.",
     idealFor: [
-      "Offices needing facility signals (environment, access, uptime)",
-      "Sites wanting alerting without complexity",
+      "Offices needing environmental, access, or uptime signals",
+      "Sites wanting alerting without unnecessary complexity",
       "Operators seeking a unified monitoring posture",
     ],
     deliverables: [
       "Sensor and gateway integration plan",
-      "Alert thresholds & notification posture",
+      "Alert thresholds and notification posture",
       "Dashboard visibility surface",
-      "Operational runbook for maintenance",
+      "Operational runbook for maintenance and review",
     ],
     onboarding:
-      "Designed for staged deployment. Sensor scope defined before activation.",
+      "Designed for staged deployment. Sensor scope and operational intent are defined before activation.",
     tone: "emerald",
   },
   {
@@ -267,61 +276,61 @@ export const MODULE_SPECS: ModuleSpec[] = [
     name: "TIRAV Horizon",
     tagline: "Sovereign compliance evidence automation.",
     purpose:
-      "Automate evidence capture, integrity verification, and audit-friendly disclosure bundles.",
+      "Automate evidence capture, integrity verification, retention discipline, and audit-friendly disclosure bundles.",
     idealFor: [
       "Regulated or compliance-heavy operators",
       "Organizations needing verifiable audit artifacts",
-      "Teams requiring disciplined retention & integrity checks",
+      "Teams requiring disciplined retention and integrity checks",
     ],
     deliverables: [
-      "Signed evidence bundles (integrity verification)",
+      "Signed evidence bundles with integrity verification",
       "Retention discipline and audit posture",
       "Operational logs designed for review",
-      "Disclosure surfaces for auditors/regulators",
+      "Disclosure surfaces for auditors and regulators",
     ],
     onboarding:
-      "Deployed as a controlled appliance workflow with documented operating posture.",
+      "Deployed as a controlled appliance workflow with documented operating posture and evidence-first handling.",
     tone: "gold",
   },
 ];
 
 export const ABOUT_STORY = {
-  headline: "Corporate Transparency",
+  headline: "Built with operator discipline",
   subhead:
-    "Orbitlink is built as an infrastructure-grade platform with disciplined operations and regulator-aware delivery.",
+    "Orbitlink is a brand of TIRAV Technologies Inc., engineered for businesses that value reliability, operational clarity, and controlled delivery.",
   principles: [
     {
-      title: "Control, then scale",
-      desc: "We prioritize predictable onboarding, stable operations, and documented posture before expanding intake volume.",
+      title: "Discipline before scale",
+      desc: "We prioritize controlled onboarding, documented operations, and measured delivery before expanding commercial scope.",
     },
     {
-      title: "Evidence over hype",
-      desc: "Trust is treated as an operational system: logging discipline, change control, and verifiable artifacts.",
+      title: "Evidence over claims",
+      desc: "Public statements remain conservative. Operational posture is supported by process, documentation, and reviewable artifacts.",
     },
     {
       title: "Operator-grade experience",
-      desc: "The website is designed to feel like a control surface because the business is run like an operator.",
+      desc: "From support surfaces to service design, Orbitlink is built to feel calm, precise, and infrastructure-led.",
     },
     {
       title: "Regulator-aware by default",
-      desc: "Public statements remain conservative. Status is tracked and updated as confirmations/issuances occur.",
+      desc: "Compliance and disclosure are treated as operating disciplines, not afterthoughts.",
     },
   ],
   story: [
     {
       label: "WHO WE ARE",
       text:
-        "Orbitlink is a brand of TIRAV Technologies Inc. We build and operate connectivity and digital utility services with an emphasis on operational clarity and disciplined execution.",
+        "Orbitlink is the customer-facing connectivity platform of TIRAV Technologies Inc., built to deliver business internet and infrastructure services with a disciplined operating posture.",
     },
     {
       label: "WHY IT EXISTS",
       text:
-        "Most providers sell features. Orbitlink sells posture: predictable delivery, transparent operations, and a controlled rollout model designed for enterprise expectations.",
+        "Too many providers sell speed without process. Orbitlink was created to offer a cleaner model: structured onboarding, transparent delivery, and enterprise-caliber support posture.",
     },
     {
       label: "HOW WE OPERATE",
       text:
-        "We maintain a separation between marketing and reality. What we publish is intentionally precise, and our internal systems are built to produce reviewable artifacts — not vague promises.",
+        "We separate presentation from proof. What we publish is intentionally measured, and what we deliver is designed to be reviewable, supportable, and operationally accountable.",
     },
   ],
 };

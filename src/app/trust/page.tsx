@@ -87,10 +87,14 @@ function StatusTile({
   tone: "ok" | "inprogress" | "info";
 }) {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
-      <div className="flex items-start justify-between gap-4">
+    <div className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.045] p-6 transition hover:border-white/15 hover:bg-white/[0.055] sm:p-7">
+      <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100">
+        <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/[0.04] blur-2xl" />
+      </div>
+
+      <div className="relative flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <div className="text-[11px] tracking-[0.28em] text-white/50">{label}</div>
+          <div className="text-[11px] tracking-[0.28em] text-white/48">{label}</div>
           <div className={`mt-3 text-sm font-medium ${toneTextClass(tone)}`}>{value}</div>
         </div>
 
@@ -106,9 +110,9 @@ function StatusTile({
 
       <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-      <p className="mt-4 text-sm leading-6 text-white/65">
-        Statements remain conservative and are updated only when the underlying milestone is complete
-        and internally verifiable.
+      <p className="mt-4 text-sm leading-6 text-white/64">
+        Statements remain conservative and update only when the underlying milestone is complete,
+        internally verifiable, and appropriate for public disclosure.
       </p>
     </div>
   );
@@ -124,14 +128,19 @@ function EvidenceCard({
   note?: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/20 p-5 sm:p-6">
+    <div className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition hover:border-white/15 hover:bg-black/25 sm:p-6">
       <div className="text-[11px] tracking-[0.28em] text-white/50">{heading}</div>
+
       <ul className="mt-4 space-y-2.5 text-sm text-white/65">
         {bullets.map((b) => (
-          <li key={b}>• {b}</li>
+          <li key={b} className="flex gap-2">
+            <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-white/30" />
+            <span>{b}</span>
+          </li>
         ))}
       </ul>
-      {note ? <p className="mt-4 text-xs leading-5 text-white/52">{note}</p> : null}
+
+      {note ? <p className="mt-4 text-xs leading-5 text-white/50">{note}</p> : null}
     </div>
   );
 }
@@ -152,9 +161,46 @@ function TrustPrinciple({
   desc: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/15 hover:bg-black/25">
       <div className="text-sm font-medium text-white/90">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/65">{desc}</p>
+    </div>
+  );
+}
+
+function ReviewStep({
+  step,
+  title,
+  desc,
+}: {
+  step: string;
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-white/[0.035] p-5">
+      <div className="flex items-center gap-3">
+        <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
+          {step}
+        </div>
+        <div className="text-sm font-medium text-white/90">{title}</div>
+      </div>
+      <p className="mt-3 text-sm leading-6 text-white/65">{desc}</p>
+    </div>
+  );
+}
+
+function ModuleChip({
+  name,
+  tagline,
+}: {
+  name: string;
+  tagline: string;
+}) {
+  return (
+    <div className="rounded-[22px] border border-white/10 bg-black/20 p-4">
+      <div className="text-sm font-medium text-white/88">{name}</div>
+      <div className="mt-1 text-xs leading-5 text-white/55">{tagline}</div>
     </div>
   );
 }
@@ -291,56 +337,82 @@ export default function TrustPage() {
   return (
     <PageShell
       eyebrow="TRUST & COMPLIANCE"
-      title="A premium trust surface for enterprise review"
-      subtitle="Built for buyers, auditors, and regulated environments that expect disciplined disclosure, evidence-first operations, and controlled rollout."
+      title="Trust designed for serious review"
+      subtitle="A premium trust surface for enterprise buyers, auditors, partners, and regulated environments that expect measured claims, disciplined disclosure, and evidence-first operations."
     >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
       />
 
-      <section className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
+      <section className="relative overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-20 top-0 h-44 w-44 rounded-full bg-blue-500/10 blur-3xl" />
-          <div className="absolute right-0 top-10 h-44 w-44 rounded-full bg-emerald-500/10 blur-3xl" />
-          <div className="absolute bottom-0 left-1/2 h-36 w-[28rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
+          <div className="absolute -left-24 top-0 h-52 w-52 rounded-full bg-blue-500/10 blur-3xl" />
+          <div className="absolute right-0 top-10 h-52 w-52 rounded-full bg-emerald-500/10 blur-3xl" />
+          <div className="absolute bottom-0 left-1/2 h-40 w-[32rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
+          <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.14)_1px,transparent_1px)] [background-size:64px_64px]" />
         </div>
 
-        <div className="relative flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-          <div className="max-w-4xl">
+        <div className="relative grid grid-cols-1 gap-8 lg:grid-cols-12">
+          <div className="lg:col-span-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[11px] text-[#FDE68A]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
               Evidence-first disclosure surface
             </div>
 
-            <h2 className="mt-5 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-              Trust is treated as infrastructure, not a marketing paragraph
+            <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[44px] lg:leading-[1.02]">
+              A trust layer built like infrastructure
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              Orbitlink is designed to support serious review. That means measured claims,
-              scope-locked commitments, request-only verification material, and an operational
-              posture that can be explained cleanly without exposing unnecessary internals.
+              Orbitlink is engineered to support serious review. That means measured public
+              statements, scope-locked commitments, controlled onboarding, request-only
+              verification material, and a clean distinction between what is visible publicly and
+              what remains appropriately private.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               <Pill>Controlled rollout</Pill>
-              <Pill>Redacted review material</Pill>
+              <Pill>Request-only verification</Pill>
               <Pill>Evidence-friendly operations</Pill>
-              <Pill>Enterprise-ready posture</Pill>
+              <Pill>Enterprise review posture</Pill>
             </div>
           </div>
 
-          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
-            <div className="text-[11px] tracking-[0.22em] text-white/55">TRUST STANDARD</div>
-            <div className="mt-1 text-sm text-white/80">
-              Conservative • Verifiable • Scope-locked
+          <div className="lg:col-span-4">
+            <div className="rounded-[28px] border border-white/10 bg-black/25 p-5 sm:p-6">
+              <div className="text-[11px] tracking-[0.24em] text-white/52">TRUST MODEL</div>
+              <div className="mt-3 text-lg font-semibold text-white">
+                Conservative, reviewable, and defensible
+              </div>
+              <p className="mt-3 text-sm leading-6 text-white/64">
+                The goal is not to sound bigger. The goal is to make every statement easier to
+                verify, explain, and defend in front of enterprise buyers and regulated reviewers.
+              </p>
+
+              <div className="mt-5 grid gap-3">
+                <ReviewStep
+                  step="1"
+                  title="Define scope"
+                  desc="Separate live scope, planned scope, and request-only detail."
+                />
+                <ReviewStep
+                  step="2"
+                  title="Control disclosure"
+                  desc="Publish only what is internally supportable and operationally accurate."
+                />
+                <ReviewStep
+                  step="3"
+                  title="Support review"
+                  desc="Provide redacted, scope-appropriate material when a real review path exists."
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3 sm:mt-6 sm:gap-5">
+      <section className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 sm:mt-6 sm:gap-5">
         {TRUST_TILES.map((tile) => (
           <StatusTile
             key={tile.label}
@@ -351,21 +423,21 @@ export default function TrustPage() {
         ))}
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-3xl border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-7">
+      <section className="mt-4 sm:mt-6 rounded-[32px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-          <div className="min-w-0">
+          <div className="min-w-0 max-w-4xl">
             <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
               VERIFICATION PACK (REQUEST-ONLY)
             </div>
 
-            <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
               Enterprise review material without overexposing operational detail
             </h2>
 
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/72 sm:text-[15px]">
+            <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
               Request a scope-appropriate review pack that clarifies what is live, what is planned,
               what evidence exists today, and how operational statements are governed. Materials are
-              supplied in redacted form where appropriate.
+              supplied in redacted form where appropriate and only when the review path is real.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">
@@ -376,8 +448,8 @@ export default function TrustPage() {
             </div>
 
             <p className="mt-4 text-xs text-white/55">
-              Sensitive technical internals remain private. Pack contents vary by review scope and
-              readiness state.
+              Sensitive technical internals remain private. Pack contents vary by module, readiness
+              state, and review scope.
             </p>
           </div>
 
@@ -466,7 +538,7 @@ export default function TrustPage() {
               Request early access
             </a>
 
-            <div className="sm:ml-auto flex items-center text-xs text-white/55">
+            <div className="flex items-center text-xs text-white/55 sm:ml-auto">
               Or email:
               <span className="ml-1 text-white/80">concierge@orbitlink.ca</span>
             </div>
@@ -478,18 +550,18 @@ export default function TrustPage() {
         </form>
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
+      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-          <div>
+          <div className="max-w-3xl">
             <div className="text-[11px] tracking-[0.28em] text-white/55">
               OPERATIONAL DISCLOSURE
             </div>
-            <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
               Built for enterprise expectation and regulator review
             </h2>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
               Orbitlink is positioned as an infrastructure-grade operating surface. The trust model
-              prioritizes accountability, disciplined operations, structured disclosure, and a clear
+              prioritizes accountability, disciplined operations, structured disclosure, and a clean
               separation between what can be published broadly and what must remain request-only.
             </p>
           </div>
@@ -512,16 +584,62 @@ export default function TrustPage() {
         </div>
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
+      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-          <div>
+          <div className="max-w-3xl">
+            <div className="text-[11px] tracking-[0.28em] text-white/55">
+              REVIEW FLOW
+            </div>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              A cleaner path from first diligence to controlled onboarding
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              Serious buyers want fewer surprises. This review flow is designed to reduce ambiguity,
+              separate scope from assumption, and keep the commercial path aligned with operational
+              reality.
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">OUTCOME</div>
+            <div className="mt-1 text-sm text-white/80">Faster diligence • Cleaner go-live</div>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-4">
+          <ReviewStep
+            step="1"
+            title="Qualify intent"
+            desc="Understand the buyer, the environment, and the actual review objective."
+          />
+          <ReviewStep
+            step="2"
+            title="Lock scope"
+            desc="Define what is live, what is planned, what is included, and what remains excluded."
+          />
+          <ReviewStep
+            step="3"
+            title="Support review"
+            desc="Provide redacted or scoped verification material when the review path is active."
+          />
+          <ReviewStep
+            step="4"
+            title="Enter onboarding"
+            desc="Move into a controlled commercial and operational intake window."
+          />
+        </div>
+      </section>
+
+      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
             <div className="text-[11px] tracking-[0.28em] text-white/55">
               SCOPE-LOCKED COMMITMENTS
             </div>
-            <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
               Serious buyers do not purchase features first — they purchase clarity
             </h2>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
               Each engagement is defined by what is included, what is measured, what is excluded,
               how changes are handled, and how evidence can be reviewed. This reduces uncertainty at
               procurement, audit, and go-live stages.
@@ -562,17 +680,46 @@ export default function TrustPage() {
         </div>
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
+      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <div className="text-[11px] tracking-[0.28em] text-white/55">
+              MODULE REVIEW CONTEXT
+            </div>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Review posture varies by service surface
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              Trust review is not one-size-fits-all. Each module has a different disclosure boundary,
+              onboarding posture, and evidence path depending on scope, operating model, and delivery
+              readiness.
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">MODULE COUNT</div>
+            <div className="mt-1 text-sm text-white/80">{moduleOptions.length} active surfaces</div>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
+          {MODULE_SPECS.map((module) => (
+            <ModuleChip key={module.id} name={module.name} tagline={module.tagline} />
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-7 lg:p-8">
         <div className="text-[11px] tracking-[0.28em] text-white/55">
           GOVERNANCE PRINCIPLES
         </div>
-        <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
-          The trust layer behind the brand
+        <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+          The discipline behind the brand surface
         </h2>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
           The premium feel of Orbitlink is supported by operational restraint. Public credibility is
-          protected through disciplined disclosure, change governance, and evidence-friendly review
-          paths rather than oversized promises.
+          protected through disclosure discipline, change governance, and evidence-friendly review
+          paths rather than oversized claims.
         </p>
 
         <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 sm:gap-4">
@@ -586,7 +733,7 @@ export default function TrustPage() {
           />
           <TrustPrinciple
             title="Design for reviewability"
-            desc="Enterprise buyers and auditors should be able to understand the posture without needing internal system access."
+            desc="Enterprise buyers and auditors should be able to understand the posture without requiring internal system access."
           />
           <TrustPrinciple
             title="Protect sensitive internals"
@@ -595,12 +742,14 @@ export default function TrustPage() {
         </div>
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
+      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-7">
         <div className="text-[11px] tracking-[0.28em] text-white/55">ASSURANCE</div>
-        <div className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">{TRUST_ASSURANCE}</div>
+        <div className="mt-3 max-w-4xl text-sm leading-6 text-white/70 sm:text-[15px]">
+          {TRUST_ASSURANCE}
+        </div>
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-black/40 p-6 sm:p-7">
+      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-black/40 p-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
             <div className="text-[11px] tracking-[0.28em] text-white/55">
