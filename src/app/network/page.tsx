@@ -8,26 +8,32 @@ import {
   NETWORK_CHANGELOG,
 } from "@/lib/siteStatus";
 
-/** ✅ Million-dollar SEO metadata */
+const SITE_URL = "https://orbitlink.ca";
+const PAGE_URL = `${SITE_URL}/network`;
+const OG_IMAGE_URL = `${SITE_URL}/network/opengraph-image`;
+
+/** Premium SEO + dynamic social preview metadata */
 export const metadata: Metadata = {
   title: "Network Posture & Operations",
   description:
     "Operator-grade network posture for enterprises in Ontario: telemetry-driven operations, routing discipline, controlled rollout, and predictable escalation.",
-  alternates: { canonical: "https://orbitlink.ca/network" },
+  alternates: {
+    canonical: PAGE_URL,
+  },
   openGraph: {
     title: "Network Posture & Operations · Orbitlink",
     description:
       "Operational surface: telemetry, routing discipline, controlled rollout, and predictable escalation — expressed conservatively and updated only when verifiable.",
-    url: "https://orbitlink.ca/network",
+    url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
     locale: "en_CA",
     images: [
       {
-        url: "https://orbitlink.ca/og-image.jpg",
+        url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink Network Posture & Operations",
+        alt: "Orbitlink — Network Visibility & Infrastructure",
       },
     ],
   },
@@ -36,6 +42,7 @@ export const metadata: Metadata = {
     title: "Network Posture & Operations · Orbitlink",
     description:
       "Operator-grade posture: telemetry, routing discipline, controlled rollout, and predictable escalation.",
+    images: [OG_IMAGE_URL],
   },
   robots: {
     index: true,
@@ -98,13 +105,13 @@ function PopMap() {
   return (
     <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/25">
       <div className="p-6 sm:p-7">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className="text-[11px] tracking-[0.28em] text-white/55">NETWORK MAP</div>
-            <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
+            <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
               POP posture & routing surface
             </h2>
-            <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
               A calm representation of presence and operational posture. This is not a marketing
               coverage map — it reflects how we think about reliability, telemetry, and escalation.
             </p>
@@ -117,7 +124,7 @@ function PopMap() {
         </div>
       </div>
 
-      <div className="relative h-[260px] sm:h-[320px] lg:h-[360px] border-t border-white/10">
+      <div className="relative h-[260px] border-t border-white/10 sm:h-[320px] lg:h-[360px]">
         <div className="absolute inset-0 opacity-[0.22]">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(250,204,21,0.15),transparent_55%),radial-gradient(circle_at_70%_35%,rgba(59,130,246,0.18),transparent_60%),radial-gradient(circle_at_55%_75%,rgba(16,185,129,0.12),transparent_55%)]" />
           <div className="absolute inset-0 [background-image:linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:56px_56px]" />
@@ -125,7 +132,7 @@ function PopMap() {
 
         <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2">
           <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-400/45 to-transparent" />
-          <div className="h-[3px] w-32 bg-blue-400/30 blur-md orbit-slide" />
+          <div className="orbit-slide h-[3px] w-32 bg-blue-400/30 blur-md" />
         </div>
 
         <PopNode left="18%" top="56%" label="MISSISSAUGA" tone="ok" role="Primary edge" />
@@ -143,24 +150,44 @@ function PopMap() {
 
 function PopList() {
   const pops = [
-    { name: "Mississauga (Primary Edge)", status: "Operational", tone: "ok" as const, note: "Primary monitoring & escalation anchor." },
-    { name: "Toronto (Interconnect)", status: "Observed", tone: "info" as const, note: "Interconnect posture and telemetry alignment." },
-    { name: "Montreal (Transit Peer)", status: "Observed", tone: "info" as const, note: "Transit posture and routing discipline." },
-    { name: "Ottawa (Expansion Path)", status: "Planned", tone: "warn" as const, note: "Expansion remains milestone-driven (no overclaiming)." },
+    {
+      name: "Mississauga (Primary Edge)",
+      status: "Operational",
+      tone: "ok" as const,
+      note: "Primary monitoring & escalation anchor.",
+    },
+    {
+      name: "Toronto (Interconnect)",
+      status: "Observed",
+      tone: "info" as const,
+      note: "Interconnect posture and telemetry alignment.",
+    },
+    {
+      name: "Montreal (Transit Peer)",
+      status: "Observed",
+      tone: "info" as const,
+      note: "Transit posture and routing discipline.",
+    },
+    {
+      name: "Ottawa (Expansion Path)",
+      status: "Planned",
+      tone: "warn" as const,
+      note: "Expansion remains milestone-driven (no overclaiming).",
+    },
   ];
 
   return (
     <div className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
       <div className="text-[11px] tracking-[0.28em] text-white/55">EDGE POP LIST</div>
-      <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
+      <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
         Presence expressed as operational roles
       </h2>
-      <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
+      <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
         POPs are presented as operational components (edge, interconnect, peer). Status is
         conservative and updated as delivery milestones are completed.
       </p>
 
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-5">
         {pops.map((p) => (
           <div key={p.name} className="rounded-2xl border border-white/10 bg-black/20 p-5">
             <div className="flex items-start justify-between gap-4">
@@ -181,15 +208,16 @@ function LatencyPosture() {
   return (
     <div className="rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
       <div className="text-[11px] tracking-[0.28em] text-white/55">LATENCY POSTURE</div>
-      <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
+      <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
         Measured, documented, and explained
       </h2>
-      <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
-        We treat latency as an operational signal — not a marketing number. Measurements are contextual:
-        route, time window, upstream conditions, and the client’s physical last-mile environment.
+      <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
+        We treat latency as an operational signal — not a marketing number. Measurements are
+        contextual: route, time window, upstream conditions, and the client’s physical last-mile
+        environment.
       </p>
 
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3 sm:gap-5">
         <div className="rounded-2xl border border-white/10 bg-white/[0.045] p-5">
           <div className="text-[11px] tracking-[0.22em] text-white/55">BASELINE</div>
           <p className="mt-3 text-sm leading-6 text-white/65">
@@ -215,23 +243,44 @@ function LatencyPosture() {
 
 function EscalationModel() {
   const steps = [
-    { level: "L1 — Intake & Confirmation", bullets: ["Confirm scope: single site vs area signal", "Verify power, link state, and basic path tests", "Collect timestamps and a simple description of symptoms"] },
-    { level: "L2 — Network Diagnosis", bullets: ["Telemetry review: path stability and error posture", "Route / upstream checks (as applicable)", "Determine whether issue is local, upstream, or equipment-related"] },
-    { level: "L3 — Provider & Remediation", bullets: ["Engage upstream/partner escalation when required", "Maintain documented timeline and client updates", "Close-out report with resolution summary and prevention notes"] },
+    {
+      level: "L1 — Intake & Confirmation",
+      bullets: [
+        "Confirm scope: single site vs area signal",
+        "Verify power, link state, and basic path tests",
+        "Collect timestamps and a simple description of symptoms",
+      ],
+    },
+    {
+      level: "L2 — Network Diagnosis",
+      bullets: [
+        "Telemetry review: path stability and error posture",
+        "Route / upstream checks (as applicable)",
+        "Determine whether issue is local, upstream, or equipment-related",
+      ],
+    },
+    {
+      level: "L3 — Provider & Remediation",
+      bullets: [
+        "Engage upstream/partner escalation when required",
+        "Maintain documented timeline and client updates",
+        "Close-out report with resolution summary and prevention notes",
+      ],
+    },
   ];
 
   return (
     <div className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
       <div className="text-[11px] tracking-[0.28em] text-white/55">ESCALATION MODEL</div>
-      <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
+      <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
         Predictable response, disciplined updates
       </h2>
-      <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
-        Structured escalation: clear ownership, clear timestamps, and a predictable sequence of checks
-        before vendor escalation.
+      <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
+        Structured escalation: clear ownership, clear timestamps, and a predictable sequence of
+        checks before vendor escalation.
       </p>
 
-      <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+      <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3 sm:gap-5">
         {steps.map((s) => (
           <div key={s.level} className="rounded-2xl border border-white/10 bg-black/20 p-5">
             <div className="text-sm font-medium text-white/90">{s.level}</div>
@@ -248,17 +297,21 @@ function EscalationModel() {
 }
 
 function ChangeLogStrip() {
-  const items = [NETWORK_CHANGELOG.last_change, NETWORK_CHANGELOG.current_posture, NETWORK_CHANGELOG.next_window];
+  const items = [
+    NETWORK_CHANGELOG.last_change,
+    NETWORK_CHANGELOG.current_posture,
+    NETWORK_CHANGELOG.next_window,
+  ];
 
   return (
     <div className="rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
-      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <div className="text-[11px] tracking-[0.28em] text-white/55">CHANGE LOG</div>
-          <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
+          <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
             Controlled updates, disclosed responsibly
           </h2>
-          <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
             We disclose maintenance windows and updates when confirmed, and document what changed,
             what was observed, and what stabilized.
           </p>
@@ -272,7 +325,7 @@ function ChangeLogStrip() {
         </div>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3 sm:gap-5">
         {items.map((i) => (
           <div key={i.label} className="rounded-2xl border border-white/10 bg-white/[0.045] p-5">
             <div className="flex items-start justify-between gap-4">
@@ -296,13 +349,13 @@ function ChangeLogStrip() {
 function TelemetryDisclosureStrip() {
   return (
     <div className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
-      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <div className="text-[11px] tracking-[0.28em] text-white/55">TELEMETRY & DISCLOSURE</div>
-          <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
+          <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
             Status is reported conservatively
           </h2>
-          <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
             We avoid broad “always/never” claims. Network posture reflects observed signals, change
             windows, and support readiness — not marketing coverage.
           </p>
@@ -314,7 +367,7 @@ function TelemetryDisclosureStrip() {
         </div>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3 sm:gap-5">
         <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
           <div className="text-[11px] tracking-[0.22em] text-white/55">WHAT WE PUBLISH</div>
           <p className="mt-3 text-sm leading-6 text-white/65">
@@ -341,10 +394,10 @@ function TelemetryDisclosureStrip() {
 function NetworkIntegrityFooter() {
   return (
     <div className="rounded-3xl border border-white/10 bg-black/30 p-6 sm:p-7">
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <div className="text-[11px] tracking-[0.28em] text-white/55">INTEGRITY NOTICE</div>
-          <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
             This page reflects operational posture and telemetry-driven status statements. Coverage,
             timelines, and milestones are disclosed conservatively and updated only when confirmed.
           </p>
@@ -356,16 +409,16 @@ function NetworkIntegrityFooter() {
         </div>
       </div>
 
-      <div className="mt-5 flex flex-col sm:flex-row gap-3">
+      <div className="mt-5 flex flex-col gap-3 sm:flex-row">
         <a
           href="/coming-soon?intent=access&source=network_footer"
-          className="rounded-2xl bg-[#FACC15] text-black px-5 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
+          className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
         >
           Request Access
         </a>
         <a
           href="/trust"
-          className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white hover:bg-white/10 transition text-center"
+          className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
         >
           Trust & Compliance
         </a>
@@ -375,25 +428,14 @@ function NetworkIntegrityFooter() {
 }
 
 export default function NetworkPage() {
-  /**
-   * ✅ Authority Schema Pack:
-   * - Organization (brand)
-   * - TelecomService (real operator signal)
-   * - BreadcrumbList (indexing clarity)
-   * - FAQPage (rich results potential)
-   *
-   * Note: Keep claims conservative. Don’t list speeds/coverage you can’t prove publicly.
-   */
   const schemaOrg = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://orbitlink.ca/#org",
+    "@id": `${SITE_URL}/#org`,
     name: "Orbitlink",
-    url: "https://orbitlink.ca",
-    logo: "https://orbitlink.ca/logo.png",
-    sameAs: [
-      // add socials when ready (LinkedIn / X / Facebook)
-    ],
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    sameAs: [],
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -421,9 +463,9 @@ export default function NetworkPage() {
   const schemaTelecom = {
     "@context": "https://schema.org",
     "@type": "TelecomService",
-    "@id": "https://orbitlink.ca/network#telecom",
+    "@id": `${PAGE_URL}#telecom`,
     name: "Business Fibre & Network Infrastructure",
-    provider: { "@id": "https://orbitlink.ca/#org" },
+    provider: { "@id": `${SITE_URL}/#org` },
     serviceType: [
       "Business Internet",
       "Fibre Connectivity",
@@ -438,7 +480,7 @@ export default function NetworkPage() {
       "@type": "Audience",
       audienceType: "Business",
     },
-    termsOfService: "https://orbitlink.ca/legal/terms",
+    termsOfService: `${SITE_URL}/legal/terms`,
   };
 
   const schemaBreadcrumbs = {
@@ -449,13 +491,13 @@ export default function NetworkPage() {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://orbitlink.ca/",
+        item: `${SITE_URL}/`,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Network",
-        item: "https://orbitlink.ca/network",
+        item: PAGE_URL,
       },
     ],
   };
@@ -514,16 +556,17 @@ export default function NetworkPage() {
       title="Operational Surface"
       subtitle="A calm view of delivery posture: telemetry, routing discipline, controlled rollout, and predictable escalation."
     >
-      {/* ✅ Authority JSON-LD graph */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
       />
 
-      {/* Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-5">
         {NETWORK_METRICS.map((m) => (
-          <div key={m.label} className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
+          <div
+            key={m.label}
+            className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7"
+          >
             <div className="flex items-start justify-between gap-6">
               <div className="text-[11px] tracking-[0.22em] text-white/55">{m.label}</div>
               <div className="flex items-center gap-2">
@@ -538,21 +581,25 @@ export default function NetworkPage() {
         ))}
       </div>
 
-      <div className="mt-4 sm:mt-6"><PopMap /></div>
-      <div className="mt-4 sm:mt-6"><PopList /></div>
+      <div className="mt-4 sm:mt-6">
+        <PopMap />
+      </div>
 
-      {/* Capability grid */}
-      <div className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
+      <div className="mt-4 sm:mt-6">
+        <PopList />
+      </div>
+
+      <div className="mt-4 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7">
         <div className="text-[11px] tracking-[0.28em] text-white/55">CAPABILITIES</div>
-        <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
+        <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
           Infrastructure-grade operations
         </h2>
-        <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
           Orbitlink is designed to feel like an operator platform: measured performance, disciplined
           change management, and transparency-first delivery.
         </p>
 
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+        <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 sm:gap-4">
           {NETWORK_CAPABILITIES.map((c) => (
             <div key={c.title} className="rounded-2xl border border-white/10 bg-black/20 p-5">
               <div className="text-sm font-medium text-white/90">{c.title}</div>
@@ -562,37 +609,47 @@ export default function NetworkPage() {
         </div>
       </div>
 
-      <div className="mt-4 sm:mt-6"><LatencyPosture /></div>
-      <div className="mt-4 sm:mt-6"><EscalationModel /></div>
-      <div className="mt-4 sm:mt-6"><ChangeLogStrip /></div>
+      <div className="mt-4 sm:mt-6">
+        <LatencyPosture />
+      </div>
 
-      {/* Premium trust strip */}
-      <div className="mt-4 sm:mt-6"><TelemetryDisclosureStrip /></div>
+      <div className="mt-4 sm:mt-6">
+        <EscalationModel />
+      </div>
 
-      {/* Coverage note */}
-      <div className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
+      <div className="mt-4 sm:mt-6">
+        <ChangeLogStrip />
+      </div>
+
+      <div className="mt-4 sm:mt-6">
+        <TelemetryDisclosureStrip />
+      </div>
+
+      <div className="mt-4 rounded-3xl border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7">
         <div className="text-[11px] tracking-[0.28em] text-white/55">COVERAGE</div>
-        <div className="mt-3 text-sm sm:text-[15px] leading-6 text-white/70">
+        <div className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
           {NETWORK_COVERAGE_NOTE}
         </div>
 
-        <div className="mt-5 flex flex-col sm:flex-row gap-3">
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
           <a
             href="/coming-soon?intent=access&source=network"
-            className="rounded-2xl bg-[#FACC15] text-black px-5 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
+            className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
           >
             Request Access
           </a>
           <a
             href="/solutions"
-            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white hover:bg-white/10 transition text-center"
+            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
           >
             View Modules
           </a>
         </div>
       </div>
 
-      <div className="mt-4 sm:mt-6"><NetworkIntegrityFooter /></div>
+      <div className="mt-4 sm:mt-6">
+        <NetworkIntegrityFooter />
+      </div>
     </PageShell>
   );
 }
