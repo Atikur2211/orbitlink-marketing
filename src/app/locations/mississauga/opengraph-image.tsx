@@ -1,7 +1,6 @@
 // src/app/locations/mississauga/opengraph-image.tsx
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
 
 export const alt = "Orbitlink — Business Fibre in Mississauga";
 export const size = {

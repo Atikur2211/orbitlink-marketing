@@ -1,7 +1,6 @@
 // src/app/services/opengraph-image.tsx
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
 
 export const alt = "Orbitlink — Managed Network Infrastructure";
 export const size = {

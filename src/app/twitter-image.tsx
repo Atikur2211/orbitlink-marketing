@@ -1,7 +1,6 @@
 // src/app/twitter-image.tsx
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
 
 export const alt = "Orbitlink — Business Fibre & Network Infrastructure";
 export const size = {
