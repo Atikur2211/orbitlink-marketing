@@ -16,7 +16,7 @@ function SocialIcon({
       title={label}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-white/70 transition hover:border-white/20 hover:bg-white/[0.07] hover:text-white"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.035] text-white/65 transition hover:border-white/20 hover:bg-white/[0.07] hover:text-white"
     >
       {children}
     </a>
@@ -55,185 +55,240 @@ function IconFacebook() {
   );
 }
 
-function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return <Link href={href} className="text-white/60 transition hover:text-white">{children}</Link>;
+function FooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className="text-sm text-white/58 transition hover:text-white"
+    >
+      {children}
+    </Link>
+  );
 }
 
 function RailTitle({ children }: { children: React.ReactNode }) {
-  return <div className="text-[11px] tracking-[0.26em] text-white/45">{children}</div>;
+  return (
+    <div className="text-[11px] tracking-[0.28em] text-white/40">
+      {children}
+    </div>
+  );
 }
+
+function FooterRail({
+  title,
+  links,
+}: {
+  title: string;
+  links: Array<{ href: string; label: string }>;
+}) {
+  return (
+    <div>
+      <RailTitle>{title}</RailTitle>
+      <ul className="mt-4 space-y-3">
+        {links.map((link) => (
+          <li key={`${title}-${link.href}`}>
+            <FooterLink href={link.href}>{link.label}</FooterLink>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+const companyLinks = [
+  { href: "/about", label: "About" },
+  { href: "/solutions", label: "Solutions" },
+  { href: "/network", label: "Network" },
+  { href: "/trust", label: "Trust" },
+  { href: "/contact", label: "Contact" },
+];
+
+const serviceLinks = [
+  { href: "/services", label: "All services" },
+  { href: "/services/business-fibre-internet", label: "Business fibre" },
+  { href: "/services/dedicated-internet-access", label: "Dedicated Internet" },
+  { href: "/services/managed-lan-wifi", label: "Managed Wi-Fi" },
+  { href: "/services/lte-5g-continuity", label: "LTE / 5G continuity" },
+  { href: "/services/voip-cloud-voice", label: "VoIP & cloud voice" },
+];
+
+const locationLinks = [
+  { href: "/locations", label: "All locations" },
+  { href: "/locations/ontario", label: "Ontario hub" },
+  { href: "/locations/mississauga", label: "Mississauga" },
+  { href: "/locations/brampton", label: "Brampton" },
+  { href: "/locations/toronto", label: "Toronto" },
+  { href: "/locations/markham", label: "Markham" },
+];
+
+const legalLinks = [
+  { href: "/legal/privacy", label: "Privacy" },
+  { href: "/legal/terms", label: "Terms" },
+  { href: "/legal/acceptable-use", label: "Acceptable use" },
+  { href: "/legal/cookies", label: "Cookies" },
+];
 
 export default function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/10 bg-black/30">
-      <div className="mx-auto max-w-6xl px-5 sm:px-7 py-10">
-        {/* Top surface */}
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-          {/* Brand block */}
-          <div className="lg:col-span-5">
+    <footer className="relative border-t border-white/10 bg-black/40">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="absolute left-0 top-10 h-56 w-56 rounded-full bg-blue-500/6 blur-3xl" />
+        <div className="absolute right-0 top-16 h-56 w-56 rounded-full bg-emerald-500/6 blur-3xl" />
+        <div className="absolute bottom-0 left-1/2 h-40 w-[34rem] -translate-x-1/2 rounded-full bg-[#FACC15]/5 blur-3xl" />
+      </div>
+
+      <div className="relative mx-auto max-w-6xl px-5 py-12 sm:px-7 sm:py-14">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-4">
             <div className="flex items-center gap-3">
               <span className="relative inline-flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/30 motion-reduce:hidden" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
               </span>
-              <div className="text-[11px] tracking-[0.30em] text-white/70">ORBITLINK</div>
-              <span className="ml-2 hidden sm:inline-flex rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] tracking-wide text-white/70">
+
+              <div className="text-[11px] tracking-[0.30em] text-white/72">
+                ORBITLINK
+              </div>
+
+              <span className="hidden rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] tracking-wide text-white/65 sm:inline-flex">
                 Operator-grade
               </span>
             </div>
 
-            <div className="mt-4 max-w-md text-sm sm:text-[15px] leading-6 text-white/70">
-              Premium connectivity engineered for disciplined operations — structured onboarding, documented delivery,
-              and an enterprise support posture across Ontario.
+            <div className="mt-5 max-w-md text-sm leading-6 text-white/68 sm:text-[15px]">
+              Premium connectivity engineered for disciplined operations,
+              structured onboarding, documented delivery, and an enterprise
+              support posture across Ontario.
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              {["TELECOMMUNICATIONS", "OPERATIONS-FIRST", "AUDIT-READY"].map((t) => (
-                <span
-                  key={t}
-                  className="inline-flex items-center rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] tracking-[0.18em] text-white/60"
-                >
-                  {t}
-                </span>
-              ))}
+            <div className="mt-5 flex flex-wrap gap-2">
+              {["TELECOMMUNICATIONS", "OPERATIONS-FIRST", "AUDIT-READY"].map(
+                (item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center rounded-2xl border border-white/10 bg-white/[0.035] px-3 py-2 text-[11px] tracking-[0.18em] text-white/56"
+                  >
+                    {item}
+                  </span>
+                )
+              )}
             </div>
 
-            <div className="mt-5 flex items-center gap-2">
-              <SocialIcon href="https://www.linkedin.com/company/orbitlinkhq" label="Orbitlink on LinkedIn">
+            <div className="mt-6 flex items-center gap-2.5">
+              <SocialIcon
+                href="https://www.linkedin.com/company/orbitlinkhq"
+                label="Orbitlink on LinkedIn"
+              >
                 <IconLinkedIn />
               </SocialIcon>
               <SocialIcon href="https://x.com/OrbitlinkHQ" label="Orbitlink on X">
                 <IconX />
               </SocialIcon>
-              <SocialIcon href="https://www.youtube.com/@Orbitlinkhq" label="Orbitlink on YouTube">
+              <SocialIcon
+                href="https://www.youtube.com/@Orbitlinkhq"
+                label="Orbitlink on YouTube"
+              >
                 <IconYouTube />
               </SocialIcon>
-              <SocialIcon href="https://www.facebook.com/orbitlinkhq" label="Orbitlink on Facebook">
+              <SocialIcon
+                href="https://www.facebook.com/orbitlinkhq"
+                label="Orbitlink on Facebook"
+              >
                 <IconFacebook />
               </SocialIcon>
             </div>
 
-            {/* NAP + posture (Local SEO) */}
-            <div className="mt-6 space-y-1 text-xs text-white/55">
-              <div>
-                Orbitlink is a brand of <span className="text-white/75">TIRAV Technologies Inc.</span>
+            <div className="mt-7 rounded-[28px] border border-white/10 bg-white/[0.03] p-5">
+              <div className="text-[11px] tracking-[0.26em] text-white/42">
+                CORPORATE DETAILS
               </div>
-              <div className="text-white/70">
-                <span className="text-white/55">Address:</span> 30 Eglinton Ave W, Suite 400-A77, Mississauga, ON L5R 3E7, Canada
+
+              <div className="mt-4 space-y-2 text-sm leading-6 text-white/65">
+                <div>
+                  Orbitlink is a brand of{" "}
+                  <span className="text-white/82">TIRAV Technologies Inc.</span>
+                </div>
+                <div>
+                  <span className="text-white/45">Address:</span>{" "}
+                  30 Eglinton Ave W, Suite 400-A77, Mississauga, ON L5R 3E7,
+                  Canada
+                </div>
+                <div>
+                  <span className="text-white/45">Phone:</span>{" "}
+                  <a
+                    className="text-white/78 transition hover:text-white"
+                    href="tel:+18888672480"
+                  >
+                    1-888-8-ORBIT-0
+                  </a>
+                </div>
+                <div className="text-xs text-white/45">
+                  Availability is confirmed per address. No overclaims.
+                </div>
               </div>
-              <div className="text-white/70">
-                <span className="text-white/55">Phone:</span>{" "}
-                <a className="text-white/75 hover:text-white transition" href="tel:+18888672480">
-                  1-888-8-ORBIT-0
-                </a>
-              </div>
-              <div className="text-white/45">Availability is confirmed per address. No overclaims.</div>
             </div>
           </div>
 
-          {/* Link rails */}
-          <div className="lg:col-span-7">
-            <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-              {/* Company */}
-              <div>
-                <RailTitle>COMPANY</RailTitle>
-                <ul className="mt-4 space-y-2.5 text-sm">
-                  <li><FooterLink href="/about">About</FooterLink></li>
-                  <li><FooterLink href="/solutions">Solutions</FooterLink></li>
-                  <li><FooterLink href="/network">Network</FooterLink></li>
-                  <li><FooterLink href="/trust">Trust</FooterLink></li>
-                </ul>
+          <div className="lg:col-span-8">
+            <div className="rounded-[32px] border border-white/10 bg-white/[0.03] p-6 sm:p-7">
+              <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+                <FooterRail title="COMPANY" links={companyLinks} />
+                <FooterRail title="SERVICES" links={serviceLinks} />
+                <FooterRail title="LOCATIONS" links={locationLinks} />
+                <FooterRail title="LEGAL" links={legalLinks} />
               </div>
 
-              {/* Services */}
-              <div>
-                <RailTitle>SERVICES</RailTitle>
-                <ul className="mt-4 space-y-2.5 text-sm">
-                  <li><FooterLink href="/services">All services</FooterLink></li>
-                  <li><FooterLink href="/services/business-fibre-internet">Business fibre</FooterLink></li>
-                  <li><FooterLink href="/services/dedicated-internet-access">Dedicated Internet</FooterLink></li>
-                  <li><FooterLink href="/services/managed-lan-wifi">Managed Wi-Fi</FooterLink></li>
-                  <li><FooterLink href="/services/lte-5g-continuity">LTE / 5G continuity</FooterLink></li>
-                  <li><FooterLink href="/services/voip-cloud-voice">VoIP & cloud voice</FooterLink></li>
-                </ul>
-              </div>
+              <div className="mt-8 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-              {/* Locations */}
-              <div>
-                <RailTitle>LOCATIONS</RailTitle>
-                <ul className="mt-4 space-y-2.5 text-sm">
-                  <li><FooterLink href="/locations">All locations</FooterLink></li>
-                  <li><FooterLink href="/locations/ontario">Ontario hub</FooterLink></li>
-                  <li><FooterLink href="/locations/mississauga">Mississauga</FooterLink></li>
-                  <li><FooterLink href="/locations/brampton">Brampton</FooterLink></li>
-                  <li><FooterLink href="/locations/toronto">Toronto</FooterLink></li>
-                  <li><FooterLink href="/locations/markham">Markham</FooterLink></li>
-                  <li><FooterLink href="/locations/vaughan">Vaughan</FooterLink></li>
-                  <li><FooterLink href="/locations/oakville">Oakville</FooterLink></li>
-                </ul>
-              </div>
-
-              {/* Legal + Contact */}
-              <div>
-                <RailTitle>LEGAL</RailTitle>
-                <ul className="mt-4 space-y-2.5 text-sm">
-                  <li><FooterLink href="/legal/privacy">Privacy</FooterLink></li>
-                  <li><FooterLink href="/legal/terms">Terms</FooterLink></li>
-                  <li><FooterLink href="/legal/acceptable-use">Acceptable use</FooterLink></li>
-                  <li><FooterLink href="/legal/cookies">Cookies</FooterLink></li>
-                </ul>
-
-                <div className="mt-8">
-                  <RailTitle>CONTACT</RailTitle>
-                  <ul className="mt-4 space-y-2.5 text-sm">
-                    <li>
-                      <a className="text-white/60 transition hover:text-white" href="mailto:concierge@orbitlink.ca">
-                        concierge@orbitlink.ca
-                      </a>
-                    </li>
-                    <li>
-                      <a className="text-white/60 transition hover:text-white" href="tel:+18888672480">
-                        1-888-8-ORBIT-0
-                      </a>
-                    </li>
-                    <li className="pt-2 text-xs leading-5 text-white/45">
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Micro CTA */}
-            <div className="mt-8 rounded-3xl border border-white/10 bg-white/[0.035] p-5 sm:p-6">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <div className="text-[11px] tracking-[0.26em] text-white/45">CONCIERGE DESK</div>
-                  <div className="mt-2 text-sm text-white/80">
+              <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div className="max-w-2xl">
+                  <div className="text-[11px] tracking-[0.26em] text-white/42">
+                    CONCIERGE DESK
+                  </div>
+                  <div className="mt-2 text-sm text-white/82">
                     Request access for structured onboarding and provisioning.
                   </div>
-                  <div className="mt-1 text-xs text-white/55">
-                    Include address • module (Fibre/DIA) • static IP • managed LAN/Wi-Fi • continuity
+                  <div className="mt-1 text-xs leading-5 text-white/50">
+                    Include address • module (Fibre/DIA) • static IP • managed
+                    LAN/Wi-Fi • continuity
                   </div>
                 </div>
 
-                <Link
-                  href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl border border-[#FACC15]/35 bg-[#FACC15]/10 px-4 py-2.5 text-sm font-medium text-[#FDE68A] transition hover:border-[#FACC15]/55 hover:bg-[#FACC15]/15"
-                >
-                  Request Access
-                </Link>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href="mailto:concierge@orbitlink.ca"
+                    className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.035] px-4 py-2.5 text-sm text-white/78 transition hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
+                  >
+                    concierge@orbitlink.ca
+                  </a>
+
+                  <Link
+                    href="/contact#intake"
+                    className="inline-flex items-center justify-center rounded-2xl border border-[#FACC15]/35 bg-[#FACC15]/10 px-4 py-2.5 text-sm font-medium text-[#FDE68A] transition hover:border-[#FACC15]/55 hover:bg-[#FACC15]/15"
+                  >
+                    Request Access
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom bar */}
         <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="text-xs text-white/45">© {year} TIRAV Technologies Inc. All rights reserved.</div>
+          <div className="text-xs text-white/42">
+            © {year} TIRAV Technologies Inc. All rights reserved.
+          </div>
 
-          <div className="flex flex-wrap gap-3 text-xs text-white/45">
+          <div className="flex flex-wrap gap-3 text-xs text-white/42">
             <span>Ontario</span>
             <span aria-hidden="true">•</span>
             <span>Availability by building</span>
