@@ -16,10 +16,36 @@ function SocialIcon({
       title={label}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-white/65 transition hover:border-white/20 hover:bg-white/[0.07] hover:text-white"
+      className="group inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-white/60 transition duration-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
     >
       {children}
     </a>
+  );
+}
+
+function FooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group relative inline-block text-sm text-white/58 transition duration-300 hover:text-white"
+    >
+      {children}
+      <span className="absolute -bottom-1 left-0 h-px w-0 bg-gradient-to-r from-[#38FDFE] via-white/70 to-transparent transition-all duration-300 group-hover:w-full" />
+    </Link>
+  );
+}
+
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="text-[11px] tracking-[0.28em] text-white/38">
+      {children}
+    </div>
   );
 }
 
@@ -55,82 +81,86 @@ function IconFacebook() {
   );
 }
 
-function FooterLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      className="text-sm text-white/58 transition hover:text-white"
-    >
-      {children}
-    </Link>
-  );
-}
-
-function SectionTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="text-[11px] tracking-[0.28em] text-white/38">
-      {children}
-    </div>
-  );
-}
-
 export default function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden border-t border-white/10 bg-[#07090D] text-white">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-[#06080C] text-white">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-[-8rem] top-[-3rem] h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
-        <div className="absolute right-[-6rem] top-[10%] h-72 w-72 rounded-full bg-emerald-500/8 blur-3xl" />
-        <div className="absolute bottom-[-8rem] left-1/2 h-64 w-[40rem] -translate-x-1/2 rounded-full bg-[#FACC15]/8 blur-3xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_32%)]" />
-        <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:72px_72px]" />
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />
+        <div className="absolute inset-0 opacity-[0.055] [background-image:linear-gradient(to_right,rgba(255,255,255,0.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.14)_1px,transparent_1px)] [background-size:68px_68px]" />
+
+        <div className="absolute -left-28 top-0 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl" />
+        <div className="absolute right-[-8rem] top-[12%] h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="absolute bottom-[-6rem] left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
+
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+        <div className="absolute inset-x-[12%] top-24 h-px bg-gradient-to-r from-transparent via-[#38FDFE]/35 to-transparent" />
+        <div className="absolute inset-x-[22%] bottom-20 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+        <div className="absolute left-[10%] top-[18%] h-2 w-2 rounded-full bg-[#38FDFE]/40 shadow-[0_0_28px_rgba(56,253,254,0.45)]" />
+        <div className="absolute left-[46%] top-[10%] h-1.5 w-1.5 rounded-full bg-white/30 shadow-[0_0_18px_rgba(255,255,255,0.22)]" />
+        <div className="absolute right-[12%] top-[22%] h-2 w-2 rounded-full bg-emerald-300/30 shadow-[0_0_26px_rgba(52,211,153,0.35)]" />
+        <div className="absolute left-[74%] bottom-[18%] h-2 w-2 rounded-full bg-[#FACC15]/30 shadow-[0_0_26px_rgba(250,204,21,0.30)]" />
+
+        <div className="absolute top-[23%] h-px w-40 bg-gradient-to-r from-transparent via-[#38FDFE]/45 to-transparent blur-sm animate-[footerSweep_10s_linear_infinite]" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-5 py-12 sm:px-7 sm:py-14 lg:px-8 lg:py-16">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
+      <style jsx>{`
+        @keyframes footerSweep {
+          0% {
+            transform: translateX(-10vw);
+            opacity: 0;
+          }
+          12% {
+            opacity: 1;
+          }
+          88% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateX(92vw);
+            opacity: 0;
+          }
+        }
+      `}</style>
+
+      <div className="relative mx-auto max-w-7xl px-5 py-12 sm:px-7 sm:py-14 lg:px-10 lg:py-16">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">
             <div className="flex items-center gap-3">
               <span className="relative inline-flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/30 motion-reduce:hidden" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/35 motion-reduce:hidden" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
               </span>
 
-              <span className="text-[11px] tracking-[0.30em] text-white/76">
+              <span className="text-[11px] tracking-[0.32em] text-white/72">
                 ORBITLINK
               </span>
 
-              <span className="hidden rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] tracking-[0.18em] text-white/48 sm:inline-flex">
-                OPERATOR-GRADE
+              <span className="hidden rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] tracking-[0.18em] text-white/46 sm:inline-flex">
+                OPERATOR SURFACE
               </span>
             </div>
 
             <div className="mt-8 max-w-xl">
-              <h2 className="text-[2rem] font-semibold tracking-tight text-white sm:text-[2.4rem] sm:leading-[1.02]">
-                Premium connectivity,
-                <span className="block text-white/64">
-                  disciplined like a Tier-1 operator.
+              <h2 className="text-[1.95rem] font-semibold tracking-tight text-white sm:text-[2.5rem] sm:leading-[1.03]">
+                Infrastructure-grade connectivity,
+                <span className="block text-white/58">
+                  presented with calm operational clarity.
                 </span>
               </h2>
 
               <p className="mt-5 max-w-md text-sm leading-6 text-white/62 sm:text-[15px]">
-                Structured onboarding, documented delivery, and enterprise support
-                posture across Ontario.
+                Premium business fibre, managed network infrastructure, and disciplined onboarding
+                designed for modern enterprise environments across Ontario.
               </p>
             </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              {["TELECOMMUNICATIONS", "OPERATIONS-FIRST", "AUDIT-READY"].map((item) => (
+              {["TELECOM", "OPS-FIRST", "AUDIT-READY"].map((item) => (
                 <span
                   key={item}
-                  className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] tracking-[0.16em] text-white/50"
+                  className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] tracking-[0.16em] text-white/52"
                 >
                   {item}
                 </span>
@@ -152,27 +182,27 @@ export default function SiteFooter() {
               </SocialIcon>
             </div>
 
-            <div className="mt-8 space-y-2 text-xs text-white/46 sm:text-[13px]">
+            <div className="mt-8 space-y-1.5 text-xs text-white/45">
               <div>
-                Orbitlink is a brand of{" "}
-                <span className="text-white/72">TIRAV Technologies Inc.</span>
+                Orbitlink is a brand of <span className="text-white/68">TIRAV Technologies Inc.</span>
               </div>
-              <div className="max-w-md text-white/58">
+              <div className="max-w-sm text-white/58">
                 30 Eglinton Ave W, Suite 400-A77, Mississauga, ON L5R 3E7, Canada
               </div>
               <div>
                 <a
-                  className="text-white/64 transition hover:text-white"
+                  className="text-white/62 transition hover:text-white"
                   href="tel:+18888672480"
                 >
                   1-888-8-ORBIT-0
                 </a>
               </div>
+              <div className="text-white/38">Availability is confirmed per address.</div>
             </div>
           </div>
 
           <div className="lg:col-span-7">
-            <div className="grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
               <div>
                 <SectionTitle>COMPANY</SectionTitle>
                 <ul className="mt-4 space-y-3">
@@ -210,49 +240,40 @@ export default function SiteFooter() {
               </div>
             </div>
 
-            <div className="mt-10 rounded-[28px] border border-white/10 bg-white/[0.025] px-5 py-5 sm:px-6 sm:py-6">
-              <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-                <div className="max-w-2xl">
-                  <div className="text-[11px] tracking-[0.26em] text-white/38">
-                    CONCIERGE DESK
+            <div className="mt-10 rounded-[28px] border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="max-w-xl">
+                  <div className="text-[11px] tracking-[0.26em] text-white/40">
+                    CONCIERGE ACCESS
                   </div>
-                  <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                    Structured onboarding for business fibre, dedicated internet,
-                    managed LAN/Wi-Fi, and continuity architecture.
-                  </p>
+                  <div className="mt-2 text-sm text-white/78">
+                    Structured onboarding for business fibre, dedicated internet, managed LAN/Wi-Fi,
+                    continuity, and enterprise infrastructure review.
+                  </div>
                 </div>
 
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Link
-                    href="/contact#intake"
-                    className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                  >
-                    Request Access
-                  </Link>
-
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center justify-center rounded-2xl border border-white/12 bg-white/[0.03] px-5 py-3 text-sm text-white/80 transition hover:bg-white/[0.07] hover:text-white"
-                  >
-                    Contact
-                  </Link>
-                </div>
+                <Link
+                  href="/contact#intake"
+                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+                >
+                  Request Access
+                </Link>
               </div>
             </div>
           </div>
         </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
-          <div className="text-xs text-white/40">
+          <div className="text-xs text-white/38">
             © {year} TIRAV Technologies Inc. All rights reserved.
           </div>
 
-          <div className="flex flex-wrap gap-3 text-xs text-white/40">
+          <div className="flex flex-wrap gap-3 text-xs text-white/38">
             <span>Ontario</span>
             <span aria-hidden="true">•</span>
             <span>Availability by building</span>
             <span aria-hidden="true">•</span>
-            <span>Documented delivery</span>
+            <span>Enterprise onboarding</span>
           </div>
         </div>
       </div>
