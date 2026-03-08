@@ -8,23 +8,27 @@ import {
   MODULE_SPECS,
 } from "@/lib/siteStatus";
 
-/** ✅ Million-dollar SEO metadata */
+const SITE_URL = "https://orbitlink.ca";
+const PAGE_URL = `${SITE_URL}/trust`;
+const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
+const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
+
 export const metadata: Metadata = {
-  title: "Trust & Compliance",
+  title: "Trust & Compliance · Orbitlink",
   description:
-    "Transparency-first posture for audit readiness, operational integrity, and controlled rollout. Regulatory credibility by design for Ontario enterprises.",
-  alternates: { canonical: "https://orbitlink.ca/trust" },
+    "A premium trust surface for enterprise buyers, auditors, and regulated environments — evidence-first operations, controlled rollout, disciplined disclosure, and scope-locked delivery.",
+  alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Trust & Compliance · Orbitlink",
     description:
       "Audit-ready posture: controlled rollout, verifiable status statements, evidence-friendly operations, and disciplined change management.",
-    url: "https://orbitlink.ca/trust",
+    url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
     locale: "en_CA",
     images: [
       {
-        url: "https://orbitlink.ca/og-image.jpg",
+        url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
         alt: "Orbitlink Trust & Compliance",
@@ -35,7 +39,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Trust & Compliance · Orbitlink",
     description:
-      "Audit-ready posture: evidence-first operations, controlled rollout, and disciplined change management.",
+      "Evidence-first operations, controlled rollout, and disciplined change management for modern enterprise environments.",
+    images: [TWITTER_IMAGE_URL],
   },
   robots: {
     index: true,
@@ -50,6 +55,28 @@ export const metadata: Metadata = {
   },
 };
 
+function statusText(tone: "ok" | "inprogress" | "info") {
+  if (tone === "ok") return "OPERATIONAL";
+  if (tone === "inprogress") return "IN PROCESS";
+  return "DISCLOSURE";
+}
+
+function toneTextClass(tone: "ok" | "inprogress" | "info") {
+  if (tone === "ok") return "text-emerald-300";
+  if (tone === "inprogress") return "text-[#FACC15]";
+  return "text-blue-300";
+}
+
+function tonePillClass(tone: "ok" | "inprogress" | "info") {
+  if (tone === "ok") {
+    return "border-emerald-400/20 bg-emerald-500/10 text-emerald-200";
+  }
+  if (tone === "inprogress") {
+    return "border-[#FACC15]/25 bg-[#FACC15]/10 text-[#FDE68A]";
+  }
+  return "border-blue-400/20 bg-blue-500/10 text-blue-200";
+}
+
 function StatusTile({
   label,
   value,
@@ -59,45 +86,30 @@ function StatusTile({
   value: string;
   tone: "ok" | "inprogress" | "info";
 }) {
-  const toneClass =
-    tone === "ok"
-      ? "text-emerald-300"
-      : tone === "inprogress"
-      ? "text-[#FACC15]"
-      : "text-blue-300";
-
-  const tonePill =
-    tone === "ok"
-      ? "border-emerald-400/20 bg-emerald-500/10 text-emerald-200"
-      : tone === "inprogress"
-      ? "border-[#FACC15]/25 bg-[#FACC15]/10 text-[#FDE68A]"
-      : "border-blue-400/20 bg-blue-500/10 text-blue-200";
-
   return (
     <div className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <div className="text-[11px] tracking-[0.28em] text-white/55">{label}</div>
-          <div className={`mt-3 text-sm font-medium ${toneClass}`}>{value}</div>
+          <div className="text-[11px] tracking-[0.28em] text-white/50">{label}</div>
+          <div className={`mt-3 text-sm font-medium ${toneTextClass(tone)}`}>{value}</div>
         </div>
 
         <div
           className={[
             "shrink-0 rounded-full border px-3 py-1.5 text-[11px]",
-            tonePill,
+            tonePillClass(tone),
           ].join(" ")}
         >
-          {tone === "ok"
-            ? "OPERATIONAL"
-            : tone === "inprogress"
-            ? "IN PROCESS"
-            : "DISCLOSURE"}
+          {statusText(tone)}
         </div>
       </div>
 
-      <div className="mt-4 text-sm leading-6 text-white/65">
-        Statements are conservative and updated only when milestones are verifiable.
-      </div>
+      <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+      <p className="mt-4 text-sm leading-6 text-white/65">
+        Statements remain conservative and are updated only when the underlying milestone is complete
+        and internally verifiable.
+      </p>
     </div>
   );
 }
@@ -113,13 +125,13 @@ function EvidenceCard({
 }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/20 p-5 sm:p-6">
-      <div className="text-[11px] tracking-[0.28em] text-white/55">{heading}</div>
-      <ul className="mt-3 space-y-2 text-sm text-white/65">
+      <div className="text-[11px] tracking-[0.28em] text-white/50">{heading}</div>
+      <ul className="mt-4 space-y-2.5 text-sm text-white/65">
         {bullets.map((b) => (
           <li key={b}>• {b}</li>
         ))}
       </ul>
-      {note ? <p className="mt-4 text-xs leading-5 text-white/55">{note}</p> : null}
+      {note ? <p className="mt-4 text-xs leading-5 text-white/52">{note}</p> : null}
     </div>
   );
 }
@@ -132,28 +144,36 @@ function Pill({ children }: { children: React.ReactNode }) {
   );
 }
 
+function TrustPrinciple({
+  title,
+  desc,
+}: {
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/65">{desc}</p>
+    </div>
+  );
+}
+
 export default function TrustPage() {
   const moduleOptions = MODULE_SPECS.map((m) => m.name);
 
-  /**
-   * ✅ Authority Schema Pack:
-   * - Organization (brand authority)
-   * - TelecomService (operator/service signal)
-   * - BreadcrumbList (indexing clarity)
-   * - FAQPage (rich results potential)
-   *
-   * Conservative wording: avoids overclaiming coverage, speeds, or regulatory status.
-   */
   const schemaOrg = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://orbitlink.ca/#org",
+    "@id": `${SITE_URL}/#org`,
     name: "Orbitlink",
-    url: "https://orbitlink.ca",
-    logo: "https://orbitlink.ca/logo.png",
-    sameAs: [
-      // add socials when ready (LinkedIn / X / Facebook)
-    ],
+    url: SITE_URL,
+    logo: `${SITE_URL}/icon.png`,
+    brand: { "@type": "Brand", name: "Orbitlink" },
+    parentOrganization: {
+      "@type": "Organization",
+      name: "TIRAV Technologies Inc.",
+    },
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -172,39 +192,51 @@ export default function TrustPage() {
     ],
     address: {
       "@type": "PostalAddress",
+      streetAddress: "30 Eglinton Ave W, Suite 400-A77",
       addressCountry: "CA",
       addressRegion: "ON",
       addressLocality: "Mississauga",
+      postalCode: "L5R 3E7",
     },
   };
 
-  const schemaTelecom = {
+  const schemaService = {
     "@context": "https://schema.org",
-    "@type": "TelecomService",
-    "@id": "https://orbitlink.ca/trust#telecom",
-    name: "Business Fibre & Network Infrastructure",
-    provider: { "@id": "https://orbitlink.ca/#org" },
+    "@type": "Service",
+    "@id": `${PAGE_URL}#trust-surface`,
+    name: "Trust & Compliance Review Surface",
+    provider: { "@id": `${SITE_URL}/#org` },
     serviceType: [
-      "Business Internet",
-      "Fibre Connectivity",
-      "Managed Network Services",
-      "Operational Escalation & Support",
+      "Business Fibre Internet",
+      "Managed Network Infrastructure",
       "Compliance-first Delivery Posture",
+      "Operational Escalation & Support",
+      "Verification Review Process",
     ],
+    audience: { "@type": "Audience", audienceType: "Business" },
     areaServed: [
       { "@type": "AdministrativeArea", name: "Ontario, Canada" },
       { "@type": "City", name: "Mississauga" },
     ],
-    audience: { "@type": "Audience", audienceType: "Business" },
-    termsOfService: "https://orbitlink.ca/legal/terms",
+    termsOfService: `${SITE_URL}/legal/terms`,
   };
 
   const schemaBreadcrumbs = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://orbitlink.ca/" },
-      { "@type": "ListItem", position: 2, name: "Trust & Compliance", item: "https://orbitlink.ca/trust" },
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${SITE_URL}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Trust & Compliance",
+        item: PAGE_URL,
+      },
     ],
   };
 
@@ -214,11 +246,11 @@ export default function TrustPage() {
     mainEntity: [
       {
         "@type": "Question",
-        name: "What does “controlled rollout” mean?",
+        name: "What does controlled rollout mean?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "It means Orbitlink publishes conservatively and confirms scope only when verifiable. Availability, timelines, and operational claims are updated after milestones complete.",
+            "Controlled rollout means Orbitlink confirms scope conservatively and updates public statements only after milestones are complete and verifiable.",
         },
       },
       {
@@ -227,25 +259,25 @@ export default function TrustPage() {
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Yes. Orbitlink emphasizes evidence-friendly operations, structured change posture, and scope-locked commitments. Review material may be provided in redacted form when appropriate.",
+            "Orbitlink emphasizes evidence-friendly operations, structured change posture, and scope-locked commitments. Review material may be provided in redacted form when appropriate.",
         },
       },
       {
         "@type": "Question",
-        name: "Can regulators, auditors, or enterprise buyers request verification materials?",
+        name: "Can enterprise buyers or auditors request verification material?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Yes. Verification packs are request-only and tailored to the engagement scope. Sensitive operational details remain private and are shared only when necessary.",
+            "Yes. Verification material is request-only and tailored to the engagement scope. Sensitive operational details remain private and are shared only when necessary.",
         },
       },
       {
         "@type": "Question",
-        name: "How are public statements updated?",
+        name: "How are public trust statements updated?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Statements are maintained as a living disclosure and updated only when milestones are complete and verifiable.",
+            "Statements are maintained as a living disclosure and updated only when milestones are complete and internally verifiable.",
         },
       },
     ],
@@ -253,68 +285,112 @@ export default function TrustPage() {
 
   const schemaGraph = {
     "@context": "https://schema.org",
-    "@graph": [schemaOrg, schemaTelecom, schemaBreadcrumbs, schemaFaq],
+    "@graph": [schemaOrg, schemaService, schemaBreadcrumbs, schemaFaq],
   };
 
   return (
     <PageShell
       eyebrow="TRUST & COMPLIANCE"
-      title="Regulatory credibility by design"
-      subtitle="A transparency-first posture for audit readiness, operational integrity, and controlled rollout."
+      title="A premium trust surface for enterprise review"
+      subtitle="Built for buyers, auditors, and regulated environments that expect disciplined disclosure, evidence-first operations, and controlled rollout."
     >
-      {/* ✅ Authority JSON-LD graph */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
       />
 
-      {/* Status tiles */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-        {TRUST_TILES.map((t) => (
-          <StatusTile key={t.label} label={t.label} value={t.value} tone={t.tone} />
-        ))}
-      </div>
+      <section className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -left-20 top-0 h-44 w-44 rounded-full bg-blue-500/10 blur-3xl" />
+          <div className="absolute right-0 top-10 h-44 w-44 rounded-full bg-emerald-500/10 blur-3xl" />
+          <div className="absolute bottom-0 left-1/2 h-36 w-[28rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
+        </div>
 
-      {/* Verification pack card */}
-      <div className="mt-4 sm:mt-6 rounded-3xl border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-7">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+        <div className="relative flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[11px] text-[#FDE68A]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
+              Evidence-first disclosure surface
+            </div>
+
+            <h2 className="mt-5 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+              Trust is treated as infrastructure, not a marketing paragraph
+            </h2>
+
+            <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
+              Orbitlink is designed to support serious review. That means measured claims,
+              scope-locked commitments, request-only verification material, and an operational
+              posture that can be explained cleanly without exposing unnecessary internals.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Pill>Controlled rollout</Pill>
+              <Pill>Redacted review material</Pill>
+              <Pill>Evidence-friendly operations</Pill>
+              <Pill>Enterprise-ready posture</Pill>
+            </div>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">TRUST STANDARD</div>
+            <div className="mt-1 text-sm text-white/80">
+              Conservative • Verifiable • Scope-locked
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3 sm:mt-6 sm:gap-5">
+        {TRUST_TILES.map((tile) => (
+          <StatusTile
+            key={tile.label}
+            label={tile.label}
+            value={tile.value}
+            tone={tile.tone}
+          />
+        ))}
+      </section>
+
+      <section className="mt-4 sm:mt-6 rounded-3xl border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-7">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="min-w-0">
             <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
               VERIFICATION PACK (REQUEST-ONLY)
             </div>
 
-            <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
-              Enterprise review material — without exposing operational internals
+            <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
+              Enterprise review material without overexposing operational detail
             </h2>
 
-            <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/70">
-              Request a scope-appropriate pack that clarifies what is live vs planned, how changes are
-              controlled, and what evidence exists today — provided in a redacted format when needed.
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/72 sm:text-[15px]">
+              Request a scope-appropriate review pack that clarifies what is live, what is planned,
+              what evidence exists today, and how operational statements are governed. Materials are
+              supplied in redacted form where appropriate.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">
               <Pill>Disclosure memo</Pill>
-              <Pill>Change policy</Pill>
-              <Pill>Evidence samples (where available)</Pill>
-              <Pill>Auditor / regulator contact path</Pill>
+              <Pill>Change posture summary</Pill>
+              <Pill>Evidence samples</Pill>
+              <Pill>Escalation governance</Pill>
             </div>
 
             <p className="mt-4 text-xs text-white/55">
-              Sensitive operational details stay request-only. Contents vary by module and readiness.
+              Sensitive technical internals remain private. Pack contents vary by review scope and
+              readiness state.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-[#FACC15]/25 bg-black/25 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/55">POSTURE</div>
             <div className="mt-1 text-sm text-white/80">
-              Controlled • Verifiable • Minimal exposure
+              Minimal exposure • Maximum clarity
             </div>
           </div>
         </div>
 
-        {/* Request form (server-safe, no handlers) */}
         <form
-          className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-3"
+          className="mt-6 grid grid-cols-1 gap-3 lg:grid-cols-12"
           action="/api/waitlist"
           method="post"
         >
@@ -375,45 +451,46 @@ export default function TrustPage() {
             ))}
           </select>
 
-          <div className="lg:col-span-12 mt-1 flex flex-col sm:flex-row gap-3">
+          <div className="lg:col-span-12 mt-1 flex flex-col gap-3 sm:flex-row">
             <button
               type="submit"
-              className="rounded-2xl bg-[#FACC15] text-black px-5 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
+              className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
               Request verification pack
             </button>
 
             <a
               href="/coming-soon?intent=early-access&source=trust"
-              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white hover:bg-white/10 transition text-center"
+              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
               Request early access
             </a>
 
-            <div className="sm:ml-auto text-xs text-white/55 flex items-center">
-              Or email: <span className="ml-1 text-white/80">concierge@orbitlink.ca</span>
+            <div className="sm:ml-auto flex items-center text-xs text-white/55">
+              Or email:
+              <span className="ml-1 text-white/80">concierge@orbitlink.ca</span>
             </div>
           </div>
 
           <div className="lg:col-span-12 text-xs text-white/55">
-            You’ll receive a single response if your request matches an active review window.
+            Requests are reviewed against active intake and review windows.
           </div>
         </form>
-      </div>
+      </section>
 
-      {/* Main disclosure card */}
-      <div className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+      <section className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className="text-[11px] tracking-[0.28em] text-white/55">
               OPERATIONAL DISCLOSURE
             </div>
-            <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
-              Built for enterprise expectations and regulator review
+            <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
+              Built for enterprise expectation and regulator review
             </h2>
-            <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
-              Orbitlink is engineered as an infrastructure-grade platform. Our approach prioritizes
-              clear accountability, disciplined operations, and evidence-friendly workflows.
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
+              Orbitlink is positioned as an infrastructure-grade operating surface. The trust model
+              prioritizes accountability, disciplined operations, structured disclosure, and a clear
+              separation between what can be published broadly and what must remain request-only.
             </p>
           </div>
 
@@ -423,82 +500,152 @@ export default function TrustPage() {
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-          {TRUST_DISCLOSURES.map((d) => (
-            <EvidenceCard key={d.heading} heading={d.heading} bullets={d.bullets} note={d.note} />
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-5">
+          {TRUST_DISCLOSURES.map((item) => (
+            <EvidenceCard
+              key={item.heading}
+              heading={item.heading}
+              bullets={item.bullets}
+              note={item.note}
+            />
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* Scope-locked commitments strip */}
-      <div className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+      <section className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className="text-[11px] tracking-[0.28em] text-white/55">
               SCOPE-LOCKED COMMITMENTS
             </div>
-            <h2 className="mt-3 text-lg sm:text-xl font-semibold text-white">
-              Enterprises don’t buy features — they buy clarity
+            <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
+              Serious buyers do not purchase features first — they purchase clarity
             </h2>
-            <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/65">
-              Commitments are defined per engagement: what will be measured, what will be reported,
-              what is excluded, and how changes are handled. This reduces risk during audits and reviews.
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
+              Each engagement is defined by what is included, what is measured, what is excluded,
+              how changes are handled, and how evidence can be reviewed. This reduces uncertainty at
+              procurement, audit, and go-live stages.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/55">OUTCOME</div>
-            <div className="mt-1 text-sm text-white/80">Faster review • Lower risk • Cleaner go-live</div>
+            <div className="mt-1 text-sm text-white/80">Cleaner review • Lower risk</div>
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3 sm:gap-5">
           <EvidenceCard
             heading="What we confirm"
             bullets={[
-              "Live scope vs planned scope",
-              "Measured posture (where applicable)",
-              "Operational ownership & escalation path",
+              "Live scope versus planned scope",
+              "Measured posture where applicable",
+              "Operational ownership and escalation path",
             ]}
           />
           <EvidenceCard
             heading="How changes happen"
             bullets={[
-              "Staged windows and rollback posture",
+              "Staged windows with rollback posture",
               "Documentation-first releases",
-              "No surprise claims or silent launches",
+              "No silent launches or surprise claims",
             ]}
           />
           <EvidenceCard
             heading="What stays private"
             bullets={[
-              "Sensitive internals kept request-only",
-              "Redacted samples when appropriate",
-              "Disclosure policy for operational detail",
+              "Sensitive internals remain request-only",
+              "Redacted samples used when appropriate",
+              "Disclosure boundary for technical detail",
             ]}
           />
         </div>
-      </div>
+      </section>
 
-      {/* Assurance strip */}
-      <div className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
-        <div className="text-[11px] tracking-[0.28em] text-white/55">ASSURANCE</div>
-        <div className="mt-3 text-sm sm:text-[15px] leading-6 text-white/70">
-          {TRUST_ASSURANCE}
+      <section className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
+        <div className="text-[11px] tracking-[0.28em] text-white/55">
+          GOVERNANCE PRINCIPLES
         </div>
-      </div>
+        <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
+          The trust layer behind the brand
+        </h2>
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
+          The premium feel of Orbitlink is supported by operational restraint. Public credibility is
+          protected through disciplined disclosure, change governance, and evidence-friendly review
+          paths rather than oversized promises.
+        </p>
 
-      {/* Corporate disclosure */}
-      <div className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-black/40 p-6 sm:p-7">
-        <div className="text-[11px] tracking-[0.28em] text-white/55">CORPORATE DISCLOSURE</div>
-        <p className="mt-3 text-sm sm:text-[15px] leading-6 text-white/65">
-          Orbitlink is a brand of TIRAV Technologies Inc. Services are provided in accordance with
-          applicable Canadian regulations and operational policies.
-        </p>
-        <p className="mt-4 text-xs text-white/55">
-          This page is maintained as a living disclosure. Statements update when milestones are complete.
-        </p>
-      </div>
+        <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 sm:gap-4">
+          <TrustPrinciple
+            title="Publish conservatively"
+            desc="Only claims that can be explained, defended, and supported should appear on the public surface."
+          />
+          <TrustPrinciple
+            title="Separate live from planned"
+            desc="The trust model clearly distinguishes what is operational today from what remains milestone-driven."
+          />
+          <TrustPrinciple
+            title="Design for reviewability"
+            desc="Enterprise buyers and auditors should be able to understand the posture without needing internal system access."
+          />
+          <TrustPrinciple
+            title="Protect sensitive internals"
+            desc="Operational details are shared on a need-to-review basis, not exposed broadly for appearance."
+          />
+        </div>
+      </section>
+
+      <section className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
+        <div className="text-[11px] tracking-[0.28em] text-white/55">ASSURANCE</div>
+        <div className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">{TRUST_ASSURANCE}</div>
+      </section>
+
+      <section className="mt-4 sm:mt-6 rounded-3xl border border-white/10 bg-black/40 p-6 sm:p-7">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <div className="text-[11px] tracking-[0.28em] text-white/55">
+              CORPORATE DISCLOSURE
+            </div>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              Orbitlink is a brand of TIRAV Technologies Inc. Services are introduced through
+              controlled onboarding, governed by applicable Canadian requirements, and described in a
+              manner intended to remain accurate as operational and regulatory milestones evolve.
+            </p>
+            <p className="mt-4 text-xs text-white/55">
+              This page is maintained as a living disclosure. Statements update when milestones are
+              complete and internally verifiable.
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">DISCLOSURE MODEL</div>
+            <div className="mt-1 text-sm text-white/80">
+              Living page • Milestone-based updates
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <a
+            href="/about"
+            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
+          >
+            About Orbitlink
+          </a>
+          <a
+            href="/network"
+            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
+          >
+            View Network Posture
+          </a>
+          <a
+            href="/coming-soon"
+            className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
+          >
+            Request Access
+          </a>
+        </div>
+      </section>
     </PageShell>
   );
 }
