@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/locations/mississauga";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
@@ -11,6 +12,7 @@ const BUSINESS = {
   legalName: "TIRAV Technologies Inc. o/a Orbitlink",
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
+  email: "concierge@orbitlink.ca",
   address: {
     street: "30 Eglinton Ave W, Suite 400-A77",
     city: "Mississauga",
@@ -25,29 +27,32 @@ const BUSINESS = {
     { day: "Thursday", opens: "09:00", closes: "18:00" },
     { day: "Friday", opens: "09:00", closes: "18:00" },
   ],
-};
+} as const;
+
+const PAGE_TITLE = "Business Fibre Internet in Mississauga, ON | Orbitlink™";
+const PAGE_DESCRIPTION =
+  "Business fibre internet in Mississauga with operator-grade onboarding, Dedicated Internet Access, managed LAN and Wi-Fi, continuity options, and structured enterprise support.";
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet in Mississauga, ON | Orbitlink™",
-  description:
-    "Business fibre internet in Mississauga with operator-grade onboarding, dedicated internet access, managed LAN/Wi-Fi, continuity options, and structured enterprise support.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: PAGE_PATH,
+    canonical: PAGE_URL,
   },
   openGraph: {
-    title: "Business Fibre Internet in Mississauga, ON | Orbitlink™",
+    title: PAGE_TITLE,
     description:
-      "Business internet in Mississauga: fibre, DIA, managed LAN/Wi-Fi, continuity, and voice with a disciplined operator posture.",
+      "Business internet in Mississauga with fibre, DIA, managed LAN and Wi-Fi, continuity architecture, and structured onboarding.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Fibre Internet in Mississauga, ON | Orbitlink™",
+    title: PAGE_TITLE,
     description:
-      "Business internet in Mississauga with fibre, DIA, managed LAN/Wi-Fi, continuity, and structured onboarding.",
+      "Enterprise business internet in Mississauga with fibre, DIA, managed LAN and Wi-Fi, and structured onboarding.",
   },
 };
 
@@ -62,11 +67,11 @@ const FAQ = [
   },
   {
     q: "Is Orbitlink fibre symmetrical?",
-    a: "Where fibre service is available, symmetrical speed tiers may be offered under AUREX Internet (AUREX 150 / 500 / GIG+), subject to feasibility and service design for the site.",
+    a: "Where fibre service is available, symmetrical speed tiers may be offered under AUREX Internet, including AUREX 150, 500, and GIG+, subject to feasibility and service design for the site.",
   },
   {
     q: "Do you offer Dedicated Internet Access (DIA) in Mississauga?",
-    a: "Yes. Dedicated Internet Access is available for business-critical environments where deterministic performance, clearer delivery posture, and business-grade support are required, subject to building and upstream feasibility.",
+    a: "Yes. Dedicated Internet Access is available for business-critical environments where deterministic performance, cleaner delivery posture, and business-grade support are required, subject to building and upstream feasibility.",
   },
   {
     q: "Do you provide static IPs?",
@@ -82,7 +87,7 @@ const FAQ = [
   },
   {
     q: "Do you offer failover or continuity options?",
-    a: "Yes. Orbitlink can design LTE/5G continuity patterns for sites that require operational uptime during access disruptions. Feasibility depends on site constraints and continuity design goals.",
+    a: "Yes. Orbitlink can design LTE and 5G continuity patterns for sites that require operational uptime during access disruptions. Feasibility depends on site constraints and continuity design goals.",
   },
 ] as const;
 
@@ -91,7 +96,7 @@ function jsonLd() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
       { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
       { "@type": "ListItem", position: 3, name: "Mississauga", item: PAGE_URL },
     ],
@@ -105,7 +110,7 @@ function jsonLd() {
     legalName: BUSINESS.legalName,
     url: PAGE_URL,
     telephone: BUSINESS.phoneE164,
-    email: "concierge@orbitlink.ca",
+    email: BUSINESS.email,
     parentOrganization: { "@id": ORG_ID },
     address: {
       "@type": "PostalAddress",
@@ -129,15 +134,9 @@ function jsonLd() {
 
   const telecomService = {
     "@context": "https://schema.org",
-    "@type": "TelecomService",
+    "@type": "Service",
     "@id": `${PAGE_URL}#service`,
     name: "Business Fibre Internet in Mississauga",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: {
-      "@type": "City",
-      name: "Mississauga",
-    },
     serviceType: [
       "Business Fibre Internet",
       "Dedicated Internet Access",
@@ -146,10 +145,16 @@ function jsonLd() {
       "VoIP and Cloud Voice",
       "LTE and 5G Continuity",
     ],
+    provider: { "@id": ORG_ID },
+    areaServed: {
+      "@type": "City",
+      name: "Mississauga",
+    },
     availableChannel: {
       "@type": "ServiceChannel",
       serviceUrl: PAGE_URL,
     },
+    url: PAGE_URL,
   };
 
   const faqPage = {
@@ -182,7 +187,24 @@ const buildingTypes = [
   "Industrial and logistics facilities",
   "Medical and professional offices",
   "Retail and service businesses",
-  "Hybrid office / warehouse environments",
+  "Hybrid office and warehouse environments",
+] as const;
+
+const whyOrbitlink = [
+  "Structured onboarding, not vague promises",
+  "Clear distinction between broadband and DIA posture",
+  "Managed network options for office environments",
+  "Continuity design for uptime-sensitive businesses",
+  "Documented delivery and acceptance checkpoints",
+  "Customer-facing operator experience with premium support posture",
+] as const;
+
+const heroTags = [
+  "Business fibre internet",
+  "Dedicated Internet Access",
+  "Managed LAN & Wi-Fi",
+  "Continuity architecture",
+  "Availability by building",
 ] as const;
 
 export default function MississaugaLocationPage() {
@@ -193,86 +215,91 @@ export default function MississaugaLocationPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
-      {/* Hero */}
-      <section className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-          <span className="h-2 w-2 rounded-full bg-white/60" />
-          <span className="text-sm tracking-wide text-white/60">Mississauga Service Area</span>
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-24 left-12 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl" />
+          <div className="absolute right-8 top-20 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />
+          <div className="absolute bottom-[-120px] left-1/2 h-72 w-[48rem] -translate-x-1/2 rounded-full bg-white/5 blur-3xl" />
         </div>
 
-        <h1 className="mt-5 text-4xl md:text-5xl font-semibold tracking-tight">
-          Business Fibre Internet in Mississauga, ON
-        </h1>
-
-        <p className="mt-4 max-w-3xl text-base md:text-lg text-white/70 leading-relaxed">
-          Orbitlink delivers business internet in Mississauga with an operator-grade posture:
-          structured onboarding, documented acceptance, and support designed for real business
-          operations. Availability is confirmed per building, with clear feasibility scoping where
-          additional work is required.
-        </p>
-
-        <div className="mt-6 flex flex-wrap gap-2">
-          {[
-            "Business fibre internet",
-            "Dedicated Internet Access",
-            "Managed LAN & Wi-Fi",
-            "Continuity architecture",
-            "Availability by building",
-          ].map((x) => (
-            <span
-              key={x}
-              className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
-            >
-              {x}
+        <div className="mx-auto max-w-6xl px-6 pb-10 pt-16 md:pb-12 md:pt-20">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+            <span className="h-2 w-2 rounded-full bg-[#38FDFE]" />
+            <span className="text-sm tracking-wide text-white/60">
+              Mississauga Service Area
             </span>
-          ))}
-        </div>
+          </div>
 
-        <div className="mt-7 flex flex-col sm:flex-row gap-3">
-          <Link
-            href="/contact#intake"
-            className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-5 py-3 text-sm font-semibold hover:bg-white/90 transition"
-          >
-            Check Availability
-          </Link>
-          <Link
-            href="/services/business-fibre-internet"
-            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
-          >
-            Explore Fibre Service
-          </Link>
+          <h1 className="mt-5 max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl">
+            Business Fibre Internet in Mississauga, ON
+          </h1>
+
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
+            Orbitlink delivers business internet in Mississauga with an
+            operator-grade posture: structured onboarding, documented acceptance,
+            and support designed for real business operations. Availability is
+            confirmed per building, with clear feasibility scoping where
+            additional work is required.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            {heroTags.map((x) => (
+              <span
+                key={x}
+                className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
+              >
+                {x}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/contact#intake"
+              className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
+            >
+              Check Availability
+            </Link>
+            <Link
+              href="/services/business-fibre-internet"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+            >
+              Explore Fibre Service
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Main content */}
       <section className="mx-auto max-w-6xl px-6 pb-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {/* Left main */}
-          <div className="lg:col-span-2 space-y-4">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <div className="space-y-4 lg:col-span-2">
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <h2 className="text-xl font-semibold tracking-tight">
                 Mississauga business internet, designed for operational reliability
               </h2>
 
-              <div className="mt-3 space-y-4 text-white/70 leading-relaxed">
+              <div className="mt-3 space-y-4 leading-relaxed text-white/70">
                 <p>
-                  Mississauga is one of Ontario’s most important commercial markets, with dense
-                  office clusters, industrial corridors, logistics facilities, and professional
-                  service environments. Connectivity requirements vary by building type, traffic
-                  profile, uptime expectations, and internal network design.
+                  Mississauga is one of Ontario’s most important commercial markets,
+                  with dense office clusters, industrial corridors, logistics
+                  facilities, and professional service environments. Connectivity
+                  requirements vary by building type, traffic profile, uptime
+                  expectations, and internal network design.
                 </p>
 
                 <p>
-                  Orbitlink approaches business internet in Mississauga with a disciplined sequence:
-                  confirm serviceability, define the right access model, align any managed network
-                  scope, then execute delivery with documented acceptance. This avoids ambiguous
+                  Orbitlink approaches business internet in Mississauga with a
+                  disciplined sequence: confirm serviceability, define the right
+                  access model, align any managed network scope, then execute
+                  delivery with documented acceptance. This avoids ambiguous
                   installs and supports a cleaner activation experience.
                 </p>
 
                 <p>
-                  We commonly assess opportunities across the Eglinton corridor, Airport Corporate
-                  Centre, Meadowvale, and major multi-tenant office environments across the city.
-                  Where a building is not already serviceable in the preferred way, we explain the
+                  We commonly assess opportunities across the Eglinton corridor,
+                  Airport Corporate Centre, Meadowvale, and major multi-tenant
+                  office environments across the city. Where a building is not
+                  already serviceable in the preferred way, we explain the
                   feasibility posture clearly and avoid overclaiming.
                 </p>
               </div>
@@ -283,14 +310,16 @@ export default function MississaugaLocationPage() {
                 Service modules available in Mississauga
               </h2>
 
-              <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
                 {serviceModules.map((item) => (
                   <Link
                     key={item.title}
                     href={item.href}
-                    className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 hover:bg-white/[0.07] transition"
+                    className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 transition hover:bg-white/[0.07]"
                   >
-                    <div className="text-sm font-medium text-white/90">{item.title}</div>
+                    <div className="text-sm font-medium text-white/90">
+                      {item.title}
+                    </div>
                     <div className="mt-2 text-sm text-white/60">
                       View service module →
                     </div>
@@ -298,12 +327,14 @@ export default function MississaugaLocationPage() {
                 ))}
               </div>
 
-              <div className="mt-6 space-y-4 text-white/70 leading-relaxed">
+              <div className="mt-6 space-y-4 leading-relaxed text-white/70">
                 <p>
-                  Fibre access is positioned under AUREX Internet, with tiering such as AUREX 150,
-                  500, and GIG+ where feasible. For sites that require more deterministic delivery
-                  posture, Orbitlink can scope Dedicated Internet Access. Managed LAN, enterprise
-                  Wi-Fi, continuity design, and cloud voice can be layered where appropriate.
+                  Fibre access is positioned under AUREX Internet, with tiering
+                  such as AUREX 150, 500, and GIG+ where feasible. For sites that
+                  require more deterministic delivery posture, Orbitlink can scope
+                  Dedicated Internet Access. Managed LAN, enterprise Wi-Fi,
+                  continuity design, and cloud voice can be layered where
+                  appropriate.
                 </p>
               </div>
             </div>
@@ -312,7 +343,8 @@ export default function MississaugaLocationPage() {
               <h2 className="text-xl font-semibold tracking-tight">
                 Building types we commonly evaluate
               </h2>
-              <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
                 {buildingTypes.map((x) => (
                   <div
                     key={x}
@@ -322,24 +354,21 @@ export default function MississaugaLocationPage() {
                   </div>
                 ))}
               </div>
-              <p className="mt-5 text-white/70 leading-relaxed">
-                Serviceability depends on the specific property, landlord access, building cabling,
-                upstream reach, and service design. Orbitlink confirms feasibility before committing
-                to delivery posture.
+
+              <p className="mt-5 leading-relaxed text-white/70">
+                Serviceability depends on the specific property, landlord access,
+                building cabling, upstream reach, and service design. Orbitlink
+                confirms feasibility before committing to delivery posture.
               </p>
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <h2 className="text-xl font-semibold tracking-tight">Why businesses choose Orbitlink</h2>
-              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-                {[
-                  "Structured onboarding, not vague promises",
-                  "Clear distinction between broadband and DIA posture",
-                  "Managed network options for office environments",
-                  "Continuity design for uptime-sensitive businesses",
-                  "Documented delivery and acceptance checkpoints",
-                  "Customer-facing operator experience with premium support posture",
-                ].map((x) => (
+              <h2 className="text-xl font-semibold tracking-tight">
+                Why businesses choose Orbitlink
+              </h2>
+
+              <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {whyOrbitlink.map((x) => (
                   <div
                     key={x}
                     className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/75"
@@ -351,21 +380,22 @@ export default function MississaugaLocationPage() {
             </div>
           </div>
 
-          {/* Right sidebar */}
           <aside className="space-y-4">
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <h2 className="text-lg font-semibold tracking-tight">Local business details</h2>
+              <h2 className="text-lg font-semibold tracking-tight">
+                Local business details
+              </h2>
 
               <div className="mt-4 space-y-3 text-sm text-white/70">
                 <div>
                   <div className="text-white/60">Business</div>
-                  <div className="text-white/85 font-medium">{BUSINESS.name}</div>
+                  <div className="font-medium text-white/85">{BUSINESS.name}</div>
                 </div>
 
                 <div>
                   <div className="text-white/60">Phone</div>
                   <a
-                    className="text-white/85 hover:text-white underline underline-offset-4"
+                    className="text-white/85 underline underline-offset-4 hover:text-white"
                     href={`tel:${BUSINESS.phoneE164}`}
                   >
                     {BUSINESS.phoneDisplay}
@@ -377,7 +407,8 @@ export default function MississaugaLocationPage() {
                   <div className="text-white/85">
                     {BUSINESS.address.street}
                     <br />
-                    {BUSINESS.address.city}, {BUSINESS.address.region} {BUSINESS.address.postal}
+                    {BUSINESS.address.city}, {BUSINESS.address.region}{" "}
+                    {BUSINESS.address.postal}
                   </div>
                 </div>
 
@@ -389,22 +420,25 @@ export default function MississaugaLocationPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-              <h3 className="text-sm font-semibold tracking-tight">Best first step</h3>
-              <p className="mt-2 text-sm text-white/70 leading-relaxed">
-                If you are evaluating business internet in Mississauga, request availability and
-                include your address, business type, expected go-live date, and whether you need DIA,
-                static IPs, managed Wi-Fi, or continuity.
+              <h3 className="text-sm font-semibold tracking-tight">
+                Best first step
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-white/70">
+                If you are evaluating business internet in Mississauga, request
+                availability and include your address, business type, expected
+                go-live date, and whether you need DIA, static IPs, managed Wi-Fi,
+                or continuity.
               </p>
               <div className="mt-4 flex flex-col gap-2">
                 <Link
                   href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-4 py-2 text-sm font-semibold hover:bg-white/90 transition"
+                  className="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
                 >
                   Request Access
                 </Link>
                 <Link
                   href="/trust"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                 >
                   Trust & Delivery Posture
                 </Link>
@@ -412,23 +446,25 @@ export default function MississaugaLocationPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-              <h3 className="text-sm font-semibold tracking-tight">Related local pages</h3>
+              <h3 className="text-sm font-semibold tracking-tight">
+                Related local pages
+              </h3>
               <div className="mt-4 flex flex-col gap-2 text-sm">
                 <Link
                   href="/locations"
-                  className="text-white/80 hover:text-white underline underline-offset-4"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
                 >
                   Browse locations
                 </Link>
                 <Link
                   href="/locations/ontario"
-                  className="text-white/80 hover:text-white underline underline-offset-4"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
                 >
                   Ontario coverage hub
                 </Link>
                 <Link
                   href="/internet-near-me"
-                  className="text-white/80 hover:text-white underline underline-offset-4"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
                 >
                   Internet near me
                 </Link>
@@ -438,40 +474,46 @@ export default function MississaugaLocationPage() {
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="mx-auto max-w-6xl px-6 pb-16">
         <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-          <h2 className="text-2xl font-semibold tracking-tight">Mississauga FAQs</h2>
-          <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
-            These answers reflect a real operational posture: clear scope, no overclaims, and
-            feasibility confirmed per building and service design.
+          <h2 className="text-2xl font-semibold tracking-tight">
+            Mississauga FAQs
+          </h2>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
+            These answers reflect a real operational posture: clear scope, no
+            overclaims, and feasibility confirmed per building and service design.
           </p>
 
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
             {FAQ.map((f) => (
-              <div key={f.q} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+              <div
+                key={f.q}
+                className="rounded-3xl border border-white/10 bg-white/[0.04] p-6"
+              >
                 <h3 className="text-base font-semibold tracking-tight">{f.q}</h3>
-                <p className="mt-2 text-sm text-white/70 leading-relaxed">{f.a}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">
+                  {f.a}
+                </p>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/services"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
               Explore Services
             </Link>
             <Link
               href="/locations"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
               Browse Locations
             </Link>
             <Link
               href="/contact#intake"
-              className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-5 py-3 text-sm font-semibold hover:bg-white/90 transition"
+              className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
             >
               Check Availability
             </Link>

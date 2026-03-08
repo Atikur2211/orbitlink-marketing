@@ -21,7 +21,7 @@ export default function Image() {
           position: "relative",
           overflow: "hidden",
           background:
-            "radial-gradient(circle at top right, rgba(15,185,177,0.18), transparent 28%), radial-gradient(circle at bottom left, rgba(56,253,254,0.14), transparent 24%), linear-gradient(180deg, #0B0F14 0%, #09090B 100%)",
+            "radial-gradient(circle at top right, rgba(15,185,177,0.16), transparent 28%), radial-gradient(circle at bottom left, rgba(56,253,254,0.10), transparent 24%), linear-gradient(180deg, #0B0F14 0%, #09090B 100%)",
           color: "white",
           fontFamily: "Inter, Arial, sans-serif",
         }}
@@ -31,7 +31,7 @@ export default function Image() {
             position: "absolute",
             inset: 0,
             backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
+              "linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px)",
             backgroundSize: "56px 56px",
             opacity: 0.14,
           }}
@@ -45,8 +45,8 @@ export default function Image() {
             width: 420,
             height: 420,
             borderRadius: 9999,
-            background: "rgba(15,185,177,0.18)",
-            filter: "blur(70px)",
+            background: "rgba(15,185,177,0.16)",
+            filter: "blur(72px)",
           }}
         />
         <div
@@ -57,8 +57,8 @@ export default function Image() {
             width: 420,
             height: 420,
             borderRadius: 9999,
-            background: "rgba(56,253,254,0.12)",
-            filter: "blur(80px)",
+            background: "rgba(56,253,254,0.10)",
+            filter: "blur(82px)",
           }}
         />
 
@@ -72,56 +72,25 @@ export default function Image() {
             position: "relative",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 18,
-            }}
-          >
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             <div
               style={{
-                width: 64,
-                height: 64,
-                borderRadius: 18,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.10)",
-                fontSize: 26,
+                fontSize: 34,
                 fontWeight: 700,
-                color: "#38FDFE",
+                letterSpacing: "-0.03em",
               }}
             >
-              O
+              Orbitlink
             </div>
-
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
+                fontSize: 14,
+                color: "rgba(255,255,255,0.58)",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
               }}
             >
-              <div
-                style={{
-                  fontSize: 34,
-                  fontWeight: 700,
-                  letterSpacing: "-0.03em",
-                }}
-              >
-                Orbitlink
-              </div>
-              <div
-                style={{
-                  fontSize: 14,
-                  color: "rgba(255,255,255,0.58)",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                }}
-              >
-                Ontario business connectivity
-              </div>
+              Ontario business connectivity
             </div>
           </div>
 
@@ -179,8 +148,6 @@ export default function Image() {
         </div>
       </div>
     ),
-    {
-      ...size,
-    }
+    { ...size }
   );
 }
