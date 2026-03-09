@@ -5,6 +5,8 @@ const SITE_URL = "https://orbitlink.ca";
 const PAGE_PATH = "/locations/ontario";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
+const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
+const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 const BUSINESS = {
   name: "Orbitlink™",
@@ -35,17 +37,26 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ontario Business Internet & Fibre Coverage | Orbitlink™",
     description:
-      "Operator-grade business connectivity across Ontario with structured onboarding, documented delivery, and availability confirmed per address.",
+      "Business connectivity across Ontario with structured onboarding, documented delivery, and availability confirmed per address.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
     locale: "en_CA",
+    images: [
+      {
+        url: OG_IMAGE_URL,
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink Ontario Business Internet & Fibre Coverage",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Ontario Business Internet & Fibre Coverage | Orbitlink™",
     description:
-      "Explore Orbitlink business internet coverage across Ontario for fibre, DIA, and managed network service modules.",
+      "Explore Orbitlink business internet coverage across Ontario for fibre, DIA, and managed network services.",
+    images: [TWITTER_IMAGE_URL],
   },
 };
 
@@ -117,7 +128,7 @@ const CITIES: City[] = [
   {
     name: "Scarborough",
     href: "/locations/scarborough",
-    subtitle: "Broad SMB footprint with strong ‘internet near me’ search demand.",
+    subtitle: "Broad SMB footprint with strong local discovery behavior.",
     tier: "GTA Extended",
     tags: ["Near me", "SMB", "Feasibility-first"],
   },
@@ -162,12 +173,12 @@ const coveragePosture = [
     d: "Orbitlink confirms serviceability per address before activation.",
   },
   {
-    t: "Module clarity",
-    d: "Business Fibre vs DIA is selected based on operational need, not guesswork.",
+    t: "Service clarity",
+    d: "Business Fibre versus DIA is selected based on operational need, not guesswork.",
   },
   {
     t: "Documented delivery",
-    d: "Clear checkpoints improve install posture and acceptance readiness.",
+    d: "Clear checkpoints improve installation posture and acceptance readiness.",
   },
   {
     t: "Support posture",
@@ -194,7 +205,30 @@ const serviceModules = [
   {
     t: "LTE / 5G Continuity",
     href: "/services/lte-5g-continuity",
-    d: "Uptime patterns for disruption events.",
+    d: "Continuity design for disruption events.",
+  },
+] as const;
+
+const buyerJourney = [
+  {
+    step: "01",
+    title: "Choose the market",
+    desc: "Start with the city that matches your building, expansion target, or local buying intent.",
+  },
+  {
+    step: "02",
+    title: "Choose the service",
+    desc: "Match the requirement to business fibre, dedicated internet, managed networking, or continuity.",
+  },
+  {
+    step: "03",
+    title: "Confirm feasibility",
+    desc: "Orbitlink reviews address-level serviceability, building conditions, and commercial fit before commitment.",
+  },
+  {
+    step: "04",
+    title: "Move into onboarding",
+    desc: "Qualified requests move into a structured intake path with clear expectations and documented delivery.",
   },
 ] as const;
 
@@ -284,24 +318,45 @@ function jsonLd() {
   return [breadcrumb, localBusiness, itemList, telecomService, faqPage];
 }
 
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/45">{children}</div>;
+}
+
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
+      <div className="mt-1 text-sm text-white/80">{value}</div>
+    </div>
+  );
+}
+
 function CityCard({ c }: { c: City }) {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-7">
+    <div className="group rounded-[30px] border border-white/10 bg-white/[0.035] p-6 transition hover:border-white/20 hover:bg-white/[0.05] md:p-7">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <div className="text-xs text-white/60">{c.tier}</div>
-          <h3 className="mt-2 text-lg font-semibold tracking-tight">{c.name}</h3>
-          <p className="mt-2 text-sm text-white/70 leading-relaxed">{c.subtitle}</p>
+          <div className="text-[11px] tracking-[0.22em] text-white/45">{c.tier.toUpperCase()}</div>
+          <h3 className="mt-3 text-lg font-semibold tracking-tight text-white">{c.name}</h3>
+          <p className="mt-3 text-sm leading-6 text-white/70">{c.subtitle}</p>
         </div>
         <Link
           href={c.href}
-          className="shrink-0 inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+          className="inline-flex shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10"
         >
           View
         </Link>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+      <div className="mt-5 flex flex-wrap gap-2">
         {c.tags.map((t) => (
           <span
             key={t}
@@ -311,6 +366,28 @@ function CityCard({ c }: { c: City }) {
           </span>
         ))}
       </div>
+    </div>
+  );
+}
+
+function JourneyCard({
+  step,
+  title,
+  desc,
+}: {
+  step: string;
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+      <div className="flex items-center gap-3">
+        <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
+          {step}
+        </div>
+        <div className="text-sm font-medium text-white/90">{title}</div>
+      </div>
+      <p className="mt-3 text-sm leading-6 text-white/65">{desc}</p>
     </div>
   );
 }
@@ -327,97 +404,163 @@ export default function OntarioHubPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
-      {/* Hero */}
-      <section className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-          <span className="h-2 w-2 rounded-full bg-white/60" />
-          <span className="text-sm tracking-wide text-white/60">Ontario Coverage Hub</span>
+      <section className="relative overflow-hidden border-b border-white/10">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-24 left-10 h-72 w-72 rounded-full bg-blue-500/12 blur-3xl" />
+          <div className="absolute right-10 top-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
+          <div className="absolute bottom-[-140px] left-1/2 h-80 w-[56rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_34%)]" />
+          <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <h1 className="mt-5 text-4xl md:text-5xl font-semibold tracking-tight">
-          Ontario business internet & fibre coverage
-        </h1>
+        <div className="relative mx-auto max-w-6xl px-6 pb-12 pt-16 sm:pb-14 sm:pt-20">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+            <span className="h-2 w-2 rounded-full bg-[#FACC15]" />
+            <span className="text-sm tracking-wide text-white/60">Ontario Coverage Hub</span>
+          </div>
 
-        <p className="mt-4 max-w-3xl text-base md:text-lg text-white/70 leading-relaxed">
-          Orbitlink supports Ontario businesses with operator-grade business internet, business fibre,
-          Dedicated Internet Access, documented delivery, and premium support posture. Availability is
-          confirmed per address and building feasibility rather than assumed generically. Use this hub
-          to navigate priority city pages and the right service modules for your environment.
-        </p>
+          <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
+            <div className="lg:col-span-8">
+              <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.02]">
+                Ontario business internet & fibre coverage
+              </h1>
 
-        <div className="mt-6 flex flex-wrap gap-2">
-          {[
-            "Ontario coverage hub",
-            "Availability by building",
-            "Business-first posture",
-            "Structured onboarding",
-            "Documented delivery",
-          ].map((x) => (
-            <span
-              key={x}
-              className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
-            >
-              {x}
-            </span>
-          ))}
-        </div>
+              <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
+                Orbitlink supports Ontario businesses with operator-grade business internet,
+                business fibre, Dedicated Internet Access, documented delivery, and premium support
+                posture. Availability is confirmed per address and building feasibility rather than
+                assumed generically. Use this hub to navigate priority city pages and the right
+                service paths for your environment.
+              </p>
 
-        <div className="mt-7 flex flex-col sm:flex-row gap-3">
-          <Link
-            href="/contact#intake"
-            className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-5 py-3 text-sm font-semibold hover:bg-white/90 transition"
-          >
-            Check Availability
-          </Link>
-          <Link
-            href="/locations"
-            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
-          >
-            All Locations
-          </Link>
-          <Link
-            href="/services"
-            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
-          >
-            Service Modules
-          </Link>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {[
+                  "Ontario coverage hub",
+                  "Availability by building",
+                  "Business-first posture",
+                  "Structured onboarding",
+                  "Documented delivery",
+                ].map((x) => (
+                  <span
+                    key={x}
+                    className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
+                  >
+                    {x}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/contact#intake"
+                  className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
+                >
+                  Check Availability
+                </Link>
+                <Link
+                  href="/locations"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+                >
+                  All Locations
+                </Link>
+                <Link
+                  href="/services"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+                >
+                  Service Modules
+                </Link>
+              </div>
+
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <MetricPill label="BUYER FIT" value="Ontario business sites" />
+                <MetricPill label="SERVICE MODEL" value="Address-first qualification" />
+                <MetricPill label="DELIVERY STYLE" value="Clear and structured" />
+              </div>
+            </div>
+
+            <div className="lg:col-span-4">
+              <div className="rounded-[30px] border border-white/10 bg-white/[0.045] p-6">
+                <SectionEyebrow>BUYING JOURNEY</SectionEyebrow>
+                <h2 className="mt-3 text-lg font-semibold text-white">
+                  Province-wide discovery, then clean onboarding
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/65">
+                  This hub is designed to shorten the path from Ontario-level search intent to a
+                  serviceability-led business conversation.
+                </p>
+
+                <div className="mt-5 grid gap-3">
+                  {buyerJourney.map((item) => (
+                    <JourneyCard
+                      key={item.step}
+                      step={item.step}
+                      title={item.title}
+                      desc={item.desc}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Coverage posture */}
-      <section className="mx-auto max-w-6xl px-6 pb-10">
+      <section className="mx-auto max-w-6xl px-6 py-10">
         <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
-          <h2 className="text-2xl font-semibold tracking-tight">Coverage posture</h2>
-          <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
-            This is how Orbitlink maintains a premium operator experience across Ontario without
-            overclaiming coverage or timelines.
-          </p>
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <SectionEyebrow>COVERAGE POSTURE</SectionEyebrow>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+                How Orbitlink maintains a premium delivery posture across Ontario
+              </h2>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
+                The goal is not to overstate coverage. The goal is to make service discovery
+                easier, qualification cleaner, and activation more predictable for business buyers.
+              </p>
+            </div>
 
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <MetricPill label="MODE" value="Discovery • Validation • Delivery" />
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
             {coveragePosture.map((x) => (
               <div key={x.t} className="rounded-3xl border border-white/10 bg-white/[0.04] p-5">
                 <div className="text-sm font-semibold text-white/90">{x.t}</div>
-                <div className="mt-2 text-sm text-white/70 leading-relaxed">{x.d}</div>
+                <div className="mt-2 text-sm leading-relaxed text-white/70">{x.d}</div>
               </div>
             ))}
           </div>
 
           <div className="mt-7 rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-            <h3 className="text-lg font-semibold tracking-tight">Choose the right service module</h3>
-            <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
-              Ontario coverage creates discoverability. Service modules capture the real buying
-              intent. Choose the delivery posture that matches your operational environment.
-            </p>
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>SERVICE MATCHING</SectionEyebrow>
+                <h3 className="mt-3 text-lg font-semibold tracking-tight">
+                  Choose the right service module
+                </h3>
+                <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
+                  Ontario coverage creates discoverability. Service modules capture real buying
+                  intent. Choose the delivery posture that matches your operational environment.
+                </p>
+              </div>
 
-            <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+                <div className="text-[11px] tracking-[0.22em] text-white/45">COMMERCIAL MODE</div>
+                <div className="mt-1 text-sm text-white/80">
+                  Discovery • Service match • Qualification
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
               {serviceModules.map((x) => (
                 <Link
                   key={x.href}
                   href={x.href}
-                  className="rounded-3xl border border-white/10 bg-white/[0.035] p-5 hover:bg-white/[0.06] transition"
+                  className="rounded-3xl border border-white/10 bg-white/[0.035] p-5 transition hover:bg-white/[0.06]"
                 >
                   <div className="text-sm font-semibold text-white/90">{x.t}</div>
-                  <div className="mt-2 text-sm text-white/70 leading-relaxed">{x.d}</div>
+                  <div className="mt-2 text-sm leading-relaxed text-white/70">{x.d}</div>
                   <div className="mt-3 text-xs text-white/60">Open module →</div>
                 </Link>
               ))}
@@ -426,52 +569,54 @@ export default function OntarioHubPage() {
         </div>
       </section>
 
-      {/* Cities */}
       <section className="mx-auto max-w-6xl px-6 pb-10">
         <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
-          <h2 className="text-2xl font-semibold tracking-tight">Top Ontario markets</h2>
-          <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
-            Start with these city hubs. Each page supports local search intent, internal linking,
-            FAQs, and service discovery for business internet buyers.
+          <SectionEyebrow>TOP ONTARIO MARKETS</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+            Start with the city hub that matches the buyer
+          </h2>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
+            These city pages support local search intent, internal linking, local FAQs, and
+            service discovery for business internet buyers across Ontario.
           </p>
 
           <h3 className="mt-7 text-lg font-semibold tracking-tight text-white">GTA core</h3>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {gtaCore.map((c) => (
               <CityCard key={c.href} c={c} />
             ))}
           </div>
 
           <h3 className="mt-8 text-lg font-semibold tracking-tight text-white">GTA extended</h3>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {gtaExt.map((c) => (
               <CityCard key={c.href} c={c} />
             ))}
           </div>
 
           <h3 className="mt-8 text-lg font-semibold tracking-tight text-white">Outside GTA</h3>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {ont.map((c) => (
               <CityCard key={c.href} c={c} />
             ))}
           </div>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/contact#intake"
-              className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-5 py-3 text-sm font-semibold hover:bg-white/90 transition"
+              className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
             >
               Check Availability
             </Link>
             <Link
               href="/trust"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
               Trust & Delivery Posture
             </Link>
             <Link
               href="/locations"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
               Browse Locations
             </Link>
@@ -479,37 +624,39 @@ export default function OntarioHubPage() {
         </div>
       </section>
 
-      {/* Popular searches / authority strip */}
       <section className="mx-auto max-w-6xl px-6 pb-10">
         <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
-          <h2 className="text-xl font-semibold tracking-tight">Popular Ontario business connectivity paths</h2>
-          <p className="mt-3 max-w-3xl text-sm text-white/70 leading-relaxed">
+          <SectionEyebrow>POPULAR ONTARIO PATHS</SectionEyebrow>
+          <h2 className="mt-3 text-xl font-semibold tracking-tight">
+            Common business connectivity entry points
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/70">
             Buyers often start with a city, a service type, or a broad “internet near me” search.
-            These pages provide the clearest next step into Orbitlink’s Ontario delivery footprint.
+            These are the clearest next steps into Orbitlink’s Ontario delivery footprint.
           </p>
 
-          <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
             <Link
               href="/internet-near-me"
-              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/85 hover:bg-white/[0.06] transition"
+              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/85 transition hover:bg-white/[0.06]"
             >
               Internet Near Me
             </Link>
             <Link
               href="/services/business-fibre-internet"
-              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/85 hover:bg-white/[0.06] transition"
+              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/85 transition hover:bg-white/[0.06]"
             >
               Business Fibre Internet
             </Link>
             <Link
               href="/services/dedicated-internet-access"
-              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/85 hover:bg-white/[0.06] transition"
+              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/85 transition hover:bg-white/[0.06]"
             >
               Dedicated Internet Access
             </Link>
             <Link
               href="/locations/mississauga"
-              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/85 hover:bg-white/[0.06] transition"
+              className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/85 transition hover:bg-white/[0.06]"
             >
               Mississauga
             </Link>
@@ -517,17 +664,19 @@ export default function OntarioHubPage() {
         </div>
       </section>
 
-      {/* Local authority strip */}
       <section className="mx-auto max-w-6xl px-6 pb-10">
         <div className="rounded-3xl border border-white/10 bg-black/20 p-6 md:p-8">
-          <h2 className="text-xl font-semibold tracking-tight">Ontario authority posture</h2>
-          <p className="mt-3 max-w-3xl text-sm text-white/70 leading-relaxed">
-            Orbitlink’s business presence is anchored in Mississauga and focused on Ontario business
-            connectivity. The most effective next step is to submit your address and requirements so
-            feasibility can be confirmed before activation.
+          <SectionEyebrow>ONTARIO AUTHORITY POSTURE</SectionEyebrow>
+          <h2 className="mt-3 text-xl font-semibold tracking-tight">
+            Local business presence with province-wide discovery intent
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/70">
+            Orbitlink’s business presence is anchored in Mississauga and focused on Ontario
+            business connectivity. The strongest next step is to submit the address and
+            requirements so feasibility can be confirmed before activation.
           </p>
 
-          <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/75">
               Address: {BUSINESS.address.street}, {BUSINESS.address.city}, {BUSINESS.address.region}{" "}
               {BUSINESS.address.postal}
@@ -542,39 +691,40 @@ export default function OntarioHubPage() {
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="mx-auto max-w-6xl px-6 pb-16">
         <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
-          <h2 className="text-2xl font-semibold tracking-tight">Ontario FAQs</h2>
-          <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
-            Operational answers that reduce ambiguity and help buyers move to an availability request faster.
+          <SectionEyebrow>FAQ</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">Ontario FAQs</h2>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
+            Clear answers that reduce ambiguity and help buyers move to an availability request
+            faster.
           </p>
 
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
             {FAQ.map((f) => (
               <div key={f.q} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
                 <h3 className="text-base font-semibold tracking-tight">{f.q}</h3>
-                <p className="mt-2 text-sm text-white/70 leading-relaxed">{f.a}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">{f.a}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/contact#intake"
-              className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-5 py-3 text-sm font-semibold hover:bg-white/90 transition"
+              className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
             >
               Check Availability
             </Link>
             <Link
               href="/services"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
               Service Modules
             </Link>
             <Link
               href="/internet-near-me"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
               Internet Near Me
             </Link>
