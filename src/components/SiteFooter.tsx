@@ -42,11 +42,7 @@ function FooterLink({
 }
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="text-[11px] tracking-[0.26em] text-white/40">
-      {children}
-    </div>
-  );
+  return <div className="text-[11px] tracking-[0.26em] text-white/40">{children}</div>;
 }
 
 function IconLinkedIn() {
@@ -103,29 +99,30 @@ export default function SiteFooter() {
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
               </span>
 
-              <span className="text-[11px] tracking-[0.32em] text-white/70">
-                ORBITLINK
-              </span>
+              <span className="text-[11px] tracking-[0.32em] text-white/70">ORBITLINK</span>
 
               <span className="rounded-full border border-white/10 bg-white/[0.03] px-2 py-1 text-[10px] tracking-[0.2em] text-white/50">
-                OPERATOR NETWORK
+                BUSINESS CONNECTIVITY
               </span>
             </div>
 
-            <h2 className="mt-8 max-w-lg text-[2rem] font-semibold tracking-tight text-white sm:text-[2.4rem] leading-[1.05]">
-              Enterprise connectivity engineered with
-              <span className="block text-white/60">
-                disciplined telecom operations.
-              </span>
+            <h2 className="mt-8 max-w-lg text-[2rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[2.4rem]">
+              Business connectivity for
+              <span className="block text-white/60">Ontario organizations.</span>
             </h2>
 
             <p className="mt-6 max-w-md text-sm leading-6 text-white/60 sm:text-[15px]">
-              Orbitlink delivers structured onboarding, managed infrastructure,
-              and operational transparency designed for modern enterprise networks.
+              Orbitlink provides business fibre, dedicated internet, managed networking, voice,
+              and continuity services with structured onboarding, address-qualified availability,
+              and a clearer commercial path.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              {["TELECOM", "INFRASTRUCTURE", "AUDIT READY"].map((item) => (
+              {[
+                "BUSINESS FIBRE",
+                "ADDRESS-QUALIFIED",
+                "STRUCTURED SUPPORT",
+              ].map((item) => (
                 <span
                   key={item}
                   className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] tracking-[0.15em] text-white/55"
@@ -155,10 +152,7 @@ export default function SiteFooter() {
 
             <div className="mt-8 space-y-1 text-xs text-white/45">
               <div>
-                Orbitlink is a brand of{" "}
-                <span className="text-white/70">
-                  TIRAV Technologies Inc.
-                </span>
+                Orbitlink is a brand of <span className="text-white/70">TIRAV Technologies Inc.</span>
               </div>
 
               <div>
@@ -169,7 +163,7 @@ export default function SiteFooter() {
 
               <div>
                 <a
-                  className="text-white/60 hover:text-white transition"
+                  className="text-white/60 transition hover:text-white"
                   href="tel:+18888672480"
                 >
                   1-888-8-ORBIT-0
@@ -183,48 +177,70 @@ export default function SiteFooter() {
               <div>
                 <SectionTitle>COMPANY</SectionTitle>
                 <ul className="mt-4 space-y-3">
-                  <li><FooterLink href="/about">About</FooterLink></li>
-                  <li><FooterLink href="/network">Network</FooterLink></li>
-                  <li><FooterLink href="/services">Services</FooterLink></li>
+                  <li>
+                    <FooterLink href="/about">About</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/network">Network</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/services">Services</FooterLink>
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <SectionTitle>PLATFORM</SectionTitle>
                 <ul className="mt-4 space-y-3">
-                  <li><FooterLink href="/solutions">Solutions</FooterLink></li>
-                  <li><FooterLink href="/trust">Trust</FooterLink></li>
-                  <li><FooterLink href="/contact">Contact</FooterLink></li>
+                  <li>
+                    <FooterLink href="/solutions">Solutions</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/trust">Trust</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/contact">Contact</FooterLink>
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <SectionTitle>LOCATIONS</SectionTitle>
                 <ul className="mt-4 space-y-3">
-                  <li><FooterLink href="/locations">All locations</FooterLink></li>
-                  <li><FooterLink href="/locations/ontario">Ontario</FooterLink></li>
-                  <li><FooterLink href="/locations/mississauga">Mississauga</FooterLink></li>
+                  <li>
+                    <FooterLink href="/locations">All locations</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/locations/ontario">Ontario</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/locations/mississauga">Mississauga</FooterLink>
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <SectionTitle>LEGAL</SectionTitle>
                 <ul className="mt-4 space-y-3">
-                  <li><FooterLink href="/legal/privacy">Privacy</FooterLink></li>
-                  <li><FooterLink href="/legal/terms">Terms</FooterLink></li>
-                  <li><FooterLink href="/legal/acceptable-use">Acceptable use</FooterLink></li>
+                  <li>
+                    <FooterLink href="/legal/privacy">Privacy</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/legal/terms">Terms</FooterLink>
+                  </li>
+                  <li>
+                    <FooterLink href="/legal/acceptable-use">Acceptable use</FooterLink>
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="mt-10 flex flex-col gap-6 rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <div className="text-[11px] tracking-[0.26em] text-white/40">
-                  CONCIERGE ACCESS
-                </div>
+                <div className="text-[11px] tracking-[0.26em] text-white/40">START HERE</div>
 
                 <div className="mt-2 text-sm text-white/70">
-                  Business fibre, dedicated internet, managed LAN/Wi-Fi.
+                  Business fibre, dedicated internet, managed LAN/Wi-Fi, voice, and continuity.
                 </div>
               </div>
 
@@ -232,23 +248,21 @@ export default function SiteFooter() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Request Access
+                Check Availability & Request Pricing
               </Link>
             </div>
           </div>
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
-          <div className="text-xs text-white/40">
-            © {year} TIRAV Technologies Inc.
-          </div>
+          <div className="text-xs text-white/40">© {year} TIRAV Technologies Inc.</div>
 
           <div className="flex flex-wrap gap-3 text-xs text-white/40">
             <span>Ontario</span>
             <span>•</span>
-            <span>Availability by building</span>
+            <span>Address-qualified availability</span>
             <span>•</span>
-            <span>Enterprise onboarding</span>
+            <span>Structured onboarding and support</span>
           </div>
         </div>
       </div>

@@ -15,66 +15,63 @@ function tonePill(tone: "ok" | "warn" | "info") {
 
 export default function StatusBand() {
   return (
-    <section className="relative z-[20] mx-auto max-w-6xl px-5 sm:px-7 mt-4 sm:mt-6">
-      <div className="overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.035] backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.22)]">
-        {/* premium top edge */}
+    <section className="relative z-[20] mx-auto mt-4 max-w-6xl px-5 sm:mt-6 sm:px-7">
+      <div className="overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.035] shadow-[0_10px_40px_rgba(0,0,0,0.22)] backdrop-blur-xl">
         <div className="h-px w-full bg-gradient-to-r from-transparent via-white/12 to-transparent" />
 
-        {/* Header strip */}
-        <div className="flex items-center justify-between gap-4 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-white/10 bg-black/15">
-          <div className="flex items-center gap-3 min-w-0">
+        <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-black/15 px-4 py-3.5 sm:px-6 sm:py-4">
+          <div className="flex min-w-0 items-center gap-3">
             <span className="relative inline-flex h-2.5 w-2.5 shrink-0">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-[#FACC15]/35 animate-ping motion-reduce:hidden" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/35 motion-reduce:hidden" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
             </span>
 
             <div className="min-w-0">
-              <div className="text-[10px] sm:text-[11px] tracking-[0.28em] text-white/55">
-                LIVE POSTURE
+              <div className="text-[10px] tracking-[0.28em] text-white/55 sm:text-[11px]">
+                BUSINESS STATUS
               </div>
             </div>
           </div>
 
-          <div className="hidden sm:block text-[11px] tracking-[0.22em] text-white/45 text-right">
-            Operator surface • conservative statements
+          <div className="hidden text-right text-[11px] tracking-[0.22em] text-white/45 sm:block">
+            Address-qualified availability • structured onboarding
           </div>
 
-          <div className="sm:hidden text-[10px] tracking-[0.18em] text-white/40 text-right">
-            Conservative
+          <div className="text-right text-[10px] tracking-[0.18em] text-white/40 sm:hidden">
+            Business-ready
           </div>
         </div>
 
-        {/* Tiles */}
         <div className="p-3 sm:p-5">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
             {STATUS_BAND.map((i) => (
               <div
                 key={i.label}
-                className="group rounded-2xl border border-white/10 bg-black/25 p-3.5 sm:p-5 transition hover:bg-black/30 hover:border-white/15"
+                className="group rounded-2xl border border-white/10 bg-black/25 p-3.5 transition hover:border-white/15 hover:bg-black/30 sm:p-5"
               >
                 <div className="flex items-start justify-between gap-2 sm:gap-3">
-                  <div className="min-w-0 text-[10px] sm:text-[11px] tracking-[0.20em] sm:tracking-[0.22em] text-white/55">
+                  <div className="min-w-0 text-[10px] tracking-[0.20em] text-white/55 sm:text-[11px] sm:tracking-[0.22em]">
                     {i.label}
                   </div>
 
                   <div
-                    className={`shrink-0 rounded-full border px-2.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-[11px] ${tonePill(i.tone)}`}
+                    className={`shrink-0 rounded-full border px-2.5 py-1 text-[10px] sm:px-3 sm:py-1.5 sm:text-[11px] ${tonePill(i.tone)}`}
                   >
                     {i.tone === "ok" ? "OK" : i.tone === "warn" ? "WATCH" : "INFO"}
                   </div>
                 </div>
 
-                <div className={`mt-3 text-[15px] sm:text-[17px] font-medium ${toneText(i.tone)}`}>
+                <div className={`mt-3 text-[15px] font-medium sm:text-[17px] ${toneText(i.tone)}`}>
                   {i.value}
                 </div>
 
                 {i.note ? (
-                  <div className="mt-2 text-[11px] sm:text-xs text-white/55 leading-5 max-w-[34ch]">
+                  <div className="mt-2 max-w-[34ch] text-[11px] leading-5 text-white/55 sm:text-xs">
                     {i.note}
                   </div>
                 ) : (
-                  <div className="mt-2 text-[11px] sm:text-xs text-white/40 leading-5">
-                    Telemetry-aligned disclosure
+                  <div className="mt-2 text-[11px] leading-5 text-white/40 sm:text-xs">
+                    Business-ready service communication
                   </div>
                 )}
 

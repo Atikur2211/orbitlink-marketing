@@ -13,16 +13,16 @@ const PAGE_URL = `${SITE_URL}/network`;
 const OG_IMAGE_URL = `${SITE_URL}/network/opengraph-image`;
 
 export const metadata: Metadata = {
-  title: "Network Posture & Operations",
+  title: "Business Network Visibility & Service Readiness | Orbitlink",
   description:
-    "Business fibre network operations for Ontario organizations: measured telemetry, structured escalation, controlled rollout, and address-verified service availability.",
+    "A business-first view of Orbitlink network visibility, service readiness, escalation handling, and address-qualified availability for Ontario organizations.",
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: "Network Posture & Operations · Orbitlink",
+    title: "Business Network Visibility & Service Readiness · Orbitlink",
     description:
-      "A structured view of Orbitlink network operations: telemetry, escalation, rollout discipline, and conservative public disclosure for business connectivity.",
+      "A clearer view of Orbitlink network readiness, service communication, escalation handling, and address-qualified availability for business buyers.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -32,15 +32,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink — Network Visibility & Infrastructure",
+        alt: "Orbitlink — Business Network Visibility & Service Readiness",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Network Posture & Operations · Orbitlink",
+    title: "Business Network Visibility & Service Readiness · Orbitlink",
     description:
-      "Business network operations with measured telemetry, structured escalation, and conservative rollout disclosure.",
+      "Business-first network visibility, structured escalation, and address-qualified service availability.",
     images: [OG_IMAGE_URL],
   },
   robots: {
@@ -140,18 +140,18 @@ function HeroCommandPanel() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/35" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
             </span>
-            <SectionEyebrow>NETWORK COMMAND SURFACE</SectionEyebrow>
+            <SectionEyebrow>NETWORK VISIBILITY</SectionEyebrow>
           </div>
 
           <div className="flex flex-wrap gap-2 text-xs text-white/55">
             <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-              Address-verified intake
+              Address-qualified availability
             </span>
             <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
               Structured escalation
             </span>
             <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-              Conservative disclosure
+              Business-first communication
             </span>
           </div>
         </div>
@@ -161,17 +161,17 @@ function HeroCommandPanel() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl sm:leading-[1.02]">
-              Business network operations,
+              Business network visibility,
               <span className="block text-white/68">
-                presented with clarity, discipline, and restraint.
+                presented with clarity, structure, and buyer-readable language.
               </span>
             </h2>
 
             <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68 sm:text-[15px]">
-              Orbitlink presents network operations the way serious business buyers expect to see
-              them: measured, conservative, and operationally accountable. This page is not a
-              blanket coverage claim. It explains how service readiness, telemetry, change control,
-              and escalation are handled before, during, and after activation.
+              Orbitlink presents network readiness the way serious business buyers expect to see it:
+              clearly, carefully, and without blanket overclaiming. This page is not a universal
+              coverage promise. It explains how service readiness, network visibility, change
+              handling, and escalation are managed before, during, and after activation.
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -185,7 +185,7 @@ function HeroCommandPanel() {
                 href="/trust"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
-                Review Trust Posture
+                Review Trust & Compliance
               </a>
             </div>
           </div>
@@ -194,8 +194,8 @@ function HeroCommandPanel() {
             <div className="rounded-[28px] border border-white/10 bg-black/25 p-5">
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <div className="text-[11px] tracking-[0.22em] text-white/50">LIVE MODE</div>
-                  <div className="mt-2 text-lg font-semibold text-white">Operational summary</div>
+                  <div className="text-[11px] tracking-[0.22em] text-white/50">CURRENT VIEW</div>
+                  <div className="mt-2 text-lg font-semibold text-white">Business service summary</div>
                 </div>
 
                 <div className="rounded-full border border-cyan-400/20 bg-cyan-500/10 px-3 py-1.5 text-[11px] text-cyan-200">
@@ -205,10 +205,10 @@ function HeroCommandPanel() {
 
               <div className="mt-5 space-y-3">
                 {[
-                  "Public updates reflect verified operational status only.",
-                  "Service availability is confirmed per address and scope.",
+                  "Public updates reflect verified service status only.",
+                  "Availability is reviewed per address, site, and scope.",
                   "Changes are disclosed after timing and ownership are confirmed.",
-                  "Escalation follows a documented intake, diagnosis, and remediation path.",
+                  "Escalation follows a documented intake, diagnosis, and resolution path.",
                 ].map((item) => (
                   <div
                     key={item}
@@ -276,22 +276,21 @@ function NetworkAtlas() {
       <div className="border-b border-white/10 px-6 py-5 sm:px-7">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <SectionEyebrow>ATLAS</SectionEyebrow>
+            <SectionEyebrow>NETWORK VIEW</SectionEyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-              Network footprint, interconnect posture, and expansion discipline
+              Network footprint, route context, and measured expansion
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
               This visual layer shows how Orbitlink communicates network presence: active operating
-              areas, observed interconnect context, and milestone-based expansion. It is
-              intentionally conservative and should be read as an operational view, not a universal
-              service coverage map.
+              areas, route context, and milestone-based expansion. It is intentionally conservative
+              and should be read as an operating view, not a blanket service coverage map.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/55">DISPLAY MODE</div>
             <div className="mt-1 text-sm text-white/80">
-              Operational view • not a marketing map
+              Business visibility • not a marketing map
             </div>
           </div>
         </div>
@@ -313,8 +312,8 @@ function NetworkAtlas() {
         </div>
 
         <PopNode left="18%" top="58%" label="MISSISSAUGA" tone="ok" role="Primary operating area" />
-        <PopNode left="44%" top="44%" label="TORONTO" tone="info" role="Interconnect context" />
-        <PopNode left="69%" top="62%" label="OTTAWA" tone="warn" role="Milestone-led expansion" />
+        <PopNode left="44%" top="44%" label="TORONTO" tone="info" role="Route and interconnect context" />
+        <PopNode left="69%" top="62%" label="OTTAWA" tone="warn" role="Milestone-based expansion" />
         <PopNode left="79%" top="34%" label="MONTREAL" tone="info" role="Upstream route context" />
 
         <div className="absolute bottom-4 right-5 text-[10px] text-white/50">
@@ -334,7 +333,7 @@ function NetworkAtlas() {
             name: "Toronto",
             status: "Observed",
             tone: "info" as const,
-            note: "Interconnect context and service posture visibility for connected business demand.",
+            note: "Route and interconnect context for connected business demand.",
           },
           {
             name: "Montreal",
@@ -369,20 +368,20 @@ function CapabilityField() {
     <Surface className="p-6 sm:p-7">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <SectionEyebrow>CAPABILITY FIELD</SectionEyebrow>
+          <SectionEyebrow>BUSINESS EXPECTATIONS</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-            What enterprise buyers should expect from the operating model
+            What business buyers should expect from the service model
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-            A serious network provider is judged by operating habits, not slogans. Orbitlink is
-            designed to qualify service carefully, communicate changes responsibly, and keep
-            escalation paths structured when business connectivity matters.
+            A serious provider is judged by how it qualifies service, communicates changes, and
+            handles escalation when connectivity matters. Orbitlink is designed to keep those areas
+            clear, structured, and easier to review.
           </p>
         </div>
 
         <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
           <div className="text-[11px] tracking-[0.22em] text-white/55">POSTURE</div>
-          <div className="mt-1 text-sm text-white/80">Clear • disciplined • operator-led</div>
+          <div className="mt-1 text-sm text-white/80">Clear • structured • business-first</div>
         </div>
       </div>
 
@@ -422,7 +421,7 @@ function BuyerOutcomesStrip() {
     <Surface className="p-6 sm:p-7">
       <SectionEyebrow>BUSINESS OUTCOMES</SectionEyebrow>
       <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-        What this operating model means for your business
+        What this service model means for your business
       </h2>
       <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
         Orbitlink’s network model is designed to improve service qualification, deployment clarity,
@@ -452,7 +451,7 @@ function OperatingPhilosophy() {
       b: "Performance and service posture are explained with route, timing, and rollout context where relevant.",
     },
     {
-      t: "Documented change control",
+      t: "Documented change handling",
       b: "Changes are recorded clearly enough to support buyer review, internal tracking, and post-incident understanding.",
     },
     {
@@ -463,14 +462,14 @@ function OperatingPhilosophy() {
 
   return (
     <Surface className="p-6 sm:p-7">
-      <SectionEyebrow>OPERATING PHILOSOPHY</SectionEyebrow>
+      <SectionEyebrow>COMMUNICATION STANDARD</SectionEyebrow>
       <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
         How Orbitlink keeps public network statements credible
       </h2>
       <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-        Buyers trust telecom providers that communicate precisely. Orbitlink uses measured
-        language, operational context, and documented updates so network statements remain credible
-        to technical, commercial, and property stakeholders.
+        Buyers trust providers that communicate precisely. Orbitlink uses measured language,
+        operational context, and documented updates so service statements remain credible to
+        technical, commercial, and property stakeholders.
       </p>
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -488,14 +487,14 @@ function OperatingPhilosophy() {
 function LatencyPosture() {
   return (
     <Surface className="p-6 sm:p-7">
-      <SectionEyebrow>PERFORMANCE POSTURE</SectionEyebrow>
+      <SectionEyebrow>PERFORMANCE VIEW</SectionEyebrow>
       <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
         Performance is measured carefully and explained honestly
       </h2>
       <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-        Orbitlink treats latency and path quality as operational signals, not headline marketing
-        claims. Measurements are interpreted with route conditions, timing, upstream state, and
-        last-mile context so buyers see a more reliable picture of service behavior.
+        Orbitlink treats latency and path quality as service signals, not headline marketing claims.
+        Measurements are interpreted with route conditions, timing, upstream state, and last-mile
+        context so buyers see a more reliable picture of service behavior.
       </p>
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -506,7 +505,7 @@ function LatencyPosture() {
           },
           {
             t: "Change-aware review",
-            b: "When routing, policy, or upstream conditions shift, measurements are reviewed against the rollout and incident context.",
+            b: "When routing, policy, or upstream conditions shift, measurements are reviewed against the service and incident context.",
           },
           {
             t: "Clear explanation",
@@ -536,13 +535,13 @@ function EscalationModel() {
     {
       level: "L2 — Network Review & Diagnosis",
       bullets: [
-        "Review telemetry, route behavior, and error conditions",
+        "Review monitoring, route behavior, and error conditions",
         "Check whether the issue is local, upstream, or equipment-related",
-        "Prepare a cleaner diagnosis before external escalation",
+        "Prepare a clearer diagnosis before external escalation",
       ],
     },
     {
-      level: "L3 — Provider Coordination & Remediation",
+      level: "L3 — Provider Coordination & Resolution",
       bullets: [
         "Engage upstream remediation when required",
         "Maintain client updates against a documented timeline",
@@ -557,7 +556,7 @@ function EscalationModel() {
         <div>
           <SectionEyebrow>ESCALATION MODEL</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-            A structured incident path from intake to resolution
+            A structured service path from intake to resolution
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
             Business buyers need to know that incidents move in an ordered way. Orbitlink uses a
@@ -596,7 +595,7 @@ function AssuranceModel() {
     },
     {
       t: "During rollout",
-      b: "Changes are introduced through controlled sequencing rather than vague public promises.",
+      b: "Changes are introduced through controlled sequencing rather than vague promises.",
     },
     {
       t: "During incidents",
@@ -604,20 +603,20 @@ function AssuranceModel() {
     },
     {
       t: "After resolution",
-      b: "The operating record is clarified with resolution notes and a cleaner understanding of what changed.",
+      b: "The service record is clarified with resolution notes and a cleaner understanding of what changed.",
     },
   ];
 
   return (
     <Surface className="p-6 sm:p-7">
-      <SectionEyebrow>ASSURANCE MODEL</SectionEyebrow>
+      <SectionEyebrow>SERVICE ASSURANCE</SectionEyebrow>
       <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-        A structured operating sequence before, during, and after service events
+        A structured sequence before, during, and after service events
       </h2>
       <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-        Enterprise buyers want to know how a provider behaves across the full lifecycle, not only
-        at the moment of sale. This section explains the sequence Orbitlink uses to keep delivery
-        and service communication orderly.
+        Serious buyers want to know how a provider behaves across the full lifecycle, not only at
+        the moment of sale. This section explains the sequence Orbitlink uses to keep delivery and
+        service communication orderly.
       </p>
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -643,13 +642,13 @@ function ChangeLogStrip() {
     <Surface className="p-6 sm:p-7">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <SectionEyebrow>CHANGE LOG</SectionEyebrow>
+          <SectionEyebrow>CHANGE UPDATES</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-            Controlled updates, disclosed responsibly
+            Controlled updates, communicated responsibly
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
             Maintenance windows and routing changes are communicated when confirmed. Public language
-            remains conservative until milestones complete and outcomes can be described cleanly.
+            remains measured until milestones complete and outcomes can be described clearly.
           </p>
         </div>
 
@@ -687,21 +686,21 @@ function TelemetryDisclosureStrip() {
     <Surface className="p-6 sm:p-7">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <SectionEyebrow>TELEMETRY & DISCLOSURE</SectionEyebrow>
+          <SectionEyebrow>SERVICE COMMUNICATION</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-            Public network status is kept intentionally conservative
+            Public service status is kept intentionally measured
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-            Orbitlink avoids broad availability claims and unqualified performance marketing. The
-            published network view reflects verified operational posture, readiness signals, change
-            windows, and controlled rollout status.
+            Orbitlink avoids blanket availability claims and exaggerated performance language. The
+            published network view reflects verified service posture, readiness signals, change
+            windows, and structured rollout status.
           </p>
         </div>
 
         <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
           <div className="text-[11px] tracking-[0.22em] text-white/55">STANDARD</div>
           <div className="mt-1 text-sm text-white/80">
-            Verified status • scope-controlled language
+            Verified status • measured language
           </div>
         </div>
       </div>
@@ -738,22 +737,22 @@ function EnterpriseReadinessStrip() {
     "Address-qualified service discussions",
     "Structured onboarding and delivery coordination",
     "Documented escalation path",
-    "Measured public disclosure",
-    "Operationally conservative network communication",
-    "Business-oriented service intake",
+    "Measured public communication",
+    "Business-oriented network updates",
+    "Business-first service intake",
   ];
 
   return (
     <Surface className="p-6 sm:p-7">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <SectionEyebrow>ENTERPRISE READINESS</SectionEyebrow>
+          <SectionEyebrow>BUSINESS FIT</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-            Designed for buyers who need more than generic internet marketing
+            Designed for buyers who want more than generic internet marketing
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
             Orbitlink is built for organizations that expect qualified service discussions, cleaner
-            implementation flow, and more disciplined operational communication.
+            implementation flow, and more disciplined communication around business connectivity.
           </p>
         </div>
 
@@ -782,14 +781,14 @@ function CoverageAndCTA() {
     <Surface className="overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-12">
         <div className="border-b border-white/10 p-6 lg:col-span-8 lg:border-b-0 lg:border-r sm:p-7">
-          <SectionEyebrow>COVERAGE & INTAKE</SectionEyebrow>
+          <SectionEyebrow>AVAILABILITY & INTAKE</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-            Service availability begins with qualified intake
+            Service availability begins with qualified review
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
             Orbitlink does not use blanket coverage promises. Serviceability is reviewed per
             address, building conditions, required service type, and operating scope. This keeps
-            deployment conversations accurate from the beginning.
+            deployment conversations more accurate from the beginning.
           </p>
 
           <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 px-4 py-4 text-sm leading-6 text-white/63">
@@ -848,9 +847,9 @@ function NetworkIntegrityFooter() {
         <div>
           <SectionEyebrow>INTEGRITY NOTICE</SectionEyebrow>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-            This page reflects Orbitlink’s current operating posture and verified public network
-            statements. Availability, rollout timing, and readiness notes are disclosed
-            conservatively and updated only when they can be described accurately.
+            This page reflects Orbitlink’s current service posture and verified public network
+            statements. Availability, rollout timing, and readiness notes are described carefully
+            and updated only when they can be presented accurately.
           </p>
         </div>
 
@@ -948,7 +947,7 @@ export default function NetworkPage() {
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "No. This page shows Orbitlink’s network operating view, not blanket service coverage. Availability is reviewed per address, building conditions, and service scope.",
+            "No. This page shows Orbitlink’s business network view, not blanket service coverage. Availability is reviewed per address, building conditions, and service scope.",
         },
       },
       {
@@ -966,7 +965,7 @@ export default function NetworkPage() {
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Orbitlink treats latency and route quality as operational measurements, not headline marketing claims. Performance is explained with route, timing, and service context where relevant.",
+            "Orbitlink treats latency and route quality as service measurements, not headline marketing claims. Performance is explained with route, timing, and service context where relevant.",
         },
       },
       {
@@ -989,8 +988,8 @@ export default function NetworkPage() {
   return (
     <PageShell
       eyebrow="NETWORK"
-      title="Operational Surface"
-      subtitle="A structured control layer for telemetry, service readiness, change discipline, and predictable escalation."
+      title="Business Network Visibility"
+      subtitle="A clearer view of service readiness, network communication, change handling, and structured escalation for serious business buyers."
     >
       <script
         type="application/ld+json"

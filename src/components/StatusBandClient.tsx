@@ -1,3 +1,4 @@
+// src/components/StatusBandClient.tsx
 "use client";
 
 import StatusBand from "@/components/StatusBand";
