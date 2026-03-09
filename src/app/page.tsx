@@ -332,8 +332,9 @@ export default function Home() {
               Business fibre internet • Dedicated internet • Managed network services
             </div>
 
-            <h1 className="mt-6 text-[2.45rem] font-semibold leading-[1.02] tracking-tight sm:text-5xl sm:leading-[1.03] lg:max-w-5xl lg:text-6xl">
-              Business fibre internet, dedicated internet, and managed network services
+            <h1 className="mt-6 max-w-4xl text-[2.15rem] font-semibold leading-[1.04] tracking-tight sm:text-[3.35rem] sm:leading-[1.03] lg:text-[4rem]">
+              Business fibre internet,
+              <span className="block">dedicated internet, and managed network services</span>
               <span className="mt-2 block text-white/74">
                 for Ontario businesses that need reliable connectivity and a more accountable
                 provider experience.
