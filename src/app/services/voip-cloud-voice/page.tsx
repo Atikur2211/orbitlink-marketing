@@ -7,18 +7,19 @@ const PAGE_PATH = "/services/voip-cloud-voice";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
+const ORG_ID = `${SITE_URL}/#org`;
 
 export const metadata: Metadata = {
   title: "VoIP & Cloud Voice | Orbitlink™ Business Communications",
   description:
-    "Orbitlink business VoIP and cloud voice services for modern organizations in Ontario. Structured onboarding, number porting support, enterprise call routing, and operator-grade delivery posture.",
+    "Business VoIP and cloud voice for Ontario organizations. Structured onboarding, number porting support, business call routing, endpoint readiness, and a cleaner operator-grade delivery posture.",
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
     title: "VoIP & Cloud Voice | Orbitlink™",
     description:
-      "Enterprise-ready cloud voice, number porting coordination, and business communications with disciplined onboarding and operator-grade delivery.",
+      "Business cloud voice, number porting coordination, and call routing with structured onboarding and a cleaner delivery posture.",
     url: PAGE_URL,
     siteName: "Orbitlink",
     locale: "en_CA",
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "VoIP & Cloud Voice | Orbitlink™",
     description:
-      "Business cloud voice and VoIP with structured onboarding and operator-grade delivery posture.",
+      "Business cloud voice and VoIP with structured onboarding, number porting support, and a cleaner operator-grade delivery posture.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
 const CAPABILITIES = [
   {
     title: "Hosted business voice",
-    desc: "Cloud voice options for modern teams that need reliability, flexibility, and clean user onboarding.",
+    desc: "Cloud voice options for modern teams that need reliability, flexibility, and cleaner user onboarding.",
   },
   {
     title: "Number porting support",
@@ -76,13 +77,13 @@ const ARCHITECTURE_MODULES = [
     eyebrow: "MODULE 01",
     title: "Core voice deployment",
     copy:
-      "A clean starting point for businesses moving from legacy telephony into cloud-managed voice with professional routing and support posture.",
+      "A clean starting point for businesses moving from legacy telephony into cloud-managed voice with professional routing and a more disciplined support posture.",
   },
   {
     eyebrow: "MODULE 02",
-    title: "Porting & transition posture",
+    title: "Porting and transition planning",
     copy:
-      "Designed to reduce disruption during changeover with better planning around numbers, users, timing, and activation sequence.",
+      "Designed to reduce disruption during changeover through better planning around numbers, users, timing, and activation sequence.",
   },
   {
     eyebrow: "MODULE 03",
@@ -100,13 +101,120 @@ const ASSURANCE_ITEMS = [
   "Ontario business focus",
 ] as const;
 
+const BUSINESS_OUTCOMES = [
+  {
+    title: "Cleaner communications rollout",
+    body: "Voice is introduced through a more structured transition path, reducing confusion around users, numbers, routing, and timing.",
+  },
+  {
+    title: "Better business fit",
+    body: "Buyers can treat voice as part of the operating stack instead of as a disconnected add-on.",
+  },
+  {
+    title: "More credible support posture",
+    body: "The service is framed around call routing, transition planning, and deployment clarity rather than generic VoIP claims.",
+  },
+  {
+    title: "Stronger long-term alignment",
+    body: "Cloud voice fits more cleanly with internet access, managed networking, continuity planning, and future communications growth.",
+  },
+] as const;
+
+const ASSURANCE_MODEL = [
+  {
+    title: "Before qualification",
+    body: "Orbitlink reviews user count, current provider, number needs, routing expectations, and site context before presenting the voice model.",
+  },
+  {
+    title: "During service fit",
+    body: "Porting, call flow structure, endpoint needs, and related network requirements are clarified before rollout planning begins.",
+  },
+  {
+    title: "Before activation",
+    body: "Transition expectations, routing behavior, cutover assumptions, and support boundaries are aligned before go-live.",
+  },
+  {
+    title: "After activation",
+    body: "The customer has a cleaner understanding of the call routing model, user setup, and how voice fits the wider business communications environment.",
+  },
+] as const;
+
+const USE_CASES = [
+  "Office phone systems for modern business teams",
+  "Cloud voice for reception, departments, and hunt groups",
+  "Number porting from legacy or incumbent providers",
+  "Voice environments with business-hour and after-hours logic",
+  "Organizations pairing voice with Business Fibre or DIA",
+  "Businesses that want cleaner communications operations and support",
+] as const;
+
+const FAQ = [
+  {
+    q: "Does Orbitlink support number porting?",
+    a: "Yes. Orbitlink supports number porting guidance and onboarding coordination as part of business voice deployment planning.",
+  },
+  {
+    q: "Is this designed for business environments?",
+    a: "Yes. Orbitlink cloud voice is positioned for business communications, call routing structure, and a more disciplined deployment posture.",
+  },
+  {
+    q: "Can voice be paired with other Orbitlink services?",
+    a: "Yes. Voice can align with Business Fibre, Dedicated Internet Access, managed LAN and Wi-Fi, and continuity architecture where appropriate.",
+  },
+  {
+    q: "What kinds of call flows can be supported?",
+    a: "Business call flows may include reception routing, business-hour logic, hunt groups, queue behavior, failover handling, and after-hours call treatment depending on the deployment scope.",
+  },
+  {
+    q: "Do I need special internet service for cloud voice?",
+    a: "Voice works best when it is aligned with a suitable access and network environment. Orbitlink reviews voice alongside internet, LAN, Wi-Fi, and continuity posture when needed.",
+  },
+  {
+    q: "Who should consider business cloud voice?",
+    a: "Organizations with multiple users, call routing needs, porting requirements, remote or hybrid teams, or businesses replacing legacy telephony should usually consider it.",
+  },
+] as const;
+
+function SectionShell({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`rounded-[30px] border border-white/10 bg-white/[0.04] ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/48">{children}</div>;
+}
+
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/45">{label}</div>
+      <div className="mt-1 text-sm text-white/82">{value}</div>
+    </div>
+  );
+}
+
 export default function Page() {
   const schemaGraph = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
-        "@id": `${SITE_URL}/#org`,
+        "@id": ORG_ID,
         name: "Orbitlink",
         url: SITE_URL,
         logo: `${SITE_URL}/icon.png`,
@@ -121,7 +229,7 @@ export default function Page() {
         "@id": `${PAGE_URL}#service`,
         name: "VoIP & Cloud Voice",
         serviceType: "Business VoIP and Cloud Communications",
-        provider: { "@id": `${SITE_URL}/#org` },
+        provider: { "@id": ORG_ID },
         areaServed: [
           { "@type": "AdministrativeArea", name: "Ontario, Canada" },
           { "@type": "City", name: "Mississauga" },
@@ -131,6 +239,8 @@ export default function Page() {
           audienceType: "Business",
         },
         url: PAGE_URL,
+        description:
+          "Business VoIP and cloud voice with structured onboarding, number porting support, business call routing, and cleaner delivery posture.",
       },
       {
         "@type": "BreadcrumbList",
@@ -157,38 +267,20 @@ export default function Page() {
       },
       {
         "@type": "FAQPage",
-        mainEntity: [
-          {
-            "@type": "Question",
-            name: "Does Orbitlink support number porting?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Yes. Orbitlink supports number porting guidance and onboarding coordination as part of business voice deployment planning.",
-            },
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
           },
-          {
-            "@type": "Question",
-            name: "Is this designed for business environments?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Yes. Orbitlink cloud voice is positioned for business communications, routing structure, and disciplined deployment posture.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "Can voice be paired with other Orbitlink services?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Yes. Voice can align with business fibre, dedicated internet access, managed LAN and Wi-Fi, and continuity architecture where appropriate.",
-            },
-          },
-        ],
+        })),
       },
     ],
   };
 
   return (
-    <div className="relative">
+    <main className="min-h-screen bg-[#09090B] text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
@@ -196,13 +288,14 @@ export default function Page() {
 
       <section className="relative overflow-hidden border-b border-white/10">
         <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:72px_72px]" />
           <div className="absolute -top-24 left-10 h-72 w-72 rounded-full bg-blue-500/12 blur-3xl" />
           <div className="absolute right-10 top-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
           <div className="absolute bottom-[-140px] left-1/2 h-80 w-[56rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_34%)]" />
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-6 pb-14 pt-16 sm:pb-16 sm:pt-20 lg:pb-20">
+        <div className="relative mx-auto max-w-6xl px-6 pb-14 pt-16 sm:pb-16 sm:pt-20 lg:px-10 lg:pb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-white/70">
             <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
             AUREX Voice
@@ -210,15 +303,25 @@ export default function Page() {
 
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="lg:col-span-8">
-              <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.02]">
+              <SectionEyebrow>BUSINESS COMMUNICATIONS</SectionEyebrow>
+
+              <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.02]">
                 VoIP & Cloud Voice
+                <span className="block text-white/62">
+                  for businesses that need cleaner communications and transition control.
+                </span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/70 sm:text-lg">
-                Modern business voice is more than dial tone. Orbitlink supports
-                cloud voice deployments with structured onboarding, number
-                porting coordination, professional routing logic, and a calm
-                operator-grade delivery posture for modern organizations.
+                Modern business voice is more than dial tone. Orbitlink supports cloud voice
+                deployments with structured onboarding, number porting coordination, professional
+                routing logic, and a calm operator-grade delivery posture for modern organizations.
+              </p>
+
+              <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
+                The goal is not just to turn on service. It is to align users, numbers, call
+                routing, endpoint readiness, and business operations so communications feel stable,
+                predictable, and easier to manage.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -240,232 +343,274 @@ export default function Page() {
                   Request Voice Options
                 </Link>
                 <Link
-                  href="/services"
+                  href="/services/business-fibre-internet"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
                 >
-                  Back to Services
+                  Pair with Business Fibre
                 </Link>
               </div>
             </div>
 
             <div className="lg:col-span-4">
-              <div className="rounded-[30px] border border-white/10 bg-white/[0.045] p-6">
-                <div className="text-[11px] tracking-[0.22em] text-white/55">
-                  COMMUNICATIONS POSTURE
+              <SectionShell className="relative overflow-hidden p-6">
+                <div className="pointer-events-none absolute inset-0">
+                  <div className="absolute -right-10 top-0 h-28 w-28 rounded-full bg-blue-500/10 blur-3xl" />
+                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
                 </div>
-                <div className="mt-3 text-lg font-semibold text-white">
-                  Business communications with operator discipline
-                </div>
-                <p className="mt-3 text-sm leading-6 text-white/65">
-                  Voice deployments are introduced through structured scoping,
-                  clean transition planning, and business-ready routing rather
-                  than improvised setup.
-                </p>
 
-                <div className="mt-5 grid gap-3">
-                  <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/80">
-                    1. Confirm scope and users
+                <div className="relative">
+                  <SectionEyebrow>COMMUNICATIONS POSTURE</SectionEyebrow>
+                  <div className="mt-3 text-lg font-semibold text-white">
+                    Business communications with cleaner deployment discipline
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/80">
-                    2. Review porting and routing
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/80">
-                    3. Enter structured onboarding
+                  <p className="mt-3 text-sm leading-6 text-white/65">
+                    Voice deployments are introduced through structured scoping, transition
+                    planning, and business-ready call routing rather than improvised setup.
+                  </p>
+
+                  <div className="mt-5 grid gap-3">
+                    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/80">
+                      1. Confirm users, scope, and current provider
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/80">
+                      2. Review porting and call routing needs
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/80">
+                      3. Move into structured onboarding
+                    </div>
                   </div>
                 </div>
-              </div>
+              </SectionShell>
             </div>
           </div>
 
           <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div className="rounded-[28px] border border-white/10 bg-white/[0.045] p-5 sm:p-6">
-              <div className="text-[11px] tracking-[0.24em] text-white/50">
-                DEPLOYMENT MODEL
-              </div>
-              <div className="mt-3 text-lg font-semibold text-white">
-                Business-ready voice
-              </div>
-              <p className="mt-2 text-sm leading-6 text-white/65">
-                Structured communications for modern teams, offices, and
-                operating environments.
-              </p>
-            </div>
-
-            <div className="rounded-[28px] border border-white/10 bg-white/[0.045] p-5 sm:p-6">
-              <div className="text-[11px] tracking-[0.24em] text-white/50">
-                TRANSITION POSTURE
-              </div>
-              <div className="mt-3 text-lg font-semibold text-white">
-                Porting-aware onboarding
-              </div>
-              <p className="mt-2 text-sm leading-6 text-white/65">
-                Expectations are defined before activation to reduce disruption
-                and improve cutover readiness.
-              </p>
-            </div>
-
-            <div className="rounded-[28px] border border-white/10 bg-white/[0.045] p-5 sm:p-6">
-              <div className="text-[11px] tracking-[0.24em] text-white/50">
-                ENTERPRISE SIGNAL
-              </div>
-              <div className="mt-3 text-lg font-semibold text-white">
-                Routing with discipline
-              </div>
-              <p className="mt-2 text-sm leading-6 text-white/65">
-                Business-hour logic, queue posture, escalation paths, and
-                cleaner communications design.
-              </p>
-            </div>
+            <MetricPill label="DEPLOYMENT MODEL" value="Business-ready cloud voice" />
+            <MetricPill label="TRANSITION POSTURE" value="Porting-aware onboarding" />
+            <MetricPill label="ENTERPRISE SIGNAL" value="Routing with cleaner expectations" />
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-12 sm:py-14">
-        <div className="rounded-[30px] border border-white/10 bg-white/[0.04] p-6 sm:p-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/45">
-                CAPABILITIES
-              </div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-                Voice designed as part of a broader operating stack
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
-                Orbitlink voice fits into a wider business communications and
-                connectivity posture. The objective is not just activation, but
-                a cleaner long-term operating model across access, routing, and
-                support.
-              </p>
-            </div>
-
-            <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-              <div className="text-[11px] tracking-[0.22em] text-white/50">
-                MODE
-              </div>
-              <div className="mt-1 text-sm text-white/80">
-                Clarity-first • Business-ready
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {CAPABILITIES.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-[28px] border border-white/10 bg-black/20 p-6"
-              >
-                <div className="text-lg font-semibold text-white">
-                  {item.title}
-                </div>
-                <p className="mt-3 text-sm leading-6 text-white/65">
-                  {item.desc}
+      <section className="mx-auto max-w-6xl px-6 py-12 sm:py-14 lg:px-10">
+        <div className="space-y-4 sm:space-y-6">
+          <SectionShell className="p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>CAPABILITIES</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
+                  Voice designed as part of a broader operating stack
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
+                  Orbitlink voice fits into a wider business communications and connectivity
+                  posture. The objective is not just activation, but a cleaner long-term operating
+                  model across access, routing, endpoints, and support.
                 </p>
               </div>
-            ))}
-          </div>
-        </div>
 
-        <section className="mt-12">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <div className="text-[11px] tracking-[0.28em] text-white/45">
-                ARCHITECTURE MODULES
-              </div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-                A cleaner communications buying path
-              </h2>
-              <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-                Start with business voice scope, confirm transition posture,
-                then align routing logic and endpoint readiness. This reduces
-                confusion and makes deployment cleaner for the client side.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-              <div className="text-[11px] tracking-[0.22em] text-white/50">
-                DELIVERY
-              </div>
-              <div className="mt-1 text-sm text-white/80">
-                Structured intake • Predictable rollout
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-            {ARCHITECTURE_MODULES.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-[30px] border border-white/10 bg-white/[0.04] p-6"
-              >
-                <div className="text-[11px] tracking-[0.24em] text-white/45">
-                  {item.eyebrow}
+              <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+                <div className="text-[11px] tracking-[0.22em] text-white/50">MODE</div>
+                <div className="mt-1 text-sm text-white/80">
+                  Clarity-first • Business-ready
                 </div>
-                <h3 className="mt-3 text-xl font-semibold tracking-tight text-white">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-white/65">
-                  {item.copy}
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+              {CAPABILITIES.map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-[28px] border border-white/10 bg-black/20 p-6"
+                >
+                  <div className="text-lg font-semibold text-white">{item.title}</div>
+                  <p className="mt-3 text-sm leading-6 text-white/65">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </SectionShell>
+
+          <SectionShell className="p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>BUSINESS OUTCOMES</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
+                  What this service structure means for buyers
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                  This page is designed to help buyers evaluate voice as a business communications
+                  layer rather than just a phone replacement.
                 </p>
               </div>
-            ))}
-          </div>
-        </section>
 
-        <div className="mt-12 rounded-[30px] border border-white/10 bg-white/[0.04] p-6 sm:p-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/45">
-                NEXT STEP
+              <MetricPill label="MODE" value="Buyer-readable • Communications-focused" />
+            </div>
+
+            <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {BUSINESS_OUTCOMES.map((item) => (
+                <div key={item.title} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+                  <div className="text-sm font-medium text-white/90">{item.title}</div>
+                  <p className="mt-3 text-sm leading-6 text-white/63">{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </SectionShell>
+
+          <section>
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <SectionEyebrow>ARCHITECTURE MODULES</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
+                  A cleaner communications buying path
+                </h2>
+                <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
+                  Start with business voice scope, confirm transition posture, then align routing
+                  logic and endpoint readiness. This reduces confusion and makes deployment cleaner
+                  on the client side.
+                </p>
               </div>
+
+              <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+                <div className="text-[11px] tracking-[0.22em] text-white/50">DELIVERY</div>
+                <div className="mt-1 text-sm text-white/80">
+                  Structured intake • Predictable rollout
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+              {ARCHITECTURE_MODULES.map((item) => (
+                <SectionShell key={item.title} className="p-6">
+                  <div className="text-[11px] tracking-[0.24em] text-white/45">{item.eyebrow}</div>
+                  <h3 className="mt-3 text-xl font-semibold tracking-tight text-white">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-white/65">{item.copy}</p>
+                </SectionShell>
+              ))}
+            </div>
+          </section>
+
+          <SectionShell className="p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>SERVICE ASSURANCE MODEL</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
+                  A structured path from qualification to operational use
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                  Larger providers often signal maturity through service lifecycle clarity. This
+                  section gives Orbitlink that same trust signal in simpler language buyers can
+                  understand quickly.
+                </p>
+              </div>
+
+              <MetricPill label="ENTERPRISE SIGNAL" value="Defined sequence • Cleaner transition" />
+            </div>
+
+            <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {ASSURANCE_MODEL.map((item) => (
+                <div key={item.title} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+                  <div className="text-sm font-medium text-white/90">{item.title}</div>
+                  <p className="mt-3 text-sm leading-6 text-white/63">{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </SectionShell>
+
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <SectionShell className="p-6 sm:p-8">
+              <h2 className="text-lg font-semibold tracking-tight text-white">
+                Common business use cases
+              </h2>
+
+              <div className="mt-4 grid grid-cols-1 gap-3">
+                {USE_CASES.map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/75"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </SectionShell>
+
+            <SectionShell className="p-6 sm:p-8">
+              <SectionEyebrow>NEXT STEP</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
                 Add voice the right way
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
-                If you are evaluating Orbitlink voice, define user count,
-                current provider, number porting needs, routing expectations,
-                and whether voice will align with fibre, DIA, managed LAN, or
-                continuity architecture.
+                If you are evaluating Orbitlink voice, define user count, current provider, number
+                porting needs, routing expectations, and whether voice will align with fibre, DIA,
+                managed LAN, or continuity architecture.
               </p>
-            </div>
 
-            <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-              <div className="text-[11px] tracking-[0.22em] text-white/55">
-                COMMERCIAL MODE
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link
+                  href="/contact#intake"
+                  className="rounded-2xl bg-[#FACC15] px-4 py-2.5 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+                >
+                  Request Voice Options
+                </Link>
+                <Link
+                  href="/services/business-fibre-internet"
+                  className="rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white/85 transition hover:bg-white/10"
+                >
+                  Business Fibre
+                </Link>
+                <Link
+                  href="/services/managed-lan-wifi"
+                  className="rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white/85 transition hover:bg-white/10"
+                >
+                  Managed LAN/Wi-Fi
+                </Link>
+                <Link
+                  href="/trust"
+                  className="rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white/85 transition hover:bg-white/10"
+                >
+                  Trust & Delivery Posture
+                </Link>
               </div>
-              <div className="mt-1 text-sm text-white/80">
-                Scope-led review • Clean transition
-              </div>
-            </div>
+            </SectionShell>
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link
-              href="/contact#intake"
-              className="rounded-2xl bg-[#FACC15] px-4 py-2.5 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-            >
-              Request Voice Options
-            </Link>
-            <Link
-              href="/services/business-fibre-internet"
-              className="rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white/85 transition hover:bg-white/10"
-            >
-              Business Fibre
-            </Link>
-            <Link
-              href="/services/managed-lan-wifi"
-              className="rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white/85 transition hover:bg-white/10"
-            >
-              Managed LAN/Wi-Fi
-            </Link>
-            <Link
-              href="/trust"
-              className="rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white/85 transition hover:bg-white/10"
-            >
-              Trust & Delivery Posture
-            </Link>
-          </div>
+          <SectionShell className="p-6 sm:p-8">
+            <SectionEyebrow>FAQ</SectionEyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+              VoIP & Cloud Voice FAQs
+            </h2>
+            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
+              These answers reflect a practical business delivery posture: cleaner porting,
+              clearer routing expectations, and structured service qualification.
+            </p>
+
+            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+              {FAQ.map((f) => (
+                <div key={f.q} className="rounded-3xl border border-white/10 bg-black/20 p-6">
+                  <div className="text-sm font-semibold text-white/90">{f.q}</div>
+                  <div className="mt-2 text-sm leading-relaxed text-white/70">{f.a}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/services"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+              >
+                Explore Services
+              </Link>
+              <Link
+                href="/contact#intake"
+                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-semibold text-black transition hover:bg-[#FDE047]"
+              >
+                Request Voice Options
+              </Link>
+            </div>
+          </SectionShell>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
