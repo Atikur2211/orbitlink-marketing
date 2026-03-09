@@ -344,7 +344,7 @@ export default function Home() {
               Orbitlink provides business fibre internet, dedicated internet access, managed
               Wi-Fi, business voice, and continuity services for offices, clinics, warehouses,
               commercial spaces, and multi-site organizations. Check availability, request
-              pricing, and start with a clearer commercial path.
+              pricing, and start with a cleaner commercial path.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2 text-[11px] text-white/55 sm:text-xs">
@@ -616,6 +616,48 @@ export default function Home() {
             <OutcomeCard
               title="Clear legal identity"
               body="A visible operating company and consistent brand presentation help increase buyer confidence from first contact."
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
+        <div className="rounded-[32px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-8 lg:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
+                WHAT BUSINESS BUYERS USUALLY WANT TO KNOW
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                Clear answers before the commercial conversation starts
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
+                Most serious buyers want to know whether Orbitlink can service the building,
+                whether the service fits the site, what the next step looks like, and how the
+                request will be handled. This homepage is designed to answer those questions early
+                and move qualified buyers toward availability review and pricing.
+              </p>
+            </div>
+
+            <StatCard label="BUYER GOAL" value="Availability • Fit • Pricing" />
+          </div>
+
+          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <OutcomeCard
+              title="Can you service my building?"
+              body="Availability is reviewed by building and address, not assumed across an entire city."
+            />
+            <OutcomeCard
+              title="Is this the right service fit?"
+              body="The site helps buyers choose between business fibre, dedicated internet, managed Wi-Fi, voice, and continuity."
+            />
+            <OutcomeCard
+              title="What happens after I enquire?"
+              body="Qualified requests move into a clear intake and review path based on address, timing, and requirements."
+            />
+            <OutcomeCard
+              title="Can I trust the provider?"
+              body="Orbitlink presents a visible operating identity, a controlled trust posture, and a business-first commercial path."
             />
           </div>
         </div>

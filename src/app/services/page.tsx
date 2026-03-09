@@ -219,7 +219,9 @@ function Surface({
   className?: string;
 }) {
   return (
-    <div className={["rounded-[32px] border border-white/10 bg-white/[0.035]", className].join(" ")}>
+    <div
+      className={["rounded-[32px] border border-white/10 bg-white/[0.035]", className].join(" ")}
+    >
       {children}
     </div>
   );
@@ -381,7 +383,9 @@ function WhyBusinessesChooseOrbitlink() {
     <Surface className="p-6 sm:p-8 lg:p-10">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.30em] text-white/42">WHY BUSINESSES START HERE</div>
+          <div className="text-[11px] tracking-[0.30em] text-white/42">
+            WHY BUSINESSES START HERE
+          </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
             Built to help buyers make a better decision
           </h2>
@@ -392,6 +396,58 @@ function WhyBusinessesChooseOrbitlink() {
         </div>
 
         <MetricPill label="BUYER SIGNAL" value="Clear, premium, and credible" />
+      </div>
+
+      <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {items.map((item) => (
+          <div key={item.title} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+            <div className="text-sm font-medium text-white/90">{item.title}</div>
+            <p className="mt-3 text-sm leading-6 text-white/63">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </Surface>
+  );
+}
+
+function BuyerQuestionsStrip() {
+  const items = [
+    {
+      title: "Which service is right for my site?",
+      body: "The page helps buyers separate business fibre, dedicated internet, managed Wi-Fi, backup connectivity, voice, and infrastructure needs.",
+    },
+    {
+      title: "Do you review by address?",
+      body: "Yes. The commercial path starts with site details, service fit, and operating requirements rather than broad assumptions.",
+    },
+    {
+      title: "Can I compare options quickly?",
+      body: "Each service card is grouped by business need so buyers can scan faster and move toward the right conversation.",
+    },
+    {
+      title: "What happens after I enquire?",
+      body: "Qualified requests move into availability review, service-fit discussion, pricing direction, or the next commercial step.",
+    },
+  ];
+
+  return (
+    <Surface className="border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-8 lg:p-10">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+        <div className="max-w-3xl">
+          <div className="text-[11px] tracking-[0.30em] text-[#FDE68A]">
+            COMMON BUYER QUESTIONS
+          </div>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+            Clear answers before the service conversation starts
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
+            Serious buyers usually want the same things first: the right service fit, a clearer
+            understanding of how review works, and confidence that the next step will be practical.
+            This page is designed to answer those questions earlier.
+          </p>
+        </div>
+
+        <MetricPill label="BUYER GOAL" value="Fit • Review • Pricing" />
       </div>
 
       <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -583,6 +639,7 @@ export default function ServicesIndexPage() {
           ))}
 
           <WhyBusinessesChooseOrbitlink />
+          <BuyerQuestionsStrip />
 
           <div className="overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.035]">
             <div className="relative p-6 sm:p-8 lg:p-10">
