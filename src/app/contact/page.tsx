@@ -264,8 +264,8 @@ export default function ContactPage() {
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
               Use this page to check availability, request pricing, and start a business service
-              conversation. Share your service address, the service you need, and anything important
-              about the site so we can review and reply with a clear next step.
+              conversation. Share your service address, the service you need, and the details that
+              matter to the site so Orbitlink can review fit and respond with the clearest next step.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
@@ -286,11 +286,11 @@ export default function ContactPage() {
             <div className="rounded-3xl border border-white/10 bg-black/25 p-6">
               <div className="text-[11px] tracking-[0.22em] text-white/55">HOW TO GET STARTED</div>
               <div className="mt-3 text-lg font-semibold text-white">
-                Send one complete request
+                Send one complete business request
               </div>
               <p className="mt-3 text-sm leading-6 text-white/65">
                 The best requests usually include the service needed, the exact address, the target
-                timeline, and any technical needs that matter to the site.
+                timeline, and any technical or operational needs that matter to the site.
               </p>
 
               <div className="mt-5 grid gap-3">
@@ -335,20 +335,20 @@ export default function ContactPage() {
 
             <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-5">
               <div className="text-[11px] tracking-[0.22em] text-white/55">DIRECT CONTACT</div>
-              <ul className="mt-3 space-y-2 text-sm text-white/72">
-                <li>
-                  • Concierge: <span className="text-white/88">concierge@orbitlink.ca</span>
-                </li>
-                <li>
-                  • Sales: <span className="text-white/88">sales@orbitlink.ca</span>
-                </li>
-                <li>
-                  • Client Care: <span className="text-white/88">1-888-8-ORBIT-0</span>
-                </li>
-                <li>
-                  • Hours: <span className="text-white/88">Mon–Fri, 9AM–6PM ET</span>
-                </li>
-              </ul>
+              <div className="mt-3 space-y-2 text-sm text-white/72">
+                <div>
+                  Concierge: <span className="text-white/88">concierge@orbitlink.ca</span>
+                </div>
+                <div>
+                  Sales: <span className="text-white/88">sales@orbitlink.ca</span>
+                </div>
+                <div>
+                  Client Care: <span className="text-white/88">1-888-8-ORBIT-0</span>
+                </div>
+                <div>
+                  Hours: <span className="text-white/88">Mon–Fri, 9AM–6PM ET</span>
+                </div>
+              </div>
             </div>
           </InfoCard>
 
@@ -369,7 +369,7 @@ export default function ContactPage() {
             </div>
 
             <p className="mt-4 text-xs text-white/55">
-              Better details at the start usually mean a faster and clearer reply.
+              Better details at the start usually mean a faster and more useful reply.
             </p>
           </InfoCard>
 
@@ -387,15 +387,15 @@ export default function ContactPage() {
               />
               <StepCard
                 step="RESPONSE"
-                title="We keep it clear"
-                text="The goal is to give you a practical next step, not a vague reply."
+                title="We keep it practical"
+                text="The goal is to give you a useful next step, not a vague reply."
               />
             </div>
 
             <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-5">
               <div className="text-[11px] tracking-[0.22em] text-white/55">GOOD TO KNOW</div>
               <p className="mt-3 text-sm leading-6 text-white/65">
-                This page is built for real business enquiries and service requests across Ontario.
+                This page is designed for real business enquiries and service requests across Ontario.
               </p>
             </div>
           </InfoCard>
@@ -413,7 +413,7 @@ export default function ContactPage() {
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">
                 Tell us what service you need, where the site is located, and any important
-                requirements. One clear request is usually enough to move things forward.
+                requirements. One complete request is usually enough to move things forward.
               </p>
             </div>
 
