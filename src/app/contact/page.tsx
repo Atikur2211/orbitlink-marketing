@@ -14,12 +14,12 @@ const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 export const metadata: Metadata = {
   title: "Contact · Orbitlink",
   description:
-    "Enterprise intake for business fibre, managed network infrastructure, and controlled onboarding. Premium client care, disciplined qualification, and scope-led delivery.",
+    "Business contact and intake for fibre, dedicated internet, managed networks, voice, continuity, and infrastructure services across Ontario. Clear qualification, structured onboarding, and premium enterprise response posture.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Contact · Orbitlink",
     description:
-      "Enterprise-first intake for sales, provisioning coordination, and structured onboarding across Ontario.",
+      "Business-first intake for sales, onboarding, provisioning coordination, and structured qualification across Ontario.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Contact · Orbitlink",
     description:
-      "Enterprise-first intake for sales, provisioning coordination, and structured onboarding.",
+      "Business-first intake for sales, onboarding, provisioning coordination, and structured qualification.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -90,6 +90,39 @@ function IntakeSignal({
     <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
       <div className="text-sm font-medium text-white/90">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/65">{text}</p>
+    </div>
+  );
+}
+
+function StepCard({
+  step,
+  title,
+  text,
+}: {
+  step: string;
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{step}</div>
+      <div className="mt-3 text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/65">{text}</p>
+    </div>
+  );
+}
+
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
+      <div className="mt-1 text-sm text-white/80">{value}</div>
     </div>
   );
 }
@@ -168,14 +201,43 @@ export default function ContactPage() {
           },
         ],
       },
+      {
+        "@type": "FAQPage",
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "What should I include in my request?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Include your address or building, the service you want, your timeline, and any requirements such as static IPs, managed Wi-Fi, voice, continuity, or multi-site needs.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Can I contact Orbitlink for business fibre, DIA, voice, or infrastructure planning?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Yes. The intake path supports business fibre, dedicated internet access, managed LAN and Wi-Fi, voice, continuity, static IP routing, and infrastructure-related requests.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What happens after I submit the form?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Orbitlink reviews the request against service fit, rollout posture, timing, and serviceability, then responds with the clearest next step available.",
+            },
+          },
+        ],
+      },
     ],
   };
 
   return (
     <PageShell
       eyebrow="CONTACT"
-      title="Enterprise intake, handled with discipline"
-      subtitle="A premium contact surface for sales, onboarding, provisioning coordination, and scope-led qualification."
+      title="Business intake, handled with clarity"
+      subtitle="A premium contact surface for sales, qualification, onboarding, and deployment planning across Ontario."
     >
       <script
         type="application/ld+json"
@@ -189,35 +251,66 @@ export default function ContactPage() {
           <div className="absolute bottom-0 left-1/2 h-36 w-[28rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
         </div>
 
-        <div className="relative flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-          <div className="max-w-4xl">
+        <div className="relative grid grid-cols-1 gap-8 lg:grid-cols-12">
+          <div className="lg:col-span-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[11px] text-[#FDE68A]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
               Premium onboarding surface
             </div>
 
-            <h2 className="mt-5 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-              Contact should feel like the front desk of an operator, not a generic form
+            <h2 className="mt-5 text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl">
+              Contact should feel like the front desk of a serious operator
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              Orbitlink intake is designed for serious conversations: site qualification, service
-              fit, rollout timing, and operational requirements. One submission should produce one
-              clear path forward.
+              This intake page is designed for real business requests: service qualification,
+              address review, deployment timing, and operational requirements. The goal is simple:
+              make it easy to send a strong request and easy to receive a clear next step.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              <Pill>Controlled rollout</Pill>
-              <Pill>Enterprise client care</Pill>
-              <Pill>Scope-led qualification</Pill>
-              <Pill>Minimal noise</Pill>
+              <Pill>Easy to submit</Pill>
+              <Pill>Business-first qualification</Pill>
+              <Pill>Structured onboarding</Pill>
+              <Pill>Minimal back-and-forth</Pill>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <MetricPill label="BEST FOR" value="Business service requests" />
+              <MetricPill label="RESPONSE STYLE" value="Clear next step" />
+              <MetricPill label="INTAKE MODEL" value="Scope-first" />
             </div>
           </div>
 
-          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
-            <div className="text-[11px] tracking-[0.22em] text-white/55">INTAKE STANDARD</div>
-            <div className="mt-1 text-sm text-white/80">
-              Verified • Structured • Response-led
+          <div className="lg:col-span-4">
+            <div className="rounded-3xl border border-white/10 bg-black/25 p-6">
+              <div className="text-[11px] tracking-[0.22em] text-white/55">HOW TO GET THE BEST RESPONSE</div>
+              <div className="mt-3 text-lg font-semibold text-white">
+                Send one complete request
+              </div>
+              <p className="mt-3 text-sm leading-6 text-white/65">
+                The strongest submissions usually include the service needed, the address or
+                building, the target timeline, and any technical requirements that matter to the
+                site.
+              </p>
+
+              <div className="mt-5 grid gap-3">
+                <StepCard
+                  step="STEP 1"
+                  title="Choose the service"
+                  text="Tell us what you want: Business Fibre, DIA, Voice, Managed LAN/Wi-Fi, Continuity, Static IP, IoT, or Infrastructure."
+                />
+                <StepCard
+                  step="STEP 2"
+                  title="Add the site"
+                  text="Include the address, city, and any building or facility context that affects serviceability."
+                />
+                <StepCard
+                  step="STEP 3"
+                  title="Add your needs"
+                  text="Include timeline, user count, static IP needs, voice, managed Wi-Fi, continuity, or multi-site requirements."
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -225,17 +318,20 @@ export default function ContactPage() {
 
       <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-12 sm:mt-6 sm:gap-5">
         <div className="space-y-4 sm:space-y-5 lg:col-span-5">
-          <InfoCard eyebrow="CONCIERGE DESK" title="Enterprise Client Care">
+          <InfoCard eyebrow="CONTACT DESK" title="Business sales and onboarding">
             <p>
-              For sales, provisioning coordination, onboarding review, and operational planning. We
-              aim to respond with a single actionable path based on fit, timing, and serviceability.
+              Use this page for sales conversations, address checks, service fit, rollout timing,
+              deployment planning, and onboarding review. The intake path is built to move serious
+              requests toward a cleaner qualification process.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">
-              <Pill>Controlled onboarding</Pill>
-              <Pill>Scope-locked commitments</Pill>
-              <Pill>Regulator-aware posture</Pill>
-              <Pill>Enterprise review path</Pill>
+              <Pill>Business fibre</Pill>
+              <Pill>Dedicated internet</Pill>
+              <Pill>Managed network</Pill>
+              <Pill>Voice</Pill>
+              <Pill>Continuity</Pill>
+              <Pill>Infrastructure</Pill>
             </div>
 
             <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-5">
@@ -255,47 +351,53 @@ export default function ContactPage() {
                 </li>
               </ul>
             </div>
-
-            <p className="mt-4 text-xs text-white/55">
-              Public statements remain conservative. Service scope is confirmed only when it is
-              internally reviewable.
-            </p>
           </InfoCard>
 
-          <InfoCard eyebrow="HIGH-SIGNAL INTAKE" title="What helps us qualify faster">
+          <InfoCard eyebrow="WHAT TO INCLUDE" title="Requests that qualify faster">
             <div className="grid grid-cols-1 gap-3">
               <IntakeSignal
-                title="Location"
-                text="City, province, and building context help determine whether the request fits an active intake path."
+                title="Address or building"
+                text="City, province, and building context help determine serviceability and the right intake path."
               />
               <IntakeSignal
-                title="Module"
-                text="Tell us whether you are evaluating Internet, Voice, Smart, Horizon, or a combined infrastructure scope."
+                title="Service type"
+                text="Tell us which service you are evaluating so we can route the request correctly from the start."
               />
               <IntakeSignal
-                title="Constraints"
-                text="Include timeline, static IP needs, SLA expectations, handoff constraints, and multi-site requirements where relevant."
+                title="Timeline and requirements"
+                text="Include target go-live date, static IP needs, voice, continuity, managed Wi-Fi, SLA expectations, or multi-site scope where relevant."
               />
             </div>
 
             <p className="mt-4 text-xs text-white/55">
-              Better signal at intake usually means faster qualification and a cleaner onboarding
-              motion.
+              Better input at intake usually leads to faster qualification and less back-and-forth.
             </p>
           </InfoCard>
 
-          <InfoCard eyebrow="RESPONSE MODEL" title="How Orbitlink handles new requests">
-            <ul className="space-y-2 text-sm text-white/65">
-              <li>• Qualification against current rollout and serviceability posture</li>
-              <li>• Single response path where the request fits an active intake window</li>
-              <li>• Clear next step: review, discovery, waitlist, or structured follow-up</li>
-            </ul>
+          <InfoCard eyebrow="RESPONSE MODEL" title="What happens after you submit">
+            <div className="grid grid-cols-1 gap-3">
+              <StepCard
+                step="REVIEW"
+                title="We assess fit"
+                text="The request is reviewed against service fit, rollout posture, timing, and address context."
+              />
+              <StepCard
+                step="DECISION"
+                title="We identify the next step"
+                text="The next step may be discovery, feasibility review, waitlist, structured follow-up, or a direct commercial conversation."
+              />
+              <StepCard
+                step="RESPONSE"
+                title="We keep it clear"
+                text="The goal is to return one clean next step rather than a vague or fragmented reply."
+              />
+            </div>
 
             <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-5">
               <div className="text-[11px] tracking-[0.22em] text-white/55">OPERATING NOTE</div>
               <p className="mt-3 text-sm leading-6 text-white/65">
-                The contact surface is intentionally designed to feel calm and selective. It is not
-                built for volume spam or vague submissions.
+                This contact page is intentionally designed to feel calm, selective, and easy to
+                use. It is built for real business requests, not generic spam volume.
               </p>
             </div>
           </InfoCard>
@@ -307,19 +409,20 @@ export default function ContactPage() {
         >
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="text-[11px] tracking-[0.22em] text-white/55">INTAKE FORM</div>
+              <div className="text-[11px] tracking-[0.22em] text-white/55">REQUEST FORM</div>
               <h2 className="mt-3 text-base font-medium text-white/90 sm:text-lg">
-                Request onboarding
+                Send a business request
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">
-                One submission should be enough. When the request matches an active intake window,
-                Orbitlink responds with a clear, scope-led next step.
+                Keep it simple. Tell us what service you need, where the site is, and what matters
+                operationally. One strong submission should be enough to move the conversation
+                forward.
               </p>
             </div>
 
             <div className="hidden shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 sm:block">
               <div className="text-[11px] tracking-[0.22em] text-white/55">POSTURE</div>
-              <div className="mt-1 text-sm text-white/80">Controlled • Verified • Minimal</div>
+              <div className="mt-1 text-sm text-white/80">Clear • Structured • Easy</div>
             </div>
           </div>
 
@@ -329,12 +432,27 @@ export default function ContactPage() {
             </Suspense>
           </div>
 
-          <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-5">
-            <div className="text-[11px] tracking-[0.22em] text-white/55">BEST RESULTS</div>
-            <p className="mt-3 text-sm leading-6 text-white/65">
-              Use a work email and describe the site, timeline, and module clearly. The more precise
-              the request, the more premium the response path feels.
-            </p>
+          <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
+            <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+              <div className="text-[11px] tracking-[0.22em] text-white/55">BEST PRACTICE</div>
+              <p className="mt-2 text-sm leading-6 text-white/65">
+                Use a work email when possible.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+              <div className="text-[11px] tracking-[0.22em] text-white/55">BEST PRACTICE</div>
+              <p className="mt-2 text-sm leading-6 text-white/65">
+                Include the exact service address.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+              <div className="text-[11px] tracking-[0.22em] text-white/55">BEST PRACTICE</div>
+              <p className="mt-2 text-sm leading-6 text-white/65">
+                Add timeline and technical needs.
+              </p>
+            </div>
           </div>
 
           <div className="mt-5">
@@ -346,14 +464,14 @@ export default function ContactPage() {
               <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
                 <div className="text-[11px] tracking-[0.22em] text-white/55">INTAKE</div>
                 <div className="mt-2 text-sm text-white/80">
-                  Open <span className="text-white/55">for qualified submissions</span>
+                  Open <span className="text-white/55">for qualified business requests</span>
                 </div>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-                <div className="text-[11px] tracking-[0.22em] text-white/55">ROLLOUT</div>
+                <div className="text-[11px] tracking-[0.22em] text-white/55">REVIEW MODEL</div>
                 <div className="mt-2 text-sm text-white/80">
-                  Controlled <span className="text-white/55">and scope-led</span>
+                  Scope-led <span className="text-white/55">and address-aware</span>
                 </div>
               </div>
 
@@ -367,7 +485,7 @@ export default function ContactPage() {
 
             <p className="mt-4 text-xs leading-5 text-white/55">
               Orbitlink is a brand of TIRAV Technologies Inc. Requests are reviewed against service
-              fit, rollout posture, and operational readiness.
+              fit, rollout posture, timing, and operational readiness.
             </p>
           </div>
         </div>
