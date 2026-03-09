@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Service Areas in Ontario | Orbitlink™ Locations",
     description:
-      "Operator-grade business internet across Ontario. Browse city pages, check availability by building, and request access with a structured onboarding posture.",
+      "Business internet across Ontario. Browse city pages, check availability by building, and request service through a structured onboarding process.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Service Areas in Ontario | Orbitlink™ Locations",
     description:
-      "Explore Orbitlink service areas across Ontario for business fibre, DIA, and managed network delivery.",
+      "Explore Orbitlink service areas across Ontario for business fibre, dedicated internet, and managed network delivery.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -158,11 +158,11 @@ const FAQ = [
   },
   {
     q: "What should I submit for an availability check?",
-    a: "Submit your service address, preferred module such as Business Fibre or DIA, any static IP needs, and whether you need managed LAN/Wi-Fi or LTE/5G continuity.",
+    a: "Submit your service address, preferred service such as Business Fibre or DIA, any static IP needs, and whether you need managed LAN/Wi-Fi or LTE/5G continuity.",
   },
   {
     q: "Do you offer residential internet?",
-    a: "Orbitlink is focused primarily on business connectivity and managed network posture. If you have a mixed-use requirement, submit your details and Orbitlink will advise what is feasible.",
+    a: "Orbitlink is focused primarily on business connectivity and managed network delivery. If you have a mixed-use requirement, submit your details and Orbitlink will advise what is feasible.",
   },
   {
     q: "How fast can you install?",
@@ -203,25 +203,25 @@ const premiumSignals = [
     d: "Structured onboarding and documented delivery designed for commercial environments.",
   },
   {
-    t: "Service-module clarity",
-    d: "Business Fibre, DIA, managed networking, and continuity aligned to operational need.",
+    t: "Service clarity",
+    d: "Business Fibre, DIA, managed networking, and continuity are aligned to operational need.",
   },
   {
     t: "Ontario-focused execution",
-    d: "Priority city hubs designed for local search, service discovery, and conversion.",
+    d: "Priority city hubs designed for local discovery, service matching, and conversion.",
   },
 ] as const;
 
 const buyerJourney = [
   {
     step: "01",
-    title: "Select market",
-    desc: "Start with the city that reflects your building, buyer geography, or expansion target.",
+    title: "Choose the market",
+    desc: "Start with the city that matches your building, expansion target, or local buying intent.",
   },
   {
     step: "02",
-    title: "Map the module",
-    desc: "Choose the service posture that matches your requirement: fibre, DIA, managed network, or continuity.",
+    title: "Choose the service",
+    desc: "Match the requirement to business fibre, dedicated internet, managed networking, or continuity.",
   },
   {
     step: "03",
@@ -230,8 +230,8 @@ const buyerJourney = [
   },
   {
     step: "04",
-    title: "Enter onboarding",
-    desc: "Qualified opportunities move into a structured intake path with clean expectations and documented delivery.",
+    title: "Move into onboarding",
+    desc: "Qualified requests move into a structured intake path with clear expectations and documented delivery.",
   },
 ] as const;
 
@@ -301,28 +301,39 @@ function jsonLd() {
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/45">{children}</div>;
+}
+
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
   return (
-    <div className="text-[11px] tracking-[0.28em] text-white/45">{children}</div>
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
+      <div className="mt-1 text-sm text-white/80">{value}</div>
+    </div>
   );
 }
 
 function LocationCardView({ item }: { item: LocationCard }) {
   return (
-    <div className="group rounded-[30px] border border-white/10 bg-white/[0.035] p-6 md:p-7 transition hover:border-white/20 hover:bg-white/[0.05]">
+    <div className="group rounded-[30px] border border-white/10 bg-white/[0.035] p-6 transition hover:border-white/20 hover:bg-white/[0.05] md:p-7">
       <div className="flex items-start justify-between gap-4">
         <div>
           <div className="text-[11px] tracking-[0.22em] text-white/45">
             {item.posture.toUpperCase()}
           </div>
-          <h3 className="mt-3 text-xl font-semibold tracking-tight text-white">
-            {item.name}
-          </h3>
+          <h3 className="mt-3 text-xl font-semibold tracking-tight text-white">{item.name}</h3>
           <p className="mt-3 text-sm leading-6 text-white/70">{item.subtitle}</p>
         </div>
 
         <Link
           href={item.href}
-          className="shrink-0 inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/85 transition hover:bg-white/10"
+          className="inline-flex shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/85 transition hover:bg-white/10"
         >
           View
         </Link>
@@ -340,6 +351,28 @@ function LocationCardView({ item }: { item: LocationCard }) {
           </span>
         ))}
       </div>
+    </div>
+  );
+}
+
+function JourneyCard({
+  step,
+  title,
+  desc,
+}: {
+  step: string;
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+      <div className="flex items-center gap-3">
+        <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
+          {step}
+        </div>
+        <div className="text-sm font-medium text-white/90">{title}</div>
+      </div>
+      <p className="mt-3 text-sm leading-6 text-white/65">{desc}</p>
     </div>
   );
 }
@@ -365,7 +398,7 @@ export default function LocationsHubPage() {
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
             <span className="h-2 w-2 rounded-full bg-[#FACC15]" />
             <span className="text-sm tracking-wide text-white/65">
-              Ontario service areas • building-qualified delivery
+              Ontario business service areas • address-qualified delivery
             </span>
           </div>
 
@@ -376,10 +409,10 @@ export default function LocationsHubPage() {
               </h1>
 
               <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/70 sm:text-lg">
-                Browse city pages and move from local discovery to structured qualification.
-                Orbitlink aligns business fibre, Dedicated Internet Access, managed network
-                infrastructure, and continuity options to commercial requirements — with
-                availability confirmed per building, not assumed generically.
+                Browse city pages and move from local discovery to real qualification. Orbitlink
+                aligns business fibre, dedicated internet access, managed network infrastructure,
+                and continuity options to commercial requirements, with availability confirmed per
+                building instead of assumed across an entire city.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -419,35 +452,33 @@ export default function LocationsHubPage() {
                   Explore Services
                 </Link>
               </div>
+
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <MetricPill label="BUYER FIT" value="Ontario business locations" />
+                <MetricPill label="SERVICE MODEL" value="Address-first qualification" />
+                <MetricPill label="DELIVERY STYLE" value="Clear and structured" />
+              </div>
             </div>
 
             <div className="lg:col-span-4">
               <div className="rounded-[30px] border border-white/10 bg-white/[0.045] p-6">
                 <SectionEyebrow>BUYING JOURNEY</SectionEyebrow>
                 <h2 className="mt-3 text-lg font-semibold text-white">
-                  Local discovery, then disciplined onboarding
+                  Local discovery, then clean onboarding
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/65">
                   This hub is designed to shorten the path from city-level search intent to a
-                  serviceability-led commercial conversation.
+                  serviceability-led business conversation.
                 </p>
 
                 <div className="mt-5 grid gap-3">
                   {buyerJourney.map((item) => (
-                    <div
+                    <JourneyCard
                       key={item.step}
-                      className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3"
-                    >
-                      <div className="text-[11px] tracking-[0.22em] text-white/45">
-                        STEP {item.step}
-                      </div>
-                      <div className="mt-1 text-sm font-medium text-white/85">
-                        {item.title}
-                      </div>
-                      <div className="mt-1 text-sm leading-6 text-white/60">
-                        {item.desc}
-                      </div>
-                    </div>
+                      step={item.step}
+                      title={item.title}
+                      desc={item.desc}
+                    />
                   ))}
                 </div>
               </div>
@@ -458,15 +489,21 @@ export default function LocationsHubPage() {
 
       <section className="mx-auto max-w-6xl px-6 py-10">
         <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6 md:p-8">
-          <SectionEyebrow>DISCOVERY POSTURE</SectionEyebrow>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight">
-            Built as the authority layer for city discovery
-          </h2>
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-            `/locations` acts as the premium directory layer for Ontario city pages, province-level
-            search relevance, and conversion into availability review. City pages handle local
-            intent; service pages handle module intent; intake handles real qualification.
-          </p>
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <SectionEyebrow>DISCOVERY POSTURE</SectionEyebrow>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+                Built as the authority layer for city discovery
+              </h2>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
+                This page acts as the premium directory layer for Ontario city pages, province-level
+                discovery, and conversion into availability review. City pages handle local intent.
+                Service pages handle buying intent. Intake handles real qualification.
+              </p>
+            </div>
+
+            <MetricPill label="MODE" value="Discovery • Match • Qualification" />
+          </div>
 
           <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
             {premiumSignals.map((x) => (
@@ -489,13 +526,13 @@ export default function LocationsHubPage() {
               <SectionEyebrow>PRIORITY MARKETS</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight">GTA core markets</h2>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-                These are high-priority commercial markets where business fibre, DIA, and managed
-                network posture convert fastest. Each page is positioned to support local search,
-                address-level inquiry, and structured onboarding.
+                These are high-priority commercial markets where business fibre, dedicated internet,
+                and managed network posture convert fastest. Each page is positioned to support
+                local search, address-level inquiry, and structured onboarding.
               </p>
             </div>
 
-            <div className="hidden md:flex items-center gap-2 text-sm text-white/60">
+            <div className="hidden items-center gap-2 text-sm text-white/60 md:flex">
               <span className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1.5">
                 Feasibility-first
               </span>
@@ -518,8 +555,9 @@ export default function LocationsHubPage() {
           <SectionEyebrow>EXPANDED MARKETS</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight">Extended Ontario discovery</h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-            These pages support broader commercial demand, regional service discovery, and expansion
-            conversations. Orbitlink confirms serviceability per address and avoids blanket coverage claims.
+            These pages support broader commercial demand, regional service discovery, and
+            expansion conversations. Orbitlink confirms serviceability per address and avoids
+            blanket coverage claims.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -533,19 +571,19 @@ export default function LocationsHubPage() {
               <div className="max-w-3xl">
                 <SectionEyebrow>SERVICE MATCHING</SectionEyebrow>
                 <h3 className="mt-3 text-xl font-semibold tracking-tight">
-                  Choose the right service module
+                  Choose the right service path
                 </h3>
                 <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
-                  Location pages create local relevance. Service modules capture actual buying
-                  intent. Select the delivery posture that matches the site, uptime requirement,
-                  and operational expectation.
+                  Location pages create local relevance. Service pages capture actual buying
+                  intent. Choose the delivery model that matches the site, uptime requirement, and
+                  operational expectation.
                 </p>
               </div>
 
               <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
                 <div className="text-[11px] tracking-[0.22em] text-white/45">COMMERCIAL MODE</div>
                 <div className="mt-1 text-sm text-white/80">
-                  Market discovery • Scope match • Clean qualification
+                  Market discovery • Service match • Qualification
                 </div>
               </div>
             </div>
@@ -559,7 +597,7 @@ export default function LocationsHubPage() {
                 >
                   <div className="text-sm font-semibold text-white/90">{x.t}</div>
                   <div className="mt-2 text-sm leading-6 text-white/70">{x.d}</div>
-                  <div className="mt-4 text-xs text-white/55">Open module →</div>
+                  <div className="mt-4 text-xs text-white/55">Open service →</div>
                 </Link>
               ))}
             </div>
@@ -570,11 +608,13 @@ export default function LocationsHubPage() {
       <section className="mx-auto max-w-6xl px-6 pb-10">
         <div className="rounded-[30px] border border-white/10 bg-black/20 p-6 md:p-8">
           <SectionEyebrow>AUTHORITY SIGNALS</SectionEyebrow>
-          <h2 className="mt-3 text-xl font-semibold tracking-tight">Hub authority and trust posture</h2>
+          <h2 className="mt-3 text-xl font-semibold tracking-tight">
+            Hub authority and trust posture
+          </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-            Orbitlink’s business presence is anchored in Mississauga and focused on Ontario business
-            connectivity. This page acts as the city-directory authority layer, while the Ontario hub
-            strengthens province-level relevance and city pages capture local commercial demand.
+            Orbitlink’s business presence is anchored in Mississauga and focused on Ontario
+            business connectivity. This page acts as the city-directory authority layer, while
+            province and city pages strengthen local relevance and capture real commercial demand.
           </p>
 
           <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
@@ -597,7 +637,7 @@ export default function LocationsHubPage() {
           <SectionEyebrow>FAQ</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight">Locations FAQs</h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-            Quick answers to move from search to availability review without ambiguity.
+            Quick answers that help move from search to availability review without confusion.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
