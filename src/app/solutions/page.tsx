@@ -2,7 +2,6 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import StickyModuleNav from "@/components/StickyModuleNav";
-import { MODULE_SPECS } from "@/lib/siteStatus";
 
 const SITE_URL = "https://orbitlink.ca";
 const PAGE_URL = `${SITE_URL}/solutions`;
@@ -10,14 +9,14 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: "Business Fibre & Network Solutions",
+  title: "Business Connectivity Solutions by Business Type | Orbitlink",
   description:
-    "Business fibre internet, dedicated internet access, managed network infrastructure, voice, continuity, and trust-led service modules for Ontario organizations.",
+    "Explore Orbitlink business connectivity solutions for offices, clinics, warehouses, multi-site organizations, and commercial buildings across Ontario.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Business Fibre & Network Solutions · Orbitlink",
+    title: "Business Connectivity Solutions by Business Type | Orbitlink",
     description:
-      "Business connectivity and network solutions delivered with structured onboarding, disciplined operations, and a premium buyer experience.",
+      "Business fibre, dedicated internet, managed Wi-Fi, voice, continuity, and infrastructure solutions tailored to real business environments across Ontario.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -27,15 +26,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink Business Fibre & Network Solutions",
+        alt: "Orbitlink business connectivity solutions by business type",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Fibre & Network Solutions · Orbitlink",
+    title: "Business Connectivity Solutions by Business Type | Orbitlink",
     description:
-      "Business fibre, dedicated internet, managed networks, and trust-led service modules across Ontario.",
+      "Solutions for offices, clinics, warehouses, multi-site organizations, and commercial buildings across Ontario.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -50,6 +49,124 @@ export const metadata: Metadata = {
     },
   },
 };
+
+const SOLUTIONS = [
+  {
+    id: "offices",
+    name: "Professional Offices",
+    tone: "blue" as const,
+    tagline:
+      "Business internet, managed Wi-Fi, voice, and cleaner support for offices that need a more professional provider experience.",
+    purpose:
+      "Built for offices that need reliable connectivity, simple onboarding, clear communication, and a better day-to-day service relationship.",
+    idealFor: [
+      "Law firms and accounting offices",
+      "Professional services firms",
+      "Administrative offices",
+      "Executive suites and shared office environments",
+    ],
+    deliverables: [
+      "Business fibre internet or dedicated access",
+      "Managed Wi-Fi and LAN support",
+      "Business voice and call routing",
+      "Structured intake and address review",
+    ],
+    bestFit:
+      "Best when the priority is reliable office connectivity, cleaner onboarding, and a provider that feels organized and business-ready.",
+  },
+  {
+    id: "clinics",
+    name: "Clinics & Service Businesses",
+    tone: "emerald" as const,
+    tagline:
+      "Connectivity, guest Wi-Fi, voice, and continuity planning for customer-facing environments that depend on stable daily operations.",
+    purpose:
+      "Designed for businesses where internet downtime, poor Wi-Fi, or unclear provider support creates real client-facing disruption.",
+    idealFor: [
+      "Clinics and wellness practices",
+      "Dental and health-adjacent offices",
+      "Retail-service environments",
+      "Appointment-based businesses",
+    ],
+    deliverables: [
+      "Primary business internet",
+      "Guest Wi-Fi and internal segmentation",
+      "Voice and front-desk routing",
+      "Backup connectivity planning",
+    ],
+    bestFit:
+      "Best when the site depends on daily uptime, customer-facing service quality, and a clear support path.",
+  },
+  {
+    id: "warehouses",
+    name: "Warehouses & Industrial Sites",
+    tone: "gold" as const,
+    tagline:
+      "Dedicated internet, continuity, managed networking, and site coordination for industrial and operational environments.",
+    purpose:
+      "Built for environments where uptime, coordination, resilience, and site practicality matter more than generic telecom packaging.",
+    idealFor: [
+      "Warehouses and logistics sites",
+      "Industrial and light manufacturing environments",
+      "Operational facilities",
+      "Sites with continuity requirements",
+    ],
+    deliverables: [
+      "Business fibre or dedicated internet",
+      "LTE / 5G backup connectivity",
+      "Managed LAN and Wi-Fi where needed",
+      "Structured commercial review and site qualification",
+    ],
+    bestFit:
+      "Best when the priority is operational reliability, stronger resilience, and a commercial path that understands site realities.",
+  },
+  {
+    id: "multisite",
+    name: "Multi-Site Businesses",
+    tone: "blue" as const,
+    tagline:
+      "A more organized connectivity path for businesses that need consistency across more than one office, branch, or operating location.",
+    purpose:
+      "Created for organizations that want cleaner coordination, standardized service paths, and a provider experience that scales more predictably.",
+    idealFor: [
+      "Growing regional businesses",
+      "Operators with multiple offices or branches",
+      "Service businesses with expansion needs",
+      "Organizations needing standardized connectivity planning",
+    ],
+    deliverables: [
+      "Primary internet by location",
+      "Managed network support options",
+      "Voice and continuity coordination",
+      "Commercial intake based on site-by-site fit",
+    ],
+    bestFit:
+      "Best when the business wants a clearer way to qualify, review, and scale service across multiple locations.",
+  },
+  {
+    id: "buildings",
+    name: "Commercial Buildings & Property Stakeholders",
+    tone: "emerald" as const,
+    tagline:
+      "Address-based review, cleaner onboarding, and a more structured telecom posture for building-level commercial environments.",
+    purpose:
+      "Designed for commercial property conversations where clarity, documentation, service fit, and operating discipline matter.",
+    idealFor: [
+      "Commercial landlords and property groups",
+      "Managed office buildings",
+      "Mixed commercial environments",
+      "Stakeholders reviewing business internet options for tenants or managed spaces",
+    ],
+    deliverables: [
+      "Address-qualified service review",
+      "Business internet and managed network options",
+      "Structured onboarding language",
+      "Trust and compliance support path",
+    ],
+    bestFit:
+      "Best when the priority is building-level review, professional stakeholder communication, and a more credible provider posture.",
+  },
+] as const;
 
 function toneStyles(tone: "blue" | "gold" | "emerald") {
   if (tone === "blue")
@@ -135,21 +252,21 @@ function FitCard({
   );
 }
 
-function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
-  const s = toneStyles(m.tone);
+function SolutionCard({ s }: { s: (typeof SOLUTIONS)[number] }) {
+  const style = toneStyles(s.tone);
 
   return (
     <section
-      id={m.id}
+      id={s.id}
       className={[
         "scroll-mt-[168px] md:scroll-mt-[184px]",
         "rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7",
         "transition hover:border-white/15",
-        s.glow,
+        style.glow,
       ].join(" ")}
     >
       <div className="relative">
-        <div className={`h-px w-full bg-gradient-to-r ${s.line}`} />
+        <div className={`h-px w-full bg-gradient-to-r ${style.line}`} />
 
         <div className="mt-5 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="min-w-0">
@@ -157,46 +274,46 @@ function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
               className={[
                 "inline-flex items-center gap-2 rounded-full border px-3 py-1",
                 "text-[11px] tracking-[0.22em]",
-                s.chip,
+                style.chip,
               ].join(" ")}
             >
-              <span className={`h-1.5 w-1.5 rounded-full ${s.dot}`} />
-              SERVICE MODULE
+              <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
+              SOLUTION TYPE
             </div>
 
-            <h2 className="mt-4 text-xl font-semibold text-white sm:text-2xl">{m.name}</h2>
+            <h2 className="mt-4 text-xl font-semibold text-white sm:text-2xl">{s.name}</h2>
 
             <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-              {m.tagline}
+              {s.tagline}
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
-            <div className="text-[11px] tracking-[0.22em] text-white/55">ONBOARDING</div>
-            <div className="mt-1 text-sm text-white/80">{m.onboarding}</div>
+            <div className="text-[11px] tracking-[0.22em] text-white/55">BEST FIT</div>
+            <div className="mt-1 text-sm text-white/80">{s.bestFit}</div>
           </div>
         </div>
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-3">
         <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-          <div className="text-[11px] tracking-[0.22em] text-white/55">PURPOSE</div>
-          <p className="mt-3 text-sm leading-6 text-white/65">{m.purpose}</p>
+          <div className="text-[11px] tracking-[0.22em] text-white/55">BUSINESS NEED</div>
+          <p className="mt-3 text-sm leading-6 text-white/65">{s.purpose}</p>
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-          <div className="text-[11px] tracking-[0.22em] text-white/55">IDEAL FOR</div>
+          <div className="text-[11px] tracking-[0.22em] text-white/55">COMMON FIT</div>
           <ul className="mt-3 space-y-2 text-sm text-white/65">
-            {m.idealFor.map((x) => (
+            {s.idealFor.map((x) => (
               <li key={x}>• {x}</li>
             ))}
           </ul>
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-          <div className="text-[11px] tracking-[0.22em] text-white/55">DELIVERABLES</div>
+          <div className="text-[11px] tracking-[0.22em] text-white/55">TYPICAL SERVICES</div>
           <ul className="mt-3 space-y-2 text-sm text-white/65">
-            {m.deliverables.map((x) => (
+            {s.deliverables.map((x) => (
               <li key={x}>• {x}</li>
             ))}
           </ul>
@@ -208,31 +325,29 @@ function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
           <div>
             <div className="text-[11px] tracking-[0.22em] text-white/55">NEXT STEP</div>
             <div className="mt-2 text-sm text-white/70">
-              Submit your location, service need, and target go-live date to start structured
-              qualification.
+              Submit your address, business need, and target timeline to start structured
+              qualification and availability review.
             </div>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <a
-              href={`/contact#intake?intent=access&source=solutions&module=${encodeURIComponent(
-                m.name
-              )}`}
+              href={`/contact#intake?source=solutions&solution=${encodeURIComponent(s.name)}`}
               className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Request Access
+              Check Availability & Request Pricing
+            </a>
+            <a
+              href="/services"
+              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
+            >
+              View Services
             </a>
             <a
               href="/trust"
               className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
               Trust & Compliance
-            </a>
-            <a
-              href="/network"
-              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
-            >
-              Network Posture
             </a>
           </div>
         </div>
@@ -242,7 +357,7 @@ function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
 }
 
 export default function SolutionsPage() {
-  const modules = MODULE_SPECS.map((m) => ({ id: m.id, name: m.name, tone: m.tone }));
+  const modules = SOLUTIONS.map((s) => ({ id: s.id, name: s.name, tone: s.tone }));
 
   const schemaGraph = {
     "@context": "https://schema.org",
@@ -288,9 +403,9 @@ export default function SolutionsPage() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Business Fibre & Network Solutions",
+        name: "Business Connectivity Solutions by Business Type",
         isPartOf: { "@id": `${SITE_URL}/#website` },
-        about: { "@type": "Thing", name: "Business fibre and network infrastructure services" },
+        about: { "@type": "Thing", name: "Business connectivity solutions for Ontario organizations" },
         inLanguage: "en-CA",
       },
       {
@@ -302,54 +417,23 @@ export default function SolutionsPage() {
         ],
       },
       {
-        "@type": "TelecomService",
-        "@id": `${PAGE_URL}#telecom`,
-        name: "Orbitlink Business Connectivity & Network Services",
-        provider: { "@id": `${SITE_URL}/#org` },
-        serviceType: [
-          "Business Internet",
-          "Fibre Connectivity",
-          "Managed Network Services",
-          "Operational Escalation and Support",
-          "Compliance-first Delivery Posture",
-        ],
-        areaServed: [
-          { "@type": "AdministrativeArea", name: "Ontario, Canada" },
-          { "@type": "City", name: "Mississauga" },
-        ],
-        audience: { "@type": "Audience", audienceType: "Business" },
-        termsOfService: `${SITE_URL}/legal/terms`,
-      },
-      {
         "@type": "OfferCatalog",
         "@id": `${PAGE_URL}#catalog`,
-        name: "Orbitlink Service Modules",
+        name: "Orbitlink Solutions by Business Type",
         url: PAGE_URL,
         provider: { "@id": `${SITE_URL}/#org` },
-        itemListElement: MODULE_SPECS.map((m) => ({
+        itemListElement: SOLUTIONS.map((s) => ({
           "@type": "Offer",
-          name: m.name,
-          url: `${PAGE_URL}#${m.id}`,
+          name: s.name,
+          url: `${PAGE_URL}#${s.id}`,
           itemOffered: {
             "@type": "Service",
-            name: m.name,
-            description: m.tagline,
+            name: s.name,
+            description: s.tagline,
             provider: { "@id": `${SITE_URL}/#org` },
             areaServed: { "@type": "AdministrativeArea", name: "Ontario, Canada" },
-            serviceType: "Network Service Module",
+            serviceType: "Business Connectivity Solution",
           },
-        })),
-      },
-      {
-        "@type": "ItemList",
-        "@id": `${PAGE_URL}#list`,
-        name: "Orbitlink Solutions List",
-        url: PAGE_URL,
-        itemListElement: MODULE_SPECS.map((m, i) => ({
-          "@type": "ListItem",
-          position: i + 1,
-          name: m.name,
-          url: `${PAGE_URL}#${m.id}`,
         })),
       },
       {
@@ -358,20 +442,20 @@ export default function SolutionsPage() {
         mainEntity: [
           {
             "@type": "Question",
-            name: "How does onboarding work?",
+            name: "How should I use this page?",
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "Orbitlink introduces services through controlled onboarding windows. Requests are qualified by location, scope, and readiness, and commitments are confirmed only when supportable.",
+                "Start with the type of business environment that best matches your site, then review common fit, typical services, and the next step for qualification.",
             },
           },
           {
             "@type": "Question",
-            name: "Do you publish broad coverage or performance claims?",
+            name: "Do you review availability by address?",
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "Orbitlink avoids broad availability and performance overclaims. Public statements remain conservative and update only when milestones are confirmed.",
+                "Yes. Orbitlink reviews serviceability by location, business need, and operating requirements before confirming the next commercial step.",
             },
           },
           {
@@ -380,7 +464,7 @@ export default function SolutionsPage() {
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "Include the site location, the service module you need, the target go-live date, and any constraints such as handoff type, static IP needs, continuity requirements, or SLA expectations.",
+                "Include the site location, business need, target go-live date, and any important requirements such as managed Wi-Fi, voice, continuity, static IPs, or multi-site scope.",
             },
           },
         ],
@@ -391,8 +475,8 @@ export default function SolutionsPage() {
   return (
     <PageShell
       eyebrow="SOLUTIONS"
-      title="Business connectivity modules"
-      subtitle="Each service is presented as a clear business module with structured onboarding, disciplined delivery, and a premium operator-grade posture."
+      title="Business connectivity solutions by business type"
+      subtitle="A clearer way to match Orbitlink services to real business environments across Ontario, from offices and clinics to warehouses, multi-site organizations, and commercial buildings."
     >
       <script
         type="application/ld+json"
@@ -411,52 +495,53 @@ export default function SolutionsPage() {
           <div className="lg:col-span-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[11px] text-[#FDE68A]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Structured solution surface
+              Buyer-focused solutions surface
             </div>
 
             <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[44px] lg:leading-[1.02]">
-              Choose the service path that matches the business need
+              Choose the solution that matches your business environment
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              This solutions page is designed to make Orbitlink easier to understand and easier to
-              buy. Start with the primary service requirement, review fit and deliverables, then
-              move into a structured intake path with clearer expectations.
+              This page is designed to help buyers move faster from “What is right for my site?”
+              to a practical next step. Start with the type of business environment, review the
+              common fit, then move into structured intake for availability and pricing.
             </p>
 
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <MetricPill label="BUYER MODE" value="Choose • Compare • Request" />
-              <MetricPill label="DELIVERY STYLE" value="Structured and controlled" />
-              <MetricPill label="TRUST SIGNAL" value="Clearer than generic telecom" />
+              <MetricPill label="PAGE PURPOSE" value="Solutions by business type" />
+              <MetricPill label="NEXT STEP" value="Availability and pricing review" />
             </div>
           </div>
 
           <div className="lg:col-span-4">
             <div className="rounded-[28px] border border-white/10 bg-black/25 p-5 sm:p-6">
-              <SectionEyebrow>BUYING JOURNEY</SectionEyebrow>
+              <SectionEyebrow>HOW BUSINESSES START</SectionEyebrow>
               <div className="mt-3 text-lg font-semibold text-white">
-                A cleaner path from service interest to onboarding
+                A cleaner path from business need to service fit
               </div>
               <p className="mt-3 text-sm leading-6 text-white/64">
-                Each module is meant to answer four buyer questions quickly: what it is, who it
-                fits, what it includes, and what to do next.
+                Each solution is designed to answer four buyer questions quickly: what kind of
+                business it fits, what services usually matter, what the business need looks like,
+                and what to do next.
               </p>
 
               <div className="mt-5 grid gap-3">
                 <BuyerStep
                   step="1"
-                  title="Choose the module"
-                  desc="Start with internet, voice, smart connectivity, trust review, or another core need."
+                  title="Choose your business type"
+                  desc="Start with the environment that best matches the site, team, or operating model."
                 />
                 <BuyerStep
                   step="2"
-                  title="Review fit"
-                  desc="Check purpose, ideal environments, and deliverables before starting a conversation."
+                  title="Review service fit"
+                  desc="See the typical services, common business need, and commercial fit before enquiring."
                 />
                 <BuyerStep
                   step="3"
                   title="Move into intake"
-                  desc="Submit one clear request tied to the site, timeline, and operational requirements."
+                  desc="Submit one clear request tied to the address, timeline, and operating requirements."
                 />
               </div>
             </div>
@@ -476,46 +561,46 @@ export default function SolutionsPage() {
       <section className="mt-6 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <SectionEyebrow>HOW TO USE THIS PAGE</SectionEyebrow>
+            <SectionEyebrow>SOLUTIONS BY BUSINESS NEED</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
-              Start with the service that matters most
+              Start with the environment, not the jargon
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              Most buyers do not need every service at once. Start with the main requirement, such
-              as business fibre, dedicated internet, managed networking, voice, continuity, or
-              trust review. Additional layers can be added once the primary scope is clear.
+              Most buyers do not begin by asking for a product architecture. They begin with a
+              business problem: office connectivity, clinic uptime, warehouse resilience, multi-site
+              coordination, or building-level service review. This page is built around that reality.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/55">OUTCOME</div>
-            <div className="mt-1 text-sm text-white/80">Better fit • Cleaner buying motion</div>
+            <div className="mt-1 text-sm text-white/80">Better fit • Less confusion</div>
           </div>
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
           <FitCard
-            title="Business Fibre"
-            body="Best when the priority is strong business connectivity, clean onboarding, and value."
+            title="Professional offices"
+            body="Best when the priority is reliable business internet, managed Wi-Fi, voice, and cleaner provider support."
           />
           <FitCard
-            title="Dedicated Internet"
-            body="Best when the site requires a more deterministic delivery posture and critical-path alignment."
+            title="Clinics and service businesses"
+            body="Best when uptime, guest Wi-Fi, front-desk calling, and day-to-day dependability matter."
           />
           <FitCard
-            title="Managed Network"
-            body="Best when internal LAN, Wi-Fi, segmentation, or local operational control matters."
+            title="Warehouses and industrial sites"
+            body="Best when resilience, continuity, operational coordination, and stronger commercial review matter."
           />
           <FitCard
-            title="Trust & Review"
-            body="Best when a buyer or reviewer needs clearer disclosure, governance, and verification posture."
+            title="Multi-site and building-led environments"
+            body="Best when the business needs site-by-site consistency, building review, and a more organized commercial path."
           />
         </div>
       </section>
 
       <div className="mt-6 grid gap-4 sm:gap-5">
-        {MODULE_SPECS.map((m) => (
-          <SpecCard key={m.id} m={m} />
+        {SOLUTIONS.map((s) => (
+          <SolutionCard key={s.id} s={s} />
         ))}
       </div>
 
@@ -524,37 +609,38 @@ export default function SolutionsPage() {
       <div className="mt-5 rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <SectionEyebrow>INTEGRITY</SectionEyebrow>
+            <SectionEyebrow>WHY THIS APPROACH WORKS</SectionEyebrow>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-              Services are introduced through controlled onboarding windows. Public statements
-              remain conservative until milestones are verified and the delivery posture is clear.
+              Buyers usually convert faster when the site matches how they actually think: by site
+              type, operating need, and business context. Orbitlink uses that structure to make the
+              next commercial step clearer.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/55">POSTURE</div>
-            <div className="mt-1 text-sm text-white/80">Controlled rollout • Evidence-first</div>
+            <div className="mt-1 text-sm text-white/80">Business-first • Human-readable</div>
           </div>
         </div>
 
         <div className="mt-5 flex flex-col gap-3 sm:flex-row">
           <a
-            href="/contact#intake?intent=access&source=solutions_footer"
+            href="/contact#intake?source=solutions_footer"
             className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
           >
-            Request Access
+            Check Availability & Request Pricing
           </a>
           <a
-            href="/trust"
+            href="/services"
             className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
           >
-            Trust & Compliance
+            View Services
           </a>
           <a
-            href="/network"
+            href="/locations"
             className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
           >
-            Network Posture
+            View Locations
           </a>
         </div>
       </div>
