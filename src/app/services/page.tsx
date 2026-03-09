@@ -31,12 +31,12 @@ type GroupItem = {
 };
 
 export const metadata: Metadata = {
-  title: "Business Internet & Network Services | Orbitlink",
+  title: "Business Fibre Internet, Dedicated Internet & Network Services | Orbitlink",
   description:
     "Explore Orbitlink business fibre internet, dedicated internet access, managed Wi-Fi and LAN, business voice, backup connectivity, IoT uplinks, static IP routing, and infrastructure services across Ontario.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Business Internet & Network Services | Orbitlink",
+    title: "Business Fibre Internet, Dedicated Internet & Network Services | Orbitlink",
     description:
       "Business fibre internet, dedicated internet access, managed Wi-Fi, continuity, voice, IoT, static IP routing, and infrastructure services for Ontario businesses.",
     url: PAGE_URL,
@@ -48,13 +48,13 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink business internet and network services",
+        alt: "Orbitlink business fibre internet, dedicated internet, and network services",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Internet & Network Services | Orbitlink",
+    title: "Business Fibre Internet, Dedicated Internet & Network Services | Orbitlink",
     description:
       "Business fibre internet, dedicated internet access, managed Wi-Fi, continuity, voice, and infrastructure services across Ontario.",
     images: [TWITTER_IMAGE_URL],
@@ -65,40 +65,40 @@ const SERVICES: readonly ServiceItem[] = [
   {
     title: "Business Fibre Internet",
     subtitle:
-      "Primary business internet for offices, commercial spaces, and growing organizations.",
+      "Primary business internet for offices, commercial spaces, and growing organizations that need reliable connectivity and a cleaner commercial path.",
     href: "/services/business-fibre-internet",
     bullets: ["Business fibre", "Symmetrical options", "Address-based review"],
     tag: "INTERNET",
     group: "Connectivity",
     bestFit:
-      "Best for businesses that want high-quality primary internet with a cleaner buying and onboarding experience.",
+      "Best for businesses that want high-quality primary internet with clearer qualification, cleaner onboarding, and a more accountable provider experience.",
   },
   {
     title: "Dedicated Internet Access",
     subtitle:
-      "Dedicated connectivity for critical business sites and higher-performance environments.",
+      "Dedicated connectivity for critical business sites that need stronger performance expectations and more predictable service delivery.",
     href: "/services/dedicated-internet-access",
     bullets: ["Dedicated access", "Committed service", "Critical sites"],
     tag: "DEDICATED CONNECTIVITY",
     group: "Connectivity",
     bestFit:
-      "Best for organizations that need stronger performance expectations, cleaner escalation, and more predictable delivery.",
+      "Best for organizations that need stronger performance expectations, cleaner escalation, and more predictable delivery for important business operations.",
   },
   {
     title: "Managed LAN & Wi-Fi",
     subtitle:
-      "Managed internal networking for businesses that need better Wi-Fi, cleaner segmentation, and easier support.",
+      "Managed internal networking for businesses that need better Wi-Fi coverage, cleaner segmentation, and easier day-to-day support.",
     href: "/services/managed-lan-wifi",
     bullets: ["Managed Wi-Fi", "LAN support", "Segmentation"],
     tag: "MANAGED NETWORK",
     group: "Managed Network",
     bestFit:
-      "Best for sites where internal network performance, guest access, and day-to-day network support matter.",
+      "Best for sites where internal network performance, guest access, coverage quality, and ongoing support matter.",
   },
   {
     title: "LTE / 5G Backup Connectivity",
     subtitle:
-      "Backup connectivity for businesses that want failover and better resilience during outages.",
+      "Backup connectivity for businesses that want failover, resilience, and better continuity during outages.",
     href: "/services/lte-5g-continuity",
     bullets: ["Backup path", "Failover", "Business continuity"],
     tag: "CONTINUITY",
@@ -109,7 +109,7 @@ const SERVICES: readonly ServiceItem[] = [
   {
     title: "Starlink",
     subtitle:
-      "Satellite connectivity for sites with limited terrestrial options or special continuity needs.",
+      "Satellite connectivity for sites with limited terrestrial options or special continuity requirements.",
     href: "/services/starlink-agent",
     bullets: ["Satellite option", "Remote sites", "Continuity use cases"],
     tag: "SATELLITE",
@@ -120,13 +120,13 @@ const SERVICES: readonly ServiceItem[] = [
   {
     title: "VoIP & Cloud Voice",
     subtitle:
-      "Business voice service for teams that need porting, routing, and more professional call handling.",
+      "Business voice service for teams that need number porting, call routing, and more professional communications handling.",
     href: "/services/voip-cloud-voice",
     bullets: ["Cloud voice", "Number porting", "Call routing"],
     tag: "VOICE",
     group: "Voice",
     bestFit:
-      "Best for businesses that want business-ready calling aligned with the rest of their service stack.",
+      "Best for businesses that want business-ready calling aligned with the rest of their communications and service stack.",
   },
   {
     title: "IoT Connectivity",
@@ -137,12 +137,12 @@ const SERVICES: readonly ServiceItem[] = [
     tag: "CONNECTED DEVICES",
     group: "Infrastructure",
     bestFit:
-      "Best for environments where devices, gateways, and operational systems need secure and controlled connectivity.",
+      "Best for environments where devices, gateways, and operational systems need secure, segmented, and controlled connectivity.",
   },
   {
     title: "Static IP Routing",
     subtitle:
-      "Fixed addressing options for VPNs, firewalls, remote access, and stable endpoints.",
+      "Fixed addressing options for VPNs, firewalls, remote access, and stable business endpoints.",
     href: "/services/static-ip-routing",
     bullets: ["Static IPs", "Routing options", "Stable endpoints"],
     tag: "ROUTING",
@@ -159,7 +159,7 @@ const SERVICES: readonly ServiceItem[] = [
     tag: "INFRASTRUCTURE",
     group: "Infrastructure",
     bestFit:
-      "Best for businesses planning beyond standard internet access and into infrastructure or interconnection needs.",
+      "Best for businesses planning beyond standard internet access and into infrastructure, edge presence, or interconnection needs.",
   },
 ];
 
@@ -168,31 +168,31 @@ const GROUPS: readonly GroupItem[] = [
     title: "Connectivity",
     eyebrow: "PRIMARY ACCESS",
     description:
-      "Internet services for business sites that need reliable primary connectivity and clearer qualification.",
+      "Internet services for business sites that need reliable primary connectivity, clearer qualification, and a stronger commercial starting point.",
   },
   {
     title: "Managed Network",
     eyebrow: "INTERNAL NETWORK",
     description:
-      "Managed Wi-Fi and LAN services for businesses that need better site networking and day-to-day support.",
+      "Managed Wi-Fi and LAN services for businesses that need better site networking, cleaner segmentation, and day-to-day support.",
   },
   {
     title: "Continuity",
     eyebrow: "BACKUP & RESILIENCE",
     description:
-      "Backup connectivity options for organizations that want stronger uptime and outage planning.",
+      "Backup connectivity options for organizations that want stronger uptime planning and outage resilience.",
   },
   {
     title: "Voice",
     eyebrow: "COMMUNICATIONS",
     description:
-      "Business voice services for teams that need professional calling and cleaner communications setup.",
+      "Business voice services for teams that need professional calling, routing, and cleaner communications setup.",
   },
   {
     title: "Infrastructure",
     eyebrow: "ADVANCED SERVICES",
     description:
-      "Routing, IoT, and infrastructure services for more technical or future-ready business environments.",
+      "Routing, IoT, and infrastructure services for more technical, operational, or future-ready business environments.",
   },
 ];
 
@@ -318,7 +318,7 @@ function QuickStartStrip() {
     {
       label: "STEP 2",
       title: "Share your site details",
-      body: "Add your address, timeline, and anything important to the business environment.",
+      body: "Add your address, timeline, and the technical or operational requirements that matter to the business.",
     },
     {
       label: "STEP 3",
@@ -357,7 +357,7 @@ function QuickStartStrip() {
   );
 }
 
-function WhyThisPageWorks() {
+function WhyBusinessesChooseOrbitlink() {
   const items = [
     {
       title: "Clearer service selection",
@@ -381,7 +381,7 @@ function WhyThisPageWorks() {
     <Surface className="p-6 sm:p-8 lg:p-10">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.30em] text-white/42">WHY IT HELPS</div>
+          <div className="text-[11px] tracking-[0.30em] text-white/42">WHY BUSINESSES START HERE</div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
             Built to help buyers make a better decision
           </h2>
@@ -489,10 +489,12 @@ export default function ServicesIndexPage() {
                 </h1>
 
                 <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/66 sm:text-lg">
-                  Orbitlink organizes services the way business buyers usually evaluate them:
-                  primary internet first, managed network support where needed, backup where
-                  resilience matters, voice where communications matter, and infrastructure for
-                  more advanced environments.
+                  Explore business fibre internet, dedicated internet access, managed Wi-Fi and LAN,
+                  backup connectivity, business voice, and infrastructure services for Ontario
+                  businesses. Orbitlink organizes services the way commercial buyers usually evaluate
+                  them: primary internet first, managed network support where needed, backup where
+                  resilience matters, voice where communications matter, and infrastructure for more
+                  advanced environments.
                 </p>
 
                 <div className="mt-7 flex flex-wrap gap-2">
@@ -580,7 +582,7 @@ export default function ServicesIndexPage() {
             />
           ))}
 
-          <WhyThisPageWorks />
+          <WhyBusinessesChooseOrbitlink />
 
           <div className="overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.035]">
             <div className="relative p-6 sm:p-8 lg:p-10">

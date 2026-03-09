@@ -14,12 +14,12 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: "Trust & Compliance · Orbitlink",
+  title: "Business Trust & Compliance Review | Orbitlink",
   description:
     "Business trust and compliance review for Ontario organizations. Clear disclosure, structured onboarding, evidence-friendly operations, and disciplined delivery for serious buyers, property stakeholders, auditors, and regulated environments.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Trust & Compliance · Orbitlink",
+    title: "Business Trust & Compliance Review | Orbitlink",
     description:
       "Business trust posture with clear disclosure, controlled onboarding, evidence-friendly operations, and disciplined change management.",
     url: PAGE_URL,
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Trust & Compliance · Orbitlink",
+    title: "Business Trust & Compliance Review | Orbitlink",
     description:
       "Evidence-first operations, controlled rollout, and disciplined change management for business environments.",
     images: [TWITTER_IMAGE_URL],
@@ -138,7 +138,7 @@ function StatusTile({
       <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       <p className="mt-4 text-sm leading-6 text-white/64">
-        Public trust statements stay conservative and update only when the milestone is complete,
+        Public trust statements stay conservative and update only when a milestone is complete,
         reviewable, and appropriate for disclosure.
       </p>
     </div>
@@ -399,7 +399,7 @@ export default function TrustPage() {
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              Orbitlink is designed to support serious review. That means clear public statements,
+              Orbitlink is designed to support serious business review with clear public statements,
               scope-aware commitments, controlled onboarding, request-based verification material,
               and a clean separation between what is public and what remains appropriately private.
             </p>
@@ -425,9 +425,9 @@ export default function TrustPage() {
                 Conservative, reviewable, and commercially clear
               </div>
               <p className="mt-3 text-sm leading-6 text-white/64">
-                The goal is not to sound bigger than reality. The goal is to make every public
+                The goal is not to sound bigger than reality. The goal is to make each public
                 statement easier to understand, easier to verify, and easier to defend in front of
-                serious buyers and reviewers.
+                buyers, partners, and reviewers.
               </p>
 
               <div className="mt-5 grid gap-3">
@@ -466,15 +466,14 @@ export default function TrustPage() {
       <section className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <SectionEyebrow>WHY THIS PAGE EXISTS</SectionEyebrow>
+            <SectionEyebrow>WHY BUSINESSES READ THIS PAGE</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
               Serious buyers do not just evaluate service. They evaluate judgment.
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              This page is designed to answer the questions better buyers always ask, even when
-              they do not ask them out loud: Can this provider communicate clearly? Can it control
-              scope? Can it separate live from planned? Can it support diligence without making
-              reckless public claims?
+              This page is designed to answer the questions stronger buyers always ask: Can this
+              provider communicate clearly? Can it control scope? Can it separate live from planned?
+              Can it support diligence without making reckless public claims?
             </p>
           </div>
 
@@ -512,7 +511,7 @@ export default function TrustPage() {
             </div>
 
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
-              Review material for serious diligence without overexposing sensitive internals
+              Review material for real diligence without overexposing sensitive internals
             </h2>
 
             <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
@@ -762,8 +761,8 @@ export default function TrustPage() {
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
               A strong trust page does not replace service pages. It removes doubt around the
-              provider itself. This section exists to help buyers feel that the business behind the
-              service is deliberate, governed, and easier to work with over time.
+              provider itself. This section helps buyers feel that the business behind the service
+              is deliberate, governed, and easier to work with over time.
             </p>
           </div>
 
@@ -820,7 +819,7 @@ export default function TrustPage() {
         </div>
       </section>
 
-      <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7 lg:p-8">
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7">
         <SectionEyebrow>GOVERNANCE PRINCIPLES</SectionEyebrow>
         <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
           The discipline behind the brand surface

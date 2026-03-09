@@ -14,19 +14,20 @@ const LEGAL_NAME = "TIRAV Technologies Inc.";
 const CANONICAL_URL = `${SITE_URL}/`;
 
 const SITE_DESC =
-  "Orbitlink provides business fibre internet, dedicated internet access, managed Wi-Fi, voice, and network infrastructure services for Ontario businesses.";
+  "Orbitlink provides business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and continuity services for Ontario businesses. Check availability and request pricing for your location.";
 
-const OG_TITLE = "Orbitlink | Business Fibre Internet & Network Infrastructure";
+const OG_TITLE =
+  "Business Fibre Internet, Dedicated Internet & Managed Network Services | Orbitlink";
 const OG_DESC =
-  "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, and network infrastructure services for Ontario businesses.";
+  "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, and continuity services for Ontario businesses with a clearer commercial path.";
 const TWITTER_DESC =
-  "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, and network infrastructure services across Ontario.";
+  "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, and continuity services across Ontario for offices, clinics, warehouses, and multi-site businesses.";
 
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: "Orbitlink | Business Fibre Internet & Network Infrastructure",
+  title: "Business Fibre Internet, Dedicated Internet & Managed Network Services | Orbitlink",
   description: SITE_DESC,
   keywords: [
     "Business Fibre Internet Ontario",
@@ -39,6 +40,11 @@ export const metadata: Metadata = {
     "Enterprise Internet Ontario",
     "Ontario Business Connectivity",
     "Network Infrastructure Services Ontario",
+    "Commercial Internet Provider Ontario",
+    "Business Internet Toronto",
+    "LTE Failover Business Internet",
+    "Business Wi-Fi Solutions Ontario",
+    "Dedicated Internet Mississauga",
   ],
   alternates: {
     canonical: CANONICAL_URL,
@@ -55,7 +61,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink business fibre internet and network infrastructure",
+        alt: "Orbitlink business fibre internet, dedicated internet, and managed network services",
       },
     ],
   },
@@ -248,9 +254,9 @@ export default function Home() {
 
   const telecomSchema = {
     "@context": "https://schema.org",
-    "@type": "TelecomService",
+    "@type": "Service",
     "@id": `${SITE_URL}/#telecom`,
-    name: "Orbitlink Business Fibre Internet & Network Infrastructure",
+    name: "Orbitlink Business Fibre Internet & Managed Network Services",
     provider: {
       "@id": `${SITE_URL}/#org`,
     },
@@ -260,6 +266,7 @@ export default function Home() {
       "Managed Wi-Fi",
       "Business VoIP",
       "Network Infrastructure Services",
+      "LTE and 5G Continuity",
     ],
     areaServed: [
       {
@@ -326,17 +333,34 @@ export default function Home() {
             </div>
 
             <h1 className="mt-6 text-[2.45rem] font-semibold leading-[1.02] tracking-tight sm:text-5xl sm:leading-[1.03] lg:max-w-5xl lg:text-6xl">
-              Business fibre internet and network infrastructure
+              Business fibre internet, dedicated internet, and managed network services
               <span className="mt-2 block text-white/74">
-                for Ontario organizations that need a better provider experience.
+                for Ontario businesses that need reliable connectivity and a more accountable
+                provider experience.
               </span>
             </h1>
 
             <p className="mt-5 max-w-3xl text-[15px] leading-6 text-white/70 sm:text-lg sm:leading-7">
-              Orbitlink helps businesses buy connectivity more clearly. From business fibre and
-              dedicated internet access to managed Wi-Fi, voice, and continuity, the goal is
-              simple: make service selection, onboarding, and next steps easier to understand.
+              Orbitlink provides business fibre internet, dedicated internet access, managed
+              Wi-Fi, business voice, and continuity services for offices, clinics, warehouses,
+              commercial spaces, and multi-site organizations. Check availability, request
+              pricing, and start with a clearer commercial path.
             </p>
+
+            <div className="mt-5 flex flex-wrap gap-2 text-[11px] text-white/55 sm:text-xs">
+              <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1">
+                Ontario business-focused
+              </span>
+              <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1">
+                Address-qualified availability
+              </span>
+              <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1">
+                Structured commercial intake
+              </span>
+              <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1">
+                Operated by TIRAV Technologies Inc.
+              </span>
+            </div>
 
             <div className="mt-6 text-xs tracking-wide text-white/50 sm:text-sm">
               Ontario business internet • Check availability • Request pricing
@@ -366,19 +390,19 @@ export default function Home() {
 
           <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 md:grid-cols-3 lg:gap-6">
             <SignalCard
-              eyebrow="BUSINESS INTERNET"
-              title="Services buyers actually look for"
-              body="Business fibre internet, dedicated internet access, managed Wi-Fi, voice, and continuity services for commercial environments."
+              eyebrow="BUSINESS SERVICES"
+              title="Internet, DIA, Wi-Fi, voice, and continuity"
+              body="Commercial connectivity and network services designed for offices, service businesses, industrial sites, and growing multi-location teams."
             />
             <SignalCard
-              eyebrow="CLEARER BUYING PATH"
-              title="Less guessing, less back-and-forth"
-              body="The site is built to help buyers understand service fit, next steps, and how to start a serious request."
+              eyebrow="QUALIFICATION"
+              title="Building and address-based review"
+              body="Requests start with site location, service need, and business requirements so the next step is clearer from the beginning."
             />
             <SignalCard
               eyebrow="TRUST"
-              title="A more professional first impression"
-              body="Clearer language, cleaner process, and a calmer presentation create more confidence from first visit onward."
+              title="A more accountable provider experience"
+              body="Clearer communication, structured intake, and business-first service positioning help serious buyers move forward with confidence."
             />
           </div>
 
@@ -393,11 +417,13 @@ export default function Home() {
               <div className="max-w-3xl">
                 <div className="text-[11px] tracking-[0.28em] text-white/55">WHO THIS IS FOR</div>
                 <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-                  Built for businesses that want more than generic internet
+                  Built for businesses that need reliable internet and a more accountable service
+                  experience
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                  Orbitlink is a better fit for organizations that want clean installs, clearer
-                  communication, business-ready support, and a more structured service experience.
+                  Orbitlink is a better fit for organizations that want cleaner onboarding,
+                  clearer communication, business-ready support, and a more structured path from
+                  inquiry to installation.
                 </p>
               </div>
 
@@ -407,19 +433,19 @@ export default function Home() {
             <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
               <UseCaseCard
                 title="Professional offices"
-                body="Reliable business internet, cleaner onboarding, and a more polished support experience."
+                body="Reliable business internet, cleaner quoting, and a more polished provider experience for daily operations."
               />
               <UseCaseCard
                 title="Clinics and service businesses"
-                body="Connectivity, guest Wi-Fi, voice, and day-to-day reliability for customer-facing environments."
+                body="Connectivity, guest Wi-Fi, voice, and day-to-day service dependability for customer-facing environments."
               />
               <UseCaseCard
                 title="Warehouses and industrial sites"
-                body="Internet, managed network support, continuity planning, and multi-site service coordination."
+                body="Internet, managed network support, continuity planning, and site coordination for operational environments."
               />
               <UseCaseCard
                 title="Growing multi-site businesses"
-                body="A provider experience designed to feel more organized, more responsive, and easier to scale."
+                body="A commercial path designed to feel more organized, more responsive, and easier to scale across locations."
               />
             </div>
           </div>
@@ -438,8 +464,9 @@ export default function Home() {
                 Choose the path that matches the business need
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                The fastest way to buy through Orbitlink is to start with the site need. Pick the
-                service that best matches what the business needs today.
+                Start with the business need, then request availability and pricing for the
+                location. The fastest path through Orbitlink is to choose the service that best
+                matches what the business needs today.
               </p>
             </div>
 
@@ -454,22 +481,22 @@ export default function Home() {
             />
             <PathCard
               title="Need dedicated internet access"
-              body="Best for critical sites that need stronger performance and delivery expectations."
+              body="Best for critical sites that need stronger performance, stability, and service expectations."
               href="/services/dedicated-internet-access"
             />
             <PathCard
               title="Need managed Wi-Fi and LAN"
-              body="Best for coverage, segmentation, internal network support, and cleaner operations."
+              body="Best for coverage, segmentation, internal network support, and cleaner day-to-day operations."
               href="/services/managed-lan-wifi"
             />
             <PathCard
               title="Need backup connectivity"
-              body="Best for LTE or 5G continuity planning and resilience during outages."
+              body="Best for LTE or 5G continuity planning and resilience during primary service disruption."
               href="/services/lte-5g-continuity"
             />
             <PathCard
               title="Need business voice"
-              body="Best for porting, front-desk routing, business calling, and cloud voice."
+              body="Best for number porting, front-desk routing, business calling, and cloud voice needs."
               href="/services/voip-cloud-voice"
             />
           </div>
@@ -482,12 +509,12 @@ export default function Home() {
             <div className="max-w-3xl">
               <div className="text-[11px] tracking-[0.28em] text-white/55">HOW IT WORKS</div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                A simpler buying path than most telecom websites
+                A simpler commercial path than most telecom websites
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink is built to help buyers move from interest to next step without the usual
-                confusion. The goal is to make service fit, address review, and intake easier to
-                understand.
+                Orbitlink is built to help business buyers move from interest to next step without
+                the usual confusion. The goal is to make service fit, address review, and intake
+                easier to understand from the first visit.
               </p>
             </div>
 
@@ -498,17 +525,17 @@ export default function Home() {
             <StepCard
               step="1"
               title="Choose a service"
-              desc="Start with business fibre, dedicated internet, managed Wi-Fi, voice, or continuity."
+              desc="Start with business fibre, dedicated internet, managed Wi-Fi, business voice, or continuity."
             />
             <StepCard
               step="2"
               title="Share your address and needs"
-              desc="Tell Orbitlink where the site is located and what matters for the business."
+              desc="Tell Orbitlink where the site is located, what the business needs, and what matters most operationally."
             />
             <StepCard
               step="3"
-              title="Receive a clear next step"
-              desc="Get a cleaner response path for availability, pricing, fit, or follow-up."
+              title="Receive availability, pricing direction, or a recommended next step"
+              desc="Get a clearer response path for qualification, service fit, pricing, or follow-up."
             />
           </div>
         </div>
@@ -518,13 +545,16 @@ export default function Home() {
         <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">WHY IT CONVERTS</div>
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                WHY BUSINESSES CHOOSE ORBITLINK
+              </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Built to reduce friction for real buyers
+                Built to reduce friction for serious buyers
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                A premium homepage should do more than look good. It should make the service easier
-                to understand, the provider easier to trust, and the next step easier to take.
+                A premium homepage should do more than look polished. It should make the service
+                easier to understand, the provider easier to trust, and the next step easier to
+                take for real business decision-makers.
               </p>
             </div>
 
@@ -534,19 +564,58 @@ export default function Home() {
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
             <OutcomeCard
               title="Clearer service selection"
-              body="Visitors can quickly understand whether they need fibre, DIA, managed Wi-Fi, voice, or continuity."
+              body="Visitors can quickly understand whether they need business fibre, dedicated internet, managed Wi-Fi, voice, or continuity."
+            />
+            <OutcomeCard
+              title="Better-fit quoting"
+              body="Address-based intake helps match the request to the site, the service need, and the business context more effectively."
             />
             <OutcomeCard
               title="Stronger trust"
-              body="Cleaner language and cleaner structure create a more credible business impression."
-            />
-            <OutcomeCard
-              title="Better lead quality"
-              body="People arrive at the intake form with a better understanding of what they actually need."
+              body="Cleaner language, visible structure, and business-first positioning create a more credible commercial impression."
             />
             <OutcomeCard
               title="Less wasted time"
-              body="A clearer homepage reduces confusion, weak clicks, and vague contact requests."
+              body="A clearer homepage reduces confusion, weak clicks, and vague contact requests before they reach intake."
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
+        <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-white/55">TRUST SIGNALS</div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                Trust starts with clarity, structure, and real business identity
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                Orbitlink is positioned for business buyers who want a more credible provider
+                experience: clearer service categories, structured intake, address-based review,
+                and a visible operating identity through TIRAV Technologies Inc.
+              </p>
+            </div>
+
+            <StatCard label="OPERATED BY" value="TIRAV Technologies Inc." />
+          </div>
+
+          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <OutcomeCard
+              title="Business-only positioning"
+              body="The site is designed for commercial buyers, not consumer promo traffic or broad mass-market bundling."
+            />
+            <OutcomeCard
+              title="Address-qualified requests"
+              body="Location matters. Availability and fit begin with site details instead of vague assumptions."
+            />
+            <OutcomeCard
+              title="Structured intake"
+              body="The next step is not hidden behind generic language. Buyers are guided toward a cleaner request path."
+            />
+            <OutcomeCard
+              title="Clear legal identity"
+              body="A visible operating company and consistent brand presentation help increase buyer confidence from first contact."
             />
           </div>
         </div>

@@ -214,8 +214,9 @@ export default function BentoServices() {
               Business connectivity services, clearly organized
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65 sm:text-[15px]">
-              Start with the service your site needs most. The goal is to make selection easier,
-              reduce confusion, and help buyers move to the right next step faster.
+              Start with the service your site needs most. The goal is to help buyers choose faster,
+              understand fit more clearly, and move toward address-qualified pricing with less
+              friction.
             </p>
           </div>
 
@@ -230,7 +231,7 @@ export default function BentoServices() {
         <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-5">
           <Card
             title="Business Fibre Internet"
-            desc="High-quality business internet for offices, commercial spaces, and growing organizations that need a cleaner provider experience."
+            desc="Business internet for offices, commercial spaces, and growing organizations that need reliable connectivity, clearer quoting, and a cleaner provider experience."
             accent="blue"
             href="/services/business-fibre-internet"
             badge="INTERNET"
@@ -242,7 +243,7 @@ export default function BentoServices() {
 
           <Card
             title="Dedicated Internet Access"
-            desc="Dedicated connectivity for business sites that need stronger performance expectations, cleaner delivery, and more predictable service."
+            desc="Dedicated connectivity for business sites that need stronger performance expectations, cleaner delivery, and more predictable service for critical operations."
             accent="blue"
             href="/services/dedicated-internet-access"
             badge="DEDICATED CONNECTIVITY"
@@ -254,7 +255,7 @@ export default function BentoServices() {
 
           <Card
             title="Managed Wi-Fi & LAN"
-            desc="Managed internal network service for businesses that need better Wi-Fi, cleaner segmentation, stronger support, and easier site operations."
+            desc="Managed internal network service for businesses that need better Wi-Fi coverage, cleaner segmentation, stronger support, and easier day-to-day site operations."
             accent="emerald"
             href="/services/managed-lan-wifi"
             badge="MANAGED NETWORK"
@@ -290,7 +291,7 @@ export default function BentoServices() {
 
           <Card
             title="IoT Connectivity"
-            desc="Secure uplinks for gateways, sensors, and connected devices that need clearer segmentation and safer day-to-day connectivity."
+            desc="Secure business connectivity for gateways, sensors, and connected devices that need cleaner segmentation, controlled uplinks, and safer operational visibility."
             accent="emerald"
             href="/services/iot-connectivity"
             badge="CONNECTED DEVICES"
@@ -311,7 +312,7 @@ export default function BentoServices() {
             </h3>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
               Most buyers start with the service that solves the main site need first, then add
-              voice, backup, managed networking, or IoT as the scope becomes clearer.
+              voice, backup, managed networking, or IoT as the business scope becomes clearer.
             </p>
           </div>
 
@@ -370,12 +371,12 @@ export default function BentoServices() {
           <BuyerStep
             step="2"
             title="Add your site details"
-            desc="Share your address, timeline, and the requirements that matter most."
+            desc="Share your address, timeline, and the technical or operational requirements that matter most."
           />
           <BuyerStep
             step="3"
             title="Request review and pricing"
-            desc="Submit one clear request and receive the next best step."
+            desc="Submit one clear request and receive the next best step for availability, fit, or pricing direction."
           />
         </div>
 

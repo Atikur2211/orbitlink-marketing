@@ -30,14 +30,14 @@ const BUSINESS = {
 };
 
 export const metadata: Metadata = {
-  title: "Ontario Business Internet Locations | Orbitlink",
+  title: "Business Internet Service Areas in Ontario | Orbitlink Locations",
   description:
-    "Browse Orbitlink business internet service areas across Ontario. Explore city pages for business fibre internet, dedicated internet access, managed Wi-Fi, and availability by building.",
+    "Browse Orbitlink business internet service areas across Ontario. Explore city pages for business fibre internet, dedicated internet access, managed Wi-Fi, and building-based availability review.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Ontario Business Internet Locations | Orbitlink",
+    title: "Business Internet Service Areas in Ontario | Orbitlink Locations",
     description:
-      "Explore Orbitlink service areas across Ontario. Browse city pages, check availability by building, and request business internet service.",
+      "Explore Orbitlink service areas across Ontario. Browse city pages, review availability by building, and request business internet service.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ontario Business Internet Locations | Orbitlink",
+    title: "Business Internet Service Areas in Ontario | Orbitlink Locations",
     description:
       "Browse Orbitlink service areas across Ontario for business fibre internet, dedicated internet, managed Wi-Fi, and network services.",
     images: [TWITTER_IMAGE_URL],
@@ -72,42 +72,48 @@ const GTA_CORE: readonly LocationCard[] = [
   {
     name: "Mississauga",
     href: "/locations/mississauga",
-    subtitle: "Business fibre internet and managed network service in select commercial buildings and corridors.",
+    subtitle:
+      "Business fibre internet and managed network service in select commercial buildings and corridors.",
     tags: ["Business fibre", "Commercial buildings", "High-priority market"],
     posture: "Primary launch market",
   },
   {
     name: "Brampton",
     href: "/locations/brampton",
-    subtitle: "Business internet and network service for industrial, logistics, and SMB environments.",
+    subtitle:
+      "Business internet and network service for industrial, logistics, and SMB environments.",
     tags: ["Industrial sites", "SMB demand", "Availability by address"],
     posture: "Industrial growth market",
   },
   {
     name: "Toronto",
     href: "/locations/toronto",
-    subtitle: "Business connectivity for office, commercial, and uptime-sensitive environments.",
+    subtitle:
+      "Business connectivity for office, commercial, and uptime-sensitive environments.",
     tags: ["Office market", "DIA-ready", "Enterprise fit"],
     posture: "Enterprise market",
   },
   {
     name: "Markham",
     href: "/locations/markham",
-    subtitle: "Business internet and managed networking for office and technology-led environments.",
+    subtitle:
+      "Business internet and managed networking for office and technology-led environments.",
     tags: ["Managed Wi-Fi", "Office sites", "Static IP options"],
     posture: "Technology market",
   },
   {
     name: "Vaughan",
     href: "/locations/vaughan",
-    subtitle: "Connectivity for commercial and industrial sites with multi-location and continuity needs.",
+    subtitle:
+      "Connectivity for commercial and industrial sites with multi-location and continuity needs.",
     tags: ["Commercial", "Multi-site", "Backup options"],
     posture: "Multi-site market",
   },
   {
     name: "Oakville",
     href: "/locations/oakville",
-    subtitle: "Business internet and managed network service for premium SMB and professional-service environments.",
+    subtitle:
+      "Business internet and managed network service for premium SMB and professional-service environments.",
     tags: ["Premium SMB", "Professional services", "Business-grade"],
     posture: "Premium market",
   },
@@ -117,35 +123,40 @@ const GTA_EXTENDED: readonly LocationCard[] = [
   {
     name: "Milton",
     href: "/locations/milton",
-    subtitle: "Business internet for growing industrial and commercial sites, reviewed by address.",
+    subtitle:
+      "Business internet for growing industrial and commercial sites, reviewed by address.",
     tags: ["Industrial growth", "Address review", "Expansion"],
     posture: "Expansion market",
   },
   {
     name: "Etobicoke",
     href: "/locations/etobicoke",
-    subtitle: "Business connectivity for office and light industrial environments with building-based availability review.",
+    subtitle:
+      "Business connectivity for office and light industrial environments with building-based availability review.",
     tags: ["Commercial", "Managed networking", "Building review"],
     posture: "Commercial market",
   },
   {
     name: "Scarborough",
     href: "/locations/scarborough",
-    subtitle: "Business internet and managed connectivity for broad SMB demand across local commercial areas.",
+    subtitle:
+      "Business internet and managed connectivity for broad SMB demand across local commercial areas.",
     tags: ["SMB", "Local demand", "Availability by address"],
     posture: "Discovery market",
   },
   {
     name: "Hamilton",
     href: "/locations/hamilton",
-    subtitle: "Regional business demand supported by structured service review and documented delivery.",
+    subtitle:
+      "Regional business demand supported by structured service review and documented delivery.",
     tags: ["Regional market", "Business demand", "Structured onboarding"],
     posture: "Regional market",
   },
   {
     name: "Ottawa",
     href: "/locations/ottawa",
-    subtitle: "Business connectivity for professional and uptime-sensitive environments with enterprise expectations.",
+    subtitle:
+      "Business connectivity for professional and uptime-sensitive environments with enterprise expectations.",
     tags: ["Professional services", "Enterprise fit", "DIA-ready"],
     posture: "Strategic market",
   },
@@ -410,8 +421,9 @@ export default function LocationsHubPage() {
 
               <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/70 sm:text-lg">
                 Browse Orbitlink city pages for business fibre internet, dedicated internet access,
-                managed Wi-Fi, and backup connectivity. Availability is reviewed by building and
-                address, not assumed across an entire city.
+                managed Wi-Fi, and backup connectivity. Each location moves from city-level discovery
+                into building-based availability review, service matching, and a clearer commercial
+                path.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -490,7 +502,7 @@ export default function LocationsHubPage() {
         <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6 md:p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <SectionEyebrow>WHY THIS PAGE HELPS</SectionEyebrow>
+              <SectionEyebrow>WHY BUSINESSES START HERE</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight">
                 Built for local discovery and easier qualification
               </h2>
