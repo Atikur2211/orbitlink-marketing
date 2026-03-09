@@ -14,14 +14,13 @@ const LEGAL_NAME = "TIRAV Technologies Inc.";
 const CANONICAL_URL = `${SITE_URL}/`;
 
 const SITE_DESC =
-  "Business Fibre Internet, Managed Network Infrastructure, and Compliance-Ready Connectivity for modern enterprises in Ontario, Canada.";
+  "Business fibre internet, dedicated internet access, managed network infrastructure, and structured connectivity services for Ontario organizations.";
 
 const OG_TITLE = "Orbitlink — Business Fibre & Network Infrastructure";
 const OG_DESC =
-  "Audit-ready connectivity, enterprise fibre internet, and infrastructure-grade operations for modern businesses in Ontario.";
-
+  "Business connectivity for Ontario organizations: fibre internet, dedicated internet access, managed networks, and infrastructure-grade delivery.";
 const TWITTER_DESC =
-  "Enterprise fibre internet and audit-ready connectivity for modern operators in Ontario.";
+  "Business fibre, dedicated internet, managed networks, and infrastructure-grade delivery across Ontario.";
 
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
@@ -35,11 +34,11 @@ export const metadata: Metadata = {
     "Enterprise Internet Mississauga",
     "Managed Network Infrastructure",
     "Dedicated Internet Access Ontario",
-    "Audit-Ready Connectivity",
     "Business Fibre Mississauga",
     "Enterprise Connectivity Canada",
     "Telecom Services Ontario",
     "Business Network Infrastructure",
+    "Ontario Business Connectivity",
   ],
   alternates: {
     canonical: CANONICAL_URL,
@@ -103,10 +102,62 @@ function HeroSignalCard({
   body: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm">
+    <div className="rounded-[26px] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm">
       <div className="text-[11px] tracking-[0.22em] text-white/55">{eyebrow}</div>
-      <div className="mt-2 text-sm text-white/90">{title}</div>
+      <div className="mt-2 text-sm font-medium text-white/90">{title}</div>
       <div className="mt-2 text-sm leading-6 text-white/65">{body}</div>
+    </div>
+  );
+}
+
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
+      <div className="mt-1 text-sm text-white/80">{value}</div>
+    </div>
+  );
+}
+
+function BuyerStep({
+  step,
+  title,
+  desc,
+}: {
+  step: string;
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+      <div className="flex items-center gap-3">
+        <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
+          {step}
+        </div>
+        <div className="text-sm font-medium text-white/90">{title}</div>
+      </div>
+      <p className="mt-3 text-sm leading-6 text-white/65">{desc}</p>
+    </div>
+  );
+}
+
+function OutcomeCard({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/65">{body}</p>
     </div>
   );
 }
@@ -235,72 +286,156 @@ export default function Home() {
         </div>
 
         <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-12 sm:px-7 sm:pb-16 sm:pt-16 lg:pb-20 lg:pt-20">
-          <div className="max-w-4xl">
+          <div className="max-w-5xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-white/70 sm:text-xs">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Infrastructure-grade operations • Compliance-ready delivery
+              Business fibre • Dedicated internet • Managed network infrastructure
             </div>
 
-            <h1 className="mt-6 text-[2.25rem] font-semibold leading-[1.02] tracking-tight sm:text-5xl sm:leading-[1.03] lg:max-w-5xl lg:text-6xl">
-              Business Fibre & Audit-Ready Connectivity
+            <h1 className="mt-6 text-[2.4rem] font-semibold leading-[1.02] tracking-tight sm:text-5xl sm:leading-[1.03] lg:max-w-5xl lg:text-6xl">
+              Business connectivity,
               <span className="mt-2 block text-white/72">
-                for Modern Enterprises in Ontario
+                built with more clarity, more structure, and more trust.
               </span>
             </h1>
 
-            <p className="mt-5 max-w-2xl text-[15px] leading-6 text-white/70 sm:text-lg sm:leading-7">
-              Precision network services engineered for reliability, clean operations,
-              and compliance-first delivery — built for modern businesses in
-              Mississauga and across Ontario.
+            <p className="mt-5 max-w-3xl text-[15px] leading-6 text-white/70 sm:text-lg sm:leading-7">
+              Orbitlink delivers business fibre internet, dedicated internet access, managed
+              network infrastructure, voice, continuity, and operator-grade service coordination
+              for organizations across Ontario. The experience is designed to feel clear,
+              professional, and easier to trust from first contact onward.
             </p>
 
             <div className="mt-6 text-xs tracking-wide text-white/50 sm:text-sm">
-              Serving enterprise and SMB environments across Ontario • Structured
-              onboarding • Infrastructure-grade operations
+              Ontario business connectivity • Structured onboarding • Controlled rollout •
+              Enterprise-minded delivery
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
               <a
-                href="/coming-soon"
+                href="/contact#intake"
                 className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Request Access
-              </a>
-              <a
-                href="/network"
-                className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
-              >
-                View Network
+                Send a Request
               </a>
               <a
                 href="/services"
-                className="rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-center text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
+                className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
               >
                 Explore Services
+              </a>
+              <a
+                href="/trust"
+                className="rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-center text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
+              >
+                Trust & Compliance
               </a>
             </div>
           </div>
 
           <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 md:grid-cols-3 lg:gap-6">
             <HeroSignalCard
-              eyebrow="RELIABILITY"
-              title="SLA-first delivery"
-              body="Designed for uptime, predictable routing, and disciplined escalation."
+              eyebrow="SERVICE FIT"
+              title="Built for business environments"
+              body="Fibre, dedicated internet, managed networks, voice, continuity, and infrastructure support aligned to real operating needs."
             />
             <HeroSignalCard
-              eyebrow="OPERATIONS"
-              title="Network-grade visibility"
-              body="Telemetry that feels like a control plane — not marketing."
+              eyebrow="DELIVERY"
+              title="Structured from the beginning"
+              body="Clear qualification, cleaner onboarding, and scope-led delivery instead of vague promises and reactive process."
             />
             <HeroSignalCard
-              eyebrow="COMPLIANCE"
-              title="Audit-ready by default"
-              body="Evidence-friendly workflows designed for regulators and auditors."
+              eyebrow="TRUST"
+              title="Designed for serious review"
+              body="Measured public posture, evidence-friendly operations, and a cleaner business trust surface for buyers and reviewers."
             />
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+            <MetricPill label="BEST FOR" value="Ontario business sites and multi-site environments" />
+            <MetricPill label="OPERATING STYLE" value="Clear, structured, and commercially disciplined" />
+            <MetricPill label="BUYER SIGNAL" value="More premium than a generic telecom experience" />
           </div>
 
           <div className="mx-auto mt-12 h-px max-w-6xl bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           <HeroFibreLine />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 py-10 sm:px-7 sm:py-12">
+        <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-white/55">WHY BUYERS STAY LONGER HERE</div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                A cleaner buying path than most telecom websites
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                Most provider websites make buyers hunt for relevance. Orbitlink is being built to
+                do the opposite: clarify the service, explain the fit, show the posture, and make
+                the next step obvious.
+              </p>
+            </div>
+
+            <MetricPill label="MODE" value="Buyer-readable • Business-first" />
+          </div>
+
+          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
+            <BuyerStep
+              step="1"
+              title="Choose the service path"
+              desc="Start with business fibre, dedicated internet, managed network, voice, continuity, or infrastructure depending on the site need."
+            />
+            <BuyerStep
+              step="2"
+              title="Confirm fit and scope"
+              desc="Match the request to the address, building context, timeline, and any technical requirements that matter operationally."
+            />
+            <BuyerStep
+              step="3"
+              title="Move into structured intake"
+              desc="Submit one clear request and receive a cleaner next step instead of a fragmented or generic sales response."
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
+        <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-white/55">BUSINESS OUTCOMES</div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                What Orbitlink is designed to signal from the homepage
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                The homepage should not just look premium. It should communicate that Orbitlink is
+                easier to understand, more disciplined in delivery, and more serious about trust
+                than the average provider surface.
+              </p>
+            </div>
+
+            <MetricPill label="FIRST IMPRESSION" value="Clear, premium, and commercially credible" />
+          </div>
+
+          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <OutcomeCard
+              title="Clearer than mass-market telecom"
+              body="The message is direct: what Orbitlink does, who it serves, and why the experience is different."
+            />
+            <OutcomeCard
+              title="More structured for enterprise buyers"
+              body="The homepage frames the business around service fit, onboarding clarity, and trust posture rather than generic promotional language."
+            />
+            <OutcomeCard
+              title="More credible for serious review"
+              body="Trust, compliance, disclosure, and business process are visible early, which increases confidence with better buyers."
+            />
+            <OutcomeCard
+              title="Stronger path to action"
+              body="The next step is simple and commercial: explore services, review trust posture, or send a real business request."
+            />
+          </div>
         </div>
       </section>
 

@@ -16,12 +16,12 @@ const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 export const metadata: Metadata = {
   title: "Trust & Compliance · Orbitlink",
   description:
-    "A premium trust surface for enterprise buyers, auditors, and regulated environments — evidence-first operations, controlled rollout, disciplined disclosure, and scope-locked delivery.",
+    "Business trust and compliance review for Ontario organizations. Clear disclosure, structured onboarding, evidence-friendly operations, and a disciplined delivery posture for serious buyers and reviewers.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Trust & Compliance · Orbitlink",
     description:
-      "Audit-ready posture: controlled rollout, verifiable status statements, evidence-friendly operations, and disciplined change management.",
+      "Business trust posture with clear disclosure, controlled onboarding, evidence-friendly operations, and disciplined change management.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Trust & Compliance · Orbitlink",
     description:
-      "Evidence-first operations, controlled rollout, and disciplined change management for modern enterprise environments.",
+      "Evidence-first operations, controlled rollout, and disciplined change management for business environments.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -56,8 +56,8 @@ export const metadata: Metadata = {
 };
 
 function statusText(tone: "ok" | "inprogress" | "info") {
-  if (tone === "ok") return "OPERATIONAL";
-  if (tone === "inprogress") return "IN PROCESS";
+  if (tone === "ok") return "ACTIVE";
+  if (tone === "inprogress") return "IN REVIEW";
   return "DISCLOSURE";
 }
 
@@ -111,8 +111,8 @@ function StatusTile({
       <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       <p className="mt-4 text-sm leading-6 text-white/64">
-        Statements remain conservative and update only when the underlying milestone is complete,
-        internally verifiable, and appropriate for public disclosure.
+        Public trust statements stay conservative and update only when the underlying milestone is
+        complete, reviewable, and appropriate for disclosure.
       </p>
     </div>
   );
@@ -201,6 +201,21 @@ function ModuleChip({
     <div className="rounded-[22px] border border-white/10 bg-black/20 p-4">
       <div className="text-sm font-medium text-white/88">{name}</div>
       <div className="mt-1 text-xs leading-5 text-white/55">{tagline}</div>
+    </div>
+  );
+}
+
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/55">{label}</div>
+      <div className="mt-1 text-sm text-white/80">{value}</div>
     </div>
   );
 }
@@ -296,16 +311,16 @@ export default function TrustPage() {
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Controlled rollout means Orbitlink confirms scope conservatively and updates public statements only after milestones are complete and verifiable.",
+            "Controlled rollout means Orbitlink confirms scope conservatively and updates public statements only after milestones are complete and reviewable.",
         },
       },
       {
         "@type": "Question",
-        name: "Do you provide audit-ready documentation?",
+        name: "Do you provide review or verification material?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Orbitlink emphasizes evidence-friendly operations, structured change posture, and scope-locked commitments. Review material may be provided in redacted form when appropriate.",
+            "Orbitlink supports evidence-friendly operations, structured change posture, and scope-appropriate review material when the engagement and review path are real.",
         },
       },
       {
@@ -314,7 +329,7 @@ export default function TrustPage() {
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Yes. Verification material is request-only and tailored to the engagement scope. Sensitive operational details remain private and are shared only when necessary.",
+            "Yes. Verification material is request-based and tailored to the engagement scope. Sensitive operational details remain private and are shared only when appropriate.",
         },
       },
       {
@@ -323,7 +338,7 @@ export default function TrustPage() {
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Statements are maintained as a living disclosure and updated only when milestones are complete and internally verifiable.",
+            "Statements are maintained as a living disclosure and updated only when milestones are complete and internally reviewable.",
         },
       },
     ],
@@ -337,8 +352,8 @@ export default function TrustPage() {
   return (
     <PageShell
       eyebrow="TRUST & COMPLIANCE"
-      title="Trust designed for serious review"
-      subtitle="A premium trust surface for enterprise buyers, auditors, partners, and regulated environments that expect measured claims, disciplined disclosure, and evidence-first operations."
+      title="Trust designed for serious business review"
+      subtitle="A premium trust surface for buyers, auditors, partners, and regulated environments that expect clear statements, disciplined disclosure, and structured delivery."
     >
       <script
         type="application/ld+json"
@@ -361,21 +376,26 @@ export default function TrustPage() {
             </div>
 
             <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[44px] lg:leading-[1.02]">
-              A trust layer built like infrastructure
+              A trust layer built to be clear, reviewable, and defensible
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              Orbitlink is engineered to support serious review. That means measured public
-              statements, scope-locked commitments, controlled onboarding, request-only
-              verification material, and a clean distinction between what is visible publicly and
-              what remains appropriately private.
+              Orbitlink is designed to support serious review. That means clear public statements,
+              scope-aware commitments, controlled onboarding, request-based verification material,
+              and a clean separation between what is public and what remains appropriately private.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               <Pill>Controlled rollout</Pill>
-              <Pill>Request-only verification</Pill>
+              <Pill>Request-based verification</Pill>
               <Pill>Evidence-friendly operations</Pill>
               <Pill>Enterprise review posture</Pill>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <MetricPill label="TRUST MODEL" value="Clear and conservative" />
+              <MetricPill label="REVIEW STYLE" value="Scope-aware" />
+              <MetricPill label="DELIVERY SIGNAL" value="Structured and disciplined" />
             </div>
           </div>
 
@@ -383,28 +403,29 @@ export default function TrustPage() {
             <div className="rounded-[28px] border border-white/10 bg-black/25 p-5 sm:p-6">
               <div className="text-[11px] tracking-[0.24em] text-white/52">TRUST MODEL</div>
               <div className="mt-3 text-lg font-semibold text-white">
-                Conservative, reviewable, and defensible
+                Conservative, reviewable, and commercially clear
               </div>
               <p className="mt-3 text-sm leading-6 text-white/64">
-                The goal is not to sound bigger. The goal is to make every statement easier to
-                verify, explain, and defend in front of enterprise buyers and regulated reviewers.
+                The goal is not to sound bigger than reality. The goal is to make every public
+                statement easier to understand, easier to verify, and easier to defend in front of
+                serious buyers and reviewers.
               </p>
 
               <div className="mt-5 grid gap-3">
                 <ReviewStep
                   step="1"
                   title="Define scope"
-                  desc="Separate live scope, planned scope, and request-only detail."
+                  desc="Separate what is live, what is planned, and what is request-only."
                 />
                 <ReviewStep
                   step="2"
                   title="Control disclosure"
-                  desc="Publish only what is internally supportable and operationally accurate."
+                  desc="Publish only what is supportable and operationally accurate."
                 />
                 <ReviewStep
                   step="3"
                   title="Support review"
-                  desc="Provide redacted, scope-appropriate material when a real review path exists."
+                  desc="Share redacted or scoped material when there is a real review path."
                 />
               </div>
             </div>
@@ -423,7 +444,7 @@ export default function TrustPage() {
         ))}
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-[32px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-7 lg:p-8">
+      <section className="mt-4 rounded-[32px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="min-w-0 max-w-4xl">
             <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
@@ -431,13 +452,13 @@ export default function TrustPage() {
             </div>
 
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
-              Enterprise review material without overexposing operational detail
+              Review material for serious diligence without overexposing sensitive internals
             </h2>
 
             <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
               Request a scope-appropriate review pack that clarifies what is live, what is planned,
-              what evidence exists today, and how operational statements are governed. Materials are
-              supplied in redacted form where appropriate and only when the review path is real.
+              what evidence exists today, and how public trust statements are governed. Materials
+              are supplied in redacted form where appropriate and only when the review path is real.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">
@@ -448,16 +469,14 @@ export default function TrustPage() {
             </div>
 
             <p className="mt-4 text-xs text-white/55">
-              Sensitive technical internals remain private. Pack contents vary by module, readiness
-              state, and review scope.
+              Sensitive technical internals remain private. Pack contents vary by service, readiness
+              state, and engagement scope.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-[#FACC15]/25 bg-black/25 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/55">POSTURE</div>
-            <div className="mt-1 text-sm text-white/80">
-              Minimal exposure • Maximum clarity
-            </div>
+            <div className="mt-1 text-sm text-white/80">Minimal exposure • Maximum clarity</div>
           </div>
         </div>
 
@@ -483,26 +502,26 @@ export default function TrustPage() {
             type="email"
             required
             placeholder="Work email"
-            className="lg:col-span-4 w-full rounded-2xl border border-[#FACC15]/15 bg-black/25 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-[#FACC15]/45"
+            className="w-full rounded-2xl border border-[#FACC15]/15 bg-black/25 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-[#FACC15]/45 lg:col-span-4"
           />
 
           <input
             name="company"
             type="text"
-            placeholder="Company (optional)"
-            className="lg:col-span-3 w-full rounded-2xl border border-[#FACC15]/15 bg-black/25 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-[#FACC15]/45"
+            placeholder="Company or organization"
+            className="w-full rounded-2xl border border-[#FACC15]/15 bg-black/25 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-[#FACC15]/45 lg:col-span-3"
           />
 
           <select
             name="role"
             defaultValue=""
-            className="lg:col-span-2 w-full rounded-2xl border border-[#FACC15]/15 bg-black/25 px-4 py-3 text-sm text-white outline-none focus:border-[#FACC15]/45"
+            className="w-full rounded-2xl border border-[#FACC15]/15 bg-black/25 px-4 py-3 text-sm text-white outline-none focus:border-[#FACC15]/45 lg:col-span-2"
           >
             <option value="" disabled>
-              Role (optional)
+              Role
             </option>
-            <option value="enterprise">Enterprise buyer</option>
-            <option value="isp">ISP / Operator</option>
+            <option value="enterprise">Business buyer</option>
+            <option value="it">IT / Network lead</option>
             <option value="auditor">Auditor / Compliance</option>
             <option value="partner">Partner / Vendor</option>
             <option value="other">Other</option>
@@ -511,10 +530,10 @@ export default function TrustPage() {
           <select
             name="module"
             defaultValue=""
-            className="lg:col-span-3 w-full rounded-2xl border border-[#FACC15]/15 bg-black/25 px-4 py-3 text-sm text-white outline-none focus:border-[#FACC15]/45"
+            className="w-full rounded-2xl border border-[#FACC15]/15 bg-black/25 px-4 py-3 text-sm text-white outline-none focus:border-[#FACC15]/45 lg:col-span-3"
           >
             <option value="" disabled>
-              Module (optional)
+              Service surface
             </option>
             {moduleOptions.map((name) => (
               <option key={name} value={name}>
@@ -523,7 +542,7 @@ export default function TrustPage() {
             ))}
           </select>
 
-          <div className="lg:col-span-12 mt-1 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-1 flex flex-col gap-3 lg:col-span-12 sm:flex-row">
             <button
               type="submit"
               className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
@@ -532,10 +551,10 @@ export default function TrustPage() {
             </button>
 
             <a
-              href="/coming-soon?intent=early-access&source=trust"
+              href="/contact#intake"
               className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
-              Request early access
+              Contact Orbitlink
             </a>
 
             <div className="flex items-center text-xs text-white/55 sm:ml-auto">
@@ -544,25 +563,23 @@ export default function TrustPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-12 text-xs text-white/55">
-            Requests are reviewed against active intake and review windows.
+          <div className="text-xs text-white/55 lg:col-span-12">
+            Requests are reviewed against active review and intake windows.
           </div>
         </form>
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-7 lg:p-8">
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">
-              OPERATIONAL DISCLOSURE
-            </div>
+            <div className="text-[11px] tracking-[0.28em] text-white/55">OPERATIONAL DISCLOSURE</div>
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
-              Built for enterprise expectation and regulator review
+              Built for enterprise expectation and reviewer confidence
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
               Orbitlink is positioned as an infrastructure-grade operating surface. The trust model
-              prioritizes accountability, disciplined operations, structured disclosure, and a clean
-              separation between what can be published broadly and what must remain request-only.
+              prioritizes accountability, structured operations, disciplined disclosure, and a clear
+              separation between what can be published broadly and what should remain request-only.
             </p>
           </div>
 
@@ -584,12 +601,10 @@ export default function TrustPage() {
         </div>
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-7 lg:p-8">
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">
-              REVIEW FLOW
-            </div>
+            <div className="text-[11px] tracking-[0.28em] text-white/55">REVIEW FLOW</div>
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
               A cleaner path from first diligence to controlled onboarding
             </h2>
@@ -610,12 +625,12 @@ export default function TrustPage() {
           <ReviewStep
             step="1"
             title="Qualify intent"
-            desc="Understand the buyer, the environment, and the actual review objective."
+            desc="Understand the buyer, the environment, and the real review objective."
           />
           <ReviewStep
             step="2"
             title="Lock scope"
-            desc="Define what is live, what is planned, what is included, and what remains excluded."
+            desc="Define what is live, what is planned, what is included, and what is excluded."
           />
           <ReviewStep
             step="3"
@@ -630,7 +645,7 @@ export default function TrustPage() {
         </div>
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-7 lg:p-8">
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
             <div className="text-[11px] tracking-[0.28em] text-white/55">
@@ -641,8 +656,8 @@ export default function TrustPage() {
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
               Each engagement is defined by what is included, what is measured, what is excluded,
-              how changes are handled, and how evidence can be reviewed. This reduces uncertainty at
-              procurement, audit, and go-live stages.
+              how changes are handled, and how evidence can be reviewed. This reduces uncertainty
+              at procurement, review, and go-live stages.
             </p>
           </div>
 
@@ -680,19 +695,17 @@ export default function TrustPage() {
         </div>
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-7 lg:p-8">
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">
-              MODULE REVIEW CONTEXT
-            </div>
+            <div className="text-[11px] tracking-[0.28em] text-white/55">MODULE REVIEW CONTEXT</div>
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
               Review posture varies by service surface
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              Trust review is not one-size-fits-all. Each module has a different disclosure boundary,
-              onboarding posture, and evidence path depending on scope, operating model, and delivery
-              readiness.
+              Trust review is not one-size-fits-all. Each service has a different disclosure
+              boundary, onboarding posture, and evidence path depending on scope, operating model,
+              and delivery readiness.
             </p>
           </div>
 
@@ -709,17 +722,15 @@ export default function TrustPage() {
         </div>
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-7 lg:p-8">
-        <div className="text-[11px] tracking-[0.28em] text-white/55">
-          GOVERNANCE PRINCIPLES
-        </div>
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="text-[11px] tracking-[0.28em] text-white/55">GOVERNANCE PRINCIPLES</div>
         <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
           The discipline behind the brand surface
         </h2>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-          The premium feel of Orbitlink is supported by operational restraint. Public credibility is
-          protected through disclosure discipline, change governance, and evidence-friendly review
-          paths rather than oversized claims.
+          The premium feel of Orbitlink is supported by operational restraint. Public credibility
+          is protected through disclosure discipline, change governance, and evidence-friendly
+          review paths rather than oversized claims.
         </p>
 
         <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 sm:gap-4">
@@ -733,7 +744,7 @@ export default function TrustPage() {
           />
           <TrustPrinciple
             title="Design for reviewability"
-            desc="Enterprise buyers and auditors should be able to understand the posture without requiring internal system access."
+            desc="Buyers and auditors should be able to understand the posture without needing internal system access."
           />
           <TrustPrinciple
             title="Protect sensitive internals"
@@ -742,35 +753,31 @@ export default function TrustPage() {
         </div>
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-7">
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7">
         <div className="text-[11px] tracking-[0.28em] text-white/55">ASSURANCE</div>
         <div className="mt-3 max-w-4xl text-sm leading-6 text-white/70 sm:text-[15px]">
           {TRUST_ASSURANCE}
         </div>
       </section>
 
-      <section className="mt-4 sm:mt-6 rounded-[32px] border border-white/10 bg-black/40 p-6 sm:p-7 lg:p-8">
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-black/40 p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">
-              CORPORATE DISCLOSURE
-            </div>
+            <div className="text-[11px] tracking-[0.28em] text-white/55">CORPORATE DISCLOSURE</div>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
               Orbitlink is a brand of TIRAV Technologies Inc. Services are introduced through
-              controlled onboarding, governed by applicable Canadian requirements, and described in a
-              manner intended to remain accurate as operational and regulatory milestones evolve.
+              controlled onboarding, governed by applicable Canadian requirements, and described in
+              a manner intended to remain accurate as operational and regulatory milestones evolve.
             </p>
             <p className="mt-4 text-xs text-white/55">
               This page is maintained as a living disclosure. Statements update when milestones are
-              complete and internally verifiable.
+              complete and internally reviewable.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/55">DISCLOSURE MODEL</div>
-            <div className="mt-1 text-sm text-white/80">
-              Living page • Milestone-based updates
-            </div>
+            <div className="mt-1 text-sm text-white/80">Living page • Milestone-based updates</div>
           </div>
         </div>
 
@@ -788,10 +795,10 @@ export default function TrustPage() {
             View Network Posture
           </a>
           <a
-            href="/coming-soon"
+            href="/contact#intake"
             className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
           >
-            Request Access
+            Contact Orbitlink
           </a>
         </div>
       </section>

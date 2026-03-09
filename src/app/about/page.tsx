@@ -8,12 +8,12 @@ const PAGE_URL = `${SITE_URL}/about`;
 export const metadata: Metadata = {
   title: "About · Orbitlink",
   description:
-    "Orbitlink is a disciplined connectivity brand built for modern enterprise environments in Ontario — calm by design, reliability-first in execution, and structured for long-term trust.",
+    "Orbitlink is a business connectivity and network infrastructure brand for Ontario organizations. Built around clear communication, structured delivery, and long-term trust.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "About · Orbitlink",
     description:
-      "A disciplined operator posture: calm, precise, reliability-first. Orbitlink is a brand of TIRAV Technologies Inc.",
+      "A business connectivity brand built around clear communication, structured delivery, and long-term trust. Orbitlink is a brand of TIRAV Technologies Inc.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -31,72 +31,128 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About · Orbitlink",
     description:
-      "A disciplined operator posture: calm, precise, reliability-first. Orbitlink is a brand of TIRAV Technologies Inc.",
+      "A business connectivity brand built around clear communication, structured delivery, and long-term trust.",
     images: [`${SITE_URL}/twitter-image`],
   },
 };
 
 const STORY_BLOCKS = [
   {
-    label: "THE IDEA",
+    label: "WHY ORBITLINK EXISTS",
     text:
-      "Orbitlink was created around a simple belief: business connectivity should feel calm, exact, and professionally governed. Instead of noise, we prioritize clarity. Instead of overclaiming, we prioritize evidence. Instead of a mass-market telecom experience, we design for disciplined delivery and long-term confidence.",
+      "Orbitlink was created around a simple idea: business connectivity should be easier to understand, easier to buy, and easier to trust. Too often, telecom feels noisy, vague, or overly sales-driven. Orbitlink is being built to feel clearer, calmer, and more professionally structured from the first interaction onward.",
   },
   {
-    label: "THE POSTURE",
+    label: "HOW WE OPERATE",
     text:
-      "Our posture is operator-minded from the beginning. That means structured onboarding, measured statements, clean escalation paths, and a visible bias toward reliability. We communicate conservatively, validate before we publish, and treat infrastructure as a trust surface — not just a product category.",
+      "We focus on clear qualification, structured onboarding, measured language, and cleaner delivery expectations. Instead of making broad claims, we confirm fit, scope, and readiness before moving forward. The goal is a better business experience, not just a louder brand.",
   },
   {
-    label: "THE DIRECTION",
+    label: "WHERE WE ARE GOING",
     text:
-      "Orbitlink is being shaped to serve modern enterprise and business environments across Ontario with premium fibre, managed network infrastructure, and compliance-aware operations. The ambition is not to look large for the sake of appearance — it is to build something durable, credible, and respected.",
+      "Orbitlink is being shaped to support business fibre, dedicated internet, managed networks, voice, continuity, and broader infrastructure requirements across Ontario. The ambition is to build a durable, credible connectivity company that earns trust over time.",
   },
 ] as const;
 
 const PRINCIPLES = [
   {
-    title: "Calm over noise",
+    title: "Clear over confusing",
     desc:
-      "We avoid exaggerated language and unstable promises. The brand is designed to signal confidence through restraint, not volume.",
+      "We want buyers to understand what they are getting, what fits their site, and what happens next without unnecessary complexity.",
   },
   {
-    title: "Reliability over theatrics",
+    title: "Structured over improvised",
     desc:
-      "The real product is dependable execution: controlled change, disciplined support, and a service posture built for continuity.",
+      "We believe onboarding, delivery, escalation, and communication should feel organized from the beginning.",
   },
   {
-    title: "Evidence over assumption",
+    title: "Measured over exaggerated",
     desc:
-      "Status, performance posture, and operational claims are expressed conservatively and updated when milestones are actually confirmed.",
+      "We avoid overclaiming. Service posture, rollout, and operational statements are expressed conservatively and refined as they become verifiable.",
   },
   {
-    title: "Long-term trust over short-term hype",
+    title: "Trust over short-term hype",
     desc:
-      "Every page, module, and delivery motion is designed to support durable credibility with clients, partners, and future regulators.",
+      "The brand is being built for long-term credibility with business clients, partners, and future regulatory or infrastructure stakeholders.",
   },
 ] as const;
 
 const FOUNDATIONS = [
   {
     eyebrow: "BRAND FOUNDATION",
-    title: "Built to feel institutional from day one",
+    title: "Built to feel serious from day one",
     body:
-      "Orbitlink is designed with the visual restraint and operating discipline of a serious infrastructure company: dark control-surface aesthetics, precise language, structured disclosure, and premium spacing that communicates authority without excess.",
+      "Orbitlink is designed to look and read like a disciplined infrastructure company. The visual language is restrained, the copy is deliberate, and the service structure is meant to feel stable and credible.",
   },
   {
     eyebrow: "DELIVERY MODEL",
-    title: "Structured onboarding, documented delivery",
+    title: "Structured intake and cleaner execution",
     body:
-      "We introduce service through controlled intake, scoped evaluation, and measured rollout. The goal is a cleaner client experience, fewer surprises, and better alignment between promise and execution.",
+      "We introduce services through qualification, address review, scope definition, and measured rollout. The objective is fewer surprises, cleaner alignment, and a more professional client experience.",
   },
   {
     eyebrow: "CLIENT EXPERIENCE",
-    title: "Enterprise-minded, even when engagement starts small",
+    title: "Business-first, even at early stages",
     body:
-      "Whether the requirement is business fibre, managed infrastructure, or a broader connectivity posture, the experience is intended to feel deliberate, premium, and professionally governed from first contact onward.",
+      "Whether a request starts with one site or a broader infrastructure need, the experience is intended to feel premium, clear, and professionally handled from first contact onward.",
   },
 ] as const;
+
+const BUSINESS_OUTCOMES = [
+  {
+    title: "Easier to understand",
+    body:
+      "The company story is presented in buyer language, not internal jargon or vague brand language.",
+  },
+  {
+    title: "More credible first impression",
+    body:
+      "The page is designed to make Orbitlink feel more established, more selective, and more operationally serious.",
+  },
+  {
+    title: "Better alignment with enterprise buyers",
+    body:
+      "The positioning supports buyers who expect structure, discipline, and commercial clarity before they evaluate services.",
+  },
+  {
+    title: "Stronger long-term trust signal",
+    body:
+      "The page reinforces that Orbitlink is being built as a durable business platform, not a short-term marketing surface.",
+  },
+] as const;
+
+function SectionShell({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <section className={`rounded-3xl border border-white/10 bg-white/[0.045] ${className}`}>
+      {children}
+    </section>
+  );
+}
+
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/55">{children}</div>;
+}
+
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
+      <div className="mt-1 text-sm text-white/80">{value}</div>
+    </div>
+  );
+}
 
 export default function AboutPage() {
   const schemaGraph = {
@@ -157,15 +213,15 @@ export default function AboutPage() {
   return (
     <PageShell
       eyebrow="ABOUT"
-      title="A disciplined connectivity brand for modern enterprise environments"
-      subtitle="Orbitlink is built around a calm operator posture — reliability-first, evidence-led, and structured for long-term trust across Ontario."
+      title="A business connectivity brand built for clarity and long-term trust"
+      subtitle="Orbitlink is designed for organizations that want cleaner communication, structured delivery, and a more disciplined business connectivity experience across Ontario."
     >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
       />
 
-      <section className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
+      <SectionShell className="relative overflow-hidden p-6 sm:p-8 lg:p-10">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-16 top-0 h-44 w-44 rounded-full bg-blue-500/10 blur-3xl" />
           <div className="absolute right-0 top-8 h-44 w-44 rounded-full bg-emerald-500/10 blur-3xl" />
@@ -173,17 +229,15 @@ export default function AboutPage() {
         </div>
 
         <div className="relative">
-          <div className="text-[11px] tracking-[0.28em] text-white/55">
-            BRAND STORY
-          </div>
+          <SectionEyebrow>BRAND STORY</SectionEyebrow>
           <h2 className="mt-3 max-w-4xl text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-            Built to make connectivity feel precise, governed, and quietly premium
+            Built to make business connectivity feel clearer, calmer, and more professionally run
           </h2>
           <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-            Orbitlink is not positioned as a loud telecom brand. It is being built
-            as a modern infrastructure surface — measured in tone, intentional in
-            design, and disciplined in delivery. The objective is a business
-            connectivity experience that feels stable before a single circuit is ever discussed.
+            Orbitlink is not being built as a loud mass-market telecom brand. It is being built as
+            a modern business connectivity platform with a cleaner operating style: clear
+            qualification, measured communication, structured onboarding, and a visible bias toward
+            long-term trust.
           </p>
 
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3 sm:gap-5">
@@ -192,48 +246,68 @@ export default function AboutPage() {
                 key={block.label}
                 className="rounded-3xl border border-white/10 bg-black/20 p-6"
               >
-                <div className="text-[11px] tracking-[0.26em] text-white/50">
-                  {block.label}
-                </div>
-                <p className="mt-4 text-sm leading-6 text-white/70">
-                  {block.text}
-                </p>
+                <div className="text-[11px] tracking-[0.26em] text-white/50">{block.label}</div>
+                <p className="mt-4 text-sm leading-6 text-white/70">{block.text}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
 
-      <section className="mt-4 sm:mt-5 grid grid-cols-1 gap-4 lg:grid-cols-3 sm:gap-5">
-        {FOUNDATIONS.map((item) => (
-          <div
-            key={item.title}
-            className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7"
-          >
-            <div className="text-[11px] tracking-[0.28em] text-white/55">
-              {item.eyebrow}
-            </div>
-            <h3 className="mt-3 text-lg font-semibold text-white sm:text-xl">
-              {item.title}
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-white/66 sm:text-[15px]">
-              {item.body}
-            </p>
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+            <MetricPill label="POSITIONING" value="Business-first connectivity brand" />
+            <MetricPill label="OPERATING STYLE" value="Structured and measured" />
+            <MetricPill label="LONG-TERM AIM" value="Durable enterprise trust" />
           </div>
+        </div>
+      </SectionShell>
+
+      <section className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3 sm:mt-5 sm:gap-5">
+        {FOUNDATIONS.map((item) => (
+          <SectionShell key={item.title} className="p-6 sm:p-7">
+            <SectionEyebrow>{item.eyebrow}</SectionEyebrow>
+            <h3 className="mt-3 text-lg font-semibold text-white sm:text-xl">{item.title}</h3>
+            <p className="mt-3 text-sm leading-6 text-white/66 sm:text-[15px]">{item.body}</p>
+          </SectionShell>
         ))}
       </section>
 
-      <section className="mt-4 sm:mt-5 rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
-        <div className="text-[11px] tracking-[0.28em] text-white/55">
-          OPERATING PRINCIPLES
+      <SectionShell className="mt-4 p-6 sm:mt-5 sm:p-7">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>BUSINESS OUTCOMES</SectionEyebrow>
+            <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
+              What this brand posture is meant to signal
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
+              The objective is not to sound abstract or overly polished. The objective is to help
+              buyers, partners, and stakeholders quickly understand that Orbitlink is being built
+              with discipline, commercial clarity, and long-term seriousness.
+            </p>
+          </div>
+
+          <MetricPill label="MODE" value="Clear and buyer-readable" />
         </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4 sm:gap-4">
+          {BUSINESS_OUTCOMES.map((item) => (
+            <div
+              key={item.title}
+              className="rounded-2xl border border-white/10 bg-black/20 p-5"
+            >
+              <div className="text-sm font-medium text-white/90">{item.title}</div>
+              <p className="mt-2 text-sm leading-6 text-white/65">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </SectionShell>
+
+      <SectionShell className="mt-4 p-6 sm:mt-5 sm:p-7">
+        <SectionEyebrow>OPERATING PRINCIPLES</SectionEyebrow>
         <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
           The standard behind the brand
         </h2>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-          Orbitlink is designed to feel composed because the operating model behind
-          it is meant to be composed. The goal is not short-term attention. The
-          goal is professional trust that compounds over time.
+          Orbitlink is designed to feel composed because the operating model behind it is meant to
+          be composed. The goal is professional trust that becomes stronger over time.
         </p>
 
         <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 sm:gap-4">
@@ -242,39 +316,56 @@ export default function AboutPage() {
               key={principle.title}
               className="rounded-2xl border border-white/10 bg-black/20 p-5"
             >
-              <div className="text-sm font-medium text-white/90">
-                {principle.title}
-              </div>
-              <p className="mt-2 text-sm leading-6 text-white/65">
-                {principle.desc}
-              </p>
+              <div className="text-sm font-medium text-white/90">{principle.title}</div>
+              <p className="mt-2 text-sm leading-6 text-white/65">{principle.desc}</p>
             </div>
           ))}
         </div>
+      </SectionShell>
+
+      <section className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2 sm:mt-5 sm:gap-5">
+        <SectionShell className="p-6 sm:p-7">
+          <SectionEyebrow>WHAT ORBITLINK IS</SectionEyebrow>
+          <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
+            A business connectivity and infrastructure platform
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
+            Orbitlink is being shaped to support business fibre, dedicated internet, managed LAN
+            and Wi-Fi, voice, continuity, IoT uplinks, static routing, and broader infrastructure
+            coordination. The common thread is a cleaner, more disciplined client experience.
+          </p>
+        </SectionShell>
+
+        <SectionShell className="p-6 sm:p-7">
+          <SectionEyebrow>WHAT ORBITLINK IS NOT</SectionEyebrow>
+          <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
+            Not a hype-first telecom brand
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
+            The brand is intentionally restrained. It is not built around exaggerated marketing,
+            blanket claims, or noisy service language. It is being built to feel stable,
+            understandable, and commercially credible.
+          </p>
+        </SectionShell>
       </section>
 
-      <section className="mt-4 sm:mt-5 rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
+      <section className="mt-4 rounded-3xl border border-white/10 bg-black/25 p-6 sm:mt-5 sm:p-7">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">
-              CORPORATE DISCLOSURE
-            </div>
+            <SectionEyebrow>CORPORATE DISCLOSURE</SectionEyebrow>
             <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
               Brand, governance, and public posture
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
-              Orbitlink is a brand of{" "}
-              <span className="text-white/88">TIRAV Technologies Inc.</span> Public
-              service posture, onboarding windows, and operational statements are
-              expressed conservatively and updated as regulatory, technical, and
-              delivery milestones complete.
+              Orbitlink is a brand of <span className="text-white/88">TIRAV Technologies Inc.</span>{" "}
+              Public service posture, onboarding windows, and operational statements are expressed
+              conservatively and updated as regulatory, technical, and delivery milestones are
+              confirmed.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3">
-            <div className="text-[11px] tracking-[0.22em] text-white/55">
-              DISCLOSURE STANDARD
-            </div>
+            <div className="text-[11px] tracking-[0.22em] text-white/55">DISCLOSURE STANDARD</div>
             <div className="mt-1 text-sm text-white/80">
               No overclaiming • Controlled rollout
             </div>
@@ -297,10 +388,10 @@ export default function AboutPage() {
             View Network Posture
           </a>
           <a
-            href="/coming-soon"
+            href="/contact#intake"
             className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
           >
-            Request Access
+            Contact Orbitlink
           </a>
         </div>
       </section>
