@@ -5,7 +5,8 @@ import Script from "next/script";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
-const SITE_DESC = "Audit-Ready Connectivity for Modern Operators";
+const SITE_DESC =
+  "Business fibre, dedicated internet access, managed network infrastructure, and audit-ready connectivity for organizations across Ontario.";
 const GA_MEASUREMENT_ID = "G-1VWDS0BMLY";
 
 export const viewport: Viewport = {
@@ -26,6 +27,18 @@ export const metadata: Metadata = {
   category: "Telecommunications",
   creator: SITE_NAME,
   publisher: SITE_NAME,
+  keywords: [
+    "business fibre Ontario",
+    "business internet Ontario",
+    "dedicated internet access Ontario",
+    "managed network services Ontario",
+    "business telecom provider Ontario",
+    "Mississauga business fibre",
+    "enterprise connectivity Ontario",
+    "audit-ready connectivity",
+    "managed Wi-Fi Ontario",
+    "business VoIP Ontario",
+  ],
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -50,14 +63,25 @@ export const metadata: Metadata = {
     type: "website",
     url: `${SITE_URL}/`,
     siteName: SITE_NAME,
-    title: SITE_NAME,
-    description: SITE_DESC,
+    title: "Orbitlink",
+    description:
+      "Business fibre, dedicated internet access, managed network infrastructure, and audit-ready connectivity for organizations across Ontario.",
     locale: "en_CA",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink — Business Fibre & Network Infrastructure",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE_NAME,
-    description: SITE_DESC,
+    title: "Orbitlink",
+    description:
+      "Business fibre, dedicated internet access, managed network infrastructure, and audit-ready connectivity across Ontario.",
+    images: [`${SITE_URL}/opengraph-image`],
   },
   verification: {
     other: {
@@ -71,9 +95,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   const isDev = process.env.NODE_ENV !== "production";
 
   const orgJsonLd = {
@@ -84,6 +108,8 @@ export default function RootLayout({
     url: `${SITE_URL}/`,
     logo: `${SITE_URL}/icon.png`,
     image: `${SITE_URL}/opengraph-image`,
+    description:
+      "Business fibre, dedicated internet access, managed network infrastructure, and audit-ready connectivity for organizations across Ontario.",
     brand: {
       "@type": "Brand",
       name: SITE_NAME,
@@ -98,17 +124,18 @@ export default function RootLayout({
       {
         "@type": "ContactPoint",
         contactType: "sales",
+        telephone: "+18888672480",
         email: "sales@orbitlink.ca",
         availableLanguage: ["en"],
-        areaServed: "CA",
+        areaServed: "CA-ON",
       },
       {
         "@type": "ContactPoint",
         contactType: "customer support",
         telephone: "+18888672480",
-        email: "concierge@orbitlink.ca",
+        email: "support@orbitlink.ca",
         availableLanguage: ["en"],
-        areaServed: "CA",
+        areaServed: "CA-ON",
       },
     ],
     address: {
@@ -123,6 +150,7 @@ export default function RootLayout({
       "@type": "AdministrativeArea",
       name: "Ontario, Canada",
     },
+    sameAs: [],
   };
 
   const websiteJsonLd = {
@@ -131,10 +159,53 @@ export default function RootLayout({
     "@id": `${SITE_URL}/#website`,
     name: SITE_NAME,
     url: `${SITE_URL}/`,
+    description: SITE_DESC,
     publisher: {
       "@id": `${SITE_URL}/#org`,
     },
     inLanguage: "en-CA",
+  };
+
+  const localBusinessJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "InternetServiceProvider",
+    "@id": `${SITE_URL}/#isp`,
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+    image: `${SITE_URL}/opengraph-image`,
+    telephone: "+18888672480",
+    email: "concierge@orbitlink.ca",
+    priceRange: "$$",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "30 Eglinton Ave W, Suite 400-A77",
+      addressLocality: "Mississauga",
+      addressRegion: "ON",
+      postalCode: "L5R 3E7",
+      addressCountry: "CA",
+    },
+    areaServed: [
+      {
+        "@type": "AdministrativeArea",
+        name: "Ontario, Canada",
+      },
+      {
+        "@type": "City",
+        name: "Mississauga",
+      },
+    ],
+    provider: {
+      "@id": `${SITE_URL}/#org`,
+    },
+    knowsAbout: [
+      "Business Fibre",
+      "Dedicated Internet Access",
+      "Managed Network Infrastructure",
+      "Managed Wi-Fi",
+      "Business Connectivity",
+      "VoIP",
+      "Continuity Connectivity",
+    ],
   };
 
   return (
@@ -147,6 +218,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
 
         <Script
