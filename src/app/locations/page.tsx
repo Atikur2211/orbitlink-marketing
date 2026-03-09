@@ -30,14 +30,14 @@ const BUSINESS = {
 };
 
 export const metadata: Metadata = {
-  title: "Service Areas in Ontario | Business Internet Locations | Orbitlink™",
+  title: "Ontario Business Internet Locations | Orbitlink",
   description:
-    "Explore Orbitlink service areas across Ontario for business fibre internet, dedicated internet access, managed network infrastructure, and availability by building.",
+    "Browse Orbitlink business internet service areas across Ontario. Explore city pages for business fibre internet, dedicated internet access, managed Wi-Fi, and availability by building.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Service Areas in Ontario | Orbitlink™ Locations",
+    title: "Ontario Business Internet Locations | Orbitlink",
     description:
-      "Business internet across Ontario. Browse city pages, check availability by building, and request service through a structured onboarding process.",
+      "Explore Orbitlink service areas across Ontario. Browse city pages, check availability by building, and request business internet service.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -47,15 +47,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink Ontario Service Areas",
+        alt: "Orbitlink Ontario business internet locations",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Service Areas in Ontario | Orbitlink™ Locations",
+    title: "Ontario Business Internet Locations | Orbitlink",
     description:
-      "Explore Orbitlink service areas across Ontario for business fibre, dedicated internet, and managed network delivery.",
+      "Browse Orbitlink service areas across Ontario for business fibre internet, dedicated internet, managed Wi-Fi, and network services.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -72,44 +72,44 @@ const GTA_CORE: readonly LocationCard[] = [
   {
     name: "Mississauga",
     href: "/locations/mississauga",
-    subtitle: "Business fibre and managed networking in select buildings and commercial corridors.",
-    tags: ["High ROI", "SMB + offices", "On-net where available"],
-    posture: "Primary commercial launch market",
+    subtitle: "Business fibre internet and managed network service in select commercial buildings and corridors.",
+    tags: ["Business fibre", "Commercial buildings", "High-priority market"],
+    posture: "Primary launch market",
   },
   {
     name: "Brampton",
     href: "/locations/brampton",
-    subtitle: "Industrial and SMB demand with strong local commercial intent and structured qualification.",
-    tags: ["High ROI", "Industrial corridors", "Availability by site"],
-    posture: "Industrial and logistics-fit market",
+    subtitle: "Business internet and network service for industrial, logistics, and SMB environments.",
+    tags: ["Industrial sites", "SMB demand", "Availability by address"],
+    posture: "Industrial growth market",
   },
   {
     name: "Toronto",
     href: "/locations/toronto",
-    subtitle: "Dense office market where delivery posture, uptime expectations, and escalation clarity matter.",
-    tags: ["Office density", "DIA-ready", "Enterprise posture"],
-    posture: "Enterprise-led market",
+    subtitle: "Business connectivity for office, commercial, and uptime-sensitive environments.",
+    tags: ["Office market", "DIA-ready", "Enterprise fit"],
+    posture: "Enterprise market",
   },
   {
     name: "Markham",
     href: "/locations/markham",
-    subtitle: "B2B office demand with uptime-sensitive business environments and managed network needs.",
-    tags: ["B2B", "Managed LAN/Wi-Fi", "Static IP options"],
-    posture: "Technology and office-fit market",
+    subtitle: "Business internet and managed networking for office and technology-led environments.",
+    tags: ["Managed Wi-Fi", "Office sites", "Static IP options"],
+    posture: "Technology market",
   },
   {
     name: "Vaughan",
     href: "/locations/vaughan",
-    subtitle: "Commercial and industrial mix with multi-site connectivity requirements and continuity demand.",
-    tags: ["Commercial", "Multi-site", "Continuity options"],
-    posture: "Multi-site buyer market",
+    subtitle: "Connectivity for commercial and industrial sites with multi-location and continuity needs.",
+    tags: ["Commercial", "Multi-site", "Backup options"],
+    posture: "Multi-site market",
   },
   {
     name: "Oakville",
     href: "/locations/oakville",
-    subtitle: "Premium SMB and professional-services footprint with service-quality expectations.",
-    tags: ["Premium", "Professional services", "Operator-grade"],
-    posture: "Premium commercial market",
+    subtitle: "Business internet and managed network service for premium SMB and professional-service environments.",
+    tags: ["Premium SMB", "Professional services", "Business-grade"],
+    posture: "Premium market",
   },
 ];
 
@@ -117,78 +117,78 @@ const GTA_EXTENDED: readonly LocationCard[] = [
   {
     name: "Milton",
     href: "/locations/milton",
-    subtitle: "Industrial growth with feasibility determined by building infrastructure and service path.",
-    tags: ["Industrial growth", "Feasibility-first", "Structured onboarding"],
+    subtitle: "Business internet for growing industrial and commercial sites, reviewed by address.",
+    tags: ["Industrial growth", "Address review", "Expansion"],
     posture: "Expansion market",
   },
   {
     name: "Etobicoke",
     href: "/locations/etobicoke",
-    subtitle: "Business connectivity for office and light industrial environments with address-based qualification.",
-    tags: ["Local intent", "Managed networking", "Availability by building"],
-    posture: "Commercial expansion market",
+    subtitle: "Business connectivity for office and light industrial environments with building-based availability review.",
+    tags: ["Commercial", "Managed networking", "Building review"],
+    posture: "Commercial market",
   },
   {
     name: "Scarborough",
     href: "/locations/scarborough",
-    subtitle: "Broad SMB footprint with strong local discovery behavior and building-by-building review.",
-    tags: ["Near me", "SMB", "Feasibility-first"],
-    posture: "Discovery-led market",
+    subtitle: "Business internet and managed connectivity for broad SMB demand across local commercial areas.",
+    tags: ["SMB", "Local demand", "Availability by address"],
+    posture: "Discovery market",
   },
   {
     name: "Hamilton",
     href: "/locations/hamilton",
-    subtitle: "Broad regional demand with clear need for service scoping and documented delivery expectations.",
-    tags: ["Big volume", "Broad intent", "Documented delivery"],
-    posture: "Regional demand market",
+    subtitle: "Regional business demand supported by structured service review and documented delivery.",
+    tags: ["Regional market", "Business demand", "Structured onboarding"],
+    posture: "Regional market",
   },
   {
     name: "Ottawa",
     href: "/locations/ottawa",
-    subtitle: "Professional-services and business-critical demand with uptime expectations and enterprise evaluation.",
-    tags: ["Professional services", "DIA-ready", "Support posture"],
-    posture: "Strategic expansion market",
+    subtitle: "Business connectivity for professional and uptime-sensitive environments with enterprise expectations.",
+    tags: ["Professional services", "Enterprise fit", "DIA-ready"],
+    posture: "Strategic market",
   },
 ];
 
 const FAQ = [
   {
     q: "Do you service every address in these cities?",
-    a: "No. Orbitlink availability is confirmed per building and depends on infrastructure, access feasibility, and upstream serviceability. Coverage is not assumed universally across a city.",
+    a: "No. Orbitlink confirms availability per building and address. Service depends on infrastructure, access feasibility, and upstream availability.",
   },
   {
-    q: "What should I submit for an availability check?",
-    a: "Submit your service address, preferred service such as Business Fibre or DIA, any static IP needs, and whether you need managed LAN/Wi-Fi or LTE/5G continuity.",
+    q: "What should I include in an availability request?",
+    a: "Include your service address, the service you need, your timeline, and any requirements such as static IPs, managed Wi-Fi, voice, or backup connectivity.",
   },
   {
     q: "Do you offer residential internet?",
-    a: "Orbitlink is focused primarily on business connectivity and managed network delivery. If you have a mixed-use requirement, submit your details and Orbitlink will advise what is feasible.",
+    a: "Orbitlink is focused mainly on business internet and managed network services. If you have a mixed-use requirement, submit your details for review.",
   },
   {
-    q: "How fast can you install?",
-    a: "Timelines depend on building readiness, access type, landlord coordination, and upstream serviceability. Orbitlink uses structured onboarding and documented acceptance so expectations are defined before activation.",
+    q: "How long does installation take?",
+    a: "Installation timing depends on building readiness, access type, landlord coordination, and serviceability. Availability and expectations are reviewed before activation.",
   },
 ] as const;
 
 const serviceModules = [
   {
     t: "Business Fibre Internet",
-    d: "Strong commercial value with disciplined onboarding and clean service activation.",
+    d: "Primary internet for business sites that want high-quality connectivity and a cleaner buying experience.",
     href: "/services/business-fibre-internet",
   },
   {
-    t: "Dedicated Internet Access (DIA)",
-    d: "Deterministic performance posture for critical sites and uptime-sensitive operations.",
+    t: "Dedicated Internet Access",
+    d: "Dedicated connectivity for critical sites that need stronger performance expectations and cleaner escalation.",
     href: "/services/dedicated-internet-access",
   },
   {
-    t: "Managed LAN & Enterprise Wi-Fi",
-    d: "Segmentation, visibility, and support aligned to modern business environments.",
+    t: "Managed Wi-Fi & LAN",
+    d: "Managed internal network support for businesses that need better Wi-Fi, segmentation, and easier day-to-day operations.",
     href: "/services/managed-lan-wifi",
   },
   {
-    t: "LTE / 5G Continuity",
-    d: "Continuity architecture for sites that require resilience during access disruption.",
+    t: "LTE / 5G Backup Connectivity",
+    d: "Backup connectivity for businesses that want stronger resilience during outages or primary access disruption.",
     href: "/services/lte-5g-continuity",
   },
 ] as const;
@@ -196,42 +196,42 @@ const serviceModules = [
 const premiumSignals = [
   {
     t: "Availability by building",
-    d: "Feasibility is confirmed per address before activation, not assumed by city name alone.",
+    d: "Service is reviewed per address instead of assumed across an entire city.",
   },
   {
-    t: "Business-first posture",
-    d: "Structured onboarding and documented delivery designed for commercial environments.",
+    t: "Business-first service model",
+    d: "The buying path is built for business internet, managed networking, and operational needs.",
   },
   {
-    t: "Service clarity",
-    d: "Business Fibre, DIA, managed networking, and continuity are aligned to operational need.",
+    t: "Clear service matching",
+    d: "Business fibre, dedicated internet, managed Wi-Fi, and backup are matched to real business requirements.",
   },
   {
     t: "Ontario-focused execution",
-    d: "Priority city hubs designed for local discovery, service matching, and conversion.",
+    d: "Priority city pages support local search intent and move buyers into qualified availability review.",
   },
 ] as const;
 
 const buyerJourney = [
   {
-    step: "01",
-    title: "Choose the market",
-    desc: "Start with the city that matches your building, expansion target, or local buying intent.",
+    step: "1",
+    title: "Choose your city",
+    desc: "Start with the city that matches your building, business location, or expansion target.",
   },
   {
-    step: "02",
+    step: "2",
     title: "Choose the service",
-    desc: "Match the requirement to business fibre, dedicated internet, managed networking, or continuity.",
+    desc: "Select business fibre, dedicated internet, managed Wi-Fi, or backup based on the site need.",
   },
   {
-    step: "03",
-    title: "Confirm feasibility",
-    desc: "Orbitlink reviews address-level serviceability, building conditions, and commercial fit before commitment.",
+    step: "3",
+    title: "Check availability",
+    desc: "Orbitlink reviews serviceability by address and building before moving forward.",
   },
   {
-    step: "04",
-    title: "Move into onboarding",
-    desc: "Qualified requests move into a structured intake path with clear expectations and documented delivery.",
+    step: "4",
+    title: "Move into intake",
+    desc: "Qualified requests move into a clear intake and onboarding path.",
   },
 ] as const;
 
@@ -321,7 +321,7 @@ function MetricPill({
 
 function LocationCardView({ item }: { item: LocationCard }) {
   return (
-    <div className="group rounded-[28px] border border-white/10 bg-white/[0.035] p-5 transition hover:border-white/20 hover:bg-white/[0.05] sm:p-6 md:p-7">
+    <div className="group rounded-[28px] border border-white/10 bg-white/[0.035] p-5 transition hover:border-white/20 hover:bg-white/[0.05] sm:p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <div className="text-[11px] tracking-[0.22em] text-white/45">
@@ -335,7 +335,7 @@ function LocationCardView({ item }: { item: LocationCard }) {
           href={item.href}
           className="inline-flex shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium text-white/85 transition hover:bg-white/10"
         >
-          View
+          View city
         </Link>
       </div>
 
@@ -385,43 +385,42 @@ export default function LocationsHubPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
-      <section className="relative overflow-hidden border-b border-white/10">
+      <section className="relative border-b border-white/10">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -top-24 left-8 h-72 w-72 rounded-full bg-blue-500/12 blur-3xl" />
           <div className="absolute right-8 top-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
           <div className="absolute bottom-[-140px] left-1/2 h-80 w-[56rem] max-w-[140vw] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_34%)]" />
-          <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] [background-size:72px_72px]" />
+          <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-14 sm:px-7 sm:pb-14 sm:pt-20">
+        <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-14 sm:px-7 sm:pb-16 sm:pt-20 lg:pb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
             <span className="h-2 w-2 rounded-full bg-[#FACC15]" />
             <span className="text-sm tracking-wide text-white/65">
-              Ontario business service areas • address-qualified delivery
+              Ontario business internet locations
             </span>
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="lg:col-span-8">
               <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.02]">
-                Orbitlink locations across Ontario
+                Business internet locations across Ontario
               </h1>
 
               <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/70 sm:text-lg">
-                Browse city pages and move from local discovery to real qualification. Orbitlink
-                aligns business fibre, dedicated internet access, managed network infrastructure,
-                and continuity options to commercial requirements, with availability confirmed per
-                building instead of assumed across an entire city.
+                Browse Orbitlink city pages for business fibre internet, dedicated internet access,
+                managed Wi-Fi, and backup connectivity. Availability is reviewed by building and
+                address, not assumed across an entire city.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {[
-                  "Ontario service footprint",
-                  "Business-first posture",
                   "Availability by building",
+                  "Business-first service model",
+                  "Ontario city pages",
                   "Structured onboarding",
-                  "Documented delivery",
+                  "Check availability",
                 ].map((x) => (
                   <span
                     key={x}
@@ -437,13 +436,7 @@ export default function LocationsHubPage() {
                   href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
-                  Check Availability
-                </Link>
-                <Link
-                  href="/locations/ontario"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Ontario Coverage Hub
+                  Check Availability & Request Pricing
                 </Link>
                 <Link
                   href="/services"
@@ -451,24 +444,30 @@ export default function LocationsHubPage() {
                 >
                   Explore Services
                 </Link>
+                <Link
+                  href="/locations/ontario"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+                >
+                  Ontario Coverage
+                </Link>
               </div>
 
               <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <MetricPill label="BUYER FIT" value="Ontario business locations" />
-                <MetricPill label="SERVICE MODEL" value="Address-first qualification" />
-                <MetricPill label="DELIVERY STYLE" value="Clear and structured" />
+                <MetricPill label="BEST FOR" value="Ontario business locations" />
+                <MetricPill label="SERVICE MODEL" value="Address-based qualification" />
+                <MetricPill label="NEXT STEP" value="Check availability and request pricing" />
               </div>
             </div>
 
             <div className="lg:col-span-4">
               <div className="rounded-[30px] border border-white/10 bg-white/[0.045] p-6">
-                <SectionEyebrow>BUYING JOURNEY</SectionEyebrow>
+                <SectionEyebrow>HOW IT WORKS</SectionEyebrow>
                 <h2 className="mt-3 text-lg font-semibold text-white">
-                  Local discovery, then clean onboarding
+                  Start local, then move into a clear request
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/65">
-                  This hub is designed to shorten the path from city-level search intent to a
-                  serviceability-led business conversation.
+                  This page is built to help buyers move from city-level search into building-level
+                  availability review and a clearer service conversation.
                 </p>
 
                 <div className="mt-5 grid gap-3">
@@ -487,18 +486,17 @@ export default function LocationsHubPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 py-10 sm:px-7">
+      <section className="mx-auto max-w-6xl px-5 py-10 sm:px-7 sm:py-12">
         <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6 md:p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <SectionEyebrow>DISCOVERY POSTURE</SectionEyebrow>
+              <SectionEyebrow>WHY THIS PAGE HELPS</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight">
-                Built as the authority layer for city discovery
+                Built for local discovery and easier qualification
               </h2>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-                This page acts as the premium directory layer for Ontario city pages, province-level
-                discovery, and conversion into availability review. City pages handle local intent.
-                Service pages handle buying intent. Intake handles real qualification.
+                City pages support local search intent. Service pages explain the offer. The contact
+                path turns that interest into a real availability and pricing review.
               </p>
             </div>
 
@@ -523,21 +521,20 @@ export default function LocationsHubPage() {
         <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6 md:p-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <SectionEyebrow>PRIORITY MARKETS</SectionEyebrow>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight">GTA core markets</h2>
+              <SectionEyebrow>PRIORITY CITIES</SectionEyebrow>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight">Core Ontario markets</h2>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-                These are high-priority commercial markets where business fibre, dedicated internet,
-                and managed network posture convert fastest. Each page is positioned to support
-                local search, address-level inquiry, and structured onboarding.
+                Start with the main markets where Orbitlink is focused on commercial demand,
+                address-based service review, and structured onboarding.
               </p>
             </div>
 
             <div className="hidden items-center gap-2 text-sm text-white/60 md:flex">
               <span className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1.5">
-                Feasibility-first
+                Business-first
               </span>
               <span className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1.5">
-                Operator-grade
+                Availability by address
               </span>
             </div>
           </div>
@@ -552,12 +549,11 @@ export default function LocationsHubPage() {
 
       <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7">
         <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6 md:p-8">
-          <SectionEyebrow>EXPANDED MARKETS</SectionEyebrow>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight">Extended Ontario discovery</h2>
+          <SectionEyebrow>EXPANDED COVERAGE</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">Additional Ontario markets</h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-            These pages support broader commercial demand, regional service discovery, and
-            expansion conversations. Orbitlink confirms serviceability per address and avoids
-            blanket coverage claims.
+            These city pages support broader Ontario demand and expansion conversations, with
+            serviceability reviewed by address and building.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -565,56 +561,54 @@ export default function LocationsHubPage() {
               <LocationCardView key={item.href} item={item} />
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="mt-8 rounded-[28px] border border-white/10 bg-white/[0.04] p-6">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-              <div className="max-w-3xl">
-                <SectionEyebrow>SERVICE MATCHING</SectionEyebrow>
-                <h3 className="mt-3 text-xl font-semibold tracking-tight">
-                  Choose the right service path
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
-                  Location pages create local relevance. Service pages capture actual buying
-                  intent. Choose the delivery model that matches the site, uptime requirement, and
-                  operational expectation.
-                </p>
-              </div>
-
-              <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-                <div className="text-[11px] tracking-[0.22em] text-white/45">COMMERCIAL MODE</div>
-                <div className="mt-1 text-sm text-white/80">
-                  Market discovery • Service match • Qualification
-                </div>
-              </div>
+      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7">
+        <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6 md:p-8">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <SectionEyebrow>SERVICE MATCHING</SectionEyebrow>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+                Choose the service that matches the site
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
+                Once you know the city, the next step is to match the location to the right service
+                path based on uptime, site needs, and operating requirements.
+              </p>
             </div>
 
-            <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
-              {serviceModules.map((x) => (
-                <Link
-                  key={x.href}
-                  href={x.href}
-                  className="rounded-3xl border border-white/10 bg-white/[0.035] p-5 transition hover:bg-white/[0.06]"
-                >
-                  <div className="text-sm font-semibold text-white/90">{x.t}</div>
-                  <div className="mt-2 text-sm leading-6 text-white/70">{x.d}</div>
-                  <div className="mt-4 text-xs text-white/55">Open service →</div>
-                </Link>
-              ))}
+            <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+              <div className="text-[11px] tracking-[0.22em] text-white/45">COMMERCIAL MODE</div>
+              <div className="mt-1 text-sm text-white/80">
+                Location • Service match • Qualification
+              </div>
             </div>
+          </div>
+
+          <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
+            {serviceModules.map((x) => (
+              <Link
+                key={x.href}
+                href={x.href}
+                className="rounded-3xl border border-white/10 bg-white/[0.035] p-5 transition hover:bg-white/[0.06]"
+              >
+                <div className="text-sm font-semibold text-white/90">{x.t}</div>
+                <div className="mt-2 text-sm leading-6 text-white/70">{x.d}</div>
+                <div className="mt-4 text-xs text-white/55">Open service →</div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7">
         <div className="rounded-[30px] border border-white/10 bg-black/20 p-6 md:p-8">
-          <SectionEyebrow>AUTHORITY SIGNALS</SectionEyebrow>
-          <h2 className="mt-3 text-xl font-semibold tracking-tight">
-            Hub authority and trust posture
-          </h2>
+          <SectionEyebrow>BUSINESS DETAILS</SectionEyebrow>
+          <h2 className="mt-3 text-xl font-semibold tracking-tight">Orbitlink Ontario presence</h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-            Orbitlink’s business presence is anchored in Mississauga and focused on Ontario
-            business connectivity. This page acts as the city-directory authority layer, while
-            province and city pages strengthen local relevance and capture real commercial demand.
+            Orbitlink’s business presence is anchored in Mississauga and focused on Ontario business
+            internet, dedicated connectivity, managed networking, and structured onboarding.
           </p>
 
           <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
@@ -637,7 +631,7 @@ export default function LocationsHubPage() {
           <SectionEyebrow>FAQ</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight">Locations FAQs</h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-            Quick answers that help move from search to availability review without confusion.
+            Quick answers for buyers checking business internet availability across Ontario.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -654,19 +648,19 @@ export default function LocationsHubPage() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Check Availability
+              Check Availability & Request Pricing
             </Link>
             <Link
               href="/trust"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
             >
-              Trust & Delivery Posture
+              View Trust & Compliance
             </Link>
             <Link
               href="/network"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
             >
-              Network
+              View Network
             </Link>
           </div>
         </div>
