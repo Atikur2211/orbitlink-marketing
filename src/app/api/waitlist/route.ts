@@ -3,19 +3,15 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { Resend } from "resend";
 
-/**
- * ORBITLINK — INTAKE / WAITLIST (Golden-grade, production-safe)
- * - runtime=nodejs
- * - INTAKE_STORE_LOCAL=true  => write to local waitlist.json (dev only)
- * - INTAKE_STORE_LOCAL=false => no fs writes (Vercel-safe), email still sends
- * - Safe redirects (no open redirect)
- * - Dedupe + spam-guard + optional rate limit
- */
 export const runtime = "nodejs";
 
-// ---------------- types
+type Intent =
+  | "early-access"
+  | "verification-pack"
+  | "onboarding"
+  | "availability_pricing"
+  | "sales";
 
-type Intent = "early-access" | "verification-pack" | "onboarding";
 type Source = "coming-soon" | "trust" | "solutions" | "contact" | "other";
 
 export type Submission = {
@@ -39,7 +35,8 @@ export type Submission = {
 
   location?: string;
   module?: string;
-  volume?: string;
+  sites?: string;
+  timeline?: string;
   notes?: string;
 
   userAgent?: string;
@@ -53,8 +50,6 @@ export type Submission = {
 
 type Store = { value: Submission[]; Count: number };
 
-// ---------------- env
-
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 const INTAKE_STORE_LOCAL =
@@ -64,8 +59,6 @@ const WAITLIST_FILE = process.env.WAITLIST_FILE || "waitlist.json";
 const LOCK_FILE = process.env.WAITLIST_LOCK_FILE || "waitlist.lock";
 
 const RATE_LIMIT_MIN = clampInt(process.env.INTAKE_RATE_LIMIT_MINUTES, 10, 0, 120);
-
-// ---------------- helpers
 
 function clampInt(v: string | undefined, fallback: number, min: number, max: number) {
   const n = Number(v);
@@ -87,6 +80,8 @@ function normalizeIntent(v: string): Intent | undefined {
   if (x === "early-access") return "early-access";
   if (x === "verification-pack") return "verification-pack";
   if (x === "onboarding") return "onboarding";
+  if (x === "availability_pricing") return "availability_pricing";
+  if (x === "sales") return "sales";
   return undefined;
 }
 
@@ -123,7 +118,57 @@ function escapeHtml(s: string) {
     .replaceAll("'", "&#039;");
 }
 
-// ---------------- local store (only if INTAKE_STORE_LOCAL=true)
+function formatIntentLabel(intent?: Intent) {
+  switch (intent) {
+    case "availability_pricing":
+      return "Availability & Pricing";
+    case "sales":
+      return "Sales";
+    case "onboarding":
+      return "Onboarding";
+    case "verification-pack":
+      return "Verification Pack";
+    case "early-access":
+      return "Early Access";
+    default:
+      return "N/A";
+  }
+}
+
+function formatScopeLabel(sites?: string) {
+  switch (sites) {
+    case "1":
+      return "1 site";
+    case "2_5":
+      return "2–5 sites";
+    case "6_20":
+      return "6–20 sites";
+    case "20_plus":
+      return "20+ sites";
+    default:
+      return sites || "N/A";
+  }
+}
+
+function formatTimelineLabel(timeline?: string) {
+  switch (timeline) {
+    case "asap":
+      return "As soon as possible";
+    case "within_30_days":
+    case "30_days":
+      return "Within 30 days";
+    case "within_60_90_days":
+    case "60_90_days":
+      return "Within 60–90 days";
+    case "planning_stage":
+    case "planning":
+      return "Planning stage";
+    case "not_sure":
+      return "Not sure yet";
+    default:
+      return timeline || "N/A";
+  }
+}
 
 async function readStoreLocal(filePath: string): Promise<Store> {
   const fs = await import("fs/promises");
@@ -179,53 +224,64 @@ async function withFileLockLocal<T>(lockPath: string, fn: () => Promise<T>) {
   }
 }
 
-// ---------------- ops notify (email)
-
 async function notifyOps(sub: Submission, isUpdate: boolean) {
   if (!resend) return;
 
   const to = process.env.INTAKE_TO_EMAIL || "concierge@orbitlink.ca";
   const from = process.env.INTAKE_FROM_EMAIL || "Orbitlink <onboarding@resend.dev>";
 
+  const companyOrEmail = sub.company || sub.email;
+  const moduleOrFallback = sub.module || "General enquiry";
+
   const subject = isUpdate
-    ? `Orbitlink Intake (Update) — ${sub.company || sub.email}`
-    : `Orbitlink Intake — ${sub.company || sub.email}`;
+    ? `Orbitlink Lead Update — ${companyOrEmail} — ${moduleOrFallback}`
+    : `Orbitlink New Lead — ${companyOrEmail} — ${moduleOrFallback}`;
 
   const when = sub.createdAt || sub.ts || new Date().toISOString();
 
   const text = [
-    "Orbitlink Intake Submission",
+    isUpdate ? "Orbitlink Lead Update" : "Orbitlink New Lead",
     "—",
-    `Email: ${sub.email}`,
     `Name: ${sub.fullName || "N/A"}`,
+    `Email: ${sub.email}`,
     `Company: ${sub.company || "N/A"}`,
     `Role: ${sub.role || "N/A"}`,
-    `Location: ${sub.location || "N/A"}`,
-    `Module: ${sub.module || "N/A"}`,
+    `Service Address: ${sub.location || "N/A"}`,
+    `Service Needed: ${sub.module || "N/A"}`,
+    `Timeline: ${formatTimelineLabel(sub.timeline)}`,
+    `Number of Sites: ${formatScopeLabel(sub.sites)}`,
     `Source: ${sub.lastSource || sub.source || "N/A"}`,
-    `Intent: ${sub.lastIntent || sub.intent || "N/A"}`,
+    `Intent: ${formatIntentLabel(sub.lastIntent || sub.intent)}`,
     `When: ${when}`,
     "",
-    "Notes:",
+    "Project Details:",
     sub.notes || "(none)",
   ].join("\n");
 
   const html = `
-    <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; line-height:1.5;">
-      <h2 style="margin:0 0 12px;">Orbitlink Intake ${isUpdate ? "(Update)" : ""}</h2>
+    <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; line-height:1.5; color:#111;">
+      <h2 style="margin:0 0 12px;">${escapeHtml(
+        isUpdate ? "Orbitlink Lead Update" : "Orbitlink New Lead"
+      )}</h2>
+
       <table style="border-collapse:collapse;">
-        <tr><td style="padding:6px 10px;color:#666;">Email</td><td style="padding:6px 10px;">${escapeHtml(sub.email)}</td></tr>
         <tr><td style="padding:6px 10px;color:#666;">Name</td><td style="padding:6px 10px;">${escapeHtml(sub.fullName || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Email</td><td style="padding:6px 10px;">${escapeHtml(sub.email)}</td></tr>
         <tr><td style="padding:6px 10px;color:#666;">Company</td><td style="padding:6px 10px;">${escapeHtml(sub.company || "N/A")}</td></tr>
         <tr><td style="padding:6px 10px;color:#666;">Role</td><td style="padding:6px 10px;">${escapeHtml(sub.role || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Location</td><td style="padding:6px 10px;">${escapeHtml(sub.location || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Module</td><td style="padding:6px 10px;">${escapeHtml(sub.module || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Service Address</td><td style="padding:6px 10px;">${escapeHtml(sub.location || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Service Needed</td><td style="padding:6px 10px;">${escapeHtml(sub.module || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Timeline</td><td style="padding:6px 10px;">${escapeHtml(formatTimelineLabel(sub.timeline))}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Number of Sites</td><td style="padding:6px 10px;">${escapeHtml(formatScopeLabel(sub.sites))}</td></tr>
         <tr><td style="padding:6px 10px;color:#666;">Source</td><td style="padding:6px 10px;">${escapeHtml(sub.lastSource || sub.source || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Intent</td><td style="padding:6px 10px;">${escapeHtml(sub.lastIntent || sub.intent || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Intent</td><td style="padding:6px 10px;">${escapeHtml(formatIntentLabel(sub.lastIntent || sub.intent))}</td></tr>
         <tr><td style="padding:6px 10px;color:#666;">When</td><td style="padding:6px 10px;">${escapeHtml(when)}</td></tr>
       </table>
-      <h3 style="margin:18px 0 8px;">Notes</h3>
-      <div style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:10px;">${escapeHtml(sub.notes || "(none)")}</div>
+
+      <h3 style="margin:18px 0 8px;">Project Details</h3>
+      <div style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:10px;">${escapeHtml(
+        sub.notes || "(none)"
+      )}</div>
     </div>
   `;
 
@@ -238,8 +294,6 @@ async function notifyOps(sub: Submission, isUpdate: boolean) {
     replyTo: sub.email,
   });
 }
-
-// ---------------- main
 
 export async function POST(req: Request) {
   const headers = new Headers(req.headers);
@@ -268,18 +322,16 @@ export async function POST(req: Request) {
     }
 
     const source = normalizeSource(clean(form.get("source") || "contact", 80));
-    const intent = normalizeIntent(clean(form.get("intent") || "onboarding", 80));
+    const intent = normalizeIntent(clean(form.get("intent") || "availability_pricing", 80));
 
     const fullName = clean(form.get("fullName"), 120) || undefined;
     const company = clean(form.get("company"), 160) || undefined;
     const role = clean(form.get("role"), 80) || undefined;
-    const location = clean(form.get("location"), 120) || undefined;
-
-    // ✅ LINT-SAFE: never use local variable name `module`
+    const location = clean(form.get("location"), 180) || undefined;
     const moduleName = clean(form.get("module"), 120) || undefined;
-
-    const volume = clean(form.get("volume"), 120) || undefined;
-    const notes = clean(form.get("notes"), 800) || undefined;
+    const timeline = clean(form.get("timeline"), 80) || undefined;
+    const sites = clean(form.get("sites"), 80) || undefined;
+    const notes = clean(form.get("notes"), 1200) || undefined;
 
     const now = new Date().toISOString();
 
@@ -296,13 +348,13 @@ export async function POST(req: Request) {
       role,
       location,
       module: moduleName,
-      volume,
+      timeline,
+      sites,
       notes,
       userAgent: userAgent || undefined,
       ip: ip || undefined,
     };
 
-    // PROD SAFE: no filesystem writes
     if (!INTAKE_STORE_LOCAL) {
       notifySub = { ...draft, lastNotifiedAt: now };
       notifyIsUpdate = false;
@@ -316,7 +368,6 @@ export async function POST(req: Request) {
       return NextResponse.redirect(buildRedirect(req.url, returnTo, { ok: "1" }), 303);
     }
 
-    // DEV/LOCAL STORE PATH
     const { default: pathMod } = await import("path");
     const filePath = pathMod.join(process.cwd(), WAITLIST_FILE);
     const lockPath = pathMod.join(process.cwd(), LOCK_FILE);
@@ -368,15 +419,14 @@ export async function POST(req: Request) {
           intent: prev.intent || intent,
           lastSource: source,
           lastIntent: intent,
-
           fullName: fullName ?? prev.fullName,
           company: company ?? prev.company,
           role: role ?? prev.role,
           location: location ?? prev.location,
           module: moduleName ?? prev.module,
-          volume: volume ?? prev.volume,
+          timeline: timeline ?? prev.timeline,
+          sites: sites ?? prev.sites,
           notes: notes ?? prev.notes,
-
           userAgent: prev.userAgent || userAgent || undefined,
           ip: prev.ip || ip || undefined,
         };

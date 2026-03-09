@@ -36,8 +36,8 @@ export default function WaitlistBanner() {
       return {
         tone: "ok" as const,
         eyebrow: "REQUEST RECEIVED",
-        title: "You’re on the early access list.",
-        body: "We’ll notify you when the next intake window opens. No marketing noise.",
+        title: "Thanks — your request has been submitted.",
+        body: "We’ll review your address, service needs, and timeline, then reply with the clearest next step available.",
       };
     }
 
@@ -46,26 +46,26 @@ export default function WaitlistBanner() {
     if (err === "invalid") {
       return {
         tone: "warn" as const,
-        eyebrow: "CHECK EMAIL",
-        title: "That address doesn’t look valid.",
-        body: "Please enter a real email and try again.",
+        eyebrow: "CHECK YOUR EMAIL",
+        title: "That email address doesn’t look valid.",
+        body: "Please enter a valid email address and submit the form again.",
       };
     }
 
     if (err === "blocked") {
       return {
         tone: "warn" as const,
-        eyebrow: "UNAVAILABLE",
-        title: "That request couldn’t be accepted.",
-        body: "If you think this is a mistake, email concierge@orbitlink.ca.",
+        eyebrow: "REQUEST NOT ACCEPTED",
+        title: "We couldn’t accept that request.",
+        body: "Please review your details and try again, or email concierge@orbitlink.ca.",
       };
     }
 
     return {
       tone: "warn" as const,
       eyebrow: "TRY AGAIN",
-      title: "We couldn’t process the request.",
-      body: "Please retry in a moment, or email concierge@orbitlink.ca.",
+      title: "We couldn’t process your request.",
+      body: "Please try again in a moment, or email concierge@orbitlink.ca for help.",
     };
   }, [ok, err]);
 
@@ -86,27 +86,23 @@ export default function WaitlistBanner() {
         <div className="min-w-0">
           <div className="flex items-center gap-2">
             <Dot tone={state.tone} />
-            <div className="text-[11px] tracking-[0.28em] opacity-90">
-              {state.eyebrow}
-            </div>
+            <div className="text-[11px] tracking-[0.28em] opacity-90">{state.eyebrow}</div>
           </div>
 
-          <div className="mt-2 text-sm sm:text-[15px] font-medium text-white">
+          <div className="mt-2 text-sm font-medium text-white sm:text-[15px]">
             {state.title}
           </div>
 
-          <div className="mt-2 text-sm leading-6 text-white/75">
-            {state.body}
-          </div>
+          <div className="mt-2 text-sm leading-6 text-white/75">{state.body}</div>
         </div>
 
         <button
           type="button"
           onClick={onClear}
-          className="shrink-0 rounded-2xl border px-3 py-2 text-xs transition border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
+          className="shrink-0 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/80 transition hover:bg-white/10"
           aria-label="Dismiss message"
         >
-          {isOk ? "Dismiss" : "Try again"}
+          {isOk ? "Dismiss" : "Close"}
         </button>
       </div>
     </div>
