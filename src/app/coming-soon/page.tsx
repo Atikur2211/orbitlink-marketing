@@ -1,6 +1,6 @@
 // src/app/coming-soon/page.tsx
 import PageShell from "@/components/PageShell";
-import WaitlistBanner from "@/components/WaitlistBanner";
+import IntakeStatusBanner from "@/components/IntakeStatusBanner";
 import { MODULE_SPECS } from "@/lib/siteStatus";
 import { Suspense } from "react";
 
@@ -82,7 +82,7 @@ export default function ComingSoonPage() {
           {/* Banner */}
           <div className="mt-5">
             <Suspense fallback={null}>
-              <WaitlistBanner />
+              <IntakeStatusBanner />
             </Suspense>
           </div>
 

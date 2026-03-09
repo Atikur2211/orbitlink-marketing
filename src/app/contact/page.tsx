@@ -1,7 +1,7 @@
 // src/app/contact/page.tsx
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
-import WaitlistBanner from "@/components/WaitlistBanner";
+import IntakeStatusBanner from "@/components/IntakeStatusBanner";
 import { MODULE_SPECS } from "@/lib/siteStatus";
 import { Suspense } from "react";
 import ContactIntakeForm from "@/components/ContactIntakeForm";
@@ -425,7 +425,7 @@ export default function ContactPage() {
 
           <div className="mt-5">
             <Suspense fallback={null}>
-              <WaitlistBanner />
+              <IntakeStatusBanner />
             </Suspense>
           </div>
 
