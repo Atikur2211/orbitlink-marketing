@@ -321,9 +321,9 @@ function MetricPill({
 
 function LocationCardView({ item }: { item: LocationCard }) {
   return (
-    <div className="group rounded-[30px] border border-white/10 bg-white/[0.035] p-6 transition hover:border-white/20 hover:bg-white/[0.05] md:p-7">
-      <div className="flex items-start justify-between gap-4">
-        <div>
+    <div className="group rounded-[28px] border border-white/10 bg-white/[0.035] p-5 transition hover:border-white/20 hover:bg-white/[0.05] sm:p-6 md:p-7">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
           <div className="text-[11px] tracking-[0.22em] text-white/45">
             {item.posture.toUpperCase()}
           </div>
@@ -333,7 +333,7 @@ function LocationCardView({ item }: { item: LocationCard }) {
 
         <Link
           href={item.href}
-          className="inline-flex shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/85 transition hover:bg-white/10"
+          className="inline-flex shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium text-white/85 transition hover:bg-white/10"
         >
           View
         </Link>
@@ -379,22 +379,22 @@ function JourneyCard({
 
 export default function LocationsHubPage() {
   return (
-    <main className="min-h-screen text-white">
+    <main className="min-h-screen overflow-x-hidden bg-[#09090B] text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
       <section className="relative overflow-hidden border-b border-white/10">
-        <div className="pointer-events-none absolute inset-0">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -top-24 left-8 h-72 w-72 rounded-full bg-blue-500/12 blur-3xl" />
           <div className="absolute right-8 top-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
-          <div className="absolute bottom-[-140px] left-1/2 h-80 w-[56rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
+          <div className="absolute bottom-[-140px] left-1/2 h-80 w-[56rem] max-w-[140vw] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_34%)]" />
           <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-6 pb-12 pt-16 sm:pb-14 sm:pt-20">
+        <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-14 sm:px-7 sm:pb-14 sm:pt-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
             <span className="h-2 w-2 rounded-full bg-[#FACC15]" />
             <span className="text-sm tracking-wide text-white/65">
@@ -487,7 +487,7 @@ export default function LocationsHubPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-10">
+      <section className="mx-auto max-w-6xl px-5 py-10 sm:px-7">
         <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6 md:p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
@@ -519,9 +519,9 @@ export default function LocationsHubPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-10">
+      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7">
         <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6 md:p-8">
-          <div className="flex items-end justify-between gap-4">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <SectionEyebrow>PRIORITY MARKETS</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight">GTA core markets</h2>
@@ -550,7 +550,7 @@ export default function LocationsHubPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-10">
+      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7">
         <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6 md:p-8">
           <SectionEyebrow>EXPANDED MARKETS</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight">Extended Ontario discovery</h2>
@@ -605,7 +605,7 @@ export default function LocationsHubPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-10">
+      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7">
         <div className="rounded-[30px] border border-white/10 bg-black/20 p-6 md:p-8">
           <SectionEyebrow>AUTHORITY SIGNALS</SectionEyebrow>
           <h2 className="mt-3 text-xl font-semibold tracking-tight">
@@ -632,7 +632,7 @@ export default function LocationsHubPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-16">
+      <section className="mx-auto max-w-6xl px-5 pb-16 sm:px-7">
         <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6 md:p-8">
           <SectionEyebrow>FAQ</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight">Locations FAQs</h2>
