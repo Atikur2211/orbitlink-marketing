@@ -284,7 +284,9 @@ export default function ContactPage() {
 
           <div className="lg:col-span-4">
             <div className="rounded-3xl border border-white/10 bg-black/25 p-6">
-              <div className="text-[11px] tracking-[0.22em] text-white/55">HOW TO GET THE BEST RESPONSE</div>
+              <div className="text-[11px] tracking-[0.22em] text-white/55">
+                HOW TO GET THE BEST RESPONSE
+              </div>
               <div className="mt-3 text-lg font-semibold text-white">
                 Send one complete request
               </div>
@@ -411,7 +413,7 @@ export default function ContactPage() {
             <div>
               <div className="text-[11px] tracking-[0.22em] text-white/55">REQUEST FORM</div>
               <h2 className="mt-3 text-base font-medium text-white/90 sm:text-lg">
-                Send a business request
+                Check availability and request review
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">
                 Keep it simple. Tell us what service you need, where the site is, and what matters

@@ -10,6 +10,7 @@ function Card({
   badge,
   bullets,
   children,
+  cta = "View module",
 }: {
   title: string;
   desc: string;
@@ -18,6 +19,7 @@ function Card({
   badge: string;
   bullets: string[];
   children: React.ReactNode;
+  cta?: string;
 }) {
   const glow =
     accent === "blue"
@@ -45,7 +47,7 @@ function Card({
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/60 transition group-hover:border-white/20 group-hover:bg-white/10 group-hover:text-white/78">
-            View
+            {cta}
           </div>
         </div>
 
@@ -170,6 +172,21 @@ function BuyerStep({
   );
 }
 
+function FitStrip({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/65">{body}</p>
+    </div>
+  );
+}
+
 export default function BentoServices() {
   return (
     <section className="mx-auto max-w-6xl px-5 py-12 sm:px-7 sm:py-14 lg:py-16">
@@ -189,7 +206,9 @@ export default function BentoServices() {
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/50">BUYER MODE</div>
-            <div className="mt-1 text-sm text-white/80">Choose module • confirm fit • move forward</div>
+            <div className="mt-1 text-sm text-white/80">
+              Choose module • confirm fit • move forward
+            </div>
           </div>
         </div>
 
@@ -201,6 +220,7 @@ export default function BentoServices() {
             href="/services/business-fibre-internet"
             badge="CONNECTIVITY"
             bullets={["Business Fibre", "Dedicated Internet", "Ontario business sites"]}
+            cta="Best starting point"
           >
             <FiberPulse />
           </Card>
@@ -212,6 +232,7 @@ export default function BentoServices() {
             href="/services/voip-cloud-voice"
             badge="COMMUNICATIONS"
             bullets={["Cloud Voice", "Number Porting", "Business Call Routing"]}
+            cta="View voice"
           >
             <Waveform647 />
           </Card>
@@ -223,6 +244,7 @@ export default function BentoServices() {
             href="/services/iot-connectivity"
             badge="CONNECTED SYSTEMS"
             bullets={["IoT Uplinks", "Segmentation", "Monitoring-ready"]}
+            cta="View smart"
           >
             <SmartGrid />
           </Card>
@@ -234,9 +256,50 @@ export default function BentoServices() {
             href="/trust"
             badge="TRUST LAYER"
             bullets={["Trust Surface", "Verification Path", "Controlled Disclosure"]}
+            cta="Review trust"
           >
             <ShieldSeal />
           </Card>
+        </div>
+      </div>
+
+      <div className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-5 sm:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <div className="text-[11px] tracking-[0.28em] text-white/55">BEST FIT</div>
+            <h3 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Which buyers usually start with which module
+            </h3>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              This service surface works best when buyers can quickly identify where they fit. Start
+              with the module that matches the main business requirement, then add other layers as
+              the scope becomes clearer.
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/50">OUTCOME</div>
+            <div className="mt-1 text-sm text-white/80">Faster selection • Better alignment</div>
+          </div>
+        </div>
+
+        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <FitStrip
+            title="Offices and commercial sites"
+            body="Usually start with AUREX Internet for business fibre or dedicated access."
+          />
+          <FitStrip
+            title="Front desk and team communications"
+            body="Usually start with AUREX Voice for cloud calling, routing, and number porting."
+          />
+          <FitStrip
+            title="Sensors, gateways, and devices"
+            body="Usually start with AUREX Smart for IoT uplinks, segmentation, and monitoring."
+          />
+          <FitStrip
+            title="Buyers who need stronger assurance"
+            body="Usually start with TIRAV Horizon or the Trust surface for governance and review posture."
+          />
         </div>
       </div>
 
@@ -276,6 +339,21 @@ export default function BentoServices() {
             title="Move into structured intake"
             desc="Use the contact path to submit one clear request tied to the service, address, timeline, and site needs."
           />
+        </div>
+
+        <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+          <Link
+            href="/contact#intake"
+            className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
+          >
+            Check availability
+          </Link>
+          <Link
+            href="/services"
+            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
+          >
+            Browse all services
+          </Link>
         </div>
       </div>
     </section>

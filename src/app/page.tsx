@@ -162,6 +162,42 @@ function OutcomeCard({
   );
 }
 
+function FitCard({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/65">{body}</p>
+    </div>
+  );
+}
+
+function StartingPointCard({
+  title,
+  body,
+  href,
+}: {
+  title: string;
+  body: string;
+  href: string;
+}) {
+  return (
+    <a
+      href={href}
+      className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/20 hover:bg-white/[0.05]"
+    >
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/65">{body}</p>
+      <div className="mt-4 text-xs text-white/55">Open path →</div>
+    </a>
+  );
+}
+
 export default function Home() {
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -307,8 +343,8 @@ export default function Home() {
             </p>
 
             <div className="mt-6 text-xs tracking-wide text-white/50 sm:text-sm">
-              Ontario business connectivity • Structured onboarding • Controlled rollout •
-              Enterprise-minded delivery
+              Ontario business connectivity • Structured onboarding • Commercially disciplined
+              delivery
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
@@ -316,7 +352,7 @@ export default function Home() {
                 href="/contact#intake"
                 className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Send a Request
+                Check Availability
               </a>
               <a
                 href="/services"
@@ -352,9 +388,55 @@ export default function Home() {
           </div>
 
           <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <MetricPill label="BEST FOR" value="Ontario business sites and multi-site environments" />
-            <MetricPill label="OPERATING STYLE" value="Clear, structured, and commercially disciplined" />
-            <MetricPill label="BUYER SIGNAL" value="More premium than a generic telecom experience" />
+            <MetricPill
+              label="BEST FOR"
+              value="Ontario business sites and multi-site environments"
+            />
+            <MetricPill
+              label="OPERATING STYLE"
+              value="Clear, structured, and commercially disciplined"
+            />
+            <MetricPill
+              label="BUYER SIGNAL"
+              value="More premium than a generic telecom experience"
+            />
+          </div>
+
+          <div className="mt-10 rounded-[30px] border border-white/10 bg-white/[0.045] p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <div className="text-[11px] tracking-[0.28em] text-white/55">WHO THIS IS FOR</div>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
+                  A better fit for organizations that need more than generic internet
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                  Orbitlink is designed for businesses that want cleaner installs, better service
+                  coordination, clearer escalation, and a more professional provider experience
+                  from the start.
+                </p>
+              </div>
+
+              <MetricPill label="BUYER TYPE" value="Operational and decision-ready" />
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <FitCard
+                title="Professional offices"
+                body="Good fit for firms that need stable internet, clean onboarding, and a business-ready support experience."
+              />
+              <FitCard
+                title="Clinics and service businesses"
+                body="Good fit where uptime, voice, guest Wi-Fi, and better coordination matter to daily operations."
+              />
+              <FitCard
+                title="Warehouses and industrial sites"
+                body="Good fit for connectivity, managed networking, continuity design, and multi-location operations."
+              />
+              <FitCard
+                title="Growing multi-site teams"
+                body="Good fit for businesses that need a provider with clearer process, stronger structure, and room to scale."
+              />
+            </div>
           </div>
 
           <div className="mx-auto mt-12 h-px max-w-6xl bg-gradient-to-r from-transparent via-white/20 to-transparent" />
@@ -366,14 +448,16 @@ export default function Home() {
         <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">WHY BUYERS STAY LONGER HERE</div>
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                WHY BUYERS STAY LONGER HERE
+              </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
                 A cleaner buying path than most telecom websites
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Most provider websites make buyers hunt for relevance. Orbitlink is being built to
-                do the opposite: clarify the service, explain the fit, show the posture, and make
-                the next step obvious.
+                Most provider websites make buyers hunt for relevance. Orbitlink is built to do the
+                opposite: clarify the service, explain fit, show next steps, and reduce friction
+                before the first conversation even begins.
               </p>
             </div>
 
@@ -389,7 +473,7 @@ export default function Home() {
             <BuyerStep
               step="2"
               title="Confirm fit and scope"
-              desc="Match the request to the address, building context, timeline, and any technical requirements that matter operationally."
+              desc="Match the request to the address, building context, timeline, and technical requirements that matter operationally."
             />
             <BuyerStep
               step="3"
@@ -404,14 +488,64 @@ export default function Home() {
         <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">BUSINESS OUTCOMES</div>
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                MOST BUYERS START HERE
+              </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                What Orbitlink is designed to signal from the homepage
+                Pick the path that matches the business need
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                The homepage should not just look premium. It should communicate that Orbitlink is
-                easier to understand, more disciplined in delivery, and more serious about trust
-                than the average provider surface.
+                The fastest way to buy through the site is to start with the operational priority,
+                not the brand story. Choose the service that best matches what the site actually
+                needs today.
+              </p>
+            </div>
+
+            <MetricPill label="OUTCOME" value="Faster selection • Better fit" />
+          </div>
+
+          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
+            <StartingPointCard
+              title="Need strong business internet"
+              body="Start with Business Fibre for offices, service businesses, and general commercial sites."
+              href="/services/business-fibre-internet"
+            />
+            <StartingPointCard
+              title="Need critical-site reliability"
+              body="Start with Dedicated Internet Access for more deterministic delivery posture."
+              href="/services/dedicated-internet-access"
+            />
+            <StartingPointCard
+              title="Need better Wi-Fi and LAN"
+              body="Start with Managed LAN & Enterprise Wi-Fi for segmentation, coverage, and cleaner support."
+              href="/services/managed-lan-wifi"
+            />
+            <StartingPointCard
+              title="Need backup and continuity"
+              body="Start with LTE / 5G Continuity for disruption planning and resilience."
+              href="/services/lte-5g-continuity"
+            />
+            <StartingPointCard
+              title="Need calling and front desk flow"
+              body="Start with VoIP & Cloud Voice for business routing, porting, and call handling."
+              href="/services/voip-cloud-voice"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
+        <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-white/55">BUSINESS OUTCOMES</div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                What Orbitlink is designed to improve for buyers
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                The site should not only look premium. It should help buyers understand how
+                Orbitlink reduces operational friction, improves clarity, and creates a more
+                professional path from inquiry to go-live.
               </p>
             </div>
 
@@ -420,20 +554,20 @@ export default function Home() {
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
             <OutcomeCard
-              title="Clearer than mass-market telecom"
-              body="The message is direct: what Orbitlink does, who it serves, and why the experience is different."
+              title="Cleaner installs"
+              body="Address-aware qualification and better service matching reduce surprises before activation."
             />
             <OutcomeCard
-              title="More structured for enterprise buyers"
-              body="The homepage frames the business around service fit, onboarding clarity, and trust posture rather than generic promotional language."
+              title="Better escalation"
+              body="The buying surface signals clearer ownership, more structured updates, and a better support posture."
             />
             <OutcomeCard
-              title="More credible for serious review"
-              body="Trust, compliance, disclosure, and business process are visible early, which increases confidence with better buyers."
+              title="Less provider friction"
+              body="The site is built to reduce confusion around fit, scope, onboarding, and next step."
             />
             <OutcomeCard
-              title="Stronger path to action"
-              body="The next step is simple and commercial: explore services, review trust posture, or send a real business request."
+              title="Stronger trust from day one"
+              body="Trust, compliance, disclosure, and review posture are visible early, which increases buyer confidence."
             />
           </div>
         </div>

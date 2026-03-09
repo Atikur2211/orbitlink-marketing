@@ -176,10 +176,10 @@ function HeroCommandPanel() {
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a
-                href="/coming-soon?intent=access&source=network_hero"
+                href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Request Availability
+                Check Availability
               </a>
               <a
                 href="/trust"
@@ -798,13 +798,13 @@ function CoverageAndCTA() {
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <a
-              href="/coming-soon?intent=access&source=network"
+              href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Request Availability
+              Check Availability
             </a>
             <a
-              href="/solutions"
+              href="/services"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
             >
               View Services

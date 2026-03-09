@@ -16,7 +16,7 @@ const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 export const metadata: Metadata = {
   title: "Trust & Compliance · Orbitlink",
   description:
-    "Business trust and compliance review for Ontario organizations. Clear disclosure, structured onboarding, evidence-friendly operations, and a disciplined delivery posture for serious buyers and reviewers.",
+    "Business trust and compliance review for Ontario organizations. Clear disclosure, structured onboarding, evidence-friendly operations, and disciplined delivery for serious buyers, property stakeholders, auditors, and regulated environments.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Trust & Compliance · Orbitlink",
@@ -77,6 +77,33 @@ function tonePillClass(tone: "ok" | "inprogress" | "info") {
   return "border-blue-400/20 bg-blue-500/10 text-blue-200";
 }
 
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/55">{children}</div>;
+}
+
+function Pill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70">
+      {children}
+    </span>
+  );
+}
+
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/55">{label}</div>
+      <div className="mt-1 text-sm text-white/80">{value}</div>
+    </div>
+  );
+}
+
 function StatusTile({
   label,
   value,
@@ -111,8 +138,8 @@ function StatusTile({
       <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       <p className="mt-4 text-sm leading-6 text-white/64">
-        Public trust statements stay conservative and update only when the underlying milestone is
-        complete, reviewable, and appropriate for disclosure.
+        Public trust statements stay conservative and update only when the milestone is complete,
+        reviewable, and appropriate for disclosure.
       </p>
     </div>
   );
@@ -145,29 +172,6 @@ function EvidenceCard({
   );
 }
 
-function Pill({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70">
-      {children}
-    </span>
-  );
-}
-
-function TrustPrinciple({
-  title,
-  desc,
-}: {
-  title: string;
-  desc: string;
-}) {
-  return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/15 hover:bg-black/25">
-      <div className="text-sm font-medium text-white/90">{title}</div>
-      <p className="mt-2 text-sm leading-6 text-white/65">{desc}</p>
-    </div>
-  );
-}
-
 function ReviewStep({
   step,
   title,
@@ -190,6 +194,21 @@ function ReviewStep({
   );
 }
 
+function TrustPrinciple({
+  title,
+  desc,
+}: {
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/15 hover:bg-black/25">
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/65">{desc}</p>
+    </div>
+  );
+}
+
 function ModuleChip({
   name,
   tagline,
@@ -205,17 +224,17 @@ function ModuleChip({
   );
 }
 
-function MetricPill({
-  label,
-  value,
+function BuyerFitCard({
+  title,
+  text,
 }: {
-  label: string;
-  value: string;
+  title: string;
+  text: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-      <div className="text-[11px] tracking-[0.22em] text-white/55">{label}</div>
-      <div className="mt-1 text-sm text-white/80">{value}</div>
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/65">{text}</p>
     </div>
   );
 }
@@ -444,6 +463,47 @@ export default function TrustPage() {
         ))}
       </section>
 
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>WHY THIS PAGE EXISTS</SectionEyebrow>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Serious buyers do not just evaluate service. They evaluate judgment.
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              This page is designed to answer the questions better buyers always ask, even when
+              they do not ask them out loud: Can this provider communicate clearly? Can it control
+              scope? Can it separate live from planned? Can it support diligence without making
+              reckless public claims?
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">BUYER SIGNAL</div>
+            <div className="mt-1 text-sm text-white/80">Professional judgment is visible</div>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <BuyerFitCard
+            title="Enterprise buyers"
+            text="Need clarity before procurement, not generic promises."
+          />
+          <BuyerFitCard
+            title="Property stakeholders"
+            text="Need cleaner delivery language, fewer surprises, and better operating discipline."
+          />
+          <BuyerFitCard
+            title="IT and network leads"
+            text="Need statements that make technical sense and do not overclaim what is not yet proven."
+          />
+          <BuyerFitCard
+            title="Auditors and reviewers"
+            text="Need a provider surface that can be read, checked, and understood quickly."
+          />
+        </div>
+      </section>
+
       <section className="mt-4 rounded-[32px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="min-w-0 max-w-4xl">
@@ -572,7 +632,7 @@ export default function TrustPage() {
       <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">OPERATIONAL DISCLOSURE</div>
+            <SectionEyebrow>OPERATIONAL DISCLOSURE</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
               Built for enterprise expectation and reviewer confidence
             </h2>
@@ -604,7 +664,7 @@ export default function TrustPage() {
       <section className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">REVIEW FLOW</div>
+            <SectionEyebrow>REVIEW FLOW</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
               A cleaner path from first diligence to controlled onboarding
             </h2>
@@ -648,9 +708,7 @@ export default function TrustPage() {
       <section className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">
-              SCOPE-LOCKED COMMITMENTS
-            </div>
+            <SectionEyebrow>SCOPE-LOCKED COMMITMENTS</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
               Serious buyers do not purchase features first — they purchase clarity
             </h2>
@@ -695,10 +753,50 @@ export default function TrustPage() {
         </div>
       </section>
 
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>PROCUREMENT CONFIDENCE</SectionEyebrow>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Built to reduce buyer hesitation before the commercial conversation
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              A strong trust page does not replace service pages. It removes doubt around the
+              provider itself. This section exists to help buyers feel that the business behind the
+              service is deliberate, governed, and easier to work with over time.
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">COMMERCIAL IMPACT</div>
+            <div className="mt-1 text-sm text-white/80">Higher trust • lower friction</div>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <BuyerFitCard
+            title="Fewer credibility questions"
+            text="The page answers the trust questions that normally slow down early-stage deals."
+          />
+          <BuyerFitCard
+            title="Cleaner property discussions"
+            text="Building and operations stakeholders can understand the posture without reading technical internals."
+          />
+          <BuyerFitCard
+            title="Better enterprise fit"
+            text="Buyers see a provider that can separate claims, scope, and review process more professionally."
+          />
+          <BuyerFitCard
+            title="Stronger close conditions"
+            text="Clearer disclosure and controlled commitments support smoother commercial next steps."
+          />
+        </div>
+      </section>
+
       <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">MODULE REVIEW CONTEXT</div>
+            <SectionEyebrow>MODULE REVIEW CONTEXT</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
               Review posture varies by service surface
             </h2>
@@ -723,7 +821,7 @@ export default function TrustPage() {
       </section>
 
       <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7 lg:p-8">
-        <div className="text-[11px] tracking-[0.28em] text-white/55">GOVERNANCE PRINCIPLES</div>
+        <SectionEyebrow>GOVERNANCE PRINCIPLES</SectionEyebrow>
         <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
           The discipline behind the brand surface
         </h2>
@@ -754,7 +852,7 @@ export default function TrustPage() {
       </section>
 
       <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7">
-        <div className="text-[11px] tracking-[0.28em] text-white/55">ASSURANCE</div>
+        <SectionEyebrow>ASSURANCE</SectionEyebrow>
         <div className="mt-3 max-w-4xl text-sm leading-6 text-white/70 sm:text-[15px]">
           {TRUST_ASSURANCE}
         </div>
@@ -763,7 +861,7 @@ export default function TrustPage() {
       <section className="mt-4 rounded-[32px] border border-white/10 bg-black/40 p-6 sm:mt-6 sm:p-7 lg:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">CORPORATE DISCLOSURE</div>
+            <SectionEyebrow>CORPORATE DISCLOSURE</SectionEyebrow>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
               Orbitlink is a brand of TIRAV Technologies Inc. Services are introduced through
               controlled onboarding, governed by applicable Canadian requirements, and described in

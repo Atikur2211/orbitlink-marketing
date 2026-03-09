@@ -11,6 +11,8 @@ const NAV = [
   { name: "Locations", href: "/locations" },
   { name: "Solutions", href: "/solutions" },
   { name: "Trust", href: "/trust" },
+  { name: "Why Orbitlink", href: "/why-orbitlink" },
+  { name: "Compare", href: "/compare" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
 ] as const;
@@ -143,7 +145,7 @@ export default function TopNav() {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-6 text-sm text-white/70 md:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-5 text-sm text-white/70 lg:flex" aria-label="Primary">
             {NAV.map((i) => {
               const active = activeHref === i.href;
               return (
@@ -162,7 +164,7 @@ export default function TopNav() {
           <div className="flex items-center gap-2">
             <button
               ref={openBtnRef}
-              className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10 md:hidden"
+              className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10 lg:hidden"
               onClick={() => setOpen(true)}
               aria-label="Open menu"
               aria-expanded={open}
@@ -191,11 +193,11 @@ export default function TopNav() {
 
       {open && (
         <div
-          className="fixed inset-0 z-[220] md:hidden"
+          className="fixed inset-0 z-[220] lg:hidden"
           role="dialog"
           aria-modal="true"
-          aria-labelledby="orbitlink-menu-title"
-          aria-describedby="orbitlink-menu-desc"
+          aria-labelledby="orbitlink-mobile-menu-title"
+          aria-describedby="orbitlink-mobile-menu-desc"
           id="orbitlink-mobile-menu"
           onClickCapture={(e) => {
             const target = e.target as HTMLElement | null;
@@ -209,7 +211,7 @@ export default function TopNav() {
             aria-label="Close menu"
           />
 
-          <div className="absolute inset-x-0 top-0 z-[230] mx-auto max-w-6xl px-4 pt-3 pb-3 sm:px-6">
+          <div className="absolute inset-x-0 top-0 z-[230] mx-auto max-w-6xl px-4 pb-3 pt-3 sm:px-6">
             <div
               ref={dialogRef}
               className="relative flex max-h-[calc(100dvh-1.5rem)] min-h-[calc(100dvh-1.5rem)] flex-col overflow-hidden rounded-[30px] border border-white/10 bg-[#09090B]/96 shadow-[0_24px_90px_rgba(0,0,0,0.58)] backdrop-blur-2xl"
@@ -226,13 +228,13 @@ export default function TopNav() {
 
                   <div>
                     <div
-                      id="orbitlink-menu-title"
+                      id="orbitlink-mobile-menu-title"
                       className="text-[11px] tracking-[0.30em] text-white/88"
                     >
                       ORBITLINK
                     </div>
                     <div
-                      id="orbitlink-menu-desc"
+                      id="orbitlink-mobile-menu-desc"
                       className="mt-1 text-[11px] text-white/50"
                     >
                       Tier-1 navigation surface
@@ -298,11 +300,32 @@ export default function TopNav() {
 
                     <div className="mt-3 grid grid-cols-2 gap-2">
                       <Link
+                        href="/why-orbitlink"
+                        onClick={() => setOpen(false)}
+                        className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82 transition hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
+                      >
+                        Why Orbitlink
+                      </Link>
+                      <Link
+                        href="/compare"
+                        onClick={() => setOpen(false)}
+                        className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82 transition hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
+                      >
+                        Compare
+                      </Link>
+                      <Link
                         href="/locations/ontario"
                         onClick={() => setOpen(false)}
                         className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82 transition hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
                       >
                         Ontario Hub
+                      </Link>
+                      <Link
+                        href="/services/business-fibre-internet"
+                        onClick={() => setOpen(false)}
+                        className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82 transition hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
+                      >
+                        Business Fibre
                       </Link>
                       <Link
                         href="/services/dedicated-internet-access"
@@ -317,13 +340,6 @@ export default function TopNav() {
                         className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82 transition hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
                       >
                         Managed LAN
-                      </Link>
-                      <Link
-                        href="/services/business-fibre-internet"
-                        onClick={() => setOpen(false)}
-                        className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82 transition hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
-                      >
-                        Business Fibre
                       </Link>
                     </div>
                   </div>
