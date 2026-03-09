@@ -4,22 +4,27 @@ import PageShell from "@/components/PageShell";
 import StickyModuleNav from "@/components/StickyModuleNav";
 import { MODULE_SPECS } from "@/lib/siteStatus";
 
+const SITE_URL = "https://orbitlink.ca";
+const PAGE_URL = `${SITE_URL}/solutions`;
+const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
+const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
+
 export const metadata: Metadata = {
   title: "Business Fibre & Network Solutions",
   description:
-    "Business Fibre Internet, managed network infrastructure, and compliance-ready connectivity solutions for enterprises in Ontario, Canada. Controlled onboarding and operator-grade support.",
-  alternates: { canonical: "https://orbitlink.ca/solutions" },
+    "Business fibre internet, dedicated internet access, managed network infrastructure, voice, continuity, and trust-led service modules for Ontario organizations.",
+  alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Business Fibre & Network Solutions · Orbitlink",
     description:
-      "Enterprise fibre internet and infrastructure-grade network services delivered with controlled onboarding and disciplined operations.",
-    url: "https://orbitlink.ca/solutions",
+      "Business connectivity and network solutions delivered with structured onboarding, disciplined operations, and a premium buyer experience.",
+    url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
     locale: "en_CA",
     images: [
       {
-        url: "https://orbitlink.ca/og-image.jpg",
+        url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
         alt: "Orbitlink Business Fibre & Network Solutions",
@@ -30,7 +35,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Business Fibre & Network Solutions · Orbitlink",
     description:
-      "Enterprise fibre internet and compliance-ready network infrastructure in Ontario.",
+      "Business fibre, dedicated internet, managed networks, and trust-led service modules across Ontario.",
+    images: [TWITTER_IMAGE_URL],
   },
   robots: {
     index: true,
@@ -73,6 +79,62 @@ function toneStyles(tone: "blue" | "gold" | "emerald") {
   };
 }
 
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/55">{label}</div>
+      <div className="mt-1 text-sm text-white/80">{value}</div>
+    </div>
+  );
+}
+
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/55">{children}</div>;
+}
+
+function BuyerStep({
+  step,
+  title,
+  desc,
+}: {
+  step: string;
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+      <div className="flex items-center gap-3">
+        <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
+          {step}
+        </div>
+        <div className="text-sm font-medium text-white/90">{title}</div>
+      </div>
+      <p className="mt-3 text-sm leading-6 text-white/65">{desc}</p>
+    </div>
+  );
+}
+
+function FitCard({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/65">{body}</p>
+    </div>
+  );
+}
+
 function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
   const s = toneStyles(m.tone);
 
@@ -89,7 +151,7 @@ function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
       <div className="relative">
         <div className={`h-px w-full bg-gradient-to-r ${s.line}`} />
 
-        <div className="mt-5 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+        <div className="mt-5 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="min-w-0">
             <div
               className={[
@@ -99,12 +161,12 @@ function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
               ].join(" ")}
             >
               <span className={`h-1.5 w-1.5 rounded-full ${s.dot}`} />
-              MODULE
+              SERVICE MODULE
             </div>
 
-            <h2 className="mt-4 text-xl sm:text-2xl font-semibold text-white">{m.name}</h2>
+            <h2 className="mt-4 text-xl font-semibold text-white sm:text-2xl">{m.name}</h2>
 
-            <p className="mt-3 text-sm sm:text-[15px] leading-6 text-white/65 max-w-3xl">
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
               {m.tagline}
             </p>
           </div>
@@ -116,7 +178,7 @@ function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
         </div>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
+      <div className="mt-6 grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-3">
         <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
           <div className="text-[11px] tracking-[0.22em] text-white/55">PURPOSE</div>
           <p className="mt-3 text-sm leading-6 text-white/65">{m.purpose}</p>
@@ -142,32 +204,33 @@ function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
       </div>
 
       <div className="mt-6 rounded-2xl border border-white/10 bg-black/25 p-5">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <div className="text-[11px] tracking-[0.22em] text-white/55">NEXT STEP</div>
             <div className="mt-2 text-sm text-white/70">
-              Request access with your location + module + target go-live date.
+              Submit your location, service need, and target go-live date to start structured
+              qualification.
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row">
             <a
               href={`/contact#intake?intent=access&source=solutions&module=${encodeURIComponent(
                 m.name
               )}`}
-              className="rounded-2xl bg-[#FACC15] text-black px-5 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
+              className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
               Request Access
             </a>
             <a
               href="/trust"
-              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white hover:bg-white/10 transition text-center"
+              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
               Trust & Compliance
             </a>
             <a
               href="/network"
-              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white hover:bg-white/10 transition text-center"
+              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
               Network Posture
             </a>
@@ -181,17 +244,15 @@ function SpecCard({ m }: { m: (typeof MODULE_SPECS)[number] }) {
 export default function SolutionsPage() {
   const modules = MODULE_SPECS.map((m) => ({ id: m.id, name: m.name, tone: m.tone }));
 
-  /** ✅ Authority schema graph (operator-grade, not reseller vibes) */
   const schemaGraph = {
     "@context": "https://schema.org",
     "@graph": [
-      // --- Organization authority ---
       {
         "@type": "Organization",
-        "@id": "https://orbitlink.ca/#org",
+        "@id": `${SITE_URL}/#org`,
         name: "Orbitlink",
-        url: "https://orbitlink.ca",
-        logo: "https://orbitlink.ca/logo.png",
+        url: SITE_URL,
+        logo: `${SITE_URL}/icon.png`,
         address: {
           "@type": "PostalAddress",
           addressCountry: "CA",
@@ -215,49 +276,41 @@ export default function SolutionsPage() {
           },
         ],
       },
-
-      // --- WebSite entity (helps canonical authority) ---
       {
         "@type": "WebSite",
-        "@id": "https://orbitlink.ca/#website",
-        url: "https://orbitlink.ca",
+        "@id": `${SITE_URL}/#website`,
+        url: SITE_URL,
         name: "Orbitlink",
-        publisher: { "@id": "https://orbitlink.ca/#org" },
+        publisher: { "@id": `${SITE_URL}/#org` },
         inLanguage: "en-CA",
       },
-
-      // --- WebPage entity ---
       {
         "@type": "WebPage",
-        "@id": "https://orbitlink.ca/solutions#webpage",
-        url: "https://orbitlink.ca/solutions",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
         name: "Business Fibre & Network Solutions",
-        isPartOf: { "@id": "https://orbitlink.ca/#website" },
+        isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@type": "Thing", name: "Business fibre and network infrastructure services" },
         inLanguage: "en-CA",
       },
-
-      // --- Breadcrumbs ---
       {
         "@type": "BreadcrumbList",
-        "@id": "https://orbitlink.ca/solutions#breadcrumbs",
+        "@id": `${PAGE_URL}#breadcrumbs`,
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "https://orbitlink.ca/" },
-          { "@type": "ListItem", position: 2, name: "Solutions", item: "https://orbitlink.ca/solutions" },
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Solutions", item: PAGE_URL },
         ],
       },
-
-      // --- TelecomService (operator/service signal) ---
       {
         "@type": "TelecomService",
-        "@id": "https://orbitlink.ca/solutions#telecom",
+        "@id": `${PAGE_URL}#telecom`,
         name: "Orbitlink Business Connectivity & Network Services",
-        provider: { "@id": "https://orbitlink.ca/#org" },
+        provider: { "@id": `${SITE_URL}/#org` },
         serviceType: [
           "Business Internet",
           "Fibre Connectivity",
           "Managed Network Services",
-          "Operational Escalation & Support",
+          "Operational Escalation and Support",
           "Compliance-first Delivery Posture",
         ],
         areaServed: [
@@ -265,62 +318,56 @@ export default function SolutionsPage() {
           { "@type": "City", name: "Mississauga" },
         ],
         audience: { "@type": "Audience", audienceType: "Business" },
-        termsOfService: "https://orbitlink.ca/legal/terms",
+        termsOfService: `${SITE_URL}/legal/terms`,
       },
-
-      // --- OfferCatalog (modules as real service catalog) ---
       {
         "@type": "OfferCatalog",
-        "@id": "https://orbitlink.ca/solutions#catalog",
+        "@id": `${PAGE_URL}#catalog`,
         name: "Orbitlink Service Modules",
-        url: "https://orbitlink.ca/solutions",
-        provider: { "@id": "https://orbitlink.ca/#org" },
+        url: PAGE_URL,
+        provider: { "@id": `${SITE_URL}/#org` },
         itemListElement: MODULE_SPECS.map((m) => ({
           "@type": "Offer",
           name: m.name,
-          url: `https://orbitlink.ca/solutions#${m.id}`,
+          url: `${PAGE_URL}#${m.id}`,
           itemOffered: {
             "@type": "Service",
             name: m.name,
             description: m.tagline,
-            provider: { "@id": "https://orbitlink.ca/#org" },
+            provider: { "@id": `${SITE_URL}/#org` },
             areaServed: { "@type": "AdministrativeArea", name: "Ontario, Canada" },
             serviceType: "Network Service Module",
           },
         })),
       },
-
-      // --- ItemList (discovery) ---
       {
         "@type": "ItemList",
-        "@id": "https://orbitlink.ca/solutions#list",
+        "@id": `${PAGE_URL}#list`,
         name: "Orbitlink Solutions List",
-        url: "https://orbitlink.ca/solutions",
+        url: PAGE_URL,
         itemListElement: MODULE_SPECS.map((m, i) => ({
           "@type": "ListItem",
           position: i + 1,
           name: m.name,
-          url: `https://orbitlink.ca/solutions#${m.id}`,
+          url: `${PAGE_URL}#${m.id}`,
         })),
       },
-
-      // --- FAQ (safe, conservative) ---
       {
         "@type": "FAQPage",
-        "@id": "https://orbitlink.ca/solutions#faq",
+        "@id": `${PAGE_URL}#faq`,
         mainEntity: [
           {
             "@type": "Question",
-            name: "How do onboarding windows work?",
+            name: "How does onboarding work?",
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "Orbitlink introduces modules through controlled onboarding windows. Requests are qualified by location, scope, and readiness, and we confirm commitments only when verifiable.",
+                "Orbitlink introduces services through controlled onboarding windows. Requests are qualified by location, scope, and readiness, and commitments are confirmed only when supportable.",
             },
           },
           {
             "@type": "Question",
-            name: "Do you publish coverage or performance claims?",
+            name: "Do you publish broad coverage or performance claims?",
             acceptedAnswer: {
               "@type": "Answer",
               text:
@@ -329,11 +376,11 @@ export default function SolutionsPage() {
           },
           {
             "@type": "Question",
-            name: "What should I include in an access request?",
+            name: "What should I include in a request?",
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "Include the site location (city/province), the module you need, the target go-live date, and any constraints such as handoff type, static IP needs, or SLA requirements.",
+                "Include the site location, the service module you need, the target go-live date, and any constraints such as handoff type, static IP needs, continuity requirements, or SLA expectations.",
             },
           },
         ],
@@ -344,14 +391,78 @@ export default function SolutionsPage() {
   return (
     <PageShell
       eyebrow="SOLUTIONS"
-      title="Service Modules"
-      subtitle="Each module is delivered with controlled onboarding, clear documentation, and an operator-grade support posture."
+      title="Business connectivity modules"
+      subtitle="Each service is presented as a clear business module with structured onboarding, disciplined delivery, and a premium operator-grade posture."
     >
-      {/* ✅ Authority Schema Pack */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
       />
+
+      <section className="relative overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -left-24 top-0 h-52 w-52 rounded-full bg-blue-500/10 blur-3xl" />
+          <div className="absolute right-0 top-10 h-52 w-52 rounded-full bg-emerald-500/10 blur-3xl" />
+          <div className="absolute bottom-0 left-1/2 h-40 w-[32rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
+          <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.14)_1px,transparent_1px)] [background-size:64px_64px]" />
+        </div>
+
+        <div className="relative grid grid-cols-1 gap-8 lg:grid-cols-12">
+          <div className="lg:col-span-8">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[11px] text-[#FDE68A]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
+              Structured solution surface
+            </div>
+
+            <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[44px] lg:leading-[1.02]">
+              Choose the service path that matches the business need
+            </h2>
+
+            <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
+              This solutions page is designed to make Orbitlink easier to understand and easier to
+              buy. Start with the primary service requirement, review fit and deliverables, then
+              move into a structured intake path with clearer expectations.
+            </p>
+
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <MetricPill label="BUYER MODE" value="Choose • Compare • Request" />
+              <MetricPill label="DELIVERY STYLE" value="Structured and controlled" />
+              <MetricPill label="TRUST SIGNAL" value="Clearer than generic telecom" />
+            </div>
+          </div>
+
+          <div className="lg:col-span-4">
+            <div className="rounded-[28px] border border-white/10 bg-black/25 p-5 sm:p-6">
+              <SectionEyebrow>BUYING JOURNEY</SectionEyebrow>
+              <div className="mt-3 text-lg font-semibold text-white">
+                A cleaner path from service interest to onboarding
+              </div>
+              <p className="mt-3 text-sm leading-6 text-white/64">
+                Each module is meant to answer four buyer questions quickly: what it is, who it
+                fits, what it includes, and what to do next.
+              </p>
+
+              <div className="mt-5 grid gap-3">
+                <BuyerStep
+                  step="1"
+                  title="Choose the module"
+                  desc="Start with internet, voice, smart connectivity, trust review, or another core need."
+                />
+                <BuyerStep
+                  step="2"
+                  title="Review fit"
+                  desc="Check purpose, ideal environments, and deliverables before starting a conversation."
+                />
+                <BuyerStep
+                  step="3"
+                  title="Move into intake"
+                  desc="Submit one clear request tied to the site, timeline, and operational requirements."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div id="solutions-sentinel" className="h-px w-full" />
 
@@ -362,6 +473,46 @@ export default function SolutionsPage() {
         bottomWatchId="solutions-bottom-sentinel"
       />
 
+      <section className="mt-6 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>HOW TO USE THIS PAGE</SectionEyebrow>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Start with the service that matters most
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              Most buyers do not need every service at once. Start with the main requirement, such
+              as business fibre, dedicated internet, managed networking, voice, continuity, or
+              trust review. Additional layers can be added once the primary scope is clear.
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">OUTCOME</div>
+            <div className="mt-1 text-sm text-white/80">Better fit • Cleaner buying motion</div>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <FitCard
+            title="Business Fibre"
+            body="Best when the priority is strong business connectivity, clean onboarding, and value."
+          />
+          <FitCard
+            title="Dedicated Internet"
+            body="Best when the site requires a more deterministic delivery posture and critical-path alignment."
+          />
+          <FitCard
+            title="Managed Network"
+            body="Best when internal LAN, Wi-Fi, segmentation, or local operational control matters."
+          />
+          <FitCard
+            title="Trust & Review"
+            body="Best when a buyer or reviewer needs clearer disclosure, governance, and verification posture."
+          />
+        </div>
+      </section>
+
       <div className="mt-6 grid gap-4 sm:gap-5">
         {MODULE_SPECS.map((m) => (
           <SpecCard key={m.id} m={m} />
@@ -371,12 +522,12 @@ export default function SolutionsPage() {
       <div id="solutions-bottom-sentinel" className="h-px w-full" />
 
       <div className="mt-5 rounded-3xl border border-white/10 bg-black/25 p-6 sm:p-7">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <div className="text-[11px] tracking-[0.28em] text-white/55">INTEGRITY</div>
-            <p className="mt-3 max-w-3xl text-sm sm:text-[15px] leading-6 text-white/70">
-              Modules are introduced through controlled onboarding windows. Public statements remain
-              conservative until milestones are verified.
+            <SectionEyebrow>INTEGRITY</SectionEyebrow>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
+              Services are introduced through controlled onboarding windows. Public statements
+              remain conservative until milestones are verified and the delivery posture is clear.
             </p>
           </div>
 
@@ -386,22 +537,22 @@ export default function SolutionsPage() {
           </div>
         </div>
 
-        <div className="mt-5 flex flex-col sm:flex-row gap-3">
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
           <a
             href="/contact#intake?intent=access&source=solutions_footer"
-            className="rounded-2xl bg-[#FACC15] text-black px-5 py-3 text-sm font-medium hover:bg-[#FDE047] transition text-center"
+            className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
           >
             Request Access
           </a>
           <a
             href="/trust"
-            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white hover:bg-white/10 transition text-center"
+            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
           >
             Trust & Compliance
           </a>
           <a
             href="/network"
-            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white hover:bg-white/10 transition text-center"
+            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
           >
             Network Posture
           </a>
