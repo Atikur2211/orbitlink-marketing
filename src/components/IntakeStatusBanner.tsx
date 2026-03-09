@@ -1,4 +1,4 @@
-// src/components/WaitlistBanner.tsx
+// src/components/IntakeStatusBanner.tsx
 "use client";
 
 import { useMemo } from "react";
@@ -23,7 +23,7 @@ function Dot({ tone }: { tone: "ok" | "warn" }) {
   );
 }
 
-export default function WaitlistBanner() {
+export default function IntakeStatusBanner() {
   const sp = useSearchParams();
   const ok = sp.get("ok");
   const err = sp.get("error");

@@ -10,7 +10,7 @@ function Card({
   badge,
   bullets,
   children,
-  cta = "View module",
+  cta = "View service",
 }: {
   title: string;
   desc: string;
@@ -43,7 +43,7 @@ function Card({
           <div className="min-w-0">
             <div className="text-[11px] tracking-[0.24em] text-white/50">{badge}</div>
             <div className="mt-3 text-lg font-medium text-white sm:text-[1.05rem]">{title}</div>
-            <div className="mt-3 max-w-[46ch] text-sm leading-6 text-white/65">{desc}</div>
+            <div className="mt-3 max-w-[46ch] text-sm leading-6 text-white/66">{desc}</div>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/60 transition group-hover:border-white/20 group-hover:bg-white/10 group-hover:text-white/78">
@@ -68,7 +68,7 @@ function Card({
   );
 }
 
-function FiberPulse() {
+function FibrePulse() {
   return (
     <div className="relative h-24 overflow-hidden rounded-2xl border border-white/10 bg-black/25">
       <div className="absolute inset-0">
@@ -76,36 +76,28 @@ function FiberPulse() {
         <div className="orbit-slide absolute left-0 top-1/2 h-[3px] w-28 -translate-y-1/2 bg-blue-400/50 blur-md" />
       </div>
       <div className="absolute bottom-2 right-3 text-[10px] text-white/55">
-        Fibre path • monitored
+        Fibre service path
       </div>
     </div>
   );
 }
 
-function Waveform647() {
+function DedicatedLine() {
   return (
-    <div className="relative flex h-24 items-center overflow-hidden rounded-2xl border border-white/10 bg-black/25 px-4">
-      <div className="flex w-full items-end gap-1 opacity-95">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={i}
-            className="orbit-bar w-1.5 rounded-sm bg-[#FACC15]/70"
-            style={{
-              height: `${12 + ((i * 9) % 44)}px`,
-              animationDelay: `${i * 0.05}s`,
-            }}
-          />
-        ))}
+    <div className="relative h-24 overflow-hidden rounded-2xl border border-white/10 bg-black/25">
+      <div className="absolute inset-0">
+        <div className="absolute left-[8%] right-[8%] top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-cyan-300/15 via-cyan-200/80 to-cyan-300/15" />
+        <div className="absolute left-[22%] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-cyan-200 shadow-[0_0_24px_rgba(56,253,254,0.45)]" />
+        <div className="absolute right-[22%] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-cyan-200 shadow-[0_0_24px_rgba(56,253,254,0.45)]" />
       </div>
-
-      <div className="absolute right-3 top-3 rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] text-white/75">
-        Voice ready
+      <div className="absolute bottom-2 right-3 text-[10px] text-white/55">
+        Dedicated path
       </div>
     </div>
   );
 }
 
-function SmartGrid() {
+function ManagedGrid() {
   return (
     <div className="relative h-24 overflow-hidden rounded-2xl border border-white/10 bg-black/25">
       <div className="absolute inset-0 grid grid-cols-12 grid-rows-4 gap-2 p-3 opacity-85">
@@ -129,22 +121,46 @@ function SmartGrid() {
       ))}
 
       <div className="absolute bottom-2 right-3 text-[10px] text-white/55">
-        Nodes active • alerts enabled
+        Managed network
       </div>
     </div>
   );
 }
 
-function ShieldSeal() {
+function VoiceWave() {
+  return (
+    <div className="relative flex h-24 items-center overflow-hidden rounded-2xl border border-white/10 bg-black/25 px-4">
+      <div className="flex w-full items-end gap-1 opacity-95">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div
+            key={i}
+            className="orbit-bar w-1.5 rounded-sm bg-[#FACC15]/70"
+            style={{
+              height: `${12 + ((i * 9) % 44)}px`,
+              animationDelay: `${i * 0.05}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="absolute right-3 top-3 rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] text-white/75">
+        Voice ready
+      </div>
+    </div>
+  );
+}
+
+function ContinuityPulse() {
   return (
     <div className="relative flex h-24 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-black/25">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.08),transparent_62%)]" />
       <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
         <div className="orbit-spin absolute -inset-2 rounded-2xl border border-[#FACC15]/30" />
-        <div className="text-xl text-[#FACC15]">⛨</div>
+        <div className="text-lg text-[#FACC15]">↺</div>
       </div>
 
       <div className="absolute bottom-2 right-3 text-[10px] text-white/55">
-        Integrity check • current
+        Backup ready
       </div>
     </div>
   );
@@ -193,72 +209,95 @@ export default function BentoServices() {
       <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">SERVICE SURFACE</div>
+            <div className="text-[11px] tracking-[0.28em] text-white/55">SERVICES</div>
             <h2 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">
-              Orbitlink service modules
+              Business connectivity services, clearly organized
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65 sm:text-[15px]">
-              Each service is presented as a business-ready module with a clear role, cleaner
-              buying context, and a more structured delivery posture than a typical small-provider
-              catalog.
+              Start with the service your site needs most. The goal is to make selection easier,
+              reduce confusion, and help buyers move to the right next step faster.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/50">BUYER MODE</div>
             <div className="mt-1 text-sm text-white/80">
-              Choose module • confirm fit • move forward
+              Choose service • confirm fit • request pricing
             </div>
           </div>
         </div>
 
         <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-5">
           <Card
-            title="AUREX Internet"
-            desc="Business fibre internet and dedicated connectivity for organizations that need clean onboarding, stronger performance posture, and a more professional service experience."
+            title="Business Fibre Internet"
+            desc="High-quality business internet for offices, commercial spaces, and growing organizations that need a cleaner provider experience."
             accent="blue"
             href="/services/business-fibre-internet"
-            badge="CONNECTIVITY"
-            bullets={["Business Fibre", "Dedicated Internet", "Ontario business sites"]}
-            cta="Best starting point"
+            badge="INTERNET"
+            bullets={["Business fibre", "Commercial sites", "Ontario"]}
+            cta="View fibre"
           >
-            <FiberPulse />
+            <FibrePulse />
           </Card>
 
           <Card
-            title="AUREX Voice"
-            desc="Business cloud voice and VoIP for teams that need cleaner call routing, number porting support, and a more structured communications rollout."
+            title="Dedicated Internet Access"
+            desc="Dedicated connectivity for business sites that need stronger performance expectations, cleaner delivery, and more predictable service."
+            accent="blue"
+            href="/services/dedicated-internet-access"
+            badge="DEDICATED CONNECTIVITY"
+            bullets={["Dedicated internet", "Critical sites", "Business-grade"]}
+            cta="View DIA"
+          >
+            <DedicatedLine />
+          </Card>
+
+          <Card
+            title="Managed Wi-Fi & LAN"
+            desc="Managed internal network service for businesses that need better Wi-Fi, cleaner segmentation, stronger support, and easier site operations."
+            accent="emerald"
+            href="/services/managed-lan-wifi"
+            badge="MANAGED NETWORK"
+            bullets={["Managed Wi-Fi", "LAN support", "Site operations"]}
+            cta="View network"
+          >
+            <ManagedGrid />
+          </Card>
+
+          <Card
+            title="Business Voice"
+            desc="Cloud voice and business calling for teams that need number porting, front-desk routing, and a more structured communications setup."
             accent="gold"
             href="/services/voip-cloud-voice"
-            badge="COMMUNICATIONS"
-            bullets={["Cloud Voice", "Number Porting", "Business Call Routing"]}
+            badge="VOICE"
+            bullets={["Cloud voice", "Number porting", "Call routing"]}
             cta="View voice"
           >
-            <Waveform647 />
+            <VoiceWave />
           </Card>
 
           <Card
-            title="AUREX Smart"
-            desc="IoT connectivity and secure uplinks for device fleets, sensors, gateways, and environments that need clearer boundaries and safer operational control."
+            title="Backup Connectivity"
+            desc="Continuity service for businesses that want LTE or 5G failover, outage resilience, and a stronger backup plan for critical operations."
+            accent="gold"
+            href="/services/lte-5g-continuity"
+            badge="CONTINUITY"
+            bullets={["LTE / 5G backup", "Failover", "Resilience"]}
+            cta="View backup"
+          >
+            <ContinuityPulse />
+          </Card>
+
+          <Card
+            title="IoT Connectivity"
+            desc="Secure uplinks for gateways, sensors, and connected devices that need clearer segmentation and safer day-to-day connectivity."
             accent="emerald"
             href="/services/iot-connectivity"
-            badge="CONNECTED SYSTEMS"
-            bullets={["IoT Uplinks", "Segmentation", "Monitoring-ready"]}
-            cta="View smart"
+            badge="CONNECTED DEVICES"
+            bullets={["IoT uplinks", "Segmentation", "Monitoring-ready"]}
+            cta="View IoT"
           >
-            <SmartGrid />
-          </Card>
-
-          <Card
-            title="TIRAV Horizon"
-            desc="Trust, compliance, and evidence-friendly operational posture for buyers and reviewers who expect clearer governance, controlled disclosure, and disciplined service language."
-            accent="gold"
-            href="/trust"
-            badge="TRUST LAYER"
-            bullets={["Trust Surface", "Verification Path", "Controlled Disclosure"]}
-            cta="Review trust"
-          >
-            <ShieldSeal />
+            <ManagedGrid />
           </Card>
         </div>
       </div>
@@ -268,37 +307,36 @@ export default function BentoServices() {
           <div className="max-w-3xl">
             <div className="text-[11px] tracking-[0.28em] text-white/55">BEST FIT</div>
             <h3 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
-              Which buyers usually start with which module
+              Where most buyers usually begin
             </h3>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              This service surface works best when buyers can quickly identify where they fit. Start
-              with the module that matches the main business requirement, then add other layers as
-              the scope becomes clearer.
+              Most buyers start with the service that solves the main site need first, then add
+              voice, backup, managed networking, or IoT as the scope becomes clearer.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/50">OUTCOME</div>
-            <div className="mt-1 text-sm text-white/80">Faster selection • Better alignment</div>
+            <div className="mt-1 text-sm text-white/80">Faster selection • Better fit</div>
           </div>
         </div>
 
         <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
           <FitStrip
             title="Offices and commercial sites"
-            body="Usually start with AUREX Internet for business fibre or dedicated access."
+            body="Usually start with Business Fibre Internet."
           />
           <FitStrip
-            title="Front desk and team communications"
-            body="Usually start with AUREX Voice for cloud calling, routing, and number porting."
+            title="Critical business locations"
+            body="Usually start with Dedicated Internet Access."
           />
           <FitStrip
-            title="Sensors, gateways, and devices"
-            body="Usually start with AUREX Smart for IoT uplinks, segmentation, and monitoring."
+            title="Internal network and Wi-Fi issues"
+            body="Usually start with Managed Wi-Fi & LAN."
           />
           <FitStrip
-            title="Buyers who need stronger assurance"
-            body="Usually start with TIRAV Horizon or the Trust surface for governance and review posture."
+            title="Calling and continuity needs"
+            body="Usually start with Business Voice or Backup Connectivity."
           />
         </div>
       </div>
@@ -306,38 +344,38 @@ export default function BentoServices() {
       <div className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-5 sm:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">HOW TO USE THIS SURFACE</div>
+            <div className="text-[11px] tracking-[0.28em] text-white/55">HOW TO START</div>
             <h3 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
-              Start with the module that matches the business need
+              Start with the service the business needs most
             </h3>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              Buyers do not need to decode the whole platform at once. Start with the service that
-              best fits the site, then add voice, continuity, network, infrastructure, or trust
-              context as the requirement becomes clearer.
+              You do not need to plan everything at once. Start with internet, voice, managed
+              networking, backup, or IoT, then move into a clear request with your address,
+              timeline, and site requirements.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/50">OUTCOME</div>
-            <div className="mt-1 text-sm text-white/80">Cleaner decisions • Better fit</div>
+            <div className="mt-1 text-sm text-white/80">Cleaner decisions • Better leads</div>
           </div>
         </div>
 
         <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
           <BuyerStep
             step="1"
-            title="Choose the primary service"
-            desc="Start with internet, voice, smart connectivity, or trust review depending on the buyer’s real objective."
+            title="Choose a service"
+            desc="Start with fibre, dedicated internet, managed Wi-Fi, voice, backup, or IoT."
           />
           <BuyerStep
             step="2"
-            title="Add operational context"
-            desc="Layer in continuity, managed networking, static routing, or infrastructure requirements where needed."
+            title="Add your site details"
+            desc="Share your address, timeline, and the requirements that matter most."
           />
           <BuyerStep
             step="3"
-            title="Move into structured intake"
-            desc="Use the contact path to submit one clear request tied to the service, address, timeline, and site needs."
+            title="Request review and pricing"
+            desc="Submit one clear request and receive the next best step."
           />
         </div>
 
@@ -346,13 +384,19 @@ export default function BentoServices() {
             href="/contact#intake"
             className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
           >
-            Check availability
+            Check Availability & Request Pricing
           </Link>
           <Link
             href="/services"
             className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
           >
-            Browse all services
+            Browse All Services
+          </Link>
+          <Link
+            href="/trust"
+            className="rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-center text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
+          >
+            View Trust & Compliance
           </Link>
         </div>
       </div>
