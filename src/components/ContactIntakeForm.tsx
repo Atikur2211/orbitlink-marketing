@@ -12,8 +12,56 @@ function FieldHint({ children }: { children: React.ReactNode }) {
   return <p className="text-xs leading-5 text-white/50">{children}</p>;
 }
 
+function FieldLabel({
+  htmlFor,
+  children,
+  optional = false,
+}: {
+  htmlFor: string;
+  children: React.ReactNode;
+  optional?: boolean;
+}) {
+  return (
+    <label htmlFor={htmlFor} className="text-sm text-white/82">
+      {children}
+      {optional ? <span className="ml-1 text-white/45">(optional)</span> : null}
+    </label>
+  );
+}
+
+function normalizeServiceLabel(name: string) {
+  const key = name.trim().toLowerCase();
+
+  const labelMap: Record<string, string> = {
+    "business fibre internet": "Business Fibre Internet",
+    "business fiber internet": "Business Fibre Internet",
+    "dedicated internet access": "Dedicated Internet Access",
+    "managed wi-fi & lan": "Managed Wi-Fi & LAN",
+    "managed wifi & lan": "Managed Wi-Fi & LAN",
+    "managed lan/wifi": "Managed Wi-Fi & LAN",
+    "managed lan wifi": "Managed Wi-Fi & LAN",
+    "business voice": "Business Voice",
+    "voip cloud voice": "Business Voice",
+    "cloud voice": "Business Voice",
+    "backup connectivity": "Backup Connectivity",
+    "lte / 5g continuity": "Backup Connectivity",
+    "lte/5g continuity": "Backup Connectivity",
+    "lte 5g continuity": "Backup Connectivity",
+    "iot connectivity": "IoT Connectivity",
+  };
+
+  return labelMap[key] ?? name;
+}
+
 export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: string[] }) {
-  const options = useMemo(() => moduleOptions, [moduleOptions]);
+  const options = useMemo(
+    () =>
+      moduleOptions.map((value) => ({
+        value,
+        label: normalizeServiceLabel(value),
+      })),
+    [moduleOptions]
+  );
 
   return (
     <form
@@ -44,16 +92,14 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
       <div className="rounded-2xl border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-4">
         <div className="text-[11px] tracking-[0.22em] text-[#FDE68A]">WHAT HAPPENS NEXT</div>
         <p className="mt-2 text-sm leading-6 text-white/75">
-          We review your address, service needs, and timeline, then reply with the clearest next
-          step available.
+          We review the address, service requirement, and timeline, then reply with the clearest
+          next step available.
         </p>
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="grid gap-2">
-          <label htmlFor="fullName" className="text-sm text-white/82">
-            Full name
-          </label>
+          <FieldLabel htmlFor="fullName">Full name</FieldLabel>
           <input
             id="fullName"
             name="fullName"
@@ -65,9 +111,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
         </div>
 
         <div className="grid gap-2">
-          <label htmlFor="email" className="text-sm text-white/82">
-            Work email
-          </label>
+          <FieldLabel htmlFor="email">Work email</FieldLabel>
           <input
             id="email"
             name="email"
@@ -76,15 +120,13 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             placeholder="name@company.com"
             className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40"
           />
-          <FieldHint>Using a work email usually helps us respond more clearly.</FieldHint>
+          <FieldHint>Using a work email usually helps us qualify and respond faster.</FieldHint>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="grid gap-2">
-          <label htmlFor="company" className="text-sm text-white/82">
-            Company
-          </label>
+          <FieldLabel htmlFor="company">Company</FieldLabel>
           <input
             id="company"
             name="company"
@@ -96,9 +138,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
         </div>
 
         <div className="grid gap-2">
-          <label htmlFor="role" className="text-sm text-white/82">
-            Your role
-          </label>
+          <FieldLabel htmlFor="role">Your role</FieldLabel>
           <select
             id="role"
             name="role"
@@ -109,11 +149,12 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             <option value="" disabled>
               Select your role
             </option>
-            <option value="business_buyer">Business buyer</option>
-            <option value="it_network">IT / Network lead</option>
-            <option value="operations_facilities">Operations / Facilities</option>
-            <option value="property_management">Property / Building management</option>
-            <option value="partner_vendor">Partner / Vendor</option>
+            <option value="business_owner">Business owner / leadership</option>
+            <option value="business_buyer">Business buyer / procurement</option>
+            <option value="it_network">IT / network lead</option>
+            <option value="operations_facilities">Operations / facilities</option>
+            <option value="property_management">Property / building management</option>
+            <option value="partner_vendor">Partner / vendor</option>
             <option value="other">Other</option>
           </select>
         </div>
@@ -121,9 +162,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="grid gap-2">
-          <label htmlFor="location" className="text-sm text-white/82">
-            Service address
-          </label>
+          <FieldLabel htmlFor="location">Service address</FieldLabel>
           <input
             id="location"
             name="location"
@@ -136,9 +175,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
         </div>
 
         <div className="grid gap-2">
-          <label htmlFor="module" className="text-sm text-white/82">
-            Service needed
-          </label>
+          <FieldLabel htmlFor="module">Primary service needed</FieldLabel>
           <select
             id="module"
             name="module"
@@ -149,9 +186,9 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             <option value="" disabled>
               Select a service
             </option>
-            {options.map((name) => (
-              <option key={name} value={name}>
-                {name}
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
               </option>
             ))}
           </select>
@@ -161,9 +198,9 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="grid gap-2">
-          <label htmlFor="timeline" className="text-sm text-white/82">
-            Timeline
-          </label>
+          <FieldLabel htmlFor="timeline" optional>
+            Project timeline
+          </FieldLabel>
           <select
             id="timeline"
             name="timeline"
@@ -182,9 +219,9 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
         </div>
 
         <div className="grid gap-2">
-          <label htmlFor="sites" className="text-sm text-white/82">
+          <FieldLabel htmlFor="sites" optional>
             Number of sites
-          </label>
+          </FieldLabel>
           <select
             id="sites"
             name="sites"
@@ -203,19 +240,19 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
       </div>
 
       <div className="grid gap-2">
-        <label htmlFor="notes" className="text-sm text-white/82">
+        <FieldLabel htmlFor="notes" optional>
           Project details
-        </label>
+        </FieldLabel>
         <textarea
           id="notes"
           name="notes"
           rows={5}
-          placeholder="Tell us what you need. Include your timeline, current setup if relevant, and any requirements such as static IPs, managed Wi-Fi, voice, continuity, or multi-site service."
+          placeholder="Tell us what you need. Include install timing, current setup if relevant, and any requirements such as static IPs, managed Wi-Fi, voice, backup connectivity, landlord coordination, or multi-site service."
           className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40"
         />
         <FieldHint>
-          Helpful details include the address, install timing, service priority, and any technical
-          needs.
+          Helpful details include service priority, building context, install timing, and any
+          technical requirements.
         </FieldHint>
       </div>
 

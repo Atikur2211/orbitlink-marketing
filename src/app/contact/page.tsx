@@ -1,10 +1,11 @@
 // src/app/contact/page.tsx
 import type { Metadata } from "next";
+import { Suspense } from "react";
+
 import PageShell from "@/components/PageShell";
 import IntakeStatusBanner from "@/components/IntakeStatusBanner";
-import { MODULE_SPECS } from "@/lib/siteStatus";
-import { Suspense } from "react";
 import ContactIntakeForm from "@/components/ContactIntakeForm";
+import { MODULE_SPECS } from "@/lib/siteStatus";
 
 const SITE_URL = "https://orbitlink.ca";
 const PAGE_URL = `${SITE_URL}/contact`;
@@ -237,7 +238,7 @@ export default function ContactPage() {
     <PageShell
       eyebrow="CONTACT"
       title="Check availability and start your service request"
-      subtitle="Contact Orbitlink for business fibre, dedicated internet, voice, managed network services, and deployment planning across Ontario."
+      subtitle="Contact Orbitlink for business fibre, dedicated internet, managed Wi-Fi, voice, continuity, and deployment planning across Ontario."
     >
       <script
         type="application/ld+json"
@@ -259,20 +260,20 @@ export default function ContactPage() {
             </div>
 
             <h2 className="mt-5 text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl">
-              Tell us your address, service needs, and timeline
+              Tell us the address, service need, and timeline
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
               Use this page to check availability, request pricing, and start a business service
-              conversation. Share your service address, the service you need, and the details that
-              matter to the site so Orbitlink can review fit and respond with the clearest next step.
+              conversation. A complete request helps Orbitlink review service fit faster and reply
+              with a practical next step.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               <Pill>Check availability</Pill>
               <Pill>Request pricing</Pill>
-              <Pill>Business-first review</Pill>
-              <Pill>Clear next steps</Pill>
+              <Pill>Business service review</Pill>
+              <Pill>Clear next step</Pill>
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -289,25 +290,25 @@ export default function ContactPage() {
                 Send one complete business request
               </div>
               <p className="mt-3 text-sm leading-6 text-white/65">
-                The best requests usually include the service needed, the exact address, the target
-                timeline, and any technical or operational needs that matter to the site.
+                The strongest requests usually include the service needed, the exact address, the
+                target timeline, and any technical or operational requirements.
               </p>
 
               <div className="mt-5 grid gap-3">
                 <StepCard
                   step="STEP 1"
                   title="Choose the service"
-                  text="Tell us what you need: Business Fibre, Dedicated Internet, Voice, Managed LAN/Wi-Fi, Continuity, Static IP, or infrastructure support."
+                  text="Tell us whether you need Business Fibre, Dedicated Internet, Voice, Managed LAN/Wi-Fi, Continuity, Static IP, or infrastructure support."
                 />
                 <StepCard
                   step="STEP 2"
                   title="Add the address"
-                  text="Include the exact service address, city, and any building details that help us review serviceability."
+                  text="Include the exact service address, city, and any building details that help with serviceability review."
                 />
                 <StepCard
                   step="STEP 3"
                   title="Add your requirements"
-                  text="Include your timeline, user count, static IP needs, voice, managed Wi-Fi, continuity, or multi-site scope if relevant."
+                  text="Include your timeline, user count, voice needs, managed network scope, static IP needs, continuity needs, or multi-site scope if relevant."
                 />
               </div>
             </div>
@@ -315,7 +316,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-12 sm:mt-6 sm:gap-5">
+      <div className="mt-4 grid grid-cols-1 gap-4 sm:mt-6 sm:gap-5 lg:grid-cols-12">
         <div className="space-y-4 sm:space-y-5 lg:col-span-5">
           <InfoCard eyebrow="CONTACT ORBITLINK" title="Business sales, pricing, and onboarding">
             <p>
@@ -369,7 +370,7 @@ export default function ContactPage() {
             </div>
 
             <p className="mt-4 text-xs text-white/55">
-              Better details at the start usually mean a faster and more useful reply.
+              Better detail at the start usually leads to a faster and more useful reply.
             </p>
           </InfoCard>
 
@@ -383,12 +384,12 @@ export default function ContactPage() {
               <StepCard
                 step="NEXT STEP"
                 title="We identify the right path"
-                text="That may be pricing, serviceability review, follow-up questions, or a direct business conversation."
+                text="That may be pricing direction, serviceability review, follow-up questions, or a direct business conversation."
               />
               <StepCard
                 step="RESPONSE"
                 title="We keep it practical"
-                text="The goal is to give you a useful next step, not a vague reply."
+                text="The goal is to give you a useful next step instead of a vague reply."
               />
             </div>
 
@@ -432,16 +433,12 @@ export default function ContactPage() {
           <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
               <div className="text-[11px] tracking-[0.22em] text-white/55">TIP</div>
-              <p className="mt-2 text-sm leading-6 text-white/65">
-                Use a work email when possible.
-              </p>
+              <p className="mt-2 text-sm leading-6 text-white/65">Use a work email when possible.</p>
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
               <div className="text-[11px] tracking-[0.22em] text-white/55">TIP</div>
-              <p className="mt-2 text-sm leading-6 text-white/65">
-                Add the exact service address.
-              </p>
+              <p className="mt-2 text-sm leading-6 text-white/65">Add the exact service address.</p>
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4">

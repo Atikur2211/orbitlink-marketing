@@ -196,9 +196,10 @@ export const NETWORK_CAPABILITIES: { title: string; desc: string }[] = [
 export const NETWORK_COVERAGE_NOTE =
   "Coverage and availability are introduced through structured onboarding. If you need a site review, submit your address, service need, and operational requirements for qualification.";
 
-export type ModuleSpec = {
+export type ServiceSpec = {
   id: "internet" | "voice" | "smart" | "horizon";
   name: string;
+  publicLabel: string;
   tagline: string;
   purpose: string;
   idealFor: string[];
@@ -207,10 +208,11 @@ export type ModuleSpec = {
   tone: "blue" | "gold" | "emerald";
 };
 
-export const MODULE_SPECS: ModuleSpec[] = [
+export const SERVICE_CATALOG: ServiceSpec[] = [
   {
     id: "internet",
     name: "AUREX Internet",
+    publicLabel: "Business Fibre Internet",
     tagline: "Business connectivity with structured delivery and clear commercial handling.",
     purpose:
       "Provide predictable business connectivity with transparent onboarding, clear escalation, and a more accountable provider experience.",
@@ -232,6 +234,7 @@ export const MODULE_SPECS: ModuleSpec[] = [
   {
     id: "voice",
     name: "AUREX Voice",
+    publicLabel: "Business Voice",
     tagline: "Professional cloud voice for modern teams.",
     purpose:
       "Deliver a business-grade voice experience with structured routing, clean call handling, and support aligned to day-to-day operations.",
@@ -253,6 +256,7 @@ export const MODULE_SPECS: ModuleSpec[] = [
   {
     id: "smart",
     name: "AUREX Smart",
+    publicLabel: "IoT Connectivity",
     tagline: "Connected office monitoring with controlled alerting.",
     purpose:
       "Provide IoT integration and facility monitoring for visibility, uptime signals, and practical business alerting.",
@@ -274,6 +278,7 @@ export const MODULE_SPECS: ModuleSpec[] = [
   {
     id: "horizon",
     name: "TIRAV Horizon",
+    publicLabel: "Compliance Automation",
     tagline: "Compliance evidence automation with review-friendly handling.",
     purpose:
       "Automate evidence capture, integrity verification, retention discipline, and audit-friendly disclosure bundles.",

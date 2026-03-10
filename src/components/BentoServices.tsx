@@ -75,9 +75,7 @@ function FibrePulse() {
         <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
         <div className="orbit-slide absolute left-0 top-1/2 h-[3px] w-28 -translate-y-1/2 bg-blue-400/50 blur-md" />
       </div>
-      <div className="absolute bottom-2 right-3 text-[10px] text-white/55">
-        Fibre service path
-      </div>
+      <div className="absolute bottom-2 right-3 text-[10px] text-white/55">Fibre service path</div>
     </div>
   );
 }
@@ -90,9 +88,7 @@ function DedicatedLine() {
         <div className="absolute left-[22%] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-cyan-200 shadow-[0_0_24px_rgba(56,253,254,0.45)]" />
         <div className="absolute right-[22%] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-cyan-200 shadow-[0_0_24px_rgba(56,253,254,0.45)]" />
       </div>
-      <div className="absolute bottom-2 right-3 text-[10px] text-white/55">
-        Dedicated path
-      </div>
+      <div className="absolute bottom-2 right-3 text-[10px] text-white/55">Dedicated path</div>
     </div>
   );
 }
@@ -120,9 +116,7 @@ function ManagedGrid() {
         </div>
       ))}
 
-      <div className="absolute bottom-2 right-3 text-[10px] text-white/55">
-        Managed network
-      </div>
+      <div className="absolute bottom-2 right-3 text-[10px] text-white/55">Managed network</div>
     </div>
   );
 }
@@ -159,9 +153,7 @@ function ContinuityPulse() {
         <div className="text-lg text-[#FACC15]">↺</div>
       </div>
 
-      <div className="absolute bottom-2 right-3 text-[10px] text-white/55">
-        Backup ready
-      </div>
+      <div className="absolute bottom-2 right-3 text-[10px] text-white/55">Backup ready</div>
     </div>
   );
 }
@@ -211,27 +203,26 @@ export default function BentoServices() {
           <div className="max-w-3xl">
             <div className="text-[11px] tracking-[0.28em] text-white/55">SERVICES</div>
             <h2 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">
-              Business connectivity services, clearly organized
+              Business connectivity services for Ontario sites
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65 sm:text-[15px]">
-              Start with the service your site needs most. The goal is to help buyers choose faster,
-              understand fit more clearly, and move toward address-qualified pricing with less
-              friction.
+              Choose the service that matches your site requirement, then request availability and
+              pricing based on address, scope, and timeline.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/50">BUYER MODE</div>
             <div className="mt-1 text-sm text-white/80">
-              Choose service • confirm fit • request pricing
+              Choose service • submit site details • receive next step
             </div>
           </div>
         </div>
 
-        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-5">
+        <div className="mt-7 grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2">
           <Card
             title="Business Fibre Internet"
-            desc="Business internet for offices, commercial spaces, and growing organizations that need reliable connectivity, clearer quoting, and a cleaner provider experience."
+            desc="Business internet for offices, clinics, commercial units, and growing teams that need reliable connectivity and a better commercial experience."
             accent="blue"
             href="/services/business-fibre-internet"
             badge="INTERNET"
@@ -243,7 +234,7 @@ export default function BentoServices() {
 
           <Card
             title="Dedicated Internet Access"
-            desc="Dedicated connectivity for business sites that need stronger performance expectations, cleaner delivery, and more predictable service for critical operations."
+            desc="Dedicated connectivity for critical business locations that need stronger performance, higher consistency, and cleaner delivery expectations."
             accent="blue"
             href="/services/dedicated-internet-access"
             badge="DEDICATED CONNECTIVITY"
@@ -255,7 +246,7 @@ export default function BentoServices() {
 
           <Card
             title="Managed Wi-Fi & LAN"
-            desc="Managed internal network service for businesses that need better Wi-Fi coverage, cleaner segmentation, stronger support, and easier day-to-day site operations."
+            desc="Managed internal networking for businesses that need stronger Wi-Fi coverage, better segmentation, and more dependable day-to-day site operations."
             accent="emerald"
             href="/services/managed-lan-wifi"
             badge="MANAGED NETWORK"
@@ -267,7 +258,7 @@ export default function BentoServices() {
 
           <Card
             title="Business Voice"
-            desc="Cloud voice and business calling for teams that need number porting, front-desk routing, and a more structured communications setup."
+            desc="Cloud voice and business calling for teams that need number porting, call routing, auto attendants, and a more professional phone setup."
             accent="gold"
             href="/services/voip-cloud-voice"
             badge="VOICE"
@@ -279,7 +270,7 @@ export default function BentoServices() {
 
           <Card
             title="Backup Connectivity"
-            desc="Continuity service for businesses that want LTE or 5G failover, outage resilience, and a stronger backup plan for critical operations."
+            desc="LTE or 5G continuity for businesses that need failover planning and a stronger response path during primary service disruption."
             accent="gold"
             href="/services/lte-5g-continuity"
             badge="CONTINUITY"
@@ -291,7 +282,7 @@ export default function BentoServices() {
 
           <Card
             title="IoT Connectivity"
-            desc="Secure business connectivity for gateways, sensors, and connected devices that need cleaner segmentation, controlled uplinks, and safer operational visibility."
+            desc="Business connectivity for gateways, sensors, and connected devices that need controlled uplinks, segmentation, and operational visibility."
             accent="emerald"
             href="/services/iot-connectivity"
             badge="CONNECTED DEVICES"
@@ -308,17 +299,17 @@ export default function BentoServices() {
           <div className="max-w-3xl">
             <div className="text-[11px] tracking-[0.28em] text-white/55">BEST FIT</div>
             <h3 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
-              Where most buyers usually begin
+              The most common starting points
             </h3>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              Most buyers start with the service that solves the main site need first, then add
-              voice, backup, managed networking, or IoT as the business scope becomes clearer.
+              Most businesses begin with internet first, then add managed networking, voice,
+              backup, or IoT based on operational requirements.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/50">OUTCOME</div>
-            <div className="mt-1 text-sm text-white/80">Faster selection • Better fit</div>
+            <div className="mt-1 text-sm text-white/80">Clearer starting point</div>
           </div>
         </div>
 
@@ -347,18 +338,17 @@ export default function BentoServices() {
           <div className="max-w-3xl">
             <div className="text-[11px] tracking-[0.28em] text-white/55">HOW TO START</div>
             <h3 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
-              Start with the service the business needs most
+              Start with one requirement
             </h3>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              You do not need to plan everything at once. Start with internet, voice, managed
-              networking, backup, or IoT, then move into a clear request with your address,
-              timeline, and site requirements.
+              Start with the service your site needs most, then submit your address, timeline, and
+              requirements for availability review and pricing direction.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/50">OUTCOME</div>
-            <div className="mt-1 text-sm text-white/80">Cleaner decisions • Better leads</div>
+            <div className="mt-1 text-sm text-white/80">Qualified enquiries</div>
           </div>
         </div>
 
@@ -370,13 +360,13 @@ export default function BentoServices() {
           />
           <BuyerStep
             step="2"
-            title="Add your site details"
-            desc="Share your address, timeline, and the technical or operational requirements that matter most."
+            title="Submit site details"
+            desc="Share your address, timeline, and business requirements."
           />
           <BuyerStep
             step="3"
-            title="Request review and pricing"
-            desc="Submit one clear request and receive the next best step for availability, fit, or pricing direction."
+            title="Receive the next step"
+            desc="Get availability direction, pricing guidance, or a recommended follow-up."
           />
         </div>
 
@@ -394,10 +384,10 @@ export default function BentoServices() {
             Browse All Services
           </Link>
           <Link
-            href="/trust"
+            href="/locations"
             className="rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-center text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
           >
-            View Trust & Compliance
+            View Service Areas
           </Link>
         </div>
       </div>

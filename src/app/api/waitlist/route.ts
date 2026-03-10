@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { Resend } from "resend";
 
+import { SERVICE_CATALOG } from "@/lib/siteStatus";
+
 export const runtime = "nodejs";
 
 type Intent =
@@ -170,6 +172,50 @@ function formatTimelineLabel(timeline?: string) {
   }
 }
 
+function normalizeModuleName(input?: string): string | undefined {
+  if (!input) return undefined;
+
+  const raw = input.trim();
+  if (!raw) return undefined;
+
+  const lowered = raw.toLowerCase();
+
+  for (const service of SERVICE_CATALOG) {
+    if (service.name.toLowerCase() === lowered) return service.name;
+    if (service.publicLabel.toLowerCase() === lowered) return service.name;
+  }
+
+  const labelMap: Record<string, string> = {
+    "business fibre internet": "AUREX Internet",
+    "business fiber internet": "AUREX Internet",
+    "dedicated internet access": "AUREX Internet",
+    "managed wi-fi & lan": "AUREX Internet",
+    "managed wifi & lan": "AUREX Internet",
+    "managed lan/wifi": "AUREX Internet",
+    "managed lan wifi": "AUREX Internet",
+    "business voice": "AUREX Voice",
+    "backup connectivity": "AUREX Internet",
+    "lte / 5g continuity": "AUREX Internet",
+    "lte/5g continuity": "AUREX Internet",
+    "iot connectivity": "AUREX Smart",
+    "compliance automation": "TIRAV Horizon",
+  };
+
+  return labelMap[lowered] ?? raw;
+}
+
+function formatModuleLabel(moduleName?: string) {
+  if (!moduleName) return "N/A";
+
+  const lowered = moduleName.toLowerCase();
+  const match = SERVICE_CATALOG.find(
+    (service) =>
+      service.name.toLowerCase() === lowered || service.publicLabel.toLowerCase() === lowered
+  );
+
+  return match?.publicLabel || moduleName;
+}
+
 async function readStoreLocal(filePath: string): Promise<Store> {
   const fs = await import("fs/promises");
   try {
@@ -231,7 +277,7 @@ async function notifyOps(sub: Submission, isUpdate: boolean) {
   const from = process.env.INTAKE_FROM_EMAIL || "Orbitlink <onboarding@resend.dev>";
 
   const companyOrEmail = sub.company || sub.email;
-  const moduleOrFallback = sub.module || "General enquiry";
+  const moduleOrFallback = formatModuleLabel(sub.module);
 
   const subject = isUpdate
     ? `Orbitlink Lead Update — ${companyOrEmail} — ${moduleOrFallback}`
@@ -247,7 +293,7 @@ async function notifyOps(sub: Submission, isUpdate: boolean) {
     `Company: ${sub.company || "N/A"}`,
     `Role: ${sub.role || "N/A"}`,
     `Service Address: ${sub.location || "N/A"}`,
-    `Service Needed: ${sub.module || "N/A"}`,
+    `Service Needed: ${formatModuleLabel(sub.module)}`,
     `Timeline: ${formatTimelineLabel(sub.timeline)}`,
     `Number of Sites: ${formatScopeLabel(sub.sites)}`,
     `Source: ${sub.lastSource || sub.source || "N/A"}`,
@@ -270,7 +316,7 @@ async function notifyOps(sub: Submission, isUpdate: boolean) {
         <tr><td style="padding:6px 10px;color:#666;">Company</td><td style="padding:6px 10px;">${escapeHtml(sub.company || "N/A")}</td></tr>
         <tr><td style="padding:6px 10px;color:#666;">Role</td><td style="padding:6px 10px;">${escapeHtml(sub.role || "N/A")}</td></tr>
         <tr><td style="padding:6px 10px;color:#666;">Service Address</td><td style="padding:6px 10px;">${escapeHtml(sub.location || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Service Needed</td><td style="padding:6px 10px;">${escapeHtml(sub.module || "N/A")}</td></tr>
+        <tr><td style="padding:6px 10px;color:#666;">Service Needed</td><td style="padding:6px 10px;">${escapeHtml(formatModuleLabel(sub.module))}</td></tr>
         <tr><td style="padding:6px 10px;color:#666;">Timeline</td><td style="padding:6px 10px;">${escapeHtml(formatTimelineLabel(sub.timeline))}</td></tr>
         <tr><td style="padding:6px 10px;color:#666;">Number of Sites</td><td style="padding:6px 10px;">${escapeHtml(formatScopeLabel(sub.sites))}</td></tr>
         <tr><td style="padding:6px 10px;color:#666;">Source</td><td style="padding:6px 10px;">${escapeHtml(sub.lastSource || sub.source || "N/A")}</td></tr>
@@ -328,7 +374,7 @@ export async function POST(req: Request) {
     const company = clean(form.get("company"), 160) || undefined;
     const role = clean(form.get("role"), 80) || undefined;
     const location = clean(form.get("location"), 180) || undefined;
-    const moduleName = clean(form.get("module"), 120) || undefined;
+    const moduleName = normalizeModuleName(clean(form.get("module"), 120) || undefined);
     const timeline = clean(form.get("timeline"), 80) || undefined;
     const sites = clean(form.get("sites"), 80) || undefined;
     const notes = clean(form.get("notes"), 1200) || undefined;

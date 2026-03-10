@@ -5,8 +5,8 @@ export type WaitlistRecord = {
   createdAt?: string;
   updatedAt?: string;
 
-  source?: string; // coming-soon / trust / solutions
-  intent?: string; // early-access / verification-pack
+  source?: string; // contact / trust / solutions / coming-soon
+  intent?: string; // availability_pricing / verification-pack / early-access
 
   email: string;
 
@@ -16,6 +16,8 @@ export type WaitlistRecord = {
   location?: string;
   module?: string;
   volume?: string;
+  timeline?: string;
+  sites?: string;
   notes?: string;
 
   // ✅ OPS fields (internal)
@@ -39,8 +41,7 @@ function asString(v: unknown): string | undefined {
 }
 
 function cleanEmail(v: unknown): string {
-  const s = typeof v === "string" ? v.trim().toLowerCase() : "";
-  return s;
+  return typeof v === "string" ? v.trim().toLowerCase() : "";
 }
 
 /**
@@ -55,10 +56,7 @@ export function normalizeRecord(x: unknown): WaitlistRecord | null {
   const email = cleanEmail(x.email);
   if (!email) return null;
 
-  const createdAt =
-    asString(x.createdAt) ??
-    asString(x.ts) ??
-    undefined;
+  const createdAt = asString(x.createdAt) ?? asString(x.ts) ?? undefined;
 
   return {
     id: asString(x.id),
@@ -75,6 +73,8 @@ export function normalizeRecord(x: unknown): WaitlistRecord | null {
     location: asString(x.location),
     module: asString(x.module),
     volume: asString(x.volume),
+    timeline: asString(x.timeline),
+    sites: asString(x.sites),
     notes: asString(x.notes),
 
     reviewedAt: asString(x.reviewedAt),
@@ -90,29 +90,52 @@ export function scoreRecord(r: WaitlistRecord): number {
   let s = 0;
 
   // Intent
-  if (r.intent === "verification-pack") s += 50;
-  if (r.intent === "early-access") s += 30;
+  if (r.intent === "availability_pricing") s += 35;
+  if (r.intent === "verification-pack") s += 45;
+  if (r.intent === "early-access") s += 20;
+
+  // Source
+  if (r.source === "contact") s += 20;
+  if (r.source === "trust") s += 10;
+  if (r.source === "solutions") s += 8;
 
   // Role
-  if (r.role === "auditor") s += 35;
-  if (r.role === "enterprise") s += 30;
-  if (r.role === "isp") s += 20;
-  if (r.role === "partner") s += 10;
+  if (r.role === "business_owner") s += 22;
+  if (r.role === "business_buyer") s += 24;
+  if (r.role === "it_network") s += 20;
+  if (r.role === "operations_facilities") s += 16;
+  if (r.role === "property_management") s += 16;
+  if (r.role === "partner_vendor") s += 8;
+
+  // Legacy role support
+  if (r.role === "auditor") s += 30;
+  if (r.role === "enterprise") s += 24;
+  if (r.role === "isp") s += 16;
+  if (r.role === "partner") s += 8;
 
   // Completeness
   if (r.company) s += 10;
   if (r.fullName) s += 8;
-  if (r.location) s += 6;
-  if (r.module) s += 8;
+  if (r.location) s += 14;
+  if (r.module) s += 12;
+  if (r.timeline) s += 8;
+  if (r.sites) s += 6;
   if (r.volume) s += 4;
 
-  // Notes
+  // Timeline urgency
+  if (r.timeline === "asap") s += 10;
+  if (r.timeline === "within_30_days") s += 8;
+  if (r.timeline === "within_60_90_days") s += 5;
+
+  // Multi-site potential
+  if (r.sites === "2_5") s += 4;
+  if (r.sites === "6_20") s += 8;
+  if (r.sites === "20_plus") s += 12;
+
+  // Notes quality
   const n = (r.notes || "").trim();
   if (n.length >= 40) s += 6;
   if (n.length >= 140) s += 6;
-
-  // Trust source nudge
-  if (r.source === "trust") s += 10;
 
   return Math.min(100, s);
 }
@@ -120,64 +143,99 @@ export function scoreRecord(r: WaitlistRecord): number {
 export function formatWhen(r: WaitlistRecord): string {
   const ts = r.updatedAt || r.createdAt;
   if (!ts) return "—";
+
   const d = new Date(ts);
   if (Number.isNaN(d.getTime())) return "—";
+
   return d.toISOString().slice(0, 10);
 }
 
 export function formatShortDate(ts?: string) {
   if (!ts) return "—";
+
   const d = new Date(ts);
   if (Number.isNaN(d.getTime())) return "—";
+
   return d.toISOString().slice(0, 10);
 }
 
 export function uniqSorted(values: (string | undefined)[]) {
-  return Array.from(
-    new Set(values.map((v) => (v || "").trim()).filter(Boolean))
-  ).sort((a, b) => a.localeCompare(b));
+  return Array.from(new Set(values.map((v) => (v || "").trim()).filter(Boolean))).sort((a, b) =>
+    a.localeCompare(b)
+  );
 }
 
 export function makeMailtoSubject(r: WaitlistRecord) {
   if (r.intent === "verification-pack") {
-    return "Orbitlink — Verification Pack (Request Received)";
+    return "Orbitlink — Verification Pack Request";
   }
-  return "Orbitlink — Intake Request (Next Window)";
+
+  if (r.intent === "availability_pricing") {
+    return "Orbitlink — Availability & Pricing Request";
+  }
+
+  return "Orbitlink — Service Request";
 }
 
 export function makeReplyTemplate(r: WaitlistRecord) {
   const lines: string[] = [];
 
   if (r.intent === "verification-pack") {
-    lines.push("Thanks — request received.");
+    lines.push("Thanks — your request has been received.");
     lines.push("We’ll reply when your request matches an active review window.");
     lines.push("");
     lines.push("To prepare the scope-appropriate pack, please confirm:");
-    lines.push("• Module (if applicable): " + (r.module || "—"));
+    lines.push("• Service or module: " + (r.module || "—"));
     lines.push("• Location: " + (r.location || "—"));
-    lines.push(
-      "• Review audience (auditor / internal / regulator): " + (r.role || "—")
-    );
+    lines.push("• Review audience: " + (r.role || "—"));
     lines.push("");
     lines.push(
-      "We keep sensitive operational details request-only and provide redacted samples where appropriate."
+      "Sensitive operational details remain request-only, and redacted materials are shared where appropriate."
     );
-  } else {
-    lines.push("Thanks — intake request received.");
-    lines.push("We’ll reply when your profile fits the next onboarding window.");
+
+    return lines.join("\n");
+  }
+
+  if (r.intent === "availability_pricing") {
+    lines.push("Thanks — your request has been received.");
+    lines.push("We’re reviewing the address, service fit, and project details now.");
     lines.push("");
     lines.push("Captured details:");
-    lines.push("• Module: " + (r.module || "—"));
-    lines.push("• Location: " + (r.location || "—"));
+    lines.push("• Service: " + (r.module || "—"));
+    lines.push("• Address: " + (r.location || "—"));
     lines.push("• Company: " + (r.company || "—"));
-    if (r.notes) {
+    lines.push("• Timeline: " + (r.timeline || "—"));
+    lines.push("• Sites: " + (r.sites || r.volume || "—"));
+
+    if (r.notes && r.notes.trim()) {
       lines.push("");
-      lines.push("Notes:");
+      lines.push("Project details:");
       lines.push(r.notes.trim());
     }
+
     lines.push("");
-    lines.push("Orbitlink intake is controlled: one response, no marketing noise.");
+    lines.push(
+      "We’ll reply with the clearest next step available, which may include availability direction, pricing guidance, or a follow-up question if more detail is needed."
+    );
+
+    return lines.join("\n");
   }
+
+  lines.push("Thanks — your request has been received.");
+  lines.push("");
+  lines.push("Captured details:");
+  lines.push("• Service: " + (r.module || "—"));
+  lines.push("• Address: " + (r.location || "—"));
+  lines.push("• Company: " + (r.company || "—"));
+
+  if (r.notes && r.notes.trim()) {
+    lines.push("");
+    lines.push("Notes:");
+    lines.push(r.notes.trim());
+  }
+
+  lines.push("");
+  lines.push("We’ll reply with the next appropriate step.");
 
   return lines.join("\n");
 }
