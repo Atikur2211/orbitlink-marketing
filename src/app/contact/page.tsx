@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import PageShell from "@/components/PageShell";
 import IntakeStatusBanner from "@/components/IntakeStatusBanner";
 import ContactIntakeForm from "@/components/ContactIntakeForm";
-import { MODULE_SPECS } from "@/lib/siteStatus";
+import { SERVICE_CATALOG } from "@/lib/siteStatus";
 
 const SITE_URL = "https://orbitlink.ca";
 const PAGE_URL = `${SITE_URL}/contact`;
@@ -129,7 +129,7 @@ function MetricPill({
 }
 
 export default function ContactPage() {
-  const moduleOptions = MODULE_SPECS.map((m) => m.name);
+  const moduleOptions = SERVICE_CATALOG.map((s) => s.publicLabel);
 
   const schemaGraph = {
     "@context": "https://schema.org",

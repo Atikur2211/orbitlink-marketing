@@ -1,7 +1,7 @@
 // src/app/coming-soon/page.tsx
 import PageShell from "@/components/PageShell";
 import IntakeStatusBanner from "@/components/IntakeStatusBanner";
-import { MODULE_SPECS } from "@/lib/siteStatus";
+import { SERVICE_CATALOG } from "@/lib/siteStatus";
 import { Suspense } from "react";
 
 function Pill({ children }: { children: React.ReactNode }) {
@@ -13,7 +13,7 @@ function Pill({ children }: { children: React.ReactNode }) {
 }
 
 export default function ComingSoonPage() {
-  const moduleOptions = MODULE_SPECS.map((m) => m.name);
+  const moduleOptions = SERVICE_CATALOG.map((s) => s.publicLabel)
 
   return (
     <PageShell

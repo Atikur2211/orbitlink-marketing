@@ -5,7 +5,7 @@ import {
   TRUST_ASSURANCE,
   TRUST_DISCLOSURES,
   TRUST_TILES,
-  MODULE_SPECS,
+  SERVICE_CATALOG,
 } from "@/lib/siteStatus";
 
 const SITE_URL = "https://orbitlink.ca";
@@ -240,7 +240,7 @@ function BuyerFitCard({
 }
 
 export default function TrustPage() {
-  const moduleOptions = MODULE_SPECS.map((m) => m.name);
+  const moduleOptions = SERVICE_CATALOG.map((s) => s.name);
 
   const schemaOrg = {
     "@context": "https://schema.org",
@@ -813,7 +813,7 @@ export default function TrustPage() {
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
-          {MODULE_SPECS.map((module) => (
+          {SERVICE_CATALOG.map((module) => (
             <ModuleChip key={module.id} name={module.name} tagline={module.tagline} />
           ))}
         </div>
