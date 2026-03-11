@@ -15,8 +15,11 @@ function clean(v: unknown, max = 400) {
   return s.length > max ? s.slice(0, max) : s;
 }
 
-function readBootstrapEmail() {
-  return cleanEmail(process.env.PORTAL_DEV_BOOTSTRAP_EMAIL || "");
+function readAllowedEmails() {
+  return String(process.env.PORTAL_ALLOWED_EMAILS || "")
+    .split(",")
+    .map((x) => cleanEmail(x))
+    .filter(Boolean);
 }
 
 function readPortalSecret() {
@@ -43,8 +46,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "invalid_email" }, { status: 400 });
     }
 
-    const bootstrapEmail = readBootstrapEmail();
-    if (!bootstrapEmail || email !== bootstrapEmail) {
+    const allowedEmails = readAllowedEmails();
+    if (!allowedEmails.includes(email)) {
       return NextResponse.json({ ok: false, error: "not_provisioned" }, { status: 403 });
     }
 
