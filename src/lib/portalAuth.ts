@@ -1,4 +1,4 @@
-// src/lib/portalAuth.ts (v2.2 GOLDEN)
+// src/lib/portalAuth.ts (v2.3 PORTABLE STORAGE)
 import { promises as fs } from "fs";
 import path from "path";
 import crypto from "crypto";
@@ -56,14 +56,21 @@ function randomHex(bytes = 24) {
   return crypto.randomBytes(bytes).toString("hex");
 }
 
+function runtimeDataDir() {
+  if (process.env.NODE_ENV === "production") return "/tmp";
+  return process.cwd();
+}
+
 function tokensPath() {
-  return path.join(process.cwd(), "portal_tokens.json");
+  return path.join(runtimeDataDir(), "portal_tokens.json");
 }
+
 function sessionsPath() {
-  return path.join(process.cwd(), "portal_sessions.json");
+  return path.join(runtimeDataDir(), "portal_sessions.json");
 }
+
 function provisionPath() {
-  return path.join(process.cwd(), "portal_provision.json");
+  return path.join(runtimeDataDir(), "portal_provision.json");
 }
 
 async function readArrayJSON<T>(filePath: string): Promise<T[]> {
@@ -86,7 +93,7 @@ function clamp(n: number, a: number, b: number) {
   return Math.max(a, Math.min(b, n));
 }
 
-function isPortalRole(v: any): v is PortalRole {
+function isPortalRole(v: unknown): v is PortalRole {
   return v === "customer" || v === "admin" || v === "ops";
 }
 
@@ -99,16 +106,17 @@ function isPortalRole(v: any): v is PortalRole {
 
 const COOKIE_NAME = "orbit_portal_session";
 
-// Rolling session config (tune freely)
-const SESSION_TTL_HOURS = Number(process.env.PORTAL_SESSION_TTL_HOURS ?? 24); // server session length
-const COOKIE_TTL_MINUTES = Number(process.env.PORTAL_COOKIE_TTL_MINUTES ?? 60); // cookie refresh window
-const ROLLING_GRACE_MINUTES = Number(process.env.PORTAL_ROLLING_GRACE_MINUTES ?? 15); // refresh if < 15m left
+// Rolling session config
+const SESSION_TTL_HOURS = Number(process.env.PORTAL_SESSION_TTL_HOURS ?? 24);
+const COOKIE_TTL_MINUTES = Number(process.env.PORTAL_COOKIE_TTL_MINUTES ?? 60);
+const ROLLING_GRACE_MINUTES = Number(process.env.PORTAL_ROLLING_GRACE_MINUTES ?? 15);
 
 function mustSecret(): string {
   const s = String(process.env.PORTAL_COOKIE_SECRET || "").trim();
   if (!s || s.length < 24) {
-    // In dev, allow a fallback, but strongly encourage setting the env var
-    if (process.env.NODE_ENV !== "production") return "DEV_ONLY_CHANGE_ME_DEV_ONLY_CHANGE_ME_1234567890";
+    if (process.env.NODE_ENV !== "production") {
+      return "DEV_ONLY_CHANGE_ME_DEV_ONLY_CHANGE_ME_1234567890";
+    }
     throw new Error("PORTAL_COOKIE_SECRET_missing");
   }
   return s;
@@ -117,6 +125,7 @@ function mustSecret(): string {
 function b64urlEncode(buf: Buffer) {
   return buf.toString("base64url");
 }
+
 function b64urlDecode(s: string) {
   return Buffer.from(s, "base64url");
 }
@@ -131,7 +140,7 @@ export type CookieIdentity = {
   email: string;
   orgId: string;
   role: PortalRole;
-  expiresAt: string; // cookie expiry (not the same as server session expiry)
+  expiresAt: string;
 };
 
 function makeCookiePayload(x: CookieIdentity) {
@@ -139,7 +148,6 @@ function makeCookiePayload(x: CookieIdentity) {
 }
 
 export function makeSessionCookieValue(x: CookieIdentity) {
-  // payload.signature
   const payload = makeCookiePayload(x);
   const sig = hmac(payload);
   return `${payload}.${sig}`;
@@ -158,10 +166,10 @@ export function verifySessionCookieValue(v: string):
     const payloadB64 = parts[0];
     const sig = parts[1];
 
-    // constant-time compare
     const expected = hmac(payloadB64);
     const a = Buffer.from(sig);
     const b = Buffer.from(expected);
+
     if (a.length !== b.length) return { ok: false };
     if (!crypto.timingSafeEqual(a, b)) return { ok: false };
 
@@ -177,7 +185,6 @@ export function verifySessionCookieValue(v: string):
     if (!sessionId || !email || !orgId || !expiresAt) return { ok: false };
     if (!isPortalRole(role)) return { ok: false };
 
-    // cookie expiry gate
     const exp = Date.parse(expiresAt);
     if (!exp || Date.now() > exp) return { ok: false };
 
@@ -188,24 +195,32 @@ export function verifySessionCookieValue(v: string):
 }
 
 /**
- * v2.2 provisioning rules
+ * v2.3 provisioning rules
+ * - Reads real provision file in dev
+ * - In production, falls back to bootstrap env because /tmp is ephemeral
  */
 async function getProvisionForEmail(email: string): Promise<ProvisionRow | null> {
-  const list = await readArrayJSON<ProvisionRow>(provisionPath());
-  const row = list.find((x) => cleanEmail(x?.email) === email && x?.enabled);
-  if (row) return row;
+  const normalizedEmail = cleanEmail(email);
+  if (!normalizedEmail) return null;
+
+  if (process.env.NODE_ENV !== "production") {
+    const list = await readArrayJSON<ProvisionRow>(provisionPath());
+    const row = list.find((x) => cleanEmail(x?.email) === normalizedEmail && x?.enabled);
+    if (row) return row;
+  }
 
   const bootstrap = cleanEmail(process.env.PORTAL_DEV_BOOTSTRAP_EMAIL || "");
-  if (bootstrap && bootstrap === email) {
+  if (bootstrap && bootstrap === normalizedEmail) {
     return {
-      email,
+      email: normalizedEmail,
       orgId: "orbitlink-internal",
       role: "admin",
       enabled: true,
-      note: "Dev bootstrap",
+      note: "Bootstrap access",
       createdAt: nowISO(),
     };
   }
+
   return null;
 }
 
@@ -234,8 +249,8 @@ export async function makeMagicToken(args: {
     email,
     createdAt,
     expiresAt,
-    ip: clean(args.ip, 120),
-    userAgent: clean(args.userAgent, 240),
+    ip: clean(args.ip, 120) || undefined,
+    userAgent: clean(args.userAgent, 240) || undefined,
   };
 
   const file = tokensPath();
@@ -272,13 +287,14 @@ export async function verifyMagicToken(tokenRaw: string): Promise<
   const prov = await getProvisionForEmail(row.email);
   if (!prov) return { ok: false, error: "not_provisioned" };
 
-  // mark token used
   const usedAt = nowISO();
   list[idx] = { ...row, usedAt };
   await writeJSONAtomic(file, list);
 
   const sessionId = randomHex(32);
-  const sessionExpiresAt = new Date(Date.now() + SESSION_TTL_HOURS * 60 * 60_000).toISOString();
+  const sessionExpiresAt = new Date(
+    Date.now() + SESSION_TTL_HOURS * 60 * 60_000
+  ).toISOString();
 
   const sessionsFile = sessionsPath();
   const sessions = await readArrayJSON<SessionRow>(sessionsFile);
@@ -329,10 +345,11 @@ export async function verifySessionExists(sessionIdRaw: string): Promise<
 }
 
 /**
- * Touch session: update lastSeenAt and (optionally) extend server expiry
- * Golden: sliding sessions; extend expiry on activity.
+ * Touch session: sliding extension
  */
-export async function touchSession(sessionIdRaw: string): Promise<{ ok: true; expiresAt: string } | { ok: false }> {
+export async function touchSession(
+  sessionIdRaw: string
+): Promise<{ ok: true; expiresAt: string } | { ok: false }> {
   const sessionId = clean(sessionIdRaw, 200);
   if (!sessionId) return { ok: false };
 
@@ -345,12 +362,14 @@ export async function touchSession(sessionIdRaw: string): Promise<{ ok: true; ex
   const exp = Date.parse(row.expiresAt || "");
   if (!exp || Date.now() > exp) return { ok: false };
 
-  const nextExpiresAt = new Date(Date.now() + SESSION_TTL_HOURS * 60 * 60_000).toISOString();
+  const nextExpiresAt = new Date(
+    Date.now() + SESSION_TTL_HOURS * 60 * 60_000
+  ).toISOString();
 
   sessions[idx] = {
     ...row,
     lastSeenAt: nowISO(),
-    expiresAt: nextExpiresAt, // sliding extension
+    expiresAt: nextExpiresAt,
   };
 
   await writeJSONAtomic(file, sessions);
@@ -373,8 +392,7 @@ export async function revokeSession(sessionIdRaw: string) {
 }
 
 /**
- * Golden helper:
- * Should we refresh cookie soon?
+ * Refresh cookie soon?
  */
 export function shouldRefreshCookie(cookieExpiresAtISO: string) {
   const exp = Date.parse(cookieExpiresAtISO || "");
@@ -389,7 +407,10 @@ export function mintRollingCookie(identity: {
   orgId: string;
   role: PortalRole;
 }) {
-  const cookieExpiresAt = new Date(Date.now() + COOKIE_TTL_MINUTES * 60_000).toISOString();
+  const cookieExpiresAt = new Date(
+    Date.now() + COOKIE_TTL_MINUTES * 60_000
+  ).toISOString();
+
   return makeSessionCookieValue({
     sessionId: identity.sessionId,
     email: identity.email,
