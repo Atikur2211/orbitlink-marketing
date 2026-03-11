@@ -1,15 +1,21 @@
+// src/app/locations/vaughan/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/locations/vaughan";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
+const ORG_ID = `${SITE_URL}/#org`;
+const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
+const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 const BUSINESS = {
   name: "Orbitlink™",
   legalName: "TIRAV Technologies Inc. o/a Orbitlink",
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
+  email: "concierge@orbitlink.ca",
   address: {
     street: "30 Eglinton Ave W, Suite 400-A77",
     city: "Mississauga",
@@ -24,61 +30,109 @@ const BUSINESS = {
     { day: "Thursday", opens: "09:00", closes: "18:00" },
     { day: "Friday", opens: "09:00", closes: "18:00" },
   ],
-};
+} as const;
+
+const PAGE_TITLE = "Business Fibre Internet in Vaughan, ON | Orbitlink™";
+const PAGE_DESCRIPTION =
+  "Business internet in Vaughan with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet in Vaughan, ON | Orbitlink™",
-  description:
-    "Operator-grade business fibre internet in Vaughan with structured onboarding, documented delivery, and enterprise support posture. Check availability.",
-  alternates: { canonical: PAGE_PATH },
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Business Fibre Internet in Vaughan, ON | Orbitlink™",
+    title: PAGE_TITLE,
     description:
-      "Business connectivity in Vaughan: fibre, DIA, managed LAN & Wi-Fi, continuity architecture, and voice. Availability by building.",
-    url: PAGE_PATH,
+      "Business connectivity in Vaughan with fibre, DIA, managed LAN and Wi-Fi, continuity, and address-qualified service review.",
+    url: PAGE_URL,
     type: "website",
+    siteName: SITE_NAME,
+    locale: "en_CA",
+    images: [
+      {
+        url: OG_IMAGE_URL,
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink Vaughan business internet",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Fibre Internet in Vaughan, ON | Orbitlink™",
+    title: PAGE_TITLE,
     description:
-      "Operator-grade business connectivity in Vaughan delivered with structured onboarding, documented acceptance, and enterprise support posture.",
+      "Business internet in Vaughan with fibre, DIA, managed LAN and Wi-Fi, and structured service review.",
+    images: [TWITTER_IMAGE_URL],
   },
 };
 
 const FAQ = [
   {
     q: "Do you service my address in Vaughan?",
-    a: "Coverage depends on building infrastructure and upstream feasibility. Orbitlink is available on-net where possible, with clear scoping when additional build work is required. Submit an availability request and we’ll confirm feasibility.",
+    a: "Availability depends on building infrastructure, access feasibility, and upstream serviceability. Orbitlink confirms feasibility by address before moving forward.",
   },
   {
     q: "Do you support industrial and commercial sites in Vaughan?",
-    a: "Yes—Vaughan includes a strong mix of commercial offices and industrial corridors. We confirm feasibility per site and recommend broadband fibre or DIA based on your operational requirements.",
+    a: "Yes. Vaughan includes a strong mix of commercial offices and industrial corridors. Orbitlink reviews feasibility per site and recommends the right access model based on operational needs.",
   },
   {
-    q: "Do you offer Dedicated Internet Access (DIA) in Vaughan?",
-    a: "Yes—DIA is available for performance-critical environments where deterministic throughput/latency and formal delivery posture are required, subject to feasibility.",
+    q: "Do you offer Dedicated Internet Access in Vaughan?",
+    a: "Yes. Dedicated Internet Access is available for performance-critical environments where stronger performance and a clearer delivery posture are required, subject to feasibility.",
   },
   {
     q: "Do you provide static IPs?",
-    a: "Static IP options are available where feasible and depend on the underlying access type and location. We’ll confirm options during onboarding.",
+    a: "Static IP options are available where feasible and depend on the access type, service design, and site location.",
   },
   {
     q: "Can you manage my LAN and enterprise Wi-Fi?",
-    a: "Yes—Orbitlink provides Managed LAN & Enterprise Wi-Fi including segmentation posture, guest access, and coverage planning aligned with an operator-grade support posture.",
+    a: "Yes. Orbitlink provides managed LAN and enterprise Wi-Fi, including segmentation, guest access, coverage planning, and network support.",
   },
   {
     q: "How long does installation take in Vaughan?",
-    a: "Timelines vary by building readiness, access type, and upstream coordination. Orbitlink uses structured onboarding and documented acceptance so expectations are clear before activation.",
+    a: "Install timelines vary by building readiness, access type, landlord coordination, and upstream coordination. Expectations are reviewed before activation.",
   },
   {
-    q: "Do you offer failover/continuity options?",
-    a: "Yes—Orbitlink designs LTE/5G continuity patterns for sites that require uptime during access disruptions. Feasibility depends on site constraints and design.",
+    q: "Do you offer failover and continuity options?",
+    a: "Yes. Orbitlink can design LTE and 5G continuity options for sites that require uptime during access disruptions.",
   },
   {
     q: "Are you a reseller?",
-    a: "Orbitlink is the customer-facing operator responsible for onboarding posture, documentation, and support experience. Certain access products (e.g., Starlink) may be delivered via an agent/reseller model and are clearly labeled as such.",
+    a: "Orbitlink is the customer-facing operator responsible for onboarding, documentation, and support experience. Some access products may be delivered via an agent or reseller model and are labeled clearly.",
   },
+] as const;
+
+const serviceModules = [
+  { title: "Business Fibre Internet", href: "/services/business-fibre-internet" },
+  { title: "Dedicated Internet Access", href: "/services/dedicated-internet-access" },
+  { title: "Managed LAN & Wi-Fi", href: "/services/managed-lan-wifi" },
+  { title: "LTE / 5G Continuity", href: "/services/lte-5g-continuity" },
+  { title: "VoIP & Cloud Voice", href: "/services/voip-cloud-voice" },
+  { title: "Static IP Routing", href: "/services/static-ip-routing" },
+] as const;
+
+const buildingTypes = [
+  "Commercial office buildings",
+  "Industrial and warehouse sites",
+  "Professional offices and clinics",
+  "Retail and service businesses",
+  "Multi-site and mixed-use environments",
+] as const;
+
+const whyOrbitlink = [
+  "Address-qualified availability review",
+  "Clear distinction between broadband and DIA",
+  "Managed network options for commercial and industrial sites",
+  "Continuity design for uptime-sensitive operations",
+  "Documented onboarding and delivery",
+  "Business-first support posture",
+] as const;
+
+const heroTags = [
+  "Business fibre internet",
+  "Dedicated Internet Access",
+  "Managed LAN & Wi-Fi",
+  "Continuity options",
+  "Commercial and industrial fit",
 ] as const;
 
 function jsonLd() {
@@ -86,7 +140,7 @@ function jsonLd() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
       { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
       { "@type": "ListItem", position: 3, name: "Vaughan", item: PAGE_URL },
     ],
@@ -95,10 +149,13 @@ function jsonLd() {
   const localBusiness = {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "TelecomCompany"],
+    "@id": `${PAGE_URL}#business`,
     name: BUSINESS.name,
     legalName: BUSINESS.legalName,
     url: SITE_URL,
     telephone: BUSINESS.phoneE164,
+    email: BUSINESS.email,
+    parentOrganization: { "@id": ORG_ID },
     address: {
       "@type": "PostalAddress",
       streetAddress: BUSINESS.address.street,
@@ -107,7 +164,10 @@ function jsonLd() {
       postalCode: BUSINESS.address.postal,
       addressCountry: BUSINESS.address.country,
     },
-    areaServed: [{ "@type": "City", name: "Vaughan" }, { "@type": "AdministrativeArea", name: "Ontario" }],
+    areaServed: [
+      { "@type": "City", name: "Vaughan" },
+      { "@type": "AdministrativeArea", name: "Ontario" },
+    ],
     openingHoursSpecification: BUSINESS.hours.map((h) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: `https://schema.org/${h.day}`,
@@ -118,12 +178,24 @@ function jsonLd() {
 
   const telecomService = {
     "@context": "https://schema.org",
-    "@type": "Service",
-    name: "Business Fibre Internet in Vaughan",
-    provider: { "@type": "Organization", name: BUSINESS.name, url: SITE_URL },
+    "@type": "TelecomService",
+    "@id": `${PAGE_URL}#service`,
+    name: "Business Internet in Vaughan",
+    url: PAGE_URL,
+    provider: { "@id": ORG_ID },
     areaServed: { "@type": "City", name: "Vaughan" },
-    serviceType: ["Business Fibre Internet", "Dedicated Internet Access (DIA)", "Managed LAN & Enterprise Wi-Fi"],
-    availableChannel: { "@type": "ServiceChannel", serviceUrl: PAGE_URL },
+    serviceType: [
+      "Business Fibre Internet",
+      "Dedicated Internet Access",
+      "Managed LAN and Enterprise Wi-Fi",
+      "LTE and 5G Continuity",
+      "VoIP and Cloud Voice",
+      "Static IP Routing",
+    ],
+    availableChannel: {
+      "@type": "ServiceChannel",
+      serviceUrl: PAGE_URL,
+    },
   };
 
   const faqPage = {
@@ -139,195 +211,326 @@ function jsonLd() {
   return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/50">{children}</div>;
+}
+
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
+      <div className="mt-1 text-sm text-white/80">{value}</div>
+    </div>
+  );
+}
+
 export default function VaughanLocationPage() {
   return (
     <main className="min-h-screen bg-[#0B0F14] text-white">
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
-      {/* Hero */}
-      <section className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-        <div className="inline-flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-white/60" />
-          <span className="text-sm tracking-wide text-white/60">Service Area</span>
+      <section className="relative overflow-hidden border-b border-white/10">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-24 left-12 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl" />
+          <div className="absolute right-8 top-20 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />
+          <div className="absolute bottom-[-120px] left-1/2 h-72 w-[48rem] -translate-x-1/2 rounded-full bg-white/5 blur-3xl" />
+          <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <h1 className="mt-5 text-4xl md:text-5xl font-semibold tracking-tight">
-          Business Fibre Internet in Vaughan, ON
-        </h1>
-
-        <p className="mt-4 max-w-3xl text-base md:text-lg text-white/70 leading-relaxed">
-          Orbitlink provides operator-grade business connectivity in Vaughan with a disciplined delivery posture:
-          structured onboarding, documented acceptance, and enterprise support posture. Availability is{" "}
-          <span className="text-white/85 font-medium">on-net where available</span>, with clear feasibility scoping
-          when additional build work is required.
-        </p>
-
-        <div className="mt-6 flex flex-wrap gap-2">
-          {["On-net where available", "Structured onboarding", "Documented delivery", "Enterprise support posture"].map(
-            (x) => (
-              <span
-                key={x}
-                className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
-              >
-                {x}
-              </span>
-            )
-          )}
-        </div>
-
-        <div className="mt-7 flex flex-col sm:flex-row gap-3">
-          <Link
-            href="/contact#intake"
-            className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-5 py-3 text-sm font-semibold hover:bg-white/90 transition"
-          >
-            Check Availability / Request Access
-          </Link>
-          <Link
-            href="/services/business-fibre-internet"
-            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
-          >
-            Business Fibre Service Module
-          </Link>
-        </div>
-      </section>
-
-      {/* Content */}
-      <section className="mx-auto max-w-6xl px-6 pb-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {/* Main */}
-          <div className="lg:col-span-2 rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-            <h2 className="text-xl font-semibold tracking-tight">Vaughan connectivity for commercial and industrial operations</h2>
-            <div className="mt-3 space-y-4 text-white/70 leading-relaxed">
-              <p>
-                Vaughan is a high-intent business market with a mix of commercial offices and industrial environments
-                where uptime and clarity matter. Orbitlink focuses on feasibility confirmation, correct service selection,
-                and documented delivery—so the outcome matches business expectations.
-              </p>
-              <p>
-                Our controlled onboarding model confirms building feasibility first, then aligns a service module:
-                broadband fibre for many business sites, or DIA for performance-critical operations requiring deterministic
-                posture. For multi-device environments, managed LAN/Wi-Fi and segmentation posture are often the difference
-                between “connected” and “stable.”
-              </p>
-              <p>
-                If continuity posture is required, Orbitlink can design LTE/5G failover patterns aligned to critical traffic.
-                Feasibility and constraints are scoped before activation—no overclaims.
-              </p>
-
-              <h3 className="pt-2 text-lg font-semibold tracking-tight text-white">
-                Service modules commonly deployed in Vaughan
-              </h3>
-              <ul className="mt-2 space-y-2">
-                {[
-                  { t: "Business Fibre Internet", href: "/services/business-fibre-internet" },
-                  { t: "Dedicated Internet Access (DIA)", href: "/services/dedicated-internet-access" },
-                  { t: "Managed LAN & Enterprise Wi-Fi", href: "/services/managed-lan-wifi" },
-                  { t: "LTE / 5G Continuity Architecture", href: "/services/lte-5g-continuity" },
-                  { t: "VoIP & Cloud Voice", href: "/services/voip-cloud-voice" },
-                  { t: "Static IP Routing", href: "/services/static-ip-routing" },
-                ].map((x) => (
-                  <li key={x.t} className="flex items-start gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-white/40" />
-                    <span>
-                      <Link href={x.href} className="text-white/85 hover:text-white underline underline-offset-4">
-                        {x.t}
-                      </Link>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">Broadband fibre vs DIA</h3>
-              <p>
-                Broadband fibre is ideal when you want strong value with a professional delivery posture. DIA is the fit
-                when deterministic performance and formal delivery requirements are needed for critical operations,
-                regulated environments, or multi-site routing.
-              </p>
-
-              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">Managed network posture</h3>
-              <p>
-                For commercial/industrial sites, managed LAN/Wi-Fi helps reduce tickets and improve day-to-day stability:
-                segmentation between office/ops/IoT, guest access posture, and coverage planning aligned with business needs.
-              </p>
-            </div>
+        <div className="relative mx-auto max-w-6xl px-6 pb-12 pt-16 md:pb-16 md:pt-20">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+            <span className="h-2 w-2 rounded-full bg-[#38FDFE]" />
+            <span className="text-sm tracking-wide text-white/60">Vaughan Service Area</span>
           </div>
 
-          {/* Sidebar */}
-          <aside className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-            <h2 className="text-lg font-semibold tracking-tight">Request availability</h2>
+          <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
+            <div className="lg:col-span-8">
+              <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl lg:leading-[1.02]">
+                Business internet in Vaughan
+              </h1>
 
-            <div className="mt-4 space-y-3 text-sm text-white/70">
-              <div>
-                <div className="text-white/60">Phone</div>
-                <a className="text-white/85 hover:text-white underline underline-offset-4" href={`tel:${BUSINESS.phoneE164}`}>
-                  {BUSINESS.phoneDisplay}
-                </a>
+              <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
+                Orbitlink supports Vaughan businesses with fibre, dedicated internet, managed
+                Wi-Fi, voice, and continuity services. Availability is reviewed by address,
+                building, and service fit before the next step is confirmed.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                {heroTags.map((x) => (
+                  <span
+                    key={x}
+                    className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
+                  >
+                    {x}
+                  </span>
+                ))}
               </div>
 
-              <div>
-                <div className="text-white/60">Ontario coverage hub</div>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="/locations/ontario"
-                  className="text-white/85 hover:text-white underline underline-offset-4"
+                  href="/contact#intake"
+                  className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
                 >
-                  View province coverage
+                  Check Availability
+                </Link>
+                <Link
+                  href="/services/business-fibre-internet"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+                >
+                  Explore Fibre Service
                 </Link>
               </div>
 
-              <div>
-                <div className="text-white/60">What to include</div>
-                <div className="text-white/85">
-                  Address + required posture (broadband vs DIA, static IP, managed LAN/Wi-Fi, continuity).
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <MetricPill label="MARKET" value="Vaughan business locations" />
+                <MetricPill label="QUALIFICATION" value="Address and building based" />
+                <MetricPill label="NEXT STEP" value="Availability and pricing review" />
+              </div>
+            </div>
+
+            <div className="lg:col-span-4">
+              <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+                <SectionEyebrow>HOW IT WORKS</SectionEyebrow>
+                <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
+                  Start with your address
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-white/70">
+                  The strongest requests include the service address, service needed, target
+                  timeline, and any important requirements such as DIA, static IPs, managed
+                  Wi-Fi, or continuity.
+                </p>
+
+                <div className="mt-5 grid gap-3">
+                  <MetricPill label="STEP 1" value="Choose the service" />
+                  <MetricPill label="STEP 2" value="Add address and scope" />
+                  <MetricPill label="STEP 3" value="Receive the next step" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-10 md:py-12">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <div className="space-y-4 lg:col-span-2">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>LOCAL MARKET</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Vaughan blends commercial offices with industrial demand
+              </h2>
+
+              <div className="mt-4 space-y-4 text-white/70 leading-relaxed">
+                <p>
+                  Vaughan is a strong business market with a mix of commercial offices,
+                  industrial environments, and multi-site operations where uptime and service
+                  clarity matter.
+                </p>
+
+                <p>
+                  Orbitlink approaches this market with a simple model: confirm serviceability,
+                  match the site to the right access type, define any managed network scope,
+                  and move into a cleaner onboarding path.
+                </p>
+
+                <p>
+                  Depending on the site, the right fit may be business fibre, dedicated
+                  internet, managed LAN and Wi-Fi, or continuity planning for business-critical
+                  operations.
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>SERVICE OPTIONS</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Services available in Vaughan
+              </h2>
+
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {serviceModules.map((item) => (
+                  <Link
+                    key={item.title}
+                    href={item.href}
+                    className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 transition hover:bg-white/[0.07]"
+                  >
+                    <div className="text-sm font-medium text-white/90">{item.title}</div>
+                    <div className="mt-2 text-sm text-white/60">View service →</div>
+                  </Link>
+                ))}
+              </div>
+
+              <p className="mt-5 leading-relaxed text-white/70">
+                Available services may include business fibre internet, dedicated internet
+                access, managed LAN and Wi-Fi, continuity planning, voice, and static IP
+                options depending on the site and service design.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>COMMON BUILDING TYPES</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Building environments we commonly review
+              </h2>
+
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {buildingTypes.map((x) => (
+                  <div
+                    key={x}
+                    className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/75"
+                  >
+                    {x}
+                  </div>
+                ))}
+              </div>
+
+              <p className="mt-5 leading-relaxed text-white/70">
+                Final serviceability depends on the specific property, landlord access,
+                building cabling, upstream reach, and service design.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>WHY ORBITLINK</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Why Vaughan businesses choose Orbitlink
+              </h2>
+
+              <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {whyOrbitlink.map((x) => (
+                  <div
+                    key={x}
+                    className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/75"
+                  >
+                    {x}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <aside className="space-y-4">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>LOCAL DETAILS</SectionEyebrow>
+              <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
+                Orbitlink business details
+              </h2>
+
+              <div className="mt-4 space-y-3 text-sm text-white/70">
+                <div>
+                  <div className="text-white/60">Business</div>
+                  <div className="font-medium text-white/85">{BUSINESS.name}</div>
+                </div>
+
+                <div>
+                  <div className="text-white/60">Phone</div>
+                  <a
+                    className="text-white/85 underline underline-offset-4 hover:text-white"
+                    href={`tel:${BUSINESS.phoneE164}`}
+                  >
+                    {BUSINESS.phoneDisplay}
+                  </a>
+                </div>
+
+                <div>
+                  <div className="text-white/60">Email</div>
+                  <a
+                    className="text-white/85 underline underline-offset-4 hover:text-white"
+                    href={`mailto:${BUSINESS.email}`}
+                  >
+                    {BUSINESS.email}
+                  </a>
+                </div>
+
+                <div>
+                  <div className="text-white/60">Address</div>
+                  <div className="text-white/85">
+                    {BUSINESS.address.street}
+                    <br />
+                    {BUSINESS.address.city}, {BUSINESS.address.region} {BUSINESS.address.postal}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-white/60">Hours</div>
+                  <div className="text-white/85">Mon–Fri 9:00 AM – 6:00 PM</div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5">
-              <h3 className="text-sm font-semibold tracking-tight">Recommended starting point</h3>
+            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+              <SectionEyebrow>BEST NEXT STEP</SectionEyebrow>
+              <h3 className="mt-3 text-sm font-semibold tracking-tight">
+                Request availability review
+              </h3>
               <p className="mt-2 text-sm text-white/70 leading-relaxed">
-                Start with feasibility confirmation. If performance is critical, request a DIA assessment and continuity review.
+                Submit your address, business type, and service requirements to begin
+                serviceability and pricing review.
               </p>
               <div className="mt-4 flex flex-col gap-2">
                 <Link
                   href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-4 py-2 text-sm font-semibold hover:bg-white/90 transition"
+                  className="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
                 >
-                  Request Access
+                  Check Availability
                 </Link>
                 <Link
                   href="/trust"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                 >
-                  Trust & Delivery Posture
+                  Trust & Compliance
                 </Link>
               </div>
             </div>
 
-            <div className="mt-6 text-sm text-white/60">
-              Nearby:{" "}
-              <Link href="/locations/markham" className="text-white/80 hover:text-white underline underline-offset-4">
-                Markham
-              </Link>
-              {", "}
-              <Link href="/locations/brampton" className="text-white/80 hover:text-white underline underline-offset-4">
-                Brampton
-              </Link>
-              .
+            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+              <SectionEyebrow>RELATED PAGES</SectionEyebrow>
+              <div className="mt-4 flex flex-col gap-2 text-sm">
+                <Link
+                  href="/locations/markham"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
+                >
+                  Markham
+                </Link>
+                <Link
+                  href="/locations/brampton"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
+                >
+                  Brampton
+                </Link>
+                <Link
+                  href="/locations/toronto"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
+                >
+                  Toronto
+                </Link>
+                <Link
+                  href="/locations/ontario"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
+                >
+                  Ontario coverage hub
+                </Link>
+              </div>
             </div>
           </aside>
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="mx-auto max-w-6xl px-6 pb-16">
         <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-          <h2 className="text-2xl font-semibold tracking-tight">Vaughan FAQs</h2>
+          <SectionEyebrow>FAQ</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">Vaughan FAQs</h2>
           <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
-            Clear, operational answers—coverage confirmed per site, with scope and feasibility defined before activation.
+            Quick answers for buyers evaluating business internet in Vaughan.
           </p>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -342,19 +545,19 @@ export default function VaughanLocationPage() {
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
             <Link
               href="/services"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
               Explore Services
             </Link>
             <Link
               href="/locations"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
               Browse Locations
             </Link>
             <Link
               href="/contact#intake"
-              className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-5 py-3 text-sm font-semibold hover:bg-white/90 transition"
+              className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
             >
               Check Availability
             </Link>
