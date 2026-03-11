@@ -32,12 +32,12 @@ const BUSINESS = {
 export const metadata: Metadata = {
   title: "Business Internet Service Areas in Ontario | Orbitlink Locations",
   description:
-    "Browse Orbitlink business internet service areas across Ontario. Explore city pages for business fibre internet, dedicated internet access, managed Wi-Fi, and building-based availability review.",
+    "Browse Orbitlink business internet service areas across Ontario. Explore city pages for business fibre internet, dedicated internet access, managed Wi-Fi, and address-qualified availability.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Business Internet Service Areas in Ontario | Orbitlink Locations",
     description:
-      "Explore Orbitlink service areas across Ontario. Browse city pages, review availability by building, and request business internet service.",
+      "Explore Orbitlink service areas across Ontario. Browse city pages, review availability by address, and request business internet service.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -74,16 +74,16 @@ const GTA_CORE: readonly LocationCard[] = [
     href: "/locations/mississauga",
     subtitle:
       "Business fibre internet and managed network service in select commercial buildings and corridors.",
-    tags: ["Business fibre", "Commercial buildings", "High-priority market"],
-    posture: "Primary launch market",
+    tags: ["Business fibre", "Commercial buildings", "Priority market"],
+    posture: "Primary market",
   },
   {
     name: "Brampton",
     href: "/locations/brampton",
     subtitle:
       "Business internet and network service for industrial, logistics, and SMB environments.",
-    tags: ["Industrial sites", "SMB demand", "Availability by address"],
-    posture: "Industrial growth market",
+    tags: ["Industrial sites", "SMB demand", "Address review"],
+    posture: "Growth market",
   },
   {
     name: "Toronto",
@@ -141,7 +141,7 @@ const GTA_EXTENDED: readonly LocationCard[] = [
     href: "/locations/scarborough",
     subtitle:
       "Business internet and managed connectivity for broad SMB demand across local commercial areas.",
-    tags: ["SMB", "Local demand", "Availability by address"],
+    tags: ["SMB", "Local demand", "Address review"],
     posture: "Discovery market",
   },
   {
@@ -206,20 +206,20 @@ const serviceModules = [
 
 const premiumSignals = [
   {
-    t: "Availability by building",
-    d: "Service is reviewed per address instead of assumed across an entire city.",
+    t: "Address-qualified availability",
+    d: "Service is reviewed per building and address instead of assumed across an entire city.",
   },
   {
     t: "Business-first service model",
-    d: "The buying path is built for business internet, managed networking, and operational needs.",
+    d: "The buying path is designed for business internet, managed networking, and operational requirements.",
   },
   {
     t: "Clear service matching",
-    d: "Business fibre, dedicated internet, managed Wi-Fi, and backup are matched to real business requirements.",
+    d: "Business fibre, dedicated internet, managed Wi-Fi, and backup are matched to real site needs.",
   },
   {
     t: "Ontario-focused execution",
-    d: "Priority city pages support local search intent and move buyers into qualified availability review.",
+    d: "City pages support local discovery and move buyers into qualified availability review.",
   },
 ] as const;
 
@@ -227,12 +227,12 @@ const buyerJourney = [
   {
     step: "1",
     title: "Choose your city",
-    desc: "Start with the city that matches your building, business location, or expansion target.",
+    desc: "Start with the city that matches your building, location, or expansion target.",
   },
   {
     step: "2",
     title: "Choose the service",
-    desc: "Select business fibre, dedicated internet, managed Wi-Fi, or backup based on the site need.",
+    desc: "Select fibre, dedicated internet, managed Wi-Fi, or backup based on site needs.",
   },
   {
     step: "3",
@@ -242,7 +242,7 @@ const buyerJourney = [
   {
     step: "4",
     title: "Move into intake",
-    desc: "Qualified requests move into a clear intake and onboarding path.",
+    desc: "Qualified requests move into a clear onboarding path.",
   },
 ] as const;
 
@@ -421,17 +421,15 @@ export default function LocationsHubPage() {
 
               <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/70 sm:text-lg">
                 Browse Orbitlink city pages for business fibre internet, dedicated internet access,
-                managed Wi-Fi, and backup connectivity. Each location moves from city-level discovery
-                into building-based availability review, service matching, and a clearer commercial
-                path.
+                managed Wi-Fi, and backup connectivity. Start with your city, then move into
+                address-qualified availability and service review.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {[
-                  "Availability by building",
+                  "Address-qualified availability",
                   "Business-first service model",
                   "Ontario city pages",
-                  "Structured onboarding",
                   "Check availability",
                 ].map((x) => (
                   <span
@@ -448,7 +446,7 @@ export default function LocationsHubPage() {
                   href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
-                  Check Availability & Request Pricing
+                  Check Availability
                 </Link>
                 <Link
                   href="/services"
@@ -466,8 +464,8 @@ export default function LocationsHubPage() {
 
               <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <MetricPill label="BEST FOR" value="Ontario business locations" />
-                <MetricPill label="SERVICE MODEL" value="Address-based qualification" />
-                <MetricPill label="NEXT STEP" value="Check availability and request pricing" />
+                <MetricPill label="QUALIFICATION" value="Address and building based" />
+                <MetricPill label="NEXT STEP" value="Check availability and pricing" />
               </div>
             </div>
 
@@ -475,10 +473,10 @@ export default function LocationsHubPage() {
               <div className="rounded-[30px] border border-white/10 bg-white/[0.045] p-6">
                 <SectionEyebrow>HOW IT WORKS</SectionEyebrow>
                 <h2 className="mt-3 text-lg font-semibold text-white">
-                  Start local, then move into a clear request
+                  Start local, then submit your request
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/65">
-                  This page is built to help buyers move from city-level search into building-level
+                  This page is designed to move buyers from city discovery into address-based
                   availability review and a clearer service conversation.
                 </p>
 
@@ -504,11 +502,11 @@ export default function LocationsHubPage() {
             <div className="max-w-3xl">
               <SectionEyebrow>WHY BUSINESSES START HERE</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight">
-                Built for local discovery and easier qualification
+                Built for local discovery and faster qualification
               </h2>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-                City pages support local search intent. Service pages explain the offer. The contact
-                path turns that interest into a real availability and pricing review.
+                City pages support local search. Service pages explain the offer. The contact path
+                turns interest into a real availability and pricing review.
               </p>
             </div>
 
@@ -546,7 +544,7 @@ export default function LocationsHubPage() {
                 Business-first
               </span>
               <span className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1.5">
-                Availability by address
+                Address-qualified
               </span>
             </div>
           </div>
@@ -616,11 +614,12 @@ export default function LocationsHubPage() {
 
       <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7">
         <div className="rounded-[30px] border border-white/10 bg-black/20 p-6 md:p-8">
-          <SectionEyebrow>BUSINESS DETAILS</SectionEyebrow>
+          <SectionEyebrow>ONTARIO BUSINESS PRESENCE</SectionEyebrow>
           <h2 className="mt-3 text-xl font-semibold tracking-tight">Orbitlink Ontario presence</h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-            Orbitlink’s business presence is anchored in Mississauga and focused on Ontario business
-            internet, dedicated connectivity, managed networking, and structured onboarding.
+            Orbitlink’s business presence is anchored in Mississauga and focused on Ontario
+            business internet, dedicated connectivity, managed networking, and structured
+            onboarding.
           </p>
 
           <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
@@ -660,7 +659,7 @@ export default function LocationsHubPage() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Check Availability & Request Pricing
+              Check Availability
             </Link>
             <Link
               href="/trust"

@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Business Fibre Internet, Dedicated Internet & Network Services | Orbitlink",
     description:
-      "Business fibre internet, dedicated internet access, managed Wi-Fi, continuity, voice, IoT, static IP routing, and infrastructure services for Ontario businesses.",
+      "Business fibre internet, dedicated internet access, managed Wi-Fi, continuity, voice, and infrastructure services for Ontario businesses.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -65,42 +65,42 @@ const SERVICES: readonly ServiceItem[] = [
   {
     title: "Business Fibre Internet",
     subtitle:
-      "Primary business internet for offices, commercial spaces, and growing organizations that need reliable connectivity and a cleaner commercial path.",
+      "Primary internet for offices, commercial spaces, and growing organizations that need reliable connectivity.",
     href: "/services/business-fibre-internet",
-    bullets: ["Business fibre", "Symmetrical options", "Address-based review"],
+    bullets: ["Business fibre", "Symmetrical options", "Address review"],
     tag: "INTERNET",
     group: "Connectivity",
     bestFit:
-      "Best for businesses that want high-quality primary internet with clearer qualification, cleaner onboarding, and a more accountable provider experience.",
+      "High-quality primary internet for business sites that need reliable connectivity and a cleaner onboarding path.",
   },
   {
     title: "Dedicated Internet Access",
     subtitle:
-      "Dedicated connectivity for critical business sites that need stronger performance expectations and more predictable service delivery.",
+      "Dedicated connectivity for critical business sites that need stronger performance expectations.",
     href: "/services/dedicated-internet-access",
     bullets: ["Dedicated access", "Committed service", "Critical sites"],
     tag: "DEDICATED CONNECTIVITY",
     group: "Connectivity",
     bestFit:
-      "Best for organizations that need stronger performance expectations, cleaner escalation, and more predictable delivery for important business operations.",
+      "Best for sites that need stronger performance, clearer escalation, and more predictable service delivery.",
   },
   {
     title: "Managed LAN & Wi-Fi",
     subtitle:
-      "Managed internal networking for businesses that need better Wi-Fi coverage, cleaner segmentation, and easier day-to-day support.",
+      "Managed internal networking for businesses that need better Wi-Fi coverage, segmentation, and day-to-day support.",
     href: "/services/managed-lan-wifi",
     bullets: ["Managed Wi-Fi", "LAN support", "Segmentation"],
     tag: "MANAGED NETWORK",
     group: "Managed Network",
     bestFit:
-      "Best for sites where internal network performance, guest access, coverage quality, and ongoing support matter.",
+      "Best for sites where internal network performance, guest access, and support quality matter.",
   },
   {
     title: "LTE / 5G Backup Connectivity",
     subtitle:
-      "Backup connectivity for businesses that want failover, resilience, and better continuity during outages.",
+      "Backup connectivity for businesses that want failover, resilience, and stronger continuity planning.",
     href: "/services/lte-5g-continuity",
-    bullets: ["Backup path", "Failover", "Business continuity"],
+    bullets: ["Backup path", "Failover", "Continuity"],
     tag: "CONTINUITY",
     group: "Continuity",
     bestFit:
@@ -120,13 +120,13 @@ const SERVICES: readonly ServiceItem[] = [
   {
     title: "VoIP & Cloud Voice",
     subtitle:
-      "Business voice service for teams that need number porting, call routing, and more professional communications handling.",
+      "Business voice service for teams that need number porting, call routing, and professional communications handling.",
     href: "/services/voip-cloud-voice",
     bullets: ["Cloud voice", "Number porting", "Call routing"],
     tag: "VOICE",
     group: "Voice",
     bestFit:
-      "Best for businesses that want business-ready calling aligned with the rest of their communications and service stack.",
+      "Best for businesses that want calling aligned with the rest of their communications and service stack.",
   },
   {
     title: "IoT Connectivity",
@@ -137,7 +137,7 @@ const SERVICES: readonly ServiceItem[] = [
     tag: "CONNECTED DEVICES",
     group: "Infrastructure",
     bestFit:
-      "Best for environments where devices, gateways, and operational systems need secure, segmented, and controlled connectivity.",
+      "Best for environments where devices, gateways, and operational systems need secure and segmented connectivity.",
   },
   {
     title: "Static IP Routing",
@@ -159,7 +159,7 @@ const SERVICES: readonly ServiceItem[] = [
     tag: "INFRASTRUCTURE",
     group: "Infrastructure",
     bestFit:
-      "Best for businesses planning beyond standard internet access and into infrastructure, edge presence, or interconnection needs.",
+      "Best for businesses planning beyond standard internet access and into infrastructure or interconnection needs.",
   },
 ];
 
@@ -168,13 +168,13 @@ const GROUPS: readonly GroupItem[] = [
     title: "Connectivity",
     eyebrow: "PRIMARY ACCESS",
     description:
-      "Internet services for business sites that need reliable primary connectivity, clearer qualification, and a stronger commercial starting point.",
+      "Internet services for business sites that need reliable primary connectivity and a stronger commercial starting point.",
   },
   {
     title: "Managed Network",
     eyebrow: "INTERNAL NETWORK",
     description:
-      "Managed Wi-Fi and LAN services for businesses that need better site networking, cleaner segmentation, and day-to-day support.",
+      "Managed Wi-Fi and LAN services for businesses that need better site networking and easier day-to-day support.",
   },
   {
     title: "Continuity",
@@ -192,7 +192,7 @@ const GROUPS: readonly GroupItem[] = [
     title: "Infrastructure",
     eyebrow: "ADVANCED SERVICES",
     description:
-      "Routing, IoT, and infrastructure services for more technical, operational, or future-ready business environments.",
+      "Routing, IoT, and infrastructure services for more technical and future-ready business environments.",
   },
 ];
 
@@ -320,7 +320,7 @@ function QuickStartStrip() {
     {
       label: "STEP 2",
       title: "Share your site details",
-      body: "Add your address, timeline, and the technical or operational requirements that matter to the business.",
+      body: "Add your address, timeline, and the requirements that matter to the business.",
     },
     {
       label: "STEP 3",
@@ -352,57 +352,6 @@ function QuickStartStrip() {
             <div className="text-[11px] tracking-[0.22em] text-white/45">{step.label}</div>
             <div className="mt-3 text-sm font-medium text-white/90">{step.title}</div>
             <p className="mt-3 text-sm leading-6 text-white/63">{step.body}</p>
-          </div>
-        ))}
-      </div>
-    </Surface>
-  );
-}
-
-function WhyBusinessesChooseOrbitlink() {
-  const items = [
-    {
-      title: "Clearer service selection",
-      body: "Buyers can quickly tell the difference between primary internet, managed networking, backup, voice, and infrastructure.",
-    },
-    {
-      title: "Better lead quality",
-      body: "Visitors arrive at contact with a better understanding of what they actually need.",
-    },
-    {
-      title: "Less buyer friction",
-      body: "A clearer service structure reduces confusion and shortens the path to a serious conversation.",
-    },
-    {
-      title: "Stronger business trust",
-      body: "The page feels more structured and more credible than a generic internet plan list.",
-    },
-  ];
-
-  return (
-    <Surface className="p-6 sm:p-8 lg:p-10">
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-        <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.30em] text-white/42">
-            WHY BUSINESSES START HERE
-          </div>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-            Built to help buyers make a better decision
-          </h2>
-          <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            A strong services page should make it easier to understand the offer, easier to compare
-            options, and easier to move toward the right next step.
-          </p>
-        </div>
-
-        <MetricPill label="BUYER SIGNAL" value="Clear, premium, and credible" />
-      </div>
-
-      <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {items.map((item) => (
-          <div key={item.title} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
-            <div className="text-sm font-medium text-white/90">{item.title}</div>
-            <p className="mt-3 text-sm leading-6 text-white/63">{item.body}</p>
           </div>
         ))}
       </div>
@@ -442,8 +391,7 @@ function BuyerQuestionsStrip() {
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
             Serious buyers usually want the same things first: the right service fit, a clearer
-            understanding of how review works, and confidence that the next step will be practical.
-            This page is designed to answer those questions earlier.
+            review path, and confidence that the next step will be practical.
           </p>
         </div>
 
@@ -545,12 +493,9 @@ export default function ServicesIndexPage() {
                 </h1>
 
                 <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/66 sm:text-lg">
-                  Explore business fibre internet, dedicated internet access, managed Wi-Fi and LAN,
-                  backup connectivity, business voice, and infrastructure services for Ontario
-                  businesses. Orbitlink organizes services the way commercial buyers usually evaluate
-                  them: primary internet first, managed network support where needed, backup where
-                  resilience matters, voice where communications matter, and infrastructure for more
-                  advanced environments.
+                  Explore business fibre, dedicated internet, managed Wi-Fi, backup connectivity,
+                  voice, and infrastructure services for Ontario businesses. Start with the service
+                  that matches your site, then move into availability and pricing.
                 </p>
 
                 <div className="mt-7 flex flex-wrap gap-2">
@@ -558,8 +503,7 @@ export default function ServicesIndexPage() {
                     "Business fibre internet",
                     "Dedicated internet access",
                     "Managed Wi-Fi and LAN",
-                    "Backup connectivity",
-                    "Business voice",
+                    "Backup and voice",
                   ].map((item) => (
                     <span
                       key={item}
@@ -575,7 +519,7 @@ export default function ServicesIndexPage() {
                     href="/contact#intake"
                     className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                   >
-                    Check Availability & Request Pricing
+                    Check Availability
                   </Link>
                   <Link
                     href="/trust"
@@ -601,7 +545,7 @@ export default function ServicesIndexPage() {
                   </div>
                   <p className="mt-3 text-sm leading-6 text-white/64">
                     Start with internet, managed Wi-Fi, backup, voice, or infrastructure. Then move
-                    into a clearer request with your address, timing, and technical requirements.
+                    into a clearer request with your address, timing, and requirements.
                   </p>
 
                   <div className="mt-5 grid gap-3">
@@ -617,7 +561,7 @@ export default function ServicesIndexPage() {
           <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
             <MetricPill label="BEST FOR" value="Ontario business sites and multi-location teams" />
             <MetricPill label="BUYER MODE" value="Simple, clear, and business-ready" />
-            <MetricPill label="NEXT STEP" value="Check availability and request pricing" />
+            <MetricPill label="NEXT STEP" value="Check availability and pricing" />
           </div>
         </div>
       </section>
@@ -638,7 +582,6 @@ export default function ServicesIndexPage() {
             />
           ))}
 
-          <WhyBusinessesChooseOrbitlink />
           <BuyerQuestionsStrip />
 
           <div className="overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.035]">
@@ -687,7 +630,7 @@ export default function ServicesIndexPage() {
                   href="/contact#intake"
                   className="rounded-2xl bg-[#FACC15] px-4 py-2.5 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
-                  Check Availability & Request Pricing
+                  Check Availability
                 </Link>
               </div>
             </div>

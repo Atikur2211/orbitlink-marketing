@@ -161,9 +161,9 @@ function HeroCommandPanel() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl sm:leading-[1.02]">
-              Business network visibility,
+              Network readiness for business sites,
               <span className="block text-white/68">
-                presented with clarity, structure, and buyer-readable language.
+                qualified by address, scope, and service fit.
               </span>
             </h2>
 
@@ -988,8 +988,8 @@ export default function NetworkPage() {
   return (
     <PageShell
       eyebrow="NETWORK"
-      title="Business Network Visibility"
-      subtitle="A clearer view of service readiness, network communication, change handling, and structured escalation for serious business buyers."
+      title="Network Availability & Service Readiness"
+      subtitle="Address-qualified business connectivity, structured escalation, and a clearer path from building review to next step."  
     >
       <script
         type="application/ld+json"

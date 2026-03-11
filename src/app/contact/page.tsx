@@ -15,12 +15,12 @@ const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 export const metadata: Metadata = {
   title: "Contact Orbitlink | Business Fibre, Internet & Network Services Ontario",
   description:
-    "Contact Orbitlink for business fibre internet, dedicated internet access, managed Wi-Fi, voice, continuity, and network services across Ontario. Check availability, request pricing, and start your service review.",
+    "Contact Orbitlink for business fibre, dedicated internet, managed Wi-Fi, voice, continuity, and network services across Ontario. Check availability and request pricing.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Contact Orbitlink | Business Fibre & Network Services",
     description:
-      "Check availability, request pricing, and contact Orbitlink for business fibre, DIA, managed networks, voice, and continuity services across Ontario.",
+      "Check availability and request pricing for business fibre, dedicated internet, managed networks, voice, and continuity services across Ontario.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Contact Orbitlink | Business Fibre & Network Services",
     description:
-      "Check availability, request pricing, and contact Orbitlink for business internet and network services across Ontario.",
+      "Check availability and request pricing for business internet and network services across Ontario.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -210,15 +210,15 @@ export default function ContactPage() {
             name: "What should I include in my request?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Include your service address, the service you need, your timeline, and any requirements such as static IPs, managed Wi-Fi, voice, continuity, or multi-site needs.",
+              text: "Include your service address, service needed, timeline, and any important requirements such as managed Wi-Fi, voice, static IPs, continuity, or multi-site scope.",
             },
           },
           {
             "@type": "Question",
-            name: "Can I contact Orbitlink for business fibre, dedicated internet, voice, or managed network services?",
+            name: "What services can I request here?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Yes. You can use this page for business fibre internet, dedicated internet access, managed LAN and Wi-Fi, voice, continuity, static IP routing, and infrastructure-related requests.",
+              text: "You can use this page for business fibre internet, dedicated internet access, managed LAN and Wi-Fi, voice, continuity, static IP routing, and related network service requests.",
             },
           },
           {
@@ -226,7 +226,7 @@ export default function ContactPage() {
             name: "What happens after I submit the form?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Orbitlink reviews your request based on service fit, address, timing, and requirements, then replies with the clearest next step available.",
+              text: "Orbitlink reviews your request based on service fit, address, timing, and requirements, then replies with the next step.",
             },
           },
         ],
@@ -237,7 +237,7 @@ export default function ContactPage() {
   return (
     <PageShell
       eyebrow="CONTACT"
-      title="Check availability and start your service request"
+      title="Check availability and request pricing"
       subtitle="Contact Orbitlink for business fibre, dedicated internet, managed Wi-Fi, voice, continuity, and deployment planning across Ontario."
     >
       <script
@@ -256,59 +256,57 @@ export default function ContactPage() {
           <div className="lg:col-span-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[11px] text-[#FDE68A]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Business sales and service intake
+              Business service intake
             </div>
 
             <h2 className="mt-5 text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl">
-              Tell us the address, service need, and timeline
+              Tell us the address, service, and timeline
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              Use this page to check availability, request pricing, and start a business service
-              conversation. A complete request helps Orbitlink review service fit faster and reply
-              with a practical next step.
+              Use this page to check availability and request pricing. A complete request helps us
+              review service fit faster and reply with the right next step.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               <Pill>Check availability</Pill>
               <Pill>Request pricing</Pill>
               <Pill>Business service review</Pill>
-              <Pill>Clear next step</Pill>
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <MetricPill label="BEST FOR" value="Business service requests" />
               <MetricPill label="SERVICES" value="Fibre, DIA, voice, managed network" />
-              <MetricPill label="GOAL" value="Fast, clear qualification" />
+              <MetricPill label="GOAL" value="Clear qualification" />
             </div>
           </div>
 
           <div className="lg:col-span-4">
             <div className="rounded-3xl border border-white/10 bg-black/25 p-6">
-              <div className="text-[11px] tracking-[0.22em] text-white/55">HOW TO GET STARTED</div>
+              <div className="text-[11px] tracking-[0.22em] text-white/55">HOW IT WORKS</div>
               <div className="mt-3 text-lg font-semibold text-white">
-                Send one complete business request
+                Send one complete request
               </div>
               <p className="mt-3 text-sm leading-6 text-white/65">
-                The strongest requests usually include the service needed, the exact address, the
-                target timeline, and any technical or operational requirements.
+                The most useful requests include the service needed, exact address, target
+                timeline, and any important technical requirements.
               </p>
 
               <div className="mt-5 grid gap-3">
                 <StepCard
                   step="STEP 1"
                   title="Choose the service"
-                  text="Tell us whether you need Business Fibre, Dedicated Internet, Voice, Managed LAN/Wi-Fi, Continuity, Static IP, or infrastructure support."
+                  text="Tell us what you need, such as fibre, dedicated internet, voice, managed Wi-Fi, or continuity."
                 />
                 <StepCard
                   step="STEP 2"
                   title="Add the address"
-                  text="Include the exact service address, city, and any building details that help with serviceability review."
+                  text="Include the exact service address and any building details that help with review."
                 />
                 <StepCard
                   step="STEP 3"
-                  title="Add your requirements"
-                  text="Include your timeline, user count, voice needs, managed network scope, static IP needs, continuity needs, or multi-site scope if relevant."
+                  title="Add requirements"
+                  text="Include timing, user count, static IPs, voice needs, managed network scope, or multi-site details if relevant."
                 />
               </div>
             </div>
@@ -318,11 +316,10 @@ export default function ContactPage() {
 
       <div className="mt-4 grid grid-cols-1 gap-4 sm:mt-6 sm:gap-5 lg:grid-cols-12">
         <div className="space-y-4 sm:space-y-5 lg:col-span-5">
-          <InfoCard eyebrow="CONTACT ORBITLINK" title="Business sales, pricing, and onboarding">
+          <InfoCard eyebrow="DIRECT CONTACT" title="Business sales and onboarding">
             <p>
-              Use this page for business fibre internet, dedicated internet access, managed
-              network services, voice, continuity, address checks, and deployment planning across
-              Ontario.
+              Use this page for business fibre internet, dedicated internet, managed network
+              services, voice, continuity, address checks, and deployment planning across Ontario.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">
@@ -331,11 +328,10 @@ export default function ContactPage() {
               <Pill>Managed Wi-Fi</Pill>
               <Pill>Voice</Pill>
               <Pill>Continuity</Pill>
-              <Pill>Static IP</Pill>
             </div>
 
             <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-5">
-              <div className="text-[11px] tracking-[0.22em] text-white/55">DIRECT CONTACT</div>
+              <div className="text-[11px] tracking-[0.22em] text-white/55">CONTACT DETAILS</div>
               <div className="mt-3 space-y-2 text-sm text-white/72">
                 <div>
                   Concierge: <span className="text-white/88">concierge@orbitlink.ca</span>
@@ -357,15 +353,15 @@ export default function ContactPage() {
             <div className="grid grid-cols-1 gap-3">
               <SignalCard
                 title="Service address"
-                text="The exact address or building helps us review serviceability and route the request properly."
+                text="The exact address helps us review serviceability more accurately."
               />
               <SignalCard
                 title="Service needed"
-                text="Tell us whether you need business fibre, dedicated internet, managed Wi-Fi, voice, continuity, or another network service."
+                text="Tell us whether you need fibre, dedicated internet, managed Wi-Fi, voice, continuity, or another network service."
               />
               <SignalCard
                 title="Timeline and requirements"
-                text="Include your target install date, user count, static IP needs, managed network scope, voice needs, or multi-site requirements."
+                text="Include install timing and any important technical or operational requirements."
               />
             </div>
 
@@ -374,30 +370,23 @@ export default function ContactPage() {
             </p>
           </InfoCard>
 
-          <InfoCard eyebrow="WHAT HAPPENS NEXT" title="After you submit">
+          <InfoCard eyebrow="AFTER YOU SUBMIT" title="What happens next">
             <div className="grid grid-cols-1 gap-3">
               <StepCard
                 step="REVIEW"
                 title="We review your request"
-                text="We look at service fit, address details, timing, and technical requirements."
+                text="We look at service fit, address details, timing, and requirements."
               />
               <StepCard
                 step="NEXT STEP"
                 title="We identify the right path"
-                text="That may be pricing direction, serviceability review, follow-up questions, or a direct business conversation."
+                text="That may be pricing direction, serviceability review, or a direct follow-up."
               />
               <StepCard
                 step="RESPONSE"
                 title="We keep it practical"
                 text="The goal is to give you a useful next step instead of a vague reply."
               />
-            </div>
-
-            <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-5">
-              <div className="text-[11px] tracking-[0.22em] text-white/55">GOOD TO KNOW</div>
-              <p className="mt-3 text-sm leading-6 text-white/65">
-                This page is designed for real business enquiries and service requests across Ontario.
-              </p>
             </div>
           </InfoCard>
         </div>
@@ -410,11 +399,11 @@ export default function ContactPage() {
             <div>
               <div className="text-[11px] tracking-[0.22em] text-white/55">REQUEST FORM</div>
               <h2 className="mt-3 text-base font-medium text-white/92 sm:text-lg">
-                Check availability and request pricing
+                Check availability
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">
                 Tell us what service you need, where the site is located, and any important
-                requirements. One complete request is usually enough to move things forward.
+                requirements.
               </p>
             </div>
 
@@ -443,9 +432,7 @@ export default function ContactPage() {
 
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
               <div className="text-[11px] tracking-[0.22em] text-white/55">TIP</div>
-              <p className="mt-2 text-sm leading-6 text-white/65">
-                Include timing and technical needs.
-              </p>
+              <p className="mt-2 text-sm leading-6 text-white/65">Include timing and requirements.</p>
             </div>
           </div>
 

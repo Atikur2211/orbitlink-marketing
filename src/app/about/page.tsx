@@ -8,12 +8,12 @@ const PAGE_URL = `${SITE_URL}/about`;
 export const metadata: Metadata = {
   title: "About Orbitlink | Business Connectivity for Ontario",
   description:
-    "Orbitlink is a business connectivity and network infrastructure brand for Ontario organizations. Built around clear communication, structured delivery, and long-term trust.",
+    "Orbitlink is a business connectivity brand for Ontario organizations, focused on clear communication, structured delivery, and long-term trust.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "About Orbitlink | Business Connectivity for Ontario",
     description:
-      "A business connectivity brand built around clear communication, structured delivery, and long-term trust. Orbitlink is a brand of TIRAV Technologies Inc.",
+      "Orbitlink is a business connectivity brand built for clear communication, structured delivery, and long-term trust.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About Orbitlink | Business Connectivity for Ontario",
     description:
-      "A business connectivity brand built around clear communication, structured delivery, and long-term trust.",
+      "A business connectivity brand built for clarity, structured delivery, and long-term trust.",
     images: [`${SITE_URL}/twitter-image`],
   },
 };
@@ -40,84 +40,80 @@ const STORY_BLOCKS = [
   {
     label: "WHY ORBITLINK EXISTS",
     text:
-      "Orbitlink was created around a simple idea: business connectivity should be easier to understand, easier to buy, and easier to trust. Too often, telecom feels noisy, vague, or overly sales-driven. Orbitlink is designed to feel clearer, calmer, and more professionally structured from the first interaction onward.",
+      "Orbitlink was created to make business connectivity easier to understand, easier to buy, and easier to trust.",
   },
   {
     label: "HOW WE OPERATE",
     text:
-      "We focus on clear qualification, structured onboarding, measured language, and cleaner delivery expectations. Instead of making broad claims, we confirm fit, scope, and readiness before moving forward. The goal is a better business experience, not just a louder brand.",
+      "We focus on clear qualification, structured onboarding, measured communication, and a cleaner service experience from first contact onward.",
   },
   {
     label: "WHERE WE ARE GOING",
     text:
-      "Orbitlink is shaped to support business fibre, dedicated internet, managed networks, voice, continuity, and broader infrastructure requirements across Ontario. The ambition is to build a durable, credible connectivity company that earns trust over time.",
+      "Orbitlink is being built to support business internet, managed networks, voice, continuity, and broader infrastructure needs across Ontario.",
   },
 ] as const;
 
 const PRINCIPLES = [
   {
-    title: "Clear over confusing",
+    title: "Clear communication",
     desc:
-      "We want buyers to understand what they are getting, what fits their site, and what happens next without unnecessary complexity.",
+      "Buyers should understand what fits their site, what happens next, and what to expect from the process.",
   },
   {
-    title: "Structured over improvised",
+    title: "Structured delivery",
     desc:
-      "We believe onboarding, delivery, escalation, and communication should feel organized from the beginning.",
+      "Qualification, onboarding, and service coordination should feel organized from the beginning.",
   },
   {
-    title: "Measured over exaggerated",
+    title: "Measured language",
     desc:
-      "We avoid overclaiming. Service posture, rollout, and operational statements are expressed conservatively and refined as they become verifiable.",
+      "We avoid overclaiming and keep public service statements conservative and reviewable.",
   },
   {
-    title: "Trust over short-term hype",
+    title: "Long-term trust",
     desc:
-      "The brand is built for long-term credibility with business clients, partners, and future regulatory or infrastructure stakeholders.",
+      "Orbitlink is designed to build durable credibility with business clients, partners, and stakeholders.",
   },
 ] as const;
 
 const FOUNDATIONS = [
   {
     eyebrow: "BRAND FOUNDATION",
-    title: "Built to feel serious from day one",
+    title: "Built to feel serious",
     body:
-      "Orbitlink is designed to look and read like a disciplined infrastructure company. The visual language is restrained, the copy is deliberate, and the service structure is meant to feel stable and credible.",
+      "Orbitlink is designed to read like a disciplined business infrastructure brand, not a noisy mass-market telecom site.",
   },
   {
     eyebrow: "DELIVERY MODEL",
-    title: "Structured intake and cleaner execution",
+    title: "Structured from the start",
     body:
-      "Services are introduced through qualification, address review, scope definition, and measured rollout. The objective is fewer surprises, cleaner alignment, and a more professional client experience.",
+      "Services begin with address review, scope confirmation, and a clearer path to onboarding and delivery.",
   },
   {
     eyebrow: "CLIENT EXPERIENCE",
-    title: "Business-first from first contact",
+    title: "Business-first experience",
     body:
-      "Whether a request starts with one site or a broader infrastructure need, the experience is intended to feel premium, clear, and professionally handled from the beginning.",
+      "The goal is a cleaner, more professional experience for organizations reviewing business connectivity.",
   },
 ] as const;
 
 const BUSINESS_OUTCOMES = [
   {
-    title: "Easier to understand",
-    body:
-      "The company story is presented in buyer language, not internal jargon or vague brand messaging.",
+    title: "Clearer first impression",
+    body: "Buyers quickly understand what Orbitlink is and how it operates.",
   },
   {
-    title: "More credible first impression",
-    body:
-      "The page is designed to make Orbitlink feel more established, more selective, and more operationally serious.",
+    title: "Stronger credibility",
+    body: "The brand is positioned to feel serious, stable, and commercially ready.",
   },
   {
-    title: "Better alignment with enterprise buyers",
-    body:
-      "The positioning supports buyers who expect structure, discipline, and commercial clarity before they evaluate services.",
+    title: "Better buyer fit",
+    body: "The page supports organizations that expect structure and clarity.",
   },
   {
-    title: "Stronger long-term trust signal",
-    body:
-      "The page reinforces that Orbitlink is being built as a durable business platform, not a short-term marketing surface.",
+    title: "Long-term trust signal",
+    body: "Orbitlink is presented as a durable business platform, not a short-term marketing surface.",
   },
 ] as const;
 
@@ -213,8 +209,8 @@ export default function AboutPage() {
   return (
     <PageShell
       eyebrow="ABOUT"
-      title="A business connectivity brand built for clarity and long-term trust"
-      subtitle="Orbitlink is designed for Ontario organizations that want cleaner communication, structured delivery, and a more disciplined business connectivity experience."
+      title="A business connectivity brand built for clarity and trust"
+      subtitle="Orbitlink is designed for Ontario organizations that want clearer communication, structured delivery, and a more professional connectivity experience."
     >
       <script
         type="application/ld+json"
@@ -229,15 +225,13 @@ export default function AboutPage() {
         </div>
 
         <div className="relative">
-          <SectionEyebrow>BRAND STORY</SectionEyebrow>
+          <SectionEyebrow>ABOUT ORBITLINK</SectionEyebrow>
           <h2 className="mt-3 max-w-4xl text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-            Built to make business connectivity feel clearer, calmer, and more professionally run
+            Built for business connectivity that feels clearer and more professionally run
           </h2>
           <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-            Orbitlink is not positioned as a loud mass-market telecom brand. It is positioned as a
-            modern business connectivity platform with a cleaner operating style: clear
-            qualification, measured communication, structured onboarding, and a visible bias toward
-            long-term trust.
+            Orbitlink is built for organizations that want business connectivity with clearer
+            communication, structured onboarding, and a more disciplined service experience.
           </p>
 
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3 sm:gap-5">
@@ -253,9 +247,9 @@ export default function AboutPage() {
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <MetricPill label="POSITIONING" value="Business-first connectivity brand" />
+            <MetricPill label="POSITIONING" value="Business connectivity brand" />
             <MetricPill label="OPERATING STYLE" value="Structured and measured" />
-            <MetricPill label="LONG-TERM AIM" value="Durable enterprise trust" />
+            <MetricPill label="FOCUS" value="Long-term business trust" />
           </div>
         </div>
       </SectionShell>
@@ -273,18 +267,17 @@ export default function AboutPage() {
       <SectionShell className="mt-4 p-6 sm:mt-5 sm:p-7">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <SectionEyebrow>BUSINESS OUTCOMES</SectionEyebrow>
+            <SectionEyebrow>WHAT THIS SIGNALS</SectionEyebrow>
             <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
-              What this brand posture is designed to communicate
+              What buyers should understand about Orbitlink
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-              The objective is not to sound abstract or overly polished. It is to help buyers,
-              partners, and stakeholders quickly understand that Orbitlink is built with
-              discipline, commercial clarity, and long-term seriousness.
+              Orbitlink is designed to feel credible, structured, and commercially clear from the
+              first review.
             </p>
           </div>
 
-          <MetricPill label="MODE" value="Clear and buyer-readable" />
+          <MetricPill label="MODE" value="Clear and buyer-focused" />
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4 sm:gap-4">
@@ -306,8 +299,8 @@ export default function AboutPage() {
           The standard behind the brand
         </h2>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-          Orbitlink is designed to feel composed because the operating model behind it is meant to
-          be composed. The goal is professional trust that becomes stronger over time.
+          Orbitlink is built to feel composed because the operating model behind it is meant to be
+          clear, structured, and dependable.
         </p>
 
         <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 sm:gap-4">
@@ -325,26 +318,24 @@ export default function AboutPage() {
 
       <section className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2 sm:mt-5 sm:gap-5">
         <SectionShell className="p-6 sm:p-7">
-          <SectionEyebrow>WHAT ORBITLINK IS</SectionEyebrow>
+          <SectionEyebrow>WHAT ORBITLINK PROVIDES</SectionEyebrow>
           <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
-            A business connectivity and infrastructure platform
+            Business connectivity and infrastructure services
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
-            Orbitlink is shaped to support business fibre, dedicated internet, managed LAN and
-            Wi-Fi, voice, continuity, IoT uplinks, static routing, and broader infrastructure
-            coordination. The common thread is a cleaner, more disciplined client experience.
+            Orbitlink is positioned to support business fibre, dedicated internet, managed Wi-Fi,
+            voice, continuity, and broader connectivity requirements for Ontario organizations.
           </p>
         </SectionShell>
 
         <SectionShell className="p-6 sm:p-7">
-          <SectionEyebrow>WHAT ORBITLINK IS NOT</SectionEyebrow>
+          <SectionEyebrow>HOW ORBITLINK IS POSITIONED</SectionEyebrow>
           <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
-            Not a hype-first telecom brand
+            A restrained and credible business brand
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
-            The brand is intentionally restrained. It is not built around exaggerated marketing,
-            blanket claims, or noisy service language. It is built to feel stable,
-            understandable, and commercially credible.
+            Orbitlink is not positioned as a hype-first telecom brand. It is designed to feel
+            stable, understandable, and commercially credible.
           </p>
         </SectionShell>
       </section>
@@ -354,20 +345,19 @@ export default function AboutPage() {
           <div className="max-w-3xl">
             <SectionEyebrow>CORPORATE DISCLOSURE</SectionEyebrow>
             <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
-              Brand, governance, and public posture
+              Brand and operating company
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
-              Orbitlink is a brand of <span className="text-white/88">TIRAV Technologies Inc.</span>{" "}
-              Public service posture, onboarding windows, and operational statements are expressed
-              conservatively and updated as regulatory, technical, and delivery milestones are
-              confirmed.
+              Orbitlink is a brand of <span className="text-white/88">TIRAV Technologies Inc.</span>.
+              Public service statements, onboarding posture, and operational updates are presented
+              conservatively and updated as milestones are confirmed.
             </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/55">DISCLOSURE STANDARD</div>
             <div className="mt-1 text-sm text-white/80">
-              No overclaiming • Controlled rollout
+              Measured language • controlled rollout
             </div>
           </div>
         </div>
@@ -385,13 +375,13 @@ export default function AboutPage() {
             href="/network"
             className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
           >
-            View Network Posture
+            Network
           </a>
           <a
             href="/contact#intake"
             className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
           >
-            Contact Orbitlink
+            Check Availability
           </a>
         </div>
       </section>
