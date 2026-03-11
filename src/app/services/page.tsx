@@ -31,14 +31,16 @@ type GroupItem = {
 };
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet, Dedicated Internet & Network Services | Orbitlink",
+  title:
+    "Business Fibre Internet, Dedicated Internet & Managed Network Services | Orbitlink",
   description:
-    "Explore Orbitlink business fibre internet, dedicated internet access, managed Wi-Fi and LAN, business voice, backup connectivity, IoT uplinks, static IP routing, and infrastructure services across Ontario.",
+    "Explore Orbitlink business fibre internet, dedicated internet access, managed LAN and Wi-Fi, backup connectivity, cloud voice, static IP routing, IoT connectivity, and infrastructure services across Ontario.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Business Fibre Internet, Dedicated Internet & Network Services | Orbitlink",
+    title:
+      "Business Fibre Internet, Dedicated Internet & Managed Network Services | Orbitlink",
     description:
-      "Business fibre internet, dedicated internet access, managed Wi-Fi, continuity, voice, and infrastructure services for Ontario businesses.",
+      "Business fibre internet, dedicated internet access, managed networking, backup connectivity, voice, and infrastructure services for Ontario businesses.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -48,15 +50,16 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink business fibre internet, dedicated internet, and network services",
+        alt: "Orbitlink business internet and network services",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Fibre Internet, Dedicated Internet & Network Services | Orbitlink",
+    title:
+      "Business Fibre Internet, Dedicated Internet & Managed Network Services | Orbitlink",
     description:
-      "Business fibre internet, dedicated internet access, managed Wi-Fi, continuity, voice, and infrastructure services across Ontario.",
+      "Business fibre internet, dedicated internet access, managed networking, backup connectivity, voice, and infrastructure services across Ontario.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -65,101 +68,101 @@ const SERVICES: readonly ServiceItem[] = [
   {
     title: "Business Fibre Internet",
     subtitle:
-      "Primary internet for offices, commercial spaces, and growing organizations that need reliable connectivity.",
+      "Primary internet for offices, commercial spaces, and growth-stage organizations that need clean onboarding and dependable business connectivity.",
     href: "/services/business-fibre-internet",
     bullets: ["Business fibre", "Symmetrical options", "Address review"],
-    tag: "INTERNET",
+    tag: "PRIMARY INTERNET",
     group: "Connectivity",
     bestFit:
-      "High-quality primary internet for business sites that need reliable connectivity and a cleaner onboarding path.",
+      "Best for business sites that want high-quality primary internet, structured onboarding, and a more professional buying experience.",
   },
   {
     title: "Dedicated Internet Access",
     subtitle:
-      "Dedicated connectivity for critical business sites that need stronger performance expectations.",
+      "Dedicated connectivity for critical business environments that require stronger performance posture, clearer escalation, and more formal delivery.",
     href: "/services/dedicated-internet-access",
     bullets: ["Dedicated access", "Committed service", "Critical sites"],
     tag: "DEDICATED CONNECTIVITY",
     group: "Connectivity",
     bestFit:
-      "Best for sites that need stronger performance, clearer escalation, and more predictable service delivery.",
+      "Best for organizations that need deterministic performance expectations, cleaner escalation, and stronger commercial posture.",
   },
   {
     title: "Managed LAN & Wi-Fi",
     subtitle:
-      "Managed internal networking for businesses that need better Wi-Fi coverage, segmentation, and day-to-day support.",
+      "Managed internal networking for businesses that need stronger Wi-Fi coverage, cleaner segmentation, and easier day-to-day operational stability.",
     href: "/services/managed-lan-wifi",
     bullets: ["Managed Wi-Fi", "LAN support", "Segmentation"],
     tag: "MANAGED NETWORK",
     group: "Managed Network",
     bestFit:
-      "Best for sites where internal network performance, guest access, and support quality matter.",
+      "Best for sites where internal network quality, guest access, and support responsiveness matter as much as the circuit itself.",
   },
   {
     title: "LTE / 5G Backup Connectivity",
     subtitle:
-      "Backup connectivity for businesses that want failover, resilience, and stronger continuity planning.",
+      "Backup connectivity for organizations that want continuity, failover readiness, and stronger resilience during primary access disruption.",
     href: "/services/lte-5g-continuity",
     bullets: ["Backup path", "Failover", "Continuity"],
-    tag: "CONTINUITY",
+    tag: "RESILIENCE",
     group: "Continuity",
     bestFit:
-      "Best for organizations that want internet resilience built into the service plan from the start.",
+      "Best for businesses that want uptime planning built into the service design from the beginning.",
   },
   {
     title: "Starlink",
     subtitle:
-      "Satellite connectivity for sites with limited terrestrial options or special continuity requirements.",
+      "Satellite connectivity for remote, edge, or constrained environments where terrestrial options are limited or continuity requires an alternative path.",
     href: "/services/starlink-agent",
     bullets: ["Satellite option", "Remote sites", "Continuity use cases"],
     tag: "SATELLITE",
     group: "Continuity",
     bestFit:
-      "Best for edge cases where terrestrial access is limited and business operations still need a viable connection path.",
+      "Best for sites where standard terrestrial availability is limited and operations still require a viable business connection path.",
   },
   {
     title: "VoIP & Cloud Voice",
     subtitle:
-      "Business voice service for teams that need number porting, call routing, and professional communications handling.",
+      "Business voice service for teams that need number porting, call routing, professional communications handling, and cleaner operational control.",
     href: "/services/voip-cloud-voice",
     bullets: ["Cloud voice", "Number porting", "Call routing"],
     tag: "VOICE",
     group: "Voice",
     bestFit:
-      "Best for businesses that want calling aligned with the rest of their communications and service stack.",
+      "Best for organizations that want voice aligned with the rest of their business communications and service stack.",
   },
   {
     title: "IoT Connectivity",
     subtitle:
-      "Secure uplinks for gateways, sensors, and connected devices in managed business environments.",
+      "Secure uplinks for gateways, sensors, field devices, and connected systems operating inside managed business environments.",
     href: "/services/iot-connectivity",
     bullets: ["IoT uplinks", "Segmentation", "Monitoring-ready"],
-    tag: "CONNECTED DEVICES",
+    tag: "CONNECTED SYSTEMS",
     group: "Infrastructure",
     bestFit:
-      "Best for environments where devices, gateways, and operational systems need secure and segmented connectivity.",
+      "Best for environments where devices, operational systems, and gateways need segmented and more controlled connectivity.",
   },
   {
     title: "Static IP Routing",
     subtitle:
-      "Fixed addressing options for VPNs, firewalls, remote access, and stable business endpoints.",
+      "Fixed addressing options for VPNs, firewalls, remote access, policy enforcement, and stable business endpoints.",
     href: "/services/static-ip-routing",
     bullets: ["Static IPs", "Routing options", "Stable endpoints"],
     tag: "ROUTING",
     group: "Infrastructure",
     bestFit:
-      "Best for businesses that need fixed endpoints for VPNs, remote access, firewall policy, or hosted systems.",
+      "Best for businesses that need fixed endpoints for VPNs, hosted systems, firewall policy, or stable remote access.",
   },
   {
     title: "Colocation & Infrastructure Services",
     subtitle:
-      "Infrastructure coordination for buyers planning edge presence, cross-connects, or future interconnection.",
+      "Infrastructure coordination for organizations planning rack presence, cross-connects, interconnection, or longer-term network architecture.",
     href: "/services/colocation-infrastructure",
     bullets: ["Cross-connects", "Rack coordination", "Infrastructure planning"],
     tag: "INFRASTRUCTURE",
     group: "Infrastructure",
     bestFit:
-      "Best for businesses planning beyond standard internet access and into infrastructure or interconnection needs.",
+      "Best for buyers planning beyond standard connectivity into infrastructure, interconnection, or future network presence.",
   },
 ];
 
@@ -168,31 +171,31 @@ const GROUPS: readonly GroupItem[] = [
     title: "Connectivity",
     eyebrow: "PRIMARY ACCESS",
     description:
-      "Internet services for business sites that need reliable primary connectivity and a stronger commercial starting point.",
+      "Internet services for business environments that need strong primary connectivity and a cleaner commercial starting point.",
   },
   {
     title: "Managed Network",
     eyebrow: "INTERNAL NETWORK",
     description:
-      "Managed Wi-Fi and LAN services for businesses that need better site networking and easier day-to-day support.",
+      "Managed LAN and Wi-Fi services for businesses that need better internal stability, cleaner segmentation, and easier operational support.",
   },
   {
     title: "Continuity",
     eyebrow: "BACKUP & RESILIENCE",
     description:
-      "Backup connectivity options for organizations that want stronger uptime planning and outage resilience.",
+      "Backup and continuity services for organizations that want stronger uptime planning and outage resilience.",
   },
   {
     title: "Voice",
     eyebrow: "COMMUNICATIONS",
     description:
-      "Business voice services for teams that need professional calling, routing, and cleaner communications setup.",
+      "Business voice services for teams that need professional calling, routing, and better communications control.",
   },
   {
     title: "Infrastructure",
     eyebrow: "ADVANCED SERVICES",
     description:
-      "Routing, IoT, and infrastructure services for more technical and future-ready business environments.",
+      "Routing, IoT, and infrastructure services for more technical, future-ready, and policy-driven business environments.",
   },
 ];
 
@@ -204,8 +207,8 @@ function MetricPill({
   value: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-      <div className="text-[11px] tracking-[0.22em] text-white/45">{label}</div>
+    <div className="rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/42">{label}</div>
       <div className="mt-1 text-sm text-white/82">{value}</div>
     </div>
   );
@@ -220,7 +223,10 @@ function Surface({
 }) {
   return (
     <div
-      className={["rounded-[32px] border border-white/10 bg-white/[0.035]", className].join(" ")}
+      className={[
+        "rounded-[34px] border border-white/10 bg-white/[0.035] backdrop-blur-sm",
+        className,
+      ].join(" ")}
     >
       {children}
     </div>
@@ -231,26 +237,26 @@ function ServiceCard({ service }: { service: ServiceItem }) {
   return (
     <Link
       href={service.href}
-      className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.035] p-6 transition duration-300 hover:border-white/20 hover:bg-white/[0.055]"
+      className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-black/20 p-6 transition duration-300 hover:border-white/20 hover:bg-white/[0.055]"
     >
       <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-        <div className="absolute -left-16 top-0 h-40 w-40 rounded-full bg-blue-500/10 blur-3xl" />
-        <div className="absolute right-0 top-10 h-36 w-36 rounded-full bg-emerald-500/8 blur-3xl" />
+        <div className="absolute -left-12 top-0 h-40 w-40 rounded-full bg-blue-500/8 blur-3xl" />
+        <div className="absolute right-0 top-8 h-36 w-36 rounded-full bg-emerald-500/8 blur-3xl" />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       </div>
 
       <div className="relative">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <div className="text-[11px] tracking-[0.24em] text-white/50">{service.tag}</div>
+            <div className="text-[11px] tracking-[0.24em] text-white/48">{service.tag}</div>
             <h3 className="mt-3 text-xl font-semibold tracking-tight text-white">
               {service.title}
             </h3>
-            <p className="mt-3 text-sm leading-6 text-white/66">{service.subtitle}</p>
+            <p className="mt-3 text-sm leading-6 text-white/64">{service.subtitle}</p>
           </div>
 
-          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/68 transition group-hover:border-white/20 group-hover:bg-white/10 group-hover:text-white">
-            View
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] text-white/66 transition group-hover:border-white/20 group-hover:bg-white/10 group-hover:text-white">
+            Open
           </div>
         </div>
 
@@ -258,7 +264,7 @@ function ServiceCard({ service }: { service: ServiceItem }) {
           {service.bullets.map((b) => (
             <span
               key={b}
-              className="inline-flex items-center rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-xs text-white/64"
+              className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/62"
             >
               {b}
             </span>
@@ -268,7 +274,7 @@ function ServiceCard({ service }: { service: ServiceItem }) {
         <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
         <div className="mt-5">
-          <div className="text-[11px] tracking-[0.22em] text-white/42">BEST FOR</div>
+          <div className="text-[11px] tracking-[0.22em] text-white/40">BEST FOR</div>
           <p className="mt-2 text-sm leading-6 text-white/60">{service.bestFit}</p>
         </div>
       </div>
@@ -288,7 +294,7 @@ function GroupBlock({
   services: readonly ServiceItem[];
 }) {
   return (
-    <section className="mt-14 first:mt-0">
+    <section className="mt-16 first:mt-0">
       <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-3xl">
           <div className="text-[11px] tracking-[0.30em] text-white/40">{eyebrow}</div>
@@ -314,18 +320,18 @@ function QuickStartStrip() {
   const steps = [
     {
       label: "STEP 1",
-      title: "Choose a service",
-      body: "Start with internet, dedicated internet, managed Wi-Fi, voice, backup, or infrastructure.",
+      title: "Choose the business need",
+      body: "Start with primary internet, dedicated connectivity, managed networking, backup, voice, or infrastructure.",
     },
     {
       label: "STEP 2",
-      title: "Share your site details",
-      body: "Add your address, timeline, and the requirements that matter to the business.",
+      title: "Add site details",
+      body: "Share the address, timeline, and the operational requirements that matter to the business.",
     },
     {
       label: "STEP 3",
-      title: "Request review and pricing",
-      body: "Move into a clearer next step for serviceability, fit, or commercial discussion.",
+      title: "Move into qualification",
+      body: "Get a clearer next step for serviceability, service fit, and pricing direction.",
     },
   ];
 
@@ -333,17 +339,17 @@ function QuickStartStrip() {
     <Surface className="p-6 sm:p-8 lg:p-10">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.30em] text-white/42">HOW TO START</div>
+          <div className="text-[11px] tracking-[0.30em] text-white/42">HOW TO BUY</div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-            A simpler path from browsing to qualification
+            A cleaner path from browsing to commercial review
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            Choose the service that best matches the business need, then move into a clear request
-            with your address, timing, and requirements.
+            Buyers do not need a maze. They need the right service, the right qualification path,
+            and a clear next step.
           </p>
         </div>
 
-        <MetricPill label="MODE" value="Simple • Clear • Business-ready" />
+        <MetricPill label="MODE" value="Clear • Practical • Business-ready" />
       </div>
 
       <div className="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -359,23 +365,23 @@ function QuickStartStrip() {
   );
 }
 
-function BuyerQuestionsStrip() {
+function ValueStrip() {
   const items = [
     {
-      title: "Which service is right for my site?",
-      body: "The page helps buyers separate business fibre, dedicated internet, managed Wi-Fi, backup connectivity, voice, and infrastructure needs.",
+      title: "Business-first qualification",
+      body: "Orbitlink is positioned around commercial fit, not generic consumer intake.",
     },
     {
-      title: "Do you review by address?",
-      body: "Yes. The commercial path starts with site details, service fit, and operating requirements rather than broad assumptions.",
+      title: "Stronger service matching",
+      body: "Fibre, DIA, managed networking, backup, and voice are mapped to real operating needs.",
     },
     {
-      title: "Can I compare options quickly?",
-      body: "Each service card is grouped by business need so buyers can scan faster and move toward the right conversation.",
+      title: "Cleaner operator posture",
+      body: "The buying experience is designed to feel structured, accountable, and enterprise-ready.",
     },
     {
-      title: "What happens after I enquire?",
-      body: "Qualified requests move into availability review, service-fit discussion, pricing direction, or the next commercial step.",
+      title: "Better next-step clarity",
+      body: "Clients move faster when the path from service interest to qualification is obvious.",
     },
   ];
 
@@ -384,18 +390,19 @@ function BuyerQuestionsStrip() {
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
           <div className="text-[11px] tracking-[0.30em] text-[#FDE68A]">
-            COMMON BUYER QUESTIONS
+            WHY BUYERS TAKE THIS SERIOUSLY
           </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-            Clear answers before the service conversation starts
+            More than a list of services
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-            Serious buyers usually want the same things first: the right service fit, a clearer
-            review path, and confidence that the next step will be practical.
+            When a serious buyer lands here, they should immediately understand the value of doing
+            business with Orbitlink: clearer service paths, cleaner qualification, and stronger
+            commercial posture.
           </p>
         </div>
 
-        <MetricPill label="BUYER GOAL" value="Fit • Review • Pricing" />
+        <MetricPill label="BUYER OUTCOME" value="Fit • Confidence • Action" />
       </div>
 
       <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -425,6 +432,13 @@ export default function ServicesIndexPage() {
           "@type": "Organization",
           name: "TIRAV Technologies Inc.",
         },
+      },
+      {
+        "@type": "WebPage",
+        name: "Orbitlink Services",
+        url: PAGE_URL,
+        description:
+          "Business fibre internet, dedicated internet access, managed networking, backup connectivity, voice, and infrastructure services for Ontario businesses.",
       },
       {
         "@type": "ItemList",
@@ -465,7 +479,7 @@ export default function ServicesIndexPage() {
 
       <section className="relative overflow-hidden border-b border-white/10">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 opacity-[0.055] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:72px_72px]" />
+          <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
           <div className="absolute -top-24 left-10 h-72 w-72 rounded-full bg-blue-500/12 blur-3xl" />
           <div className="absolute right-10 top-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
           <div className="absolute bottom-[-140px] left-1/2 h-80 w-[56rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
@@ -476,7 +490,7 @@ export default function ServicesIndexPage() {
           <div className="max-w-6xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] text-white/70">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Business internet and network services
+              Business internet, managed networking, backup, voice, and infrastructure
             </div>
           </div>
 
@@ -484,26 +498,27 @@ export default function ServicesIndexPage() {
             <div className="lg:col-span-8">
               <div className="max-w-4xl">
                 <div className="text-[11px] tracking-[0.30em] text-white/42">
-                  INTERNET • MANAGED NETWORK • BACKUP • VOICE • INFRASTRUCTURE
+                  ONTARIO BUSINESS CONNECTIVITY • TIER-1 OPERATOR SURFACE
                 </div>
 
-                <h1 className="mt-4 text-[2.6rem] font-semibold tracking-tight text-white sm:text-6xl lg:text-[5.1rem] lg:leading-[0.98]">
+                <h1 className="mt-4 text-[2.6rem] font-semibold tracking-tight text-white sm:text-6xl lg:text-[5.15rem] lg:leading-[0.97]">
                   Business internet and
-                  <span className="block text-white/62">network services</span>
+                  <span className="block text-white/60">network services</span>
                 </h1>
 
                 <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/66 sm:text-lg">
-                  Explore business fibre, dedicated internet, managed Wi-Fi, backup connectivity,
-                  voice, and infrastructure services for Ontario businesses. Start with the service
-                  that matches your site, then move into availability and pricing.
+                  Explore Orbitlink business fibre internet, dedicated internet access, managed LAN
+                  and Wi-Fi, backup connectivity, voice, and infrastructure services for Ontario
+                  businesses. Choose the service that matches the site, then move into availability,
+                  fit, and pricing review.
                 </p>
 
                 <div className="mt-7 flex flex-wrap gap-2">
                   {[
                     "Business fibre internet",
                     "Dedicated internet access",
-                    "Managed Wi-Fi and LAN",
-                    "Backup and voice",
+                    "Managed LAN & Wi-Fi",
+                    "Backup, voice, infrastructure",
                   ].map((item) => (
                     <span
                       key={item}
@@ -522,10 +537,16 @@ export default function ServicesIndexPage() {
                     Check Availability
                   </Link>
                   <Link
+                    href="/locations"
+                    className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+                  >
+                    View Locations
+                  </Link>
+                  <Link
                     href="/trust"
                     className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
                   >
-                    View Trust & Compliance
+                    Trust & Compliance
                   </Link>
                 </div>
               </div>
@@ -539,18 +560,18 @@ export default function ServicesIndexPage() {
                 </div>
 
                 <div className="relative">
-                  <div className="text-[11px] tracking-[0.24em] text-white/50">START HERE</div>
+                  <div className="text-[11px] tracking-[0.24em] text-white/50">COMMERCIAL START</div>
                   <div className="mt-3 text-lg font-semibold text-white">
-                    Pick the service that matches the main business need
+                    Pick the service that matches the business objective
                   </div>
                   <p className="mt-3 text-sm leading-6 text-white/64">
-                    Start with internet, managed Wi-Fi, backup, voice, or infrastructure. Then move
-                    into a clearer request with your address, timing, and requirements.
+                    Start with internet, managed networking, backup, voice, or infrastructure.
+                    Then move into a clearer request with address, timing, and service scope.
                   </p>
 
                   <div className="mt-5 grid gap-3">
                     <MetricPill label="STEP 1" value="Choose the service" />
-                    <MetricPill label="STEP 2" value="Add address and scope" />
+                    <MetricPill label="STEP 2" value="Add site details" />
                     <MetricPill label="STEP 3" value="Request review and pricing" />
                   </div>
                 </div>
@@ -560,14 +581,14 @@ export default function ServicesIndexPage() {
 
           <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
             <MetricPill label="BEST FOR" value="Ontario business sites and multi-location teams" />
-            <MetricPill label="BUYER MODE" value="Simple, clear, and business-ready" />
-            <MetricPill label="NEXT STEP" value="Check availability and pricing" />
+            <MetricPill label="BUYER MODE" value="Clear, serious, business-ready" />
+            <MetricPill label="NEXT STEP" value="Availability • Fit • Pricing" />
           </div>
         </div>
       </section>
 
       <section className="relative mx-auto max-w-7xl px-6 py-14 sm:px-7 sm:py-16 lg:px-10 lg:py-20">
-        <div className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:88px_88px]" />
+        <div className="pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:88px_88px]" />
 
         <div className="relative space-y-6">
           <QuickStartStrip />
@@ -582,7 +603,7 @@ export default function ServicesIndexPage() {
             />
           ))}
 
-          <BuyerQuestionsStrip />
+          <ValueStrip />
 
           <div className="overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.035]">
             <div className="relative p-6 sm:p-8 lg:p-10">
@@ -596,11 +617,12 @@ export default function ServicesIndexPage() {
                 <div className="max-w-3xl">
                   <div className="text-[11px] tracking-[0.30em] text-white/42">NEXT STEP</div>
                   <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                    Move from browsing to a qualified conversation
+                    Move from browsing to a qualified service conversation
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                    Start with your address, business needs, and service priority. Orbitlink can
-                    then review fit, availability, and the clearest next step.
+                    Start with the address, operating requirements, and the service priority.
+                    Orbitlink can then review fit, availability, and the clearest next commercial
+                    step.
                   </p>
                 </div>
 
@@ -608,6 +630,12 @@ export default function ServicesIndexPage() {
               </div>
 
               <div className="mt-7 flex flex-wrap gap-3">
+                <Link
+                  href="/contact#intake"
+                  className="rounded-2xl bg-[#FACC15] px-4 py-2.5 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+                >
+                  Check Availability
+                </Link>
                 <Link
                   href="/locations"
                   className="rounded-2xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm text-white/82 transition hover:bg-white/10"
@@ -625,12 +653,6 @@ export default function ServicesIndexPage() {
                   className="rounded-2xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm text-white/82 transition hover:bg-white/10"
                 >
                   View Network
-                </Link>
-                <Link
-                  href="/contact#intake"
-                  className="rounded-2xl bg-[#FACC15] px-4 py-2.5 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                >
-                  Check Availability
                 </Link>
               </div>
             </div>
