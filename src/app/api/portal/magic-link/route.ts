@@ -60,7 +60,9 @@ export async function POST(req: Request) {
       link,
       ip: clean(getIP(req), 120) || undefined,
     });
-  } catch {
+  } catch (e) {
+    console.error("portal magic-link error:", e);
     return NextResponse.json({ ok: false, error: "server" }, { status: 500 });
   }
-}
+  
+ }
