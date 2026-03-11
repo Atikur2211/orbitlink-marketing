@@ -62,12 +62,12 @@ function verifyBootstrapToken(token: string) {
   if (!email || !allowedEmails.includes(email)) return null;
   if (!exp || Date.now() > exp) return null;
 
-  const role = email === "support@orbitlink.ca" ? "ops" : "admin";
+  const role: "admin" | "ops" = email === "support@orbitlink.ca" ? "ops" : "admin";
 
   return {
     email,
     orgId: "orbitlink-internal",
-    role: role as const,
+    role,
     sessionId: crypto.randomBytes(32).toString("hex"),
     expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
   };
