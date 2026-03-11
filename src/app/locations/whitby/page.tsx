@@ -1,3 +1,4 @@
+// src/app/locations/whitby/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -11,6 +12,7 @@ const BUSINESS = {
   legalName: "TIRAV Technologies Inc. o/a Orbitlink",
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
+  email: "concierge@orbitlink.ca",
   address: {
     street: "30 Eglinton Ave W, Suite 400-A77",
     city: "Mississauga",
@@ -30,12 +32,12 @@ const BUSINESS = {
 export const metadata: Metadata = {
   title: "Business Fibre Internet in Whitby, ON | Orbitlink™",
   description:
-    "Operator-grade business fibre internet in Whitby with structured onboarding, documented delivery, and enterprise support posture. Fibre, DIA, managed LAN & Wi-Fi, continuity, and voice.",
+    "Business fibre internet in Whitby with structured onboarding, documented delivery, and enterprise support posture. Fibre, DIA, managed LAN & Wi-Fi, continuity, and voice.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
     title: "Business Fibre Internet in Whitby, ON | Orbitlink™",
     description:
-      "Business connectivity in Whitby: fibre, DIA, managed LAN & Wi-Fi, continuity architecture, and voice. Availability by building.",
+      "Business connectivity in Whitby with fibre, DIA, managed LAN & Wi-Fi, continuity architecture, and voice. Availability reviewed by building.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -45,52 +47,71 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Business Fibre Internet in Whitby, ON | Orbitlink™",
     description:
-      "Operator-grade business connectivity in Whitby delivered with structured onboarding, documented acceptance, and enterprise support posture.",
+      "Operator-grade business connectivity in Whitby with structured onboarding, documented acceptance, and enterprise support posture.",
   },
 };
 
 const FAQ = [
   {
     q: "Do you service my address in Whitby?",
-    a: "Coverage depends on building infrastructure and upstream feasibility. Orbitlink is available on-net where possible, with clear scoping when additional build work is required. Submit an availability request and we’ll confirm feasibility.",
+    a: "Availability depends on building infrastructure and upstream feasibility. Orbitlink confirms serviceability per address and clearly scopes any additional build or access work before activation.",
   },
   {
     q: "Is Whitby a strong market for business fibre internet?",
-    a: "Yes. Whitby is a growing business market with office, industrial, commercial, and expansion-oriented demand. Orbitlink confirms feasibility per site and aligns the correct service module to operational requirements.",
+    a: "Yes. Whitby is a growing Durham-region business market with office, commercial, and expansion-oriented demand where stable connectivity and clean delivery posture matter.",
   },
   {
-    q: "Do you offer Dedicated Internet Access (DIA) in Whitby?",
-    a: "Yes—DIA is available for performance-critical environments requiring deterministic throughput, cleaner enterprise handoff, and a more formal delivery posture, subject to feasibility.",
+    q: "Do you offer Dedicated Internet Access in Whitby?",
+    a: "Yes. Dedicated Internet Access is available for performance-critical environments that require stronger delivery posture, deterministic performance expectations, and cleaner enterprise handoff, subject to feasibility.",
   },
   {
     q: "Do you provide static IPs?",
-    a: "Static IP options are available where feasible and depend on the underlying access type and location. We’ll confirm options during onboarding.",
+    a: "Static IP options are available where feasible and depend on access type, design, and location. Options are confirmed during qualification.",
   },
   {
     q: "Can you manage LAN and enterprise Wi-Fi?",
-    a: "Yes—Orbitlink provides Managed LAN & Enterprise Wi-Fi including segmentation posture, guest access, and coverage planning aligned with an operator-grade support posture.",
+    a: "Yes. Orbitlink supports managed LAN and enterprise Wi-Fi, including segmentation posture, guest access, and coverage planning aligned with a business-grade support model.",
   },
   {
     q: "Do you offer continuity and failover options?",
-    a: "Yes—Orbitlink designs LTE/5G continuity patterns for sites that require uptime during access disruptions. Feasibility depends on site constraints and design.",
+    a: "Yes. Orbitlink can design LTE and 5G continuity patterns for sites that require stronger resilience during access disruption, subject to site conditions and feasibility.",
   },
   {
     q: "How long does installation take in Whitby?",
-    a: "Timelines vary by building readiness, access type, landlord coordination, and upstream delivery conditions. Orbitlink uses structured onboarding and documented acceptance so expectations are clear before activation.",
+    a: "Timelines vary based on building readiness, landlord coordination, access method, and upstream delivery conditions. Orbitlink uses structured onboarding so expectations are defined before activation.",
   },
   {
     q: "Are you a reseller?",
-    a: "Orbitlink is the customer-facing operator responsible for onboarding posture, documentation, and support experience. Certain access products may be delivered via agent or reseller models and are clearly labeled as such.",
+    a: "Orbitlink is the customer-facing operator responsible for commercial qualification, onboarding posture, documentation, and support experience. Some access products may be delivered through partner or reseller models and are clearly identified as such.",
   },
 ] as const;
 
 const serviceModules = [
   { t: "Business Fibre Internet", href: "/services/business-fibre-internet" },
-  { t: "Dedicated Internet Access (DIA)", href: "/services/dedicated-internet-access" },
+  { t: "Dedicated Internet Access", href: "/services/dedicated-internet-access" },
   { t: "Managed LAN & Enterprise Wi-Fi", href: "/services/managed-lan-wifi" },
-  { t: "LTE / 5G Continuity Architecture", href: "/services/lte-5g-continuity" },
+  { t: "LTE / 5G Continuity", href: "/services/lte-5g-continuity" },
   { t: "VoIP & Cloud Voice", href: "/services/voip-cloud-voice" },
   { t: "Static IP Routing", href: "/services/static-ip-routing" },
+] as const;
+
+const signals = [
+  {
+    t: "Address-qualified",
+    d: "Availability is reviewed by building and service fit before commitment.",
+  },
+  {
+    t: "Business-first",
+    d: "Built for real commercial environments, not generic consumer intake.",
+  },
+  {
+    t: "Structured delivery",
+    d: "Clear onboarding and documented activation posture.",
+  },
+  {
+    t: "Durham-region fit",
+    d: "Strong match for offices, commercial sites, and growth-oriented operations.",
+  },
 ] as const;
 
 function jsonLd() {
@@ -112,7 +133,7 @@ function jsonLd() {
     legalName: BUSINESS.legalName,
     url: SITE_URL,
     telephone: BUSINESS.phoneE164,
-    email: "concierge@orbitlink.ca",
+    email: BUSINESS.email,
     parentOrganization: { "@id": ORG_ID },
     address: {
       "@type": "PostalAddress",
@@ -169,265 +190,327 @@ function jsonLd() {
   return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/45">{children}</div>;
+}
+
+function Surface({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={["rounded-[30px] border border-white/10 bg-white/[0.03]", className].join(" ")}>
+      {children}
+    </div>
+  );
+}
+
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/45">{label}</div>
+      <div className="mt-1 text-sm text-white/82">{value}</div>
+    </div>
+  );
+}
+
 export default function WhitbyLocationPage() {
   return (
-    <main className="min-h-screen bg-[#0B0F14] text-white">
+    <div className="relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
-      <section className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-          <span className="h-2 w-2 rounded-full bg-white/60" />
-          <span className="text-sm tracking-wide text-white/60">Service Area</span>
+      <section className="relative overflow-hidden border-b border-white/10">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.035),transparent_30%)]" />
+          <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <h1 className="mt-5 text-4xl font-semibold tracking-tight md:text-5xl">
-          Business Fibre Internet in Whitby, ON
-        </h1>
-
-        <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
-          Orbitlink delivers operator-grade business connectivity in Whitby with a disciplined
-          delivery posture: structured onboarding, documented acceptance, and enterprise support
-          posture. Availability is{" "}
-          <span className="font-medium text-white/85">confirmed per building</span>, with clear
-          feasibility scoping when additional build work is required.
-        </p>
-
-        <div className="mt-6 flex flex-wrap gap-2">
-          {[
-            "Availability by building",
-            "Structured onboarding",
-            "Documented delivery",
-            "Enterprise support posture",
-            "Durham-region business fit",
-          ].map((x) => (
-            <span
-              key={x}
-              className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
-            >
-              {x}
-            </span>
-          ))}
-        </div>
-
-        <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-          <Link
-            href="/contact#intake"
-            className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
-          >
-            Check Availability / Request Access
-          </Link>
-          <Link
-            href="/services/business-fibre-internet"
-            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
-          >
-            Business Fibre Service Module
-          </Link>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-6 pb-10">
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8 lg:col-span-2">
-            <h2 className="text-xl font-semibold tracking-tight">
-              Whitby connectivity for business growth, office demand, and expansion-ready sites
-            </h2>
-
-            <div className="mt-3 space-y-4 leading-relaxed text-white/70">
-              <p>
-                Whitby is a strong next-step Ontario market because it combines business growth,
-                expansion-oriented demand, office and commercial activity, and industrial opportunity
-                within the broader Durham-region corridor.
-              </p>
-
-              <p>
-                Orbitlink’s posture is operator-grade: confirm feasibility first, align the correct
-                service module, and deliver with documented acceptance checkpoints. That matters in
-                markets like Whitby where buildings, access methods, and operational requirements can
-                vary significantly by site.
-              </p>
-
-              <p>
-                Many Whitby businesses run cloud applications, voice, VPN access, cameras, internal
-                Wi-Fi, and multi-site workflows. In those environments, stable outcomes depend not
-                just on access, but on correct service selection between business fibre and DIA, plus
-                managed LAN/Wi-Fi posture and continuity design where uptime matters.
-              </p>
-
-              <h3 className="pt-2 text-lg font-semibold tracking-tight text-white">
-                Service modules commonly deployed in Whitby
-              </h3>
-
-              <ul className="mt-2 space-y-2">
-                {serviceModules.map((x) => (
-                  <li key={x.t} className="flex items-start gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-white/40" />
-                    <span>
-                      <Link
-                        href={x.href}
-                        className="text-white/85 underline underline-offset-4 hover:text-white"
-                      >
-                        {x.t}
-                      </Link>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
-                Broadband fibre vs DIA
-              </h3>
-              <p>
-                Business fibre is ideal when you want strong value with disciplined onboarding and a
-                professional delivery posture. DIA is the better fit when deterministic performance,
-                cleaner enterprise handoff, or more formal delivery requirements are needed for
-                critical systems, multi-site routing, or uptime-sensitive operations.
-              </p>
-
-              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
-                Managed network posture
-              </h3>
-              <p>
-                Managed LAN/Wi-Fi helps Whitby offices and mixed business environments stay stable:
-                segmentation posture, guest access, coverage planning, and a support experience that
-                feels operator-grade rather than consumer-grade.
-              </p>
-
-              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
-                Continuity architecture
-              </h3>
-              <p>
-                If uptime matters, Orbitlink can design LTE/5G continuity patterns aligned to your
-                critical traffic and operational priorities. Constraints and feasibility are scoped
-                before activation so expectations stay clear.
-              </p>
-            </div>
+        <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-14 sm:px-7 sm:pb-16 sm:pt-20 lg:pb-20">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+            <span className="h-2 w-2 rounded-full bg-[#FACC15]" />
+            <span className="text-sm tracking-wide text-white/65">Whitby service area</span>
           </div>
 
-          <aside className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-            <h2 className="text-lg font-semibold tracking-tight">Request availability</h2>
-
-            <div className="mt-4 space-y-3 text-sm text-white/70">
-              <div>
-                <div className="text-white/60">Phone</div>
-                <a
-                  className="text-white/85 underline underline-offset-4 hover:text-white"
-                  href={`tel:${BUSINESS.phoneE164}`}
-                >
-                  {BUSINESS.phoneDisplay}
-                </a>
+          <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-8">
+              <div className="text-[11px] tracking-[0.30em] text-white/40">
+                DURHAM REGION • FIBRE • DIA • MANAGED NETWORKING
               </div>
 
-              <div>
-                <div className="text-white/60">Ontario coverage hub</div>
+              <h1 className="mt-4 text-[2.5rem] font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.75rem] lg:leading-[0.98]">
+                Business fibre internet
+                <span className="block text-white/62">in Whitby</span>
+              </h1>
+
+              <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/66 sm:text-lg">
+                Business connectivity for Whitby offices, commercial sites, and expansion-ready
+                environments. Availability is reviewed by address, building, and service fit before
+                the next step is confirmed.
+              </p>
+
+              <div className="mt-7 flex flex-wrap gap-2">
+                {[
+                  "Availability by building",
+                  "Business-first posture",
+                  "Structured onboarding",
+                  "Durham-region fit",
+                ].map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/66"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="/locations/ontario"
-                  className="text-white/85 underline underline-offset-4 hover:text-white"
+                  href="/contact#intake"
+                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
-                  View province coverage
+                  Check Availability
+                </Link>
+                <Link
+                  href="/services/business-fibre-internet"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+                >
+                  Business Fibre
+                </Link>
+                <Link
+                  href="/services/dedicated-internet-access"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+                >
+                  Dedicated Internet
                 </Link>
               </div>
 
-              <div>
-                <div className="text-white/60">What to include</div>
-                <div className="text-white/85">
-                  Address + posture (broadband vs DIA, static IP, managed LAN/Wi-Fi, continuity).
+              <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <MetricPill label="BUYER FIT" value="Whitby business sites" />
+                <MetricPill label="QUALIFICATION" value="Address and building based" />
+                <MetricPill label="NEXT STEP" value="Availability review" />
+              </div>
+            </div>
+
+            <div className="lg:col-span-4">
+              <Surface className="bg-white/[0.04] p-6">
+                <SectionEyebrow>COMMERCIAL FIT</SectionEyebrow>
+                <h2 className="mt-3 text-lg font-semibold text-white">
+                  A strong next-step Durham market
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/64">
+                  Whitby is well-suited to business fibre, DIA, managed networking, and continuity
+                  for growth-oriented sites that need a cleaner buying path.
+                </p>
+
+                <div className="mt-5 grid gap-3">
+                  {signals.map((item) => (
+                    <div
+                      key={item.t}
+                      className="rounded-[24px] border border-white/10 bg-black/20 p-4"
+                    >
+                      <div className="text-sm font-medium text-white/90">{item.t}</div>
+                      <p className="mt-2 text-sm leading-6 text-white/63">{item.d}</p>
+                    </div>
+                  ))}
+                </div>
+              </Surface>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 py-10 sm:px-7 sm:py-12">
+        <div className="space-y-6">
+          <Surface className="p-6 sm:p-8">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+              <div className="lg:col-span-8">
+                <SectionEyebrow>WHITBY MARKET</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+                  Built for business growth and clean delivery
+                </h2>
+
+                <div className="mt-4 space-y-4 text-sm leading-6 text-white/64 sm:text-[15px]">
+                  <p>
+                    Whitby is a strong Ontario market because it combines office demand, commercial
+                    activity, expansion-ready sites, and broader Durham-region business movement.
+                  </p>
+                  <p>
+                    Orbitlink’s posture is simple: confirm feasibility first, align the correct
+                    service module, and move forward with documented delivery. That matters in
+                    markets where buildings, access methods, and operating requirements vary
+                    meaningfully from site to site.
+                  </p>
+                  <p>
+                    For many Whitby businesses, the real requirement is not just access. It is the
+                    right mix of business fibre or DIA, internal network stability, and continuity
+                    planning where uptime matters.
+                  </p>
+                </div>
+              </div>
+
+              <div className="lg:col-span-4">
+                <div className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+                  <div className="text-[11px] tracking-[0.22em] text-white/45">RECOMMENDED PATH</div>
+                  <div className="mt-3 text-base font-semibold text-white">
+                    Start with address qualification
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-white/63">
+                    If the environment is uptime-sensitive, request DIA and continuity review with
+                    the availability submission.
+                  </p>
+
+                  <div className="mt-4 flex flex-col gap-2">
+                    <Link
+                      href="/contact#intake"
+                      className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-4 py-2.5 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+                    >
+                      Request Access
+                    </Link>
+                    <Link
+                      href="/trust"
+                      className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm text-white transition hover:bg-white/10"
+                    >
+                      Trust & Delivery Posture
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
+          </Surface>
 
-            <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5">
-              <h3 className="text-sm font-semibold tracking-tight">Recommended starting point</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/70">
-                Start with feasibility confirmation. If performance is critical, request a DIA
-                assessment and continuity posture review.
-              </p>
+          <Surface className="p-6 sm:p-8">
+            <SectionEyebrow>SERVICE MODULES</SectionEyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+              Common service paths in Whitby
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/64">
+              Choose the path that matches the operational environment, uptime requirement, and
+              internal network posture.
+            </p>
 
-              <div className="mt-4 flex flex-col gap-2">
+            <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+              {serviceModules.map((item) => (
                 <Link
-                  href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
+                  key={item.t}
+                  href={item.href}
+                  className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:bg-white/[0.06]"
                 >
-                  Request Access
+                  <div className="text-sm font-medium text-white/90">{item.t}</div>
+                  <div className="mt-3 text-xs text-white/55">Open module →</div>
                 </Link>
-                <Link
-                  href="/trust"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10"
-                >
-                  Trust & Delivery Posture
-                </Link>
+              ))}
+            </div>
+          </Surface>
+
+          <Surface className="p-6 sm:p-8">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+              <div className="lg:col-span-8">
+                <SectionEyebrow>NETWORK POSTURE</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+                  Fibre when value matters. DIA when certainty matters.
+                </h2>
+
+                <div className="mt-4 space-y-4 text-sm leading-6 text-white/64 sm:text-[15px]">
+                  <p>
+                    Business fibre is the right fit when you want strong value with disciplined
+                    onboarding and a professional delivery experience.
+                  </p>
+                  <p>
+                    Dedicated Internet Access is the stronger fit when deterministic performance,
+                    cleaner enterprise handoff, or more formal delivery posture is required for
+                    critical systems, multi-site routing, or uptime-sensitive operations.
+                  </p>
+                  <p>
+                    Managed LAN and enterprise Wi-Fi help Whitby sites stay stable through better
+                    segmentation, cleaner coverage planning, and a support posture that feels
+                    operator-grade rather than consumer-grade.
+                  </p>
+                </div>
+              </div>
+
+              <div className="lg:col-span-4">
+                <div className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+                  <div className="text-[11px] tracking-[0.22em] text-white/45">NEARBY MARKETS</div>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <Link
+                      href="/locations/oshawa"
+                      className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/75 transition hover:bg-white/10"
+                    >
+                      Oshawa
+                    </Link>
+                    <Link
+                      href="/locations/toronto"
+                      className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/75 transition hover:bg-white/10"
+                    >
+                      Toronto
+                    </Link>
+                    <Link
+                      href="/locations/ontario"
+                      className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/75 transition hover:bg-white/10"
+                    >
+                      Ontario hub
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
+          </Surface>
 
-            <div className="mt-6 text-sm text-white/60">
-              Nearby:{" "}
-              <Link
-                href="/locations/oshawa"
-                className="text-white/80 underline underline-offset-4 hover:text-white"
-              >
-                Oshawa
-              </Link>
-              {", "}
-              <Link
-                href="/locations/toronto"
-                className="text-white/80 underline underline-offset-4 hover:text-white"
-              >
-                Toronto
-              </Link>
-              {", "}
-              <Link
-                href="/locations/ontario"
-                className="text-white/80 underline underline-offset-4 hover:text-white"
-              >
-                Ontario hub
-              </Link>
-              .
+          <Surface className="p-6 sm:p-8">
+            <SectionEyebrow>FAQ</SectionEyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">Whitby FAQs</h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/64">
+              Clear answers for business buyers reviewing service availability in Whitby.
+            </p>
+
+            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+              {FAQ.map((item) => (
+                <div
+                  key={item.q}
+                  className="rounded-[26px] border border-white/10 bg-black/20 p-5"
+                >
+                  <h3 className="text-base font-semibold tracking-tight text-white">{item.q}</h3>
+                  <p className="mt-3 text-sm leading-6 text-white/63">{item.a}</p>
+                </div>
+              ))}
             </div>
-          </aside>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/contact#intake"
+                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+              >
+                Check Availability
+              </Link>
+              <Link
+                href="/services"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Explore Services
+              </Link>
+              <Link
+                href="/locations"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Browse Locations
+              </Link>
+            </div>
+          </Surface>
         </div>
       </section>
-
-      <section className="mx-auto max-w-6xl px-6 pb-16">
-        <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-          <h2 className="text-2xl font-semibold tracking-tight">Whitby FAQs</h2>
-          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
-            Clear, operational answers—coverage confirmed per site, with scope and feasibility
-            defined before activation.
-          </p>
-
-          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {FAQ.map((f) => (
-              <div key={f.q} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-                <h3 className="text-base font-semibold tracking-tight">{f.q}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/70">{f.a}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/services"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
-            >
-              Explore Services
-            </Link>
-            <Link
-              href="/locations"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
-            >
-              Browse Locations
-            </Link>
-            <Link
-              href="/contact#intake"
-              className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
-            >
-              Check Availability
-            </Link>
-          </div>
-        </div>
-      </section>
-    </main>
+    </div>
   );
 }
