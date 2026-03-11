@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
-const PAGE_PATH = "/locations/peterborough";
+const PAGE_PATH = "/locations/cambridge";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
@@ -31,9 +31,9 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet & Fibre in Peterborough, ON | Orbitlink™";
+const PAGE_TITLE = "Business Internet & Fibre in Cambridge, ON | Orbitlink™";
 const PAGE_DESCRIPTION =
-  "Business internet in Peterborough with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
+  "Business internet in Cambridge with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: PAGE_TITLE,
     description:
-      "Business connectivity in Peterborough with fibre, DIA, managed LAN and Wi-Fi, continuity, and address-qualified service review.",
+      "Business connectivity in Cambridge with fibre, DIA, managed LAN and Wi-Fi, continuity, and address-qualified service review.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink Peterborough business internet",
+        alt: "Orbitlink Cambridge business internet",
       },
     ],
   },
@@ -60,22 +60,22 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: PAGE_TITLE,
     description:
-      "Business internet in Peterborough with fibre, DIA, managed LAN and Wi-Fi, and structured service review.",
+      "Business internet in Cambridge with fibre, DIA, managed LAN and Wi-Fi, and structured service review.",
     images: [TWITTER_IMAGE_URL],
   },
 };
 
 const FAQ = [
   {
-    q: "Do you service my address in Peterborough?",
+    q: "Do you service my address in Cambridge?",
     a: "Availability depends on building infrastructure, access feasibility, and upstream serviceability. Orbitlink confirms feasibility by address before moving forward.",
   },
   {
-    q: "Why is Peterborough a strong market for local business internet searches?",
-    a: "Peterborough has strong local-intent demand across offices, service businesses, and commercial environments where buyers want a clear path from discovery to service review.",
+    q: "Is Cambridge a strong fit for industrial and business internet demand?",
+    a: "Yes. Cambridge includes industrial, logistics, office, and mixed commercial environments where buyers often need a clearer path from discovery to service review.",
   },
   {
-    q: "Do you offer Dedicated Internet Access in Peterborough?",
+    q: "Do you offer Dedicated Internet Access in Cambridge?",
     a: "Yes. Dedicated Internet Access is available for performance-critical environments where stronger performance expectations and a clearer delivery posture are required, subject to feasibility.",
   },
   {
@@ -91,7 +91,7 @@ const FAQ = [
     a: "Yes. Orbitlink can design LTE and 5G continuity options for sites that require uptime during access disruptions.",
   },
   {
-    q: "How long does installation take in Peterborough?",
+    q: "How long does installation take in Cambridge?",
     a: "Install timelines vary by building readiness, access type, landlord coordination, and upstream coordination. Expectations are reviewed before activation.",
   },
   {
@@ -110,18 +110,18 @@ const serviceModules = [
 ] as const;
 
 const buildingTypes = [
-  "Professional offices",
-  "Service businesses",
+  "Industrial and warehouse sites",
   "Commercial and mixed-use buildings",
-  "Regional multi-location environments",
-  "Operationally important SMB sites",
+  "Professional offices",
+  "Regional multi-site environments",
+  "Operationally important SMB locations",
 ] as const;
 
 const whyOrbitlink = [
   "Address-qualified availability review",
   "Clear separation between broadband and DIA",
-  "Managed network options for business environments",
-  "Continuity design for uptime-sensitive sites",
+  "Managed network options for business sites",
+  "Continuity design for uptime-sensitive operations",
   "Documented onboarding and delivery",
   "Business-first support posture",
 ] as const;
@@ -141,7 +141,7 @@ function jsonLd() {
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
       { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
-      { "@type": "ListItem", position: 3, name: "Peterborough", item: PAGE_URL },
+      { "@type": "ListItem", position: 3, name: "Cambridge", item: PAGE_URL },
     ],
   };
 
@@ -164,7 +164,7 @@ function jsonLd() {
       addressCountry: BUSINESS.address.country,
     },
     areaServed: [
-      { "@type": "City", name: "Peterborough" },
+      { "@type": "City", name: "Cambridge" },
       { "@type": "AdministrativeArea", name: "Ontario" },
     ],
     openingHoursSpecification: BUSINESS.hours.map((h) => ({
@@ -179,12 +179,12 @@ function jsonLd() {
     "@context": "https://schema.org",
     "@type": "TelecomService",
     "@id": `${PAGE_URL}#service`,
-    name: "Business Internet in Peterborough",
+    name: "Business Internet in Cambridge",
     url: PAGE_URL,
     provider: { "@id": ORG_ID },
     areaServed: {
       "@type": "City",
-      name: "Peterborough",
+      name: "Cambridge",
     },
     serviceType: [
       "Business Fibre Internet",
@@ -232,7 +232,7 @@ function MetricPill({
   );
 }
 
-export default function PeterboroughLocationPage() {
+export default function CambridgeLocationPage() {
   return (
     <main className="min-h-screen bg-[#0B0F14] text-white">
       <script
@@ -251,17 +251,17 @@ export default function PeterboroughLocationPage() {
         <div className="relative mx-auto max-w-6xl px-6 pb-12 pt-16 md:pb-16 md:pt-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
             <span className="h-2 w-2 rounded-full bg-[#38FDFE]" />
-            <span className="text-sm tracking-wide text-white/60">Peterborough Service Area</span>
+            <span className="text-sm tracking-wide text-white/60">Cambridge Service Area</span>
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="lg:col-span-8">
               <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl lg:leading-[1.02]">
-                Business internet in Peterborough
+                Business internet in Cambridge
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
-                Orbitlink supports Peterborough businesses with fibre, dedicated internet,
+                Orbitlink supports Cambridge businesses with fibre, dedicated internet,
                 managed Wi-Fi, voice, and continuity services. Availability is reviewed
                 by address, building, and service fit before the next step is confirmed.
               </p>
@@ -293,7 +293,7 @@ export default function PeterboroughLocationPage() {
               </div>
 
               <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <MetricPill label="MARKET" value="Peterborough business locations" />
+                <MetricPill label="MARKET" value="Cambridge business locations" />
                 <MetricPill label="QUALIFICATION" value="Address and building based" />
                 <MetricPill label="NEXT STEP" value="Availability and pricing review" />
               </div>
@@ -328,13 +328,14 @@ export default function PeterboroughLocationPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>LOCAL MARKET</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Peterborough is a strong local-intent market for business connectivity
+                Cambridge is a strong operational market for business connectivity
               </h2>
 
               <div className="mt-4 space-y-4 text-white/70 leading-relaxed">
                 <p>
-                  Peterborough is a regional business market where many buyers begin with
-                  local-intent searches and want a clearer path from discovery to service review.
+                  Cambridge includes industrial, logistics, commercial, and office
+                  environments where buyers want clearer service selection and a more
+                  professional path from discovery to onboarding.
                 </p>
 
                 <p>
@@ -344,7 +345,7 @@ export default function PeterboroughLocationPage() {
                 </p>
 
                 <p>
-                  Many Peterborough environments benefit from a combined posture:
+                  Many Cambridge environments benefit from a combined posture:
                   business fibre or dedicated internet, managed LAN and Wi-Fi,
                   static IP routing where needed, and continuity planning for
                   uptime-sensitive operations.
@@ -355,7 +356,7 @@ export default function PeterboroughLocationPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>SERVICE OPTIONS</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Services available in Peterborough
+                Services available in Cambridge
               </h2>
 
               <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -404,7 +405,7 @@ export default function PeterboroughLocationPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>WHY ORBITLINK</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Why Peterborough businesses choose Orbitlink
+                Why Cambridge businesses choose Orbitlink
               </h2>
 
               <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -499,22 +500,22 @@ export default function PeterboroughLocationPage() {
               <SectionEyebrow>RELATED PAGES</SectionEyebrow>
               <div className="mt-4 flex flex-col gap-2 text-sm">
                 <Link
-                  href="/locations/kingston"
+                  href="/locations/kitchener-waterloo"
                   className="text-white/80 underline underline-offset-4 hover:text-white"
                 >
-                  Kingston
+                  Kitchener-Waterloo
+                </Link>
+                <Link
+                  href="/locations/guelph"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
+                >
+                  Guelph
                 </Link>
                 <Link
                   href="/locations/ontario"
                   className="text-white/80 underline underline-offset-4 hover:text-white"
                 >
                   Ontario coverage hub
-                </Link>
-                <Link
-                  href="/services/business-fibre-internet"
-                  className="text-white/80 underline underline-offset-4 hover:text-white"
-                >
-                  Business Fibre Internet
                 </Link>
               </div>
             </div>
@@ -525,9 +526,9 @@ export default function PeterboroughLocationPage() {
       <section className="mx-auto max-w-6xl px-6 pb-16">
         <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
           <SectionEyebrow>FAQ</SectionEyebrow>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight">Peterborough FAQs</h2>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">Cambridge FAQs</h2>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
-            Quick answers for buyers evaluating business internet in Peterborough.
+            Quick answers for buyers evaluating business internet in Cambridge.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
