@@ -64,5 +64,4 @@ export async function POST(req: Request) {
     console.error("portal magic-link error:", e);
     return NextResponse.json({ ok: false, error: "server" }, { status: 500 });
   }
-  
- }
+}
