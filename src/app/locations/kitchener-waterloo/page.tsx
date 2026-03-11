@@ -2,14 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/locations/kitchener-waterloo";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
+const ORG_ID = `${SITE_URL}/#org`;
+const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
+const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 const BUSINESS = {
   name: "Orbitlink™",
   legalName: "TIRAV Technologies Inc. o/a Orbitlink",
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
+  email: "concierge@orbitlink.ca",
   address: {
     street: "30 Eglinton Ave W, Suite 400-A77",
     city: "Mississauga",
@@ -24,61 +29,109 @@ const BUSINESS = {
     { day: "Thursday", opens: "09:00", closes: "18:00" },
     { day: "Friday", opens: "09:00", closes: "18:00" },
   ],
-};
+} as const;
+
+const PAGE_TITLE = "Business Internet & Fibre in Kitchener-Waterloo, ON | Orbitlink™";
+const PAGE_DESCRIPTION =
+  "Business internet in Kitchener-Waterloo with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet in Kitchener-Waterloo, ON | Orbitlink™",
-  description:
-    "Operator-grade business fibre internet in Kitchener-Waterloo with structured onboarding, documented delivery, and enterprise support posture. Check availability.",
-  alternates: { canonical: PAGE_PATH },
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Business Fibre Internet in Kitchener-Waterloo, ON | Orbitlink™",
+    title: PAGE_TITLE,
     description:
-      "Business connectivity in Kitchener-Waterloo: fibre, DIA, managed LAN & Wi-Fi, continuity architecture, and voice. Availability by building.",
-    url: PAGE_PATH,
+      "Business connectivity in Kitchener-Waterloo with fibre, DIA, managed LAN and Wi-Fi, continuity, and address-qualified service review.",
+    url: PAGE_URL,
     type: "website",
+    siteName: SITE_NAME,
+    locale: "en_CA",
+    images: [
+      {
+        url: OG_IMAGE_URL,
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink Kitchener-Waterloo business internet",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Fibre Internet in Kitchener-Waterloo, ON | Orbitlink™",
+    title: PAGE_TITLE,
     description:
-      "Operator-grade business connectivity in Kitchener-Waterloo delivered with structured onboarding, documented acceptance, and enterprise support posture.",
+      "Business internet in Kitchener-Waterloo with fibre, DIA, managed LAN and Wi-Fi, and structured service review.",
+    images: [TWITTER_IMAGE_URL],
   },
 };
 
 const FAQ = [
   {
     q: "Do you service my address in Kitchener-Waterloo?",
-    a: "Coverage depends on building infrastructure and upstream feasibility. Orbitlink is available on-net where possible, with clear scoping when additional build work is required. Submit an availability request and we’ll confirm feasibility.",
+    a: "Availability depends on building infrastructure, access feasibility, and upstream serviceability. Orbitlink confirms feasibility by address before moving forward.",
   },
   {
     q: "Is Kitchener-Waterloo a good fit for tech offices and modern Wi-Fi requirements?",
-    a: "Yes—KW includes many cloud-first teams and multi-tenant office environments that benefit from stable access plus managed LAN/Wi-Fi posture. We confirm feasibility per site and align service modules to operational needs.",
+    a: "Yes. Kitchener-Waterloo includes cloud-first teams, office environments, and multi-tenant business sites where stable connectivity and managed LAN and Wi-Fi can materially improve day-to-day operations.",
   },
   {
-    q: "Do you offer Dedicated Internet Access (DIA) in Kitchener-Waterloo?",
-    a: "Yes—DIA is available for performance-critical environments requiring deterministic throughput/latency and a formal delivery posture, subject to feasibility.",
+    q: "Do you offer Dedicated Internet Access in Kitchener-Waterloo?",
+    a: "Yes. Dedicated Internet Access is available for performance-critical environments where stronger performance expectations and a clearer delivery posture are required, subject to feasibility.",
   },
   {
     q: "Do you provide static IPs?",
-    a: "Static IP options are available where feasible and depend on the underlying access type and location. We’ll confirm options during onboarding.",
+    a: "Static IP options are available where feasible and depend on the access type, service design, and site location.",
   },
   {
     q: "Can you manage LAN and enterprise Wi-Fi for multi-floor offices?",
-    a: "Yes—Orbitlink provides Managed LAN & Enterprise Wi-Fi including segmentation posture, guest networks, and coverage planning aligned with an operator-grade support posture.",
+    a: "Yes. Orbitlink provides managed LAN and enterprise Wi-Fi, including segmentation, guest access, coverage planning, and network support.",
   },
   {
     q: "How long does installation take in Kitchener-Waterloo?",
-    a: "Timelines vary by building readiness, access type, and upstream coordination. Orbitlink uses structured onboarding and documented acceptance so expectations are clear before activation.",
+    a: "Install timelines vary by building readiness, access type, landlord coordination, and upstream coordination. Expectations are reviewed before activation.",
   },
   {
-    q: "Do you offer continuity/failover options?",
-    a: "Yes—Orbitlink designs LTE/5G continuity patterns for sites that require uptime during access disruptions. Feasibility depends on site constraints and design.",
+    q: "Do you offer continuity or failover options?",
+    a: "Yes. Orbitlink can design LTE and 5G continuity options for sites that require uptime during access disruptions.",
   },
   {
     q: "Are you a reseller?",
-    a: "Orbitlink is the customer-facing operator responsible for onboarding posture, documentation, and support experience. Certain access products (e.g., Starlink) may be delivered via an agent/reseller model and are clearly labeled as such.",
+    a: "Orbitlink is the customer-facing operator responsible for onboarding, documentation, and support experience. Some access products may be delivered via an agent or reseller model and are labeled clearly.",
   },
+] as const;
+
+const serviceModules = [
+  { title: "Business Fibre Internet", href: "/services/business-fibre-internet" },
+  { title: "Dedicated Internet Access", href: "/services/dedicated-internet-access" },
+  { title: "Managed LAN & Wi-Fi", href: "/services/managed-lan-wifi" },
+  { title: "LTE / 5G Continuity", href: "/services/lte-5g-continuity" },
+  { title: "VoIP & Cloud Voice", href: "/services/voip-cloud-voice" },
+  { title: "Static IP Routing", href: "/services/static-ip-routing" },
+] as const;
+
+const buildingTypes = [
+  "Tech and software offices",
+  "Multi-tenant office environments",
+  "Professional services firms",
+  "SMB offices with cloud-first workflows",
+  "Teams with uptime-sensitive operations",
+] as const;
+
+const whyOrbitlink = [
+  "Address-qualified availability review",
+  "Clear separation between broadband and DIA",
+  "Managed network options for office environments",
+  "Continuity design for uptime-sensitive operations",
+  "Documented onboarding and delivery",
+  "Business-first support posture",
+] as const;
+
+const heroTags = [
+  "Business fibre internet",
+  "Dedicated Internet Access",
+  "Managed LAN & Wi-Fi",
+  "Continuity options",
+  "Tech office fit",
 ] as const;
 
 function jsonLd() {
@@ -86,7 +139,7 @@ function jsonLd() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
       { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
       { "@type": "ListItem", position: 3, name: "Kitchener-Waterloo", item: PAGE_URL },
     ],
@@ -95,10 +148,13 @@ function jsonLd() {
   const localBusiness = {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "TelecomCompany"],
+    "@id": `${PAGE_URL}#business`,
     name: BUSINESS.name,
     legalName: BUSINESS.legalName,
     url: SITE_URL,
     telephone: BUSINESS.phoneE164,
+    email: BUSINESS.email,
+    parentOrganization: { "@id": ORG_ID },
     address: {
       "@type": "PostalAddress",
       streetAddress: BUSINESS.address.street,
@@ -121,12 +177,24 @@ function jsonLd() {
 
   const telecomService = {
     "@context": "https://schema.org",
-    "@type": "Service",
-    name: "Business Fibre Internet in Kitchener-Waterloo",
-    provider: { "@type": "Organization", name: BUSINESS.name, url: SITE_URL },
+    "@type": "TelecomService",
+    "@id": `${PAGE_URL}#service`,
+    name: "Business Internet in Kitchener-Waterloo",
+    url: PAGE_URL,
+    provider: { "@id": ORG_ID },
     areaServed: { "@type": "Place", name: "Kitchener-Waterloo, Ontario" },
-    serviceType: ["Business Fibre Internet", "Dedicated Internet Access (DIA)", "Managed LAN & Enterprise Wi-Fi"],
-    availableChannel: { "@type": "ServiceChannel", serviceUrl: PAGE_URL },
+    serviceType: [
+      "Business Fibre Internet",
+      "Dedicated Internet Access",
+      "Managed LAN and Enterprise Wi-Fi",
+      "LTE and 5G Continuity",
+      "VoIP and Cloud Voice",
+      "Static IP Routing",
+    ],
+    availableChannel: {
+      "@type": "ServiceChannel",
+      serviceUrl: PAGE_URL,
+    },
   };
 
   const faqPage = {
@@ -142,171 +210,311 @@ function jsonLd() {
   return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/50">{children}</div>;
+}
+
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
+      <div className="mt-1 text-sm text-white/80">{value}</div>
+    </div>
+  );
+}
+
 export default function KitchenerWaterlooLocationPage() {
   return (
     <main className="min-h-screen bg-[#0B0F14] text-white">
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
-      <section className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-        <div className="inline-flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-white/60" />
-          <span className="text-sm tracking-wide text-white/60">Service Area</span>
+      <section className="relative overflow-hidden border-b border-white/10">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-24 left-12 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl" />
+          <div className="absolute right-8 top-20 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />
+          <div className="absolute bottom-[-120px] left-1/2 h-72 w-[48rem] -translate-x-1/2 rounded-full bg-white/5 blur-3xl" />
+          <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <h1 className="mt-5 text-4xl md:text-5xl font-semibold tracking-tight">
-          Business Fibre Internet in Kitchener-Waterloo, ON
-        </h1>
+        <div className="relative mx-auto max-w-6xl px-6 pb-12 pt-16 md:pb-16 md:pt-20">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+            <span className="h-2 w-2 rounded-full bg-[#38FDFE]" />
+            <span className="text-sm tracking-wide text-white/60">
+              Kitchener-Waterloo Service Area
+            </span>
+          </div>
 
-        <p className="mt-4 max-w-3xl text-base md:text-lg text-white/70 leading-relaxed">
-          Orbitlink provides operator-grade business connectivity in Kitchener-Waterloo with a disciplined delivery posture:
-          structured onboarding, documented acceptance, and enterprise support posture. Availability is{" "}
-          <span className="text-white/85 font-medium">on-net where available</span>, with clear feasibility scoping when
-          additional build work is required.
-        </p>
+          <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
+            <div className="lg:col-span-8">
+              <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl lg:leading-[1.02]">
+                Business internet in Kitchener-Waterloo
+              </h1>
 
-        <div className="mt-6 flex flex-wrap gap-2">
-          {["On-net where available", "Structured onboarding", "Documented delivery", "Enterprise support posture"].map(
-            (x) => (
-              <span key={x} className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70">
-                {x}
-              </span>
-            )
-          )}
-        </div>
+              <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
+                Orbitlink supports Kitchener-Waterloo businesses with fibre, dedicated
+                internet, managed Wi-Fi, voice, and continuity services. Availability is
+                reviewed by address, building, and service fit before the next step is confirmed.
+              </p>
 
-        <div className="mt-7 flex flex-col sm:flex-row gap-3">
-          <Link
-            href="/contact#intake"
-            className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-5 py-3 text-sm font-semibold hover:bg-white/90 transition"
-          >
-            Check Availability / Request Access
-          </Link>
-          <Link
-            href="/services/business-fibre-internet"
-            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
-          >
-            Business Fibre Service Module
-          </Link>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {heroTags.map((x) => (
+                  <span
+                    key={x}
+                    className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
+                  >
+                    {x}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/contact#intake"
+                  className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
+                >
+                  Check Availability
+                </Link>
+                <Link
+                  href="/services/business-fibre-internet"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+                >
+                  Explore Fibre Service
+                </Link>
+              </div>
+
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <MetricPill label="MARKET" value="Kitchener-Waterloo business locations" />
+                <MetricPill label="QUALIFICATION" value="Address and building based" />
+                <MetricPill label="NEXT STEP" value="Availability and pricing review" />
+              </div>
+            </div>
+
+            <div className="lg:col-span-4">
+              <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+                <SectionEyebrow>HOW IT WORKS</SectionEyebrow>
+                <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
+                  Start with your address
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-white/70">
+                  The strongest requests include the service address, service needed,
+                  target timeline, and any important requirements such as DIA, static IPs,
+                  managed Wi-Fi, or continuity.
+                </p>
+
+                <div className="mt-5 grid gap-3">
+                  <MetricPill label="STEP 1" value="Choose the service" />
+                  <MetricPill label="STEP 2" value="Add address and scope" />
+                  <MetricPill label="STEP 3" value="Receive the next step" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-2 rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-            <h2 className="text-xl font-semibold tracking-tight">
-              Kitchener-Waterloo connectivity for tech offices and modern multi-tenant environments
-            </h2>
+      <section className="mx-auto max-w-6xl px-6 py-10 md:py-12">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <div className="space-y-4 lg:col-span-2">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>LOCAL MARKET</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Kitchener-Waterloo supports a strong mix of tech, office, and cloud-first business demand
+              </h2>
 
-            <div className="mt-3 space-y-4 text-white/70 leading-relaxed">
-              <p>
-                Kitchener-Waterloo is a high-demand market for cloud-first businesses: software teams, agencies, professional
-                services, and multi-tenant offices where performance and reliability drive productivity. Orbitlink’s posture
-                is operator-grade: feasibility confirmation first, correct service selection, and documented delivery.
-              </p>
+              <div className="mt-4 space-y-4 text-white/70 leading-relaxed">
+                <p>
+                  Kitchener-Waterloo is a business market where many teams rely on cloud
+                  applications, voice, VPN access, collaboration platforms, and stable office Wi-Fi.
+                </p>
 
-              <p>
-                For teams running voice, VPN, and cloud workloads, the internal network posture matters as much as the access
-                circuit. Managed LAN/Wi-Fi and segmentation posture keep environments stable and reduce avoidable tickets.
-              </p>
+                <p>
+                  Orbitlink approaches this market with a simple structure: confirm
+                  serviceability, match the site to the right access type, define any
+                  managed network scope, and move into a clearer onboarding path.
+                </p>
 
-              <h3 className="pt-2 text-lg font-semibold tracking-tight text-white">
-                Service modules commonly deployed in Kitchener-Waterloo
-              </h3>
+                <p>
+                  Many Kitchener-Waterloo business environments benefit from a combined posture:
+                  business fibre, managed LAN and Wi-Fi, static IP routing where needed,
+                  and continuity planning for uptime-sensitive operations.
+                </p>
+              </div>
+            </div>
 
-              <ul className="mt-2 space-y-2">
-                {[
-                  { t: "Business Fibre Internet", href: "/services/business-fibre-internet" },
-                  { t: "Dedicated Internet Access (DIA)", href: "/services/dedicated-internet-access" },
-                  { t: "Managed LAN & Enterprise Wi-Fi", href: "/services/managed-lan-wifi" },
-                  { t: "LTE / 5G Continuity Architecture", href: "/services/lte-5g-continuity" },
-                  { t: "VoIP & Cloud Voice", href: "/services/voip-cloud-voice" },
-                  { t: "Static IP Routing", href: "/services/static-ip-routing" },
-                ].map((x) => (
-                  <li key={x.t} className="flex items-start gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-white/40" />
-                    <span>
-                      <Link href={x.href} className="text-white/85 hover:text-white underline underline-offset-4">
-                        {x.t}
-                      </Link>
-                    </span>
-                  </li>
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>SERVICE OPTIONS</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Services available in Kitchener-Waterloo
+              </h2>
+
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {serviceModules.map((item) => (
+                  <Link
+                    key={item.title}
+                    href={item.href}
+                    className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 transition hover:bg-white/[0.07]"
+                  >
+                    <div className="text-sm font-medium text-white/90">{item.title}</div>
+                    <div className="mt-2 text-sm text-white/60">View service →</div>
+                  </Link>
                 ))}
-              </ul>
+              </div>
 
-              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">Broadband fibre vs DIA</h3>
-              <p>
-                Broadband fibre is ideal when you want strong value with a professional delivery posture. DIA is the fit when
-                deterministic performance and formal delivery requirements are needed (critical operations, regulated
-                environments, multi-site routing, or where broadband variance is unacceptable).
+              <p className="mt-5 leading-relaxed text-white/70">
+                Available services may include business fibre internet, dedicated internet
+                access, managed LAN and Wi-Fi, continuity planning, voice, and static IP
+                options depending on the site and service design.
               </p>
+            </div>
 
-              <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">Managed network posture</h3>
-              <p>
-                Managed LAN/Wi-Fi supports stable outcomes: segmentation posture, guest networks, coverage planning, and an
-                operator-grade support experience for modern office expectations.
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>COMMON BUILDING TYPES</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Building environments we commonly review
+              </h2>
+
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {buildingTypes.map((x) => (
+                  <div
+                    key={x}
+                    className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/75"
+                  >
+                    {x}
+                  </div>
+                ))}
+              </div>
+
+              <p className="mt-5 leading-relaxed text-white/70">
+                Final serviceability depends on the specific property, landlord access,
+                building cabling, upstream reach, and service design.
               </p>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>WHY ORBITLINK</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Why Kitchener-Waterloo businesses choose Orbitlink
+              </h2>
+
+              <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {whyOrbitlink.map((x) => (
+                  <div
+                    key={x}
+                    className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/75"
+                  >
+                    {x}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <aside className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-            <h2 className="text-lg font-semibold tracking-tight">Request availability</h2>
+          <aside className="space-y-4">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>LOCAL DETAILS</SectionEyebrow>
+              <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
+                Orbitlink business details
+              </h2>
 
-            <div className="mt-4 space-y-3 text-sm text-white/70">
-              <div>
-                <div className="text-white/60">Phone</div>
-                <a className="text-white/85 hover:text-white underline underline-offset-4" href={`tel:${BUSINESS.phoneE164}`}>
-                  {BUSINESS.phoneDisplay}
-                </a>
-              </div>
+              <div className="mt-4 space-y-3 text-sm text-white/70">
+                <div>
+                  <div className="text-white/60">Business</div>
+                  <div className="font-medium text-white/85">{BUSINESS.name}</div>
+                </div>
 
-              <div>
-                <div className="text-white/60">Ontario coverage hub</div>
-                <Link href="/locations/ontario" className="text-white/85 hover:text-white underline underline-offset-4">
-                  View province coverage
-                </Link>
-              </div>
+                <div>
+                  <div className="text-white/60">Phone</div>
+                  <a
+                    className="text-white/85 underline underline-offset-4 hover:text-white"
+                    href={`tel:${BUSINESS.phoneE164}`}
+                  >
+                    {BUSINESS.phoneDisplay}
+                  </a>
+                </div>
 
-              <div>
-                <div className="text-white/60">What to include</div>
-                <div className="text-white/85">Address + posture (DIA, static IP, managed LAN/Wi-Fi, continuity).</div>
+                <div>
+                  <div className="text-white/60">Email</div>
+                  <a
+                    className="text-white/85 underline underline-offset-4 hover:text-white"
+                    href={`mailto:${BUSINESS.email}`}
+                  >
+                    {BUSINESS.email}
+                  </a>
+                </div>
+
+                <div>
+                  <div className="text-white/60">Address</div>
+                  <div className="text-white/85">
+                    {BUSINESS.address.street}
+                    <br />
+                    {BUSINESS.address.city}, {BUSINESS.address.region} {BUSINESS.address.postal}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-white/60">Hours</div>
+                  <div className="text-white/85">Mon–Fri 9:00 AM – 6:00 PM</div>
+                </div>
               </div>
             </div>
 
-            <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5">
-              <h3 className="text-sm font-semibold tracking-tight">Recommended starting point</h3>
+            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+              <SectionEyebrow>BEST NEXT STEP</SectionEyebrow>
+              <h3 className="mt-3 text-sm font-semibold tracking-tight">
+                Request availability review
+              </h3>
               <p className="mt-2 text-sm text-white/70 leading-relaxed">
-                Start with feasibility confirmation. If performance is critical, request a DIA assessment and continuity review.
+                Submit your address, business type, and service requirements to begin
+                serviceability and pricing review.
               </p>
+
               <div className="mt-4 flex flex-col gap-2">
                 <Link
                   href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-4 py-2 text-sm font-semibold hover:bg-white/90 transition"
+                  className="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
                 >
-                  Request Access
+                  Check Availability
                 </Link>
                 <Link
                   href="/trust"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                 >
-                  Trust & Delivery Posture
+                  Trust & Compliance
                 </Link>
               </div>
             </div>
 
-            <div className="mt-6 text-sm text-white/60">
-              Also consider:{" "}
-              <Link href="/locations/hamilton" className="text-white/80 hover:text-white underline underline-offset-4">
-                Hamilton
-              </Link>
-              {", "}
-              <Link href="/locations/ontario" className="text-white/80 hover:text-white underline underline-offset-4">
-                Ontario hub
-              </Link>
-              .
+            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+              <SectionEyebrow>RELATED PAGES</SectionEyebrow>
+              <div className="mt-4 flex flex-col gap-2 text-sm">
+                <Link
+                  href="/locations/guelph"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
+                >
+                  Guelph
+                </Link>
+                <Link
+                  href="/locations/hamilton"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
+                >
+                  Hamilton
+                </Link>
+                <Link
+                  href="/locations/ontario"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
+                >
+                  Ontario coverage hub
+                </Link>
+              </div>
             </div>
           </aside>
         </div>
@@ -314,9 +522,12 @@ export default function KitchenerWaterlooLocationPage() {
 
       <section className="mx-auto max-w-6xl px-6 pb-16">
         <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-          <h2 className="text-2xl font-semibold tracking-tight">Kitchener-Waterloo FAQs</h2>
+          <SectionEyebrow>FAQ</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+            Kitchener-Waterloo FAQs
+          </h2>
           <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
-            Clear, operational answers—coverage confirmed per site, with scope defined before activation.
+            Quick answers for buyers evaluating business internet in Kitchener-Waterloo.
           </p>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -331,19 +542,19 @@ export default function KitchenerWaterlooLocationPage() {
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
             <Link
               href="/services"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
               Explore Services
             </Link>
             <Link
               href="/locations"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
               Browse Locations
             </Link>
             <Link
               href="/contact#intake"
-              className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-5 py-3 text-sm font-semibold hover:bg-white/90 transition"
+              className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
             >
               Check Availability
             </Link>
