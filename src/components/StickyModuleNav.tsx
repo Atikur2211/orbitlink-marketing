@@ -13,10 +13,12 @@ function dotClass(tone: Tone) {
 }
 
 function indicatorClass(tone: Tone) {
-  if (tone === "blue")
+  if (tone === "blue") {
     return "border-blue-400/25 bg-blue-500/10 shadow-[0_10px_40px_rgba(59,130,246,0.14)]";
-  if (tone === "emerald")
+  }
+  if (tone === "emerald") {
     return "border-emerald-400/25 bg-emerald-500/10 shadow-[0_10px_40px_rgba(16,185,129,0.14)]";
+  }
   return "border-[#FACC15]/25 bg-[#FACC15]/10 shadow-[0_10px_40px_rgba(250,204,21,0.14)]";
 }
 
@@ -28,7 +30,7 @@ function progressClass(tone: Tone) {
 
 export default function StickyModuleNav({
   modules,
-  watchOffsetTop = 72, // keep below TopNav
+  watchOffsetTop = 72,
   watchId = "solutions-sentinel",
   bottomWatchId = "solutions-bottom-sentinel",
 }: {
@@ -41,7 +43,7 @@ export default function StickyModuleNav({
 
   const [activeId, setActiveId] = useState<string>(modules?.[0]?.id ?? "");
   const [show, setShow] = useState(false);
-  const [progress, setProgress] = useState(0); // 0..1
+  const [progress, setProgress] = useState(0);
 
   const railRef = useRef<HTMLDivElement | null>(null);
   const btnRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
@@ -53,9 +55,6 @@ export default function StickyModuleNav({
   const activeTone: Tone =
     modules.find((m) => m.id === activeId)?.tone ?? (modules?.[0]?.tone ?? "gold");
 
-  // ------------------------------------------------------------
-  // A) VISIBILITY GATE (TOP): show only after top sentinel scrolls out
-  // ------------------------------------------------------------
   useEffect(() => {
     const el = document.getElementById(watchId);
     if (!el) {
@@ -75,21 +74,16 @@ export default function StickyModuleNav({
     return () => io.disconnect();
   }, [watchId, watchOffsetTop]);
 
-  // ------------------------------------------------------------
-  // A2) VISIBILITY GATE (BOTTOM): hide when bottom sentinel enters
-  // ------------------------------------------------------------
   useEffect(() => {
     const el = document.getElementById(bottomWatchId);
     if (!el) return;
 
     const io = new IntersectionObserver(
       ([entry]) => {
-        // If bottom sentinel is visible, we are near the end -> hide
         if (entry.isIntersecting) setShow(false);
       },
       {
         threshold: 0,
-        // Hide a bit before the footer content fully arrives (feels “designed”)
         rootMargin: `0px 0px -35% 0px`,
       }
     );
@@ -98,9 +92,6 @@ export default function StickyModuleNav({
     return () => io.disconnect();
   }, [bottomWatchId]);
 
-  // ------------------------------------------------------------
-  // B) SCROLL SPY: active module highlight while scrolling
-  // ------------------------------------------------------------
   useEffect(() => {
     const els = ids
       .map((id) => document.getElementById(id))
@@ -126,9 +117,6 @@ export default function StickyModuleNav({
     return () => io.disconnect();
   }, [ids, watchOffsetTop]);
 
-  // ------------------------------------------------------------
-  // C) INDICATOR: slide under active pill + keep active visible
-  // ------------------------------------------------------------
   const recalcIndicator = () => {
     const rail = railRef.current;
     const activeBtn = btnRefs.current[activeId];
@@ -150,19 +138,14 @@ export default function StickyModuleNav({
 
   useLayoutEffect(() => {
     recalcIndicator();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeId]);
 
   useEffect(() => {
     const onResize = () => recalcIndicator();
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeId]);
 
-  // ------------------------------------------------------------
-  // D) MICRO PROGRESS: how far through module sections (0..1)
-  // ------------------------------------------------------------
   useEffect(() => {
     const els = ids
       .map((id) => document.getElementById(id))
@@ -186,15 +169,13 @@ export default function StickyModuleNav({
     calc();
     window.addEventListener("scroll", calc, { passive: true });
     window.addEventListener("resize", calc);
+
     return () => {
       window.removeEventListener("scroll", calc);
       window.removeEventListener("resize", calc);
     };
   }, [ids, watchOffsetTop]);
 
-  // ------------------------------------------------------------
-  // E) PREMIUM HASH CLICK: smooth scroll + respects sticky offset
-  // ------------------------------------------------------------
   const onPillClick = (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const el = document.getElementById(id);
@@ -210,41 +191,38 @@ export default function StickyModuleNav({
   return (
     <div
       className={[
-        "sticky z-30 -mx-5 sm:-mx-7 px-5 sm:px-7",
+        "sticky z-30 -mx-5 px-5 sm:-mx-7 sm:px-7",
         "border-b border-white/10 bg-black/45 backdrop-blur-xl",
         "transition-all duration-300 ease-out",
-        show ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none",
+        show ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0",
       ].join(" ")}
       style={{ top: `${watchOffsetTop}px` }}
       aria-hidden={!show}
     >
       <div className="mx-auto max-w-6xl py-3">
         <div className="flex items-center justify-between gap-3">
-          {/* Left label (quiet on mobile) */}
-          <div className="hidden md:flex items-center gap-2 min-w-0">
+          <div className="hidden min-w-0 items-center gap-2 md:flex">
             <span className="relative inline-flex h-2 w-2 shrink-0">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-[#FACC15]/25 animate-ping" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/25" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[#FACC15]" />
             </span>
-            <div className="text-[10px] tracking-[0.28em] text-white/55 whitespace-nowrap">
+            <div className="whitespace-nowrap text-[10px] tracking-[0.28em] text-white/55">
               MODULE INDEX
             </div>
-            <div className="text-[10px] text-white/35 truncate">
+            <div className="truncate text-[10px] text-white/35">
               Operator-grade delivery posture
             </div>
           </div>
 
-          {/* Rail */}
           <div className="relative flex-1">
             <div
               ref={railRef}
-              className="relative flex gap-2 overflow-x-auto no-scrollbar py-1 scroll-smooth"
+              className="no-scrollbar relative flex gap-2 overflow-x-auto py-1 scroll-smooth"
             >
-              {/* Sliding indicator (tone-matched) */}
               <div
                 aria-hidden="true"
                 className={[
-                  "pointer-events-none absolute top-1 bottom-1 rounded-full border transition-all duration-300 ease-out",
+                  "pointer-events-none absolute bottom-1 top-1 rounded-full border transition-all duration-300 ease-out",
                   indicatorClass(activeTone),
                 ].join(" ")}
                 style={{
@@ -255,6 +233,7 @@ export default function StickyModuleNav({
 
               {modules.map((m) => {
                 const active = m.id === activeId;
+
                 return (
                   <a
                     key={m.id}
@@ -279,21 +258,22 @@ export default function StickyModuleNav({
               })}
             </div>
 
-            {/* Micro progress bar (tone-matched) */}
             <div className="mt-2 h-px w-full bg-white/10">
               <div
-                className={["h-px transition-[width] duration-200 ease-out", progressClass(activeTone)].join(" ")}
+                className={[
+                  "h-px transition-[width] duration-200 ease-out",
+                  progressClass(activeTone),
+                ].join(" ")}
                 style={{ width: `${Math.round(progress * 100)}%` }}
               />
             </div>
           </div>
 
-          {/* Right CTA (large screens only) */}
           <a
-            href="/coming-soon"
-            className="hidden lg:inline rounded-full border border-[#FACC15]/35 bg-[#FACC15]/10 px-4 py-2 text-[13px] font-medium text-[#FDE68A] hover:bg-[#FACC15]/15 hover:border-[#FACC15]/50 transition whitespace-nowrap"
+            href="/contact#intake"
+            className="hidden whitespace-nowrap rounded-full border border-[#FACC15]/35 bg-[#FACC15]/10 px-4 py-2 text-[13px] font-medium text-[#FDE68A] transition hover:border-[#FACC15]/50 hover:bg-[#FACC15]/15 lg:inline"
           >
-            Request Access
+            Check Availability
           </a>
         </div>
       </div>

@@ -245,6 +245,7 @@ export default function SolutionsPage() {
   const modules = SOLUTIONS.map((s) => ({
     id: s.id,
     name: s.name,
+    tone: s.tone,
   }));
 
   return (
