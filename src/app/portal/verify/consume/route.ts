@@ -16,8 +16,11 @@ function cleanEmail(v: unknown) {
   return s;
 }
 
-function readBootstrapEmail() {
-  return cleanEmail(process.env.PORTAL_DEV_BOOTSTRAP_EMAIL || "");
+function readAllowedEmails() {
+  return String(process.env.PORTAL_ALLOWED_EMAILS || "")
+    .split(",")
+    .map((x) => cleanEmail(x))
+    .filter(Boolean);
 }
 
 function readPortalSecret() {
@@ -30,8 +33,8 @@ function readPortalSecret() {
 
 function verifyBootstrapToken(token: string) {
   const secret = readPortalSecret();
-  const bootstrapEmail = readBootstrapEmail();
-  if (!bootstrapEmail) return null;
+  const allowedEmails = readAllowedEmails();
+  if (allowedEmails.length === 0) return null;
 
   const parts = token.split(".");
   if (parts.length !== 2) return null;
@@ -56,13 +59,15 @@ function verifyBootstrapToken(token: string) {
   const email = cleanEmail(payload?.email);
   const exp = Date.parse(String(payload?.expiresAt || ""));
 
-  if (!email || email !== bootstrapEmail) return null;
+  if (!email || !allowedEmails.includes(email)) return null;
   if (!exp || Date.now() > exp) return null;
+
+  const role = email === "support@orbitlink.ca" ? "ops" : "admin";
 
   return {
     email,
     orgId: "orbitlink-internal",
-    role: "admin" as const,
+    role: role as const,
     sessionId: crypto.randomBytes(32).toString("hex"),
     expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
   };
@@ -101,7 +106,8 @@ export async function POST(req: Request) {
     });
 
     return res;
-  } catch {
+  } catch (e) {
+    console.error("portal verify consume error:", e);
     return NextResponse.json({ ok: false, error: "server" }, { status: 500 });
   }
 }
