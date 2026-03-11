@@ -141,7 +141,7 @@ export default function TopNav() {
             <div className="flex items-center gap-2">
               <span className="text-xs tracking-[0.28em] text-white/95">ORBITLINK</span>
               <span className="hidden rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] tracking-wide text-white/65 sm:inline-flex">
-                Business Fibre
+                Business Connectivity
               </span>
             </div>
           </Link>
@@ -193,7 +193,7 @@ export default function TopNav() {
               href={INTAKE_HREF}
               className="rounded-xl bg-[#FACC15] px-4 py-2.5 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Talk to Sales
+              Check Availability
             </Link>
           </div>
         </div>
@@ -240,7 +240,7 @@ export default function TopNav() {
                       ORBITLINK
                     </div>
                     <div className="mt-1 text-[12px] text-white/52">
-                      Business fibre and network infrastructure
+                      Business fibre and managed connectivity
                     </div>
                   </div>
                 </div>
@@ -296,16 +296,15 @@ export default function TopNav() {
                 </div>
 
                 <div className="mt-6 rounded-[24px] border border-white/10 bg-white/[0.04] p-4">
-                  <div className="text-[11px] tracking-[0.24em] text-white/50">
-                    NEED HELP?
-                  </div>
+                  <div className="text-[11px] tracking-[0.24em] text-white/50">START HERE</div>
 
                   <div className="mt-2 text-sm font-medium text-white/92">
-                    Speak with Orbitlink sales
+                    Check availability for your building
                   </div>
 
                   <p className="mt-2 text-sm leading-6 text-white/62">
-                    Check availability, request pricing, or start a service conversation.
+                    Request pricing, review service fit, or start a business connectivity
+                    conversation.
                   </p>
 
                   <div className="mt-4 grid gap-2">
@@ -314,7 +313,7 @@ export default function TopNav() {
                       onClick={() => setOpen(false)}
                       className="rounded-2xl bg-[#FACC15] px-4 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
                     >
-                      Talk to Sales
+                      Check Availability
                     </Link>
 
                     <a

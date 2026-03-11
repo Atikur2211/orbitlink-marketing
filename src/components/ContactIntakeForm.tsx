@@ -92,8 +92,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
       <div className="rounded-2xl border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-4">
         <div className="text-[11px] tracking-[0.22em] text-[#FDE68A]">WHAT HAPPENS NEXT</div>
         <p className="mt-2 text-sm leading-6 text-white/75">
-          We review the address, service requirement, and timeline, then reply with the clearest
-          next step available.
+          We review your address, service need, and timeline, then reply with the right next step.
         </p>
       </div>
 
@@ -120,7 +119,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             placeholder="name@company.com"
             className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40"
           />
-          <FieldHint>Using a work email usually helps us qualify and respond faster.</FieldHint>
+          <FieldHint>Work email usually helps us respond faster.</FieldHint>
         </div>
       </div>
 
@@ -171,7 +170,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             placeholder="Street address, city, province"
             className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40"
           />
-          <FieldHint>The exact address helps us review availability more accurately.</FieldHint>
+          <FieldHint>Exact address helps us check availability more accurately.</FieldHint>
         </div>
 
         <div className="grid gap-2">
@@ -247,20 +246,19 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
           id="notes"
           name="notes"
           rows={5}
-          placeholder="Tell us what you need. Include install timing, current setup if relevant, and any requirements such as static IPs, managed Wi-Fi, voice, backup connectivity, landlord coordination, or multi-site service."
+          placeholder="Tell us what you need. Include current setup, install timing, static IPs, managed Wi-Fi, voice, backup connectivity, landlord coordination, or multi-site requirements."
           className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40"
         />
         <FieldHint>
-          Helpful details include service priority, building context, install timing, and any
-          technical requirements.
+          Helpful details include current service, timing, building context, and technical needs.
         </FieldHint>
       </div>
 
       <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
         <div className="text-[11px] tracking-[0.22em] text-white/55">HELPFUL TO INCLUDE</div>
         <p className="mt-2 text-sm leading-6 text-white/65">
-          Static IPs, managed Wi-Fi, voice, continuity, landlord or building details, and your
-          preferred installation window.
+          Static IPs, managed Wi-Fi, voice, backup connectivity, building details, and preferred
+          install window.
         </p>
       </div>
 
@@ -273,7 +271,13 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
         </button>
 
         <div className="text-xs text-white/55">
-          Prefer email? <span className="text-white/80">concierge@orbitlink.ca</span>
+          Prefer email?{" "}
+          <a
+            href="mailto:concierge@orbitlink.ca"
+            className="text-white/80 transition hover:text-white"
+          >
+            concierge@orbitlink.ca
+          </a>
         </div>
       </div>
     </form>

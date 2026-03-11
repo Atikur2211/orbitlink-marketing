@@ -108,21 +108,16 @@ export default function SiteFooter() {
 
             <h2 className="mt-8 max-w-lg text-[2rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[2.4rem]">
               Business connectivity for
-              <span className="block text-white/60">Ontario organizations.</span>
+              <span className="block text-white/60">Ontario businesses.</span>
             </h2>
 
             <p className="mt-6 max-w-md text-sm leading-6 text-white/60 sm:text-[15px]">
-              Orbitlink provides business fibre, dedicated internet, managed networking, voice,
-              and continuity services with structured onboarding, address-qualified availability,
-              and a clearer commercial path.
+              Business fibre, dedicated internet, managed Wi-Fi, voice, and continuity services
+              with address-qualified availability and a clearer path to quote.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              {[
-                "BUSINESS FIBRE",
-                "ADDRESS-QUALIFIED",
-                "STRUCTURED SUPPORT",
-              ].map((item) => (
+              {["BUSINESS FIBRE", "ADDRESS-QUALIFIED", "ONTARIO"].map((item) => (
                 <span
                   key={item}
                   className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] tracking-[0.15em] text-white/55"
@@ -152,7 +147,8 @@ export default function SiteFooter() {
 
             <div className="mt-8 space-y-1 text-xs text-white/45">
               <div>
-                Orbitlink is a brand of <span className="text-white/70">TIRAV Technologies Inc.</span>
+                Orbitlink is operated by{" "}
+                <span className="text-white/70">TIRAV Technologies Inc.</span>
               </div>
 
               <div>
@@ -167,6 +163,15 @@ export default function SiteFooter() {
                   href="tel:+18888672480"
                 >
                   1-888-8-ORBIT-0
+                </a>
+              </div>
+
+              <div>
+                <a
+                  className="text-white/60 transition hover:text-white"
+                  href="mailto:concierge@orbitlink.ca"
+                >
+                  concierge@orbitlink.ca
                 </a>
               </div>
             </div>
@@ -240,7 +245,7 @@ export default function SiteFooter() {
                 <div className="text-[11px] tracking-[0.26em] text-white/40">START HERE</div>
 
                 <div className="mt-2 text-sm text-white/70">
-                  Business fibre, dedicated internet, managed LAN/Wi-Fi, voice, and continuity.
+                  Check building availability and request pricing for your location.
                 </div>
               </div>
 
@@ -258,11 +263,11 @@ export default function SiteFooter() {
           <div className="text-xs text-white/40">© {year} TIRAV Technologies Inc.</div>
 
           <div className="flex flex-wrap gap-3 text-xs text-white/40">
-            <span>Ontario</span>
+            <span>Ontario business connectivity</span>
             <span>•</span>
             <span>Address-qualified availability</span>
             <span>•</span>
-            <span>Structured onboarding and support</span>
+            <span>Business fibre and managed services</span>
           </div>
         </div>
       </div>
