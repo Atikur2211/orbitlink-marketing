@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   },
 };
 
-type CityTier = "GTA Core" | "GTA Extended" | "Ontario";
+type CityTier = "Priority" | "Expansion" | "Ontario";
 
 type City = {
   name: string;
@@ -79,31 +79,31 @@ const CITIES: readonly City[] = [
     name: "Mississauga",
     href: "/locations/mississauga",
     subtitle: "Core commercial market for fibre, managed networking, and structured business onboarding.",
-    tier: "GTA Core",
+    tier: "Priority",
     tags: ["Priority market", "SMB + offices", "High-intent"],
     signal: "Primary market",
-  },
-  {
-    name: "Brampton",
-    href: "/locations/brampton",
-    subtitle: "Industrial, warehouse, and SMB demand with strong address-qualified buying intent.",
-    tier: "GTA Core",
-    tags: ["Industrial", "Growth market", "Feasibility-first"],
-    signal: "Growth market",
   },
   {
     name: "Toronto",
     href: "/locations/toronto",
     subtitle: "Dense office and commercial demand where delivery posture and escalation quality matter.",
-    tier: "GTA Core",
+    tier: "Priority",
     tags: ["Enterprise fit", "Office density", "DIA-ready"],
     signal: "Enterprise market",
+  },
+  {
+    name: "Brampton",
+    href: "/locations/brampton",
+    subtitle: "Industrial, warehouse, and SMB demand with strong address-qualified buying intent.",
+    tier: "Priority",
+    tags: ["Industrial", "Growth market", "Feasibility-first"],
+    signal: "Growth market",
   },
   {
     name: "Markham",
     href: "/locations/markham",
     subtitle: "B2B office and technology environments with strong managed network fit.",
-    tier: "GTA Core",
+    tier: "Priority",
     tags: ["B2B", "Managed LAN/Wi-Fi", "Static IP"],
     signal: "Technology market",
   },
@@ -111,7 +111,7 @@ const CITIES: readonly City[] = [
     name: "Vaughan",
     href: "/locations/vaughan",
     subtitle: "Commercial and industrial environments with multi-site and continuity demand.",
-    tier: "GTA Core",
+    tier: "Priority",
     tags: ["Commercial", "Multi-site", "Continuity"],
     signal: "Multi-site market",
   },
@@ -119,7 +119,7 @@ const CITIES: readonly City[] = [
     name: "Oakville",
     href: "/locations/oakville",
     subtitle: "Premium SMB and professional-services footprint with higher service expectations.",
-    tier: "GTA Core",
+    tier: "Priority",
     tags: ["Premium SMB", "Professional services", "Business-grade"],
     signal: "Premium market",
   },
@@ -127,7 +127,7 @@ const CITIES: readonly City[] = [
     name: "Milton",
     href: "/locations/milton",
     subtitle: "Industrial expansion market where building conditions vary and service review matters.",
-    tier: "GTA Extended",
+    tier: "Expansion",
     tags: ["Industrial growth", "Expansion", "Address review"],
     signal: "Expansion market",
   },
@@ -135,7 +135,7 @@ const CITIES: readonly City[] = [
     name: "Etobicoke",
     href: "/locations/etobicoke",
     subtitle: "Commercial and light industrial demand with strong local business intent.",
-    tier: "GTA Extended",
+    tier: "Expansion",
     tags: ["Commercial", "Managed networking", "Building review"],
     signal: "Commercial market",
   },
@@ -143,7 +143,7 @@ const CITIES: readonly City[] = [
     name: "Scarborough",
     href: "/locations/scarborough",
     subtitle: "Broad SMB and commercial footprint with strong local discovery behavior.",
-    tier: "GTA Extended",
+    tier: "Expansion",
     tags: ["SMB", "Local demand", "Address-qualified"],
     signal: "Discovery market",
   },
@@ -151,7 +151,7 @@ const CITIES: readonly City[] = [
     name: "Hamilton",
     href: "/locations/hamilton",
     subtitle: "Regional business and industrial demand with strong need for clean delivery planning.",
-    tier: "GTA Extended",
+    tier: "Expansion",
     tags: ["Regional market", "Industrial demand", "Structured onboarding"],
     signal: "Regional market",
   },
@@ -223,36 +223,6 @@ const SERVICE_MODULES = [
     title: "LTE / 5G Continuity",
     href: "/services/lte-5g-continuity",
     body: "Continuity planning for access disruption and outage resilience.",
-  },
-] as const;
-
-const ENTRY_PATHS = [
-  { title: "Internet Near Me", href: "/internet-near-me" },
-  { title: "Business Fibre Internet", href: "/services/business-fibre-internet" },
-  { title: "Dedicated Internet Access", href: "/services/dedicated-internet-access" },
-  { title: "Mississauga", href: "/locations/mississauga" },
-] as const;
-
-const FLOW = [
-  {
-    step: "01",
-    title: "Choose the city",
-    body: "Start with the market that matches your site or expansion target.",
-  },
-  {
-    step: "02",
-    title: "Choose the service",
-    body: "Match the requirement to fibre, DIA, managed networking, or continuity.",
-  },
-  {
-    step: "03",
-    title: "Confirm feasibility",
-    body: "Orbitlink reviews serviceability, building conditions, and fit.",
-  },
-  {
-    step: "04",
-    title: "Move into intake",
-    body: "Qualified requests move into a clear commercial and onboarding path.",
   },
 ] as const;
 
@@ -376,7 +346,9 @@ function CityCard({ city }: { city: City }) {
       <div className="relative">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <div className="text-[11px] tracking-[0.22em] text-white/42">{city.signal.toUpperCase()}</div>
+            <div className="text-[11px] tracking-[0.22em] text-white/42">
+              {city.signal.toUpperCase()}
+            </div>
             <h3 className="mt-3 text-lg font-semibold tracking-tight text-white">{city.name}</h3>
             <p className="mt-3 text-sm leading-6 text-white/66">{city.subtitle}</p>
           </div>
@@ -401,28 +373,6 @@ function CityCard({ city }: { city: City }) {
   );
 }
 
-function FlowCard({
-  step,
-  title,
-  body,
-}: {
-  step: string;
-  title: string;
-  body: string;
-}) {
-  return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
-      <div className="flex items-center gap-3">
-        <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
-          {step}
-        </div>
-        <div className="text-sm font-medium text-white/90">{title}</div>
-      </div>
-      <p className="mt-3 text-sm leading-6 text-white/63">{body}</p>
-    </div>
-  );
-}
-
 function Surface({
   children,
   className = "",
@@ -438,9 +388,9 @@ function Surface({
 }
 
 export default function OntarioHubPage() {
-  const gtaCore = CITIES.filter((c) => c.tier === "GTA Core");
-  const gtaExtended = CITIES.filter((c) => c.tier === "GTA Extended");
-  const outsideGta = CITIES.filter((c) => c.tier === "Ontario");
+  const priorityMarkets = CITIES.filter((c) => c.tier === "Priority");
+  const expansionMarkets = CITIES.filter((c) => c.tier === "Expansion");
+  const ontarioMarkets = CITIES.filter((c) => c.tier === "Ontario");
 
   return (
     <div className="relative">
@@ -473,9 +423,8 @@ export default function OntarioHubPage() {
               </h1>
 
               <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/66 sm:text-lg">
-                Browse Ontario city pages, choose the right service, and move into
-                address-qualified availability. Orbitlink is built for serious business buyers who
-                want a cleaner path from discovery to service review.
+                Browse the right market, match the right service, and move into address-qualified
+                availability with a cleaner commercial path.
               </p>
 
               <div className="mt-7 flex flex-wrap gap-2">
@@ -483,7 +432,7 @@ export default function OntarioHubPage() {
                   "Availability by address",
                   "Business-first service model",
                   "Ontario city pages",
-                  "Conversion-ready intake",
+                  "Structured intake",
                 ].map((item) => (
                   <span
                     key={item}
@@ -502,16 +451,16 @@ export default function OntarioHubPage() {
                   Check Availability
                 </Link>
                 <Link
-                  href="/locations"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  All Locations
-                </Link>
-                <Link
                   href="/services"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
                 >
                   Service Modules
+                </Link>
+                <Link
+                  href="/locations"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+                >
+                  All Locations
                 </Link>
               </div>
 
@@ -529,18 +478,25 @@ export default function OntarioHubPage() {
                   Province-wide discovery, then clean qualification
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64">
-                  Start with the market, match the service, then move into a serious commercial
-                  review with address-level validation.
+                  Start with the market. Then match the service and move into address-level review.
                 </p>
 
                 <div className="mt-5 grid gap-3">
-                  {FLOW.map((item) => (
-                    <FlowCard
-                      key={item.step}
-                      step={item.step}
-                      title={item.title}
-                      body={item.body}
-                    />
+                  {[
+                    { step: "01", title: "Choose the city", body: "Start with the market that matches your site or expansion target." },
+                    { step: "02", title: "Choose the service", body: "Match the requirement to fibre, DIA, managed networking, or continuity." },
+                    { step: "03", title: "Confirm feasibility", body: "Orbitlink reviews serviceability, building conditions, and fit." },
+                    { step: "04", title: "Move into intake", body: "Qualified requests move into a clear commercial path." },
+                  ].map((item) => (
+                    <div key={item.step} className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+                      <div className="flex items-center gap-3">
+                        <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
+                          {item.step}
+                        </div>
+                        <div className="text-sm font-medium text-white/90">{item.title}</div>
+                      </div>
+                      <p className="mt-3 text-sm leading-6 text-white/63">{item.body}</p>
+                    </div>
                   ))}
                 </div>
               </Surface>
@@ -559,8 +515,7 @@ export default function OntarioHubPage() {
                   Coverage that feels credible
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                  The goal is simple: better discovery, cleaner qualification, and fewer surprises
-                  before activation.
+                  Better discovery, cleaner qualification, fewer surprises before activation.
                 </p>
               </div>
 
@@ -583,13 +538,59 @@ export default function OntarioHubPage() {
           <Surface className="p-6 sm:p-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
+                <SectionEyebrow>PRIORITY MARKETS</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+                  Core Ontario markets
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                  Start with the strongest markets for Orbitlink’s business-first operating model.
+                </p>
+              </div>
+
+              <MetricPill label="FOCUS" value="High-intent commercial demand" />
+            </div>
+
+            <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {priorityMarkets.map((city) => (
+                <CityCard key={city.href} city={city} />
+              ))}
+            </div>
+          </Surface>
+
+          <Surface className="p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>EXPANDED COVERAGE</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+                  Additional Ontario markets
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                  Broader Ontario discovery for buyers outside the core commercial corridor.
+                </p>
+              </div>
+
+              <MetricPill label="RANGE" value="Expansion and regional demand" />
+            </div>
+
+            <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {expansionMarkets.map((city) => (
+                <CityCard key={city.href} city={city} />
+              ))}
+              {ontarioMarkets.map((city) => (
+                <CityCard key={city.href} city={city} />
+              ))}
+            </div>
+          </Surface>
+
+          <Surface className="p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
                 <SectionEyebrow>SERVICE MATCHING</SectionEyebrow>
                 <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
                   Choose the right service path
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                  Ontario coverage creates discoverability. Service modules capture real buying
-                  intent.
+                  City pages create discovery. Service modules turn that intent into a real buying path.
                 </p>
               </div>
 
@@ -611,91 +612,13 @@ export default function OntarioHubPage() {
             </div>
           </Surface>
 
-          <Surface className="p-6 sm:p-8">
-            <SectionEyebrow>TOP ONTARIO MARKETS</SectionEyebrow>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
-              Start with the city that matches the buyer
-            </h2>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/64 sm:text-[15px]">
-              These city pages support local discovery, local FAQs, internal linking, and business
-              internet conversion across Ontario.
-            </p>
-
-            <h3 className="mt-8 text-lg font-semibold tracking-tight text-white">GTA core</h3>
-            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {gtaCore.map((city) => (
-                <CityCard key={city.href} city={city} />
-              ))}
-            </div>
-
-            <h3 className="mt-8 text-lg font-semibold tracking-tight text-white">GTA extended</h3>
-            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {gtaExtended.map((city) => (
-                <CityCard key={city.href} city={city} />
-              ))}
-            </div>
-
-            <h3 className="mt-8 text-lg font-semibold tracking-tight text-white">Outside GTA</h3>
-            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {outsideGta.map((city) => (
-                <CityCard key={city.href} city={city} />
-              ))}
-            </div>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/contact#intake"
-                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-              >
-                Check Availability
-              </Link>
-              <Link
-                href="/trust"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
-              >
-                Trust & Compliance
-              </Link>
-              <Link
-                href="/locations"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
-              >
-                Browse Locations
-              </Link>
-            </div>
-          </Surface>
-
-          <Surface className="p-6 sm:p-8">
-            <SectionEyebrow>POPULAR ENTRY PATHS</SectionEyebrow>
-            <h2 className="mt-3 text-xl font-semibold tracking-tight text-white">
-              Common business starting points
-            </h2>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/64">
-              Buyers usually begin with a city, a service type, or a broad search for business
-              internet nearby.
-            </p>
-
-            <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
-              {ENTRY_PATHS.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/84 transition hover:bg-white/[0.06]"
-                >
-                  {item.title}
-                </Link>
-              ))}
-            </div>
-          </Surface>
-
           <Surface className="bg-black/20 p-6 sm:p-8">
             <SectionEyebrow>ONTARIO BUSINESS PRESENCE</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold tracking-tight text-white">
               Local anchor, province-wide discovery
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-white/64">
-              Orbitlink’s business presence is anchored in Mississauga and focused on Ontario
-              business connectivity. The strongest next step is still the same: submit the address
-              and service requirement.
+              Orbitlink’s business presence is anchored in Mississauga and focused on Ontario business connectivity.
             </p>
 
             <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
@@ -745,10 +668,10 @@ export default function OntarioHubPage() {
                 Service Modules
               </Link>
               <Link
-                href="/internet-near-me"
+                href="/trust"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
-                Internet Near Me
+                Trust & Compliance
               </Link>
             </div>
           </Surface>

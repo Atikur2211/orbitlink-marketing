@@ -1,3 +1,4 @@
+// src/app/locations/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -68,140 +69,159 @@ type LocationCard = {
   posture: string;
 };
 
-const GTA_CORE: readonly LocationCard[] = [
+const PRIORITY_MARKETS: readonly LocationCard[] = [
   {
     name: "Mississauga",
     href: "/locations/mississauga",
-    subtitle: "Priority commercial market for business fibre, managed networking, and structured onboarding.",
+    subtitle:
+      "Priority market for business fibre, managed networking, and commercial building-led qualification.",
     tags: ["Priority", "Commercial", "Business fibre"],
     posture: "Primary market",
   },
   {
-    name: "Brampton",
-    href: "/locations/brampton",
-    subtitle: "Industrial, warehouse, and SMB business internet with address-qualified delivery review.",
-    tags: ["Industrial", "SMB", "Warehouse"],
-    posture: "Growth market",
-  },
-  {
     name: "Toronto",
     href: "/locations/toronto",
-    subtitle: "Business connectivity for office, commercial, and uptime-sensitive environments.",
+    subtitle:
+      "Business connectivity for dense office environments, commercial sites, and uptime-sensitive operations.",
     tags: ["Office", "Enterprise", "DIA-ready"],
     posture: "Enterprise market",
   },
   {
+    name: "Brampton",
+    href: "/locations/brampton",
+    subtitle:
+      "Industrial, warehouse, and SMB connectivity with structured feasibility review by address.",
+    tags: ["Industrial", "Warehouse", "SMB"],
+    posture: "Growth market",
+  },
+  {
     name: "Markham",
     href: "/locations/markham",
-    subtitle: "Business internet and managed networking for office, B2B, and technology-led sites.",
+    subtitle:
+      "Business internet and managed network posture for B2B offices, tech-led sites, and multi-tenant environments.",
     tags: ["B2B", "Managed Wi-Fi", "Static IP"],
     posture: "Technology market",
   },
   {
     name: "Vaughan",
     href: "/locations/vaughan",
-    subtitle: "Commercial and industrial connectivity for multi-site operations and continuity-driven buyers.",
+    subtitle:
+      "Commercial and industrial connectivity for multi-site buyers and continuity-driven environments.",
     tags: ["Commercial", "Multi-site", "Continuity"],
     posture: "Multi-site market",
   },
   {
     name: "Oakville",
     href: "/locations/oakville",
-    subtitle: "Premium business internet and managed network service for professional-service environments.",
+    subtitle:
+      "Premium business internet and managed networking for professional-service and office environments.",
     tags: ["Premium", "Professional", "Business-grade"],
     posture: "Premium market",
   },
   {
     name: "Oshawa",
     href: "/locations/oshawa",
-    subtitle: "Strong market for industrial, logistics, and growth-oriented business connectivity.",
+    subtitle:
+      "Industrial and growth-oriented business connectivity across a strong Durham-region market.",
     tags: ["Industrial", "Logistics", "Growth"],
     posture: "Strategic market",
   },
+  {
+    name: "Whitby",
+    href: "/locations/whitby",
+    subtitle:
+      "Business fibre and managed network fit for local office, commercial, and expansion-ready sites.",
+    tags: ["Durham", "Business fibre", "Office"],
+    posture: "Emerging market",
+  },
 ];
 
-const EXPANDED_MARKETS: readonly LocationCard[] = [
+const EXTENDED_MARKETS: readonly LocationCard[] = [
   {
     name: "Milton",
     href: "/locations/milton",
-    subtitle: "Industrial growth corridor with business internet reviewed by building and service fit.",
-    tags: ["Industrial growth", "Address review", "Expansion"],
+    subtitle:
+      "Industrial growth corridor with business internet reviewed by building and service fit.",
+    tags: ["Industrial growth", "Expansion", "Address review"],
     posture: "Expansion market",
   },
   {
     name: "Etobicoke",
     href: "/locations/etobicoke",
-    subtitle: "Commercial and light industrial business connectivity with building-based qualification.",
+    subtitle:
+      "Commercial and light industrial connectivity with building-based qualification.",
     tags: ["Commercial", "Light industrial", "Managed network"],
     posture: "Commercial market",
   },
   {
     name: "Scarborough",
     href: "/locations/scarborough",
-    subtitle: "Broad SMB and commercial demand supported by address-qualified service review.",
+    subtitle:
+      "Broad SMB and commercial demand supported by address-qualified service review.",
     tags: ["SMB", "Commercial", "Address review"],
     posture: "Discovery market",
   },
   {
     name: "Hamilton",
     href: "/locations/hamilton",
-    subtitle: "Regional industrial and commercial market with structured onboarding and delivery posture.",
+    subtitle:
+      "Regional industrial and commercial market with stronger onboarding and delivery posture.",
     tags: ["Regional", "Industrial", "Structured onboarding"],
     posture: "Regional market",
   },
   {
     name: "Ottawa",
     href: "/locations/ottawa",
-    subtitle: "Professional and uptime-sensitive environments with stronger enterprise delivery expectations.",
+    subtitle:
+      "Professional and business-critical environments with stronger enterprise expectations.",
     tags: ["Professional", "Enterprise", "DIA-ready"],
     posture: "Strategic market",
   },
   {
-    name: "Whitby",
-    href: "/locations/whitby",
-    subtitle: "Durham-region business demand with strong local intent and clean service qualification.",
-    tags: ["Durham", "Local intent", "Business fibre"],
-    posture: "Emerging market",
-  },
-  {
     name: "Newmarket",
     href: "/locations/newmarket",
-    subtitle: "High-intent SMB and office demand with a strong fit for managed networking and fibre.",
+    subtitle:
+      "High-intent office and SMB demand with strong fit for fibre and managed networking.",
     tags: ["SMB", "Office", "Managed Wi-Fi"],
     posture: "Emerging market",
   },
   {
     name: "Aurora",
     href: "/locations/aurora",
-    subtitle: "Business-grade connectivity for professional environments and high-uptime office operations.",
+    subtitle:
+      "Business-grade connectivity for professional environments and uptime-sensitive offices.",
     tags: ["Professional", "Office", "Uptime"],
     posture: "Emerging market",
   },
   {
     name: "Richmond Hill",
     href: "/locations/richmond-hill",
-    subtitle: "B2B and office demand supported by clean onboarding and address-based service matching.",
+    subtitle:
+      "B2B office demand supported by clean onboarding and address-based service matching.",
     tags: ["B2B", "Office", "Business-grade"],
     posture: "Emerging market",
   },
   {
     name: "Kitchener-Waterloo",
     href: "/locations/kitchener-waterloo",
-    subtitle: "Modern office and tech-led market with strong fit for fibre and managed network posture.",
+    subtitle:
+      "Modern office and tech-led demand with strong fit for fibre and managed network posture.",
     tags: ["Tech", "Office", "Managed LAN"],
     posture: "Regional market",
   },
   {
     name: "London",
     href: "/locations/london",
-    subtitle: "Broad commercial demand and high local search intent with structured business qualification.",
+    subtitle:
+      "Broad commercial demand and strong local search intent with structured business qualification.",
     tags: ["Commercial", "Regional", "High intent"],
     posture: "Regional market",
   },
   {
     name: "Barrie",
     href: "/locations/barrie",
-    subtitle: "Growth-market business internet with strong local discovery intent and address review.",
+    subtitle:
+      "Growth-market business internet supported by local discovery intent and address review.",
     tags: ["Growth", "Local intent", "Business fibre"],
     posture: "Regional market",
   },
@@ -210,22 +230,22 @@ const EXPANDED_MARKETS: readonly LocationCard[] = [
 const serviceModules = [
   {
     t: "Business Fibre Internet",
-    d: "Primary internet for business sites that want clean onboarding and better-quality connectivity.",
+    d: "Primary internet for business sites that want cleaner onboarding and stronger day-to-day reliability.",
     href: "/services/business-fibre-internet",
   },
   {
     t: "Dedicated Internet Access",
-    d: "Dedicated connectivity for critical sites that need stronger performance expectations.",
+    d: "Dedicated connectivity for critical sites that need stronger performance expectations and escalation posture.",
     href: "/services/dedicated-internet-access",
   },
   {
     t: "Managed LAN & Wi-Fi",
-    d: "Managed internal networking for better Wi-Fi, segmentation, and day-to-day stability.",
+    d: "Managed internal networking for better Wi-Fi, segmentation, and site stability.",
     href: "/services/managed-lan-wifi",
   },
   {
     t: "LTE / 5G Backup",
-    d: "Continuity architecture for sites that need resilience during primary access disruption.",
+    d: "Continuity architecture for businesses that need resilience during access disruption.",
     href: "/services/lte-5g-continuity",
   },
 ] as const;
@@ -237,15 +257,15 @@ const premiumSignals = [
   },
   {
     t: "Business-first",
-    d: "Built for business internet, managed networking, and operational requirements.",
+    d: "Built for business internet, managed networking, and operational needs.",
   },
   {
     t: "Service-matched",
-    d: "Fibre, DIA, managed Wi-Fi, and continuity aligned to real site needs.",
+    d: "Fibre, DIA, managed Wi-Fi, and continuity aligned to real site requirements.",
   },
   {
-    t: "Ontario-focused",
-    d: "Local city discovery with a cleaner commercial path to qualification.",
+    t: "Commercially clear",
+    d: "City discovery leads into a cleaner path toward qualification and pricing.",
   },
 ] as const;
 
@@ -253,7 +273,7 @@ const buyerJourney = [
   {
     step: "01",
     title: "Choose your city",
-    desc: "Start with the market that matches your site, building, or expansion target.",
+    desc: "Start with the market that matches your building, site, or expansion target.",
   },
   {
     step: "02",
@@ -263,7 +283,7 @@ const buyerJourney = [
   {
     step: "03",
     title: "Check availability",
-    desc: "Orbitlink reviews address-level serviceability and building fit.",
+    desc: "Orbitlink reviews serviceability by address, building, and fit.",
   },
   {
     step: "04",
@@ -292,7 +312,7 @@ const FAQ = [
 ] as const;
 
 function jsonLd() {
-  const all = [...GTA_CORE, ...EXPANDED_MARKETS];
+  const all = [...PRIORITY_MARKETS, ...EXTENDED_MARKETS];
 
   const breadcrumb = {
     "@context": "https://schema.org",
@@ -590,8 +610,8 @@ export default function LocationsHubPage() {
         <Surface className="p-6 md:p-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <SectionEyebrow>CORE MARKETS</SectionEyebrow>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight">Priority Ontario cities</h2>
+              <SectionEyebrow>PRIORITY MARKETS</SectionEyebrow>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight">Core Ontario cities</h2>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
                 Start with the strongest commercial markets for Orbitlink’s business-first service model.
               </p>
@@ -607,8 +627,8 @@ export default function LocationsHubPage() {
             </div>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {GTA_CORE.map((item) => (
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {PRIORITY_MARKETS.map((item) => (
               <LocationCardView key={item.href} item={item} />
             ))}
           </div>
@@ -617,14 +637,25 @@ export default function LocationsHubPage() {
 
       <section className="mx-auto max-w-7xl px-6 pb-10 sm:px-7 lg:px-10">
         <Surface className="p-6 md:p-8">
-          <SectionEyebrow>EXPANDED MARKETS</SectionEyebrow>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight">Additional Ontario cities</h2>
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-            Broader discovery coverage for business buyers across Ontario.
-          </p>
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <SectionEyebrow>EXPANDED MARKETS</SectionEyebrow>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight">Additional Ontario cities</h2>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
+                Broader discovery coverage for business buyers across Ontario.
+              </p>
+            </div>
+
+            <Link
+              href="/locations/ontario"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm text-white transition hover:bg-white/10"
+            >
+              View Ontario coverage
+            </Link>
+          </div>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {EXPANDED_MARKETS.map((item) => (
+            {EXTENDED_MARKETS.map((item) => (
               <LocationCardView key={item.href} item={item} />
             ))}
           </div>
