@@ -87,12 +87,36 @@ const FAQ = [
 ] as const;
 
 const serviceModules = [
-  { t: "Business Fibre Internet", href: "/services/business-fibre-internet" },
-  { t: "Dedicated Internet Access", href: "/services/dedicated-internet-access" },
-  { t: "Managed LAN & Enterprise Wi-Fi", href: "/services/managed-lan-wifi" },
-  { t: "LTE / 5G Continuity", href: "/services/lte-5g-continuity" },
-  { t: "VoIP & Cloud Voice", href: "/services/voip-cloud-voice" },
-  { t: "Static IP Routing", href: "/services/static-ip-routing" },
+  {
+    t: "Business Fibre Internet",
+    href: "/services/business-fibre-internet",
+    d: "Primary internet for Whitby offices, commercial sites, and growth-stage operations.",
+  },
+  {
+    t: "Dedicated Internet Access",
+    href: "/services/dedicated-internet-access",
+    d: "Stronger delivery posture for critical systems and uptime-sensitive environments.",
+  },
+  {
+    t: "Managed LAN & Enterprise Wi-Fi",
+    href: "/services/managed-lan-wifi",
+    d: "Internal network support, segmentation, guest access, and coverage planning.",
+  },
+  {
+    t: "LTE / 5G Continuity",
+    href: "/services/lte-5g-continuity",
+    d: "Backup architecture for resilience during access disruption or outage events.",
+  },
+  {
+    t: "VoIP & Cloud Voice",
+    href: "/services/voip-cloud-voice",
+    d: "Business voice for teams that need routing, portability, and cleaner communications.",
+  },
+  {
+    t: "Static IP Routing",
+    href: "/services/static-ip-routing",
+    d: "Fixed addressing for VPNs, remote access, firewalls, and hosted business systems.",
+  },
 ] as const;
 
 const signals = [
@@ -106,7 +130,7 @@ const signals = [
   },
   {
     t: "Structured delivery",
-    d: "Clear onboarding and documented activation posture.",
+    d: "Clear onboarding, scoped expectations, and documented activation posture.",
   },
   {
     t: "Durham-region fit",
@@ -308,11 +332,11 @@ export default function WhitbyLocationPage() {
               <Surface className="bg-white/[0.04] p-6">
                 <SectionEyebrow>COMMERCIAL FIT</SectionEyebrow>
                 <h2 className="mt-3 text-lg font-semibold text-white">
-                  A strong next-step Durham market
+                  Durham-region demand with cleaner qualification
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64">
                   Whitby is well-suited to business fibre, DIA, managed networking, and continuity
-                  for growth-oriented sites that need a cleaner buying path.
+                  for sites that need a more disciplined buying and delivery path.
                 </p>
 
                 <div className="mt-5 grid gap-3">
@@ -409,6 +433,7 @@ export default function WhitbyLocationPage() {
                   className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:bg-white/[0.06]"
                 >
                   <div className="text-sm font-medium text-white/90">{item.t}</div>
+                  <p className="mt-3 text-sm leading-6 text-white/63">{item.d}</p>
                   <div className="mt-3 text-xs text-white/55">Open module →</div>
                 </Link>
               ))}
