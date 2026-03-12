@@ -13,9 +13,9 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: "Contact Orbitlink | Business Fibre, Internet & Network Services Ontario",
+  title: "Contact Orbitlink | Business Fibre, Dedicated Internet & Network Services",
   description:
-    "Contact Orbitlink for business fibre, dedicated internet, managed Wi-Fi, voice, continuity, and network services across Ontario. Check availability and request pricing.",
+    "Check availability and request pricing for Orbitlink business fibre internet, dedicated internet access, managed Wi-Fi, voice, continuity, and network services across Ontario.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Contact Orbitlink | Business Fibre & Network Services",
@@ -56,61 +56,28 @@ export const metadata: Metadata = {
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/72">
+    <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/70">
       {children}
     </span>
   );
 }
 
-function InfoCard({
-  eyebrow,
-  title,
+function Surface({
   children,
+  className = "",
 }: {
-  eyebrow: string;
-  title: string;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7">
-      <div className="text-[11px] tracking-[0.24em] text-white/55">{eyebrow}</div>
-      <h2 className="mt-3 text-base font-medium text-white/92 sm:text-lg">{title}</h2>
-      <div className="mt-4 text-sm leading-6 text-white/68">{children}</div>
+    <div className={["rounded-[30px] border border-white/10 bg-white/[0.035]", className].join(" ")}>
+      {children}
     </div>
   );
 }
 
-function SignalCard({
-  title,
-  text,
-}: {
-  title: string;
-  text: string;
-}) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-      <div className="text-sm font-medium text-white/90">{title}</div>
-      <p className="mt-2 text-sm leading-6 text-white/65">{text}</p>
-    </div>
-  );
-}
-
-function StepCard({
-  step,
-  title,
-  text,
-}: {
-  step: string;
-  title: string;
-  text: string;
-}) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-      <div className="text-[11px] tracking-[0.22em] text-white/50">{step}</div>
-      <div className="mt-3 text-sm font-medium text-white/90">{title}</div>
-      <p className="mt-2 text-sm leading-6 text-white/65">{text}</p>
-    </div>
-  );
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/45">{children}</div>;
 }
 
 function MetricPill({
@@ -125,6 +92,57 @@ function MetricPill({
       <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
       <div className="mt-1 text-sm text-white/82">{value}</div>
     </div>
+  );
+}
+
+function SignalCard({
+  title,
+  text,
+}: {
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/64">{text}</p>
+    </div>
+  );
+}
+
+function StepCard({
+  step,
+  title,
+  text,
+}: {
+  step: string;
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{step}</div>
+      <div className="mt-3 text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/64">{text}</p>
+    </div>
+  );
+}
+
+function ContactCard({
+  eyebrow,
+  title,
+  children,
+}: {
+  eyebrow: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Surface className="p-6 sm:p-7">
+      <SectionEyebrow>{eyebrow}</SectionEyebrow>
+      <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">{title}</h2>
+      <div className="mt-4 text-sm leading-6 text-white/66">{children}</div>
+    </Surface>
   );
 }
 
@@ -238,75 +256,80 @@ export default function ContactPage() {
     <PageShell
       eyebrow="CONTACT"
       title="Check availability and request pricing"
-      subtitle="Contact Orbitlink for business fibre, dedicated internet, managed Wi-Fi, voice, continuity, and deployment planning across Ontario."
+      subtitle="Business fibre, dedicated internet, managed Wi-Fi, voice, continuity, and deployment planning across Ontario."
+      pills={["Business service intake", "Address-qualified review", "Pricing and fit"]}
+      actions={[
+        { label: "Check Availability", href: "#intake", variant: "primary" },
+        { label: "View Services", href: "/services", variant: "secondary" },
+      ]}
     >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
       />
 
-      <section className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
+      <section className="relative overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-20 top-0 h-44 w-44 rounded-full bg-blue-500/10 blur-3xl" />
           <div className="absolute right-0 top-8 h-44 w-44 rounded-full bg-emerald-500/10 blur-3xl" />
           <div className="absolute bottom-0 left-1/2 h-36 w-[28rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
         </div>
 
         <div className="relative grid grid-cols-1 gap-8 lg:grid-cols-12">
           <div className="lg:col-span-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[11px] text-[#FDE68A]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Business service intake
+              Commercial intake
             </div>
 
             <h2 className="mt-5 text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl">
-              Tell us the address, service, and timeline
+              One clear request.
+              <span className="block text-white/62">A faster business answer.</span>
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              Use this page to check availability and request pricing. A complete request helps us
-              review service fit faster and reply with the right next step.
+              Share the address, service, and timeline. Orbitlink reviews fit, availability, and
+              commercial next steps with a cleaner operator-grade intake path.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               <Pill>Check availability</Pill>
               <Pill>Request pricing</Pill>
-              <Pill>Business service review</Pill>
+              <Pill>Business-grade qualification</Pill>
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <MetricPill label="BEST FOR" value="Business service requests" />
-              <MetricPill label="SERVICES" value="Fibre, DIA, voice, managed network" />
-              <MetricPill label="GOAL" value="Clear qualification" />
+              <MetricPill label="BEST FOR" value="Ontario business enquiries" />
+              <MetricPill label="SERVICES" value="Fibre • DIA • Voice • Managed Network" />
+              <MetricPill label="GOAL" value="Clear fit and next step" />
             </div>
           </div>
 
           <div className="lg:col-span-4">
-            <div className="rounded-3xl border border-white/10 bg-black/25 p-6">
-              <div className="text-[11px] tracking-[0.22em] text-white/55">HOW IT WORKS</div>
-              <div className="mt-3 text-lg font-semibold text-white">
-                Send one complete request
-              </div>
-              <p className="mt-3 text-sm leading-6 text-white/65">
-                The most useful requests include the service needed, exact address, target
-                timeline, and any important technical requirements.
+            <div className="rounded-[30px] border border-white/10 bg-black/25 p-6">
+              <SectionEyebrow>HOW TO SUBMIT</SectionEyebrow>
+              <h2 className="mt-3 text-lg font-semibold text-white">Make the first request count</h2>
+              <p className="mt-3 text-sm leading-6 text-white/64">
+                The strongest requests include the exact site, service type, timeline, and any
+                technical requirements that matter operationally.
               </p>
 
               <div className="mt-5 grid gap-3">
                 <StepCard
                   step="STEP 1"
-                  title="Choose the service"
-                  text="Tell us what you need, such as fibre, dedicated internet, voice, managed Wi-Fi, or continuity."
+                  title="Select the service"
+                  text="Business fibre, dedicated internet, managed Wi-Fi, voice, continuity, or another network need."
                 />
                 <StepCard
                   step="STEP 2"
-                  title="Add the address"
-                  text="Include the exact service address and any building details that help with review."
+                  title="Add the site"
+                  text="Use the exact service address and include building details when relevant."
                 />
                 <StepCard
                   step="STEP 3"
-                  title="Add requirements"
-                  text="Include timing, user count, static IPs, voice needs, managed network scope, or multi-site details if relevant."
+                  title="Add real requirements"
+                  text="Timing, user count, static IPs, voice, managed network scope, continuity, or multi-site needs."
                 />
               </div>
             </div>
@@ -314,9 +337,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <div className="mt-4 grid grid-cols-1 gap-4 sm:mt-6 sm:gap-5 lg:grid-cols-12">
-        <div className="space-y-4 sm:space-y-5 lg:col-span-5">
-          <InfoCard eyebrow="DIRECT CONTACT" title="Business sales and onboarding">
+      <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-12">
+        <div className="space-y-5 lg:col-span-5">
+          <ContactCard eyebrow="DIRECT CONTACT" title="Business sales and onboarding">
             <p>
               Use this page for business fibre internet, dedicated internet, managed network
               services, voice, continuity, address checks, and deployment planning across Ontario.
@@ -330,7 +353,7 @@ export default function ContactPage() {
               <Pill>Continuity</Pill>
             </div>
 
-            <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-5">
+            <div className="mt-5 rounded-[24px] border border-white/10 bg-black/20 p-5">
               <div className="text-[11px] tracking-[0.22em] text-white/55">CONTACT DETAILS</div>
               <div className="mt-3 space-y-2 text-sm text-white/72">
                 <div>
@@ -347,67 +370,67 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-          </InfoCard>
+          </ContactCard>
 
-          <InfoCard eyebrow="WHAT TO INCLUDE" title="What helps us review faster">
+          <ContactCard eyebrow="WHAT TO INCLUDE" title="What improves review quality">
             <div className="grid grid-cols-1 gap-3">
               <SignalCard
-                title="Service address"
-                text="The exact address helps us review serviceability more accurately."
+                title="Exact service address"
+                text="The precise address gives the cleanest path into serviceability review."
               />
               <SignalCard
-                title="Service needed"
-                text="Tell us whether you need fibre, dedicated internet, managed Wi-Fi, voice, continuity, or another network service."
+                title="Service type"
+                text="Tell us whether this is fibre, DIA, managed Wi-Fi, voice, continuity, or a broader network requirement."
               />
               <SignalCard
-                title="Timeline and requirements"
-                text="Include install timing and any important technical or operational requirements."
+                title="Timing and scope"
+                text="Include target timing and the operational details that affect the design or commercial path."
               />
             </div>
 
             <p className="mt-4 text-xs text-white/55">
-              Better detail at the start usually leads to a faster and more useful reply.
+              Better detail up front usually produces a faster and more useful answer.
             </p>
-          </InfoCard>
+          </ContactCard>
 
-          <InfoCard eyebrow="AFTER YOU SUBMIT" title="What happens next">
+          <ContactCard eyebrow="AFTER SUBMISSION" title="What happens next">
             <div className="grid grid-cols-1 gap-3">
               <StepCard
                 step="REVIEW"
-                title="We review your request"
-                text="We look at service fit, address details, timing, and requirements."
+                title="We assess fit"
+                text="We review service type, address, timing, and operating requirements."
               />
               <StepCard
                 step="NEXT STEP"
-                title="We identify the right path"
-                text="That may be pricing direction, serviceability review, or a direct follow-up."
+                title="We define the path"
+                text="That may mean pricing direction, serviceability review, or a more specific commercial follow-up."
               />
               <StepCard
                 step="RESPONSE"
                 title="We keep it practical"
-                text="The goal is to give you a useful next step instead of a vague reply."
+                text="The goal is a useful next step, not a generic acknowledgement."
               />
             </div>
-          </InfoCard>
+          </ContactCard>
         </div>
 
         <div
-          className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 sm:p-7 lg:col-span-7"
           id="intake"
+          className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-7 lg:col-span-7"
         >
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="text-[11px] tracking-[0.22em] text-white/55">REQUEST FORM</div>
-              <h2 className="mt-3 text-base font-medium text-white/92 sm:text-lg">
+              <SectionEyebrow>REQUEST FORM</SectionEyebrow>
+              <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
                 Check availability
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">
-                Tell us what service you need, where the site is located, and any important
-                requirements.
+                Submit one clear business request with the service, address, and operational
+                requirements that matter.
               </p>
             </div>
 
-            <div className="hidden shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 sm:block">
+            <div className="hidden rounded-2xl border border-white/10 bg-black/20 px-4 py-3 sm:block">
               <div className="text-[11px] tracking-[0.22em] text-white/55">FOCUS</div>
               <div className="mt-1 text-sm text-white/80">Simple • Clear • Business-ready</div>
             </div>
@@ -427,12 +450,12 @@ export default function ContactPage() {
 
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
               <div className="text-[11px] tracking-[0.22em] text-white/55">TIP</div>
-              <p className="mt-2 text-sm leading-6 text-white/65">Add the exact service address.</p>
+              <p className="mt-2 text-sm leading-6 text-white/65">Include the exact service address.</p>
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
               <div className="text-[11px] tracking-[0.22em] text-white/55">TIP</div>
-              <p className="mt-2 text-sm leading-6 text-white/65">Include timing and requirements.</p>
+              <p className="mt-2 text-sm leading-6 text-white/65">Add timing and technical needs.</p>
             </div>
           </div>
 
