@@ -14,7 +14,7 @@ const NAV = [
   { name: "Contact", href: "/contact" },
 ] as const;
 
-const SUPPORT_PHONE_DISPLAY = "1-888-8-ORBIT-0";
+const SUPPORT_PHONE_DISPLAY = "888-8-ORBIT-0";
 const SUPPORT_PHONE_TEL = "tel:+18888672480";
 const SUPPORT_PHONE_ARIA = "Call Orbitlink at 1 888 8 ORBIT 0";
 const INTAKE_HREF = "/contact#intake";
