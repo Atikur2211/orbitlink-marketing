@@ -1,5 +1,4 @@
 import TopNav from "@/components/TopNav";
-import StatusBand from "@/components/StatusBand";
 import SiteFooter from "@/components/SiteFooter";
 
 export default function PortalShell({
@@ -16,7 +15,6 @@ export default function PortalShell({
   return (
     <main className="min-h-screen bg-[#09090B] text-white">
       <TopNav />
-      <StatusBand />
 
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0">

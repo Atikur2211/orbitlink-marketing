@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 
 import TopNav from "@/components/TopNav";
 import StickyStatusStrip from "@/components/StickyStatusStrip";
-import StatusBandClient from "@/components/StatusBandClient";
 import BentoServices from "@/components/BentoServices";
 import ConciergeBlock from "@/components/ConciergeBlock";
 import SiteFooter from "@/components/SiteFooter";
@@ -315,7 +314,6 @@ export default function Home() {
 
       <TopNav />
       <StickyStatusStrip />
-      <StatusBandClient />
 
       <section className="relative overflow-hidden border-b border-white/6">
         <div className="pointer-events-none absolute inset-0">

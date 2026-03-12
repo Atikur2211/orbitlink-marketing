@@ -1,6 +1,5 @@
 // src/app/locations/layout.tsx
 import TopNav from "@/components/TopNav";
-import StatusBandClient from "@/components/StatusBandClient";
 import ConciergeBlock from "@/components/ConciergeBlock";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -43,7 +42,7 @@ export default function LocationsLayout({
 
       {/* status band */}
       <div className="relative z-[120]">
-        <StatusBandClient />
+        
       </div>
 
       {/* page content */}

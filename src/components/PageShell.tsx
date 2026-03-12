@@ -1,6 +1,5 @@
 import ConciergeBlock from "@/components/ConciergeBlock";
 import TopNav from "@/components/TopNav";
-import StatusBandClient from "@/components/StatusBandClient";
 import SiteFooter from "@/components/SiteFooter";
 
 type PageShellAction = {
@@ -27,7 +26,6 @@ export default function PageShell({
   return (
     <main className="min-h-screen bg-[#09090B] text-white">
       <TopNav />
-      <StatusBandClient />
 
       <section className="relative overflow-hidden border-b border-white/6">
         <div className="pointer-events-none absolute inset-0">

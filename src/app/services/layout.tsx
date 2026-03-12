@@ -1,6 +1,5 @@
 // src/app/services/layout.tsx
 import TopNav from "@/components/TopNav";
-import StatusBandClient from "@/components/StatusBandClient";
 import ConciergeBlock from "@/components/ConciergeBlock";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -42,7 +41,7 @@ export default function ServicesLayout({
       </div>
 
       <div className="relative z-[130]">
-        <StatusBandClient />
+       
       </div>
 
       {/* content */}
