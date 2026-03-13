@@ -7,14 +7,14 @@ const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
 
 export const metadata: Metadata = {
-  title: "Dedicated Internet Access (DIA) | Orbitlink™",
+  title: "Dedicated Internet Access (DIA) | Orbitlink",
   description:
-    "Dedicated Internet Access for Ontario organizations that require committed business connectivity, clearer handoff expectations, structured onboarding, and a more formal enterprise delivery posture.",
+    "Dedicated Internet Access for Ontario businesses that need business-critical connectivity, address-based feasibility review, structured qualification, and a clearer enterprise service path.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
-    title: "Dedicated Internet Access (DIA) | Orbitlink™",
+    title: "Dedicated Internet Access (DIA) | Orbitlink",
     description:
-      "Dedicated Internet Access with structured onboarding, address-qualified feasibility, and a cleaner enterprise delivery posture across Ontario.",
+      "Dedicated Internet Access for Ontario organizations with address-based feasibility review, structured onboarding, and a clearer enterprise service path.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -22,20 +22,20 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dedicated Internet Access (DIA) | Orbitlink™",
+    title: "Dedicated Internet Access (DIA) | Orbitlink",
     description:
-      "Dedicated Internet Access with structured onboarding, clearer business expectations, and enterprise-grade delivery posture.",
+      "Dedicated Internet Access for Ontario businesses with structured qualification, clearer service expectations, and enterprise-oriented delivery.",
   },
 };
 
 const FAQ = [
   {
     q: "What is Dedicated Internet Access (DIA)?",
-    a: "Dedicated Internet Access is a business internet service designed for organizations that need a more formal access model, clearer handoff expectations, and a service posture aligned to critical operations. Orbitlink reviews DIA per address and confirms feasibility before activation.",
+    a: "Dedicated Internet Access is a business internet service designed for organizations that need a more formal access model, clearer service expectations, and a delivery posture aligned to business-critical operations. Orbitlink reviews DIA per address and confirms feasibility before activation.",
   },
   {
     q: "How is DIA different from Business Fibre?",
-    a: "Business Fibre is often the right fit for offices and day-to-day operations that need strong capacity and stable business connectivity. DIA is better suited to organizations that require more formal service expectations, committed delivery posture, clearer enterprise handoff, or a cleaner model for business-critical internet access.",
+    a: "Business Fibre is often the right fit for offices and day-to-day operations that need strong capacity and stable business connectivity. DIA is better suited to organizations that require more formal service expectations, clearer handoff assumptions, or a more business-critical internet model.",
   },
   {
     q: "Do you offer DIA in Mississauga?",
@@ -47,11 +47,11 @@ const FAQ = [
   },
   {
     q: "How long does DIA installation take?",
-    a: "Installation timelines vary by building readiness, landlord access, construction needs, and upstream coordination. Orbitlink uses structured onboarding with clearer checkpoints and documented acceptance before go-live.",
+    a: "Installation timelines vary by building readiness, landlord access, construction needs, and upstream coordination. Orbitlink uses structured qualification with clearer checkpoints and documented acceptance before go-live.",
   },
   {
     q: "When should a business choose DIA?",
-    a: "DIA is appropriate when generic broadband variance is not acceptable, when uptime posture matters to operations, or when the organization needs a cleaner enterprise-grade access model for voice, cloud, secure connectivity, or multi-site business operations.",
+    a: "DIA is appropriate when generic broadband variance is not acceptable, when uptime posture matters to operations, or when the organization needs a cleaner enterprise-grade internet model for voice, cloud, secure connectivity, or multi-site business operations.",
   },
 ] as const;
 
@@ -73,7 +73,7 @@ function jsonLd() {
 
   const telecomService = {
     "@context": "https://schema.org",
-    "@type": "TelecomService",
+    "@type": "Service",
     "@id": `${PAGE_URL}#service`,
     name: "Dedicated Internet Access (DIA)",
     url: PAGE_URL,
@@ -86,7 +86,7 @@ function jsonLd() {
       "Dedicated Internet Access",
       "Enterprise Internet Service",
       "Business-Critical Connectivity",
-      "Structured Onboarding",
+      "Structured Qualification",
     ],
     audience: {
       "@type": "Audience",
@@ -124,11 +124,11 @@ const fitItems = [
 
 const postureItems = [
   {
-    title: "Address-qualified feasibility",
+    title: "Address-based feasibility",
     desc: "Orbitlink confirms what is practical for the building before expectations are set.",
   },
   {
-    title: "Structured onboarding",
+    title: "Structured qualification",
     desc: "Defined checkpoints help keep installation, activation, and acceptance clearer.",
   },
   {
@@ -145,15 +145,15 @@ const useCases = [
   "Primary internet for business-critical applications",
   "Enterprise handoff for sensitive or higher-value environments",
   "Cloud, voice, VPN, and multi-site business connectivity",
-  "Operational environments where downtime posture matters",
-  "Core sites requiring disciplined onboarding and cleaner expectations",
+  "Operational environments where uptime posture matters",
+  "Core sites requiring disciplined qualification and cleaner expectations",
   "Organizations designing premium network architecture around primary internet access",
 ] as const;
 
 const businessOutcomes = [
   {
     title: "Stronger service matching",
-    body: "Buyers can separate business fibre from DIA based on operational need, not just speed language.",
+    body: "Buyers can separate Business Fibre from DIA based on operational need, not just speed language.",
   },
   {
     title: "Cleaner qualification",
@@ -221,6 +221,14 @@ function MetricPill({
   );
 }
 
+function TrustPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/68">
+      {children}
+    </span>
+  );
+}
+
 export default function Page() {
   return (
     <main className="min-h-screen bg-[#0B0F14] text-white">
@@ -246,9 +254,9 @@ export default function Page() {
                 <span className="text-sm tracking-wide text-white/65">AUREX Internet</span>
               </div>
 
-              <div className="flex items-center gap-2 text-xs text-white/55">
+              <div className="flex flex-wrap items-center gap-2 text-xs text-white/55">
                 <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-                  Enterprise delivery posture
+                  Enterprise-oriented access model
                 </span>
                 <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
                   Structured qualification
@@ -260,40 +268,34 @@ export default function Page() {
               <div className="lg:col-span-8">
                 <SectionEyebrow>BUSINESS-CRITICAL CONNECTIVITY</SectionEyebrow>
 
-                <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.6rem] lg:leading-[0.98]">
+                <h1 className="mt-4 text-[2.3rem] font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.6rem] lg:leading-[0.98]">
                   Dedicated Internet Access
                   <span className="block text-white/62">
-                    for organizations that need clearer business expectations.
+                    for organizations that need a more formal internet service model
                   </span>
                 </h1>
 
                 <p className="mt-6 max-w-3xl text-base leading-7 text-white/68 sm:text-lg">
-                  DIA is designed for organizations that require a more formal access model,
-                  clearer handoff expectations, and an internet service posture better aligned to
-                  business-critical environments. Orbitlink approaches DIA with structured
-                  qualification, measured delivery, and cleaner go-live expectations.
+                  DIA is designed for businesses that need stronger service expectations, cleaner
+                  handoff assumptions, and a delivery posture better aligned to business-critical environments.
+                  Orbitlink approaches DIA with structured qualification, measured delivery, and clearer
+                  commercial expectations before go-live.
                 </p>
 
                 <p className="mt-4 max-w-3xl text-base leading-7 text-white/62">
-                  This is the right fit when internet access is not just about speed, but about
-                  business impact, operational clarity, and a service model that supports core
-                  applications, voice, cloud, and higher-value environments.
+                  This is the right fit when internet access is not just about speed, but about business
+                  impact, uptime posture, voice and cloud dependency, or the need for a more formal access model.
                 </p>
 
                 <div className="mt-7 flex flex-wrap gap-2">
                   {[
-                    "Address-qualified feasibility",
-                    "Structured onboarding",
-                    "Clearer enterprise fit",
-                    "Formal delivery posture",
+                    "Address-based feasibility review",
+                    "Business-critical connectivity",
+                    "Structured qualification",
+                    "Enterprise-oriented posture",
                     "Ontario business focus",
                   ].map((x) => (
-                    <span
-                      key={x}
-                      className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/68"
-                    >
-                      {x}
-                    </span>
+                    <TrustPill key={x}>{x}</TrustPill>
                   ))}
                 </div>
 
@@ -342,6 +344,27 @@ export default function Page() {
               </div>
             </div>
 
+            <div className="mt-10 rounded-[28px] border border-white/10 bg-white/[0.04] p-5 sm:p-6">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div className="max-w-3xl">
+                  <div className="text-[11px] tracking-[0.28em] text-white/45">
+                    COMMERCIAL TRUST SIGNALS
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-white/66">
+                    This service page is structured for business buyers that need clarity around site fit,
+                    feasibility, and when DIA is the right answer compared with standard Business Fibre.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:min-w-[520px]">
+                  <TrustPill>Business-only service path</TrustPill>
+                  <TrustPill>Availability reviewed by address</TrustPill>
+                  <TrustPill>Ontario commercial focus</TrustPill>
+                  <TrustPill>Operated by TIRAV Technologies Inc.</TrustPill>
+                </div>
+              </div>
+            </div>
+
             <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
               <MetricPill label="SERVICE TYPE" value="Business-critical internet access" />
               <MetricPill label="DELIVERY POSTURE" value="Formal, structured, enterprise-oriented" />
@@ -362,9 +385,9 @@ export default function Page() {
 
             <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
               DIA engagements are scoped with more clarity than standard business internet.
-              Feasibility checks, building conditions, access path assumptions, and installation
-              sequence are addressed before activation. Orbitlink keeps the process structured so
-              there is less ambiguity during delivery and cleaner alignment before go-live.
+              Feasibility checks, building conditions, access-path assumptions, and installation sequence
+              are addressed before activation. Orbitlink keeps the process structured so there is less
+              ambiguity during delivery and cleaner alignment before go-live.
             </p>
 
             <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -377,9 +400,8 @@ export default function Page() {
             </div>
 
             <div className="mt-6 text-xs text-white/55">
-              Availability, handoff assumptions, addressing options, routing posture, and delivery
-              timelines vary by address and upstream feasibility. Orbitlink confirms what is
-              practical for the site before commitment.
+              Availability, handoff assumptions, addressing options, routing posture, and delivery timelines vary by address and upstream feasibility.
+              Orbitlink confirms what is practical for the site before commitment.
             </div>
           </SectionShell>
 
@@ -419,8 +441,8 @@ export default function Page() {
                   What this service structure means for buyers
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                  This page is designed to help buyers evaluate DIA as a formal business access
-                  model rather than a vague premium internet label.
+                  This page is designed to help buyers evaluate DIA as a formal business access model,
+                  not a vague premium internet label.
                 </p>
               </div>
 
@@ -446,8 +468,7 @@ export default function Page() {
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
                   Larger telecom providers often signal maturity through service lifecycle clarity.
-                  This section gives Orbitlink that same enterprise trust signal in simpler,
-                  buyer-readable language.
+                  This section gives Orbitlink that same enterprise trust signal in simpler, buyer-readable language.
                 </p>
               </div>
 
@@ -470,10 +491,9 @@ export default function Page() {
               When to choose Business Fibre instead
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-white/70">
-              If your organization needs strong capacity, stable business internet, and a premium
-              onboarding posture without the more formal requirements of DIA, Business Fibre is
-              often the right starting point. Orbitlink keeps that path clear and leaves room for
-              future upgrades where requirements evolve.
+              If your organization needs strong capacity, stable business internet, and a premium onboarding posture
+              without the more formal requirements of DIA, Business Fibre is often the right starting point.
+              Orbitlink keeps that path clear and leaves room for future upgrades where requirements evolve.
             </p>
             <Link
               href="/services/business-fibre-internet"
@@ -487,9 +507,8 @@ export default function Page() {
             <SectionShell className="p-5 sm:p-6">
               <SectionEyebrow>LOCAL RELEVANCE</SectionEyebrow>
               <p className="mt-3 text-sm leading-relaxed text-white/70">
-                Orbitlink evaluates DIA opportunities across Ontario, including Mississauga and
-                other business-dense commercial markets where serviceability and enterprise delivery
-                posture support the site.
+                Orbitlink evaluates DIA opportunities across Ontario, including Mississauga and other business-dense
+                commercial markets where serviceability and enterprise delivery posture support the site.
               </p>
 
               <div className="mt-4 flex flex-col gap-2">
@@ -512,8 +531,7 @@ export default function Page() {
               <SectionEyebrow>NEXT STEP</SectionEyebrow>
               <p className="mt-3 text-sm leading-relaxed text-white/70">
                 Request a DIA assessment and include your address, go-live target, uptime posture,
-                voice or network requirements, and whether static IPs or managed services are
-                needed.
+                voice or network requirements, and whether static IPs or managed services are needed.
               </p>
               <Link
                 href="/contact#intake"
