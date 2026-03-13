@@ -23,6 +23,14 @@ function Dot({ tone }: { tone: "ok" | "warn" }) {
   );
 }
 
+function DetailPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-white/10 bg-black/20 px-3 py-1 text-[11px] text-white/72">
+      {children}
+    </span>
+  );
+}
+
 export default function IntakeStatusBanner() {
   const sp = useSearchParams();
   const ok = sp.get("ok");
@@ -36,8 +44,13 @@ export default function IntakeStatusBanner() {
       return {
         tone: "ok" as const,
         eyebrow: "REQUEST RECEIVED",
-        title: "Thanks — your request has been submitted.",
-        body: "We’ll review your address, service needs, and timeline, then reply with the clearest next step available.",
+        title: "Thanks — your business request has been submitted.",
+        body: "Orbitlink will review the service address, service type, and project details you provided, then reply with the most useful next commercial step.",
+        details: [
+          "Availability reviewed by address",
+          "Commercial response within 1 business day",
+          "Next step may include pricing direction or qualification",
+        ],
       };
     }
 
@@ -46,9 +59,13 @@ export default function IntakeStatusBanner() {
     if (err === "invalid") {
       return {
         tone: "warn" as const,
-        eyebrow: "CHECK YOUR EMAIL",
+        eyebrow: "CHECK YOUR DETAILS",
         title: "That email address doesn’t look valid.",
-        body: "Please enter a valid email address and submit the form again.",
+        body: "Please enter a valid work or business email address and submit the form again.",
+        details: [
+          "Use a real business email if possible",
+          "Check spelling before resubmitting",
+        ],
       };
     }
 
@@ -57,7 +74,11 @@ export default function IntakeStatusBanner() {
         tone: "warn" as const,
         eyebrow: "REQUEST NOT ACCEPTED",
         title: "We couldn’t accept that request.",
-        body: "Please review your details and try again, or email concierge@orbitlink.ca.",
+        body: "Please review the information provided and try again, or email concierge@orbitlink.ca for help.",
+        details: [
+          "Review the form fields",
+          "Try again in a moment",
+        ],
       };
     }
 
@@ -65,7 +86,11 @@ export default function IntakeStatusBanner() {
       tone: "warn" as const,
       eyebrow: "TRY AGAIN",
       title: "We couldn’t process your request.",
-      body: "Please try again in a moment, or email concierge@orbitlink.ca for help.",
+      body: "Please try again in a moment, or email concierge@orbitlink.ca if you need direct assistance.",
+      details: [
+        "Temporary submission issue",
+        "Email us directly if needed",
+      ],
     };
   }, [ok, err]);
 
@@ -93,7 +118,13 @@ export default function IntakeStatusBanner() {
             {state.title}
           </div>
 
-          <div className="mt-2 text-sm leading-6 text-white/75">{state.body}</div>
+          <div className="mt-2 text-sm leading-6 text-white/78">{state.body}</div>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            {state.details.map((detail) => (
+              <DetailPill key={detail}>{detail}</DetailPill>
+            ))}
+          </div>
         </div>
 
         <button
