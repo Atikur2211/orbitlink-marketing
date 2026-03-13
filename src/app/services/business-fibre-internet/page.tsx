@@ -7,14 +7,14 @@ const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet | Orbitlink™",
+  title: "Business Fibre Internet | Orbitlink",
   description:
-    "Business fibre internet for Ontario organizations with address-qualified availability, structured onboarding, disciplined delivery, and a premium business support posture.",
+    "Business fibre internet for Ontario businesses with address-based availability review, structured qualification, and a clear path to pricing, onboarding, and future upgrades.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
-    title: "Business Fibre Internet | Orbitlink™",
+    title: "Business Fibre Internet | Orbitlink",
     description:
-      "Business fibre internet with structured onboarding, address-qualified availability, and a cleaner delivery posture for organizations across Ontario.",
+      "Business fibre internet for Ontario business locations with address-based qualification, structured onboarding, and a clearer commercial path.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -22,16 +22,16 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Fibre Internet | Orbitlink™",
+    title: "Business Fibre Internet | Orbitlink",
     description:
-      "Business fibre internet with structured onboarding, disciplined delivery, and availability confirmed per address.",
+      "Business fibre internet for Ontario organizations with address-based qualification and a clearer path to service review.",
   },
 };
 
 const FAQ = [
   {
     q: "Do you offer business fibre internet in Ontario?",
-    a: "Yes. Orbitlink offers business fibre internet across Ontario where building conditions, access feasibility, and upstream service design support deployment. Availability is confirmed per address rather than assumed universally.",
+    a: "Yes. Orbitlink supports business fibre internet across Ontario where building conditions, access feasibility, and upstream service design support deployment. Availability is reviewed per address rather than assumed universally.",
   },
   {
     q: "Do you offer business fibre internet in Mississauga?",
@@ -43,11 +43,11 @@ const FAQ = [
   },
   {
     q: "What is the difference between business fibre internet and Dedicated Internet Access?",
-    a: "Business fibre internet is typically the right fit for offices, clinics, studios, and SMB environments that need strong day-to-day capacity and a clean business support experience. Dedicated Internet Access is better suited to business-critical environments that require more formal service expectations, committed delivery posture, and clearer handoff requirements.",
+    a: "Business fibre internet is usually the right fit for offices, clinics, studios, and SMB environments that need strong day-to-day capacity and a clean business support experience. Dedicated Internet Access is better suited to business-critical environments that require more formal service expectations, committed delivery posture, and clearer handoff requirements.",
   },
   {
     q: "How do I check fibre availability?",
-    a: "Use the Orbitlink intake path and include your address, business type, expected go-live date, and any requirements such as static IPs, voice, managed Wi-Fi, or continuity. Orbitlink will review feasibility and confirm next steps.",
+    a: "Use the Orbitlink intake path and include your service address, business type, expected go-live date, and any requirements such as static IPs, voice, managed Wi-Fi, or continuity. Orbitlink will review feasibility and confirm the next step.",
   },
   {
     q: "Do you offer static IPs with business fibre internet?",
@@ -68,7 +68,7 @@ function jsonLd() {
 
   const telecomService = {
     "@context": "https://schema.org",
-    "@type": "TelecomService",
+    "@type": "Service",
     "@id": `${PAGE_URL}#service`,
     name: "Business Fibre Internet",
     url: PAGE_URL,
@@ -79,9 +79,9 @@ function jsonLd() {
     ],
     serviceType: [
       "Business Fibre Internet",
-      "Structured Onboarding",
       "Business Connectivity",
-      "Managed Delivery Posture",
+      "Address-Based Qualification",
+      "Commercial Onboarding",
     ],
     availableChannel: {
       "@type": "ServiceChannel",
@@ -114,9 +114,9 @@ const typicalFit = [
 
 const advantages = [
   "Availability reviewed per address before expectations are set",
-  "Structured onboarding instead of generic plan-first selling",
-  "Cleaner delivery and acceptance posture",
-  "Premium business support orientation",
+  "Structured qualification instead of generic plan-first selling",
+  "Cleaner onboarding and delivery path",
+  "Business-focused support posture",
   "A practical upgrade path toward DIA, managed networking, continuity, or static IP requirements",
 ] as const;
 
@@ -125,7 +125,7 @@ const useCases = [
   "Connectivity for cloud applications, video meetings, and VoIP",
   "Upgrade path from unstable cable or DSL environments",
   "Foundation layer before moving into DIA or managed network architecture",
-  "Business internet for professional environments that need cleaner support expectations",
+  "Business internet for professional environments that need clearer support expectations",
   "Core connectivity for sites that may later add managed Wi-Fi, voice, or continuity",
 ] as const;
 
@@ -151,7 +151,7 @@ const buyingOutcomes = [
 const assuranceModel = [
   {
     title: "Before qualification",
-    body: "Orbitlink reviews address, building context, and operating requirements before presenting the service as a fit.",
+    body: "Orbitlink reviews the address, building context, and operating requirements before presenting the service as a fit.",
   },
   {
     title: "During solution fit",
@@ -200,6 +200,14 @@ function MetricPill({
   );
 }
 
+function TrustPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/68">
+      {children}
+    </span>
+  );
+}
+
 export default function Page() {
   return (
     <main className="min-h-screen bg-[#0B0F14] text-white">
@@ -217,7 +225,7 @@ export default function Page() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_30%)]" />
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-6 pb-14 pt-16 sm:px-7 sm:pb-16 sm:pt-20 lg:px-10 lg:pb-20">
+        <div className="relative mx-auto max-w-6xl px-5 pb-14 pt-14 sm:px-7 sm:pb-16 sm:pt-20 lg:px-10 lg:pb-20">
           <div className="max-w-5xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
               <span className="h-2 w-2 rounded-full bg-[#FACC15]" />
@@ -228,40 +236,31 @@ export default function Page() {
               <div className="lg:col-span-8">
                 <SectionEyebrow>BUSINESS CONNECTIVITY</SectionEyebrow>
 
-                <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.6rem] lg:leading-[0.98]">
+                <h1 className="mt-4 text-[2.3rem] font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.6rem] lg:leading-[0.98]">
                   Business Fibre Internet
-                  <span className="block text-white/62">for organizations that need cleaner delivery.</span>
+                  <span className="block text-white/62">for business locations that need reliable primary connectivity</span>
                 </h1>
 
                 <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/68 sm:text-lg">
-                  AUREX Business Fibre is designed for organizations that need high-capacity
-                  connectivity with structured onboarding, clearer qualification, and a premium
-                  business support posture. Orbitlink confirms availability per address, reviews
-                  building constraints before activation, and keeps service expectations cleaner
-                  from the start.
+                  AUREX Business Fibre is designed for Ontario organizations that need strong day-to-day internet,
+                  cleaner qualification, and a more professional service path. Orbitlink reviews availability by address,
+                  checks business fit before activation, and keeps the commercial next step clearer from the start.
                 </p>
 
                 <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
-                  This service is built for Ontario businesses that want a stronger internet
-                  experience without vague blanket claims. Where fibre feasibility exists,
-                  Orbitlink aligns the right access method, onboarding sequence, and upgrade path
-                  for the site.
+                  This service is often the right fit for offices, clinics, studios, and growing organizations that rely on
+                  cloud platforms, collaboration tools, business voice, and everyday operational connectivity.
                 </p>
 
                 <div className="mt-7 flex flex-wrap gap-2">
                   {[
-                    "Availability confirmed per address",
-                    "Structured onboarding",
-                    "Cleaner activation path",
-                    "Business-grade support posture",
+                    "Availability reviewed per address",
+                    "Primary business internet",
+                    "Structured qualification",
+                    "Business-focused support posture",
                     "Ontario commercial focus",
                   ].map((x) => (
-                    <span
-                      key={x}
-                      className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/68"
-                    >
-                      {x}
-                    </span>
+                    <TrustPill key={x}>{x}</TrustPill>
                   ))}
                 </div>
 
@@ -294,9 +293,8 @@ export default function Page() {
                       Better for buyers who want fit before activation
                     </div>
                     <p className="mt-3 text-sm leading-6 text-white/64">
-                      This page is designed to help buyers understand where business fibre fits,
-                      when DIA may be the better option, and what should be qualified before a
-                      go-live conversation begins.
+                      This page helps buyers understand where business fibre fits, when DIA may be the better option,
+                      and what should be qualified before a go-live conversation begins.
                     </p>
 
                     <div className="mt-5 grid gap-3">
@@ -309,6 +307,27 @@ export default function Page() {
               </div>
             </div>
 
+            <div className="mt-10 rounded-[28px] border border-white/10 bg-white/[0.04] p-5 sm:p-6">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div className="max-w-3xl">
+                  <div className="text-[11px] tracking-[0.28em] text-white/45">
+                    COMMERCIAL TRUST SIGNALS
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-white/66">
+                    This service page is designed for commercial buyers that need clarity around site fit,
+                    availability, and when standard business fibre is the right answer.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:min-w-[520px]">
+                  <TrustPill>Business-only service path</TrustPill>
+                  <TrustPill>Availability reviewed by address</TrustPill>
+                  <TrustPill>Ontario commercial focus</TrustPill>
+                  <TrustPill>Operated by TIRAV Technologies Inc.</TrustPill>
+                </div>
+              </div>
+            </div>
+
             <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
               <MetricPill label="SERVICE TYPE" value="Primary business connectivity" />
               <MetricPill label="DELIVERY POSTURE" value="Structured, not improvised" />
@@ -318,7 +337,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-12 sm:px-7 sm:py-14 lg:px-10 lg:py-16">
+      <section className="mx-auto max-w-6xl px-5 py-12 sm:px-7 sm:py-14 lg:px-10 lg:py-16">
         <div className="space-y-4 sm:space-y-6">
           <SectionShell className="p-6 md:p-8">
             <SectionEyebrow>BUSINESS FIT</SectionEyebrow>
@@ -328,23 +347,20 @@ export default function Page() {
 
             <div className="mt-4 space-y-4 text-white/70 leading-relaxed">
               <p>
-                Business fibre internet is often the right fit for modern offices, professional
-                services firms, medical environments, creative teams, and growing organizations
-                that rely on cloud platforms, collaboration tools, VoIP, and business applications
-                throughout the day.
+                Business fibre internet is often the right fit for modern offices, professional services firms,
+                medical environments, creative teams, and growing organizations that rely on cloud platforms,
+                collaboration tools, VoIP, and business applications throughout the day.
               </p>
 
               <p>
-                Orbitlink does not position this service as “generic gigabit everywhere.” The goal
-                is to confirm serviceability, match the access design to the site, and keep the
-                onboarding path structured so customers understand what is feasible, what is
-                included, and what the next step looks like.
+                Orbitlink does not position this service as “generic gigabit everywhere.” The goal is to confirm
+                serviceability, match the access design to the site, and keep the qualification path structured so
+                customers understand what is feasible, what is included, and what the next step looks like.
               </p>
 
               <p>
-                That creates a cleaner activation experience and gives organizations a better path
-                to future upgrades if requirements expand toward DIA, managed LAN, enterprise
-                Wi-Fi, continuity design, voice, or static IP needs.
+                That creates a cleaner activation experience and gives organizations a better path to future upgrades
+                if requirements expand toward DIA, managed LAN, enterprise Wi-Fi, continuity design, voice, or static IP needs.
               </p>
             </div>
           </SectionShell>
@@ -383,8 +399,7 @@ export default function Page() {
                   What this service structure means for buyers
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                  This page is designed to help organizations evaluate business fibre as a real
-                  operating service, not just a speed label.
+                  This page is designed to help organizations evaluate business fibre as a real operating service, not just a speed label.
                 </p>
               </div>
 
@@ -447,9 +462,8 @@ export default function Page() {
               When to choose Dedicated Internet Access instead
             </h2>
             <p className="mt-3 text-sm text-white/70 leading-relaxed">
-              If your environment requires more formal service expectations, committed delivery
-              posture, clearer handoff requirements, or a more business-critical internet model,
-              Dedicated Internet Access may be the better fit.
+              If your environment requires more formal service expectations, committed delivery posture,
+              clearer handoff requirements, or a more business-critical internet model, Dedicated Internet Access may be the better fit.
             </p>
             <Link
               href="/services/dedicated-internet-access"
@@ -463,8 +477,8 @@ export default function Page() {
             <SectionEyebrow>LOCAL RELEVANCE</SectionEyebrow>
             <h2 className="mt-3 text-lg font-semibold tracking-tight">Ontario business focus</h2>
             <p className="mt-3 text-sm text-white/70 leading-relaxed">
-              Orbitlink prioritizes Ontario business connectivity with structured onboarding and
-              clearer serviceability confirmation. For local commercial demand, start with our{" "}
+              Orbitlink prioritizes Ontario business connectivity with structured onboarding and clearer
+              serviceability confirmation. For local commercial demand, start with our{" "}
               <Link
                 href="/locations/mississauga"
                 className="text-white/85 underline underline-offset-4 hover:text-white"
@@ -491,19 +505,18 @@ export default function Page() {
           </SectionShell>
 
           <p className="text-xs text-white/55">
-            Availability, architecture, and optional features vary by building infrastructure and
-            site serviceability. Orbitlink confirms feasibility per address and avoids blanket
-            overclaims.
+            Availability, architecture, and optional features vary by building infrastructure and site serviceability.
+            Orbitlink confirms feasibility per address and avoids blanket overclaims.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-16 sm:px-7 lg:px-10">
+      <section className="mx-auto max-w-6xl px-5 pb-16 sm:px-7 lg:px-10">
         <SectionShell className="p-6 md:p-8">
           <h2 className="text-2xl font-semibold tracking-tight">Business Fibre Internet FAQs</h2>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
-            These answers reflect a practical delivery posture: clear qualification, building-based
-            feasibility, and a premium business service experience.
+            These answers reflect a practical delivery posture: clear qualification, building-based feasibility,
+            and a cleaner business service experience.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
