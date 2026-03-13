@@ -22,7 +22,7 @@ function FieldLabel({
   optional?: boolean;
 }) {
   return (
-    <label htmlFor={htmlFor} className="text-sm text-white/82">
+    <label htmlFor={htmlFor} className="text-sm font-medium text-white/84">
       {children}
       {optional ? <span className="ml-1 text-white/45">(optional)</span> : null}
     </label>
@@ -53,6 +53,10 @@ function normalizeServiceLabel(name: string) {
   return labelMap[key] ?? name;
 }
 
+function InputClassName() {
+  return "w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40 focus:bg-black/30";
+}
+
 export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: string[] }) {
   const options = useMemo(
     () =>
@@ -62,6 +66,8 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
       })),
     [moduleOptions]
   );
+
+  const inputClassName = InputClassName();
 
   return (
     <form
@@ -92,7 +98,8 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
       <div className="rounded-2xl border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-4">
         <div className="text-[11px] tracking-[0.22em] text-[#FDE68A]">WHAT HAPPENS NEXT</div>
         <p className="mt-2 text-sm leading-6 text-white/75">
-          We review your address, service need, and timeline, then reply with the right next step.
+          We review your address, service need, and timeline, then respond with the most useful
+          next step for availability, pricing direction, or service qualification.
         </p>
       </div>
 
@@ -104,8 +111,9 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             name="fullName"
             type="text"
             required
+            autoComplete="name"
             placeholder="Your full name"
-            className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40"
+            className={inputClassName}
           />
         </div>
 
@@ -116,23 +124,25 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             name="email"
             type="email"
             required
+            autoComplete="email"
             placeholder="name@company.com"
-            className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40"
+            className={inputClassName}
           />
-          <FieldHint>Work email usually helps us respond faster.</FieldHint>
+          <FieldHint>Using a work email usually helps us review and respond more efficiently.</FieldHint>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="grid gap-2">
-          <FieldLabel htmlFor="company">Company</FieldLabel>
+          <FieldLabel htmlFor="company">Company name</FieldLabel>
           <input
             id="company"
             name="company"
             type="text"
             required
-            placeholder="Company name"
-            className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40"
+            autoComplete="organization"
+            placeholder="Your company name"
+            className={inputClassName}
           />
         </div>
 
@@ -143,13 +153,13 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             name="role"
             required
             defaultValue=""
-            className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none transition focus:border-[#FACC15]/40"
+            className={inputClassName}
           >
             <option value="" disabled>
               Select your role
             </option>
             <option value="business_owner">Business owner / leadership</option>
-            <option value="business_buyer">Business buyer / procurement</option>
+            <option value="business_buyer">Procurement / business buyer</option>
             <option value="it_network">IT / network lead</option>
             <option value="operations_facilities">Operations / facilities</option>
             <option value="property_management">Property / building management</option>
@@ -167,10 +177,13 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             name="location"
             type="text"
             required
+            autoComplete="street-address"
             placeholder="Street address, city, province"
-            className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40"
+            className={inputClassName}
           />
-          <FieldHint>Exact address helps us check availability more accurately.</FieldHint>
+          <FieldHint>
+            The exact service address is the most important detail for availability review.
+          </FieldHint>
         </div>
 
         <div className="grid gap-2">
@@ -180,7 +193,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             name="module"
             required
             defaultValue=""
-            className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none transition focus:border-[#FACC15]/40"
+            className={inputClassName}
           >
             <option value="" disabled>
               Select a service
@@ -191,7 +204,9 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
               </option>
             ))}
           </select>
-          <FieldHint>Choose the main service you want to discuss first.</FieldHint>
+          <FieldHint>
+            Choose the main service you want reviewed first.
+          </FieldHint>
         </div>
       </div>
 
@@ -204,7 +219,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             id="timeline"
             name="timeline"
             defaultValue=""
-            className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none transition focus:border-[#FACC15]/40"
+            className={inputClassName}
           >
             <option value="" disabled>
               Select timeline
@@ -215,6 +230,9 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             <option value="planning_stage">Planning stage</option>
             <option value="not_sure">Not sure yet</option>
           </select>
+          <FieldHint>
+            Timing helps us understand urgency and the likely commercial path.
+          </FieldHint>
         </div>
 
         <div className="grid gap-2">
@@ -225,7 +243,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             id="sites"
             name="sites"
             defaultValue=""
-            className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none transition focus:border-[#FACC15]/40"
+            className={inputClassName}
           >
             <option value="" disabled>
               Select number of sites
@@ -235,6 +253,9 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             <option value="6_20">6–20 sites</option>
             <option value="20_plus">20+ sites</option>
           </select>
+          <FieldHint>
+            Add this if the request covers multiple offices, branches, or facilities.
+          </FieldHint>
         </div>
       </div>
 
@@ -245,20 +266,20 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
         <textarea
           id="notes"
           name="notes"
-          rows={5}
-          placeholder="Tell us what you need. Include current setup, install timing, static IPs, managed Wi-Fi, voice, backup connectivity, landlord coordination, or multi-site requirements."
-          className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40"
+          rows={6}
+          placeholder="Describe what you need. Helpful details include your current provider, target install timing, user count, static IP needs, managed Wi-Fi, voice, backup connectivity, landlord coordination, or multi-site requirements."
+          className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40 focus:bg-black/30"
         />
         <FieldHint>
-          Helpful details include current service, timing, building context, and technical needs.
+          Strong requests usually include current service, timing, site context, and any technical requirements.
         </FieldHint>
       </div>
 
       <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
         <div className="text-[11px] tracking-[0.22em] text-white/55">HELPFUL TO INCLUDE</div>
         <p className="mt-2 text-sm leading-6 text-white/65">
-          Static IPs, managed Wi-Fi, voice, backup connectivity, building details, and preferred
-          install window.
+          Static IPs, managed Wi-Fi, voice, backup connectivity, building details, desired install window,
+          and anything that affects the site or commercial decision.
         </p>
       </div>
 
@@ -267,7 +288,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
           type="submit"
           className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
         >
-          Check Availability & Request Pricing
+          Submit Request & Check Availability
         </button>
 
         <div className="text-xs text-white/55">
