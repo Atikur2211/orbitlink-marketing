@@ -91,20 +91,6 @@ export const metadata: Metadata = {
   },
 };
 
-function HeroLine() {
-  return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-10 hidden lg:block">
-      <div className="relative mx-auto h-24 max-w-6xl overflow-hidden">
-        <div className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-cyan-300/20 to-transparent" />
-        <div className="absolute left-[8%] top-1/2 h-[3px] w-40 -translate-y-1/2 rounded-full bg-cyan-300/25 blur-md animate-[pulse_4s_ease-in-out_infinite]" />
-        <div className="absolute left-[28%] top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-cyan-200/70 shadow-[0_0_24px_rgba(56,253,254,0.45)]" />
-        <div className="absolute left-[58%] top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-emerald-200/70 shadow-[0_0_24px_rgba(16,185,129,0.40)]" />
-        <div className="absolute left-[82%] top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-yellow-200/70 shadow-[0_0_24px_rgba(250,204,21,0.40)]" />
-      </div>
-    </div>
-  );
-}
-
 function StatCard({
   label,
   value,
@@ -230,6 +216,21 @@ function FAQCard({
     <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
       <h3 className="text-sm font-medium text-white/92">{question}</h3>
       <p className="mt-2 text-sm leading-6 text-white/66">{answer}</p>
+    </div>
+  );
+}
+
+function AvailabilityStripCard({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+      <div className="text-sm font-medium text-white/92">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/64">{body}</p>
     </div>
   );
 }
@@ -388,157 +389,294 @@ export default function Home() {
       <TopNav />
       <StickyStatusStrip />
 
-      <section className="relative overflow-hidden border-b border-white/6">
+      <section className="relative isolate overflow-hidden border-b border-white/10">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-24 left-10 h-72 w-72 rounded-full bg-blue-500/12 blur-3xl" />
-          <div className="absolute right-10 top-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
-          <div className="absolute bottom-[-140px] left-1/2 h-80 w-[56rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:44px_44px] opacity-[0.16]" />
+          <div className="absolute inset-0 bg-[#05070B]" />
+
+          <div className="absolute -left-28 top-[-120px] h-[32rem] w-[32rem] rounded-full bg-cyan-500/10 blur-3xl" />
+          <div className="absolute right-[-100px] top-[8%] h-[28rem] w-[28rem] rounded-full bg-emerald-400/10 blur-3xl" />
+          <div className="absolute bottom-[-150px] left-1/2 h-[24rem] w-[64rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
+
+          <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
+
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.06),transparent_34%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,11,0.28)_0%,rgba(5,7,11,0.54)_38%,rgba(5,7,11,0.86)_100%)]" />
+
+          <div className="absolute left-[5%] top-[22%] h-px w-[34%] bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent blur-[1px]" />
+          <div className="absolute left-[16%] top-[31%] h-px w-[48%] bg-gradient-to-r from-transparent via-white/14 to-transparent" />
+          <div className="absolute left-[38%] top-[18%] h-px w-[24%] bg-gradient-to-r from-transparent via-emerald-300/30 to-transparent blur-[1px]" />
+          <div className="absolute left-[12%] top-[60%] h-px w-[56%] bg-gradient-to-r from-transparent via-cyan-300/18 to-transparent" />
+          <div className="absolute right-[7%] top-[42%] h-px w-[22%] bg-gradient-to-r from-transparent via-white/12 to-transparent" />
+
+          <div className="absolute left-[17%] top-[31%] h-2.5 w-2.5 rounded-full bg-cyan-200/80 shadow-[0_0_24px_rgba(56,253,254,0.45)]" />
+          <div className="absolute left-[51%] top-[18%] h-2.5 w-2.5 rounded-full bg-emerald-200/80 shadow-[0_0_24px_rgba(16,185,129,0.45)]" />
+          <div className="absolute left-[66%] top-[60%] h-2.5 w-2.5 rounded-full bg-yellow-200/80 shadow-[0_0_24px_rgba(250,204,21,0.45)]" />
+          <div className="absolute right-[18%] top-[42%] h-2.5 w-2.5 rounded-full bg-white/70 shadow-[0_0_24px_rgba(255,255,255,0.25)]" />
+
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#09090B] to-transparent" />
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-12 sm:px-7 sm:pb-16 sm:pt-16 lg:pb-20 lg:pt-20">
-          <div className="max-w-5xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-white/72 sm:text-xs">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Business fibre • Dedicated internet • Managed Wi-Fi • Business voice
-            </div>
+        <div className="relative mx-auto max-w-7xl px-5 pb-14 pt-14 sm:px-7 sm:pb-18 sm:pt-18 lg:px-10 lg:pb-24 lg:pt-24">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
+            <div className="lg:col-span-7">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] text-white/72 sm:text-xs">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
+                Business fibre • Dedicated internet • Managed Wi-Fi • Business voice
+              </div>
 
-            <h1 className="mt-6 max-w-4xl text-[2.15rem] font-semibold leading-[1.04] tracking-tight sm:text-[3.35rem] sm:leading-[1.03] lg:text-[4rem]">
-              Business fibre internet
-              <span className="block">for Ontario businesses</span>
-              <span className="mt-2 block text-white/74">
+              <h1 className="mt-6 max-w-5xl text-[2.35rem] font-semibold leading-[1.01] tracking-tight text-white sm:text-[3.6rem] lg:text-[5.3rem]">
+                Business fibre internet
+                <span className="block text-white/74">for Ontario businesses</span>
+              </h1>
+
+              <p className="mt-5 max-w-3xl text-base leading-7 text-white/82 sm:text-[1.15rem]">
                 Check availability, compare the right service options, and move toward install with less friction.
-              </span>
-            </h1>
+              </p>
 
-            <p className="mt-5 max-w-3xl text-[15px] leading-6 text-white/70 sm:text-lg sm:leading-7">
-              Orbitlink helps Ontario businesses source business fibre, dedicated internet,
-              managed Wi-Fi, voice, and backup connectivity based on location, building fit,
-              and operational need.
-            </p>
+              <p className="mt-4 max-w-3xl text-sm leading-7 text-white/66 sm:text-[1rem]">
+                Orbitlink helps Ontario businesses source business fibre, dedicated internet, managed Wi-Fi,
+                voice, and backup connectivity based on location, building fit, and operational need.
+              </p>
 
-            <div className="mt-5 flex flex-wrap gap-2 text-[11px] text-white/55 sm:text-xs">
-              <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1">
-                Business-only service intake
-              </span>
-              <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1">
-                Ontario commercial coverage
-              </span>
-              <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1">
-                Operated by TIRAV Technologies Inc.
-              </span>
-              <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1">
-                Availability reviewed by address
-              </span>
-            </div>
-
-            <div className="mt-6 text-xs tracking-wide text-white/50 sm:text-sm">
-              Offices • Clinics • Warehouses • Commercial units • Multi-site business environments
-            </div>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
-              <a
-                href="/contact#intake"
-                className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
-              >
-                Check Availability & Request Pricing
-              </a>
-              <a
-                href="/services"
-                className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
-              >
-                Explore Services
-              </a>
-              <a
-                href="/locations"
-                className="rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-center text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
-              >
-                View Locations
-              </a>
-            </div>
-          </div>
-
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 md:grid-cols-3 lg:gap-6">
-            <SignalCard
-              eyebrow="SERVICES"
-              title="Choose the right connectivity path"
-              body="Business fibre, dedicated internet, managed Wi-Fi, voice, and continuity options for commercial sites across Ontario."
-            />
-            <SignalCard
-              eyebrow="SITE FIT"
-              title="Reviewed by building, address, and requirement"
-              body="Availability depends on location, infrastructure, service type, and timeline—not generic website assumptions."
-            />
-            <SignalCard
-              eyebrow="NEXT STEP"
-              title="Get a practical commercial response"
-              body="Submit your address and requirements to receive the right next step for pricing, qualification, or deployment planning."
-            />
-          </div>
-
-          <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <StatCard label="FOCUS" value="Commercial internet and managed network services" />
-            <StatCard label="SERVICE TYPES" value="Fibre, DIA, Wi-Fi, voice, continuity" />
-            <StatCard label="BUYER ACTION" value="Submit address and request pricing" />
-          </div>
-
-          <div className="mt-8 rounded-[28px] border border-white/10 bg-white/[0.04] p-5 sm:p-6">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div className="max-w-3xl">
-                <div className="text-[11px] tracking-[0.28em] text-white/55">COMMERCIAL TRUST SIGNALS</div>
-                <p className="mt-2 text-sm leading-6 text-white/66">
-                  Orbitlink is structured for commercial enquiries, location-based service review,
-                  and a more direct path to pricing and qualification.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:min-w-[520px]">
-                <TrustPill text="Business-only contact path" />
-                <TrustPill text="Ontario-focused commercial service" />
-                <TrustPill text="Clear legal operating entity" />
-                <TrustPill text="Address-first qualification approach" />
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-10 rounded-[30px] border border-white/10 bg-white/[0.045] p-6 sm:p-8">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-              <div className="max-w-3xl">
-                <div className="text-[11px] tracking-[0.28em] text-white/55">WHO THIS IS FOR</div>
-                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-                  Built for businesses that need reliable connectivity and clearer buying decisions
-                </h2>
-                <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                  Orbitlink is designed for commercial buyers that need better internet options,
-                  more direct communication, and service guidance based on the realities of the site.
-                </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {[
+                  "Business-only service intake",
+                  "Ontario commercial coverage",
+                  "Operated by TIRAV Technologies Inc.",
+                  "Availability reviewed by address",
+                ].map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/70 sm:text-xs"
+                  >
+                    {item}
+                  </span>
+                ))}
               </div>
 
-              <StatCard label="BUYER TYPE" value="Commercial sites and business decision-makers" />
+              <div className="mt-6 text-xs tracking-wide text-white/52 sm:text-sm">
+                Offices • Clinics • Warehouses • Commercial units • Multi-site business environments
+              </div>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <a
+                  href="/contact#intake"
+                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+                >
+                  Check Availability & Request Pricing
+                </a>
+
+                <a
+                  href="/services"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+                >
+                  Explore Services
+                </a>
+
+                <a
+                  href="/locations"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
+                >
+                  View Locations
+                </a>
+              </div>
             </div>
 
-            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <UseCaseCard
-                title="Professional offices"
-                body="Business internet, managed Wi-Fi, and voice for daily operations, staff connectivity, and client-facing environments."
-              />
-              <UseCaseCard
-                title="Clinics and service businesses"
-                body="Reliable connectivity for appointment systems, front-desk operations, staff workflows, and guest access."
-              />
-              <UseCaseCard
-                title="Warehouses and industrial sites"
-                body="Practical connectivity for inventory systems, handheld devices, operations teams, and industrial business locations."
-              />
-              <UseCaseCard
-                title="Multi-site businesses"
-                body="Commercial connectivity planning for organizations managing multiple offices, branches, or operating sites."
-              />
+            <div className="lg:col-span-5">
+              <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.05] p-6 backdrop-blur-sm">
+                <div className="pointer-events-none absolute inset-0">
+                  <div className="absolute -right-10 top-0 h-32 w-32 rounded-full bg-cyan-500/10 blur-3xl" />
+                  <div className="absolute left-0 top-1/2 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                </div>
+
+                <div className="relative">
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <div className="text-[11px] tracking-[0.24em] text-white/50">OPERATOR SURFACE</div>
+                      <div className="mt-2 text-lg font-semibold text-white">
+                        Commercial qualification panel
+                      </div>
+                    </div>
+                    <div className="rounded-full border border-emerald-400/20 bg-emerald-400/[0.10] px-3 py-1 text-[11px] text-emerald-200">
+                      ACTIVE
+                    </div>
+                  </div>
+
+                  <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <StatCard label="INTAKE" value="Business-only" />
+                    <StatCard label="COVERAGE" value="Ontario commercial" />
+                    <StatCard label="REVIEW MODEL" value="Address-first" />
+                    <StatCard label="SERVICE PATHS" value="Fibre • DIA • Wi-Fi • Voice" />
+                  </div>
+
+                  <div className="mt-5 rounded-[24px] border border-white/10 bg-black/25 p-5">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="text-[11px] tracking-[0.22em] text-white/50">SERVICE DECISION MODEL</div>
+                      <div className="text-[11px] text-white/45">LIVE</div>
+                    </div>
+
+                    <div className="mt-4 space-y-3">
+                      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                        <div className="text-sm text-white/82">Business Fibre</div>
+                        <div className="text-xs text-white/55">Primary office connectivity</div>
+                      </div>
+                      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                        <div className="text-sm text-white/82">Dedicated Internet Access</div>
+                        <div className="text-xs text-white/55">Critical business sites</div>
+                      </div>
+                      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                        <div className="text-sm text-white/82">Managed LAN & Wi-Fi</div>
+                        <div className="text-xs text-white/55">Internal network performance</div>
+                      </div>
+                      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                        <div className="text-sm text-white/82">Continuity & Voice</div>
+                        <div className="text-xs text-white/55">Backup and communications</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+                      <div className="text-[11px] tracking-[0.22em] text-white/50">STEP 1</div>
+                      <div className="mt-2 text-sm text-white/82">Choose service</div>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+                      <div className="text-[11px] tracking-[0.22em] text-white/50">STEP 2</div>
+                      <div className="mt-2 text-sm text-white/82">Add address</div>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+                      <div className="text-[11px] tracking-[0.22em] text-white/50">STEP 3</div>
+                      <div className="mt-2 text-sm text-white/82">Review fit</div>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 text-xs leading-5 text-white/52">
+                    Built for serious commercial enquiries, building-based qualification, and a clearer path
+                    to pricing, assessment, and deployment planning.
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="mx-auto mt-12 h-px max-w-6xl bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-          <HeroLine />
+          <div className="mt-8">
+            <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-5 sm:p-6 lg:p-7">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+                <div className="max-w-3xl">
+                  <div className="text-[11px] tracking-[0.28em] text-white/50">
+                    NETWORK MAP / AVAILABILITY STRIP
+                  </div>
+                  <h2 className="mt-3 text-xl font-semibold tracking-tight text-white sm:text-[30px]">
+                    Ontario commercial availability starts with the site, not a generic claim
+                  </h2>
+                  <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                    Orbitlink reviews address, building fit, service type, and operational requirement
+                    before confirming the next commercial path. That keeps expectations cleaner and helps
+                    buyers move faster toward the right service model.
+                  </p>
+                </div>
+
+                <StatCard label="QUALIFICATION MODE" value="Address • Building • Service fit" />
+              </div>
+
+              <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-12">
+                <div className="lg:col-span-7">
+                  <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-black/25 p-5 sm:p-6">
+                    <div className="pointer-events-none absolute inset-0">
+                      <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:48px_48px]" />
+                      <div className="absolute left-[12%] top-[28%] h-px w-[34%] bg-gradient-to-r from-transparent via-cyan-300/30 to-transparent" />
+                      <div className="absolute left-[34%] top-[46%] h-px w-[22%] bg-gradient-to-r from-transparent via-emerald-300/25 to-transparent" />
+                      <div className="absolute left-[56%] top-[30%] h-px w-[24%] bg-gradient-to-r from-transparent via-white/14 to-transparent" />
+                      <div className="absolute left-[20%] top-[64%] h-px w-[42%] bg-gradient-to-r from-transparent via-cyan-300/16 to-transparent" />
+
+                      <div className="absolute left-[18%] top-[28%] h-3 w-3 rounded-full bg-cyan-200/80 shadow-[0_0_24px_rgba(56,253,254,0.35)]" />
+                      <div className="absolute left-[42%] top-[46%] h-3 w-3 rounded-full bg-emerald-200/80 shadow-[0_0_24px_rgba(16,185,129,0.35)]" />
+                      <div className="absolute left-[64%] top-[30%] h-3 w-3 rounded-full bg-yellow-200/80 shadow-[0_0_24px_rgba(250,204,21,0.35)]" />
+                      <div className="absolute left-[52%] top-[64%] h-3 w-3 rounded-full bg-white/75 shadow-[0_0_24px_rgba(255,255,255,0.22)]" />
+                    </div>
+
+                    <div className="relative">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="text-[11px] tracking-[0.22em] text-white/50">
+                          COMMERCIAL FOOTPRINT SIGNAL
+                        </div>
+                        <div className="text-[11px] text-white/45">ONTARIO</div>
+                      </div>
+
+                      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                        <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                          <div className="text-[11px] tracking-[0.22em] text-white/50">TORONTO</div>
+                          <div className="mt-2 text-sm text-white/82">Commercial review</div>
+                        </div>
+                        <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                          <div className="text-[11px] tracking-[0.22em] text-white/50">MISSISSAUGA</div>
+                          <div className="mt-2 text-sm text-white/82">Active market</div>
+                        </div>
+                        <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                          <div className="text-[11px] tracking-[0.22em] text-white/50">VAUGHAN</div>
+                          <div className="mt-2 text-sm text-white/82">Industrial fit</div>
+                        </div>
+                        <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                          <div className="text-[11px] tracking-[0.22em] text-white/50">BRAMPTON</div>
+                          <div className="mt-2 text-sm text-white/82">Logistics fit</div>
+                        </div>
+                      </div>
+
+                      <div className="mt-5 text-xs leading-5 text-white/52">
+                        Coverage and fit depend on the building, access feasibility, landlord or site
+                        conditions, and the service model being evaluated.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5">
+                  <div className="grid grid-cols-1 gap-4">
+                    <AvailabilityStripCard
+                      title="Availability reviewed by building"
+                      body="Serviceability is confirmed using the address, building conditions, access design, and service type instead of broad blanket claims."
+                    />
+                    <AvailabilityStripCard
+                      title="Right service before wrong quote"
+                      body="Orbitlink helps buyers separate Business Fibre, DIA, managed Wi-Fi, continuity, and voice before quoting goes in the wrong direction."
+                    />
+                    <AvailabilityStripCard
+                      title="Faster commercial next step"
+                      body="The goal is to move buyers toward practical pricing, qualification, and deployment planning with less friction."
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <a
+                  href="/locations"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+                >
+                  Browse Ontario Locations
+                </a>
+                <a
+                  href="/locations/toronto"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
+                >
+                  Toronto
+                </a>
+                <a
+                  href="/locations/mississauga"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
+                >
+                  Mississauga
+                </a>
+                <a
+                  href="/contact#intake"
+                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+                >
+                  Start Availability Review
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
