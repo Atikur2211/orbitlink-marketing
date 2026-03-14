@@ -1,4 +1,3 @@
-// src/components/TopNav.tsx
 "use client";
 
 import Link from "next/link";
@@ -37,6 +36,7 @@ function getFocusable(container: HTMLElement) {
 
 export default function TopNav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
   const openBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -48,6 +48,16 @@ export default function TopNav() {
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 12);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -130,8 +140,22 @@ export default function TopNav() {
 
   return (
     <header className="sticky top-0 z-[140]">
-      <div className="border-b border-white/10 bg-black/55 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-7">
+      <div
+        className={[
+          "relative transition-all duration-300",
+          scrolled
+            ? "border-b border-white/10 bg-[#06080C]/82 shadow-[0_16px_48px_rgba(0,0,0,0.35)] backdrop-blur-2xl"
+            : "border-b border-white/8 bg-[#06080C]/58 backdrop-blur-xl",
+        ].join(" ")}
+      >
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.00))]" />
+          <div className="absolute -left-20 top-[-20px] h-24 w-24 rounded-full bg-cyan-400/10 blur-2xl" />
+          <div className="absolute right-0 top-[-26px] h-24 w-24 rounded-full bg-emerald-400/10 blur-2xl" />
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        </div>
+
+        <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-7 lg:px-10">
           <Link href="/" className="flex items-center gap-3" aria-label="Orbitlink home">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/35 motion-reduce:hidden" />
@@ -139,7 +163,7 @@ export default function TopNav() {
             </span>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs tracking-[0.28em] text-white/95">ORBITLINK</span>
+              <span className="text-xs tracking-[0.32em] text-white/95">ORBITLINK</span>
               <span className="hidden rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] tracking-wide text-white/65 sm:inline-flex">
                 Business Connectivity
               </span>
@@ -158,12 +182,17 @@ export default function TopNav() {
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={[
-                    "transition hover:text-white",
-                    active ? "text-white" : "text-white/72",
-                  ].join(" ")}
+                  className="group relative transition"
                 >
-                  {item.name}
+                  <span className={active ? "text-white" : "text-white/72 group-hover:text-white"}>
+                    {item.name}
+                  </span>
+                  <span
+                    className={[
+                      "absolute -bottom-[19px] left-0 h-px bg-gradient-to-r from-[#38FDFE] via-white/80 to-transparent transition-all duration-300",
+                      active ? "w-full opacity-100" : "w-0 opacity-0 group-hover:w-full group-hover:opacity-100",
+                    ].join(" ")}
+                  />
                 </Link>
               );
             })}
@@ -213,7 +242,7 @@ export default function TopNav() {
           }}
         >
           <button
-            className="absolute inset-0 bg-black/82 backdrop-blur-[4px]"
+            className="absolute inset-0 bg-black/84 backdrop-blur-[6px]"
             onClick={() => setOpen(false)}
             aria-label="Close menu"
           />
@@ -221,9 +250,14 @@ export default function TopNav() {
           <div className="absolute inset-x-0 top-0 z-[230] mx-auto max-w-3xl px-4 pb-4 pt-4 sm:px-6">
             <div
               ref={dialogRef}
-              className="relative flex max-h-[calc(100dvh-2rem)] min-h-[calc(100dvh-2rem)] flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[#09090B]/96 shadow-[0_24px_90px_rgba(0,0,0,0.58)] backdrop-blur-2xl"
+              className="relative flex max-h-[calc(100dvh-2rem)] min-h-[calc(100dvh-2rem)] flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[#07090D]/96 shadow-[0_24px_90px_rgba(0,0,0,0.58)] backdrop-blur-2xl"
             >
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(56,253,254,0.08),transparent_62%)]" />
+              <div className="pointer-events-none absolute inset-0">
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.00))]" />
+                <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(56,253,254,0.08),transparent_62%)]" />
+                <div className="absolute -left-10 top-0 h-24 w-24 rounded-full bg-cyan-500/10 blur-3xl" />
+                <div className="absolute right-0 top-0 h-24 w-24 rounded-full bg-emerald-400/10 blur-3xl" />
+              </div>
 
               <div className="relative flex items-center justify-between border-b border-white/10 px-5 py-4">
                 <div className="flex items-center gap-3">
@@ -303,8 +337,7 @@ export default function TopNav() {
                   </div>
 
                   <p className="mt-2 text-sm leading-6 text-white/62">
-                    Request pricing, review service fit, or start a business connectivity
-                    conversation.
+                    Request pricing, review service fit, or start a business connectivity conversation.
                   </p>
 
                   <div className="mt-4 grid gap-2">
@@ -330,6 +363,24 @@ export default function TopNav() {
                     >
                       concierge@orbitlink.ca
                     </a>
+                  </div>
+                </div>
+
+                <div className="mt-5 rounded-[24px] border border-white/10 bg-black/20 p-4">
+                  <div className="text-[11px] tracking-[0.24em] text-white/50">NETWORK SIGNAL</div>
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3 text-xs text-white/75">
+                      Toronto
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3 text-xs text-white/75">
+                      Mississauga
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3 text-xs text-white/75">
+                      Vaughan
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3 text-xs text-white/75">
+                      Brampton
+                    </div>
                   </div>
                 </div>
 
