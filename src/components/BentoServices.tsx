@@ -34,8 +34,10 @@ function Card({
       className={`group relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.045] p-6 transition ${glow} sm:p-7`}
     >
       <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.00))]" />
         <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/[0.04] blur-2xl" />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+        <div className="absolute left-[8%] top-1/2 h-px w-[42%] -translate-y-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </div>
 
       <div className="relative">
@@ -72,8 +74,11 @@ function FibrePulse() {
   return (
     <div className="relative h-24 overflow-hidden rounded-2xl border border-white/10 bg-black/25">
       <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.00))]" />
         <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
         <div className="orbit-slide absolute left-0 top-1/2 h-[3px] w-28 -translate-y-1/2 bg-blue-400/50 blur-md" />
+        <div className="absolute left-[14%] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-blue-300/70 shadow-[0_0_24px_rgba(96,165,250,0.4)]" />
+        <div className="absolute right-[14%] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-blue-300/70 shadow-[0_0_24px_rgba(96,165,250,0.4)]" />
       </div>
       <div className="absolute bottom-2 right-3 text-[10px] text-white/55">Fibre service path</div>
     </div>
@@ -84,9 +89,11 @@ function DedicatedLine() {
   return (
     <div className="relative h-24 overflow-hidden rounded-2xl border border-white/10 bg-black/25">
       <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.00))]" />
         <div className="absolute left-[8%] right-[8%] top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-cyan-300/15 via-cyan-200/80 to-cyan-300/15" />
         <div className="absolute left-[22%] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-cyan-200 shadow-[0_0_24px_rgba(56,253,254,0.45)]" />
         <div className="absolute right-[22%] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-cyan-200 shadow-[0_0_24px_rgba(56,253,254,0.45)]" />
+        <div className="absolute left-1/2 top-1/2 h-12 w-px -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-transparent via-cyan-200/25 to-transparent" />
       </div>
       <div className="absolute bottom-2 right-3 text-[10px] text-white/55">Dedicated path</div>
     </div>
@@ -124,6 +131,7 @@ function ManagedGrid() {
 function VoiceWave() {
   return (
     <div className="relative flex h-24 items-center overflow-hidden rounded-2xl border border-white/10 bg-black/25 px-4">
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.00))]" />
       <div className="flex w-full items-end gap-1 opacity-95">
         {Array.from({ length: 20 }).map((_, i) => (
           <div
@@ -195,13 +203,28 @@ function FitStrip({
   );
 }
 
+function OperatorSignal({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
+      <div className="mt-2 text-sm text-white/82">{value}</div>
+    </div>
+  );
+}
+
 export default function BentoServices() {
   return (
-    <section className="mx-auto max-w-6xl px-5 py-12 sm:px-7 sm:py-14 lg:py-16">
+    <section className="mx-auto max-w-7xl px-5 py-12 sm:px-7 sm:py-14 lg:px-10 lg:py-16">
       <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">SERVICES</div>
+            <div className="text-[11px] tracking-[0.28em] text-white/55">SERVICE CATALOG</div>
             <h2 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">
               Business connectivity services for Ontario sites
             </h2>
@@ -297,7 +320,7 @@ export default function BentoServices() {
       <div className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-5 sm:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">BEST FIT</div>
+            <div className="text-[11px] tracking-[0.28em] text-white/55">NETWORK / FIT SIGNAL</div>
             <h3 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
               The most common starting points
             </h3>
@@ -313,30 +336,73 @@ export default function BentoServices() {
           </div>
         </div>
 
-        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <FitStrip
-            title="Offices and commercial sites"
-            body="Usually start with Business Fibre Internet."
-          />
-          <FitStrip
-            title="Critical business locations"
-            body="Usually start with Dedicated Internet Access."
-          />
-          <FitStrip
-            title="Internal network and Wi-Fi issues"
-            body="Usually start with Managed Wi-Fi & LAN."
-          />
-          <FitStrip
-            title="Calling and continuity needs"
-            body="Usually start with Business Voice or Backup Connectivity."
-          />
+        <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-black/25 p-5 sm:p-6">
+              <div className="pointer-events-none absolute inset-0">
+                <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:46px_46px]" />
+                <div className="absolute left-[10%] top-[28%] h-px w-[28%] bg-gradient-to-r from-transparent via-cyan-300/30 to-transparent" />
+                <div className="absolute left-[32%] top-[46%] h-px w-[24%] bg-gradient-to-r from-transparent via-emerald-300/25 to-transparent" />
+                <div className="absolute left-[56%] top-[34%] h-px w-[24%] bg-gradient-to-r from-transparent via-white/14 to-transparent" />
+                <div className="absolute left-[20%] top-[66%] h-px w-[40%] bg-gradient-to-r from-transparent via-cyan-300/16 to-transparent" />
+
+                <div className="absolute left-[18%] top-[28%] h-3 w-3 rounded-full bg-cyan-200/80 shadow-[0_0_24px_rgba(56,253,254,0.35)]" />
+                <div className="absolute left-[44%] top-[46%] h-3 w-3 rounded-full bg-emerald-200/80 shadow-[0_0_24px_rgba(16,185,129,0.35)]" />
+                <div className="absolute left-[64%] top-[34%] h-3 w-3 rounded-full bg-yellow-200/80 shadow-[0_0_24px_rgba(250,204,21,0.35)]" />
+                <div className="absolute left-[52%] top-[66%] h-3 w-3 rounded-full bg-white/75 shadow-[0_0_24px_rgba(255,255,255,0.22)]" />
+              </div>
+
+              <div className="relative">
+                <div className="text-[11px] tracking-[0.24em] text-white/50">SERVICE DECISION GRID</div>
+                <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <OperatorSignal
+                    label="OFFICES / COMMERCIAL"
+                    value="Usually start with Business Fibre Internet"
+                  />
+                  <OperatorSignal
+                    label="CRITICAL SITES"
+                    value="Usually start with Dedicated Internet Access"
+                  />
+                  <OperatorSignal
+                    label="INTERNAL NETWORK ISSUES"
+                    value="Usually start with Managed Wi-Fi & LAN"
+                  />
+                  <OperatorSignal
+                    label="VOICE / UPTIME"
+                    value="Usually start with Voice or Backup Connectivity"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5">
+            <div className="grid grid-cols-1 gap-4">
+              <FitStrip
+                title="Offices and commercial sites"
+                body="Usually start with Business Fibre Internet."
+              />
+              <FitStrip
+                title="Critical business locations"
+                body="Usually start with Dedicated Internet Access."
+              />
+              <FitStrip
+                title="Internal network and Wi-Fi issues"
+                body="Usually start with Managed Wi-Fi & LAN."
+              />
+              <FitStrip
+                title="Calling and continuity needs"
+                body="Usually start with Business Voice or Backup Connectivity."
+              />
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-5 sm:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">HOW TO START</div>
+            <div className="text-[11px] tracking-[0.28em] text-white/55">BUYER WORKFLOW</div>
             <h3 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
               Start with one requirement
             </h3>
