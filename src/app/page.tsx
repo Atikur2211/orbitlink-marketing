@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import TopNav from "@/components/TopNav";
 import StickyStatusStrip from "@/components/StickyStatusStrip";
-import BentoServices from "@/components/BentoServices";
 import ConciergeBlock from "@/components/ConciergeBlock";
 import SiteFooter from "@/components/SiteFooter";
 
