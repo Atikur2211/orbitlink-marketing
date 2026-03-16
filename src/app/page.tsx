@@ -375,13 +375,12 @@ export default function Home() {
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-7 text-white/82 sm:text-[1.15rem]">
-                Check availability, choose the right service, and move toward install with less friction.
+                Business internet for offices, clinics, warehouses, and multi-site teams that need a cleaner buying experience.
               </p>
 
               <p className="mt-4 max-w-3xl text-sm leading-7 text-white/66 sm:text-[1rem]">
-                Orbitlink helps Ontario businesses find business fibre, dedicated internet,
-                managed Wi-Fi, voice, and backup connectivity based on address, building fit,
-                and business need.
+                Orbitlink helps Ontario businesses choose the right connectivity service based on
+                address, building fit, uptime needs, and day-to-day operations.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -413,17 +412,17 @@ export default function Home() {
                 </Link>
 
                 <Link
-                  href="/why-orbitlink"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Why Orbitlink
-                </Link>
-
-                <Link
                   href="/services"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3 text-sm text-white transition hover:bg-white/10"
                 >
                   Explore Services
+                </Link>
+
+                <Link
+                  href="/why-orbitlink"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+                >
+                  Why Orbitlink
                 </Link>
 
                 <Link
@@ -674,13 +673,13 @@ export default function Home() {
         <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">WHY BUYERS KEEP READING</div>
+              <div className="text-[11px] tracking-[0.28em] text-white/55">WHY THIS FEELS DIFFERENT</div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Orbitlink gives buyers more than a service list
+                A better business buying experience than generic telecom websites
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Many provider websites focus on speed claims first. Orbitlink is built to help buyers
-                understand service fit, building review, trust posture, and next steps before they commit.
+                Orbitlink is built to help buyers understand service fit, review trust earlier,
+                and move into a cleaner next step without vague claims or unnecessary friction.
               </p>
             </div>
 
@@ -688,20 +687,17 @@ export default function Home() {
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <StepCard
-              step="1"
-              title="Understand the fit"
-              desc="Learn which service model fits the location, the environment, and the business requirement."
+            <InfoCard
+              label="TYPICAL PROVIDER"
+              text="Broad promises first, real qualification later."
             />
-            <StepCard
-              step="2"
-              title="Review provider differences"
-              desc="Compare Orbitlink with larger telecom providers and smaller ISPs in a calmer, more business-readable way."
+            <InfoCard
+              label="ORBITLINK"
+              text="Address-based review, clearer fit, and a more structured path."
             />
-            <StepCard
-              step="3"
-              title="Move with confidence"
-              desc="Submit a stronger request with better clarity around address, scope, and next steps."
+            <InfoCard
+              label="RESULT"
+              text="Less confusion, better requests, and more confident decisions."
             />
           </div>
 
@@ -926,4 +922,4 @@ export default function Home() {
       <SiteFooter />
     </main>
   );
-}
+}  Is this best high recommended or any more touchup. plain confident English . and score if i do this one 
