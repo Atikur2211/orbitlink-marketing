@@ -17,7 +17,7 @@ const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 export const metadata: Metadata = {
   title: "Business Trust & Compliance Review | Orbitlink",
   description:
-    "Business trust and compliance review for Ontario organizations. Clear disclosure, structured onboarding, evidence-friendly operations, and disciplined delivery for serious buyers, property stakeholders, auditors, and regulated environments.",
+    "Business trust and compliance review for Ontario organizations. Clear disclosure, structured onboarding, evidence-friendly operations, and disciplined delivery for serious buyers, property stakeholders, and regulated environments.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Business Trust & Compliance Review | Orbitlink",
@@ -98,7 +98,7 @@ function MetricPill({
   value: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+    <div className="h-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
       <div className="text-[11px] tracking-[0.22em] text-white/55">{label}</div>
       <div className="mt-1 text-sm text-white/80">{value}</div>
     </div>
@@ -115,33 +115,35 @@ function StatusTile({
   tone: "ok" | "inprogress" | "info";
 }) {
   return (
-    <div className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.045] p-6 transition hover:border-white/15 hover:bg-white/[0.055] sm:p-7">
+    <div className="group relative h-full overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.045] p-6 transition hover:border-white/15 hover:bg-white/[0.055] sm:p-7">
       <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100">
         <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/[0.04] blur-2xl" />
       </div>
 
-      <div className="relative flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <div className="text-[11px] tracking-[0.28em] text-white/48">{label}</div>
-          <div className={`mt-3 text-sm font-medium ${toneTextClass(tone)}`}>{value}</div>
+      <div className="relative flex h-full flex-col">
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <div className="text-[11px] tracking-[0.28em] text-white/48">{label}</div>
+            <div className={`mt-3 text-sm font-medium ${toneTextClass(tone)}`}>{value}</div>
+          </div>
+
+          <div
+            className={[
+              "shrink-0 rounded-full border px-3 py-1.5 text-[11px]",
+              tonePillClass(tone),
+            ].join(" ")}
+          >
+            {statusText(tone)}
+          </div>
         </div>
 
-        <div
-          className={[
-            "shrink-0 rounded-full border px-3 py-1.5 text-[11px]",
-            tonePillClass(tone),
-          ].join(" ")}
-        >
-          {statusText(tone)}
-        </div>
+        <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+        <p className="mt-4 text-sm leading-6 text-white/64">
+          Public trust statements stay conservative and update only when a milestone is complete,
+          reviewable, and ready for disclosure.
+        </p>
       </div>
-
-      <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
-      <p className="mt-4 text-sm leading-6 text-white/64">
-        Public trust statements stay conservative and update only when a milestone is complete,
-        reviewable, and appropriate for disclosure.
-      </p>
     </div>
   );
 }
@@ -156,7 +158,7 @@ function EvidenceCard({
   note?: string;
 }) {
   return (
-    <div className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition hover:border-white/15 hover:bg-black/25 sm:p-6">
+    <div className="h-full rounded-[26px] border border-white/10 bg-black/20 p-5 transition hover:border-white/15 hover:bg-black/25 sm:p-6">
       <div className="text-[11px] tracking-[0.28em] text-white/50">{heading}</div>
 
       <ul className="mt-4 space-y-2.5 text-sm text-white/65">
@@ -183,7 +185,7 @@ function ReviewStep({
   desc: string;
 }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-white/[0.035] p-5">
+    <div className="h-full rounded-[24px] border border-white/10 bg-white/[0.035] p-5">
       <div className="flex items-center gap-3">
         <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
           {step}
@@ -203,7 +205,7 @@ function TrustPrinciple({
   desc: string;
 }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/15 hover:bg-black/25">
+    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/15 hover:bg-black/25">
       <div className="text-sm font-medium text-white/90">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/65">{desc}</p>
     </div>
@@ -218,7 +220,7 @@ function ModuleChip({
   tagline: string;
 }) {
   return (
-    <div className="rounded-[22px] border border-white/10 bg-black/20 p-4">
+    <div className="h-full rounded-[22px] border border-white/10 bg-black/20 p-4">
       <div className="text-sm font-medium text-white/88">{name}</div>
       <div className="mt-1 text-xs leading-5 text-white/55">{tagline}</div>
     </div>
@@ -233,7 +235,7 @@ function BuyerFitCard({
   text: string;
 }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5">
       <div className="text-sm font-medium text-white/90">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/65">{text}</p>
     </div>
@@ -331,7 +333,7 @@ export default function TrustPage() {
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Controlled rollout means Orbitlink confirms scope conservatively and updates public statements only after milestones are complete and reviewable.",
+            "Controlled rollout means Orbitlink confirms scope carefully and updates public statements only after milestones are complete and reviewable.",
         },
       },
       {
@@ -373,7 +375,7 @@ export default function TrustPage() {
     <PageShell
       eyebrow="TRUST & COMPLIANCE"
       title="Trust designed for serious business review"
-      subtitle="A premium trust surface for buyers, auditors, partners, and regulated environments that expect clear statements, disciplined disclosure, and structured delivery."
+      subtitle="A premium trust surface for buyers, partners, and regulated environments that expect clear statements, disciplined disclosure, and structured delivery."
     >
       <script
         type="application/ld+json"
@@ -402,7 +404,7 @@ export default function TrustPage() {
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
               Orbitlink is designed to support serious business review with clear public statements,
               scope-aware commitments, controlled onboarding, request-based verification material,
-              and a clean separation between what is public and what remains appropriately private.
+              and a clean separation between what is public and what stays private.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
@@ -418,12 +420,6 @@ export default function TrustPage() {
                 className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
                 Contact Orbitlink
-              </Link>
-              <Link
-                href="/why-orbitlink"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-              >
-                Why Orbitlink
               </Link>
               <Link
                 href="/compare"
@@ -493,9 +489,9 @@ export default function TrustPage() {
               Serious buyers do not just evaluate service. They evaluate judgment.
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              This page is designed to answer the questions stronger buyers always ask: Can this
-              provider communicate clearly? Can it control scope? Can it separate live from planned?
-              Can it support diligence without making reckless public claims?
+              This page answers the questions stronger buyers usually ask: Can this provider
+              communicate clearly? Can it control scope? Can it separate live from planned? Can it
+              support diligence without making careless claims?
             </p>
           </div>
 
@@ -533,9 +529,8 @@ export default function TrustPage() {
               Trust works best when it helps a buyer move forward
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              A trust page should not feel isolated from the rest of the buying journey. It should
-              reinforce why Orbitlink is easier to review, how it compares with other provider
-              models, and what the next step should be.
+              A trust page should help a buyer understand the provider, compare options, and decide
+              on the next step. It should not feel isolated from the rest of the buying journey.
             </p>
           </div>
 
@@ -547,26 +542,20 @@ export default function TrustPage() {
 
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
           <BuyerFitCard
-            title="Why Orbitlink"
-            text="Use the Why Orbitlink page when the buyer needs the business case in plain English."
+            title="Provider comparison"
+            text="Use the comparison page when deciding between Orbitlink, a big telco, or a smaller ISP."
           />
           <BuyerFitCard
-            title="Compare Provider Models"
-            text="Use the comparison page when the buyer is deciding between Orbitlink, a big telco, or a smaller ISP."
+            title="Trust review"
+            text="Use this page when the buyer wants a clearer view of disclosure, rollout, and review posture."
           />
           <BuyerFitCard
-            title="Contact and qualification"
+            title="Commercial intake"
             text="Use the intake path when the buyer is ready to submit an address, service need, and timing."
           />
         </div>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <Link
-            href="/why-orbitlink"
-            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-          >
-            Why Orbitlink
-          </Link>
           <Link
             href="/compare"
             className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
@@ -727,7 +716,7 @@ export default function TrustPage() {
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-5">
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
           {TRUST_DISCLOSURES.map((item) => (
             <EvidenceCard
               key={item.heading}
@@ -803,7 +792,7 @@ export default function TrustPage() {
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3 sm:gap-5">
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
           <EvidenceCard
             heading="What we confirm"
             bullets={[
@@ -847,7 +836,7 @@ export default function TrustPage() {
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
             <div className="text-[11px] tracking-[0.22em] text-white/55">COMMERCIAL IMPACT</div>
-            <div className="mt-1 text-sm text-white/80">Higher trust • lower friction</div>
+            <div className="mt-1 text-sm text-white/80">Higher trust • Lower friction</div>
           </div>
         </div>
 
@@ -909,7 +898,7 @@ export default function TrustPage() {
           review paths rather than oversized claims.
         </p>
 
-        <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 sm:gap-4">
+        <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
           <TrustPrinciple
             title="Publish conservatively"
             desc="Only claims that can be explained, defended, and supported should appear on the public surface."
@@ -943,7 +932,7 @@ export default function TrustPage() {
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
               Orbitlink is a brand of TIRAV Technologies Inc. Services are introduced through
               controlled onboarding, governed by applicable Canadian requirements, and described in
-              a manner intended to remain accurate as operational and regulatory milestones evolve.
+              a way intended to remain accurate as operational and regulatory milestones evolve.
             </p>
             <p className="mt-4 text-xs text-white/55">
               This page is maintained as a living disclosure. Statements update when milestones are
@@ -969,12 +958,6 @@ export default function TrustPage() {
             className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
           >
             View Network Posture
-          </Link>
-          <Link
-            href="/why-orbitlink"
-            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
-          >
-            Why Orbitlink
           </Link>
           <Link
             href="/compare"
