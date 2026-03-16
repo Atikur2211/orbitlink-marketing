@@ -1,81 +1,46 @@
+// src/app/trust/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
-
-import TopNav from "@/components/TopNav";
-import StickyStatusStrip from "@/components/StickyStatusStrip";
-import BentoServices from "@/components/BentoServices";
-import ConciergeBlock from "@/components/ConciergeBlock";
-import SiteFooter from "@/components/SiteFooter";
+import PageShell from "@/components/PageShell";
+import {
+  TRUST_ASSURANCE,
+  TRUST_DISCLOSURES,
+  TRUST_TILES,
+  SERVICE_CATALOG,
+} from "@/lib/siteStatus";
 
 const SITE_URL = "https://orbitlink.ca";
-const SITE_NAME = "Orbitlink";
-const LEGAL_NAME = "TIRAV Technologies Inc.";
-const CANONICAL_URL = `${SITE_URL}/`;
-
-const SITE_DESC =
-  "Orbitlink helps Ontario businesses source business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity based on building fit, location, and business requirements. Check availability and request pricing.";
-
-const OG_TITLE =
-  "Business Fibre Internet, Dedicated Internet & Managed Network Services | Orbitlink";
-const OG_DESC =
-  "Business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and continuity services for Ontario businesses.";
-const TWITTER_DESC =
-  "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, and continuity services for Ontario offices, clinics, warehouses, and multi-site businesses.";
-
+const PAGE_URL = `${SITE_URL}/trust`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title:
-    "Business Fibre Internet, Dedicated Internet & Managed Network Services | Orbitlink",
-  description: SITE_DESC,
-  keywords: [
-    "Business Fibre Internet Ontario",
-    "Dedicated Internet Access Ontario",
-    "Business Internet Mississauga",
-    "Managed Wi-Fi Ontario",
-    "Managed Network Services Ontario",
-    "Business VoIP Ontario",
-    "Business Fibre Mississauga",
-    "Enterprise Internet Ontario",
-    "Ontario Business Connectivity",
-    "Network Infrastructure Services Ontario",
-    "Commercial Internet Provider Ontario",
-    "Business Internet Toronto",
-    "LTE Failover Business Internet",
-    "Business Wi-Fi Solutions Ontario",
-    "Dedicated Internet Mississauga",
-    "Ontario Business Fibre Provider",
-    "Commercial Connectivity Ontario",
-    "Business Internet Serviceability Ontario",
-    "Managed Business Network Ontario",
-    "Business Fibre for Offices Ontario",
-    "Business Internet for Warehouses Ontario",
-    "Business Internet for Clinics Ontario",
-  ],
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
+  title: "Business Trust & Compliance Review | Orbitlink",
+  description:
+    "Business trust and compliance review for Ontario organizations. Clear disclosure, structured onboarding, evidence-friendly operations, and disciplined delivery for serious buyers, property stakeholders, auditors, and regulated environments.",
+  alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: OG_TITLE,
-    description: OG_DESC,
-    url: CANONICAL_URL,
-    siteName: SITE_NAME,
+    title: "Business Trust & Compliance Review | Orbitlink",
+    description:
+      "Business trust posture with clear disclosure, controlled onboarding, evidence-friendly operations, and disciplined change management.",
+    url: PAGE_URL,
     type: "website",
+    siteName: "Orbitlink",
     locale: "en_CA",
     images: [
       {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink business fibre internet, dedicated internet, and managed network services",
+        alt: "Orbitlink Trust & Compliance",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: OG_TITLE,
-    description: TWITTER_DESC,
+    title: "Business Trust & Compliance Review | Orbitlink",
+    description:
+      "Evidence-first operations, controlled rollout, and disciplined change management for business environments.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -91,7 +56,41 @@ export const metadata: Metadata = {
   },
 };
 
-function StatCard({
+function statusText(tone: "ok" | "inprogress" | "info") {
+  if (tone === "ok") return "ACTIVE";
+  if (tone === "inprogress") return "IN REVIEW";
+  return "DISCLOSURE";
+}
+
+function toneTextClass(tone: "ok" | "inprogress" | "info") {
+  if (tone === "ok") return "text-emerald-300";
+  if (tone === "inprogress") return "text-[#FACC15]";
+  return "text-blue-300";
+}
+
+function tonePillClass(tone: "ok" | "inprogress" | "info") {
+  if (tone === "ok") {
+    return "border-emerald-400/20 bg-emerald-500/10 text-emerald-200";
+  }
+  if (tone === "inprogress") {
+    return "border-[#FACC15]/25 bg-[#FACC15]/10 text-[#FDE68A]";
+  }
+  return "border-blue-400/20 bg-blue-500/10 text-blue-200";
+}
+
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/55">{children}</div>;
+}
+
+function Pill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70">
+      {children}
+    </span>
+  );
+}
+
+function MetricPill({
   label,
   value,
 }: {
@@ -100,13 +99,81 @@ function StatCard({
 }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
-      <div className="mt-1 text-sm text-white/82">{value}</div>
+      <div className="text-[11px] tracking-[0.22em] text-white/55">{label}</div>
+      <div className="mt-1 text-sm text-white/80">{value}</div>
     </div>
   );
 }
 
-function StepCard({
+function StatusTile({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: string;
+  tone: "ok" | "inprogress" | "info";
+}) {
+  return (
+    <div className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.045] p-6 transition hover:border-white/15 hover:bg-white/[0.055] sm:p-7">
+      <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100">
+        <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/[0.04] blur-2xl" />
+      </div>
+
+      <div className="relative flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <div className="text-[11px] tracking-[0.28em] text-white/48">{label}</div>
+          <div className={`mt-3 text-sm font-medium ${toneTextClass(tone)}`}>{value}</div>
+        </div>
+
+        <div
+          className={[
+            "shrink-0 rounded-full border px-3 py-1.5 text-[11px]",
+            tonePillClass(tone),
+          ].join(" ")}
+        >
+          {statusText(tone)}
+        </div>
+      </div>
+
+      <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+      <p className="mt-4 text-sm leading-6 text-white/64">
+        Public trust statements stay conservative and update only when a milestone is complete,
+        reviewable, and appropriate for disclosure.
+      </p>
+    </div>
+  );
+}
+
+function EvidenceCard({
+  heading,
+  bullets,
+  note,
+}: {
+  heading: string;
+  bullets: string[];
+  note?: string;
+}) {
+  return (
+    <div className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition hover:border-white/15 hover:bg-black/25 sm:p-6">
+      <div className="text-[11px] tracking-[0.28em] text-white/50">{heading}</div>
+
+      <ul className="mt-4 space-y-2.5 text-sm text-white/65">
+        {bullets.map((b) => (
+          <li key={b} className="flex gap-2">
+            <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-white/30" />
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+
+      {note ? <p className="mt-4 text-xs leading-5 text-white/50">{note}</p> : null}
+    </div>
+  );
+}
+
+function ReviewStep({
   step,
   title,
   desc,
@@ -116,833 +183,813 @@ function StepCard({
   desc: string;
 }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+    <div className="rounded-[24px] border border-white/10 bg-white/[0.035] p-5">
       <div className="flex items-center gap-3">
         <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
           {step}
         </div>
-        <div className="text-sm font-medium text-white/92">{title}</div>
+        <div className="text-sm font-medium text-white/90">{title}</div>
       </div>
-      <p className="mt-3 text-sm leading-6 text-white/66">{desc}</p>
+      <p className="mt-3 text-sm leading-6 text-white/65">{desc}</p>
     </div>
   );
 }
 
-function TrustPill({ text }: { text: string }) {
-  return (
-    <div className="rounded-full border border-white/10 bg-black/25 px-3 py-2 text-[11px] text-white/70 sm:text-xs">
-      {text}
-    </div>
-  );
-}
-
-function CoverageCard({
-  city,
-  note,
-  href,
+function TrustPrinciple({
+  title,
+  desc,
 }: {
-  city: string;
-  note: string;
-  href: string;
+  title: string;
+  desc: string;
 }) {
   return (
-    <Link
-      href={href}
-      className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/20 hover:bg-white/[0.05]"
-    >
-      <div className="text-[11px] tracking-[0.22em] text-white/50">{city.toUpperCase()}</div>
-      <div className="mt-2 text-sm font-medium text-white/90">{note}</div>
-      <div className="mt-4 text-xs text-white/55">Open location →</div>
-    </Link>
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/15 hover:bg-black/25">
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/65">{desc}</p>
+    </div>
   );
 }
 
-function FAQCard({
-  question,
-  answer,
+function ModuleChip({
+  name,
+  tagline,
 }: {
-  question: string;
-  answer: string;
+  name: string;
+  tagline: string;
+}) {
+  return (
+    <div className="rounded-[22px] border border-white/10 bg-black/20 p-4">
+      <div className="text-sm font-medium text-white/88">{name}</div>
+      <div className="mt-1 text-xs leading-5 text-white/55">{tagline}</div>
+    </div>
+  );
+}
+
+function BuyerFitCard({
+  title,
+  text,
+}: {
+  title: string;
+  text: string;
 }) {
   return (
     <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
-      <h3 className="text-sm font-medium text-white/92">{question}</h3>
-      <p className="mt-2 text-sm leading-6 text-white/66">{answer}</p>
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/65">{text}</p>
     </div>
   );
 }
 
-export default function Home() {
-  const organizationSchema = {
+export default function TrustPage() {
+  const moduleOptions = SERVICE_CATALOG.map((s) => s.name);
+
+  const schemaOrg = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${SITE_URL}/#org`,
-    name: SITE_NAME,
-    legalName: LEGAL_NAME,
-    url: CANONICAL_URL,
+    name: "Orbitlink",
+    url: SITE_URL,
     logo: `${SITE_URL}/icon.png`,
-    image: OG_IMAGE_URL,
-    telephone: "+18888672480",
-    email: "concierge@orbitlink.ca",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "30 Eglinton Ave W, Suite 400-A77",
-      addressLocality: "Mississauga",
-      addressRegion: "ON",
-      postalCode: "L5R 3E7",
-      addressCountry: "CA",
-    },
-    areaServed: {
-      "@type": "AdministrativeArea",
-      name: "Ontario, Canada",
-    },
+    brand: { "@type": "Brand", name: "Orbitlink" },
     parentOrganization: {
       "@type": "Organization",
-      name: LEGAL_NAME,
+      name: "TIRAV Technologies Inc.",
     },
     contactPoint: [
       {
         "@type": "ContactPoint",
         contactType: "sales",
-        telephone: "+18888672480",
         email: "sales@orbitlink.ca",
-        availableLanguage: ["en"],
+        availableLanguage: ["English"],
         areaServed: "CA-ON",
       },
       {
         "@type": "ContactPoint",
         contactType: "customer support",
-        telephone: "+18888672480",
-        email: "concierge@orbitlink.ca",
-        availableLanguage: ["en"],
+        email: "support@orbitlink.ca",
+        availableLanguage: ["English"],
         areaServed: "CA-ON",
       },
     ],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "30 Eglinton Ave W, Suite 400-A77",
+      addressCountry: "CA",
+      addressRegion: "ON",
+      addressLocality: "Mississauga",
+      postalCode: "L5R 3E7",
+    },
   };
 
-  const telecomSchema = {
+  const schemaService = {
     "@context": "https://schema.org",
     "@type": "Service",
-    "@id": `${SITE_URL}/#telecom`,
-    name: "Orbitlink Business Fibre Internet & Managed Network Services",
-    provider: {
-      "@id": `${SITE_URL}/#org`,
-    },
+    "@id": `${PAGE_URL}#trust-surface`,
+    name: "Trust & Compliance Review Surface",
+    provider: { "@id": `${SITE_URL}/#org` },
     serviceType: [
       "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed Wi-Fi",
-      "Business VoIP",
-      "Network Infrastructure Services",
-      "LTE and 5G Continuity",
+      "Managed Network Infrastructure",
+      "Compliance-first Delivery Posture",
+      "Operational Escalation & Support",
+      "Verification Review Process",
     ],
+    audience: { "@type": "Audience", audienceType: "Business" },
     areaServed: [
-      {
-        "@type": "AdministrativeArea",
-        name: "Ontario, Canada",
-      },
-      {
-        "@type": "City",
-        name: "Mississauga",
-      },
+      { "@type": "AdministrativeArea", name: "Ontario, Canada" },
+      { "@type": "City", name: "Mississauga" },
     ],
-    audience: {
-      "@type": "Audience",
-      audienceType: "Business",
-    },
     termsOfService: `${SITE_URL}/legal/terms`,
   };
 
-  const websiteSchema = {
+  const schemaBreadcrumbs = {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${SITE_URL}/#website`,
-    name: SITE_NAME,
-    url: CANONICAL_URL,
-    publisher: {
-      "@id": `${SITE_URL}/#org`,
-    },
-    inLanguage: "en-CA",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${SITE_URL}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Trust & Compliance",
+        item: PAGE_URL,
+      },
+    ],
   };
 
-  const faqSchema = {
+  const schemaFaq = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
       {
         "@type": "Question",
-        name: "How do I check if Orbitlink can serve my business location?",
+        name: "What does controlled rollout mean?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Submit your business address and service requirements through the Orbitlink contact intake. Availability is reviewed based on location, building fit, and service type.",
+          text:
+            "Controlled rollout means Orbitlink confirms scope conservatively and updates public statements only after milestones are complete and reviewable.",
         },
       },
       {
         "@type": "Question",
-        name: "Does Orbitlink offer business fibre and dedicated internet access?",
+        name: "Do you provide review or verification material?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. Orbitlink supports business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity for Ontario businesses.",
+          text:
+            "Orbitlink supports evidence-friendly operations, structured change posture, and scope-appropriate review material when the engagement and review path are real.",
         },
       },
       {
         "@type": "Question",
-        name: "What types of businesses is Orbitlink designed for?",
+        name: "Can enterprise buyers or auditors request verification material?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Orbitlink is designed for commercial buyers including offices, clinics, warehouses, commercial units, and multi-site business environments across Ontario.",
+          text:
+            "Yes. Verification material is request-based and tailored to the engagement scope. Sensitive operational details remain private and are shared only when appropriate.",
         },
       },
       {
         "@type": "Question",
-        name: "What happens after I submit a request?",
+        name: "How are public trust statements updated?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Orbitlink reviews the address, service type, and business requirement, then responds with the next commercial step such as availability direction, pricing guidance, or qualification follow-up.",
+          text:
+            "Statements are maintained as a living disclosure and updated only when milestones are complete and internally reviewable.",
         },
       },
     ],
   };
 
+  const schemaGraph = {
+    "@context": "https://schema.org",
+    "@graph": [schemaOrg, schemaService, schemaBreadcrumbs, schemaFaq],
+  };
+
   return (
-    <main className="min-h-screen bg-[#09090B] text-white">
+    <PageShell
+      eyebrow="TRUST & COMPLIANCE"
+      title="Trust designed for serious business review"
+      subtitle="A premium trust surface for buyers, auditors, partners, and regulated environments that expect clear statements, disciplined disclosure, and structured delivery."
+    >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(telecomSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
       />
 
-      <TopNav />
-      <StickyStatusStrip />
-
-      <section className="relative isolate overflow-hidden border-b border-white/10">
+      <section className="relative overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-[#05070B]" />
-          <div className="absolute -left-28 top-[-120px] h-[32rem] w-[32rem] rounded-full bg-cyan-500/10 blur-3xl" />
-          <div className="absolute right-[-100px] top-[8%] h-[28rem] w-[28rem] rounded-full bg-emerald-400/10 blur-3xl" />
-          <div className="absolute bottom-[-150px] left-1/2 h-[24rem] w-[64rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
-          <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.06),transparent_34%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,11,0.28)_0%,rgba(5,7,11,0.54)_38%,rgba(5,7,11,0.86)_100%)]" />
-          <div className="absolute left-[5%] top-[22%] h-px w-[34%] bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent blur-[1px]" />
-          <div className="absolute left-[16%] top-[31%] h-px w-[48%] bg-gradient-to-r from-transparent via-white/14 to-transparent" />
-          <div className="absolute left-[38%] top-[18%] h-px w-[24%] bg-gradient-to-r from-transparent via-emerald-300/30 to-transparent blur-[1px]" />
-          <div className="absolute left-[12%] top-[60%] h-px w-[56%] bg-gradient-to-r from-transparent via-cyan-300/18 to-transparent" />
-          <div className="absolute right-[7%] top-[42%] h-px w-[22%] bg-gradient-to-r from-transparent via-white/12 to-transparent" />
-          <div className="absolute left-[17%] top-[31%] h-2.5 w-2.5 rounded-full bg-cyan-200/80 shadow-[0_0_24px_rgba(56,253,254,0.45)]" />
-          <div className="absolute left-[51%] top-[18%] h-2.5 w-2.5 rounded-full bg-emerald-200/80 shadow-[0_0_24px_rgba(16,185,129,0.45)]" />
-          <div className="absolute left-[66%] top-[60%] h-2.5 w-2.5 rounded-full bg-yellow-200/80 shadow-[0_0_24px_rgba(250,204,21,0.45)]" />
-          <div className="absolute right-[18%] top-[42%] h-2.5 w-2.5 rounded-full bg-white/70 shadow-[0_0_24px_rgba(255,255,255,0.25)]" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#09090B] to-transparent" />
+          <div className="absolute -left-24 top-0 h-52 w-52 rounded-full bg-blue-500/10 blur-3xl" />
+          <div className="absolute right-0 top-10 h-52 w-52 rounded-full bg-emerald-500/10 blur-3xl" />
+          <div className="absolute bottom-0 left-1/2 h-40 w-[32rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
+          <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.14)_1px,transparent_1px)] [background-size:64px_64px]" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-5 pb-14 pt-14 sm:px-7 sm:pt-18 lg:px-10 lg:pb-24 lg:pt-24">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
-            <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] text-white/72 sm:text-xs">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-                Business fibre • Dedicated internet • Managed Wi-Fi • Business voice
-              </div>
-
-              <h1 className="mt-6 max-w-5xl text-[2.35rem] font-semibold leading-[1.01] tracking-tight text-white sm:text-[3.6rem] lg:text-[5.3rem]">
-                Business fibre internet
-                <span className="block text-white/74">for Ontario businesses</span>
-              </h1>
-
-              <p className="mt-5 max-w-3xl text-base leading-7 text-white/82 sm:text-[1.15rem]">
-                Check availability, compare the right service options, and move toward install with less friction.
-              </p>
-
-              <p className="mt-4 max-w-3xl text-sm leading-7 text-white/66 sm:text-[1rem]">
-                Orbitlink helps Ontario businesses source business fibre, dedicated internet,
-                managed Wi-Fi, voice, and backup connectivity based on location, building fit, and
-                operational need.
-              </p>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {[
-                  "Business-only service intake",
-                  "Ontario commercial coverage",
-                  "Operated by TIRAV Technologies Inc.",
-                  "Availability reviewed by address",
-                ].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/70 sm:text-xs"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-6 text-xs tracking-wide text-white/52 sm:text-sm">
-                Offices • Clinics • Warehouses • Commercial units • Multi-site business environments
-              </div>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link
-                  href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                >
-                  Check Availability & Request Pricing
-                </Link>
-
-                <Link
-                  href="/why-orbitlink"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Why Orbitlink
-                </Link>
-
-                <Link
-                  href="/services"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Explore Services
-                </Link>
-
-                <Link
-                  href="/locations"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
-                >
-                  View Locations
-                </Link>
-              </div>
-
-              <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4">
-                  <div className="text-[11px] tracking-[0.22em] text-white/50">COMPARE</div>
-                  <div className="mt-1 text-sm text-white/82">
-                    Compare Orbitlink with big telcos and typical small ISPs.
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4">
-                  <div className="text-[11px] tracking-[0.22em] text-white/50">TRUST</div>
-                  <div className="mt-1 text-sm text-white/82">
-                    Review trust posture, delivery visibility, and operating discipline.
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4">
-                  <div className="text-[11px] tracking-[0.22em] text-white/50">SERVICE FIT</div>
-                  <div className="mt-1 text-sm text-white/82">
-                    Match the right service to the site before the wrong quote.
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4">
-                  <div className="text-[11px] tracking-[0.22em] text-white/50">INTAKE</div>
-                  <div className="mt-1 text-sm text-white/82">
-                    Submit address, scope, and timing for a cleaner next step.
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link
-                  href="/compare"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Compare Provider Models
-                </Link>
-
-                <Link
-                  href="/trust"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Review Trust Posture
-                </Link>
-              </div>
+        <div className="relative grid grid-cols-1 gap-8 lg:grid-cols-12">
+          <div className="lg:col-span-8">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[11px] text-[#FDE68A]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
+              Evidence-first disclosure surface
             </div>
 
-            <div className="lg:col-span-5">
-              <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.05] p-6 backdrop-blur-sm">
-                <div className="pointer-events-none absolute inset-0">
-                  <div className="absolute -right-10 top-0 h-32 w-32 rounded-full bg-cyan-500/10 blur-3xl" />
-                  <div className="absolute left-0 top-1/2 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-                </div>
+            <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[44px] lg:leading-[1.02]">
+              A trust layer built to be clear, reviewable, and defensible
+            </h2>
 
-                <div className="relative">
-                  <div className="flex items-center justify-between gap-4">
-                    <div>
-                      <div className="text-[11px] tracking-[0.24em] text-white/50">OPERATOR SURFACE</div>
-                      <div className="mt-2 text-lg font-semibold text-white">
-                        Commercial qualification panel
-                      </div>
-                    </div>
-                    <div className="rounded-full border border-emerald-400/20 bg-emerald-400/[0.10] px-3 py-1 text-[11px] text-emerald-200">
-                      ACTIVE
-                    </div>
-                  </div>
+            <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
+              Orbitlink is designed to support serious business review with clear public statements,
+              scope-aware commitments, controlled onboarding, request-based verification material,
+              and a clean separation between what is public and what remains appropriately private.
+            </p>
 
-                  <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    <StatCard label="INTAKE" value="Business-only" />
-                    <StatCard label="COVERAGE" value="Ontario commercial" />
-                    <StatCard label="REVIEW MODEL" value="Address-first" />
-                    <StatCard label="SERVICE PATHS" value="Fibre • DIA • Wi-Fi • Voice" />
-                  </div>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Pill>Controlled rollout</Pill>
+              <Pill>Request-based verification</Pill>
+              <Pill>Evidence-friendly operations</Pill>
+              <Pill>Enterprise review posture</Pill>
+            </div>
 
-                  <div className="mt-5 rounded-[24px] border border-white/10 bg-black/25 p-5">
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="text-[11px] tracking-[0.22em] text-white/50">SERVICE DECISION MODEL</div>
-                      <div className="text-[11px] text-white/45">LIVE</div>
-                    </div>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link
+                href="/contact#intake"
+                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+              >
+                Contact Orbitlink
+              </Link>
+              <Link
+                href="/why-orbitlink"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Why Orbitlink
+              </Link>
+              <Link
+                href="/compare"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Compare Provider Models
+              </Link>
+            </div>
 
-                    <div className="mt-4 space-y-3">
-                      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
-                        <div className="text-sm text-white/82">Business Fibre</div>
-                        <div className="text-xs text-white/55">Primary office connectivity</div>
-                      </div>
-                      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
-                        <div className="text-sm text-white/82">Dedicated Internet Access</div>
-                        <div className="text-xs text-white/55">Critical business sites</div>
-                      </div>
-                      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
-                        <div className="text-sm text-white/82">Managed LAN & Wi-Fi</div>
-                        <div className="text-xs text-white/55">Internal network performance</div>
-                      </div>
-                      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
-                        <div className="text-sm text-white/82">Continuity & Voice</div>
-                        <div className="text-xs text-white/55">Backup and communications</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-                      <div className="text-[11px] tracking-[0.22em] text-white/50">STEP 1</div>
-                      <div className="mt-2 text-sm text-white/82">Choose service</div>
-                    </div>
-                    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-                      <div className="text-[11px] tracking-[0.22em] text-white/50">STEP 2</div>
-                      <div className="mt-2 text-sm text-white/82">Add address</div>
-                    </div>
-                    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-                      <div className="text-[11px] tracking-[0.22em] text-white/50">STEP 3</div>
-                      <div className="mt-2 text-sm text-white/82">Review fit</div>
-                    </div>
-                  </div>
-
-                  <div className="mt-5 text-xs leading-5 text-white/52">
-                    Built for serious commercial enquiries, building-based qualification, and a clearer path
-                    to pricing, assessment, and deployment planning.
-                  </div>
-                </div>
-              </div>
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <MetricPill label="TRUST MODEL" value="Clear and conservative" />
+              <MetricPill label="REVIEW STYLE" value="Scope-aware" />
+              <MetricPill label="DELIVERY SIGNAL" value="Structured and disciplined" />
             </div>
           </div>
 
-          <div className="mt-8">
-            <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-5 sm:p-6 lg:p-7">
-              <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-                <div className="max-w-3xl">
-                  <div className="text-[11px] tracking-[0.28em] text-white/50">
-                    NETWORK MAP / AVAILABILITY STRIP
-                  </div>
-                  <h2 className="mt-3 text-xl font-semibold tracking-tight text-white sm:text-[30px]">
-                    Ontario commercial availability starts with the site, not a generic claim
-                  </h2>
-                  <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                    Orbitlink reviews address, building fit, service type, and operational requirement
-                    before confirming the next commercial path.
-                  </p>
-                </div>
-
-                <StatCard label="QUALIFICATION MODE" value="Address • Building • Service fit" />
+          <div className="lg:col-span-4">
+            <div className="rounded-[28px] border border-white/10 bg-black/25 p-5 sm:p-6">
+              <div className="text-[11px] tracking-[0.24em] text-white/52">TRUST MODEL</div>
+              <div className="mt-3 text-lg font-semibold text-white">
+                Conservative, reviewable, and commercially clear
               </div>
+              <p className="mt-3 text-sm leading-6 text-white/64">
+                The goal is not to sound bigger than reality. The goal is to make each public
+                statement easier to understand, easier to verify, and easier to defend in front of
+                buyers, partners, and reviewers.
+              </p>
 
-              <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-12">
-                <div className="lg:col-span-7">
-                  <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-black/25 p-5 sm:p-6">
-                    <div className="pointer-events-none absolute inset-0">
-                      <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:48px_48px]" />
-                      <div className="absolute left-[12%] top-[28%] h-px w-[34%] bg-gradient-to-r from-transparent via-cyan-300/30 to-transparent" />
-                      <div className="absolute left-[34%] top-[46%] h-px w-[22%] bg-gradient-to-r from-transparent via-emerald-300/25 to-transparent" />
-                      <div className="absolute left-[56%] top-[30%] h-px w-[24%] bg-gradient-to-r from-transparent via-white/14 to-transparent" />
-                      <div className="absolute left-[20%] top-[64%] h-px w-[42%] bg-gradient-to-r from-transparent via-cyan-300/16 to-transparent" />
-
-                      <div className="absolute left-[18%] top-[28%] h-3 w-3 rounded-full bg-cyan-200/80 shadow-[0_0_24px_rgba(56,253,254,0.35)]" />
-                      <div className="absolute left-[42%] top-[46%] h-3 w-3 rounded-full bg-emerald-200/80 shadow-[0_0_24px_rgba(16,185,129,0.35)]" />
-                      <div className="absolute left-[64%] top-[30%] h-3 w-3 rounded-full bg-yellow-200/80 shadow-[0_0_24px_rgba(250,204,21,0.35)]" />
-                      <div className="absolute left-[52%] top-[64%] h-3 w-3 rounded-full bg-white/75 shadow-[0_0_24px_rgba(255,255,255,0.22)]" />
-                    </div>
-
-                    <div className="relative">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="text-[11px] tracking-[0.22em] text-white/50">
-                          COMMERCIAL FOOTPRINT SIGNAL
-                        </div>
-                        <div className="text-[11px] text-white/45">ONTARIO</div>
-                      </div>
-
-                      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                        <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
-                          <div className="text-[11px] tracking-[0.22em] text-white/50">TORONTO</div>
-                          <div className="mt-2 text-sm text-white/82">Commercial review</div>
-                        </div>
-                        <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
-                          <div className="text-[11px] tracking-[0.22em] text-white/50">MISSISSAUGA</div>
-                          <div className="mt-2 text-sm text-white/82">Active market</div>
-                        </div>
-                        <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
-                          <div className="text-[11px] tracking-[0.22em] text-white/50">VAUGHAN</div>
-                          <div className="mt-2 text-sm text-white/82">Industrial fit</div>
-                        </div>
-                        <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
-                          <div className="text-[11px] tracking-[0.22em] text-white/50">BRAMPTON</div>
-                          <div className="mt-2 text-sm text-white/82">Logistics fit</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-5">
-                  <div className="grid grid-cols-1 gap-4">
-                    <StatCard label="AVAILABILITY" value="Reviewed by building" />
-                    <StatCard label="SERVICE MATCHING" value="Right service before wrong quote" />
-                    <StatCard label="BUYER OUTCOME" value="Faster commercial next step" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link
-                  href="/locations"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Browse Ontario Locations
-                </Link>
-                <Link
-                  href="/locations/toronto"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
-                >
-                  Toronto
-                </Link>
-                <Link
-                  href="/locations/mississauga"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
-                >
-                  Mississauga
-                </Link>
-                <Link
-                  href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                >
-                  Start Availability Review
-                </Link>
+              <div className="mt-5 grid gap-3">
+                <ReviewStep
+                  step="1"
+                  title="Define scope"
+                  desc="Separate what is live, what is planned, and what is request-only."
+                />
+                <ReviewStep
+                  step="2"
+                  title="Control disclosure"
+                  desc="Publish only what is supportable and operationally accurate."
+                />
+                <ReviewStep
+                  step="3"
+                  title="Support review"
+                  desc="Share redacted or scoped material when there is a real review path."
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <BentoServices />
+      <section className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 sm:mt-6 sm:gap-5">
+        {TRUST_TILES.map((tile) => (
+          <StatusTile
+            key={tile.label}
+            label={tile.label}
+            value={tile.value}
+            tone={tile.tone}
+          />
+        ))}
+      </section>
 
-      <section className="mx-auto max-w-6xl px-5 py-10 sm:px-7 sm:py-12">
-        <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">HOW IT WORKS</div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                A simple path from enquiry to quote
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Submit your service address, business requirement, and timeline. Orbitlink reviews
-                the request and responds with the next commercial step.
-              </p>
-            </div>
-
-            <StatCard label="PROCESS" value="Commercial, address-based, and practical" />
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>WHY BUSINESSES READ THIS PAGE</SectionEyebrow>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Serious buyers do not just evaluate service. They evaluate judgment.
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              This page is designed to answer the questions stronger buyers always ask: Can this
+              provider communicate clearly? Can it control scope? Can it separate live from planned?
+              Can it support diligence without making reckless public claims?
+            </p>
           </div>
 
-          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <StepCard
-              step="1"
-              title="Choose your service"
-              desc="Select fibre, dedicated internet, managed Wi-Fi, voice, or continuity based on the site need."
-            />
-            <StepCard
-              step="2"
-              title="Submit your address"
-              desc="Share the service address, business requirement, and any timing details that affect the location."
-            />
-            <StepCard
-              step="3"
-              title="Receive your next step"
-              desc="Get availability direction, service-fit guidance, or a practical path toward pricing and install."
-            />
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">BUYER SIGNAL</div>
+            <div className="mt-1 text-sm text-white/80">Professional judgment is visible</div>
           </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <BuyerFitCard
+            title="Enterprise buyers"
+            text="Need clarity before procurement, not generic promises."
+          />
+          <BuyerFitCard
+            title="Property stakeholders"
+            text="Need cleaner delivery language, fewer surprises, and better operating discipline."
+          />
+          <BuyerFitCard
+            title="IT and network leads"
+            text="Need statements that make technical sense and do not overclaim what is not yet proven."
+          />
+          <BuyerFitCard
+            title="Auditors and reviewers"
+            text="Need a provider surface that can be read, checked, and understood quickly."
+          />
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
-        <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">WHY BUYERS KEEP READING</div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Orbitlink gives buyers more than a service list
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Many provider websites focus on speed claims first. Orbitlink is built to help buyers
-                understand service fit, building review, trust posture, and next steps before they commit.
-              </p>
-            </div>
-
-            <StatCard label="BUYER OUTCOME" value="More clarity before contact" />
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>HOW THIS SUPPORTS BUYER DECISIONS</SectionEyebrow>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Trust works best when it helps a buyer move forward
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              A trust page should not feel isolated from the rest of the buying journey. It should
+              reinforce why Orbitlink is easier to review, how it compares with other provider
+              models, and what the next step should be.
+            </p>
           </div>
 
-          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <StepCard
-              step="1"
-              title="Understand the fit"
-              desc="Learn which service model fits the location, the environment, and the business requirement."
-            />
-            <StepCard
-              step="2"
-              title="Review provider differences"
-              desc="Compare Orbitlink with larger telecom providers and smaller ISPs in a calmer, more business-readable way."
-            />
-            <StepCard
-              step="3"
-              title="Move with confidence"
-              desc="Submit a stronger request with better clarity around address, scope, and next steps."
-            />
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">DECISION SUPPORT</div>
+            <div className="mt-1 text-sm text-white/80">Trust → compare → contact</div>
           </div>
+        </div>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link
-              href="/compare"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Compare Provider Models
-            </Link>
-            <Link
-              href="/trust"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Review Trust Posture
-            </Link>
-          </div>
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <BuyerFitCard
+            title="Why Orbitlink"
+            text="Use the Why Orbitlink page when the buyer needs the business case in plain English."
+          />
+          <BuyerFitCard
+            title="Compare Provider Models"
+            text="Use the comparison page when the buyer is deciding between Orbitlink, a big telco, or a smaller ISP."
+          />
+          <BuyerFitCard
+            title="Contact and qualification"
+            text="Use the intake path when the buyer is ready to submit an address, service need, and timing."
+          />
+        </div>
+
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <Link
+            href="/why-orbitlink"
+            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+          >
+            Why Orbitlink
+          </Link>
+          <Link
+            href="/compare"
+            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+          >
+            Compare Provider Models
+          </Link>
+          <Link
+            href="/contact#intake"
+            className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+          >
+            Contact Orbitlink
+          </Link>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
-        <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">WHY BUYERS TRUST ORBITLINK</div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                A more structured and more reviewable business provider experience
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink is designed for buyers who want more than generic telecom marketing.
-                The business identity, intake path, trust posture, and delivery logic are made
-                visible earlier so commercial decisions feel easier and more confident.
-              </p>
+      <section className="mt-4 rounded-[32px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="min-w-0 max-w-4xl">
+            <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
+              VERIFICATION PACK (REQUEST-ONLY)
             </div>
 
-            <StatCard label="OPERATED BY" value="TIRAV Technologies Inc." />
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Review material for real diligence without overexposing sensitive internals
+            </h2>
+
+            <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
+              Request a scope-appropriate review pack that clarifies what is live, what is planned,
+              what evidence exists today, and how public trust statements are governed. Materials
+              are supplied in redacted form where appropriate and only when the review path is real.
+            </p>
+
+            <div className="mt-5 flex flex-wrap gap-2">
+              <Pill>Disclosure memo</Pill>
+              <Pill>Change posture summary</Pill>
+              <Pill>Evidence samples</Pill>
+              <Pill>Escalation governance</Pill>
+            </div>
+
+            <p className="mt-4 text-xs text-white/55">
+              Sensitive technical internals remain private. Pack contents vary by service, readiness
+              state, and engagement scope.
+            </p>
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-2">
-            <TrustPill text="Operated by TIRAV Technologies Inc." />
-            <TrustPill text="Business-only service intake" />
-            <TrustPill text="Ontario commercial coverage" />
-            <TrustPill text="Availability reviewed by address" />
-            <TrustPill text="Structured commercial path" />
-            <TrustPill text="Site-qualified next steps" />
-          </div>
-
-          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <StatCard label="BUYER TYPE" value="Offices, clinics, warehouses, multi-site businesses" />
-            <StatCard label="REVIEW METHOD" value="Address • Building • Service fit" />
-            <StatCard label="OUTCOME" value="Cleaner qualification and faster response" />
-          </div>
-
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link
-              href="/compare"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Compare Provider Models
-            </Link>
-
-            <Link
-              href="/trust"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Review Trust Posture
-            </Link>
+          <div className="shrink-0 rounded-2xl border border-[#FACC15]/25 bg-black/25 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">POSTURE</div>
+            <div className="mt-1 text-sm text-white/80">Minimal exposure • Maximum clarity</div>
           </div>
         </div>
-      </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
-        <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">ONTARIO LOCATIONS</div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Explore location-based service coverage
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink is building location pages across Ontario to help buyers evaluate service
-                fit, commercial context, and local availability signals.
-              </p>
-            </div>
+        <form
+          className="mt-6 grid grid-cols-1 gap-3 lg:grid-cols-12"
+          action="/api/waitlist"
+          method="post"
+        >
+          <input type="hidden" name="source" value="trust" />
+          <input type="hidden" name="intent" value="verification-pack" />
+          <input type="hidden" name="returnTo" value="/trust" />
 
-            <StatCard label="SEO + COVERAGE" value="Location pages support local discovery" />
-          </div>
+          <input
+            type="text"
+            name="company_website"
+            tabIndex={-1}
+            autoComplete="off"
+            className="hidden"
+          />
 
-          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <CoverageCard
-              city="Toronto"
-              note="Business internet and commercial review"
-              href="/locations/toronto"
-            />
-            <CoverageCard
-              city="Mississauga"
-              note="Priority commercial market"
-              href="/locations/mississauga"
-            />
-            <CoverageCard
-              city="Vaughan"
-              note="Industrial and business-site fit"
-              href="/locations/vaughan"
-            />
-            <CoverageCard
-              city="Brampton"
-              note="Warehousing and logistics fit"
-              href="/locations/brampton"
-            />
-          </div>
+          <input
+            name="email"
+            type="email"
+            required
+            placeholder="Work email"
+            className="w-full rounded-2xl border border-[#FACC15]/15 bg-black/25 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-[#FACC15]/45 lg:col-span-4"
+          />
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/locations"
-              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
-            >
-              Browse All Locations
-            </Link>
-            <Link
-              href="/contact#intake"
+          <input
+            name="company"
+            type="text"
+            placeholder="Company or organization"
+            className="w-full rounded-2xl border border-[#FACC15]/15 bg-black/25 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-[#FACC15]/45 lg:col-span-3"
+          />
+
+          <select
+            name="role"
+            defaultValue=""
+            className="w-full rounded-2xl border border-[#FACC15]/15 bg-black/25 px-4 py-3 text-sm text-white outline-none focus:border-[#FACC15]/45 lg:col-span-2"
+          >
+            <option value="" disabled>
+              Role
+            </option>
+            <option value="enterprise">Business buyer</option>
+            <option value="it">IT / Network lead</option>
+            <option value="auditor">Auditor / Compliance</option>
+            <option value="partner">Partner / Vendor</option>
+            <option value="other">Other</option>
+          </select>
+
+          <select
+            name="module"
+            defaultValue=""
+            className="w-full rounded-2xl border border-[#FACC15]/15 bg-black/25 px-4 py-3 text-sm text-white outline-none focus:border-[#FACC15]/45 lg:col-span-3"
+          >
+            <option value="" disabled>
+              Service surface
+            </option>
+            {moduleOptions.map((name) => (
+              <option key={name} value={name}>
+                {name}
+              </option>
+            ))}
+          </select>
+
+          <div className="mt-1 flex flex-col gap-3 lg:col-span-12 sm:flex-row sm:flex-wrap">
+            <button
+              type="submit"
               className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Check Availability
-            </Link>
-          </div>
-        </div>
-      </section>
+              Request verification pack
+            </button>
 
-      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
-        <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">FREQUENTLY ASKED QUESTIONS</div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Questions buyers commonly ask before submitting
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                These answers support clarity for buyers and help reinforce service relevance for search.
-              </p>
-            </div>
-
-            <StatCard label="SEO + CLARITY" value="Useful answers for buyers and search" />
-          </div>
-
-          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
-            <FAQCard
-              question="How do I check if Orbitlink can serve my business location?"
-              answer="Submit your business address and service requirements through the Orbitlink contact intake. Availability is reviewed based on location, building fit, and service type."
-            />
-            <FAQCard
-              question="Does Orbitlink offer business fibre and dedicated internet access?"
-              answer="Yes. Orbitlink supports business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity for Ontario businesses."
-            />
-            <FAQCard
-              question="What types of businesses is Orbitlink designed for?"
-              answer="Orbitlink is designed for commercial buyers including offices, clinics, warehouses, commercial units, and multi-site business environments across Ontario."
-            />
-            <FAQCard
-              question="What happens after I submit a request?"
-              answer="Orbitlink reviews the address, service type, and business requirement, then responds with the next commercial step such as availability direction, pricing guidance, or qualification follow-up."
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-5 pb-12 sm:px-7 sm:pb-14">
-        <div className="rounded-[32px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-8 lg:p-10">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
-                READY TO CHECK AVAILABILITY?
-              </div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Ready to check availability?
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-                Submit your service address and business requirements to receive the right next step
-                for availability, fit, and pricing direction.
-              </p>
-            </div>
-
-            <StatCard label="NEXT STEP" value="Availability • Fit • Pricing" />
-          </div>
-
-          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <StatCard label="CHECK" value="Serviceability by building and address" />
-            <StatCard label="CONFIRM" value="Right service path for the site" />
-            <StatCard label="RECEIVE" value="Pricing direction or commercial follow-up" />
-          </div>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4 sm:flex-wrap">
             <Link
               href="/contact#intake"
-              className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
-            >
-              Check Availability & Request Pricing
-            </Link>
-            <Link
-              href="/compare"
               className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
-              Compare Provider Models
+              Contact Orbitlink
             </Link>
-            <Link
-              href="/trust"
-              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
-            >
-              Review Trust Posture
-            </Link>
+
+            <div className="flex items-center text-xs text-white/55 sm:ml-auto">
+              Or email:
+              <span className="ml-1 text-white/80">concierge@orbitlink.ca</span>
+            </div>
           </div>
 
-          <div className="mt-5 text-xs text-white/55 sm:text-sm">
-            Best results come from submitting the exact service address, your business need, timing,
-            and any technical requirements such as managed Wi-Fi, voice, static IPs, or backup connectivity.
+          <div className="text-xs text-white/55 lg:col-span-12">
+            Requests are reviewed against active review and intake windows.
           </div>
+        </form>
+      </section>
+
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>OPERATIONAL DISCLOSURE</SectionEyebrow>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Built for enterprise expectation and reviewer confidence
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              Orbitlink is positioned as an infrastructure-grade operating surface. The trust model
+              prioritizes accountability, structured operations, disciplined disclosure, and a clear
+              separation between what can be published broadly and what should remain request-only.
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">PRINCIPLE</div>
+            <div className="mt-1 text-sm text-white/80">Controlled rollout • No overclaiming</div>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-5">
+          {TRUST_DISCLOSURES.map((item) => (
+            <EvidenceCard
+              key={item.heading}
+              heading={item.heading}
+              bullets={item.bullets}
+              note={item.note}
+            />
+          ))}
         </div>
       </section>
 
-      <div id="hero-sentinel" className="h-2 w-full" />
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>REVIEW FLOW</SectionEyebrow>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              A cleaner path from first diligence to controlled onboarding
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              Serious buyers want fewer surprises. This review flow is designed to reduce ambiguity,
+              separate scope from assumption, and keep the commercial path aligned with operational
+              reality.
+            </p>
+          </div>
 
-      <ConciergeBlock />
-      <SiteFooter />
-    </main>
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">OUTCOME</div>
+            <div className="mt-1 text-sm text-white/80">Faster diligence • Cleaner go-live</div>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-4">
+          <ReviewStep
+            step="1"
+            title="Qualify intent"
+            desc="Understand the buyer, the environment, and the real review objective."
+          />
+          <ReviewStep
+            step="2"
+            title="Lock scope"
+            desc="Define what is live, what is planned, what is included, and what is excluded."
+          />
+          <ReviewStep
+            step="3"
+            title="Support review"
+            desc="Provide redacted or scoped verification material when the review path is active."
+          />
+          <ReviewStep
+            step="4"
+            title="Enter onboarding"
+            desc="Move into a controlled commercial and operational intake window."
+          />
+        </div>
+      </section>
+
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>SCOPE-LOCKED COMMITMENTS</SectionEyebrow>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Serious buyers do not purchase features first — they purchase clarity
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              Each engagement is defined by what is included, what is measured, what is excluded,
+              how changes are handled, and how evidence can be reviewed. This reduces uncertainty
+              at procurement, review, and go-live stages.
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">OUTCOME</div>
+            <div className="mt-1 text-sm text-white/80">Cleaner review • Lower risk</div>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3 sm:gap-5">
+          <EvidenceCard
+            heading="What we confirm"
+            bullets={[
+              "Live scope versus planned scope",
+              "Measured posture where applicable",
+              "Operational ownership and escalation path",
+            ]}
+          />
+          <EvidenceCard
+            heading="How changes happen"
+            bullets={[
+              "Staged windows with rollback posture",
+              "Documentation-first releases",
+              "No silent launches or surprise claims",
+            ]}
+          />
+          <EvidenceCard
+            heading="What stays private"
+            bullets={[
+              "Sensitive internals remain request-only",
+              "Redacted samples used when appropriate",
+              "Disclosure boundary for technical detail",
+            ]}
+          />
+        </div>
+      </section>
+
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>PROCUREMENT CONFIDENCE</SectionEyebrow>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Built to reduce buyer hesitation before the commercial conversation
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              A strong trust page does not replace service pages. It removes doubt around the
+              provider itself. This section helps buyers feel that the business behind the service
+              is deliberate, governed, and easier to work with over time.
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">COMMERCIAL IMPACT</div>
+            <div className="mt-1 text-sm text-white/80">Higher trust • lower friction</div>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <BuyerFitCard
+            title="Fewer credibility questions"
+            text="The page answers the trust questions that normally slow down early-stage deals."
+          />
+          <BuyerFitCard
+            title="Cleaner property discussions"
+            text="Building and operations stakeholders can understand the posture without reading technical internals."
+          />
+          <BuyerFitCard
+            title="Better enterprise fit"
+            text="Buyers see a provider that can separate claims, scope, and review process more professionally."
+          />
+          <BuyerFitCard
+            title="Stronger close conditions"
+            text="Clearer disclosure and controlled commitments support smoother commercial next steps."
+          />
+        </div>
+      </section>
+
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>MODULE REVIEW CONTEXT</SectionEyebrow>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Review posture varies by service surface
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              Trust review is not one-size-fits-all. Each service has a different disclosure
+              boundary, onboarding posture, and evidence path depending on scope, operating model,
+              and delivery readiness.
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">MODULE COUNT</div>
+            <div className="mt-1 text-sm text-white/80">{moduleOptions.length} active surfaces</div>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
+          {SERVICE_CATALOG.map((module) => (
+            <ModuleChip key={module.id} name={module.name} tagline={module.tagline} />
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7">
+        <SectionEyebrow>GOVERNANCE PRINCIPLES</SectionEyebrow>
+        <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+          The discipline behind the brand surface
+        </h2>
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
+          The premium feel of Orbitlink is supported by operational restraint. Public credibility
+          is protected through disclosure discipline, change governance, and evidence-friendly
+          review paths rather than oversized claims.
+        </p>
+
+        <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 sm:gap-4">
+          <TrustPrinciple
+            title="Publish conservatively"
+            desc="Only claims that can be explained, defended, and supported should appear on the public surface."
+          />
+          <TrustPrinciple
+            title="Separate live from planned"
+            desc="The trust model clearly distinguishes what is operational today from what remains milestone-driven."
+          />
+          <TrustPrinciple
+            title="Design for reviewability"
+            desc="Buyers and auditors should be able to understand the posture without needing internal system access."
+          />
+          <TrustPrinciple
+            title="Protect sensitive internals"
+            desc="Operational details are shared on a need-to-review basis, not exposed broadly for appearance."
+          />
+        </div>
+      </section>
+
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7">
+        <SectionEyebrow>ASSURANCE</SectionEyebrow>
+        <div className="mt-3 max-w-4xl text-sm leading-6 text-white/70 sm:text-[15px]">
+          {TRUST_ASSURANCE}
+        </div>
+      </section>
+
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-black/40 p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>CORPORATE DISCLOSURE</SectionEyebrow>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              Orbitlink is a brand of TIRAV Technologies Inc. Services are introduced through
+              controlled onboarding, governed by applicable Canadian requirements, and described in
+              a manner intended to remain accurate as operational and regulatory milestones evolve.
+            </p>
+            <p className="mt-4 text-xs text-white/55">
+              This page is maintained as a living disclosure. Statements update when milestones are
+              complete and internally reviewable.
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">DISCLOSURE MODEL</div>
+            <div className="mt-1 text-sm text-white/80">Living page • Milestone-based updates</div>
+          </div>
+        </div>
+
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <Link
+            href="/about"
+            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
+          >
+            About Orbitlink
+          </Link>
+          <Link
+            href="/network"
+            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
+          >
+            View Network Posture
+          </Link>
+          <Link
+            href="/why-orbitlink"
+            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
+          >
+            Why Orbitlink
+          </Link>
+          <Link
+            href="/compare"
+            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
+          >
+            Compare Provider Models
+          </Link>
+          <Link
+            href="/contact#intake"
+            className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
+          >
+            Contact Orbitlink
+          </Link>
+        </div>
+      </section>
+    </PageShell>
   );
 }

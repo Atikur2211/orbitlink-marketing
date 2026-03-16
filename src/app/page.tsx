@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import TopNav from "@/components/TopNav";
 import StickyStatusStrip from "@/components/StickyStatusStrip";
@@ -139,23 +138,19 @@ function TrustPill({ text }: { text: string }) {
 function CoverageCard({
   city,
   note,
-  href,
 }: {
   city: string;
   note: string;
-  href: string;
 }) {
   return (
-    <Link
-      href={href}
+    <a
+      href={`/locations/${city.toLowerCase()}`}
       className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/20 hover:bg-white/[0.05]"
     >
-      <div className="text-[11px] tracking-[0.22em] text-white/50">
-        {city.toUpperCase()}
-      </div>
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{city.toUpperCase()}</div>
       <div className="mt-2 text-sm font-medium text-white/90">{note}</div>
       <div className="mt-4 text-xs text-white/55">Open location →</div>
-    </Link>
+    </a>
   );
 }
 
@@ -394,86 +389,26 @@ export default function Home() {
               </div>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link
+                <a
                   href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
                   Check Availability & Request Pricing
-                </Link>
+                </a>
 
-                <Link
-                  href="/why-orbitlink"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Why Orbitlink
-                </Link>
-
-                <Link
+                <a
                   href="/services"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3 text-sm text-white transition hover:bg-white/10"
                 >
                   Explore Services
-                </Link>
+                </a>
 
-                <Link
+                <a
                   href="/locations"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
                 >
                   View Locations
-                </Link>
-              </div>
-
-              <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4">
-                  <div className="text-[11px] tracking-[0.22em] text-white/50">WHY ORBITLINK</div>
-                  <div className="mt-1 text-sm text-white/82">
-                    See what makes Orbitlink easier to trust before the first call.
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4">
-                  <div className="text-[11px] tracking-[0.22em] text-white/50">COMPARE</div>
-                  <div className="mt-1 text-sm text-white/82">
-                    Compare Orbitlink with big telcos and typical small ISPs.
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4">
-                  <div className="text-[11px] tracking-[0.22em] text-white/50">TRUST</div>
-                  <div className="mt-1 text-sm text-white/82">
-                    Review trust posture, delivery visibility, and operating discipline.
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4">
-                  <div className="text-[11px] tracking-[0.22em] text-white/50">INTAKE</div>
-                  <div className="mt-1 text-sm text-white/82">
-                    Submit address, scope, and timing for a cleaner next step.
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link
-                  href="/why-orbitlink"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Why Orbitlink
-                </Link>
-
-                <Link
-                  href="/compare"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Compare Provider Models
-                </Link>
-
-                <Link
-                  href="/trust"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Review Trust Posture
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -488,9 +423,7 @@ export default function Home() {
                 <div className="relative">
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <div className="text-[11px] tracking-[0.24em] text-white/50">
-                        OPERATOR SURFACE
-                      </div>
+                      <div className="text-[11px] tracking-[0.24em] text-white/50">OPERATOR SURFACE</div>
                       <div className="mt-2 text-lg font-semibold text-white">
                         Commercial qualification panel
                       </div>
@@ -509,9 +442,7 @@ export default function Home() {
 
                   <div className="mt-5 rounded-[24px] border border-white/10 bg-black/25 p-5">
                     <div className="flex items-center justify-between gap-3">
-                      <div className="text-[11px] tracking-[0.22em] text-white/50">
-                        SERVICE DECISION MODEL
-                      </div>
+                      <div className="text-[11px] tracking-[0.22em] text-white/50">SERVICE DECISION MODEL</div>
                       <div className="text-[11px] text-white/45">LIVE</div>
                     </div>
 
@@ -634,30 +565,30 @@ export default function Home() {
               </div>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link
+                <a
                   href="/locations"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.05] px-5 py-3 text-sm text-white transition hover:bg-white/10"
                 >
                   Browse Ontario Locations
-                </Link>
-                <Link
+                </a>
+                <a
                   href="/locations/toronto"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
                 >
                   Toronto
-                </Link>
-                <Link
+                </a>
+                <a
                   href="/locations/mississauga"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-black/20 px-5 py-3 text-sm text-white/85 transition hover:border-white/20 hover:bg-white/5"
                 >
                   Mississauga
-                </Link>
-                <Link
+                </a>
+                <a
                   href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
                   Start Availability Review
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -704,75 +635,16 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
-        <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">WHY BUYERS KEEP READING</div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Orbitlink gives buyers more than a service list
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Many provider websites focus on speed claims first. Orbitlink is built to help buyers
-                understand service fit, building review, trust posture, and next steps before they commit.
-              </p>
-            </div>
-
-            <StatCard label="BUYER OUTCOME" value="More clarity before contact" />
-          </div>
-
-          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <StepCard
-              step="1"
-              title="Understand the fit"
-              desc="Learn which service model fits the location, the environment, and the business requirement."
-            />
-            <StepCard
-              step="2"
-              title="Review provider differences"
-              desc="Compare Orbitlink with larger telecom providers and smaller ISPs in a calmer, more business-readable way."
-            />
-            <StepCard
-              step="3"
-              title="Move with confidence"
-              desc="Submit a stronger request with better clarity around address, scope, and next steps."
-            />
-          </div>
-
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link
-              href="/why-orbitlink"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Why Orbitlink
-            </Link>
-            <Link
-              href="/compare"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Compare Provider Models
-            </Link>
-            <Link
-              href="/trust"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Review Trust Posture
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
         <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">WHY BUYERS TRUST ORBITLINK</div>
+              <div className="text-[11px] tracking-[0.28em] text-white/55">TRUST SIGNALS</div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                A more structured and more reviewable business provider experience
+                A visible business identity and a clearer commercial process
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink is designed for buyers who want more than generic telecom marketing.
-                The business identity, intake path, trust posture, and delivery logic are made
-                visible earlier so commercial decisions feel easier and more confident.
+                Orbitlink is operated by TIRAV Technologies Inc. and structured for business
+                enquiries, site-qualified review, and more accountable commercial communication.
               </p>
             </div>
 
@@ -792,29 +664,6 @@ export default function Home() {
             <StatCard label="BUYER TYPE" value="Offices, clinics, warehouses, multi-site businesses" />
             <StatCard label="REVIEW METHOD" value="Address • Building • Service fit" />
             <StatCard label="OUTCOME" value="Cleaner qualification and faster response" />
-          </div>
-
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link
-              href="/why-orbitlink"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Why Orbitlink
-            </Link>
-
-            <Link
-              href="/compare"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Compare Provider Models
-            </Link>
-
-            <Link
-              href="/trust"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Review Trust Posture
-            </Link>
           </div>
         </div>
       </section>
@@ -837,41 +686,25 @@ export default function Home() {
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <CoverageCard
-              city="Toronto"
-              note="Business internet and commercial review"
-              href="/locations/toronto"
-            />
-            <CoverageCard
-              city="Mississauga"
-              note="Priority commercial market"
-              href="/locations/mississauga"
-            />
-            <CoverageCard
-              city="Vaughan"
-              note="Industrial and business-site fit"
-              href="/locations/vaughan"
-            />
-            <CoverageCard
-              city="Brampton"
-              note="Warehousing and logistics fit"
-              href="/locations/brampton"
-            />
+            <CoverageCard city="Toronto" note="Business internet and commercial review" />
+            <CoverageCard city="Mississauga" note="Priority commercial market" />
+            <CoverageCard city="Vaughan" note="Industrial and business-site fit" />
+            <CoverageCard city="Brampton" note="Warehousing and logistics fit" />
           </div>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <Link
+            <a
               href="/locations"
               className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
               Browse All Locations
-            </Link>
-            <Link
+            </a>
+            <a
               href="/contact#intake"
               className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
               Check Availability
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -938,36 +771,29 @@ export default function Home() {
             <StatCard label="RECEIVE" value="Pricing direction or commercial follow-up" />
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4 sm:flex-wrap">
-            <Link
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+            <a
               href="/contact#intake"
               className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
               Check Availability & Request Pricing
-            </Link>
-            <Link
-              href="/why-orbitlink"
+            </a>
+            <a
+              href="/services"
               className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
-              Why Orbitlink
-            </Link>
-            <Link
-              href="/compare"
+              Explore Services
+            </a>
+            <a
+              href="/locations"
               className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
-              Compare Provider Models
-            </Link>
-            <Link
-              href="/trust"
-              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
-            >
-              Review Trust Posture
-            </Link>
+              View Locations
+            </a>
           </div>
 
           <div className="mt-5 text-xs text-white/55 sm:text-sm">
-            Best results come from submitting the exact service address, your business need, timing,
-            and any technical requirements such as managed Wi-Fi, voice, static IPs, or backup connectivity.
+            Best results come from submitting the exact service address, your business need, and any timing requirement.
           </div>
         </div>
       </section>
