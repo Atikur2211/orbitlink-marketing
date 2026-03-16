@@ -10,14 +10,14 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: "Why Orbitlink · Business Connectivity with More Clarity",
+  title: "Why Orbitlink | Business Internet with More Clarity",
   description:
-    "Why Ontario organizations choose Orbitlink for business fibre, dedicated internet, managed networks, voice, continuity, and infrastructure services: clearer onboarding, stronger trust posture, and more disciplined delivery.",
+    "Why Ontario businesses choose Orbitlink for business fibre, dedicated internet, managed networks, voice, continuity, and infrastructure services: clearer onboarding, stronger trust posture, and a more structured buying experience.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Why Orbitlink · Business Connectivity with More Clarity",
+    title: "Why Orbitlink | Business Internet with More Clarity",
     description:
-      "A buyer-focused page explaining why Orbitlink is different: clearer qualification, better delivery posture, and more disciplined business connectivity across Ontario.",
+      "A buyer-focused page explaining why Orbitlink is different: clearer qualification, better delivery posture, and a more structured business connectivity experience across Ontario.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Why Orbitlink · Business Connectivity with More Clarity",
+    title: "Why Orbitlink | Business Internet with More Clarity",
     description:
-      "Why buyers choose Orbitlink for business internet, managed networks, and structured service delivery.",
+      "Why businesses choose Orbitlink for business internet, managed networks, and structured service delivery.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -51,16 +51,25 @@ export const metadata: Metadata = {
   },
 };
 
+const HERO_SIGNALS = [
+  "Business-first qualification",
+  "Address-aware availability review",
+  "Structured onboarding",
+  "Clear next-step guidance",
+  "Trust and delivery visibility",
+  "Plain-English service language",
+] as const;
+
 const DIFFERENTIATORS = [
   {
     title: "Clearer than mass-market telecom",
     body:
-      "Orbitlink is designed to explain the service, the fit, and the next step without forcing buyers through generic telecom language or broad coverage assumptions.",
+      "Orbitlink explains the service, the fit, and the next step without forcing buyers through generic telecom language or broad coverage assumptions.",
   },
   {
     title: "More structured than a typical small provider",
     body:
-      "Service requests are qualified by address, timeline, building context, and operational need so the buying path feels cleaner from the beginning.",
+      "Service requests are qualified by address, timeline, building context, and operational need so the buying path feels cleaner from the start.",
   },
   {
     title: "Built for serious business review",
@@ -99,43 +108,33 @@ const BUYER_TYPES = [
 
 const COMPARISON = [
   {
-    left: "Typical provider experience",
-    right: "Orbitlink experience",
     a: "Generic marketing before relevance",
     b: "Service fit explained before commitment",
   },
   {
-    left: "Typical provider experience",
-    right: "Orbitlink experience",
     a: "Broad claims about availability",
     b: "Availability confirmed per address and scope",
   },
   {
-    left: "Typical provider experience",
-    right: "Orbitlink experience",
     a: "Sales flow first, clarity later",
     b: "Qualification and scope first",
   },
   {
-    left: "Typical provider experience",
-    right: "Orbitlink experience",
     a: "Support posture appears after purchase",
     b: "Escalation and trust posture visible early",
   },
   {
-    left: "Typical provider experience",
-    right: "Orbitlink experience",
     a: "Each service feels separate and fragmented",
-    b: "Services feel like part of one business-ready system",
+    b: "Services feel like one business-ready system",
   },
 ] as const;
 
 const BUYER_PATH = [
   {
     step: "1",
-    title: "Choose the business need",
+    title: "Choose the real business need",
     body:
-      "Start with the real requirement: business fibre, dedicated internet, managed Wi-Fi, voice, continuity, static IPs, IoT, or infrastructure planning.",
+      "Start with the actual requirement: business fibre, dedicated internet, managed Wi-Fi, voice, continuity, static IPs, IoT, or infrastructure planning.",
   },
   {
     step: "2",
@@ -151,13 +150,41 @@ const BUYER_PATH = [
   },
 ] as const;
 
-const SIGNALS = [
-  "Business-first qualification",
-  "Address-aware availability review",
-  "Structured onboarding",
-  "Measured disclosure",
-  "Trust and compliance visibility",
-  "Clear next-step conversion path",
+const DECISION_GUIDE = [
+  {
+    title: "Why buyers compare providers",
+    body:
+      "Some businesses already know they need internet service. What they still need is confidence in which provider model fits best.",
+  },
+  {
+    title: "What the comparison page explains",
+    body:
+      "It breaks down differences in onboarding clarity, trust posture, escalation visibility, service explanation, and overall buyer experience.",
+  },
+  {
+    title: "When to use it",
+    body:
+      "Use it when a prospect is deciding between Orbitlink, a big telco, or a smaller local ISP and wants a clearer business case.",
+  },
+] as const;
+
+const FAQ_ITEMS = [
+  {
+    q: "Why would a business choose Orbitlink instead of a larger provider?",
+    a: "Orbitlink is built to provide clearer qualification, more structured onboarding, and a more disciplined trust posture for business connectivity requests.",
+  },
+  {
+    q: "What makes Orbitlink different from a typical small ISP?",
+    a: "Orbitlink emphasizes address-aware service review, controlled disclosure, trust visibility, and a more business-readable service experience.",
+  },
+  {
+    q: "What should I do if I want to evaluate Orbitlink?",
+    a: "Start by submitting your address, required service, timeline, and any technical needs such as managed Wi-Fi, static IPs, voice, or continuity requirements.",
+  },
+  {
+    q: "Is Orbitlink only for large businesses?",
+    a: "No. Orbitlink is designed for serious business buyers of different sizes, especially organizations that value clarity, structure, and a more professional provider experience.",
+  },
 ] as const;
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -252,17 +279,22 @@ export default function WhyOrbitlinkPage() {
         },
       },
       {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        name: "Orbitlink",
+        url: SITE_URL,
+      },
+      {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
         name: "Why Orbitlink",
         isPartOf: {
-          "@type": "WebSite",
           "@id": `${SITE_URL}/#website`,
-          name: "Orbitlink",
-          url: SITE_URL,
         },
         about: { "@id": `${SITE_URL}/#org` },
+        description:
+          "A buyer-focused page explaining why Orbitlink is different for business internet, managed networks, and structured service delivery.",
       },
       {
         "@type": "BreadcrumbList",
@@ -283,35 +315,14 @@ export default function WhyOrbitlinkPage() {
       },
       {
         "@type": "FAQPage",
-        mainEntity: [
-          {
-            "@type": "Question",
-            name: "Why would a business choose Orbitlink instead of a larger provider?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text:
-                "Orbitlink is built to provide clearer qualification, more structured onboarding, and a more disciplined trust posture for business connectivity requests.",
-            },
+        mainEntity: FAQ_ITEMS.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.a,
           },
-          {
-            "@type": "Question",
-            name: "What makes Orbitlink different from a typical small ISP?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text:
-                "Orbitlink emphasizes address-aware service review, controlled disclosure, trust visibility, and a more business-readable service experience.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "What should I do if I want to evaluate Orbitlink?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text:
-                "Start by submitting your address, required service, timeline, and any technical needs such as managed Wi-Fi, static IPs, voice, or continuity requirements.",
-            },
-          },
-        ],
+        })),
       },
     ],
   };
@@ -350,14 +361,13 @@ export default function WhyOrbitlinkPage() {
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              This page exists for one reason: to help a buyer quickly understand why Orbitlink
-              feels different. The difference is not just visual. It is in how services are
-              explained, how requests are qualified, how trust is shown, and how the next step is
-              made simpler.
+              Orbitlink is built for buyers who want a cleaner path from interest to action.
+              The difference is not just visual. It is in how services are explained, how
+              requests are qualified, how trust is shown, and how the next step is made simpler.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              {SIGNALS.map((item) => (
+              {HERO_SIGNALS.map((item) => (
                 <span
                   key={item}
                   className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70"
@@ -367,7 +377,7 @@ export default function WhyOrbitlinkPage() {
               ))}
             </div>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
@@ -386,6 +396,12 @@ export default function WhyOrbitlinkPage() {
               >
                 Review Trust Posture
               </Link>
+              <Link
+                href="/compare"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Compare Provider Models
+              </Link>
             </div>
           </div>
 
@@ -396,8 +412,9 @@ export default function WhyOrbitlinkPage() {
                 What makes Orbitlink feel stronger
               </div>
               <p className="mt-3 text-sm leading-6 text-white/64">
-                Buyers stay longer when the provider looks easier to understand, more disciplined,
-                and more serious about delivery. That is exactly what this page is designed to do.
+                Buyers stay longer when the provider looks easier to understand, more
+                disciplined, and more serious about delivery. That is exactly what this
+                page is designed to show.
               </p>
 
               <div className="mt-5 grid gap-3">
@@ -419,19 +436,20 @@ export default function WhyOrbitlinkPage() {
       <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <SectionEyebrow>WHY THIS PAGE CONVERTS</SectionEyebrow>
+            <SectionEyebrow>WHY THIS PAGE WORKS</SectionEyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
               Buyers do not just want service.
               <span className="block text-white/72">They want confidence in the provider.</span>
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              A normal service page explains what you sell. A strong “Why Orbitlink” page explains
-              why the experience feels safer, clearer, and more commercially credible. That is why
-              this kind of page closes better than a standard catalog page.
+              A normal service page explains what you sell. A strong “Why Orbitlink” page
+              explains why the experience feels safer, clearer, and more commercially
+              credible. That is why this kind of page helps convert better than a standard
+              catalog page.
             </p>
           </div>
 
-          <MetricPill label="PAGE PURPOSE" value="Increase business buying confidence" />
+          <MetricPill label="PAGE PURPOSE" value="Increase buying confidence" />
         </div>
 
         <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -446,12 +464,12 @@ export default function WhyOrbitlinkPage() {
           <div className="max-w-3xl">
             <SectionEyebrow>COMPARISON</SectionEyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-              The difference buyers feel immediately
+              The difference buyers feel early
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              This is the real commercial value of Orbitlink’s presentation: the experience feels
-              more intentional, more structured, and more trustworthy before the buyer ever submits
-              a request.
+              The commercial value of Orbitlink’s presentation is simple: the experience
+              feels more intentional, more structured, and more trustworthy before the
+              buyer ever submits a request.
             </p>
           </div>
 
@@ -465,15 +483,58 @@ export default function WhyOrbitlinkPage() {
               className="grid grid-cols-1 gap-3 rounded-[26px] border border-white/10 bg-black/20 p-5 md:grid-cols-2"
             >
               <div>
-                <div className="text-[11px] tracking-[0.22em] text-white/45">{row.left}</div>
+                <div className="text-[11px] tracking-[0.22em] text-white/45">
+                  Typical provider experience
+                </div>
                 <div className="mt-2 text-sm leading-6 text-white/58">{row.a}</div>
               </div>
               <div>
-                <div className="text-[11px] tracking-[0.22em] text-white/45">{row.right}</div>
+                <div className="text-[11px] tracking-[0.22em] text-white/45">
+                  Orbitlink experience
+                </div>
                 <div className="mt-2 text-sm leading-6 text-white/82">{row.b}</div>
               </div>
             </div>
           ))}
+        </div>
+      </Surface>
+
+      <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>COMPARE PROVIDER MODELS</SectionEyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+              Still comparing Orbitlink with other provider types?
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+              Some buyers want more than a service page. They want a clearer view of how
+              Orbitlink compares with big telcos and typical small ISPs before they decide
+              who to contact.
+            </p>
+          </div>
+
+          <MetricPill label="DECISION SUPPORT" value="Compare provider models" />
+        </div>
+
+        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
+          {DECISION_GUIDE.map((item) => (
+            <BenefitCard key={item.title} title={item.title} body={item.body} />
+          ))}
+        </div>
+
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Link
+            href="/compare"
+            className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+          >
+            Open Comparison Page
+          </Link>
+          <Link
+            href="/contact#intake"
+            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+          >
+            Send a Business Request
+          </Link>
         </div>
       </Surface>
 
@@ -485,9 +546,9 @@ export default function WhyOrbitlinkPage() {
               A simpler path from interest to action
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              Strong business sites reduce hesitation by making the next step obvious. Orbitlink is
-              designed to help buyers move from service interest to a qualified request without
-              guessing what to do next.
+              Strong business sites reduce hesitation by making the next step obvious.
+              Orbitlink is designed to help buyers move from service interest to a
+              qualified request without guessing what to do next.
             </p>
           </div>
 
@@ -507,6 +568,30 @@ export default function WhyOrbitlinkPage() {
       </Surface>
 
       <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
+        <div className="max-w-3xl">
+          <SectionEyebrow>FAQ</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+            Common questions about Orbitlink
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+            These answers help buyers understand where Orbitlink fits and what to do next.
+          </p>
+        </div>
+
+        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
+          {FAQ_ITEMS.map((item) => (
+            <div
+              key={item.q}
+              className="rounded-[26px] border border-white/10 bg-black/20 p-5 sm:p-6"
+            >
+              <h3 className="text-sm font-medium text-white/90">{item.q}</h3>
+              <p className="mt-3 text-sm leading-6 text-white/65">{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </Surface>
+
+      <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-3xl">
             <SectionEyebrow>FINAL REASON</SectionEyebrow>
@@ -514,9 +599,10 @@ export default function WhyOrbitlinkPage() {
               Orbitlink is designed to feel easier to trust before the first call
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              That is the real conversion advantage. The site feels clearer than a big-telco
-              experience, more premium than a generic reseller surface, and more structured than
-              most small providers. That makes better buyers more willing to take the next step.
+              That is the real conversion advantage. The site feels clearer than a
+              big-telco experience, more premium than a generic reseller surface, and
+              more structured than most small providers. That makes better buyers more
+              willing to take the next step.
             </p>
           </div>
 
