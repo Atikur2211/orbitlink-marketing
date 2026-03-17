@@ -1,4 +1,6 @@
 import Link from "next/link";
+import TopNav from "@/components/TopNav";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function NotFound() {
   return (
@@ -14,6 +16,8 @@ export default function NotFound() {
 
         <div className="absolute inset-x-0 top-0 h-[28rem] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05),transparent_60%)]" />
       </div>
+
+      <TopNav />
 
       <section className="relative mx-auto flex min-h-[calc(100vh-180px)] w-full max-w-7xl items-center px-5 py-16 sm:px-7 lg:px-8">
         <div className="grid w-full gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
@@ -196,6 +200,8 @@ export default function NotFound() {
           </aside>
         </div>
       </section>
+
+      <SiteFooter />
     </main>
   );
 }
