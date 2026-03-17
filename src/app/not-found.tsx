@@ -1,27 +1,19 @@
 import Link from "next/link";
-import TopNav from "@/components/TopNav";
-import SiteFooter from "@/components/SiteFooter";
 
 export default function NotFound() {
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-[#09090B] text-white">
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        {/* cinematic glow fields */}
         <div className="absolute -top-24 left-[-4rem] h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
         <div className="absolute right-[-3rem] top-12 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />
         <div className="absolute bottom-[-10rem] left-1/2 h-80 w-[58rem] -translate-x-1/2 rounded-full bg-[#38FDFE]/8 blur-3xl" />
 
-        {/* ambient mesh */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,253,254,0.10),transparent_30%),radial-gradient(circle_at_20%_20%,rgba(16,185,129,0.08),transparent_25%),linear-gradient(to_bottom,rgba(255,255,255,0.03),transparent_28%)]" />
 
-        {/* premium grid */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:42px_42px] [mask-image:radial-gradient(circle_at_center,black,transparent_88%)]" />
 
-        {/* soft spotlight */}
         <div className="absolute inset-x-0 top-0 h-[28rem] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05),transparent_60%)]" />
       </div>
-
-      <TopNav />
 
       <section className="relative mx-auto flex min-h-[calc(100vh-180px)] w-full max-w-7xl items-center px-5 py-16 sm:px-7 lg:px-8">
         <div className="grid w-full gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
@@ -43,6 +35,12 @@ export default function NotFound() {
               The site is operating normally. Use the primary paths below to
               continue reviewing Orbitlink business fibre, dedicated internet,
               managed network services, and provider comparison pages.
+            </p>
+
+            <p className="mt-4 max-w-2xl text-base leading-7 text-white/60">
+              Looking for business fibre internet, dedicated internet, or
+              service availability for your Ontario location? Continue below to
+              find the right path.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -198,8 +196,6 @@ export default function NotFound() {
           </aside>
         </div>
       </section>
-
-      <SiteFooter />
     </main>
   );
 }
