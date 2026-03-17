@@ -149,7 +149,9 @@ function CoverageCard({
       href={href}
       className="block h-full rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/20 hover:bg-white/[0.05]"
     >
-      <div className="text-[11px] tracking-[0.22em] text-white/50">{city.toUpperCase()}</div>
+      <div className="text-[11px] tracking-[0.22em] text-white/50">
+        {city.toUpperCase()}
+      </div>
       <div className="mt-2 text-sm font-medium text-white/90">{note}</div>
       <div className="mt-4 text-xs text-white/55">Open location →</div>
     </Link>
@@ -167,21 +169,6 @@ function FAQCard({
     <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5">
       <h3 className="text-sm font-medium text-white/92">{question}</h3>
       <p className="mt-2 text-sm leading-6 text-white/66">{answer}</p>
-    </div>
-  );
-}
-
-function InfoCard({
-  label,
-  text,
-}: {
-  label: string;
-  text: string;
-}) {
-  return (
-    <div className="h-full rounded-2xl border border-white/10 bg-black/20 px-4 py-4">
-      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
-      <div className="mt-1 text-sm text-white/82">{text}</div>
     </div>
   );
 }
@@ -375,12 +362,15 @@ export default function Home() {
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-7 text-white/82 sm:text-[1.15rem]">
-                Business internet for offices, clinics, warehouses, and multi-site teams that need a cleaner buying experience.
+                Business fibre, dedicated internet, managed Wi-Fi, and voice for
+                Ontario organizations that need a more accountable provider
+                experience.
               </p>
 
               <p className="mt-4 max-w-3xl text-sm leading-7 text-white/66 sm:text-[1rem]">
-                Orbitlink helps Ontario businesses choose the right connectivity service based on
-                address, building fit, uptime needs, and day-to-day operations.
+                Orbitlink reviews serviceability by address, building fit,
+                operational requirements, and deployment context before
+                recommending the next commercial path.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -432,41 +422,6 @@ export default function Home() {
                   View Locations
                 </Link>
               </div>
-
-              <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                <InfoCard
-                  label="COMPARE"
-                  text="See how Orbitlink differs from big telcos and typical small ISPs."
-                />
-                <InfoCard
-                  label="TRUST"
-                  text="Review trust posture, delivery visibility, and operating discipline."
-                />
-                <InfoCard
-                  label="SERVICE FIT"
-                  text="Match the right service to the site before the wrong quote."
-                />
-                <InfoCard
-                  label="INTAKE"
-                  text="Submit address, scope, and timing for a cleaner next step."
-                />
-              </div>
-
-              <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link
-                  href="/compare"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Compare Provider Models
-                </Link>
-
-                <Link
-                  href="/trust"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Review Trust Posture
-                </Link>
-              </div>
             </div>
 
             <div className="lg:col-span-5">
@@ -480,7 +435,9 @@ export default function Home() {
                 <div className="relative">
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <div className="text-[11px] tracking-[0.24em] text-white/50">OPERATOR SURFACE</div>
+                      <div className="text-[11px] tracking-[0.24em] text-white/50">
+                        OPERATOR SURFACE
+                      </div>
                       <div className="mt-2 text-lg font-semibold text-white">
                         Commercial qualification panel
                       </div>
@@ -499,26 +456,40 @@ export default function Home() {
 
                   <div className="mt-5 rounded-[24px] border border-white/10 bg-black/25 p-5">
                     <div className="flex items-center justify-between gap-3">
-                      <div className="text-[11px] tracking-[0.22em] text-white/50">SERVICE DECISION MODEL</div>
+                      <div className="text-[11px] tracking-[0.22em] text-white/50">
+                        SERVICE DECISION MODEL
+                      </div>
                       <div className="text-[11px] text-white/45">LIVE</div>
                     </div>
 
                     <div className="mt-4 space-y-3">
                       <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
                         <div className="text-sm text-white/82">Business Fibre</div>
-                        <div className="text-xs text-white/55">Primary office connectivity</div>
+                        <div className="text-xs text-white/55">
+                          Primary office connectivity
+                        </div>
                       </div>
                       <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
-                        <div className="text-sm text-white/82">Dedicated Internet Access</div>
-                        <div className="text-xs text-white/55">Critical business sites</div>
+                        <div className="text-sm text-white/82">
+                          Dedicated Internet Access
+                        </div>
+                        <div className="text-xs text-white/55">
+                          Critical business sites
+                        </div>
                       </div>
                       <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
-                        <div className="text-sm text-white/82">Managed LAN & Wi-Fi</div>
-                        <div className="text-xs text-white/55">Internal network performance</div>
+                        <div className="text-sm text-white/82">
+                          Managed LAN & Wi-Fi
+                        </div>
+                        <div className="text-xs text-white/55">
+                          Internal network performance
+                        </div>
                       </div>
                       <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
                         <div className="text-sm text-white/82">Continuity & Voice</div>
-                        <div className="text-xs text-white/55">Backup and communications</div>
+                        <div className="text-xs text-white/55">
+                          Backup and communications
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -593,8 +564,14 @@ export default function Home() {
                 <div className="lg:col-span-5">
                   <div className="grid grid-cols-1 gap-4">
                     <StatCard label="AVAILABILITY" value="Reviewed by building" />
-                    <StatCard label="SERVICE MATCHING" value="Right service before wrong quote" />
-                    <StatCard label="BUYER OUTCOME" value="Faster commercial next step" />
+                    <StatCard
+                      label="SERVICE MATCHING"
+                      value="Right service before wrong quote"
+                    />
+                    <StatCard
+                      label="BUYER OUTCOME"
+                      value="Faster commercial next step"
+                    />
                   </div>
                 </div>
               </div>
@@ -636,17 +613,22 @@ export default function Home() {
         <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">HOW IT WORKS</div>
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                HOW IT WORKS
+              </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
                 A simple path from enquiry to next step
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Submit your service address, business requirement, and timeline. Orbitlink reviews
-                the request and replies with the right next step.
+                Submit your service address, business requirement, and timeline.
+                Orbitlink reviews the request and replies with the right next step.
               </p>
             </div>
 
-            <StatCard label="PROCESS" value="Commercial, address-based, and practical" />
+            <StatCard
+              label="PROCESS"
+              value="Commercial, address-based, and practical"
+            />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -670,66 +652,20 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
-        <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">WHY THIS FEELS DIFFERENT</div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                A better business buying experience than generic telecom websites
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink is built to help buyers understand service fit, review trust earlier,
-                and move into a cleaner next step without vague claims or unnecessary friction.
-              </p>
-            </div>
-
-            <StatCard label="BUYER OUTCOME" value="More clarity before contact" />
-          </div>
-
-          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <InfoCard
-              label="TYPICAL PROVIDER"
-              text="Broad promises first, real qualification later."
-            />
-            <InfoCard
-              label="ORBITLINK"
-              text="Address-based review, clearer fit, and a more structured path."
-            />
-            <InfoCard
-              label="RESULT"
-              text="Less confusion, better requests, and more confident decisions."
-            />
-          </div>
-
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link
-              href="/compare"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Compare Provider Models
-            </Link>
-            <Link
-              href="/trust"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Review Trust Posture
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
         <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">WHY BUYERS TRUST ORBITLINK</div>
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                TRUST & BUYER CLARITY
+              </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                A clearer and more reviewable business provider experience
+                Built to feel more reviewable, accountable, and commercially clear
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink is built for buyers who want more than generic telecom marketing.
-                The business identity, intake path, trust posture, and delivery logic are made
-                visible earlier so decisions feel easier and more confident.
+                Orbitlink is designed for buyers who want more than generic telecom
+                claims. Service fit, business identity, qualification logic, and
+                next-step clarity are surfaced earlier so decisions feel cleaner
+                and more confident.
               </p>
             </div>
 
@@ -746,25 +682,15 @@ export default function Home() {
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <StatCard label="BUYER TYPE" value="Offices, clinics, warehouses, multi-site businesses" />
+            <StatCard
+              label="BUYER TYPE"
+              value="Offices, clinics, warehouses, multi-site businesses"
+            />
             <StatCard label="REVIEW METHOD" value="Address • Building • Service fit" />
-            <StatCard label="OUTCOME" value="Cleaner qualification and faster response" />
-          </div>
-
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link
-              href="/compare"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Compare Provider Models
-            </Link>
-
-            <Link
-              href="/trust"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Review Trust Posture
-            </Link>
+            <StatCard
+              label="OUTCOME"
+              value="Cleaner qualification and faster response"
+            />
           </div>
         </div>
       </section>
@@ -773,17 +699,23 @@ export default function Home() {
         <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">ONTARIO LOCATIONS</div>
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                ONTARIO LOCATIONS
+              </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
                 Explore location-based service coverage
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink is building location pages across Ontario to help buyers evaluate service
-                fit, commercial context, and local availability signals.
+                Orbitlink is building location pages across Ontario to help buyers
+                evaluate service fit, commercial context, and local availability
+                signals.
               </p>
             </div>
 
-            <StatCard label="SEO + COVERAGE" value="Location pages support local discovery" />
+            <StatCard
+              label="SEO + COVERAGE"
+              value="Location pages support local discovery"
+            />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -830,7 +762,9 @@ export default function Home() {
         <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">FREQUENTLY ASKED QUESTIONS</div>
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                FREQUENTLY ASKED QUESTIONS
+              </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
                 Questions buyers commonly ask before submitting
               </h2>
