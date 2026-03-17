@@ -1,402 +1,250 @@
-"use client";
+import "./globals.css";
+import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 
-import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
+const SITE_DESC =
+  "Business fibre, dedicated internet access, managed network infrastructure, and audit-ready connectivity for organizations across Ontario.";
+const GA_MEASUREMENT_ID = "G-1VWDS0BMLY";
 
-const NAV = [
-  { name: "Network", href: "/network" },
-  { name: "Services", href: "/services" },
-  { name: "Locations", href: "/locations" },
-  { name: "Solutions", href: "/solutions" },
-  { name: "Trust", href: "/trust" },
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
-] as const;
+export const viewport: Viewport = {
+  themeColor: "#09090B",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
+};
 
-const SUPPORT_PHONE_DISPLAY = "1-888-8-ORBIT-0";
-const SUPPORT_PHONE_TEL = "tel:+18888672480";
-const SUPPORT_PHONE_ARIA = "Call Orbitlink at 1 888 8 ORBIT 0";
-const INTAKE_HREF = "/contact#intake";
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: `%s · ${SITE_NAME}`,
+  },
+  description: SITE_DESC,
+  applicationName: SITE_NAME,
+  category: "Telecommunications",
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  keywords: [
+    "business fibre Ontario",
+    "business internet Ontario",
+    "dedicated internet access Ontario",
+    "managed network services Ontario",
+    "business telecom provider Ontario",
+    "Mississauga business fibre",
+    "enterprise connectivity Ontario",
+    "audit-ready connectivity",
+    "managed Wi-Fi Ontario",
+    "business VoIP Ontario",
+  ],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/favicon.ico"],
+  },
+  manifest: "/manifest.webmanifest",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    url: `${SITE_URL}/`,
+    siteName: SITE_NAME,
+    title: "Orbitlink",
+    description:
+      "Business fibre, dedicated internet access, managed network infrastructure, and audit-ready connectivity for organizations across Ontario.",
+    locale: "en_CA",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink — Business Fibre & Network Infrastructure",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Orbitlink",
+    description:
+      "Business fibre, dedicated internet access, managed network infrastructure, and audit-ready connectivity across Ontario.",
+    images: [`${SITE_URL}/opengraph-image`],
+  },
+  verification: {
+    other: {
+      "msvalidate.01": "695CB2CE20F126C050AEEA5E84135A79",
+    },
+  },
+  alternates: {
+    canonical: `${SITE_URL}/`,
+  },
+};
 
-function getFocusable(container: HTMLElement) {
-  const selector = [
-    'a[href]:not([tabindex="-1"])',
-    'button:not([disabled]):not([tabindex="-1"])',
-    'input:not([disabled]):not([tabindex="-1"])',
-    'select:not([disabled]):not([tabindex="-1"])',
-    'textarea:not([disabled]):not([tabindex="-1"])',
-    '[tabindex]:not([tabindex="-1"])',
-  ].join(",");
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const isDev = process.env.NODE_ENV !== "production";
 
-  return Array.from(container.querySelectorAll<HTMLElement>(selector)).filter(
-    (el) => !el.hasAttribute("disabled") && el.offsetParent !== null
-  );
-}
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${SITE_URL}/#org`,
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+    logo: `${SITE_URL}/icon.png`,
+    image: `${SITE_URL}/opengraph-image`,
+    description:
+      "Business fibre, dedicated internet access, managed network infrastructure, and audit-ready connectivity for organizations across Ontario.",
+    brand: {
+      "@type": "Brand",
+      name: SITE_NAME,
+    },
+    parentOrganization: {
+      "@type": "Organization",
+      name: "TIRAV Technologies Inc.",
+    },
+    telephone: "+18888672480",
+    email: "concierge@orbitlink.ca",
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        telephone: "+18888672480",
+        email: "sales@orbitlink.ca",
+        availableLanguage: ["en"],
+        areaServed: "CA-ON",
+      },
+      {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        telephone: "+18888672480",
+        email: "support@orbitlink.ca",
+        availableLanguage: ["en"],
+        areaServed: "CA-ON",
+      },
+    ],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "30 Eglinton Ave W, Suite 400-A77",
+      addressLocality: "Mississauga",
+      addressRegion: "ON",
+      postalCode: "L5R 3E7",
+      addressCountry: "CA",
+    },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: "Ontario, Canada",
+    },
+    sameAs: [],
+  };
 
-export default function TopNav() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+    description: SITE_DESC,
+    publisher: {
+      "@id": `${SITE_URL}/#org`,
+    },
+    inLanguage: "en-CA",
+  };
 
-  const openBtnRef = useRef<HTMLButtonElement | null>(null);
-  const dialogRef = useRef<HTMLDivElement | null>(null);
-  const scrollYRef = useRef(0);
-
-  const activeHref = useMemo(() => pathname, [pathname]);
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 12);
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-
-    scrollYRef.current = window.scrollY;
-
-    const body = document.body;
-    const prevPosition = body.style.position;
-    const prevTop = body.style.top;
-    const prevWidth = body.style.width;
-    const prevOverflow = body.style.overflow;
-
-    body.style.position = "fixed";
-    body.style.top = `-${scrollYRef.current}px`;
-    body.style.width = "100%";
-    body.style.overflow = "hidden";
-
-    return () => {
-      body.style.position = prevPosition;
-      body.style.top = prevTop;
-      body.style.width = prevWidth;
-      body.style.overflow = prevOverflow;
-      window.scrollTo(0, scrollYRef.current);
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const dlg = dialogRef.current;
-    if (!dlg) return;
-
-    const opener = openBtnRef.current;
-    const focusables = getFocusable(dlg);
-    focusables[0]?.focus();
-
-    return () => {
-      opener?.focus();
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        setOpen(false);
-        return;
-      }
-
-      if (e.key !== "Tab") return;
-
-      const dlg = dialogRef.current;
-      if (!dlg) return;
-
-      const focusables = getFocusable(dlg);
-      if (focusables.length === 0) return;
-
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      const active = document.activeElement as HTMLElement | null;
-
-      if (e.shiftKey) {
-        if (!active || active === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (active === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open]);
+  const localBusinessJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "InternetServiceProvider",
+    "@id": `${SITE_URL}/#isp`,
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+    image: `${SITE_URL}/opengraph-image`,
+    telephone: "+18888672480",
+    email: "concierge@orbitlink.ca",
+    priceRange: "$$",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "30 Eglinton Ave W, Suite 400-A77",
+      addressLocality: "Mississauga",
+      addressRegion: "ON",
+      postalCode: "L5R 3E7",
+      addressCountry: "CA",
+    },
+    areaServed: [
+      {
+        "@type": "AdministrativeArea",
+        name: "Ontario, Canada",
+      },
+      {
+        "@type": "City",
+        name: "Mississauga",
+      },
+    ],
+    provider: {
+      "@id": `${SITE_URL}/#org`,
+    },
+    knowsAbout: [
+      "Business Fibre",
+      "Dedicated Internet Access",
+      "Managed Network Infrastructure",
+      "Managed Wi-Fi",
+      "Business Connectivity",
+      "VoIP",
+      "Continuity Connectivity",
+    ],
+  };
 
   return (
-    <header className="sticky top-0 z-[140]">
-      <div
-        className={[
-          "relative transition-all duration-300",
-          scrolled
-            ? "border-b border-white/10 bg-[#06080C]/82 shadow-[0_16px_48px_rgba(0,0,0,0.35)] backdrop-blur-2xl"
-            : "border-b border-white/8 bg-[#06080C]/58 backdrop-blur-xl",
-        ].join(" ")}
-      >
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.00))]" />
-          <div className="absolute -left-20 top-[-20px] h-24 w-24 rounded-full bg-cyan-400/10 blur-2xl" />
-          <div className="absolute right-0 top-[-26px] h-24 w-24 rounded-full bg-emerald-400/10 blur-2xl" />
-          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        </div>
+    <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
 
-        <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-7 lg:px-10">
-          <Link href="/" className="flex items-center gap-3" aria-label="Orbitlink home">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/35 motion-reduce:hidden" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
-            </span>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="lazyOnload"
+        />
+        <Script id="google-analytics" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = window.gtag || gtag;
 
-            <div className="flex items-center gap-2">
-              <span className="text-xs tracking-[0.32em] text-white/95">ORBITLINK</span>
-              <span className="hidden rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] tracking-wide text-white/65 sm:inline-flex">
-                Business Connectivity
-              </span>
-            </div>
-          </Link>
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}', {
+              anonymize_ip: true,
+              debug_mode: ${isDev ? "true" : "false"}
+            });
+          `}
+        </Script>
+      </head>
 
-          <nav
-            className="hidden items-center gap-6 text-sm text-white/72 xl:flex"
-            aria-label="Primary"
-          >
-            {NAV.map((item) => {
-              const active = activeHref === item.href;
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={active ? "page" : undefined}
-                  className="group relative transition"
-                >
-                  <span className={active ? "text-white" : "text-white/72 group-hover:text-white"}>
-                    {item.name}
-                  </span>
-                  <span
-                    className={[
-                      "absolute -bottom-[19px] left-0 h-px bg-gradient-to-r from-[#38FDFE] via-white/80 to-transparent transition-all duration-300",
-                      active ? "w-full opacity-100" : "w-0 opacity-0 group-hover:w-full group-hover:opacity-100",
-                    ].join(" ")}
-                  />
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <button
-              ref={openBtnRef}
-              className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/82 transition hover:bg-white/10 xl:hidden"
-              onClick={() => setOpen(true)}
-              aria-label="Open menu"
-              aria-expanded={open}
-              aria-controls="orbitlink-mobile-menu"
-            >
-              Menu
-            </button>
-
-            <a
-              href={SUPPORT_PHONE_TEL}
-              aria-label={SUPPORT_PHONE_ARIA}
-              className="hidden rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/82 transition hover:bg-white/10 md:inline-flex"
-            >
-              {SUPPORT_PHONE_DISPLAY}
-            </a>
-
-            <Link
-              href={INTAKE_HREF}
-              className="rounded-xl bg-[#FACC15] px-4 py-2.5 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-            >
-              Check Availability
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {open && (
-        <div
-          className="fixed inset-0 z-[220] xl:hidden"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="orbitlink-mobile-menu-title"
-          id="orbitlink-mobile-menu"
-          onClickCapture={(e) => {
-            const target = e.target as HTMLElement | null;
-            const link = target?.closest?.("a");
-            if (link) setOpen(false);
-          }}
-        >
-          <button
-            className="absolute inset-0 bg-black/84 backdrop-blur-[6px]"
-            onClick={() => setOpen(false)}
-            aria-label="Close menu"
-          />
-
-          <div className="absolute inset-x-0 top-0 z-[230] mx-auto max-w-3xl px-4 pb-4 pt-4 sm:px-6">
-            <div
-              ref={dialogRef}
-              className="relative flex max-h-[calc(100dvh-2rem)] min-h-[calc(100dvh-2rem)] flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[#07090D]/96 shadow-[0_24px_90px_rgba(0,0,0,0.58)] backdrop-blur-2xl"
-            >
-              <div className="pointer-events-none absolute inset-0">
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.00))]" />
-                <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(56,253,254,0.08),transparent_62%)]" />
-                <div className="absolute -left-10 top-0 h-24 w-24 rounded-full bg-cyan-500/10 blur-3xl" />
-                <div className="absolute right-0 top-0 h-24 w-24 rounded-full bg-emerald-400/10 blur-3xl" />
-              </div>
-
-              <div className="relative flex items-center justify-between border-b border-white/10 px-5 py-4">
-                <div className="flex items-center gap-3">
-                  <span className="relative inline-flex h-2.5 w-2.5">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/35 motion-reduce:hidden" />
-                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
-                  </span>
-
-                  <div>
-                    <div
-                      id="orbitlink-mobile-menu-title"
-                      className="text-[11px] tracking-[0.30em] text-white/90"
-                    >
-                      ORBITLINK
-                    </div>
-                    <div className="mt-1 text-[12px] text-white/52">
-                      Business fibre and managed connectivity
-                    </div>
-                  </div>
-                </div>
-
-                <button
-                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/82 transition hover:bg-white/10"
-                  onClick={() => setOpen(false)}
-                  aria-label="Close menu"
-                >
-                  Close
-                </button>
-              </div>
-
-              <div className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5">
-                <div className="grid gap-2">
-                  {NAV.map((item) => {
-                    const active = activeHref === item.href;
-
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => setOpen(false)}
-                        aria-current={active ? "page" : undefined}
-                        className={[
-                          "group flex items-center justify-between rounded-2xl border px-4 py-3.5 transition",
-                          active
-                            ? "border-white/15 bg-white/[0.08] text-white"
-                            : "border-white/10 bg-white/[0.04] text-white/84 hover:border-white/15 hover:bg-white/[0.07] hover:text-white",
-                        ].join(" ")}
-                      >
-                        <div className="flex items-center gap-3">
-                          <span
-                            className={[
-                              "h-1.5 w-1.5 rounded-full transition",
-                              active ? "bg-[#FACC15]" : "bg-white/25 group-hover:bg-white/45",
-                            ].join(" ")}
-                          />
-                          <span className="text-sm">{item.name}</span>
-                        </div>
-
-                        <span
-                          className={[
-                            "text-sm transition",
-                            active ? "text-[#FACC15]" : "text-white/30 group-hover:text-white/60",
-                          ].join(" ")}
-                        >
-                          →
-                        </span>
-                      </Link>
-                    );
-                  })}
-                </div>
-
-                <div className="mt-6 rounded-[24px] border border-white/10 bg-white/[0.04] p-4">
-                  <div className="text-[11px] tracking-[0.24em] text-white/50">START HERE</div>
-
-                  <div className="mt-2 text-sm font-medium text-white/92">
-                    Check availability for your building
-                  </div>
-
-                  <p className="mt-2 text-sm leading-6 text-white/62">
-                    Request pricing, review service fit, or start a business connectivity conversation.
-                  </p>
-
-                  <div className="mt-4 grid gap-2">
-                    <Link
-                      href={INTAKE_HREF}
-                      onClick={() => setOpen(false)}
-                      className="rounded-2xl bg-[#FACC15] px-4 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                    >
-                      Check Availability
-                    </Link>
-
-                    <a
-                      href={SUPPORT_PHONE_TEL}
-                      aria-label={SUPPORT_PHONE_ARIA}
-                      className="rounded-2xl border border-white/12 bg-black/20 px-4 py-3 text-center text-sm text-white transition hover:bg-white/10"
-                    >
-                      Call {SUPPORT_PHONE_DISPLAY}
-                    </a>
-
-                    <a
-                      href="mailto:concierge@orbitlink.ca"
-                      className="rounded-2xl border border-white/12 bg-black/20 px-4 py-3 text-center text-sm text-white transition hover:bg-white/10"
-                    >
-                      concierge@orbitlink.ca
-                    </a>
-                  </div>
-                </div>
-
-                <div className="mt-5 rounded-[24px] border border-white/10 bg-black/20 p-4">
-                  <div className="text-[11px] tracking-[0.24em] text-white/50">NETWORK SIGNAL</div>
-                  <div className="mt-3 grid grid-cols-2 gap-2">
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3 text-xs text-white/75">
-                      Toronto
-                    </div>
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3 text-xs text-white/75">
-                      Mississauga
-                    </div>
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3 text-xs text-white/75">
-                      Vaughan
-                    </div>
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3 text-xs text-white/75">
-                      Brampton
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-5 border-t border-white/10 pt-4 text-[11px] text-white/45">
-                  <div className="flex items-center justify-between gap-3">
-                    <span>Availability varies by building</span>
-                    <span>Ontario</span>
-                  </div>
-                </div>
-
-                <div className="h-2" />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </header>
+      <body className="min-h-screen bg-[#09090B] text-white antialiased">
+        {children}
+      </body>
+    </html>
   );
 }
