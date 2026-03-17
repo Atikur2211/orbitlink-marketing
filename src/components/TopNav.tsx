@@ -35,6 +35,7 @@ export default function TopNav() {
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -69,14 +70,20 @@ export default function TopNav() {
         </div>
 
         <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-7 lg:px-10">
-          <Link href="/" className="flex items-center gap-3" aria-label="Orbitlink home">
+          <Link
+            href="/"
+            className="flex items-center gap-3"
+            aria-label="Orbitlink home"
+          >
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FACC15]/35 motion-reduce:hidden" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#FACC15]" />
             </span>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs tracking-[0.32em] text-white/95">ORBITLINK</span>
+              <span className="text-xs tracking-[0.32em] text-white/95">
+                ORBITLINK
+              </span>
               <span className="hidden rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] tracking-wide text-white/65 sm:inline-flex">
                 Business Connectivity
               </span>
@@ -97,7 +104,13 @@ export default function TopNav() {
                   aria-current={active ? "page" : undefined}
                   className="group relative transition"
                 >
-                  <span className={active ? "text-white" : "text-white/72 group-hover:text-white"}>
+                  <span
+                    className={
+                      active
+                        ? "text-white"
+                        : "text-white/72 group-hover:text-white"
+                    }
+                  >
                     {item.name}
                   </span>
                   <span
@@ -216,7 +229,9 @@ export default function TopNav() {
                           <span
                             className={[
                               "h-1.5 w-1.5 rounded-full transition",
-                              active ? "bg-[#FACC15]" : "bg-white/25 group-hover:bg-white/45",
+                              active
+                                ? "bg-[#FACC15]"
+                                : "bg-white/25 group-hover:bg-white/45",
                             ].join(" ")}
                           />
                           <span className="text-sm">{item.name}</span>
@@ -225,7 +240,9 @@ export default function TopNav() {
                         <span
                           className={[
                             "text-sm transition",
-                            active ? "text-[#FACC15]" : "text-white/30 group-hover:text-white/60",
+                            active
+                              ? "text-[#FACC15]"
+                              : "text-white/30 group-hover:text-white/60",
                           ].join(" ")}
                         >
                           →
@@ -236,14 +253,17 @@ export default function TopNav() {
                 </div>
 
                 <div className="mt-6 rounded-[24px] border border-white/10 bg-white/[0.04] p-4">
-                  <div className="text-[11px] tracking-[0.24em] text-white/50">START HERE</div>
+                  <div className="text-[11px] tracking-[0.24em] text-white/50">
+                    START HERE
+                  </div>
 
                   <div className="mt-2 text-sm font-medium text-white/92">
                     Check availability for your building
                   </div>
 
                   <p className="mt-2 text-sm leading-6 text-white/62">
-                    Request pricing, review service fit, or start a business connectivity conversation.
+                    Request pricing, review service fit, or start a business
+                    connectivity conversation.
                   </p>
 
                   <div className="mt-4 grid gap-2">
@@ -273,7 +293,9 @@ export default function TopNav() {
                 </div>
 
                 <div className="mt-5 rounded-[24px] border border-white/10 bg-black/20 p-4">
-                  <div className="text-[11px] tracking-[0.24em] text-white/50">NETWORK SIGNAL</div>
+                  <div className="text-[11px] tracking-[0.24em] text-white/50">
+                    NETWORK SIGNAL
+                  </div>
                   <div className="mt-3 grid grid-cols-2 gap-2">
                     <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3 text-xs text-white/75">
                       Toronto
