@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const NAV = [
@@ -19,10 +19,31 @@ const SUPPORT_PHONE_TEL = "tel:+18888672480";
 const SUPPORT_PHONE_ARIA = "Call Orbitlink at 1 888 8 ORBIT 0";
 const INTAKE_HREF = "/contact#intake";
 
+function getFocusable(container: HTMLElement) {
+  const selector = [
+    'a[href]:not([tabindex="-1"])',
+    'button:not([disabled]):not([tabindex="-1"])',
+    'input:not([disabled]):not([tabindex="-1"])',
+    'select:not([disabled]):not([tabindex="-1"])',
+    'textarea:not([disabled]):not([tabindex="-1"])',
+    '[tabindex]:not([tabindex="-1"])',
+  ].join(",");
+
+  return Array.from(container.querySelectorAll<HTMLElement>(selector)).filter(
+    (el) => !el.hasAttribute("disabled") && el.offsetParent !== null
+  );
+}
+
 export default function TopNav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+
+  const openBtnRef = useRef<HTMLButtonElement | null>(null);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const scrollYRef = useRef(0);
+
+  const activeHref = useMemo(() => pathname, [pathname]);
 
   useEffect(() => {
     setOpen(false);
@@ -41,9 +62,75 @@ export default function TopNav() {
   useEffect(() => {
     if (!open) return;
 
+    scrollYRef.current = window.scrollY;
+
+    const body = document.body;
+    const prevPosition = body.style.position;
+    const prevTop = body.style.top;
+    const prevWidth = body.style.width;
+    const prevOverflow = body.style.overflow;
+
+    body.style.position = "fixed";
+    body.style.top = `-${scrollYRef.current}px`;
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+
+    return () => {
+      body.style.position = prevPosition;
+      body.style.top = prevTop;
+      body.style.width = prevWidth;
+      body.style.overflow = prevOverflow;
+      window.scrollTo(0, scrollYRef.current);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const dlg = dialogRef.current;
+    if (!dlg) return;
+
+    const opener = openBtnRef.current;
+    const focusables = getFocusable(dlg);
+    focusables[0]?.focus();
+
+    return () => {
+      opener?.focus();
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        e.preventDefault();
         setOpen(false);
+        return;
+      }
+
+      if (e.key !== "Tab") return;
+
+      const dlg = dialogRef.current;
+      if (!dlg) return;
+
+      const focusables = getFocusable(dlg);
+      if (focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+
+      if (e.shiftKey) {
+        if (!active || active === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (active === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     };
 
@@ -88,7 +175,7 @@ export default function TopNav() {
             aria-label="Primary"
           >
             {NAV.map((item) => {
-              const active = pathname === item.href;
+              const active = activeHref === item.href;
 
               return (
                 <Link
@@ -103,9 +190,7 @@ export default function TopNav() {
                   <span
                     className={[
                       "absolute -bottom-[19px] left-0 h-px bg-gradient-to-r from-[#38FDFE] via-white/80 to-transparent transition-all duration-300",
-                      active
-                        ? "w-full opacity-100"
-                        : "w-0 opacity-0 group-hover:w-full group-hover:opacity-100",
+                      active ? "w-full opacity-100" : "w-0 opacity-0 group-hover:w-full group-hover:opacity-100",
                     ].join(" ")}
                   />
                 </Link>
@@ -115,6 +200,7 @@ export default function TopNav() {
 
           <div className="flex items-center gap-2">
             <button
+              ref={openBtnRef}
               className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/82 transition hover:bg-white/10 xl:hidden"
               onClick={() => setOpen(true)}
               aria-label="Open menu"
@@ -149,6 +235,11 @@ export default function TopNav() {
           aria-modal="true"
           aria-labelledby="orbitlink-mobile-menu-title"
           id="orbitlink-mobile-menu"
+          onClickCapture={(e) => {
+            const target = e.target as HTMLElement | null;
+            const link = target?.closest?.("a");
+            if (link) setOpen(false);
+          }}
         >
           <button
             className="absolute inset-0 bg-black/84 backdrop-blur-[6px]"
@@ -157,7 +248,10 @@ export default function TopNav() {
           />
 
           <div className="absolute inset-x-0 top-0 z-[230] mx-auto max-w-3xl px-4 pb-4 pt-4 sm:px-6">
-            <div className="relative flex max-h-[calc(100dvh-2rem)] min-h-[calc(100dvh-2rem)] flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[#07090D]/96 shadow-[0_24px_90px_rgba(0,0,0,0.58)] backdrop-blur-2xl">
+            <div
+              ref={dialogRef}
+              className="relative flex max-h-[calc(100dvh-2rem)] min-h-[calc(100dvh-2rem)] flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[#07090D]/96 shadow-[0_24px_90px_rgba(0,0,0,0.58)] backdrop-blur-2xl"
+            >
               <div className="pointer-events-none absolute inset-0">
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.00))]" />
                 <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(56,253,254,0.08),transparent_62%)]" />
@@ -197,7 +291,7 @@ export default function TopNav() {
               <div className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5">
                 <div className="grid gap-2">
                   {NAV.map((item) => {
-                    const active = pathname === item.href;
+                    const active = activeHref === item.href;
 
                     return (
                       <Link
