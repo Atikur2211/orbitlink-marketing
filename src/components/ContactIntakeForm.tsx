@@ -29,6 +29,58 @@ function FieldLabel({
   );
 }
 
+function SectionTitle({
+  eyebrow,
+  title,
+  desc,
+}: {
+  eyebrow: string;
+  title: string;
+  desc?: string;
+}) {
+  return (
+    <div>
+      <div className="text-[11px] tracking-[0.24em] text-white/50">{eyebrow}</div>
+      <h3 className="mt-2 text-base font-semibold text-white">{title}</h3>
+      {desc ? <p className="mt-2 text-sm leading-6 text-white/62">{desc}</p> : null}
+    </div>
+  );
+}
+
+function InfoPanel({
+  eyebrow,
+  title,
+  text,
+  tone = "neutral",
+}: {
+  eyebrow: string;
+  title: string;
+  text: string;
+  tone?: "neutral" | "accent" | "positive";
+}) {
+  const toneClass =
+    tone === "accent"
+      ? "border-[#FACC15]/15 bg-[#FACC15]/[0.06]"
+      : tone === "positive"
+        ? "border-emerald-400/15 bg-emerald-400/[0.06]"
+        : "border-white/10 bg-black/20";
+
+  const eyebrowClass =
+    tone === "accent"
+      ? "text-[#FDE68A]"
+      : tone === "positive"
+        ? "text-emerald-200"
+        : "text-white/55";
+
+  return (
+    <div className={`rounded-[24px] border p-4 ${toneClass}`}>
+      <div className={`text-[11px] tracking-[0.22em] ${eyebrowClass}`}>{eyebrow}</div>
+      <div className="mt-2 text-sm font-medium text-white/88">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/72">{text}</p>
+    </div>
+  );
+}
+
 function normalizeServiceLabel(name: string) {
   const key = name.trim().toLowerCase();
 
@@ -57,6 +109,10 @@ function inputClassName() {
   return "w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40 focus:bg-black/30";
 }
 
+function textareaClassName() {
+  return "w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40 focus:bg-black/30";
+}
+
 export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: string[] }) {
   const options = useMemo(
     () =>
@@ -71,7 +127,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
 
   return (
     <form
-      className="mt-4 grid gap-4"
+      className="mt-4 grid gap-5"
       action="/api/waitlist"
       method="post"
       onSubmit={() => {
@@ -93,24 +149,25 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
         className="hidden"
       />
 
-      <div className="text-[11px] tracking-[0.28em] text-white/55">REQUEST DETAILS</div>
+      <SectionTitle
+        eyebrow="REQUEST DETAILS"
+        title="Tell us about the site and the service need"
+        desc="The more specific the request, the easier it is to review availability, fit, and the right commercial next step."
+      />
 
-      <div className="rounded-2xl border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-4">
-        <div className="text-[11px] tracking-[0.22em] text-[#FDE68A]">WHAT HAPPENS NEXT</div>
-        <p className="mt-2 text-sm leading-6 text-white/75">
-          We review your address, service need, and timeline, then respond with the most useful
-          next step for availability, pricing direction, or service qualification.
-        </p>
-      </div>
-
-      <div className="rounded-2xl border border-emerald-400/15 bg-emerald-400/[0.06] p-4">
-        <div className="text-[11px] tracking-[0.22em] text-emerald-200">
-          RESPONSE EXPECTATION
-        </div>
-        <p className="mt-2 text-sm leading-6 text-white/78">
-          Most business enquiries receive a response within 1 business day, with the next step based
-          on address, service type, and request detail.
-        </p>
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+        <InfoPanel
+          eyebrow="WHAT HAPPENS NEXT"
+          title="We review the request properly"
+          text="Orbitlink reviews the address, service need, timing, and operating context, then responds with the most useful next step for availability, pricing direction, or service qualification."
+          tone="accent"
+        />
+        <InfoPanel
+          eyebrow="RESPONSE EXPECTATION"
+          title="Clear commercial follow-up"
+          text="Most business enquiries receive a response within 1 business day. The response path depends on address, service type, scope, and request detail."
+          tone="positive"
+        />
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -213,12 +270,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
           <FieldLabel htmlFor="timeline" optional>
             Project timeline
           </FieldLabel>
-          <select
-            id="timeline"
-            name="timeline"
-            defaultValue=""
-            className={fieldClassName}
-          >
+          <select id="timeline" name="timeline" defaultValue="" className={fieldClassName}>
             <option value="" disabled>
               Select timeline
             </option>
@@ -261,22 +313,23 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
           name="notes"
           rows={6}
           placeholder="Describe what you need. Helpful details include your current provider, target install timing, user count, static IP needs, managed Wi-Fi, voice, backup connectivity, landlord coordination, or multi-site requirements."
-          className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40 focus:bg-black/30"
+          className={textareaClassName()}
         />
         <FieldHint>
           Strong requests usually include current service, timing, site context, and any technical requirements.
         </FieldHint>
       </div>
 
-      <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+      <div className="rounded-[24px] border border-white/10 bg-black/20 p-4">
         <div className="text-[11px] tracking-[0.22em] text-white/55">HELPFUL TO INCLUDE</div>
         <p className="mt-2 text-sm leading-6 text-white/65">
-          Static IPs, managed Wi-Fi, voice, backup connectivity, building details, desired install
-          window, and anything that affects the site or commercial decision.
+          Static IPs, managed Wi-Fi, voice, backup connectivity, building details, desired
+          install window, landlord coordination, and anything that affects the site or
+          the commercial decision.
         </p>
       </div>
 
-      <div className="mt-1 grid gap-2">
+      <div className="grid gap-3 pt-1">
         <button
           type="submit"
           className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"

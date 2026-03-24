@@ -136,24 +136,6 @@ function StepCard({
   );
 }
 
-function ContactCard({
-  eyebrow,
-  title,
-  children,
-}: {
-  eyebrow: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <Surface className="p-6 sm:p-7">
-      <SectionEyebrow>{eyebrow}</SectionEyrow>
-      <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">{title}</h2>
-      <div className="mt-4 text-sm leading-6 text-white/66">{children}</div>
-    </Surface>
-  );
-}
-
 export default function ContactPage() {
   const moduleOptions = SERVICE_CATALOG.map((s) => s.publicLabel);
 
@@ -390,12 +372,17 @@ export default function ContactPage() {
 
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-12">
         <div className="space-y-5 lg:col-span-5">
-          <ContactCard eyebrow="DIRECT CONTACT" title="Business connectivity enquiries">
-            <p>
+          <Surface className="p-6 sm:p-7">
+            <SectionEyebrow>DIRECT CONTACT</SectionEyebrow>
+            <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
+              Business connectivity enquiries
+            </h2>
+
+            <div className="mt-4 text-sm leading-6 text-white/66">
               Use this page for business fibre internet, dedicated internet access,
               managed Wi-Fi, voice, continuity, static IP routing, IoT, and related
               network service enquiries across Ontario.
-            </p>
+            </div>
 
             <div className="mt-5 flex flex-wrap gap-2">
               <Pill>Business fibre</Pill>
@@ -427,13 +414,15 @@ export default function ContactPage() {
                 service, and any timing or technical requirements.
               </p>
             </div>
-          </ContactCard>
+          </Surface>
 
-          <ContactCard
-            eyebrow="WHAT TO INCLUDE"
-            title="What helps us review your request properly"
-          >
-            <div className="grid grid-cols-1 gap-3">
+          <Surface className="p-6 sm:p-7">
+            <SectionEyebrow>WHAT TO INCLUDE</SectionEyebrow>
+            <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
+              What helps us review your request properly
+            </h2>
+
+            <div className="mt-5 grid grid-cols-1 gap-3">
               <SignalCard
                 title="Exact service address"
                 text="The full service address is the most important detail for availability and site-fit review."
@@ -451,10 +440,15 @@ export default function ContactPage() {
             <p className="mt-4 text-xs text-white/55">
               Better detail up front usually produces a faster and more useful response.
             </p>
-          </ContactCard>
+          </Surface>
 
-          <ContactCard eyebrow="AFTER SUBMISSION" title="What happens after submission">
-            <div className="grid grid-cols-1 gap-3">
+          <Surface className="p-6 sm:p-7">
+            <SectionEyebrow>AFTER SUBMISSION</SectionEyebrow>
+            <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
+              What happens after submission
+            </h2>
+
+            <div className="mt-5 grid grid-cols-1 gap-3">
               <StepCard
                 step="REVIEW"
                 title="We review the request"
@@ -471,7 +465,7 @@ export default function ContactPage() {
                 text="The objective is a practical answer that helps you move toward the right service or deployment path."
               />
             </div>
-          </ContactCard>
+          </Surface>
         </div>
 
         <div
