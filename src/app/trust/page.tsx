@@ -15,14 +15,14 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: "Business Trust & Compliance Review | Orbitlink",
+  title: "Trust, Compliance & Operating Posture | Orbitlink",
   description:
-    "Business trust and compliance review for Ontario organizations. Clear disclosure, structured onboarding, evidence-friendly operations, and disciplined delivery for serious buyers, property stakeholders, and regulated environments.",
+    "Trust and compliance review for Ontario business connectivity. Disclosure-first operations, structured onboarding, evidence-friendly governance, and controlled commercial delivery.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Business Trust & Compliance Review | Orbitlink",
+    title: "Trust, Compliance & Operating Posture | Orbitlink",
     description:
-      "Business trust posture with clear disclosure, controlled onboarding, evidence-friendly operations, and disciplined change management.",
+      "Disclosure-first trust posture with structured onboarding, evidence-friendly governance, and controlled commercial delivery for serious business buyers.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -32,15 +32,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink Trust & Compliance",
+        alt: "Orbitlink trust and compliance review",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Trust & Compliance Review | Orbitlink",
+    title: "Trust, Compliance & Operating Posture | Orbitlink",
     description:
-      "Evidence-first operations, controlled rollout, and disciplined change management for business environments.",
+      "A premium trust surface for business buyers, partners, and regulated environments.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -140,8 +140,8 @@ function StatusTile({
         <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
         <p className="mt-4 text-sm leading-6 text-white/64">
-          Public trust statements stay conservative and update only when a milestone is complete,
-          reviewable, and ready for disclosure.
+          Public trust statements are updated conservatively and only when a milestone is complete,
+          internally reviewed, and ready for disclosure.
         </p>
       </div>
     </div>
@@ -250,6 +250,7 @@ export default function TrustPage() {
     "@type": "Organization",
     "@id": `${SITE_URL}/#org`,
     name: "Orbitlink",
+    legalName: "TIRAV Technologies Inc.",
     url: SITE_URL,
     logo: `${SITE_URL}/icon.png`,
     brand: { "@type": "Brand", name: "Orbitlink" },
@@ -269,6 +270,13 @@ export default function TrustPage() {
         "@type": "ContactPoint",
         contactType: "customer support",
         email: "support@orbitlink.ca",
+        availableLanguage: ["English"],
+        areaServed: "CA-ON",
+      },
+      {
+        "@type": "ContactPoint",
+        contactType: "compliance",
+        email: "regulatory@tirav.com",
         availableLanguage: ["English"],
         areaServed: "CA-ON",
       },
@@ -375,7 +383,7 @@ export default function TrustPage() {
     <PageShell
       eyebrow="TRUST & COMPLIANCE"
       title="Trust designed for serious business review"
-      subtitle="A premium trust surface for buyers, partners, and regulated environments that expect clear statements, disciplined disclosure, and structured delivery."
+      subtitle="A premium trust surface for buyers, partners, and regulated environments that expect clear disclosure, disciplined delivery, and reviewable operating posture."
     >
       <script
         type="application/ld+json"
@@ -394,17 +402,18 @@ export default function TrustPage() {
           <div className="lg:col-span-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[11px] text-[#FDE68A]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Evidence-first disclosure surface
+              Disclosure-first operating posture
             </div>
 
             <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[44px] lg:leading-[1.02]">
-              A trust layer built to be clear, reviewable, and defensible
+              A trust layer built to be clear, reviewable, and commercially useful
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              Orbitlink is designed to support serious business review with clear public statements,
-              scope-aware commitments, controlled onboarding, request-based verification material,
-              and a clean separation between what is public and what stays private.
+              Orbitlink is designed to support serious business review with clear public
+              statements, scope-aware commitments, structured onboarding, request-based
+              verification material, and a disciplined boundary between what is public and
+              what remains internal.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
@@ -443,9 +452,9 @@ export default function TrustPage() {
                 Conservative, reviewable, and commercially clear
               </div>
               <p className="mt-3 text-sm leading-6 text-white/64">
-                The goal is not to sound bigger than reality. The goal is to make each public
-                statement easier to understand, easier to verify, and easier to defend in front of
-                buyers, partners, and reviewers.
+                The goal is not to sound larger than reality. The goal is to make each public
+                statement easier to understand, easier to verify, and easier to defend in front
+                of buyers, partners, and reviewers.
               </p>
 
               <div className="mt-5 grid gap-3">
@@ -486,12 +495,12 @@ export default function TrustPage() {
           <div className="max-w-3xl">
             <SectionEyebrow>WHY BUSINESSES READ THIS PAGE</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
-              Serious buyers do not just evaluate service. They evaluate judgment.
+              Serious buyers do not only evaluate service. They evaluate judgment.
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              This page answers the questions stronger buyers usually ask: Can this provider
-              communicate clearly? Can it control scope? Can it separate live from planned? Can it
-              support diligence without making careless claims?
+              This page addresses the trust questions stronger buyers usually ask: Can this
+              provider communicate clearly? Can it control scope? Can it separate live from
+              planned? Can it support diligence without careless claims?
             </p>
           </div>
 
@@ -504,7 +513,7 @@ export default function TrustPage() {
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
           <BuyerFitCard
             title="Enterprise buyers"
-            text="Need clarity before procurement, not generic promises."
+            text="Need clarity before procurement, not generic claims or vague language."
           />
           <BuyerFitCard
             title="Property stakeholders"
@@ -529,8 +538,9 @@ export default function TrustPage() {
               Trust works best when it helps a buyer move forward
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              A trust page should help a buyer understand the provider, compare options, and decide
-              on the next step. It should not feel isolated from the rest of the buying journey.
+              A trust page should help a buyer understand the provider, compare options,
+              and decide on the next step. It should not feel separate from the rest of the
+              buying journey.
             </p>
           </div>
 
@@ -543,7 +553,7 @@ export default function TrustPage() {
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
           <BuyerFitCard
             title="Provider comparison"
-            text="Use the comparison page when deciding between Orbitlink, a big telco, or a smaller ISP."
+            text="Use the comparison page when deciding between Orbitlink, a large telecom provider, or a smaller ISP."
           />
           <BuyerFitCard
             title="Trust review"
@@ -551,7 +561,7 @@ export default function TrustPage() {
           />
           <BuyerFitCard
             title="Commercial intake"
-            text="Use the intake path when the buyer is ready to submit an address, service need, and timing."
+            text="Use the intake path when the buyer is ready to submit an address, service need, and timeline."
           />
         </div>
 
@@ -579,13 +589,14 @@ export default function TrustPage() {
             </div>
 
             <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
-              Review material for real diligence without overexposing sensitive internals
+              Review material for real diligence without exposing sensitive internals broadly
             </h2>
 
             <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-              Request a scope-appropriate review pack that clarifies what is live, what is planned,
-              what evidence exists today, and how public trust statements are governed. Materials
-              are supplied in redacted form where appropriate and only when the review path is real.
+              Request a scope-appropriate review pack that clarifies what is live, what is
+              planned, what evidence exists today, and how public trust statements are governed.
+              Materials are supplied in redacted form where appropriate and only when the review
+              path is real.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">
@@ -596,8 +607,8 @@ export default function TrustPage() {
             </div>
 
             <p className="mt-4 text-xs text-white/55">
-              Sensitive technical internals remain private. Pack contents vary by service, readiness
-              state, and engagement scope.
+              Sensitive technical internals remain private. Pack contents vary by service,
+              readiness state, and engagement scope.
             </p>
           </div>
 
@@ -704,9 +715,10 @@ export default function TrustPage() {
               Built for enterprise expectation and reviewer confidence
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              Orbitlink is positioned as an infrastructure-grade operating surface. The trust model
-              prioritizes accountability, structured operations, disciplined disclosure, and a clear
-              separation between what can be published broadly and what should remain request-only.
+              Orbitlink is positioned as an infrastructure-grade operating surface. The trust
+              model prioritizes accountability, structured operations, disciplined disclosure,
+              and a clear separation between what can be published broadly and what should remain
+              request-only.
             </p>
           </div>
 
@@ -736,9 +748,9 @@ export default function TrustPage() {
               A cleaner path from first diligence to controlled onboarding
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              Serious buyers want fewer surprises. This review flow is designed to reduce ambiguity,
-              separate scope from assumption, and keep the commercial path aligned with operational
-              reality.
+              Serious buyers want fewer surprises. This review flow is designed to reduce
+              ambiguity, separate scope from assumption, and keep the commercial path aligned
+              with operational reality.
             </p>
           </div>
 
@@ -780,9 +792,9 @@ export default function TrustPage() {
               Serious buyers do not purchase features first — they purchase clarity
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              Each engagement is defined by what is included, what is measured, what is excluded,
-              how changes are handled, and how evidence can be reviewed. This reduces uncertainty
-              at procurement, review, and go-live stages.
+              Each engagement is defined by what is included, what is measured, what is
+              excluded, how changes are handled, and how evidence can be reviewed. This
+              reduces uncertainty at procurement, review, and go-live stages.
             </p>
           </div>
 
@@ -828,9 +840,9 @@ export default function TrustPage() {
               Built to reduce buyer hesitation before the commercial conversation
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
-              A strong trust page does not replace service pages. It removes doubt around the
-              provider itself. This section helps buyers feel that the business behind the service
-              is deliberate, governed, and easier to work with over time.
+              A strong trust page does not replace service pages. It reduces doubt around the
+              provider itself. This section helps buyers feel that the business behind the
+              service is deliberate, governed, and easier to work with over time.
             </p>
           </div>
 
@@ -869,8 +881,8 @@ export default function TrustPage() {
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
               Trust review is not one-size-fits-all. Each service has a different disclosure
-              boundary, onboarding posture, and evidence path depending on scope, operating model,
-              and delivery readiness.
+              boundary, onboarding posture, and evidence path depending on scope, operating
+              model, and delivery readiness.
             </p>
           </div>
 
@@ -893,9 +905,9 @@ export default function TrustPage() {
           The discipline behind the brand surface
         </h2>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
-          The premium feel of Orbitlink is supported by operational restraint. Public credibility
-          is protected through disclosure discipline, change governance, and evidence-friendly
-          review paths rather than oversized claims.
+          The premium feel of Orbitlink is supported by operational restraint. Public
+          credibility is protected through disclosure discipline, change governance, and
+          evidence-friendly review paths rather than oversized claims.
         </p>
 
         <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -931,12 +943,12 @@ export default function TrustPage() {
             <SectionEyebrow>CORPORATE DISCLOSURE</SectionEyebrow>
             <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
               Orbitlink is a brand of TIRAV Technologies Inc. Services are introduced through
-              controlled onboarding, governed by applicable Canadian requirements, and described in
-              a way intended to remain accurate as operational and regulatory milestones evolve.
+              controlled onboarding, governed by applicable Canadian requirements, and described
+              in a way intended to remain accurate as operational and regulatory milestones evolve.
             </p>
             <p className="mt-4 text-xs text-white/55">
-              This page is maintained as a living disclosure. Statements update when milestones are
-              complete and internally reviewable.
+              This page is maintained as a living disclosure. Statements update when milestones
+              are complete and internally reviewable.
             </p>
           </div>
 

@@ -253,7 +253,7 @@ export default function SiteFooter() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Check Your Business Internet Options
+                Send a Business Request
               </Link>
             </div>
           </div>
