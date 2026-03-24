@@ -10,12 +10,12 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: "Why Orbitlink | Business Internet with More Clarity",
+  title: "Why Orbitlink | Business Connectivity with More Clarity",
   description:
-    "Why Ontario businesses choose Orbitlink for business fibre, dedicated internet, managed networks, voice, continuity, and infrastructure services: clearer onboarding, stronger trust posture, and a more structured buying experience.",
+    "Why Ontario businesses choose Orbitlink for business fibre, dedicated internet, managed networks, voice, continuity, and infrastructure services: clearer qualification, more structured onboarding, and a stronger trust posture.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Why Orbitlink | Business Internet with More Clarity",
+    title: "Why Orbitlink | Business Connectivity with More Clarity",
     description:
       "A buyer-focused page explaining why Orbitlink is different: clearer qualification, better delivery posture, and a more structured business connectivity experience across Ontario.",
     url: PAGE_URL,
@@ -27,13 +27,13 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Why Orbitlink",
+        alt: "Why Orbitlink for Ontario business connectivity",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Why Orbitlink | Business Internet with More Clarity",
+    title: "Why Orbitlink | Business Connectivity with More Clarity",
     description:
       "Why businesses choose Orbitlink for business internet, managed networks, and structured service delivery.",
     images: [TWITTER_IMAGE_URL],
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 const HERO_SIGNALS = [
   "Business-first qualification",
   "Address-aware availability review",
-  "Structured onboarding",
+  "Structured onboarding posture",
   "Clear next-step guidance",
   "Trust and delivery visibility",
   "Plain-English service language",
@@ -64,22 +64,22 @@ const DIFFERENTIATORS = [
   {
     title: "Clearer than mass-market telecom",
     body:
-      "Orbitlink explains the service, the fit, and the next step without forcing buyers through generic telecom language or broad coverage assumptions.",
+      "Orbitlink explains service fit, qualification logic, and the next step without forcing buyers through broad telecom language or generic coverage assumptions.",
   },
   {
-    title: "More structured than a typical small provider",
+    title: "More structured than a typical smaller provider",
     body:
-      "Service requests are qualified by address, timeline, building context, and operational need so the buying path feels cleaner from the start.",
+      "Requests are qualified by address, building context, timeline, and operational need so the commercial path feels cleaner from the start.",
   },
   {
     title: "Built for serious business review",
     body:
-      "Trust, disclosure, escalation, and onboarding posture are visible early, which creates more confidence for IT leads, operations teams, and property stakeholders.",
+      "Trust, disclosure, escalation, and onboarding posture are surfaced earlier, which creates more confidence for IT leads, operations teams, and property stakeholders.",
   },
   {
-    title: "Premium without sounding inflated",
+    title: "Premium without overclaiming",
     body:
-      "Orbitlink uses measured language and disciplined design so the brand feels more credible, more controlled, and easier to trust over time.",
+      "Orbitlink uses measured language and disciplined presentation so the brand feels more credible, more controlled, and easier to trust over time.",
   },
 ] as const;
 
@@ -87,7 +87,7 @@ const BUYER_TYPES = [
   {
     title: "Business owners and operators",
     body:
-      "Buyers who want a provider that feels easier to work with, easier to understand, and more serious than a generic internet vendor.",
+      "Buyers who want a provider that feels easier to work with, easier to understand, and more deliberate than a generic internet vendor.",
   },
   {
     title: "IT and network decision-makers",
@@ -113,7 +113,7 @@ const COMPARISON = [
   },
   {
     a: "Broad claims about availability",
-    b: "Availability confirmed per address and scope",
+    b: "Availability reviewed per address and scope",
   },
   {
     a: "Sales flow first, clarity later",
@@ -121,10 +121,10 @@ const COMPARISON = [
   },
   {
     a: "Support posture appears after purchase",
-    b: "Escalation and trust posture visible early",
+    b: "Escalation and trust posture visible earlier",
   },
   {
-    a: "Each service feels separate and fragmented",
+    a: "Each service feels fragmented",
     b: "Services feel like one business-ready system",
   },
 ] as const;
@@ -140,13 +140,13 @@ const BUYER_PATH = [
     step: "2",
     title: "Add address and scope",
     body:
-      "Orbitlink qualifies requests by site, timeline, building conditions, and operating requirements so the conversation starts in the right place.",
+      "Orbitlink qualifies requests by site, timeline, building conditions, and operational requirements so the conversation starts in the right place.",
   },
   {
     step: "3",
-    title: "Get a cleaner next step",
+    title: "Receive a cleaner next step",
     body:
-      "The goal is one strong response path: feasibility review, structured onboarding, waitlist, or direct commercial discussion.",
+      "The goal is one strong response path: feasibility review, structured onboarding, waitlist direction, or direct commercial discussion.",
   },
 ] as const;
 
@@ -154,7 +154,7 @@ const DECISION_GUIDE = [
   {
     title: "Why buyers compare providers",
     body:
-      "Some businesses already know they need internet service. What they still need is confidence in which provider model fits best.",
+      "Some businesses already know they need connectivity. What they still need is confidence in which provider model fits best.",
   },
   {
     title: "What the comparison page explains",
@@ -164,7 +164,7 @@ const DECISION_GUIDE = [
   {
     title: "When to use it",
     body:
-      "Use it when a prospect is deciding between Orbitlink, a big telco, or a smaller local ISP and wants a clearer business case.",
+      "Use it when a prospect is deciding between Orbitlink, a large telecom provider, or a smaller ISP and wants a clearer business case.",
   },
 ] as const;
 
@@ -174,7 +174,7 @@ const FAQ_ITEMS = [
     a: "Orbitlink is built to provide clearer qualification, more structured onboarding, and a more disciplined trust posture for business connectivity requests.",
   },
   {
-    q: "What makes Orbitlink different from a typical small ISP?",
+    q: "What makes Orbitlink different from a typical smaller ISP?",
     a: "Orbitlink emphasizes address-aware service review, controlled disclosure, trust visibility, and a more business-readable service experience.",
   },
   {
@@ -362,8 +362,8 @@ export default function WhyOrbitlinkPage() {
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
               Orbitlink is built for buyers who want a cleaner path from interest to action.
-              The difference is not just visual. It is in how services are explained, how
-              requests are qualified, how trust is shown, and how the next step is made simpler.
+              The difference is not only visual. It is in how services are explained, how
+              requests are qualified, how trust is surfaced, and how the next step is made easier.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
@@ -412,9 +412,9 @@ export default function WhyOrbitlinkPage() {
                 What makes Orbitlink feel stronger
               </div>
               <p className="mt-3 text-sm leading-6 text-white/64">
-                Buyers stay longer when the provider looks easier to understand, more
-                disciplined, and more serious about delivery. That is exactly what this
-                page is designed to show.
+                Buyers stay longer when the provider feels easier to understand, more
+                disciplined, and more serious about delivery. This page is designed to
+                make that difference visible early.
               </p>
 
               <div className="mt-5 grid gap-3">
@@ -438,14 +438,13 @@ export default function WhyOrbitlinkPage() {
           <div className="max-w-3xl">
             <SectionEyebrow>WHY THIS PAGE WORKS</SectionEyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-              Buyers do not just want service.
+              Buyers do not only want service.
               <span className="block text-white/72">They want confidence in the provider.</span>
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              A normal service page explains what you sell. A strong “Why Orbitlink” page
+              A normal service page explains what you sell. A strong Why Orbitlink page
               explains why the experience feels safer, clearer, and more commercially
-              credible. That is why this kind of page helps convert better than a standard
-              catalog page.
+              credible. That is why this page can convert better than a standard catalog page.
             </p>
           </div>
 
@@ -508,7 +507,7 @@ export default function WhyOrbitlinkPage() {
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
               Some buyers want more than a service page. They want a clearer view of how
-              Orbitlink compares with big telcos and typical small ISPs before they decide
+              Orbitlink compares with big telcos and typical smaller ISPs before deciding
               who to contact.
             </p>
           </div>
@@ -601,8 +600,8 @@ export default function WhyOrbitlinkPage() {
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
               That is the real conversion advantage. The site feels clearer than a
               big-telco experience, more premium than a generic reseller surface, and
-              more structured than most small providers. That makes better buyers more
-              willing to take the next step.
+              more structured than most smaller providers. That makes stronger buyers
+              more willing to take the next step.
             </p>
           </div>
 
