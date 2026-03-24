@@ -13,15 +13,16 @@ const LEGAL_NAME = "TIRAV Technologies Inc.";
 const CANONICAL_URL = `${SITE_URL}/`;
 
 const SITE_DESC =
-  "Reliable business internet, dedicated internet, and backup connectivity for Ontario businesses that need clearer options, stronger uptime, and a practical next step.";
+  "Business fibre internet, dedicated internet access, and managed connectivity solutions for Ontario businesses. Availability reviewed by address and infrastructure fit.";
 
-const OG_TITLE = "Reliable Business Internet Engineered for uptime | Orbitlink";
+const OG_TITLE =
+  "Business Fibre & Dedicated Internet for Ontario Businesses | Orbitlink";
 
 const OG_DESC =
-  "Check your business internet options, compare service paths, and review connectivity solutions for your Ontario location.";
+  "Business fibre internet, dedicated internet access, and managed connectivity solutions for Ontario businesses. Availability reviewed by address and infrastructure fit.";
 
 const TWITTER_DESC =
-  "Reliable business internet, dedicated internet, and backup connectivity for Ontario offices, clinics, warehouses, and multi-site businesses.";
+  "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, and continuity solutions for Ontario business environments.";
 
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
@@ -68,7 +69,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink reliable business internet and backup connectivity",
+        alt: "Orbitlink business fibre and dedicated internet for Ontario businesses",
       },
     ],
   },
@@ -276,7 +277,7 @@ export default function Home() {
         name: "How do I check if Orbitlink can serve my business location?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Submit your business address and service requirements through the Orbitlink contact intake. Availability is reviewed based on location, building fit, and service type.",
+          text: "Submit your business address and service requirements through the Orbitlink contact intake. Availability is reviewed based on address, building fit, and service type.",
         },
       },
       {
@@ -284,7 +285,7 @@ export default function Home() {
         name: "Does Orbitlink offer business fibre and dedicated internet access?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. Orbitlink supports business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity for Ontario businesses.",
+          text: "Yes. Orbitlink supports business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and continuity solutions for Ontario businesses.",
         },
       },
       {
@@ -300,7 +301,7 @@ export default function Home() {
         name: "What happens after I submit a request?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Orbitlink reviews the address, service type, and business requirement, then responds with the next step such as availability direction, pricing guidance, or qualification follow-up.",
+          text: "Orbitlink reviews the address, service type, infrastructure fit, and business requirement, then responds with the next practical commercial step.",
         },
       },
     ],
@@ -345,33 +346,35 @@ export default function Home() {
             <div className="min-w-0 lg:col-span-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] text-white/72 sm:text-xs">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-                Fibre • Dedicated internet • Backup connectivity • Business voice
+                Fibre • Dedicated internet • Managed network • Business voice
               </div>
 
               <h1 className="mt-6 text-[1.85rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[2.9rem] lg:text-[3.6rem] xl:text-[4rem]">
-                <span className="block">Reliable Business Internet</span>
-                <span className="block text-white/74">Engineered for uptime</span>
+                <span className="block">Business Fibre & Network Infrastructure</span>
+                <span className="block text-white/74">
+                  Engineered for Reliability. Delivered with Accountability.
+                </span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-7 text-white/82 sm:text-[1.08rem]">
-                Fibre, dedicated internet, and backup connectivity built for businesses
-                that cannot afford downtime, slow speeds, or unreliable support.
+                Fibre internet, dedicated access, and managed connectivity designed
+                based on your building, operational requirements, and service risk.
               </p>
 
               <p className="mt-4 max-w-3xl text-sm leading-7 text-white/66 sm:text-[1rem]">
-                We check your building, compare real service paths, and show you the
-                right next step — no generic quotes, no guesswork.
+                We evaluate availability, validate service paths, and define the
+                correct commercial approach before any recommendation is made.
               </p>
 
               <div className="mt-5 text-xs tracking-wide text-white/52 sm:text-sm">
-                Built for offices, clinics, warehouses, and multi-site businesses
+                Built for offices, clinics, warehouses, and multi-site environments
               </div>
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {[
-                  "Check fibre availability at your address",
-                  "Compare providers and service paths",
-                  "Identify risks like no backup or poor fit",
+                  "Address-based availability validation",
+                  "Fibre vs dedicated service path analysis",
+                  "Risk visibility (backup, limitations, fit)",
                 ].map((item) => (
                   <span
                     key={item}
@@ -388,10 +391,10 @@ export default function Home() {
                     href="/contact#intake"
                     className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                   >
-                    Check Your Business Internet Options
+                    Check Availability & Service Fit
                   </Link>
                   <div className="text-center text-xs text-white/50 sm:text-left">
-                    Takes 2 minutes • No commitment • Business-only review
+                    Business-only review • No obligation • Structured response
                   </div>
                 </div>
 
@@ -423,10 +426,10 @@ export default function Home() {
                   <div className="flex items-center justify-between gap-4">
                     <div>
                       <div className="text-[11px] tracking-[0.24em] text-white/50">
-                        BUSINESS INTERNET REVIEW
+                        CONNECTIVITY REVIEW
                       </div>
                       <div className="mt-2 text-lg font-semibold text-white">
-                        How we find the right setup for your business
+                        Structured connectivity review for your business
                       </div>
                     </div>
                     <div className="rounded-full border border-emerald-400/20 bg-emerald-400/[0.10] px-3 py-1 text-[11px] text-emerald-200">
@@ -435,9 +438,9 @@ export default function Home() {
                   </div>
 
                   <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    <StatCard label="STEP 1" value="Check your address" />
+                    <StatCard label="STEP 1" value="Validate address" />
                     <StatCard label="STEP 2" value="Review service fit" />
-                    <StatCard label="STEP 3" value="Recommend next step" />
+                    <StatCard label="STEP 3" value="Define next step" />
                     <StatCard label="FOR" value="Ontario businesses" />
                   </div>
 
@@ -448,13 +451,13 @@ export default function Home() {
 
                     <div className="mt-4 space-y-3">
                       <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82">
-                        Fibre availability at your building
+                        Building-level fibre availability
                       </div>
                       <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82">
-                        Dedicated internet vs shared business fibre
+                        Dedicated access versus shared business fibre
                       </div>
                       <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82">
-                        Backup connectivity if uptime matters
+                        Continuity requirements and backup paths
                       </div>
                       <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82">
                         Managed Wi-Fi, voice, and network fit
@@ -463,12 +466,12 @@ export default function Home() {
                   </div>
 
                   <div className="mt-5 text-xs leading-5 text-white/52">
-                    Built for businesses that need a reliable connection, clearer
-                    options, and a faster path to the right setup.
+                    Every location is evaluated based on infrastructure, carrier
+                    reach, and service compatibility.
                   </div>
 
                   <div className="mt-4 text-[11px] text-white/45">
-                    No obligation • No sales pressure • Clear recommendation
+                    No generic quotes • No assumptions • Clear next step
                   </div>
                 </div>
               </div>
@@ -486,12 +489,15 @@ export default function Home() {
                     Availability starts with the site, not a generic claim
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                    Orbitlink reviews address, building fit, service type, and
-                    operating requirements before confirming the right commercial path.
+                    Availability is determined by building infrastructure, carrier
+                    presence, and service compatibility — not generalized coverage claims.
                   </p>
                 </div>
 
-                <StatCard label="QUALIFICATION" value="Address • Building • Service fit" />
+                <StatCard
+                  label="QUALIFICATION"
+                  value="Address • Building • Service fit"
+                />
               </div>
 
               <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-12">
@@ -557,7 +563,7 @@ export default function Home() {
                   href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
-                  Check Your Business Internet Options
+                  Check Availability & Service Fit
                 </Link>
               </div>
             </div>
@@ -570,26 +576,29 @@ export default function Home() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <div className="text-[11px] tracking-[0.28em] text-white/55">
-                BUSINESS PAIN POINTS
+                CONNECTIVITY REALITIES
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Most business internet setups fail when you need them most
+                Common limitations in business connectivity environments
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Many businesses only discover issues after downtime, slow speeds, or
-                unreliable support start affecting daily operations.
+                Many business environments operate on connectivity that was never
+                aligned to workload demand, redundancy requirements, or operational risk.
               </p>
             </div>
 
-            <StatCard label="FOCUS" value="Downtime • Speed • Cost • Reliability" />
+            <StatCard
+              label="FOCUS"
+              value="Performance • Continuity • Fit • Accountability"
+            />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
             {[
-              "Slow speeds during peak hours",
-              "Internet outages with no backup connection",
-              "Paying too much for unreliable service",
-              "No clear upgrade path or accountable support",
+              "Shared connections that degrade under peak demand",
+              "No secondary path when continuity matters",
+              "Commercial terms that do not match the actual site requirement",
+              "Limited visibility into upgrade paths, support, or constraints",
             ].map((item) => (
               <div
                 key={item}
@@ -601,8 +610,8 @@ export default function Home() {
           </div>
 
           <p className="mt-6 max-w-3xl text-sm leading-6 text-white/64 sm:text-[15px]">
-            If any of this is happening, your current setup is likely not the right
-            fit for your business.
+            Connectivity should be matched to the environment, not chosen from a
+            generic package.
           </p>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -610,7 +619,7 @@ export default function Home() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Check Your Business Internet Options
+              Check Availability & Service Fit
             </Link>
             <Link
               href="/services"
@@ -632,12 +641,12 @@ export default function Home() {
                 HOW IT WORKS
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                A simple path from enquiry to next step
+                A structured path from enquiry to next step
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
                 Submit your address, business requirement, and timeline. We review
-                the site, service fit, and available paths, then reply with a
-                practical next step.
+                the site, service fit, and commercial path, then respond with the
+                correct next step.
               </p>
             </div>
 
@@ -651,17 +660,17 @@ export default function Home() {
             <StepCard
               step="1"
               title="Submit your business address"
-              desc="Share the exact service location, your business type, and what you need from the connection."
+              desc="Share the service location, business environment, and what the connection needs to support."
             />
             <StepCard
               step="2"
               title="We review service fit"
-              desc="We assess fibre availability, provider paths, uptime needs, and whether backup connectivity makes sense."
+              desc="We assess infrastructure, carrier paths, continuity requirements, and whether a higher-assurance option is appropriate."
             />
             <StepCard
               step="3"
-              title="Receive a clear next step"
-              desc="Get pricing direction, qualification follow-up, or a practical path toward installation."
+              title="Receive the next practical step"
+              desc="You receive qualification guidance, pricing direction, or the most suitable commercial route for the site."
             />
           </div>
         </div>
@@ -675,16 +684,16 @@ export default function Home() {
                 TRUST & BUYER CLARITY
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Built for business buyers who want clarity, not generic claims
+                Built for buyers who need clarity before commitment
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink is designed for buyers who want a cleaner commercial path.
-                Service fit, business identity, qualification logic, and next-step
-                clarity are surfaced earlier so decisions feel more confident.
+                Orbitlink operates with a disclosure-first approach. Service
+                qualification, availability constraints, and commercial structure are
+                clarified before commitment.
               </p>
               <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-                No generic claims. No forced contracts. Just the right setup based
-                on your location and business needs.
+                Operated by TIRAV Technologies Inc. • CRTC-registered
+                telecommunications reseller • BITS licence active (2026)
               </p>
             </div>
 
@@ -693,7 +702,7 @@ export default function Home() {
 
           <div className="mt-6 flex flex-wrap gap-2">
             <TrustPill text="Operated by TIRAV Technologies Inc." />
-            <TrustPill text="Business-only service review" />
+            <TrustPill text="Disclosure-first qualification" />
             <TrustPill text="Ontario commercial coverage" />
             <TrustPill text="Availability reviewed by address" />
             <TrustPill text="Structured commercial path" />
@@ -705,7 +714,10 @@ export default function Home() {
               label="BUYER TYPE"
               value="Offices, clinics, warehouses, multi-site businesses"
             />
-            <StatCard label="REVIEW METHOD" value="Address • Building • Service fit" />
+            <StatCard
+              label="REVIEW METHOD"
+              value="Address • Building • Service fit"
+            />
             <StatCard
               label="OUTCOME"
               value="Cleaner qualification and faster response"
@@ -722,11 +734,11 @@ export default function Home() {
                 ONTARIO LOCATIONS
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Explore location-based business internet coverage
+                Explore location-based business connectivity pages
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
                 Orbitlink is building location pages across Ontario to help buyers
-                evaluate service fit, commercial context, and availability signals.
+                evaluate service fit, commercial context, and local availability signals.
               </p>
             </div>
 
@@ -770,8 +782,27 @@ export default function Home() {
               href="/contact#intake"
               className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Check Your Business Internet Options
+              Check Availability & Service Fit
             </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
+        <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
+          <div className="max-w-3xl">
+            <div className="text-[11px] tracking-[0.28em] text-white/55">
+              REAL-WORLD CONTEXT
+            </div>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+              Connectivity should reflect actual operational demand
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+              A business performing large-scale device deployment experienced
+              throughput limitations on standard business internet. After
+              evaluating infrastructure and service paths, a higher-capacity
+              solution aligned to workload requirements was recommended.
+            </p>
           </div>
         </div>
       </section>
@@ -792,17 +823,20 @@ export default function Home() {
               </p>
             </div>
 
-            <StatCard label="SEO + CLARITY" value="Useful answers for buyers and search" />
+            <StatCard
+              label="SEO + CLARITY"
+              value="Useful answers for buyers and search"
+            />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
             <FAQCard
               question="How do I check if Orbitlink can serve my business location?"
-              answer="Submit your business address and service requirements through the Orbitlink contact intake. Availability is reviewed based on location, building fit, and service type."
+              answer="Submit your business address and service requirements through the Orbitlink contact intake. Availability is reviewed based on address, building fit, and service type."
             />
             <FAQCard
               question="Does Orbitlink offer business fibre and dedicated internet access?"
-              answer="Yes. Orbitlink supports business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity for Ontario businesses."
+              answer="Yes. Orbitlink supports business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and continuity solutions for Ontario businesses."
             />
             <FAQCard
               question="What types of businesses is Orbitlink designed for?"
@@ -810,7 +844,7 @@ export default function Home() {
             />
             <FAQCard
               question="What happens after I submit a request?"
-              answer="Orbitlink reviews the address, service type, and business requirement, then responds with the next step such as availability direction, pricing guidance, or qualification follow-up."
+              answer="Orbitlink reviews the address, service type, infrastructure fit, and business requirement, then responds with the next practical commercial step."
             />
           </div>
         </div>
@@ -821,24 +855,27 @@ export default function Home() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
-                READY TO REVIEW YOUR INTERNET OPTIONS?
+                READY TO REVIEW YOUR OPTIONS?
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Stop guessing. Get a clear answer on what your business actually needs.
+                Move forward with a clear understanding of your connectivity options.
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-                We’ll check your building, compare service paths, and give you a
-                clear next step for availability, fit, and pricing direction.
+                We review your building, validate service paths, and provide the
+                most appropriate next step for fit, availability, and commercial direction.
               </p>
             </div>
 
-            <StatCard label="NEXT STEP" value="Availability • Fit • Pricing" />
+            <StatCard label="NEXT STEP" value="Availability • Fit • Direction" />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
             <StatCard label="CHECK" value="Serviceability by building and address" />
             <StatCard label="CONFIRM" value="Right service path for the site" />
-            <StatCard label="RECEIVE" value="Pricing direction or commercial follow-up" />
+            <StatCard
+              label="RECEIVE"
+              value="Commercial guidance or pricing direction"
+            />
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4 sm:flex-wrap">
@@ -847,10 +884,10 @@ export default function Home() {
                 href="/contact#intake"
                 className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Check Your Business Internet Options
+                Check Availability & Service Fit
               </Link>
               <div className="text-xs text-white/55 sm:text-sm">
-                Takes 2 minutes • No commitment • Business-only review
+                Business-only review • No obligation • Structured response
               </div>
             </div>
 
@@ -869,9 +906,9 @@ export default function Home() {
           </div>
 
           <div className="mt-5 text-xs text-white/55 sm:text-sm">
-            Best results come from submitting your exact service address, required
-            timeline, and any technical needs such as managed Wi-Fi, voice, static
-            IPs, or backup internet.
+            Best results come from submitting the exact service address, required
+            timeline, and any technical requirements such as managed Wi-Fi, voice,
+            static IPs, or continuity needs.
           </div>
         </div>
       </section>
