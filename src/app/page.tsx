@@ -15,7 +15,7 @@ const CANONICAL_URL = `${SITE_URL}/`;
 const SITE_DESC =
   "Reliable business internet, dedicated internet, and backup connectivity for Ontario businesses that need clearer options, stronger uptime, and a practical next step.";
 
-const OG_TITLE = "Reliable Business Internet Without Downtime | Orbitlink";
+const OG_TITLE = "Reliable Business Internet Engineered for uptime | Orbitlink";
 
 const OG_DESC =
   "Check your business internet options, compare service paths, and review connectivity solutions for your Ontario location.";
@@ -350,7 +350,7 @@ export default function Home() {
 
               <h1 className="mt-6 text-[1.85rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[2.9rem] lg:text-[3.6rem] xl:text-[4rem]">
                 <span className="block">Reliable Business Internet</span>
-                <span className="block text-white/74">Without Downtime</span>
+                <span className="block text-white/74">Engineered for uptime</span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-7 text-white/82 sm:text-[1.08rem]">
