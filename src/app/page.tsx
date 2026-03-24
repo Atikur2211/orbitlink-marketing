@@ -18,7 +18,7 @@ const SITE_DESC =
 const OG_TITLE = "Reliable Business Internet Without Downtime | Orbitlink";
 
 const OG_DESC =
-  "Check availability, compare service paths, and review business internet options for your Ontario location.";
+  "Check your business internet options, compare service paths, and review connectivity solutions for your Ontario location.";
 
 const TWITTER_DESC =
   "Reliable business internet, dedicated internet, and backup connectivity for Ontario offices, clinics, warehouses, and multi-site businesses.";
@@ -354,14 +354,18 @@ export default function Home() {
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-7 text-white/82 sm:text-[1.08rem]">
-                Fibre, dedicated internet, and backup connectivity for businesses
-                that cannot afford outages, slow speeds, or unclear support.
+                Fibre, dedicated internet, and backup connectivity built for businesses
+                that cannot afford downtime, slow speeds, or unreliable support.
               </p>
 
               <p className="mt-4 max-w-3xl text-sm leading-7 text-white/66 sm:text-[1rem]">
-                We check your building, compare real service paths, and give you a
-                clear next step — no generic quotes, no guesswork.
+                We check your building, compare real service paths, and show you the
+                right next step — no generic quotes, no guesswork.
               </p>
+
+              <div className="mt-5 text-xs tracking-wide text-white/52 sm:text-sm">
+                Built for offices, clinics, warehouses, and multi-site businesses
+              </div>
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {[
@@ -378,10 +382,6 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="mt-6 text-xs tracking-wide text-white/52 sm:text-sm">
-                Offices • Clinics • Warehouses • Commercial units • Multi-site businesses
-              </div>
-
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start">
                 <div className="flex flex-col gap-2">
                   <Link
@@ -391,10 +391,7 @@ export default function Home() {
                     Check Your Business Internet Options
                   </Link>
                   <div className="text-center text-xs text-white/50 sm:text-left">
-                    Takes 2 minutes • No commitment
-                  </div>
-                  <div className="text-center text-[11px] text-white/45 sm:text-left">
-                    Business-only review • Clear next step
+                    Takes 2 minutes • No commitment • Business-only review
                   </div>
                 </div>
 
@@ -469,6 +466,10 @@ export default function Home() {
                     Built for businesses that need a reliable connection, clearer
                     options, and a faster path to the right setup.
                   </div>
+
+                  <div className="mt-4 text-[11px] text-white/45">
+                    No obligation • No sales pressure • Clear recommendation
+                  </div>
                 </div>
               </div>
             </div>
@@ -486,8 +487,7 @@ export default function Home() {
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
                     Orbitlink reviews address, building fit, service type, and
-                    operating requirement before confirming the right commercial
-                    path.
+                    operating requirements before confirming the right commercial path.
                   </p>
                 </div>
 
@@ -557,7 +557,7 @@ export default function Home() {
                   href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
-                  Start Availability Review
+                  Check Your Business Internet Options
                 </Link>
               </div>
             </div>
@@ -573,12 +573,11 @@ export default function Home() {
                 BUSINESS PAIN POINTS
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Is your business internet holding you back?
+                Most business internet setups fail when you need them most
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Most business internet setups are never properly reviewed after
-                installation. Problems usually show up only when speed, uptime, or
-                support starts affecting operations.
+                Many businesses only discover issues after downtime, slow speeds, or
+                unreliable support start affecting daily operations.
               </p>
             </div>
 
@@ -602,8 +601,8 @@ export default function Home() {
           </div>
 
           <p className="mt-6 max-w-3xl text-sm leading-6 text-white/64 sm:text-[15px]">
-            If any of this sounds familiar, it may be time to review your current
-            setup and identify a better-fit service path.
+            If any of this is happening, your current setup is likely not the right
+            fit for your business.
           </p>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -679,10 +678,13 @@ export default function Home() {
                 Built for business buyers who want clarity, not generic claims
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink is designed for buyers who want a cleaner commercial
-                path. Service fit, business identity, qualification logic, and
-                next-step clarity are surfaced earlier so decisions feel more
-                confident.
+                Orbitlink is designed for buyers who want a cleaner commercial path.
+                Service fit, business identity, qualification logic, and next-step
+                clarity are surfaced earlier so decisions feel more confident.
+              </p>
+              <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
+                No generic claims. No forced contracts. Just the right setup based
+                on your location and business needs.
               </p>
             </div>
 
@@ -768,7 +770,7 @@ export default function Home() {
               href="/contact#intake"
               className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Check Availability
+              Check Your Business Internet Options
             </Link>
           </div>
         </div>
@@ -822,7 +824,7 @@ export default function Home() {
                 READY TO REVIEW YOUR INTERNET OPTIONS?
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Get your business internet reviewed today
+                Stop guessing. Get a clear answer on what your business actually needs.
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
                 We’ll check your building, compare service paths, and give you a
@@ -840,12 +842,18 @@ export default function Home() {
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4 sm:flex-wrap">
-            <Link
-              href="/contact#intake"
-              className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
-            >
-              Check Your Business Internet Options
-            </Link>
+            <div className="flex flex-col gap-2">
+              <Link
+                href="/contact#intake"
+                className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
+              >
+                Check Your Business Internet Options
+              </Link>
+              <div className="text-xs text-white/55 sm:text-sm">
+                Takes 2 minutes • No commitment • Business-only review
+              </div>
+            </div>
+
             <Link
               href="/compare"
               className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
