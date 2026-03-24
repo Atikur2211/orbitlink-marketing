@@ -13,13 +13,13 @@ const LEGAL_NAME = "TIRAV Technologies Inc.";
 const CANONICAL_URL = `${SITE_URL}/`;
 
 const SITE_DESC =
-  "Business internet, dedicated internet, and backup connectivity for Ontario businesses that need reliable service and a clear path to pricing and availability.";
+  "Reliable business internet, dedicated internet, and backup connectivity for Ontario businesses that need clearer options, stronger uptime, and a practical next step.";
 
 const OG_TITLE =
-  "Business Internet That Doesn’t Go Down When You Need It Most | Orbitlink";
+  "Reliable Business Internet Without Downtime | Orbitlink";
 
 const OG_DESC =
-  "Fibre, dedicated internet, and backup connectivity for Ontario businesses. Check availability, compare options, and get a clear next step.";
+  "Check availability, compare service paths, and review business internet options for your Ontario location.";
 
 const TWITTER_DESC =
   "Reliable business internet, dedicated internet, and backup connectivity for Ontario offices, clinics, warehouses, and multi-site businesses.";
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink business internet, dedicated internet, and backup connectivity",
+        alt: "Orbitlink reliable business internet and backup connectivity",
       },
     ],
   },
@@ -338,15 +338,6 @@ export default function Home() {
           <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.06),transparent_34%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,11,0.28)_0%,rgba(5,7,11,0.54)_38%,rgba(5,7,11,0.86)_100%)]" />
-          <div className="absolute left-[5%] top-[22%] h-px w-[34%] bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent blur-[1px]" />
-          <div className="absolute left-[16%] top-[31%] h-px w-[48%] bg-gradient-to-r from-transparent via-white/14 to-transparent" />
-          <div className="absolute left-[38%] top-[18%] h-px w-[24%] bg-gradient-to-r from-transparent via-emerald-300/30 to-transparent blur-[1px]" />
-          <div className="absolute left-[12%] top-[60%] h-px w-[56%] bg-gradient-to-r from-transparent via-cyan-300/18 to-transparent" />
-          <div className="absolute right-[7%] top-[42%] h-px w-[22%] bg-gradient-to-r from-transparent via-white/12 to-transparent" />
-          <div className="absolute left-[17%] top-[31%] h-2.5 w-2.5 rounded-full bg-cyan-200/80 shadow-[0_0_24px_rgba(56,253,254,0.45)]" />
-          <div className="absolute left-[51%] top-[18%] h-2.5 w-2.5 rounded-full bg-emerald-200/80 shadow-[0_0_24px_rgba(16,185,129,0.45)]" />
-          <div className="absolute left-[66%] top-[60%] h-2.5 w-2.5 rounded-full bg-yellow-200/80 shadow-[0_0_24px_rgba(250,204,21,0.45)]" />
-          <div className="absolute right-[18%] top-[42%] h-2.5 w-2.5 rounded-full bg-white/70 shadow-[0_0_24px_rgba(255,255,255,0.25)]" />
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#09090B] to-transparent" />
         </div>
 
@@ -358,35 +349,35 @@ export default function Home() {
                 Fibre • Dedicated internet • Backup connectivity • Business voice
               </div>
 
-              <h1 className="mt-6 max-w-5xl text-[2.35rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[3.6rem] lg:text-[5.2rem]">
-                Business Internet That
-                <span className="block text-white/74">
-                  Doesn’t Go Down When You Need It Most
+              <h1 className="mt-6 max-w-4xl text-[2.15rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[3.2rem] lg:text-[4.35rem]">
+                <span className="block whitespace-nowrap">Reliable Business Internet</span>
+                <span className="block whitespace-nowrap text-white/74">
+                  Without Downtime
                 </span>
               </h1>
 
-              <p className="mt-5 max-w-3xl text-base leading-7 text-white/82 sm:text-[1.15rem]">
-                Fibre, dedicated internet, and backup connectivity for businesses
-                that cannot afford downtime.
+              <p className="mt-5 max-w-3xl text-base leading-7 text-white/82 sm:text-[1.08rem]">
+                Fibre, dedicated internet, and backup connectivity for businesses that
+                cannot afford outages, slow speeds, or unclear support.
               </p>
 
-              <p className="mt-3 max-w-3xl text-sm leading-7 text-white/66 sm:text-[1rem]">
-                We check your building, show real options, and give you a clear
-                next step — no guesswork.
+              <p className="mt-4 max-w-3xl text-sm leading-7 text-white/66 sm:text-[1rem]">
+                We check your building, compare real service paths, and give you a
+                clear next step — no generic quotes, no guesswork.
               </p>
 
-              <div className="mt-6 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
+              <div className="mt-6 flex flex-wrap gap-2">
                 {[
                   "Check fibre availability at your address",
                   "Compare providers and service paths",
-                  "Identify risks like downtime or no backup",
+                  "Identify risks like no backup or poor fit",
                 ].map((item) => (
-                  <div
+                  <span
                     key={item}
-                    className="rounded-2xl border border-white/10 bg-black/25 px-4 py-3 text-sm text-white/78"
+                    className="rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/70 sm:text-xs"
                   >
                     {item}
-                  </div>
+                  </span>
                 ))}
               </div>
 
@@ -394,16 +385,19 @@ export default function Home() {
                 Offices • Clinics • Warehouses • Commercial units • Multi-site businesses
               </div>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start">
                 <div className="flex flex-col gap-2">
                   <Link
                     href="/contact#intake"
                     className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                   >
-                    Get Free Business Internet Assessment
+                    Check Your Business Internet Options
                   </Link>
                   <div className="text-center text-xs text-white/50 sm:text-left">
                     Takes 2 minutes • No commitment
+                  </div>
+                  <div className="text-center text-[11px] text-white/45 sm:text-left">
+                    Business-only review • Clear next step
                   </div>
                 </div>
 
@@ -448,7 +442,7 @@ export default function Home() {
 
                   <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <StatCard label="STEP 1" value="Check your address" />
-                    <StatCard label="STEP 2" value="Review providers and fit" />
+                    <StatCard label="STEP 2" value="Review service fit" />
                     <StatCard label="STEP 3" value="Recommend next step" />
                     <StatCard label="FOR" value="Ontario businesses" />
                   </div>
@@ -475,9 +469,8 @@ export default function Home() {
                   </div>
 
                   <div className="mt-5 text-xs leading-5 text-white/52">
-                    Built for serious business enquiries that need clear options,
-                    better reliability, and a practical next step toward pricing
-                    and deployment.
+                    Built for businesses that need a reliable connection, clearer
+                    options, and a faster path to the right setup.
                   </div>
                 </div>
               </div>
@@ -496,7 +489,7 @@ export default function Home() {
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
                     Orbitlink reviews address, building fit, service type, and operating
-                    requirement before confirming the next commercial path.
+                    requirement before confirming the right commercial path.
                   </p>
                 </div>
 
@@ -508,14 +501,6 @@ export default function Home() {
                   <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-black/25 p-5 sm:p-6">
                     <div className="pointer-events-none absolute inset-0">
                       <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:48px_48px]" />
-                      <div className="absolute left-[12%] top-[28%] h-px w-[34%] bg-gradient-to-r from-transparent via-cyan-300/30 to-transparent" />
-                      <div className="absolute left-[34%] top-[46%] h-px w-[22%] bg-gradient-to-r from-transparent via-emerald-300/25 to-transparent" />
-                      <div className="absolute left-[56%] top-[30%] h-px w-[24%] bg-gradient-to-r from-transparent via-white/14 to-transparent" />
-                      <div className="absolute left-[20%] top-[64%] h-px w-[42%] bg-gradient-to-r from-transparent via-cyan-300/16 to-transparent" />
-                      <div className="absolute left-[18%] top-[28%] h-3 w-3 rounded-full bg-cyan-200/80 shadow-[0_0_24px_rgba(56,253,254,0.35)]" />
-                      <div className="absolute left-[42%] top-[46%] h-3 w-3 rounded-full bg-emerald-200/80 shadow-[0_0_24px_rgba(16,185,129,0.35)]" />
-                      <div className="absolute left-[64%] top-[30%] h-3 w-3 rounded-full bg-yellow-200/80 shadow-[0_0_24px_rgba(250,204,21,0.35)]" />
-                      <div className="absolute left-[52%] top-[64%] h-3 w-3 rounded-full bg-white/75 shadow-[0_0_24px_rgba(255,255,255,0.22)]" />
                     </div>
 
                     <div className="relative">
@@ -593,8 +578,8 @@ export default function Home() {
                 Is your business internet holding you back?
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Many businesses do not review their internet setup until slow
-                speeds, outages, or support failures start affecting operations.
+                Most business internet setups are never properly reviewed after installation.
+                Problems usually show up only when speed, uptime, or support starts affecting operations.
               </p>
             </div>
 
@@ -605,7 +590,7 @@ export default function Home() {
             {[
               "Slow speeds during peak hours",
               "Internet outages with no backup connection",
-              "Paying too much for unreliable business service",
+              "Paying too much for unreliable service",
               "No clear upgrade path or accountable support",
             ].map((item) => (
               <div
@@ -627,7 +612,7 @@ export default function Home() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Get Free Business Internet Assessment
+              Check Your Business Internet Options
             </Link>
             <Link
               href="/services"
@@ -859,7 +844,7 @@ export default function Home() {
               href="/contact#intake"
               className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Get Free Business Internet Assessment
+              Check Your Business Internet Options
             </Link>
             <Link
               href="/compare"
