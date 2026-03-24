@@ -349,7 +349,7 @@ export default function Home() {
                 Fibre • Dedicated internet • Backup connectivity • Business voice
               </div>
 
-              <h1 className="mt-6 max-w-4xl text-[2rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[3.2rem] lg:text-[4.35rem]">
+              <h1 className="mt-6 max-w-4xl text-[1.85rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[3.2rem] lg:text-[4.35rem]">
                 <span className="block whitespace-nowrap">Reliable Business Internet</span>
                 <span className="block whitespace-nowrap text-white/74">
                   Without Downtime
