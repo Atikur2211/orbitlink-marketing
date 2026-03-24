@@ -341,21 +341,21 @@ export default function Home() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-5 pb-14 pt-14 sm:px-7 lg:px-10 lg:pb-24 lg:pt-24">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-8">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
+            <div className="min-w-0 lg:col-span-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] text-white/72 sm:text-xs">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
                 Fibre • Dedicated internet • Backup connectivity • Business voice
               </div>
 
-              <h1 className="mt-6 max-w-[13ch] text-[1.85rem] font-semibold leading-[1.02] tracking-tight text-white sm:max-w-[12ch] sm:text-[3rem] lg:max-w-[12.5ch] lg:text-[4rem] xl:text-[4.35rem]">
+              <h1 className="mt-6 text-[1.85rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[2.9rem] lg:text-[3.6rem] xl:text-[4rem]">
                 <span className="block">Reliable Business Internet</span>
                 <span className="block text-white/74">Without Downtime</span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-7 text-white/82 sm:text-[1.08rem]">
-                Fibre, dedicated internet, and backup connectivity for businesses that
-                cannot afford outages, slow speeds, or unclear support.
+                Fibre, dedicated internet, and backup connectivity for businesses
+                that cannot afford outages, slow speeds, or unclear support.
               </p>
 
               <p className="mt-4 max-w-3xl text-sm leading-7 text-white/66 sm:text-[1rem]">
@@ -485,8 +485,9 @@ export default function Home() {
                     Availability starts with the site, not a generic claim
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                    Orbitlink reviews address, building fit, service type, and operating
-                    requirement before confirming the right commercial path.
+                    Orbitlink reviews address, building fit, service type, and
+                    operating requirement before confirming the right commercial
+                    path.
                   </p>
                 </div>
 
@@ -575,8 +576,9 @@ export default function Home() {
                 Is your business internet holding you back?
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Most business internet setups are never properly reviewed after installation.
-                Problems usually show up only when speed, uptime, or support starts affecting operations.
+                Most business internet setups are never properly reviewed after
+                installation. Problems usually show up only when speed, uptime, or
+                support starts affecting operations.
               </p>
             </div>
 
@@ -677,9 +679,10 @@ export default function Home() {
                 Built for business buyers who want clarity, not generic claims
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink is designed for buyers who want a cleaner commercial path.
-                Service fit, business identity, qualification logic, and next-step
-                clarity are surfaced earlier so decisions feel more confident.
+                Orbitlink is designed for buyers who want a cleaner commercial
+                path. Service fit, business identity, qualification logic, and
+                next-step clarity are surfaced earlier so decisions feel more
+                confident.
               </p>
             </div>
 
@@ -782,8 +785,8 @@ export default function Home() {
                 Questions buyers commonly ask before submitting
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                These answers help buyers understand the process and support service
-                relevance for search.
+                These answers help buyers understand the process and support
+                service relevance for search.
               </p>
             </div>
 
