@@ -1,5 +1,6 @@
 // src/app/contact/page.tsx
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Suspense } from "react";
 
 import PageShell from "@/components/PageShell";
@@ -13,12 +14,14 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: "Contact Orbitlink | Check Availability, Request Pricing & Business Service Review",
+  title:
+    "Contact Orbitlink | Business Availability, Pricing & Commercial Service Review",
   description:
     "Submit a business fibre, dedicated internet, managed Wi-Fi, voice, continuity, or network service request for your Ontario business location. Check availability, request pricing, and receive the right commercial next step.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Contact Orbitlink | Business Fibre, Dedicated Internet & Network Services",
+    title:
+      "Contact Orbitlink | Business Availability, Pricing & Commercial Service Review",
     description:
       "Check availability, request pricing, and submit business connectivity enquiries for Ontario commercial locations.",
     url: PAGE_URL,
@@ -36,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Orbitlink | Business Fibre & Network Services",
+    title: "Contact Orbitlink | Business Connectivity Intake",
     description:
       "Submit a business connectivity request for fibre, dedicated internet, managed Wi-Fi, voice, and continuity services across Ontario.",
     images: [TWITTER_IMAGE_URL],
@@ -71,7 +74,10 @@ function Surface({
 }) {
   return (
     <div
-      className={["rounded-[30px] border border-white/10 bg-white/[0.035]", className].join(" ")}
+      className={[
+        "rounded-[32px] border border-white/10 bg-white/[0.04] backdrop-blur-sm",
+        className,
+      ].join(" ")}
     >
       {children}
     </div>
@@ -141,7 +147,7 @@ function ContactCard({
 }) {
   return (
     <Surface className="p-6 sm:p-7">
-      <SectionEyebrow>{eyebrow}</SectionEyebrow>
+      <SectionEyebrow>{eyebrow}</SectionEyrow>
       <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">{title}</h2>
       <div className="mt-4 text-sm leading-6 text-white/66">{children}</div>
     </Surface>
@@ -158,6 +164,7 @@ export default function ContactPage() {
         "@type": "Organization",
         "@id": `${SITE_URL}/#org`,
         name: "Orbitlink",
+        legalName: "TIRAV Technologies Inc.",
         url: SITE_URL,
         logo: `${SITE_URL}/icon.png`,
         brand: { "@type": "Brand", name: "Orbitlink" },
@@ -178,6 +185,13 @@ export default function ContactPage() {
             contactType: "customer support",
             telephone: "+18888672480",
             email: "concierge@orbitlink.ca",
+            availableLanguage: ["English"],
+            areaServed: "CA-ON",
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "compliance",
+            email: "regulatory@tirav.com",
             availableLanguage: ["English"],
             areaServed: "CA-ON",
           },
@@ -238,7 +252,7 @@ export default function ContactPage() {
             name: "What services can I request here?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "You can use this page for business fibre internet, dedicated internet access, managed LAN and Wi-Fi, voice, continuity, static IP routing, and related network service requests.",
+              text: "You can use this page for business fibre internet, dedicated internet access, managed LAN and Wi-Fi, voice, continuity, static IP routing, IoT connectivity, and related network service requests.",
             },
           },
           {
@@ -265,12 +279,12 @@ export default function ContactPage() {
   return (
     <PageShell
       eyebrow="CONTACT"
-      title="Check availability, request pricing, and submit your business service request"
-      subtitle="Business fibre, dedicated internet, managed Wi-Fi, voice, continuity, and network service enquiries for Ontario commercial locations."
+      title="Check availability, request pricing, and submit your business connectivity request"
+      subtitle="Business fibre, dedicated internet, managed Wi-Fi, voice, continuity, and infrastructure enquiries for Ontario commercial locations."
       pills={[
-        "Business fibre and dedicated internet",
-        "Address-based service review",
-        "Commercial pricing requests",
+        "Business-only service intake",
+        "Address-based review",
+        "Commercial pricing direction",
       ]}
       actions={[
         { label: "Check Availability", href: "#intake", variant: "primary" },
@@ -298,52 +312,54 @@ export default function ContactPage() {
             </div>
 
             <h2 className="mt-5 text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl">
-              Check availability, request pricing,
-              <span className="block text-white/62">and get the right commercial next step.</span>
+              Start with the site, the service need, and the right commercial path.
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              Submit your service address, business requirement, and timeline. Orbitlink reviews
-              availability, service fit, and next-step direction for Ontario commercial sites.
+              Submit your service address, business requirement, and timeline. Orbitlink
+              reviews availability, service fit, and the most useful next step for Ontario
+              commercial sites.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               <Pill>Business fibre and dedicated internet</Pill>
-              <Pill>Address-based service review</Pill>
-              <Pill>Commercial pricing requests</Pill>
+              <Pill>Managed network and voice</Pill>
+              <Pill>Continuity and infrastructure</Pill>
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <MetricPill label="BEST FOR" value="Ontario business enquiries" />
-              <MetricPill label="SERVICES" value="Fibre • DIA • Voice • Managed Network" />
-              <MetricPill label="GOAL" value="Clear fit and next step" />
+              <MetricPill label="REVIEW BASIS" value="Address • Fit • Timing" />
+              <MetricPill label="OUTCOME" value="Clear next commercial step" />
             </div>
           </div>
 
           <div className="lg:col-span-4">
             <div className="rounded-[30px] border border-white/10 bg-black/25 p-6">
               <SectionEyebrow>HOW TO SUBMIT</SectionEyebrow>
-              <h2 className="mt-3 text-lg font-semibold text-white">Make the first request count</h2>
+              <h2 className="mt-3 text-lg font-semibold text-white">
+                Make the first request count
+              </h2>
               <p className="mt-3 text-sm leading-6 text-white/64">
-                The strongest requests include the exact site, service type, timeline, and any
-                technical requirements that matter operationally.
+                The strongest requests include the exact site, service type, timing,
+                and any operational or technical requirements that matter to the business.
               </p>
 
               <div className="mt-5 grid gap-3">
                 <StepCard
                   step="STEP 1"
-                  title="Select the service"
+                  title="Choose the service path"
                   text="Business fibre, dedicated internet, managed Wi-Fi, voice, continuity, or another network need."
                 />
                 <StepCard
                   step="STEP 2"
                   title="Add the site"
-                  text="Use the exact service address and include building details when relevant."
+                  text="Use the exact service address and include building context when relevant."
                 />
                 <StepCard
                   step="STEP 3"
                   title="Add real requirements"
-                  text="Timing, user count, static IPs, voice, managed network scope, continuity, or multi-site needs."
+                  text="Timing, user count, static IPs, continuity, voice, managed network scope, or multi-site needs."
                 />
               </div>
             </div>
@@ -354,7 +370,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <SignalCard
               title="Business-only intake"
-              text="This contact path is designed for commercial connectivity and network service requests."
+              text="This request path is designed for commercial connectivity and network service enquiries."
             />
             <SignalCard
               title="Ontario service focus"
@@ -362,7 +378,7 @@ export default function ContactPage() {
             />
             <SignalCard
               title="Clear operating entity"
-              text="Orbitlink is operated by TIRAV Technologies Inc. for commercial buyer confidence."
+              text="Orbitlink is operated by TIRAV Technologies Inc. for stronger buyer confidence."
             />
             <SignalCard
               title="Practical next steps"
@@ -376,8 +392,9 @@ export default function ContactPage() {
         <div className="space-y-5 lg:col-span-5">
           <ContactCard eyebrow="DIRECT CONTACT" title="Business connectivity enquiries">
             <p>
-              Use this page for business fibre internet, dedicated internet access, managed Wi-Fi,
-              voice, continuity, static IP requests, and related network service enquiries across Ontario.
+              Use this page for business fibre internet, dedicated internet access,
+              managed Wi-Fi, voice, continuity, static IP routing, IoT, and related
+              network service enquiries across Ontario.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">
@@ -386,6 +403,7 @@ export default function ContactPage() {
               <Pill>Managed Wi-Fi</Pill>
               <Pill>Voice</Pill>
               <Pill>Continuity</Pill>
+              <Pill>Infrastructure</Pill>
             </div>
 
             <div className="mt-5 rounded-[24px] border border-white/10 bg-black/20 p-5">
@@ -398,15 +416,15 @@ export default function ContactPage() {
                   Sales: <span className="text-white/88">sales@orbitlink.ca</span>
                 </div>
                 <div>
-                  Client Care: <span className="text-white/88">1-888-8-ORBIT-0</span>
+                  Client Care: <span className="text-white/88">1-888-867-2480</span>
                 </div>
                 <div>
                   Hours: <span className="text-white/88">Mon–Fri, 9AM–6PM ET</span>
                 </div>
               </div>
               <p className="mt-4 text-xs leading-5 text-white/55">
-                Best results come from submitting the exact service address, service type, and any
-                timing or technical requirements.
+                Best results come from submitting the exact service address, required
+                service, and any timing or technical requirements.
               </p>
             </div>
           </ContactCard>
@@ -422,16 +440,16 @@ export default function ContactPage() {
               />
               <SignalCard
                 title="Required service"
-                text="Tell us whether the request is for business fibre, dedicated internet, managed Wi-Fi, voice, continuity, or another network need."
+                text="Tell us whether the request is for business fibre, dedicated internet, managed Wi-Fi, voice, continuity, infrastructure, or another network need."
               />
               <SignalCard
                 title="Timeline and technical detail"
-                text="Add timing, user count, static IP needs, voice requirements, continuity expectations, or multi-site scope if relevant."
+                text="Add timing, user count, static IP needs, voice requirements, continuity expectations, or multi-site scope when relevant."
               />
             </div>
 
             <p className="mt-4 text-xs text-white/55">
-              Better detail up front usually produces a faster and more useful answer.
+              Better detail up front usually produces a faster and more useful response.
             </p>
           </ContactCard>
 
@@ -467,8 +485,8 @@ export default function ContactPage() {
                 Submit your business request
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">
-                Use the form below to request availability review, pricing direction, or the next
-                commercial step for your site.
+                Use the form below to request availability review, pricing direction,
+                or the next commercial step for your site.
               </p>
             </div>
 
@@ -538,8 +556,8 @@ export default function ContactPage() {
             </div>
 
             <p className="mt-4 text-xs leading-5 text-white/55">
-              Orbitlink is a brand of TIRAV Technologies Inc. Requests are reviewed based on
-              service fit, address details, timing, and operational requirements.
+              Orbitlink is a brand of TIRAV Technologies Inc. Requests are reviewed
+              based on service fit, address details, timing, and operational requirements.
             </p>
           </div>
         </div>
@@ -558,7 +576,7 @@ export default function ContactPage() {
             />
             <SignalCard
               title="What services can I request here?"
-              text="You can use this page for business fibre internet, dedicated internet access, managed LAN and Wi-Fi, voice, continuity, static IP routing, and related network service requests."
+              text="You can use this page for business fibre internet, dedicated internet access, managed LAN and Wi-Fi, voice, continuity, static IP routing, IoT connectivity, and related network service requests."
             />
             <SignalCard
               title="What happens after I submit the form?"
