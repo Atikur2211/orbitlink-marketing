@@ -15,8 +15,7 @@ const CANONICAL_URL = `${SITE_URL}/`;
 const SITE_DESC =
   "Reliable business internet, dedicated internet, and backup connectivity for Ontario businesses that need clearer options, stronger uptime, and a practical next step.";
 
-const OG_TITLE =
-  "Reliable Business Internet Without Downtime | Orbitlink";
+const OG_TITLE = "Reliable Business Internet Without Downtime | Orbitlink";
 
 const OG_DESC =
   "Check availability, compare service paths, and review business internet options for your Ontario location.";
@@ -342,18 +341,16 @@ export default function Home() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-5 pb-14 pt-14 sm:px-7 lg:px-10 lg:pb-24 lg:pt-24">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
-            <div className="lg:col-span-7">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] text-white/72 sm:text-xs">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
                 Fibre • Dedicated internet • Backup connectivity • Business voice
               </div>
 
-              <h1 className="mt-6 max-w-4xl text-[1.85rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[3.2rem] lg:text-[4.35rem]">
-                <span className="block whitespace-nowrap">Reliable Business Internet</span>
-                <span className="block whitespace-nowrap text-white/74">
-                  Without Downtime
-                </span>
+              <h1 className="mt-6 max-w-[13ch] text-[1.85rem] font-semibold leading-[1.02] tracking-tight text-white sm:max-w-[12ch] sm:text-[3rem] lg:max-w-[12.5ch] lg:text-[4rem] xl:text-[4.35rem]">
+                <span className="block">Reliable Business Internet</span>
+                <span className="block text-white/74">Without Downtime</span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-7 text-white/82 sm:text-[1.08rem]">
@@ -417,7 +414,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-4">
               <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.05] p-6 backdrop-blur-sm">
                 <div className="pointer-events-none absolute inset-0">
                   <div className="absolute -right-10 top-0 h-32 w-32 rounded-full bg-cyan-500/10 blur-3xl" />
