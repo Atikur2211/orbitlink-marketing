@@ -12,23 +12,35 @@ type Intent =
   | "verification-pack"
   | "onboarding"
   | "availability_pricing"
-  | "sales";
+  | "sales"
+  | "future-careers-pipeline";
 
-type Source = "coming-soon" | "trust" | "solutions" | "contact" | "other";
+type Source =
+  | "coming-soon"
+  | "trust"
+  | "solutions"
+  | "contact"
+  | "careers"
+  | "other";
+
+type SubmissionType = "lead" | "careers_pipeline";
+type ReviewStatus = "new" | "reviewed" | "archived";
 
 export type Submission = {
   id: string;
 
+  type?: SubmissionType;
+
   createdAt?: string;
   ts?: string;
   updatedAt?: string;
+  lastNotifiedAt?: string;
+  lastContactedAt?: string;
 
-  reviewedAt?: string;
-  reviewedBy?: string;
-  reviewNote?: string;
-
-  source: Source;
+  source?: Source;
   intent?: Intent;
+  lastSource?: Source;
+  lastIntent?: Intent;
 
   email: string;
   fullName?: string;
@@ -44,13 +56,18 @@ export type Submission = {
   userAgent?: string;
   ip?: string;
 
-  lastSource?: Source;
-  lastIntent?: Intent;
+  reviewStatus?: ReviewStatus;
+  reviewedAt?: string;
+  reviewedBy?: string;
+  reviewNote?: string;
 
-  lastNotifiedAt?: string;
+  tags?: string[];
 };
 
-type Store = { value: Submission[]; Count: number };
+type Store = {
+  value: Submission[];
+  Count: number;
+};
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
@@ -84,6 +101,7 @@ function normalizeIntent(v: string): Intent | undefined {
   if (x === "onboarding") return "onboarding";
   if (x === "availability_pricing") return "availability_pricing";
   if (x === "sales") return "sales";
+  if (x === "future-careers-pipeline") return "future-careers-pipeline";
   return undefined;
 }
 
@@ -93,6 +111,7 @@ function normalizeSource(v: string): Source {
   if (x === "trust") return "trust";
   if (x === "solutions") return "solutions";
   if (x === "contact") return "contact";
+  if (x === "careers") return "careers";
   return "other";
 }
 
@@ -107,7 +126,9 @@ function safeReturnTo(v: string): string {
 function buildRedirect(reqUrl: string, returnTo: string, params: Record<string, string>) {
   const base = safeReturnTo(returnTo);
   const url = new URL(base, reqUrl);
-  for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+  for (const [k, v] of Object.entries(params)) {
+    url.searchParams.set(k, v);
+  }
   return url;
 }
 
@@ -132,6 +153,8 @@ function formatIntentLabel(intent?: Intent) {
       return "Verification Pack";
     case "early-access":
       return "Early Access";
+    case "future-careers-pipeline":
+      return "Future Careers Pipeline";
     default:
       return "N/A";
   }
@@ -172,11 +195,13 @@ function formatTimelineLabel(timeline?: string) {
   }
 }
 
-function normalizeModuleName(input?: string): string | undefined {
+function normalizeModuleName(input?: string, intent?: Intent): string | undefined {
   if (!input) return undefined;
 
   const raw = input.trim();
   if (!raw) return undefined;
+
+  if (intent === "future-careers-pipeline") return raw;
 
   const lowered = raw.toLowerCase();
 
@@ -198,14 +223,15 @@ function normalizeModuleName(input?: string): string | undefined {
     "lte / 5g continuity": "AUREX Internet",
     "lte/5g continuity": "AUREX Internet",
     "iot connectivity": "AUREX Smart",
-    "compliance automation": "TIRAV Horizon",
+    "compliance automation": "TIRAV Horizon"
   };
 
   return labelMap[lowered] ?? raw;
 }
 
-function formatModuleLabel(moduleName?: string) {
+function formatModuleLabel(moduleName?: string, intent?: Intent) {
   if (!moduleName) return "N/A";
+  if (intent === "future-careers-pipeline") return moduleName;
 
   const lowered = moduleName.toLowerCase();
   const match = SERVICE_CATALOG.find(
@@ -216,8 +242,62 @@ function formatModuleLabel(moduleName?: string) {
   return match?.publicLabel || moduleName;
 }
 
+function slugifyTag(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function deriveRegionTag(location?: string) {
+  if (!location) return "ontario";
+  const x = location.toLowerCase();
+
+  if (x.includes("mississauga")) return "mississauga";
+  if (x.includes("toronto")) return "toronto";
+  if (x.includes("brampton")) return "brampton";
+  if (x.includes("markham")) return "markham";
+  if (x.includes("vaughan")) return "vaughan";
+  if (x.includes("oakville")) return "oakville";
+  if (x.includes("ottawa")) return "ottawa";
+  if (x.includes("hamilton")) return "hamilton";
+  if (x.includes("ontario")) return "ontario";
+  if (x.includes("canada")) return "canada";
+
+  return "ontario";
+}
+
+function buildTags(args: {
+  careers: boolean;
+  source: Source;
+  intent?: Intent;
+  moduleName?: string;
+  location?: string;
+}) {
+  const { careers, source, intent, moduleName, location } = args;
+
+  const tags = careers
+    ? [
+        "careers",
+        "pipeline",
+        moduleName ? slugifyTag(moduleName) : "general"
+      ]
+    : [
+        "lead",
+        source,
+        intent || "general",
+        moduleName ? slugifyTag(moduleName) : "general",
+        deriveRegionTag(location)
+      ];
+
+  return Array.from(new Set(tags.filter(Boolean)));
+}
+
 async function readStoreLocal(filePath: string): Promise<Store> {
   const fs = await import("fs/promises");
+
   try {
     const raw = await fs.readFile(filePath, "utf8");
     const parsed = JSON.parse(raw);
@@ -225,12 +305,14 @@ async function readStoreLocal(filePath: string): Promise<Store> {
     if (Array.isArray(parsed)) {
       return { value: parsed as Submission[], Count: (parsed as Submission[]).length };
     }
+
     if (parsed && Array.isArray(parsed.value)) {
       return {
         value: parsed.value as Submission[],
-        Count: Number(parsed.Count ?? parsed.value.length),
+        Count: Number(parsed.Count ?? parsed.value.length)
       };
     }
+
     return { value: [], Count: 0 };
   } catch {
     return { value: [], Count: 0 };
@@ -270,66 +352,115 @@ async function withFileLockLocal<T>(lockPath: string, fn: () => Promise<T>) {
   }
 }
 
+function isCareersPipeline(sub: Submission) {
+  return sub.source === "careers" && sub.intent === "future-careers-pipeline";
+}
+
 async function notifyOps(sub: Submission, isUpdate: boolean) {
   if (!resend) return;
 
   const to = process.env.INTAKE_TO_EMAIL || "concierge@orbitlink.ca";
   const from = process.env.INTAKE_FROM_EMAIL || "Orbitlink <onboarding@resend.dev>";
 
+  const careers = isCareersPipeline(sub);
   const companyOrEmail = sub.company || sub.email;
-  const moduleOrFallback = formatModuleLabel(sub.module);
+  const moduleOrFallback = formatModuleLabel(sub.module, sub.intent);
 
-  const subject = isUpdate
-    ? `Orbitlink Lead Update — ${companyOrEmail} — ${moduleOrFallback}`
-    : `Orbitlink New Lead — ${companyOrEmail} — ${moduleOrFallback}`;
+  const subject = careers
+    ? isUpdate
+      ? `Orbitlink Careers Pipeline Update — ${sub.fullName || companyOrEmail}`
+      : `Orbitlink Careers Pipeline — ${sub.fullName || companyOrEmail}`
+    : isUpdate
+      ? `Orbitlink Lead Update — ${companyOrEmail} — ${moduleOrFallback}`
+      : `Orbitlink New Lead — ${companyOrEmail} — ${moduleOrFallback}`;
 
   const when = sub.createdAt || sub.ts || new Date().toISOString();
 
-  const text = [
-    isUpdate ? "Orbitlink Lead Update" : "Orbitlink New Lead",
-    "—",
-    `Name: ${sub.fullName || "N/A"}`,
-    `Email: ${sub.email}`,
-    `Company: ${sub.company || "N/A"}`,
-    `Role: ${sub.role || "N/A"}`,
-    `Service Address: ${sub.location || "N/A"}`,
-    `Service Needed: ${formatModuleLabel(sub.module)}`,
-    `Timeline: ${formatTimelineLabel(sub.timeline)}`,
-    `Number of Sites: ${formatScopeLabel(sub.sites)}`,
-    `Source: ${sub.lastSource || sub.source || "N/A"}`,
-    `Intent: ${formatIntentLabel(sub.lastIntent || sub.intent)}`,
-    `When: ${when}`,
-    "",
-    "Project Details:",
-    sub.notes || "(none)",
-  ].join("\n");
-
-  const html = `
-    <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; line-height:1.5; color:#111;">
-      <h2 style="margin:0 0 12px;">${escapeHtml(
-        isUpdate ? "Orbitlink Lead Update" : "Orbitlink New Lead"
-      )}</h2>
-
-      <table style="border-collapse:collapse;">
-        <tr><td style="padding:6px 10px;color:#666;">Name</td><td style="padding:6px 10px;">${escapeHtml(sub.fullName || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Email</td><td style="padding:6px 10px;">${escapeHtml(sub.email)}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Company</td><td style="padding:6px 10px;">${escapeHtml(sub.company || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Role</td><td style="padding:6px 10px;">${escapeHtml(sub.role || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Service Address</td><td style="padding:6px 10px;">${escapeHtml(sub.location || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Service Needed</td><td style="padding:6px 10px;">${escapeHtml(formatModuleLabel(sub.module))}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Timeline</td><td style="padding:6px 10px;">${escapeHtml(formatTimelineLabel(sub.timeline))}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Number of Sites</td><td style="padding:6px 10px;">${escapeHtml(formatScopeLabel(sub.sites))}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Source</td><td style="padding:6px 10px;">${escapeHtml(sub.lastSource || sub.source || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Intent</td><td style="padding:6px 10px;">${escapeHtml(formatIntentLabel(sub.lastIntent || sub.intent))}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">When</td><td style="padding:6px 10px;">${escapeHtml(when)}</td></tr>
-      </table>
-
-      <h3 style="margin:18px 0 8px;">Project Details</h3>
-      <div style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:10px;">${escapeHtml(
+  const text = careers
+    ? [
+        isUpdate ? "Orbitlink Careers Pipeline Update" : "Orbitlink Careers Pipeline",
+        "—",
+        `Name: ${sub.fullName || "N/A"}`,
+        `Email: ${sub.email}`,
+        `Background / Company: ${sub.company || "N/A"}`,
+        `Role: ${sub.role || "N/A"}`,
+        `Area of Interest: ${formatModuleLabel(sub.module, sub.intent)}`,
+        `Source: ${sub.lastSource || sub.source || "N/A"}`,
+        `Intent: ${formatIntentLabel(sub.lastIntent || sub.intent)}`,
+        `When: ${when}`,
+        "",
+        "Notes:",
         sub.notes || "(none)"
-      )}</div>
-    </div>
-  `;
+      ].join("\n")
+    : [
+        isUpdate ? "Orbitlink Lead Update" : "Orbitlink New Lead",
+        "—",
+        `Name: ${sub.fullName || "N/A"}`,
+        `Email: ${sub.email}`,
+        `Company: ${sub.company || "N/A"}`,
+        `Role: ${sub.role || "N/A"}`,
+        `Service Address: ${sub.location || "N/A"}`,
+        `Service Needed: ${formatModuleLabel(sub.module, sub.intent)}`,
+        `Timeline: ${formatTimelineLabel(sub.timeline)}`,
+        `Number of Sites: ${formatScopeLabel(sub.sites)}`,
+        `Source: ${sub.lastSource || sub.source || "N/A"}`,
+        `Intent: ${formatIntentLabel(sub.lastIntent || sub.intent)}`,
+        `When: ${when}`,
+        "",
+        "Project Details:",
+        sub.notes || "(none)"
+      ].join("\n");
+
+  const html = careers
+    ? `
+      <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; line-height:1.5; color:#111;">
+        <h2 style="margin:0 0 12px;">${escapeHtml(
+          isUpdate ? "Orbitlink Careers Pipeline Update" : "Orbitlink Careers Pipeline"
+        )}</h2>
+
+        <table style="border-collapse:collapse;">
+          <tr><td style="padding:6px 10px;color:#666;">Name</td><td style="padding:6px 10px;">${escapeHtml(sub.fullName || "N/A")}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Email</td><td style="padding:6px 10px;">${escapeHtml(sub.email)}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Background / Company</td><td style="padding:6px 10px;">${escapeHtml(sub.company || "N/A")}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Role</td><td style="padding:6px 10px;">${escapeHtml(sub.role || "N/A")}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Area of Interest</td><td style="padding:6px 10px;">${escapeHtml(formatModuleLabel(sub.module, sub.intent))}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Source</td><td style="padding:6px 10px;">${escapeHtml(sub.lastSource || sub.source || "N/A")}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Intent</td><td style="padding:6px 10px;">${escapeHtml(formatIntentLabel(sub.lastIntent || sub.intent))}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">When</td><td style="padding:6px 10px;">${escapeHtml(when)}</td></tr>
+        </table>
+
+        <h3 style="margin:18px 0 8px;">Notes</h3>
+        <div style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:10px;">${escapeHtml(
+          sub.notes || "(none)"
+        )}</div>
+      </div>
+    `
+    : `
+      <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; line-height:1.5; color:#111;">
+        <h2 style="margin:0 0 12px;">${escapeHtml(
+          isUpdate ? "Orbitlink Lead Update" : "Orbitlink New Lead"
+        )}</h2>
+
+        <table style="border-collapse:collapse;">
+          <tr><td style="padding:6px 10px;color:#666;">Name</td><td style="padding:6px 10px;">${escapeHtml(sub.fullName || "N/A")}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Email</td><td style="padding:6px 10px;">${escapeHtml(sub.email)}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Company</td><td style="padding:6px 10px;">${escapeHtml(sub.company || "N/A")}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Role</td><td style="padding:6px 10px;">${escapeHtml(sub.role || "N/A")}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Service Address</td><td style="padding:6px 10px;">${escapeHtml(sub.location || "N/A")}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Service Needed</td><td style="padding:6px 10px;">${escapeHtml(formatModuleLabel(sub.module, sub.intent))}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Timeline</td><td style="padding:6px 10px;">${escapeHtml(formatTimelineLabel(sub.timeline))}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Number of Sites</td><td style="padding:6px 10px;">${escapeHtml(formatScopeLabel(sub.sites))}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Source</td><td style="padding:6px 10px;">${escapeHtml(sub.lastSource || sub.source || "N/A")}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">Intent</td><td style="padding:6px 10px;">${escapeHtml(formatIntentLabel(sub.lastIntent || sub.intent))}</td></tr>
+          <tr><td style="padding:6px 10px;color:#666;">When</td><td style="padding:6px 10px;">${escapeHtml(when)}</td></tr>
+        </table>
+
+        <h3 style="margin:18px 0 8px;">Project Details</h3>
+        <div style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:10px;">${escapeHtml(
+          sub.notes || "(none)"
+        )}</div>
+      </div>
+    `;
 
   await resend.emails.send({
     to,
@@ -337,7 +468,7 @@ async function notifyOps(sub: Submission, isUpdate: boolean) {
     subject,
     text,
     html,
-    replyTo: sub.email,
+    replyTo: sub.email
   });
 }
 
@@ -361,7 +492,7 @@ export async function POST(req: Request) {
     }
 
     const email = clean(form.get("email"), 180).toLowerCase();
-    const returnTo = clean(form.get("returnTo"), 120) || "/contact";
+    const returnTo = clean(form.get("returnTo"), 180) || "/contact";
 
     if (!isValidEmail(email)) {
       return NextResponse.redirect(buildRedirect(req.url, returnTo, { error: "invalid" }), 303);
@@ -374,16 +505,28 @@ export async function POST(req: Request) {
     const company = clean(form.get("company"), 160) || undefined;
     const role = clean(form.get("role"), 80) || undefined;
     const location = clean(form.get("location"), 180) || undefined;
-    const moduleName = normalizeModuleName(clean(form.get("module"), 120) || undefined);
+    const moduleName = normalizeModuleName(clean(form.get("module"), 120) || undefined, intent);
     const timeline = clean(form.get("timeline"), 80) || undefined;
     const sites = clean(form.get("sites"), 80) || undefined;
     const notes = clean(form.get("notes"), 1200) || undefined;
 
     const now = new Date().toISOString();
+    const careers = source === "careers" && intent === "future-careers-pipeline";
+    const tags = buildTags({
+      careers,
+      source,
+      intent,
+      moduleName,
+      location
+    });
 
     const draft: Submission = {
       id: crypto.randomBytes(8).toString("hex"),
+      type: careers ? "careers_pipeline" : "lead",
       createdAt: now,
+      updatedAt: now,
+      lastNotifiedAt: "",
+      lastContactedAt: "",
       source,
       intent,
       lastSource: source,
@@ -399,6 +542,11 @@ export async function POST(req: Request) {
       notes,
       userAgent: userAgent || undefined,
       ip: ip || undefined,
+      reviewStatus: "new",
+      reviewedAt: "",
+      reviewedBy: "",
+      reviewNote: "",
+      tags
     };
 
     if (!INTAKE_STORE_LOCAL) {
@@ -461,6 +609,7 @@ export async function POST(req: Request) {
         const updated: Submission = {
           ...prev,
           updatedAt: now,
+          type: prev.type || (careers ? "careers_pipeline" : "lead"),
           source: prev.source || source,
           intent: prev.intent || intent,
           lastSource: source,
@@ -475,6 +624,12 @@ export async function POST(req: Request) {
           notes: notes ?? prev.notes,
           userAgent: prev.userAgent || userAgent || undefined,
           ip: prev.ip || ip || undefined,
+          reviewStatus: prev.reviewStatus || "new",
+          reviewedAt: prev.reviewedAt || "",
+          reviewedBy: prev.reviewedBy || "",
+          reviewNote: prev.reviewNote || "",
+          lastContactedAt: prev.lastContactedAt || "",
+          tags: prev.tags?.length ? prev.tags : tags
         };
 
         const lastNotify = prev.lastNotifiedAt ? Date.parse(prev.lastNotifiedAt) : 0;
