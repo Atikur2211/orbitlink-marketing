@@ -100,9 +100,9 @@ function StatCard({
   value: string;
 }) {
   return (
-    <div className="h-full rounded-2xl border border-white/10 bg-black/20 px-3 py-2">
-      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
-      <div className="mt-1 text-sm text-white/82">{value}</div>
+    <div className="h-full rounded-xl border border-white/10 bg-black/15 px-3 py-2">
+      <div className="text-[10px] tracking-[0.18em] text-white/45">{label}</div>
+      <div className="mt-1 text-[13px] text-white/82">{value}</div>
     </div>
   );
 }
@@ -334,14 +334,14 @@ export default function Home() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[72%_center] sm:object-[65%_center] lg:object-center"
+            className="object-cover object-[72%_center] sm:object-[66%_center] lg:object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.34)_0%,rgba(4,7,12,0.56)_34%,rgba(4,7,12,0.78)_66%,rgba(4,7,12,0.96)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.84)_0%,rgba(4,7,12,0.58)_36%,rgba(4,7,12,0.30)_65%,rgba(4,7,12,0.74)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.34)_0%,rgba(4,7,12,0.56)_34%,rgba(4,7,12,0.80)_68%,rgba(4,7,12,0.97)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.88)_0%,rgba(4,7,12,0.62)_34%,rgba(4,7,12,0.22)_66%,rgba(4,7,12,0.74)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(250,204,21,0.10),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.10),transparent_26%)]" />
-          <div className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
+          <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-center px-5 pb-12 pt-24 sm:px-7 lg:min-h-[92vh] lg:px-10 lg:pb-14 lg:pt-20">
+        <div className="relative mx-auto flex min-h-[100dvh] max-w-7xl items-center px-5 pb-10 pt-28 sm:px-7 sm:pt-24 lg:min-h-[92vh] lg:px-10 lg:pb-14 lg:pt-20">
           <div className="grid w-full grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:text-xs">
@@ -349,11 +349,11 @@ export default function Home() {
                 Business Fibre • Dedicated Internet • Managed Wi-Fi • Backup Connectivity
               </div>
 
-              <h1 className="mt-6 max-w-4xl text-[2rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[3rem] lg:text-[4rem] xl:text-[4.6rem]">
+              <h1 className="mt-6 max-w-4xl text-[2rem] font-semibold leading-[1.01] tracking-tight text-white sm:text-[3rem] lg:text-[4.1rem] xl:text-[4.7rem]">
                 Business Fibre Internet & Dedicated Internet Access in Ontario
               </h1>
 
-              <p className="mt-5 max-w-2xl text-base leading-7 text-white/86 sm:text-[1.08rem]">
+              <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/86 sm:text-[1.08rem]">
                 Orbitlink helps Ontario businesses choose the right internet, Wi-Fi,
                 voice, and backup connectivity for their location. We review building
                 infrastructure, provider options, and operational requirements before
@@ -419,19 +419,27 @@ export default function Home() {
                   Compare Options
                 </Link>
               </div>
+
+              <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-white/48 sm:text-xs">
+                <span>Operated by TIRAV Technologies Inc.</span>
+                <span className="hidden sm:inline">•</span>
+                <span>CRTC-registered reseller</span>
+                <span className="hidden sm:inline">•</span>
+                <span>Ontario business-only review</span>
+              </div>
             </div>
 
             <div className="lg:col-span-5 lg:self-end">
-              <div className="max-w-[320px] lg:max-w-[360px] ml-auto rounded-[22px] border border-white/10 bg-black/20 p-4 backdrop-blur-sm">
-                <div className="text-[11px] tracking-[0.24em] text-white/50">
+              <div className="ml-auto max-w-[300px] rounded-[22px] border border-white/10 bg-black/15 p-4 backdrop-blur-md sm:max-w-[320px] lg:max-w-[360px]">
+                <div className="text-[10px] tracking-[0.24em] text-white/50">
                   BUSINESS INTERNET REVIEW
                 </div>
 
-                <div className="mt-2 text-base font-medium text-white">
+                <div className="mt-2 text-sm font-medium text-white">
                   Check availability at your location
                 </div>
 
-                <p className="mt-2 text-sm text-white/70">
+                <p className="mt-2 text-xs leading-5 text-white/68 sm:text-sm">
                   We review your building and available providers to recommend the best setup.
                 </p>
 
@@ -441,8 +449,8 @@ export default function Home() {
                   <StatCard label="STEP 3" value="Recommend next step" />
                 </div>
 
-                <div className="mt-4 text-xs text-white/55">
-                  No generic quotes • No assumptions • Clear recommendation
+                <div className="mt-3 text-[11px] text-white/50">
+                  No generic quotes • Clear recommendation
                 </div>
               </div>
             </div>
