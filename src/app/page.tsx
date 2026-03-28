@@ -334,7 +334,7 @@ export default function Home() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[72%_center] sm:object-[66%_center] lg:object-center"
+            className="object-cover object-[72%_center] sm:object-[68%_center] lg:object-center"
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.34)_0%,rgba(4,7,12,0.56)_34%,rgba(4,7,12,0.80)_68%,rgba(4,7,12,0.97)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.88)_0%,rgba(4,7,12,0.62)_34%,rgba(4,7,12,0.22)_66%,rgba(4,7,12,0.74)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(250,204,21,0.10),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.10),transparent_26%)]" />
