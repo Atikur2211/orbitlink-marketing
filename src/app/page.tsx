@@ -36,6 +36,7 @@ export const metadata: Metadata = {
     "business internet mississauga",
     "business internet toronto",
     "business internet brampton",
+    "business internet vaughan",
     "managed wi-fi ontario",
     "managed network services ontario",
     "business voip ontario",
