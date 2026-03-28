@@ -100,7 +100,7 @@ function StatCard({
   value: string;
 }) {
   return (
-    <div className="h-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+    <div className="h-full rounded-2xl border border-white/10 bg-black/20 px-3 py-2">
       <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
       <div className="mt-1 text-sm text-white/82">{value}</div>
     </div>
@@ -326,7 +326,7 @@ export default function Home() {
       <TopNav />
       <StickyStatusStrip />
 
-      <section className="relative isolate overflow-hidden border-b border-white/10 min-h-[100svh] lg:min-h-[92vh]">
+      <section className="relative isolate overflow-hidden border-b border-white/10 min-h-[100dvh] lg:min-h-[92vh]">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-business-ontario.jpg"
@@ -334,7 +334,7 @@ export default function Home() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[68%_center] lg:object-center"
+            className="object-cover object-[72%_center] sm:object-[65%_center] lg:object-center"
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.34)_0%,rgba(4,7,12,0.56)_34%,rgba(4,7,12,0.78)_66%,rgba(4,7,12,0.96)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.84)_0%,rgba(4,7,12,0.58)_36%,rgba(4,7,12,0.30)_65%,rgba(4,7,12,0.74)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(250,204,21,0.10),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.10),transparent_26%)]" />
@@ -422,7 +422,7 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-5 lg:self-end">
-              <div className="rounded-[28px] border border-white/10 bg-black/20 p-5 backdrop-blur-sm">
+              <div className="max-w-[320px] lg:max-w-[360px] ml-auto rounded-[22px] border border-white/10 bg-black/20 p-4 backdrop-blur-sm">
                 <div className="text-[11px] tracking-[0.24em] text-white/50">
                   BUSINESS INTERNET REVIEW
                 </div>
@@ -435,7 +435,7 @@ export default function Home() {
                   We review your building and available providers to recommend the best setup.
                 </p>
 
-                <div className="mt-4 grid grid-cols-1 gap-2">
+                <div className="mt-3 grid grid-cols-1 gap-1.5">
                   <StatCard label="STEP 1" value="Check address" />
                   <StatCard label="STEP 2" value="Review options" />
                   <StatCard label="STEP 3" value="Recommend next step" />
