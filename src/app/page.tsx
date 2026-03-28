@@ -92,17 +92,17 @@ export const metadata: Metadata = {
   },
 };
 
-function StatCard({
-  label,
+function HeroMiniCard({
+  title,
   value,
 }: {
-  label: string;
+  title: string;
   value: string;
 }) {
   return (
-    <div className="h-full rounded-xl border border-white/10 bg-black/15 px-3 py-2">
-      <div className="text-[10px] tracking-[0.18em] text-white/45">{label}</div>
-      <div className="mt-1 text-[13px] text-white/82">{value}</div>
+    <div className="rounded-xl border border-white/10 bg-black/15 px-3 py-2">
+      <div className="text-[10px] tracking-[0.18em] text-white/42">{title}</div>
+      <div className="mt-1 text-[13px] text-white/84">{value}</div>
     </div>
   );
 }
@@ -334,26 +334,26 @@ export default function Home() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[72%_center] sm:object-[68%_center] lg:object-center"
+            className="object-cover object-[74%_center] sm:object-[68%_center] lg:object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.34)_0%,rgba(4,7,12,0.56)_34%,rgba(4,7,12,0.80)_68%,rgba(4,7,12,0.97)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.88)_0%,rgba(4,7,12,0.62)_34%,rgba(4,7,12,0.22)_66%,rgba(4,7,12,0.74)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(250,204,21,0.10),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.10),transparent_26%)]" />
-          <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.30)_0%,rgba(4,7,12,0.54)_34%,rgba(4,7,12,0.82)_70%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.90)_0%,rgba(4,7,12,0.64)_34%,rgba(4,7,12,0.18)_66%,rgba(4,7,12,0.76)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.09),transparent_26%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.09),transparent_24%)]" />
+          <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
         </div>
 
         <div className="relative mx-auto flex min-h-[100dvh] max-w-7xl items-center px-5 pb-10 pt-28 sm:px-7 sm:pt-24 lg:min-h-[92vh] lg:px-10 lg:pb-14 lg:pt-20">
           <div className="grid w-full grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:text-xs">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:text-xs">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
                 Business Fibre • Dedicated Internet • Managed Wi-Fi • Backup Connectivity
               </div>
 
-              <h1 className="mt-6 max-w-4xl text-[2rem] font-semibold leading-[1.01] tracking-tight text-white sm:text-[3rem] lg:text-[4.1rem] xl:text-[4.7rem]">
+              <h1 className="mt-6 max-w-4xl text-[2rem] font-semibold leading-[1.0] tracking-tight text-white sm:text-[3rem] lg:text-[4.2rem] xl:text-[4.9rem]">
                 Business Fibre Internet & Dedicated Internet Access in Ontario
               </h1>
 
-              <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/86 sm:text-[1.08rem]">
+              <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/87 sm:text-[1.08rem]">
                 Orbitlink helps Ontario businesses choose the right internet, Wi-Fi,
                 voice, and backup connectivity for their location. We review building
                 infrastructure, provider options, and operational requirements before
@@ -370,7 +370,7 @@ export default function Home() {
                 ].map((item) => (
                   <span
                     key={item}
-                    className="rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/72 sm:text-xs"
+                    className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/72 sm:text-xs"
                   >
                     {item}
                   </span>
@@ -385,7 +385,7 @@ export default function Home() {
                 ].map((item) => (
                   <span
                     key={item}
-                    className="rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/74 sm:text-xs"
+                    className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/74 sm:text-xs"
                   >
                     {item}
                   </span>
@@ -407,14 +407,14 @@ export default function Home() {
 
                 <Link
                   href="/services"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/20 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
                 >
                   Explore Services
                 </Link>
 
                 <Link
                   href="/compare"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/20 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
                 >
                   Compare Options
                 </Link>
@@ -430,8 +430,8 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-5 lg:self-end">
-              <div className="ml-auto max-w-[300px] rounded-[22px] border border-white/10 bg-black/15 p-4 backdrop-blur-md sm:max-w-[320px] lg:max-w-[360px]">
-                <div className="text-[10px] tracking-[0.24em] text-white/50">
+              <div className="ml-auto max-w-[280px] rounded-[20px] border border-white/10 bg-black/10 p-3.5 backdrop-blur-md sm:max-w-[300px] lg:max-w-[330px]">
+                <div className="text-[10px] tracking-[0.22em] text-white/46">
                   BUSINESS INTERNET REVIEW
                 </div>
 
@@ -439,17 +439,17 @@ export default function Home() {
                   Check availability at your location
                 </div>
 
-                <p className="mt-2 text-xs leading-5 text-white/68 sm:text-sm">
+                <p className="mt-2 text-xs leading-5 text-white/66 sm:text-sm">
                   We review your building and available providers to recommend the best setup.
                 </p>
 
                 <div className="mt-3 grid grid-cols-1 gap-1.5">
-                  <StatCard label="STEP 1" value="Check address" />
-                  <StatCard label="STEP 2" value="Review options" />
-                  <StatCard label="STEP 3" value="Recommend next step" />
+                  <HeroMiniCard title="STEP 1" value="Check address" />
+                  <HeroMiniCard title="STEP 2" value="Review options" />
+                  <HeroMiniCard title="STEP 3" value="Recommend next step" />
                 </div>
 
-                <div className="mt-3 text-[11px] text-white/50">
+                <div className="mt-3 text-[11px] text-white/46">
                   No generic quotes • Clear recommendation
                 </div>
               </div>
@@ -459,7 +459,7 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-10 sm:px-7 sm:py-12">
-        <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
+        <div className="rounded-[32px] border border-white/10 bg-black/22 p-6 sm:p-8 lg:p-10">
           <div className="max-w-3xl">
             <h2 className="text-xl font-semibold text-white">
               Business Internet Solutions in Ontario
@@ -483,7 +483,7 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
-        <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
+        <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <div className="text-[11px] tracking-[0.28em] text-white/55">
@@ -497,10 +497,7 @@ export default function Home() {
                 to actual workload, downtime risk, or long-term growth.
               </p>
             </div>
-            <StatCard
-              label="FOCUS"
-              value="Performance • Reliability • Backup • Accountability"
-            />
+            <HeroMiniCard title="FOCUS" value="Performance • Reliability • Backup • Accountability" />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -524,7 +521,7 @@ export default function Home() {
       <BentoServices />
 
       <section className="mx-auto max-w-6xl px-5 py-10 sm:px-7 sm:py-12">
-        <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
+        <div className="rounded-[32px] border border-white/10 bg-black/22 p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <div className="text-[11px] tracking-[0.28em] text-white/55">
@@ -538,7 +535,7 @@ export default function Home() {
                 available service paths, and the most suitable next step.
               </p>
             </div>
-            <StatCard label="PROCESS" value="Address-based and practical" />
+            <HeroMiniCard title="PROCESS" value="Address-based and practical" />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -562,7 +559,7 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
-        <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
+        <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <div className="text-[11px] tracking-[0.28em] text-white/55">
@@ -582,7 +579,7 @@ export default function Home() {
                 BITS licence active (2026)
               </p>
             </div>
-            <StatCard label="OPERATED BY" value="TIRAV Technologies Inc." />
+            <HeroMiniCard title="OPERATED BY" value="TIRAV Technologies Inc." />
           </div>
 
           <div className="mt-6 flex flex-wrap gap-2">
@@ -597,7 +594,7 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
-        <div className="rounded-[32px] border border-white/10 bg-black/25 p-6 sm:p-8 lg:p-10">
+        <div className="rounded-[32px] border border-white/10 bg-black/22 p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <div className="text-[11px] tracking-[0.28em] text-white/55">
@@ -611,7 +608,7 @@ export default function Home() {
                 service options, local availability, and market fit.
               </p>
             </div>
-            <StatCard label="LOCAL DISCOVERY" value="Location pages support local search intent" />
+            <HeroMiniCard title="LOCAL DISCOVERY" value="Location pages support local search intent" />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -624,7 +621,7 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7 sm:pb-12">
-        <div className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
+        <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <div className="text-[11px] tracking-[0.28em] text-white/55">
@@ -637,7 +634,7 @@ export default function Home() {
                 These answers help buyers understand the process and improve search relevance.
               </p>
             </div>
-            <StatCard label="SEO + CLARITY" value="Useful answers for buyers and search" />
+            <HeroMiniCard title="SEO + CLARITY" value="Useful answers for buyers and search" />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -676,13 +673,7 @@ export default function Home() {
                 reliable and scalable option for your business.
               </p>
             </div>
-            <StatCard label="NEXT STEP" value="Availability • Recommendation • Direction" />
-          </div>
-
-          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <StatCard label="CHECK" value="Availability by building and address" />
-            <StatCard label="CONFIRM" value="Best option for the site" />
-            <StatCard label="RECEIVE" value="Recommendation, pricing direction, or next step" />
+            <HeroMiniCard title="NEXT STEP" value="Availability • Recommendation • Direction" />
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4 sm:flex-wrap">
