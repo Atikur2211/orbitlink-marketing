@@ -326,24 +326,25 @@ export default function Home() {
       <TopNav />
       <StickyStatusStrip />
 
-      <section className="relative isolate overflow-hidden border-b border-white/10 min-h-[92vh]">
+      <section className="relative isolate overflow-hidden border-b border-white/10 min-h-[100svh] lg:min-h-[92vh]">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-business-ontario.jpg"
             alt="Ontario business team in a modern office environment"
             fill
             priority
-            className="object-cover object-center"
+            sizes="100vw"
+            className="object-cover object-[68%_center] lg:object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.25)_0%,rgba(4,7,12,0.48)_32%,rgba(4,7,12,0.72)_60%,rgba(4,7,12,0.94)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(250,204,21,0.12),transparent_30%),radial-gradient(circle_at_80%_15%,rgba(6,182,212,0.10),transparent_28%)]" />
-          <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.34)_0%,rgba(4,7,12,0.56)_34%,rgba(4,7,12,0.78)_66%,rgba(4,7,12,0.96)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.84)_0%,rgba(4,7,12,0.58)_36%,rgba(4,7,12,0.30)_65%,rgba(4,7,12,0.74)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(250,204,21,0.10),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.10),transparent_26%)]" />
+          <div className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[92vh] max-w-7xl items-center px-5 pb-14 pt-20 sm:px-7 lg:px-10">
+        <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-center px-5 pb-12 pt-24 sm:px-7 lg:min-h-[92vh] lg:px-10 lg:pb-14 lg:pt-20">
           <div className="grid w-full grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/35 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:text-xs">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:text-xs">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
                 Business Fibre • Dedicated Internet • Managed Wi-Fi • Backup Connectivity
               </div>
@@ -352,7 +353,7 @@ export default function Home() {
                 Business Fibre Internet & Dedicated Internet Access in Ontario
               </h1>
 
-              <p className="mt-5 max-w-2xl text-base leading-7 text-white/85 sm:text-[1.08rem]">
+              <p className="mt-5 max-w-2xl text-base leading-7 text-white/86 sm:text-[1.08rem]">
                 Orbitlink helps Ontario businesses choose the right internet, Wi-Fi,
                 voice, and backup connectivity for their location. We review building
                 infrastructure, provider options, and operational requirements before
@@ -369,7 +370,7 @@ export default function Home() {
                 ].map((item) => (
                   <span
                     key={item}
-                    className="rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/72 sm:text-xs"
+                    className="rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/72 sm:text-xs"
                   >
                     {item}
                   </span>
@@ -384,7 +385,7 @@ export default function Home() {
                 ].map((item) => (
                   <span
                     key={item}
-                    className="rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/74 sm:text-xs"
+                    className="rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/74 sm:text-xs"
                   >
                     {item}
                   </span>
@@ -406,14 +407,14 @@ export default function Home() {
 
                 <Link
                   href="/services"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/25 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/20 px-5 py-3 text-sm text-white transition hover:bg-white/10"
                 >
                   Explore Services
                 </Link>
 
                 <Link
                   href="/compare"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/25 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/20 px-5 py-3 text-sm text-white transition hover:bg-white/10"
                 >
                   Compare Options
                 </Link>
@@ -421,51 +422,27 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-5 lg:self-end">
-              <div className="overflow-hidden rounded-[32px] border border-white/10 bg-black/35 p-6 backdrop-blur-md">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <div className="text-[11px] tracking-[0.24em] text-white/50">
-                      CONNECTIVITY REVIEW
-                    </div>
-                    <div className="mt-2 text-lg font-semibold text-white">
-                      Clear business internet review for your location
-                    </div>
-                  </div>
-                  <div className="rounded-full border border-emerald-400/20 bg-emerald-400/[0.10] px-3 py-1 text-[11px] text-emerald-200">
-                    ACTIVE
-                  </div>
+              <div className="rounded-[28px] border border-white/10 bg-black/20 p-5 backdrop-blur-sm">
+                <div className="text-[11px] tracking-[0.24em] text-white/50">
+                  BUSINESS INTERNET REVIEW
                 </div>
 
-                <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="mt-2 text-base font-medium text-white">
+                  Check availability at your location
+                </div>
+
+                <p className="mt-2 text-sm text-white/70">
+                  We review your building and available providers to recommend the best setup.
+                </p>
+
+                <div className="mt-4 grid grid-cols-1 gap-2">
                   <StatCard label="STEP 1" value="Check address" />
                   <StatCard label="STEP 2" value="Review options" />
                   <StatCard label="STEP 3" value="Recommend next step" />
-                  <StatCard label="FOR" value="Ontario businesses" />
                 </div>
 
-                <div className="mt-5 rounded-[24px] border border-white/10 bg-black/30 p-5">
-                  <div className="text-[11px] tracking-[0.22em] text-white/50">
-                    WHAT WE REVIEW
-                  </div>
-                  <div className="mt-4 space-y-3">
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82">
-                      Building-level fibre availability
-                    </div>
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82">
-                      Dedicated internet versus shared business fibre
-                    </div>
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82">
-                      Backup internet and continuity requirements
-                    </div>
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82">
-                      Managed Wi-Fi, voice, and network requirements
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-5 text-xs leading-5 text-white/52">
-                  Every location is reviewed based on infrastructure, provider reach,
-                  and service compatibility.
+                <div className="mt-4 text-xs text-white/55">
+                  No generic quotes • No assumptions • Clear recommendation
                 </div>
               </div>
             </div>
