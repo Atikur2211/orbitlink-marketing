@@ -437,7 +437,7 @@ export default function Home() {
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-white/48 sm:text-xs">
               <span>Operated by TIRAV Technologies Inc.</span>
               <span className="hidden sm:inline">•</span>
-              <span>CRTC-registered reseller</span>
+              <span>CRTC-registered provider</span>
               <span className="hidden sm:inline">•</span>
               <span>Ontario business-only review</span>
             </div>
@@ -603,7 +603,7 @@ export default function Home() {
 
           <div className="mt-6 flex flex-wrap gap-2">
             <TrustPill text="Operated by TIRAV Technologies Inc." />
-            <TrustPill text="CRTC-registered reseller" />
+            <TrustPill text="CRTC-registered provider" />
             <TrustPill text="Disclosure-first recommendations" />
             <TrustPill text="Availability reviewed by address" />
             <TrustPill text="Ontario business coverage" />
