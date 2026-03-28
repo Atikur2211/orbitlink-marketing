@@ -92,7 +92,7 @@ export const metadata: Metadata = {
   },
 };
 
-function HeroMiniCard({
+function MiniMetaCard({
   title,
   value,
 }: {
@@ -171,6 +171,21 @@ function FAQCard({
     <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5">
       <h3 className="text-sm font-medium text-white/92">{question}</h3>
       <p className="mt-2 text-sm leading-6 text-white/66">{answer}</p>
+    </div>
+  );
+}
+
+function SolutionCard({
+  title,
+  desc,
+}: {
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5 transition hover:border-white/20 hover:bg-white/[0.06]">
+      <div className="text-sm font-medium text-white/92">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/66">{desc}</p>
     </div>
   );
 }
@@ -336,119 +351,152 @@ export default function Home() {
             sizes="100vw"
             className="object-cover object-[74%_center] sm:object-[68%_center] lg:object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.30)_0%,rgba(4,7,12,0.54)_34%,rgba(4,7,12,0.82)_70%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.90)_0%,rgba(4,7,12,0.64)_34%,rgba(4,7,12,0.18)_66%,rgba(4,7,12,0.76)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.28)_0%,rgba(4,7,12,0.50)_34%,rgba(4,7,12,0.82)_70%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.90)_0%,rgba(4,7,12,0.60)_34%,rgba(4,7,12,0.14)_66%,rgba(4,7,12,0.76)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.09),transparent_26%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.09),transparent_24%)]" />
           <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[100dvh] max-w-7xl items-center px-5 pb-10 pt-28 sm:px-7 sm:pt-24 lg:min-h-[92vh] lg:px-10 lg:pb-14 lg:pt-20">
-          <div className="grid w-full grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-8">
-            <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:text-xs">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-                Business Fibre • Dedicated Internet • Managed Wi-Fi • Backup Connectivity
-              </div>
-
-              <h1 className="mt-6 max-w-4xl text-[2rem] font-semibold leading-[1.0] tracking-tight text-white sm:text-[3rem] lg:text-[4.2rem] xl:text-[4.9rem]">
-                Business Fibre Internet & Dedicated Internet Access in Ontario
-              </h1>
-
-              <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/87 sm:text-[1.08rem]">
-                Orbitlink helps Ontario businesses choose the right internet, Wi-Fi,
-                voice, and backup connectivity for their location. We review building
-                infrastructure, provider options, and operational requirements before
-                recommending a path forward.
-              </p>
-
-              <div className="mt-5 flex flex-wrap gap-2">
-                {[
-                  "Mississauga",
-                  "Toronto",
-                  "Brampton",
-                  "Vaughan",
-                  "Ontario-wide",
-                ].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/72 sm:text-xs"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-7 flex flex-wrap gap-2">
-                {[
-                  "Business fibre & dedicated internet options",
-                  "Managed Wi-Fi & network setup",
-                  "Backup internet & failover planning",
-                ].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/74 sm:text-xs"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start">
-                <div className="flex flex-col gap-2">
-                  <Link
-                    href="/contact#intake"
-                    className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                  >
-                    Check Business Internet Availability
-                  </Link>
-                  <div className="text-center text-xs text-white/55 sm:text-left">
-                    Business-only review • No obligation • Clear response
-                  </div>
-                </div>
-
-                <Link
-                  href="/services"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Explore Services
-                </Link>
-
-                <Link
-                  href="/compare"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
-                  Compare Options
-                </Link>
-              </div>
-
-              <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-white/48 sm:text-xs">
-                <span>Operated by TIRAV Technologies Inc.</span>
-                <span className="hidden sm:inline">•</span>
-                <span>CRTC-registered reseller</span>
-                <span className="hidden sm:inline">•</span>
-                <span>Ontario business-only review</span>
-              </div>
+        <div className="relative mx-auto flex min-h-[100dvh] max-w-7xl items-center justify-center px-5 pb-10 pt-28 sm:px-7 sm:pt-24 lg:min-h-[92vh] lg:px-10 lg:pb-14 lg:pt-20">
+          <div className="w-full max-w-4xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:text-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
+              Business Fibre • Dedicated Internet • Managed Wi-Fi • Backup Connectivity
             </div>
 
+            <h1 className="mt-6 max-w-4xl text-[2rem] font-semibold leading-[1] tracking-tight text-white sm:text-[3rem] lg:text-[4.25rem] xl:text-[5rem]">
+              Business Fibre Internet & Dedicated Internet Access in Ontario
+            </h1>
+
+            <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/87 sm:text-[1.08rem]">
+              Orbitlink helps Ontario businesses choose the right internet, Wi-Fi,
+              voice, and backup connectivity for their location. We review building
+              infrastructure, provider options, and operational requirements before
+              recommending a path forward.
+            </p>
+
+            <div className="mt-5 flex flex-wrap gap-2">
+              {[
+                "Mississauga",
+                "Toronto",
+                "Brampton",
+                "Vaughan",
+                "Ontario-wide",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/72 sm:text-xs"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-7 flex flex-wrap gap-2">
+              {[
+                "Business fibre & dedicated internet options",
+                "Managed Wi-Fi & network setup",
+                "Backup internet & failover planning",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/74 sm:text-xs"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start">
+              <div className="flex flex-col gap-2">
+                <Link
+                  href="/contact#intake"
+                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+                >
+                  Check Business Internet Availability
+                </Link>
+                <div className="text-center text-xs text-white/55 sm:text-left">
+                  Business-only review • No obligation • Clear response
+                </div>
+              </div>
+
+              <Link
+                href="/services"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Explore Services
+              </Link>
+
+              <Link
+                href="/compare"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Compare Options
+              </Link>
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-white/48 sm:text-xs">
+              <span>Operated by TIRAV Technologies Inc.</span>
+              <span className="hidden sm:inline">•</span>
+              <span>CRTC-registered reseller</span>
+              <span className="hidden sm:inline">•</span>
+              <span>Ontario business-only review</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-6xl px-5 py-10 sm:px-7 sm:py-12">
-        <div className="rounded-[32px] border border-white/10 bg-black/22 p-6 sm:p-8 lg:p-10">
-          <div className="max-w-3xl">
-            <h2 className="text-xl font-semibold text-white">
-              Business Internet Solutions in Ontario
-            </h2>
-            <p className="mt-3 text-sm text-white/70">
-              Orbitlink supports Ontario businesses with:
-            </p>
-            <ul className="mt-4 space-y-2 text-sm text-white/82">
-              <li>• Business fibre internet</li>
-              <li>• Dedicated internet access (DIA)</li>
-              <li>• Managed Wi-Fi and network support</li>
-              <li>• LTE / 5G backup connectivity</li>
-              <li>• Business VoIP and voice solutions</li>
-            </ul>
-            <p className="mt-4 text-sm text-white/60">
-              Every solution is reviewed based on your address, building infrastructure,
-              and business requirements.
-            </p>
+        <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-black/22 p-6 sm:p-8 lg:p-10">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -right-16 top-0 h-40 w-40 rounded-full bg-cyan-500/10 blur-3xl" />
+            <div className="absolute -left-10 bottom-0 h-40 w-40 rounded-full bg-[#FACC15]/10 blur-3xl" />
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.02),transparent_45%)]" />
+          </div>
+
+          <div className="relative">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                BUSINESS INTERNET SOLUTIONS IN ONTARIO
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                Connectivity designed for real business environments
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                Orbitlink supports Ontario businesses with service options matched
+                to building infrastructure, operational needs, and continuity
+                requirements.
+              </p>
+            </div>
+
+            <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
+              <SolutionCard
+                title="Business fibre internet"
+                desc="Business-grade fibre for offices, clinics, warehouses, and commercial sites."
+              />
+              <SolutionCard
+                title="Dedicated internet access"
+                desc="Higher-assurance internet for uptime-sensitive and performance-critical environments."
+              />
+              <SolutionCard
+                title="Managed Wi-Fi and network support"
+                desc="Improved internal coverage, device performance, and day-to-day wireless reliability."
+              />
+              <SolutionCard
+                title="LTE / 5G backup connectivity"
+                desc="Continuity planning and secondary connectivity when the primary link matters."
+              />
+              <SolutionCard
+                title="Business VoIP and voice solutions"
+                desc="Voice services aligned to business operations, support flow, and growth requirements."
+              />
+            </div>
+
+            <div className="mt-6 rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
+              <div className="text-sm text-white/82">
+                Every solution is reviewed based on your address, building infrastructure,
+                provider reach, and business requirements.
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -468,7 +516,7 @@ export default function Home() {
                 to actual workload, downtime risk, or long-term growth.
               </p>
             </div>
-            <HeroMiniCard title="FOCUS" value="Performance • Reliability • Backup • Accountability" />
+            <MiniMetaCard title="FOCUS" value="Performance • Reliability • Backup • Accountability" />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -506,7 +554,7 @@ export default function Home() {
                 available service paths, and the most suitable next step.
               </p>
             </div>
-            <HeroMiniCard title="PROCESS" value="Address-based and practical" />
+            <MiniMetaCard title="PROCESS" value="Address-based and practical" />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -550,7 +598,7 @@ export default function Home() {
                 BITS licence active (2026)
               </p>
             </div>
-            <HeroMiniCard title="OPERATED BY" value="TIRAV Technologies Inc." />
+            <MiniMetaCard title="OPERATED BY" value="TIRAV Technologies Inc." />
           </div>
 
           <div className="mt-6 flex flex-wrap gap-2">
@@ -579,7 +627,7 @@ export default function Home() {
                 service options, local availability, and market fit.
               </p>
             </div>
-            <HeroMiniCard title="LOCAL DISCOVERY" value="Location pages support local search intent" />
+            <MiniMetaCard title="LOCAL DISCOVERY" value="Location pages support local search intent" />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -605,7 +653,7 @@ export default function Home() {
                 These answers help buyers understand the process and improve search relevance.
               </p>
             </div>
-            <HeroMiniCard title="SEO + CLARITY" value="Useful answers for buyers and search" />
+            <MiniMetaCard title="SEO + CLARITY" value="Useful answers for buyers and search" />
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -644,7 +692,7 @@ export default function Home() {
                 reliable and scalable option for your business.
               </p>
             </div>
-            <HeroMiniCard title="NEXT STEP" value="Availability • Recommendation • Direction" />
+            <MiniMetaCard title="NEXT STEP" value="Availability • Recommendation • Direction" />
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4 sm:flex-wrap">
