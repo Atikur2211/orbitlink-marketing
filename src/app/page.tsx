@@ -429,35 +429,6 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="lg:col-span-5 lg:self-end">
-              <div className="ml-auto max-w-[280px] rounded-[20px] border border-white/10 bg-black/10 p-3.5 backdrop-blur-md sm:max-w-[300px] lg:max-w-[330px]">
-                <div className="text-[10px] tracking-[0.22em] text-white/46">
-                  BUSINESS INTERNET REVIEW
-                </div>
-
-                <div className="mt-2 text-sm font-medium text-white">
-                  Check availability at your location
-                </div>
-
-                <p className="mt-2 text-xs leading-5 text-white/66 sm:text-sm">
-                  We review your building and available providers to recommend the best setup.
-                </p>
-
-                <div className="mt-3 grid grid-cols-1 gap-1.5">
-                  <HeroMiniCard title="STEP 1" value="Check address" />
-                  <HeroMiniCard title="STEP 2" value="Review options" />
-                  <HeroMiniCard title="STEP 3" value="Recommend next step" />
-                </div>
-
-                <div className="mt-3 text-[11px] text-white/46">
-                  No generic quotes • Clear recommendation
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="mx-auto max-w-6xl px-5 py-10 sm:px-7 sm:py-12">
         <div className="rounded-[32px] border border-white/10 bg-black/22 p-6 sm:p-8 lg:p-10">
           <div className="max-w-3xl">
