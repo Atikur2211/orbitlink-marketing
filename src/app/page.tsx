@@ -117,7 +117,7 @@ function StepCard({
   desc: string;
 }) {
   return (
-    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
+    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#FACC15]/30 hover:bg-white/[0.05] sm:p-6">
       <div className="flex items-center gap-3">
         <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
           {step}
@@ -149,7 +149,7 @@ function CoverageCard({
   return (
     <Link
       href={href}
-      className="block h-full rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/20 hover:bg-white/[0.05]"
+      className="group block h-full rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#FACC15]/30 hover:bg-white/[0.05]"
     >
       <div className="text-[11px] tracking-[0.22em] text-white/50">
         {city.toUpperCase()}
@@ -157,7 +157,9 @@ function CoverageCard({
       <div className="mt-2 text-sm font-medium leading-6 text-white/90">
         {note}
       </div>
-      <div className="mt-4 text-xs text-white/55">Open location →</div>
+      <div className="mt-4 text-xs text-white/55 transition group-hover:text-white/75">
+        Open location →
+      </div>
     </Link>
   );
 }
@@ -185,9 +187,39 @@ function SolutionCard({
   desc: string;
 }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5 transition hover:border-white/20 hover:bg-white/[0.06]">
+    <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#FACC15]/25 hover:bg-white/[0.06]">
       <div className="text-sm font-medium text-white/92">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/66">{desc}</p>
+    </div>
+  );
+}
+
+function FitCard({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.05]">
+      <div className="text-sm font-medium text-white/92">{title}</div>
+      <p className="mt-3 text-sm leading-6 text-white/66">{body}</p>
+    </div>
+  );
+}
+
+function ProofCard({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
+      <div className="text-sm font-medium text-white/92">{title}</div>
+      <p className="mt-3 text-sm leading-6 text-white/66">{body}</p>
     </div>
   );
 }
@@ -353,7 +385,7 @@ export default function Home() {
             sizes="100vw"
             className="object-cover object-[74%_center] sm:object-[68%_center] lg:object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.28)_0%,rgba(4,7,12,0.50)_34%,rgba(4,7,12,0.82)_70%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.90)_0%,rgba(4,7,12,0.60)_34%,rgba(4,7,12,0.14)_66%,rgba(4,7,12,0.76)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.28)_0%,rgba(4,7,12,0.52)_34%,rgba(4,7,12,0.84)_70%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.93)_0%,rgba(4,7,12,0.62)_34%,rgba(4,7,12,0.14)_66%,rgba(4,7,12,0.78)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.09),transparent_26%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.09),transparent_24%)]" />
           <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
         </div>
@@ -365,24 +397,24 @@ export default function Home() {
               Business Fibre • Dedicated Internet • Managed Wi-Fi • Backup Connectivity
             </div>
 
-            <h1 className="mt-6 max-w-4xl text-[2rem] font-semibold leading-[1] tracking-tight text-white sm:text-[3rem] lg:text-[4.25rem] xl:text-[5rem]">
-              Business Fibre Internet & Dedicated Internet Access in Ontario
+            <h1 className="mt-6 max-w-5xl text-[2rem] font-semibold leading-[1] tracking-tight text-white sm:text-[3rem] lg:text-[4.25rem] xl:text-[5rem]">
+              Connectivity engineered
+              <span className="block text-white/62">for real business operations</span>
             </h1>
 
             <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/87 sm:text-[1.08rem]">
               Orbitlink helps Ontario businesses choose the right internet, Wi-Fi,
               voice, and backup connectivity for their location. We review building
               infrastructure, provider options, and operational requirements before
-              recommending a path forward.
+              recommending a clear path forward.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {[
-                "Mississauga",
-                "Toronto",
-                "Brampton",
-                "Vaughan",
-                "Ontario-wide",
+                "Address-qualified review",
+                "Ontario business-only",
+                "Structured commercial path",
+                "Clear next step",
               ].map((item) => (
                 <span
                   key={item}
@@ -399,7 +431,7 @@ export default function Home() {
                   href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
-                  Check Business Internet Availability
+                  Check Availability for Your Location
                 </Link>
                 <div className="text-center text-xs text-white/55 sm:text-left">
                   Business-only review • No obligation • Clear response
@@ -414,10 +446,10 @@ export default function Home() {
               </Link>
 
               <Link
-                href="/compare"
+                href="/trust"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
-                Compare Options
+                Review Trust Posture
               </Link>
             </div>
 
@@ -426,13 +458,45 @@ export default function Home() {
               <span className="hidden sm:inline">•</span>
               <span>CRTC-registered provider</span>
               <span className="hidden sm:inline">•</span>
-              <span>Ontario business-only review</span>
+              <span>Ontario commercial review</span>
             </div>
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-12 sm:px-7 sm:py-14">
+        <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
+          <div className="max-w-3xl">
+            <div className="text-[11px] tracking-[0.28em] text-white/55">
+              START HERE
+            </div>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+              Choose the path that fits the business
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+              Start with the real operating requirement. That usually makes the right
+              connectivity path much clearer.
+            </p>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+            <FitCard
+              title="Offices & Clinics"
+              body="Stable day-to-day connectivity, managed Wi-Fi, and a cleaner commercial buying path."
+            />
+            <FitCard
+              title="Critical Operations"
+              body="Dedicated internet, stronger uptime posture, and continuity planning for higher-dependency environments."
+            />
+            <FitCard
+              title="Internal Network Problems"
+              body="Coverage, segmentation, and LAN / Wi-Fi issues that affect user experience and operations."
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pb-12 sm:px-7 sm:pb-14">
         <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-black/22 p-6 sm:p-8 lg:p-10">
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute -right-16 top-0 h-40 w-40 rounded-full bg-cyan-500/10 blur-3xl" />
@@ -492,14 +556,14 @@ export default function Home() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <div className="text-[11px] tracking-[0.28em] text-white/55">
-                WHY BUYERS REACH OUT
+                WHY SERIOUS BUYERS REACH OUT
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Problems businesses run into with the wrong internet setup
+                Problems businesses run into with the wrong service model
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
                 Many business locations rely on internet service that was never matched
-                to actual workload, downtime risk, or long-term growth.
+                to actual workload, continuity risk, or long-term operational needs.
               </p>
             </div>
             <MiniMetaCard
@@ -539,7 +603,7 @@ export default function Home() {
                 A clear path from enquiry to recommendation
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Submit your address, business requirements, and timeline. We review the site,
+                Submit your address, business requirements, and timeline. Orbitlink reviews the site,
                 available service paths, and the most suitable next step.
               </p>
             </div>
@@ -567,24 +631,58 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-12 sm:px-7 sm:pb-14">
+        <div className="rounded-[32px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-8 lg:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
+                WHY BUYERS CHOOSE ORBITLINK
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                Structured for business fit, not generic package selling
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
+                Orbitlink is built around commercial review, address-qualified direction,
+                and clearer next-step guidance for Ontario organizations.
+              </p>
+            </div>
+            <MiniMetaCard title="BUYER SIGNAL" value="Fit • Confidence • Action" />
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+            <ProofCard
+              title="Address-qualified review"
+              body="Availability and service direction are reviewed based on the actual location, infrastructure, and operating requirement."
+            />
+            <ProofCard
+              title="Cleaner commercial path"
+              body="The process is designed to help serious buyers move from interest into a practical decision without unnecessary friction."
+            />
+            <ProofCard
+              title="Disclosure-first posture"
+              body="The buying experience is framed around clarity, fit, and realistic service expectations before commitment."
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pb-12 sm:px-7 sm:pb-14">
         <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <div className="text-[11px] tracking-[0.28em] text-white/55">
-                TRUST & BUYER CLARITY
+                COMMERCIAL REVIEW
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Built for buyers who want clarity before commitment
+                Reviewed directly by Orbitlink
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink is operated by TIRAV Technologies Inc., a CRTC-registered
-                telecommunications reseller. We provide clear, evidence-based recommendations
-                so businesses understand availability, limitations, and service options before
-                making a decision.
+                Every request is reviewed based on the business location, service fit,
+                building context, and operating requirements. This is not a generic sales loop.
+                It is a structured commercial review designed for serious buyers.
               </p>
               <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
                 Operated by TIRAV Technologies Inc. • CRTC-registered telecommunications reseller •
-                BITS licence active (2026)
+                Ontario commercial review posture
               </p>
             </div>
             <MiniMetaCard title="OPERATED BY" value="TIRAV Technologies Inc." />
@@ -593,7 +691,7 @@ export default function Home() {
           <div className="mt-6 flex flex-wrap gap-2">
             <TrustPill text="Operated by TIRAV Technologies Inc." />
             <TrustPill text="CRTC-registered provider" />
-            <TrustPill text="Disclosure-first recommendations" />
+            <TrustPill text="Business-only review" />
             <TrustPill text="Availability reviewed by address" />
             <TrustPill text="Ontario business coverage" />
             <TrustPill text="Clear next-step guidance" />
@@ -674,7 +772,7 @@ export default function Home() {
                 READY TO REVIEW YOUR OPTIONS?
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Choose the right business internet solution for your location.
+                Move from browsing to a real service decision.
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
                 We review your building, available providers, and infrastructure to recommend the most
@@ -690,7 +788,7 @@ export default function Home() {
                 href="/contact#intake"
                 className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Check Business Internet Availability
+                Check Availability for Your Location
               </Link>
               <div className="text-xs text-white/55 sm:text-sm">
                 Business-only review • No obligation • Clear response
@@ -698,10 +796,10 @@ export default function Home() {
             </div>
 
             <Link
-              href="/compare"
+              href="/services"
               className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
-              Compare Provider Models
+              Explore Services
             </Link>
 
             <Link
