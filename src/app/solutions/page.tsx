@@ -74,6 +74,8 @@ const SOLUTIONS = [
     ],
     bestFit:
       "Best for office environments that need reliable primary connectivity and a more business-ready provider experience.",
+    outcome:
+      "Day-to-day stability, cleaner support flow, and better internal network consistency.",
   },
   {
     id: "clinics",
@@ -97,6 +99,8 @@ const SOLUTIONS = [
     ],
     bestFit:
       "Best for customer-facing environments where service continuity and internal workflow reliability matter daily.",
+    outcome:
+      "Fewer workflow interruptions, cleaner client experience, and stronger continuity planning.",
   },
   {
     id: "warehouses",
@@ -120,6 +124,8 @@ const SOLUTIONS = [
     ],
     bestFit:
       "Best for operational environments where reliability, resilience, and clearer site qualification matter more than standard retail telecom flows.",
+    outcome:
+      "Stronger uptime posture, better resilience, and a more operations-aware connectivity model.",
   },
   {
     id: "multisite",
@@ -143,6 +149,8 @@ const SOLUTIONS = [
     ],
     bestFit:
       "Best for organizations that want a cleaner and more standardized connectivity approach across several sites.",
+    outcome:
+      "Better consistency, simpler rollout, and cleaner service coordination across locations.",
   },
   {
     id: "buildings",
@@ -166,6 +174,8 @@ const SOLUTIONS = [
     ],
     bestFit:
       "Best for property and building environments that need clearer telecom planning and more business-readable service options.",
+    outcome:
+      "Cleaner tenant conversations, clearer building fit, and stronger commercial planning.",
   },
 ] as const;
 
@@ -217,9 +227,24 @@ function SignalCard({
   text: string;
 }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:bg-black/25">
       <div className="text-sm font-medium text-white/90">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/64">{text}</p>
+    </div>
+  );
+}
+
+function FitStartCard({
+  title,
+  text,
+}: {
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#FACC15]/25 hover:bg-white/[0.05]">
+      <div className="text-sm font-medium text-white/92">{title}</div>
+      <p className="mt-3 text-sm leading-6 text-white/66">{text}</p>
     </div>
   );
 }
@@ -243,14 +268,14 @@ function SolutionCard({ s }: { s: (typeof SOLUTIONS)[number] }) {
       </div>
 
       <div className="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-3">
-        <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+        <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25">
           <div className="text-[11px] tracking-[0.22em] text-white/55">
             BUSINESS NEED
           </div>
           <p className="mt-3 text-sm leading-6 text-white/65">{s.purpose}</p>
         </div>
 
-        <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+        <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25">
           <div className="text-[11px] tracking-[0.22em] text-white/55">
             COMMON FIT
           </div>
@@ -261,7 +286,7 @@ function SolutionCard({ s }: { s: (typeof SOLUTIONS)[number] }) {
           </ul>
         </div>
 
-        <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+        <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25">
           <div className="text-[11px] tracking-[0.22em] text-white/55">
             TYPICAL SERVICES
           </div>
@@ -273,13 +298,32 @@ function SolutionCard({ s }: { s: (typeof SOLUTIONS)[number] }) {
         </div>
       </div>
 
+      <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25">
+          <div className="text-[11px] tracking-[0.22em] text-white/55">
+            BUYER TAKEAWAY
+          </div>
+          <div className="mt-2 text-sm leading-6 text-white/72">{s.bestFit}</div>
+        </div>
+
+        <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25">
+          <div className="text-[11px] tracking-[0.22em] text-white/55">
+            EXPECTED OUTCOME
+          </div>
+          <div className="mt-2 text-sm leading-6 text-white/72">{s.outcome}</div>
+        </div>
+      </div>
+
       <div className="mt-6 rounded-[24px] border border-white/10 bg-black/25 p-5">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-3xl">
             <div className="text-[11px] tracking-[0.22em] text-white/55">
-              BUYER TAKEAWAY
+              NEXT STEP
             </div>
-            <div className="mt-2 text-sm leading-6 text-white/72">{s.bestFit}</div>
+            <div className="mt-2 text-sm leading-6 text-white/72">
+              Move from environment review into address-qualified availability,
+              fit, and commercial direction.
+            </div>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -456,6 +500,34 @@ export default function SolutionsPage() {
         </div>
       </Surface>
 
+      <Surface className="mt-6 p-6 sm:p-8 lg:p-10">
+        <div className="max-w-3xl">
+          <SectionEyebrow>START HERE</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+            Choose the operating environment first
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+            Most buyers know the environment before they know the final service model.
+            This section helps narrow the likely fit faster.
+          </p>
+        </div>
+
+        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <FitStartCard
+            title="Workplaces & Offices"
+            text="Reliable primary internet, managed Wi-Fi, and cleaner day-to-day support."
+          />
+          <FitStartCard
+            title="Client-Facing Environments"
+            text="Stronger continuity, voice handling, and smoother daily workflow."
+          />
+          <FitStartCard
+            title="Operational & Multi-Site Environments"
+            text="Better resilience, site qualification, and more standardized rollout."
+          />
+        </div>
+      </Surface>
+
       <div className="h-px w-full" />
 
       <StickyModuleNav modules={modules} watchOffsetTop={72} />
@@ -499,6 +571,38 @@ export default function SolutionsPage() {
           <SignalCard
             title="Multi-site and building environments"
             text="Often need consistency, coordination, and more business-readable service planning across multiple locations or stakeholders."
+          />
+        </div>
+      </Surface>
+
+      <Surface className="mt-6 p-6 sm:p-8 lg:p-10">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>WHAT THIS HELPS YOU DECIDE</SectionEyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+              Move from broad interest to a more qualified service path
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+              This page is designed to reduce early-stage uncertainty. It helps buyers
+              understand likely fit before the address-qualified review begins.
+            </p>
+          </div>
+
+          <MetricPill label="DECISION MODE" value="Environment → Fit → Availability" />
+        </div>
+
+        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <SignalCard
+            title="Choose the likely path faster"
+            text="The environment-led view narrows the service conversation before pricing and qualification."
+          />
+          <SignalCard
+            title="Reduce mismatch risk"
+            text="A better starting point helps avoid choosing the wrong service path for the site."
+          />
+          <SignalCard
+            title="Enter review with better context"
+            text="The next step becomes more useful when the business environment is already clear."
           />
         </div>
       </Surface>
