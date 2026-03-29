@@ -1,6 +1,7 @@
 // src/app/services/page.tsx
 import Link from "next/link";
 import type { Metadata } from "next";
+import type { HTMLAttributes, ReactNode } from "react";
 
 const SITE_URL = "https://orbitlink.ca";
 const PAGE_URL = `${SITE_URL}/services`;
@@ -231,12 +232,14 @@ function MetricPill({
 function Surface({
   children,
   className = "",
-}: {
-  children: React.ReactNode;
+  ...props
+}: HTMLAttributes<HTMLDivElement> & {
+  children: ReactNode;
   className?: string;
 }) {
   return (
     <div
+      {...props}
       className={[
         "rounded-[34px] border border-white/10 bg-white/[0.035] backdrop-blur-sm",
         className,
@@ -318,7 +321,7 @@ function GroupBlock({
   services: readonly ServiceItem[];
 }) {
   return (
-    <section id={id} className="scroll-mt-28 mt-16 first:mt-0">
+    <section id={id} className="mt-16 scroll-mt-28 first:mt-0">
       <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-3xl">
           <div className="text-[11px] tracking-[0.30em] text-white/40">{eyebrow}</div>
@@ -649,8 +652,7 @@ function DecisionStrip() {
             This page is built to help buyers choose correctly
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            The goal is not only to show what Orbitlink offers. It is to help serious
-            buyers identify the right service model before moving into pricing and qualification.
+            The goal is not only to show what Orbitlink offers. It is to help serious buyers identify the right service model before moving into pricing and qualification.
           </p>
         </div>
 
@@ -704,8 +706,7 @@ function ValueStrip() {
             More than a service catalog
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-            Serious buyers need more than a list. They need a service structure that
-            helps them understand fit, move into qualification, and trust the next step.
+            Serious buyers need more than a list. They need a service structure that helps them understand fit, move into qualification, and trust the next step.
           </p>
         </div>
 
@@ -755,8 +756,7 @@ function FAQStrip() {
             Questions buyers commonly ask on the services page
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            These answers help business buyers understand the service categories before
-            moving into qualification.
+            These answers help business buyers understand the service categories before moving into qualification.
           </p>
         </div>
 
@@ -792,8 +792,7 @@ function FinalCTA() {
               Move from service browsing to a qualified commercial conversation
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              Start with the address, operating requirements, and the service priority.
-              Orbitlink can then review fit, availability, and the clearest next step.
+              Start with the address, operating requirements, and the service priority. Orbitlink can then review fit, availability, and the clearest next step.
             </p>
           </div>
 
@@ -967,15 +966,24 @@ export default function ServicesIndexPage() {
 
                 <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/66 sm:text-lg">
                   Explore{" "}
-                  <Link href="/services/business-fibre-internet" className="text-white/88 underline-offset-4 hover:underline">
+                  <Link
+                    href="/services/business-fibre-internet"
+                    className="text-white/88 underline-offset-4 hover:underline"
+                  >
                     business fibre internet
                   </Link>
                   ,{" "}
-                  <Link href="/services/dedicated-internet-access" className="text-white/88 underline-offset-4 hover:underline">
+                  <Link
+                    href="/services/dedicated-internet-access"
+                    className="text-white/88 underline-offset-4 hover:underline"
+                  >
                     dedicated internet access
                   </Link>
                   ,{" "}
-                  <Link href="/services/managed-lan-wifi" className="text-white/88 underline-offset-4 hover:underline">
+                  <Link
+                    href="/services/managed-lan-wifi"
+                    className="text-white/88 underline-offset-4 hover:underline"
+                  >
                     managed LAN and Wi-Fi
                   </Link>
                   , continuity services, cloud voice, and infrastructure options for Ontario organizations.
