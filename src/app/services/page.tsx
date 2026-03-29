@@ -1003,7 +1003,7 @@ export default function ServicesIndexPage() {
             </h1>
 
             <p className="mt-4 max-w-2xl text-[14px] leading-7 text-white/80 sm:text-[15px]">
-              Fibre, dedicated internet, managed Wi-Fi, backup connectivity, voice, and infrastructure services for Ontario organizations.
+              Explore business fibre internet, dedicated internet access, managed LAN and Wi-Fi, backup connectivity, voice, and infrastructure services for Ontario organizations. Start with the service that fits the site, then move into availability, fit, and commercial review..
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
