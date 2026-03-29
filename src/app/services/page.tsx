@@ -1056,7 +1056,7 @@ export default function ServicesIndexPage() {
 
             <div className="mt-6 flex flex-wrap gap-2">
               <TrustPill text="Operated by TIRAV Technologies Inc." />
-              <TrustPill text="CRTC-registered reseller" />
+              <TrustPill text="CRTC-registered provider" />
               <TrustPill text="Ontario commercial focus" />
             </div>
           </div>
