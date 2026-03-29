@@ -225,7 +225,7 @@ function MetricPill({
   return (
     <div className="rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
       <div className="text-[11px] tracking-[0.22em] text-white/42">{label}</div>
-      <div className="mt-1 text-sm text-white/82">{value}</div>
+      <div className="mt-1 text-sm leading-5 text-white/82">{value}</div>
     </div>
   );
 }
@@ -242,7 +242,7 @@ function Surface({
     <div
       {...props}
       className={[
-        "rounded-[34px] border border-white/10 bg-white/[0.035] backdrop-blur-sm",
+        "rounded-[28px] border border-white/10 bg-white/[0.035] backdrop-blur-sm sm:rounded-[34px]",
         className,
       ].join(" ")}
     >
@@ -263,7 +263,7 @@ function ServiceCard({ service }: { service: ServiceItem }) {
   return (
     <Link
       href={service.href}
-      className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-black/20 p-5 transition duration-300 hover:border-white/20 hover:bg-white/[0.055] sm:p-6"
+      className="group relative overflow-hidden rounded-[24px] border border-white/10 bg-black/20 p-5 transition duration-300 hover:border-white/20 hover:bg-white/[0.055] sm:rounded-[28px] sm:p-6"
     >
       <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
         <div className="absolute -left-12 top-0 h-40 w-40 rounded-full bg-blue-500/8 blur-3xl" />
@@ -274,8 +274,10 @@ function ServiceCard({ service }: { service: ServiceItem }) {
       <div className="relative">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <div className="text-[11px] tracking-[0.24em] text-white/48">{service.tag}</div>
-            <h3 className="mt-3 text-xl font-semibold tracking-tight text-white">
+            <div className="text-[10px] tracking-[0.24em] text-white/48 sm:text-[11px]">
+              {service.tag}
+            </div>
+            <h3 className="mt-3 text-lg font-semibold tracking-tight text-white sm:text-xl">
               {service.title}
             </h3>
             <p className="mt-3 text-sm leading-6 text-white/64">{service.subtitle}</p>
@@ -290,7 +292,7 @@ function ServiceCard({ service }: { service: ServiceItem }) {
           {service.bullets.map((b) => (
             <span
               key={b}
-              className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/62"
+              className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] text-white/62 sm:text-xs"
             >
               {b}
             </span>
@@ -300,7 +302,9 @@ function ServiceCard({ service }: { service: ServiceItem }) {
         <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
         <div className="mt-5">
-          <div className="text-[11px] tracking-[0.22em] text-white/40">BEST FOR</div>
+          <div className="text-[10px] tracking-[0.22em] text-white/40 sm:text-[11px]">
+            BEST FOR
+          </div>
           <p className="mt-2 text-sm leading-6 text-white/60">{service.bestFit}</p>
         </div>
       </div>
@@ -322,10 +326,12 @@ function GroupBlock({
   services: readonly ServiceItem[];
 }) {
   return (
-    <section id={id} className="mt-16 scroll-mt-28 first:mt-0">
+    <section id={id} className="mt-14 scroll-mt-28 first:mt-0 sm:mt-16">
       <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.30em] text-white/40">{eyebrow}</div>
+          <div className="text-[10px] tracking-[0.30em] text-white/40 sm:text-[11px]">
+            {eyebrow}
+          </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
             {title}
           </h2>
@@ -365,7 +371,9 @@ function JumpNav() {
     <Surface className="p-4 sm:p-5">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <div className="text-[11px] tracking-[0.30em] text-white/42">JUMP TO</div>
+          <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
+            JUMP TO
+          </div>
           <div className="mt-2 text-sm text-white/72">
             Go directly to the service family that matches the business need.
           </div>
@@ -376,14 +384,14 @@ function JumpNav() {
             <a
               key={group.id}
               href={`#${group.id}`}
-              className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-white/72 transition hover:bg-white/10"
+              className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] text-white/72 transition hover:bg-white/10 sm:text-xs"
             >
               {group.title}
             </a>
           ))}
           <a
             href="#faq"
-            className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-white/72 transition hover:bg-white/10"
+            className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] text-white/72 transition hover:bg-white/10 sm:text-xs"
           >
             FAQ
           </a>
@@ -403,9 +411,11 @@ function AudienceStrip() {
   ];
 
   return (
-    <Surface className="p-6 sm:p-8">
+    <Surface className="p-5 sm:p-8">
       <div className="max-w-3xl">
-        <div className="text-[11px] tracking-[0.30em] text-white/42">WHO THIS PAGE IS FOR</div>
+        <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
+          WHO THIS PAGE IS FOR
+        </div>
         <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
           Built for serious commercial buyers
         </h2>
@@ -444,10 +454,12 @@ function QuickStartStrip() {
   ];
 
   return (
-    <Surface className="p-6 sm:p-8 lg:p-10">
+    <Surface className="p-5 sm:p-8 lg:p-10">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.30em] text-white/42">HOW TO BUY</div>
+          <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
+            HOW TO BUY
+          </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
             A cleaner path from service interest to commercial review
           </h2>
@@ -462,8 +474,13 @@ function QuickStartStrip() {
 
       <div className="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-3">
         {steps.map((step) => (
-          <div key={step.label} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
-            <div className="text-[11px] tracking-[0.22em] text-white/45">{step.label}</div>
+          <div
+            key={step.label}
+            className="rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[26px]"
+          >
+            <div className="text-[10px] tracking-[0.22em] text-white/45 sm:text-[11px]">
+              {step.label}
+            </div>
             <div className="mt-3 text-sm font-medium text-white/90">{step.title}</div>
             <p className="mt-3 text-sm leading-6 text-white/63">{step.body}</p>
           </div>
@@ -506,10 +523,12 @@ function ComparisonBlock() {
   ];
 
   return (
-    <Surface className="p-6 sm:p-8 lg:p-10">
+    <Surface className="p-5 sm:p-8 lg:p-10">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.30em] text-white/42">HOW TO CHOOSE</div>
+          <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
+            HOW TO CHOOSE
+          </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
             Compare the main service paths quickly
           </h2>
@@ -522,9 +541,11 @@ function ComparisonBlock() {
       </div>
 
       <div className="mt-7 overflow-x-auto">
-        <div className="min-w-[760px] rounded-[26px] border border-white/10 bg-black/20">
+        <div className="min-w-[760px] rounded-[24px] border border-white/10 bg-black/20 sm:rounded-[26px]">
           <div className="grid grid-cols-5 border-b border-white/10">
-            <div className="p-4 text-[11px] tracking-[0.22em] text-white/40">COMPARE</div>
+            <div className="p-4 text-[10px] tracking-[0.22em] text-white/40 sm:text-[11px]">
+              COMPARE
+            </div>
             <div className="p-4 text-sm font-medium text-white/90">Business Fibre</div>
             <div className="p-4 text-sm font-medium text-white/90">Dedicated Internet</div>
             <div className="p-4 text-sm font-medium text-white/90">Managed Wi-Fi</div>
@@ -561,10 +582,12 @@ function BuyerIntentStrip() {
   ];
 
   return (
-    <Surface className="p-6 sm:p-8 lg:p-10">
+    <Surface className="p-5 sm:p-8 lg:p-10">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.30em] text-white/42">COMMON BUYER MISTAKES</div>
+          <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
+            COMMON BUYER MISTAKES
+          </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
             Why businesses end up on the wrong service
           </h2>
@@ -578,7 +601,10 @@ function BuyerIntentStrip() {
 
       <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {items.map((item) => (
-          <div key={item} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={item}
+            className="rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[26px]"
+          >
             <div className="text-sm font-medium text-white/88">{item}</div>
           </div>
         ))}
@@ -589,10 +615,12 @@ function BuyerIntentStrip() {
 
 function MidPageCTA() {
   return (
-    <Surface className="p-6 sm:p-8 lg:p-10">
+    <Surface className="p-5 sm:p-8 lg:p-10">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.30em] text-white/42">NEED HELP CHOOSING?</div>
+          <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
+            NEED HELP CHOOSING?
+          </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
             Not sure which service fits?
           </h2>
@@ -645,10 +673,12 @@ function DecisionStrip() {
   ];
 
   return (
-    <Surface className="p-6 sm:p-8 lg:p-10">
+    <Surface className="p-5 sm:p-8 lg:p-10">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.30em] text-white/42">DECISION SUPPORT</div>
+          <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
+            DECISION SUPPORT
+          </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
             This page is built to help buyers choose correctly
           </h2>
@@ -662,7 +692,10 @@ function DecisionStrip() {
 
       <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {items.map((item) => (
-          <div key={item.title} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={item.title}
+            className="rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[26px]"
+          >
             <div className="text-sm font-medium text-white/90">{item.title}</div>
             <p className="mt-3 text-sm leading-6 text-white/63">{item.body}</p>
           </div>
@@ -697,10 +730,10 @@ function ValueStrip() {
   ];
 
   return (
-    <Surface className="border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-8 lg:p-10">
+    <Surface className="border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-5 sm:p-8 lg:p-10">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.30em] text-[#FDE68A]">
+          <div className="text-[10px] tracking-[0.30em] text-[#FDE68A] sm:text-[11px]">
             WHY THIS PAGE WORKS FOR SERIOUS BUYERS
           </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
@@ -716,7 +749,10 @@ function ValueStrip() {
 
       <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {items.map((item) => (
-          <div key={item.title} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={item.title}
+            className="rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[26px]"
+          >
             <div className="text-sm font-medium text-white/90">{item.title}</div>
             <p className="mt-3 text-sm leading-6 text-white/63">{item.body}</p>
           </div>
@@ -747,10 +783,10 @@ function FAQStrip() {
   ];
 
   return (
-    <Surface id="faq" className="scroll-mt-28 p-6 sm:p-8 lg:p-10">
+    <Surface id="faq" className="scroll-mt-28 p-5 sm:p-8 lg:p-10">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.30em] text-white/42">
+          <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
             FREQUENTLY ASKED QUESTIONS
           </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
@@ -766,7 +802,10 @@ function FAQStrip() {
 
       <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
         {items.map((item) => (
-          <div key={item.q} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={item.q}
+            className="rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[26px]"
+          >
             <h3 className="text-sm font-medium text-white/90">{item.q}</h3>
             <p className="mt-3 text-sm leading-6 text-white/63">{item.a}</p>
           </div>
@@ -778,8 +817,8 @@ function FAQStrip() {
 
 function FinalCTA() {
   return (
-    <div className="overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.035]">
-      <div className="relative p-6 sm:p-8 lg:p-10">
+    <div className="overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.035] sm:rounded-[34px]">
+      <div className="relative p-5 sm:p-8 lg:p-10">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-16 top-0 h-48 w-48 rounded-full bg-blue-500/10 blur-3xl" />
           <div className="absolute right-0 top-10 h-44 w-44 rounded-full bg-emerald-500/8 blur-3xl" />
@@ -788,7 +827,9 @@ function FinalCTA() {
 
         <div className="relative flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.30em] text-white/42">NEXT STEP</div>
+            <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
+              NEXT STEP
+            </div>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
               Move from service browsing to a qualified commercial conversation
             </h2>
@@ -940,14 +981,14 @@ export default function ServicesIndexPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[72%_center] sm:object-[68%_center] lg:object-center"
+            className="object-cover object-[76%_center] sm:object-[70%_center] lg:object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.34)_0%,rgba(4,7,12,0.58)_34%,rgba(4,7,12,0.86)_74%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.92)_0%,rgba(4,7,12,0.60)_34%,rgba(4,7,12,0.18)_66%,rgba(4,7,12,0.78)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.07),transparent_24%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.08),transparent_22%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.40)_0%,rgba(4,7,12,0.64)_36%,rgba(4,7,12,0.88)_76%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.94)_0%,rgba(4,7,12,0.62)_34%,rgba(4,7,12,0.18)_66%,rgba(4,7,12,0.80)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.08),transparent_24%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.10),transparent_22%)]" />
           <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[88dvh] max-w-7xl items-center px-5 pb-12 pt-28 sm:px-7 sm:pt-24 lg:min-h-[78vh] lg:px-10 lg:pb-16 lg:pt-20">
+        <div className="relative mx-auto flex min-h-[92dvh] max-w-7xl items-center px-5 pb-12 pt-28 sm:px-7 sm:min-h-[84dvh] sm:pt-24 lg:min-h-[78vh] lg:px-10 lg:pb-16 lg:pt-20">
           <div className="w-full max-w-4xl">
             <Breadcrumbs />
 
@@ -956,7 +997,7 @@ export default function ServicesIndexPage() {
               Ontario Business Connectivity Services
             </div>
 
-            <h1 className="mt-6 max-w-5xl text-[2.35rem] font-semibold leading-[0.98] tracking-tight text-white sm:text-[3.3rem] lg:text-[4.7rem] xl:text-[5.3rem]">
+            <h1 className="mt-6 max-w-5xl text-[2.2rem] font-semibold leading-[0.98] tracking-tight text-white sm:text-[3.3rem] lg:text-[4.8rem] xl:text-[5.4rem]">
               Business connectivity services
               <span className="block text-white/62">
                 built for real operating environments
@@ -1022,10 +1063,10 @@ export default function ServicesIndexPage() {
         </div>
       </section>
 
-      <section className="relative mx-auto max-w-7xl px-5 py-12 sm:px-7 sm:py-16 lg:px-10 lg:py-20">
+      <section className="relative mx-auto max-w-7xl px-5 py-10 sm:px-7 sm:py-16 lg:px-10 lg:py-20">
         <div className="pointer-events-none absolute inset-0 opacity-[0.03] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:88px_88px]" />
 
-        <div className="relative space-y-6">
+        <div className="relative space-y-5 sm:space-y-6">
           <JumpNav />
           <AudienceStrip />
           <QuickStartStrip />
