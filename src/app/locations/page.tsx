@@ -1,6 +1,7 @@
 // src/app/locations/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 const SITE_URL = "https://orbitlink.ca";
 const PAGE_PATH = "/locations";
@@ -411,7 +412,7 @@ function Surface({
   return (
     <div
       className={[
-        "rounded-[32px] border border-white/10 bg-white/[0.035] backdrop-blur-sm",
+        "rounded-[28px] border border-white/10 bg-white/[0.035] backdrop-blur-sm sm:rounded-[32px]",
         className,
       ].join(" ")}
     >
@@ -424,7 +425,7 @@ function LocationCardView({ item }: { item: LocationCard }) {
   return (
     <Link
       href={item.href}
-      className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.035] p-5 transition duration-300 hover:border-white/20 hover:bg-white/[0.055] sm:p-6"
+      className="group relative overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.035] p-5 transition duration-300 hover:border-white/20 hover:bg-white/[0.055] sm:rounded-[28px] sm:p-6"
     >
       <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
         <div className="absolute -left-12 top-0 h-36 w-36 rounded-full bg-blue-500/10 blur-3xl" />
@@ -474,7 +475,7 @@ function JourneyCard({
   desc: string;
 }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+    <div className="rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[24px]">
       <div className="flex items-center gap-3">
         <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
           {step}
@@ -494,7 +495,7 @@ function SignalCard({
   text: string;
 }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
+    <div className="rounded-[22px] border border-white/10 bg-white/[0.04] p-5 sm:rounded-[24px]">
       <div className="text-sm font-medium text-white/90">{title}</div>
       <div className="mt-2 text-sm leading-6 text-white/70">{text}</div>
     </div>
@@ -509,107 +510,85 @@ export default function LocationsHubPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
-      <section className="relative border-b border-white/10">
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -top-24 left-8 h-72 w-72 rounded-full bg-blue-500/12 blur-3xl" />
-          <div className="absolute right-8 top-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
-          <div className="absolute bottom-[-140px] left-1/2 h-80 w-[56rem] max-w-[140vw] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_34%)]" />
+      <section className="relative overflow-hidden border-b border-white/10">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/locations-hero-ontario-map.jpg"
+            alt="Futuristic Ontario map showing Orbitlink business connectivity coverage across Ontario cities"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[72%_center] sm:object-[64%_center] lg:object-center"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,14,0.42)_0%,rgba(5,8,14,0.64)_34%,rgba(5,8,14,0.88)_76%,rgba(5,8,14,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(5,8,14,0.94)_0%,rgba(5,8,14,0.62)_36%,rgba(5,8,14,0.16)_68%,rgba(5,8,14,0.80)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.08),transparent_24%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.10),transparent_22%)]" />
           <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-6 pb-14 pt-16 sm:px-7 sm:pb-18 sm:pt-20 lg:px-10 lg:pb-24">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-            <span className="h-2 w-2 rounded-full bg-[#FACC15]" />
-            <span className="text-sm tracking-wide text-white/65">
-              Ontario business location hub
-            </span>
-          </div>
-
-          <div className="mt-7 grid grid-cols-1 gap-9 lg:grid-cols-12">
-            <div className="lg:col-span-8">
-              <div className="max-w-4xl">
-                <div className="text-[11px] tracking-[0.30em] text-white/40">
-                  BUSINESS FIBRE • DEDICATED INTERNET • MANAGED NETWORK • CONTINUITY
-                </div>
-
-                <h1 className="mt-4 text-[2.6rem] font-semibold tracking-tight text-white sm:text-6xl lg:text-[5rem] lg:leading-[0.98]">
-                  Ontario business
-                  <span className="block text-white/62">connectivity locations</span>
-                </h1>
-
-                <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/66 sm:text-lg">
-                  Start with your city. Then move into address-qualified availability,
-                  cleaner service matching, and a more structured commercial path for your site.
-                </p>
-
-                <div className="mt-7 flex flex-wrap gap-2">
-                  {[
-                    "Address-qualified",
-                    "Business-first",
-                    "Ontario-focused",
-                    "Commercially clear",
-                  ].map((x) => (
-                    <span
-                      key={x}
-                      className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/66"
-                    >
-                      {x}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                  <Link
-                    href="/contact#intake"
-                    className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                  >
-                    Check Availability
-                  </Link>
-                  <Link
-                    href="/locations/ontario"
-                    className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                  >
-                    Ontario Coverage
-                  </Link>
-                  <Link
-                    href="/services"
-                    className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                  >
-                    Explore Services
-                  </Link>
-                </div>
-
-                <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-                  <MetricPill label="BUYER FIT" value="Ontario business sites" />
-                  <MetricPill label="QUALIFICATION" value="Address and building based" />
-                  <MetricPill label="NEXT STEP" value="Availability and pricing direction" />
-                </div>
-              </div>
+        <div className="relative mx-auto flex min-h-[92dvh] max-w-7xl items-center px-6 pb-14 pt-16 sm:px-7 sm:min-h-[84dvh] sm:pb-18 sm:pt-20 lg:px-10 lg:min-h-[78vh] lg:pb-24">
+          <div className="w-full max-w-4xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur">
+              <span className="h-2 w-2 rounded-full bg-[#FACC15]" />
+              <span className="text-sm tracking-wide text-white/65">
+                Ontario business location hub
+              </span>
             </div>
 
-            <div className="lg:col-span-4">
-              <div className="rounded-[30px] border border-white/10 bg-white/[0.045] p-6">
-                <SectionEyebrow>BUYING PATH</SectionEyebrow>
-                <h2 className="mt-3 text-lg font-semibold text-white">
-                  Local discovery to qualified intake
-                </h2>
-                <p className="mt-3 text-sm leading-6 text-white/64">
-                  This page is designed to shorten the path from city search to service
-                  review and a cleaner commercial next step.
-                </p>
+            <div className="mt-6 text-[11px] tracking-[0.30em] text-white/40">
+              BUSINESS FIBRE • DEDICATED INTERNET • MANAGED NETWORK • CONTINUITY
+            </div>
 
-                <div className="mt-5 grid gap-3">
-                  {BUYER_JOURNEY.map((item) => (
-                    <JourneyCard
-                      key={item.step}
-                      step={item.step}
-                      title={item.title}
-                      desc={item.desc}
-                    />
-                  ))}
-                </div>
-              </div>
+            <h1 className="mt-4 text-[2.35rem] font-semibold tracking-tight text-white sm:text-[3.4rem] lg:text-[5rem] lg:leading-[0.98]">
+              Ontario business
+              <span className="block text-white/62">connectivity locations</span>
+            </h1>
+
+            <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/66 sm:text-lg">
+              Start with your city. Then move into address-qualified availability,
+              cleaner service matching, and a more structured commercial path for your site.
+            </p>
+
+            <div className="mt-7 flex flex-wrap gap-2">
+              {[
+                "Ontario-wide city coverage",
+                "Address-qualified availability",
+                "Business-first review",
+                "Commercially clear next step",
+              ].map((x) => (
+                <span
+                  key={x}
+                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/66"
+                >
+                  {x}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link
+                href="/contact#intake"
+                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+              >
+                Check Availability
+              </Link>
+              <Link
+                href="/locations/ontario"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Ontario Coverage
+              </Link>
+              <Link
+                href="/services"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Explore Services
+              </Link>
+            </div>
+
+            <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+              <MetricPill label="BUYER FIT" value="Ontario business sites" />
+              <MetricPill label="QUALIFICATION" value="Address and building based" />
+              <MetricPill label="NEXT STEP" value="Availability and pricing direction" />
             </div>
           </div>
         </div>
@@ -634,10 +613,7 @@ export default function LocationsHubPage() {
 
           <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
             {PREMIUM_SIGNALS.map((x) => (
-              <div key={x.t} className="rounded-3xl border border-white/10 bg-white/[0.04] p-5">
-                <div className="text-sm font-semibold text-white/90">{x.t}</div>
-                <div className="mt-2 text-sm leading-6 text-white/70">{x.d}</div>
-              </div>
+              <SignalCard key={x.t} title={x.t} text={x.d} />
             ))}
           </div>
         </Surface>
@@ -656,7 +632,7 @@ export default function LocationsHubPage() {
               </p>
             </div>
 
-            <div className="hidden md:flex items-center gap-2 text-sm text-white/60">
+            <div className="hidden items-center gap-2 text-sm text-white/60 md:flex">
               <span className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1.5">
                 High intent
               </span>
@@ -731,7 +707,7 @@ export default function LocationsHubPage() {
               <Link
                 key={x.href}
                 href={x.href}
-                className="rounded-3xl border border-white/10 bg-white/[0.035] p-5 transition hover:bg-white/[0.06]"
+                className="rounded-[22px] border border-white/10 bg-white/[0.035] p-5 transition hover:bg-white/[0.06] sm:rounded-3xl"
               >
                 <div className="text-sm font-semibold text-white/90">{x.t}</div>
                 <div className="mt-2 text-sm leading-6 text-white/70">{x.d}</div>
@@ -743,7 +719,7 @@ export default function LocationsHubPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 pb-10 sm:px-7 lg:px-10">
-        <div className="rounded-[30px] border border-white/10 bg-black/20 p-6 md:p-8">
+        <div className="rounded-[26px] border border-white/10 bg-black/20 p-6 sm:rounded-[30px] md:p-8">
           <SectionEyebrow>ONTARIO BUSINESS PRESENCE</SectionEyebrow>
           <h2 className="mt-3 text-xl font-semibold tracking-tight">
             Orbitlink Ontario presence
@@ -780,14 +756,17 @@ export default function LocationsHubPage() {
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
             {FAQ.map((f) => (
-              <div key={f.q} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+              <div
+                key={f.q}
+                className="rounded-[22px] border border-white/10 bg-white/[0.04] p-6 sm:rounded-3xl"
+              >
                 <h3 className="text-base font-semibold tracking-tight text-white">{f.q}</h3>
                 <p className="mt-3 text-sm leading-6 text-white/70">{f.a}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
