@@ -82,17 +82,22 @@ export const metadata: Metadata = {
   },
 };
 
-function SignalCard({
+function ServiceCard({
   index,
   title,
   desc,
+  href,
 }: {
   index: string;
   title: string;
   desc: string;
+  href: string;
 }) {
   return (
-    <div className="group relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.03] p-5 transition duration-300 hover:border-white/20 hover:bg-white/[0.05]">
+    <Link
+      href={href}
+      className="group relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.03] p-5 transition duration-300 hover:border-white/20 hover:bg-white/[0.05]"
+    >
       <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
         <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-cyan-400/10 blur-3xl" />
         <div className="absolute -left-10 bottom-0 h-24 w-24 rounded-full bg-[#FACC15]/10 blur-3xl" />
@@ -102,7 +107,16 @@ function SignalCard({
         <div className="text-[10px] tracking-[0.22em] text-white/40">{index}</div>
         <h3 className="mt-3 text-sm font-medium text-white/92">{title}</h3>
         <p className="mt-2 text-sm leading-6 text-white/64">{desc}</p>
+        <div className="mt-4 text-xs text-white/50">Open service →</div>
       </div>
+    </Link>
+  );
+}
+
+function PainCard({ text }: { text: string }) {
+  return (
+    <div className="rounded-[22px] border border-white/10 bg-black/20 p-5 text-sm text-white/80">
+      {text}
     </div>
   );
 }
@@ -213,29 +227,6 @@ export default function Home() {
     termsOfService: `${SITE_URL}/legal/terms`,
   };
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "How do I check if Orbitlink can serve my business location?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Submit your business address and service requirements through the Orbitlink intake. Availability is reviewed based on address, building infrastructure, and service type.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Does Orbitlink offer business fibre and dedicated internet access?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes. Orbitlink supports business fibre internet, dedicated internet access, managed Wi-Fi, voice, and backup connectivity for Ontario businesses.",
-        },
-      },
-    ],
-  };
-
   return (
     <main className="min-h-screen bg-[#06080C] text-white">
       <script
@@ -245,10 +236,6 @@ export default function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(telecomSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       <TopNav />
@@ -311,6 +298,13 @@ export default function Home() {
               >
                 Request Pricing
               </Link>
+
+              <Link
+                href="/services"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-6 py-3 text-sm transition hover:bg-white/10"
+              >
+                View Service Catalog
+              </Link>
             </div>
 
             <div className="mt-4 text-xs text-white/55">
@@ -327,36 +321,40 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-5 py-20 sm:px-7 lg:px-10">
         <div className="max-w-3xl">
           <div className="text-[11px] tracking-[0.28em] text-white/55">
-            BUILT FOR REAL BUSINESS ENVIRONMENTS
+            SERVICE CATALOG
           </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-[34px]">
-            Less brochure. More buyer clarity.
+            What Orbitlink can actually help with
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            Faster scanning. Cleaner choices. Stronger confidence before enquiry.
+            Clear categories for the most common business connectivity needs.
           </p>
         </div>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          <SignalCard
+          <ServiceCard
             index="01"
-            title="Fibre Internet"
-            desc="High-capacity access for office, clinical, and commercial use."
+            title="Business Fibre Internet"
+            desc="High-capacity access for offices, clinics, and commercial sites."
+            href="/services/business-fibre-internet"
           />
-          <SignalCard
+          <ServiceCard
             index="02"
-            title="Dedicated Internet"
-            desc="Higher-assurance service for uptime-sensitive operations."
+            title="Dedicated Internet Access"
+            desc="Higher-assurance connectivity for uptime-sensitive operations."
+            href="/services/dedicated-internet-access"
           />
-          <SignalCard
+          <ServiceCard
             index="03"
             title="Managed Wi-Fi"
-            desc="Internal wireless performance aligned to actual device demand."
+            desc="Internal wireless performance aligned to real device demand."
+            href="/services/managed-lan-wifi"
           />
-          <SignalCard
+          <ServiceCard
             index="04"
             title="Backup Connectivity"
             desc="Secondary path planning when continuity matters."
+            href="/services/lte-5g-continuity"
           />
         </div>
 
@@ -384,19 +382,10 @@ export default function Home() {
           </div>
 
           <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {[
-              "Connection slows down when usage rises",
-              "Wireless coverage inside the unit is inconsistent",
-              "Current service is not aligned to the environment",
-              "A backup path is needed for continuity",
-            ].map((item) => (
-              <div
-                key={item}
-                className="rounded-[22px] border border-white/10 bg-black/20 p-5 text-sm text-white/80"
-              >
-                {item}
-              </div>
-            ))}
+            <PainCard text="Connection slows down when usage rises" />
+            <PainCard text="Wireless coverage inside the unit is inconsistent" />
+            <PainCard text="Current service is not aligned to the environment" />
+            <PainCard text="A backup path is needed for continuity" />
           </div>
         </div>
       </section>
