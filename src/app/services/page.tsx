@@ -354,7 +354,7 @@ function GroupBlock({
 
 function Breadcrumbs() {
   return (
-    <nav aria-label="Breadcrumb" className="mb-6">
+    <nav aria-label="Breadcrumb" className="mb-5">
       <div className="flex flex-wrap items-center gap-2 text-sm text-white/52">
         <Link href="/" className="transition hover:text-white">
           Home
@@ -981,15 +981,15 @@ export default function ServicesIndexPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[76%_center] sm:object-[70%_center] lg:object-center"
+            className="object-cover object-[78%_center] sm:object-[72%_center] lg:object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.40)_0%,rgba(4,7,12,0.64)_36%,rgba(4,7,12,0.88)_76%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.94)_0%,rgba(4,7,12,0.62)_34%,rgba(4,7,12,0.18)_66%,rgba(4,7,12,0.80)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.08),transparent_24%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.10),transparent_22%)]" />
-          <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.46)_0%,rgba(4,7,12,0.66)_36%,rgba(4,7,12,0.90)_78%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.94)_0%,rgba(4,7,12,0.60)_34%,rgba(4,7,12,0.16)_66%,rgba(4,7,12,0.82)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.07),transparent_24%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.09),transparent_22%)]" />
+          <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[92dvh] max-w-7xl items-center px-5 pb-12 pt-28 sm:px-7 sm:min-h-[84dvh] sm:pt-24 lg:min-h-[78vh] lg:px-10 lg:pb-16 lg:pt-20">
-          <div className="w-full max-w-4xl">
+        <div className="relative mx-auto flex min-h-[62svh] max-w-7xl items-center px-5 pb-10 pt-24 sm:px-7 sm:min-h-[58svh] sm:pb-12 sm:pt-22 lg:min-h-[56svh] lg:px-10 lg:pb-14 lg:pt-20">
+          <div className="w-full max-w-[46rem]">
             <Breadcrumbs />
 
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/76 backdrop-blur sm:text-xs">
@@ -997,67 +997,46 @@ export default function ServicesIndexPage() {
               Ontario Business Connectivity Services
             </div>
 
-            <h1 className="mt-6 max-w-5xl text-[2.2rem] font-semibold leading-[0.98] tracking-tight text-white sm:text-[3.3rem] lg:text-[4.8rem] xl:text-[5.4rem]">
+            <h1 className="mt-5 max-w-4xl text-[2rem] font-semibold leading-[0.98] tracking-tight text-white sm:text-[3rem] lg:text-[4rem]">
               Business connectivity services
-              <span className="block text-white/62">
-                built for real operating environments
-              </span>
+              <span className="block text-white/62">for real business environments</span>
             </h1>
 
-            <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/82 sm:text-[1.08rem]">
-              Explore business fibre internet, dedicated internet access, managed LAN and
-              Wi-Fi, backup connectivity, voice, and infrastructure services for Ontario
-              organizations. Start with the service that fits the site, then move into
-              availability, fit, and commercial review.
+            <p className="mt-4 max-w-2xl text-[14px] leading-7 text-white/80 sm:text-[15px]">
+              Fibre, dedicated internet, managed Wi-Fi, backup connectivity, voice, and infrastructure services for Ontario organizations.
             </p>
 
-            <div className="mt-7 flex flex-wrap gap-2">
-              {[
-                "Business fibre internet",
-                "Dedicated internet access",
-                "Managed LAN & Wi-Fi",
-                "Backup connectivity",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/68 sm:text-xs"
-                >
-                  {item}
-                </span>
-              ))}
+            <div className="mt-6 flex flex-wrap gap-2">
+              {["Business fibre", "Dedicated internet", "Managed Wi-Fi", "Backup"].map(
+                (item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/68 sm:text-xs"
+                  >
+                    {item}
+                  </span>
+                )
+              )}
             </div>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 href="/contact#intake"
-                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-6 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
                 Check Availability
               </Link>
 
               <Link
                 href="/contact#intake"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-6 py-3 text-sm text-white transition hover:bg-white/10"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
                 Request Pricing
-              </Link>
-
-              <Link
-                href="/locations"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-6 py-3 text-sm text-white transition hover:bg-white/10"
-              >
-                View Locations
               </Link>
             </div>
 
             <div className="mt-4 text-xs text-white/55">
-              Business-only review • Address-based qualification • Clear next step
-            </div>
-
-            <div className="mt-6 flex flex-wrap gap-2">
-              <TrustPill text="Operated by TIRAV Technologies Inc." />
-              <TrustPill text="CRTC-registered provider" />
-              <TrustPill text="Ontario commercial focus" />
+              Business-only review • Address-based qualification
             </div>
           </div>
         </div>
@@ -1072,7 +1051,6 @@ export default function ServicesIndexPage() {
           <QuickStartStrip />
           <ComparisonBlock />
           <BuyerIntentStrip />
-          <DecisionStrip />
 
           {GROUPS.map((group) => (
             <GroupBlock
@@ -1086,6 +1064,7 @@ export default function ServicesIndexPage() {
           ))}
 
           <MidPageCTA />
+          <DecisionStrip />
           <ValueStrip />
           <FAQStrip />
           <FinalCTA />
