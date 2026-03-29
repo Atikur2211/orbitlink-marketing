@@ -59,7 +59,7 @@ export const metadata: Metadata = {
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/70">
+    <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] text-white/70 sm:text-xs">
       {children}
     </span>
   );
@@ -75,7 +75,7 @@ function Surface({
   return (
     <div
       className={[
-        "rounded-[32px] border border-white/10 bg-white/[0.04] backdrop-blur-sm",
+        "rounded-[28px] border border-white/10 bg-white/[0.04] backdrop-blur-sm sm:rounded-[32px]",
         className,
       ].join(" ")}
     >
@@ -85,7 +85,11 @@ function Surface({
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
-  return <div className="text-[11px] tracking-[0.28em] text-white/45">{children}</div>;
+  return (
+    <div className="text-[10px] tracking-[0.28em] text-white/45 sm:text-[11px]">
+      {children}
+    </div>
+  );
 }
 
 function MetricPill({
@@ -97,8 +101,10 @@ function MetricPill({
 }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
-      <div className="mt-1 text-sm text-white/82">{value}</div>
+      <div className="text-[10px] tracking-[0.22em] text-white/50 sm:text-[11px]">
+        {label}
+      </div>
+      <div className="mt-1 text-sm leading-5 text-white/82">{value}</div>
     </div>
   );
 }
@@ -111,7 +117,7 @@ function SignalCard({
   text: string;
 }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
+    <div className="rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[24px]">
       <div className="text-sm font-medium text-white/90">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/64">{text}</p>
     </div>
@@ -128,8 +134,10 @@ function StepCard({
   text: string;
 }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
-      <div className="text-[11px] tracking-[0.22em] text-white/50">{step}</div>
+    <div className="rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[24px]">
+      <div className="text-[10px] tracking-[0.22em] text-white/50 sm:text-[11px]">
+        {step}
+      </div>
       <div className="mt-3 text-sm font-medium text-white/90">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/64">{text}</p>
     </div>
@@ -261,15 +269,15 @@ export default function ContactPage() {
   return (
     <PageShell
       eyebrow="CONTACT"
-      title="Check availability, request pricing, and submit your business connectivity request"
+      title="Check availability and submit your business request"
       subtitle="Business fibre, dedicated internet, managed Wi-Fi, voice, continuity, and infrastructure enquiries for Ontario commercial locations."
       pills={[
         "Business-only service intake",
         "Address-based review",
-        "Commercial pricing direction",
+        "Clear commercial next step",
       ]}
       actions={[
-        { label: "Check Availability", href: "#intake", variant: "primary" },
+        { label: "Start Request", href: "#intake", variant: "primary" },
         { label: "View Services", href: "/services", variant: "secondary" },
       ]}
     >
@@ -278,93 +286,96 @@ export default function ContactPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
       />
 
-      <section className="relative overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
+      <section className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.045] p-5 sm:rounded-[34px] sm:p-8 lg:p-10">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-20 top-0 h-44 w-44 rounded-full bg-blue-500/10 blur-3xl" />
           <div className="absolute right-0 top-8 h-44 w-44 rounded-full bg-emerald-500/10 blur-3xl" />
           <div className="absolute bottom-0 left-1/2 h-36 w-[28rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+          <div className="absolute inset-0 opacity-[0.03] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
         <div className="relative grid grid-cols-1 gap-8 lg:grid-cols-12">
           <div className="lg:col-span-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[11px] text-[#FDE68A]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[10px] text-[#FDE68A] sm:text-[11px]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
               Business service intake
             </div>
 
             <h2 className="mt-5 text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl">
-              Start with the site, the service need, and the right commercial path.
+              Start with the site and the service you need
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              Submit your service address, business requirement, and timeline. Orbitlink
-              reviews availability, service fit, and the most useful next step for Ontario
-              commercial sites.
+              Submit your business address, the service you need, and your timing.
+              Orbitlink reviews availability, service fit, and the next useful commercial step.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              <Pill>Business fibre and dedicated internet</Pill>
-              <Pill>Managed network and voice</Pill>
-              <Pill>Continuity and infrastructure</Pill>
+              <Pill>Business fibre</Pill>
+              <Pill>Dedicated internet</Pill>
+              <Pill>Managed Wi-Fi</Pill>
+              <Pill>Voice</Pill>
+              <Pill>Continuity</Pill>
+              <Pill>Infrastructure</Pill>
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <MetricPill label="BEST FOR" value="Ontario business enquiries" />
               <MetricPill label="REVIEW BASIS" value="Address • Fit • Timing" />
-              <MetricPill label="OUTCOME" value="Clear next commercial step" />
+              <MetricPill label="OUTCOME" value="Clear next step" />
             </div>
           </div>
 
           <div className="lg:col-span-4">
-            <div className="rounded-[30px] border border-white/10 bg-black/25 p-6">
+            <div className="rounded-[24px] border border-white/10 bg-black/25 p-5 sm:rounded-[30px] sm:p-6">
               <SectionEyebrow>HOW TO SUBMIT</SectionEyebrow>
               <h2 className="mt-3 text-lg font-semibold text-white">
-                Make the first request count
+                Keep it simple
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64">
-                The strongest requests include the exact site, service type, timing,
-                and any operational or technical requirements that matter to the business.
+                The best requests include the exact address, the main service need,
+                and any timing or technical detail that matters.
               </p>
 
               <div className="mt-5 grid gap-3">
                 <StepCard
                   step="STEP 1"
-                  title="Choose the service path"
+                  title="Choose the service"
                   text="Business fibre, dedicated internet, managed Wi-Fi, voice, continuity, or another network need."
                 />
                 <StepCard
                   step="STEP 2"
-                  title="Add the site"
-                  text="Use the exact service address and include building context when relevant."
+                  title="Add the address"
+                  text="Use the exact service address so the site can be reviewed properly."
                 />
                 <StepCard
                   step="STEP 3"
-                  title="Add real requirements"
-                  text="Timing, user count, static IPs, continuity, voice, managed network scope, or multi-site needs."
+                  title="Add what matters"
+                  text="Timeline, user count, static IPs, continuity, voice, or multi-site details."
                 />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="relative mt-8 rounded-[24px] border border-white/10 bg-black/20 p-5">
+        <div className="relative mt-8 rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[24px]">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <SignalCard
               title="Business-only intake"
-              text="This request path is designed for commercial connectivity and network service enquiries."
+              text="This form is for commercial connectivity and network service requests."
             />
             <SignalCard
-              title="Ontario service focus"
-              text="Requests are reviewed for Ontario business addresses, buildings, and site requirements."
+              title="Ontario-focused"
+              text="Requests are reviewed for Ontario business addresses, buildings, and service fit."
             />
             <SignalCard
               title="Clear operating entity"
               text="Orbitlink is operated by TIRAV Technologies Inc. for stronger buyer confidence."
             />
             <SignalCard
-              title="Practical next steps"
-              text="The goal is a useful commercial response, not a generic acknowledgement."
+              title="Practical response"
+              text="The goal is a useful next step, not a generic acknowledgement."
             />
           </div>
         </div>
@@ -372,7 +383,7 @@ export default function ContactPage() {
 
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-12">
         <div className="space-y-5 lg:col-span-5">
-          <Surface className="p-6 sm:p-7">
+          <Surface className="p-5 sm:p-7">
             <SectionEyebrow>DIRECT CONTACT</SectionEyebrow>
             <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
               Business connectivity enquiries
@@ -393,8 +404,10 @@ export default function ContactPage() {
               <Pill>Infrastructure</Pill>
             </div>
 
-            <div className="mt-5 rounded-[24px] border border-white/10 bg-black/20 p-5">
-              <div className="text-[11px] tracking-[0.22em] text-white/55">DIRECT CONTACT</div>
+            <div className="mt-5 rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[24px]">
+              <div className="text-[10px] tracking-[0.22em] text-white/55 sm:text-[11px]">
+                DIRECT CONTACT
+              </div>
               <div className="mt-3 space-y-2 text-sm text-white/72">
                 <div>
                   Concierge: <span className="text-white/88">concierge@orbitlink.ca</span>
@@ -410,16 +423,16 @@ export default function ContactPage() {
                 </div>
               </div>
               <p className="mt-4 text-xs leading-5 text-white/55">
-                Best results come from submitting the exact service address, required
-                service, and any timing or technical requirements.
+                Best results come from submitting the exact address, required
+                service, and timing.
               </p>
             </div>
           </Surface>
 
-          <Surface className="p-6 sm:p-7">
+          <Surface className="p-5 sm:p-7">
             <SectionEyebrow>WHAT TO INCLUDE</SectionEyebrow>
             <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
-              What helps us review your request properly
+              What helps us review your request
             </h2>
 
             <div className="mt-5 grid grid-cols-1 gap-3">
@@ -442,10 +455,10 @@ export default function ContactPage() {
             </p>
           </Surface>
 
-          <Surface className="p-6 sm:p-7">
+          <Surface className="p-5 sm:p-7">
             <SectionEyebrow>AFTER SUBMISSION</SectionEyebrow>
             <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
-              What happens after submission
+              What happens next
             </h2>
 
             <div className="mt-5 grid grid-cols-1 gap-3">
@@ -470,7 +483,7 @@ export default function ContactPage() {
 
         <div
           id="intake"
-          className="rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-7 lg:col-span-7"
+          className="rounded-[28px] border border-white/10 bg-white/[0.045] p-5 sm:rounded-[32px] sm:p-7 lg:col-span-7"
         >
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -487,7 +500,7 @@ export default function ContactPage() {
             <div className="hidden rounded-2xl border border-white/10 bg-black/20 px-4 py-3 sm:block">
               <div className="text-[11px] tracking-[0.22em] text-white/55">FOCUS</div>
               <div className="mt-1 text-sm text-white/80">
-                Commercial intake for Ontario business sites
+                Ontario commercial intake
               </div>
             </div>
           </div>
@@ -500,23 +513,29 @@ export default function ContactPage() {
 
           <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-              <div className="text-[11px] tracking-[0.22em] text-white/55">BEST PRACTICE</div>
+              <div className="text-[10px] tracking-[0.22em] text-white/55 sm:text-[11px]">
+                BEST PRACTICE
+              </div>
               <p className="mt-2 text-sm leading-6 text-white/65">
-                Use the exact business service address.
+                Use the exact business address.
               </p>
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-              <div className="text-[11px] tracking-[0.22em] text-white/55">BEST PRACTICE</div>
+              <div className="text-[10px] tracking-[0.22em] text-white/55 sm:text-[11px]">
+                BEST PRACTICE
+              </div>
               <p className="mt-2 text-sm leading-6 text-white/65">
-                Include timing, technical needs, or site constraints.
+                Add timing and important requirements.
               </p>
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-              <div className="text-[11px] tracking-[0.22em] text-white/55">BEST PRACTICE</div>
+              <div className="text-[10px] tracking-[0.22em] text-white/55 sm:text-[11px]">
+                BEST PRACTICE
+              </div>
               <p className="mt-2 text-sm leading-6 text-white/65">
-                Use a work email when possible for cleaner follow-up.
+                Use a work email when possible.
               </p>
             </div>
           </div>
@@ -528,21 +547,27 @@ export default function ContactPage() {
           <div className="mt-6 border-t border-white/10 pt-5">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-                <div className="text-[11px] tracking-[0.22em] text-white/55">INTAKE TYPE</div>
+                <div className="text-[10px] tracking-[0.22em] text-white/55 sm:text-[11px]">
+                  INTAKE TYPE
+                </div>
                 <div className="mt-2 text-sm text-white/80">
                   Business-only <span className="text-white/55">commercial enquiries</span>
                 </div>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-                <div className="text-[11px] tracking-[0.22em] text-white/55">REVIEW BASIS</div>
+                <div className="text-[10px] tracking-[0.22em] text-white/55 sm:text-[11px]">
+                  REVIEW BASIS
+                </div>
                 <div className="mt-2 text-sm text-white/80">
                   Address, fit, and timing <span className="text-white/55">for the site</span>
                 </div>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-                <div className="text-[11px] tracking-[0.22em] text-white/55">OPERATING ENTITY</div>
+                <div className="text-[10px] tracking-[0.22em] text-white/55 sm:text-[11px]">
+                  OPERATING ENTITY
+                </div>
                 <div className="mt-2 text-sm text-white/80">
                   TIRAV Technologies Inc. <span className="text-white/55">o/a Orbitlink</span>
                 </div>
@@ -558,7 +583,7 @@ export default function ContactPage() {
       </div>
 
       <section className="mt-5">
-        <Surface className="p-6 sm:p-7">
+        <Surface className="p-5 sm:p-7">
           <SectionEyebrow>FREQUENTLY ASKED QUESTIONS</SectionEyebrow>
           <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
             Questions buyers often ask before submitting
