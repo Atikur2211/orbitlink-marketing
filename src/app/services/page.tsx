@@ -1,5 +1,6 @@
 // src/app/services/page.tsx
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import type { HTMLAttributes, ReactNode } from "react";
 
@@ -932,134 +933,91 @@ export default function ServicesIndexPage() {
       />
 
       <section className="relative overflow-hidden border-b border-white/10">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
-          <div className="absolute -top-24 left-10 h-72 w-72 rounded-full bg-blue-500/12 blur-3xl" />
-          <div className="absolute right-10 top-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
-          <div className="absolute bottom-[-140px] left-1/2 h-80 w-[56rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_30%)]" />
+        <div className="absolute inset-0">
+          <Image
+            src="/images/services-hero-business-connectivity.jpg"
+            alt="Modern business environment with subtle enterprise network infrastructure"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[72%_center] sm:object-[68%_center] lg:object-center"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.34)_0%,rgba(4,7,12,0.58)_34%,rgba(4,7,12,0.86)_74%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.92)_0%,rgba(4,7,12,0.60)_34%,rgba(4,7,12,0.18)_66%,rgba(4,7,12,0.78)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.07),transparent_24%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.08),transparent_22%)]" />
+          <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-5 pb-14 pt-14 sm:px-7 sm:pb-18 sm:pt-18 lg:px-10 lg:pb-24 lg:pt-20">
-          <Breadcrumbs />
+        <div className="relative mx-auto flex min-h-[88dvh] max-w-7xl items-center px-5 pb-12 pt-28 sm:px-7 sm:pt-24 lg:min-h-[78vh] lg:px-10 lg:pb-16 lg:pt-20">
+          <div className="w-full max-w-4xl">
+            <Breadcrumbs />
 
-          <div className="max-w-6xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] text-white/70">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/76 backdrop-blur sm:text-xs">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Business fibre, dedicated internet, managed networking, continuity, voice, and infrastructure
-            </div>
-          </div>
-
-          <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-8">
-              <div className="max-w-4xl">
-                <div className="text-[11px] tracking-[0.30em] text-white/42">
-                  ONTARIO BUSINESS CONNECTIVITY
-                </div>
-
-                <h1 className="mt-4 text-[2.5rem] font-semibold tracking-tight text-white sm:text-6xl lg:text-[5rem] lg:leading-[0.97]">
-                  Business connectivity services
-                  <span className="block text-white/60">
-                    organized around real operating needs
-                  </span>
-                </h1>
-
-                <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/66 sm:text-lg">
-                  Explore{" "}
-                  <Link
-                    href="/services/business-fibre-internet"
-                    className="text-white/88 underline-offset-4 hover:underline"
-                  >
-                    business fibre internet
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/services/dedicated-internet-access"
-                    className="text-white/88 underline-offset-4 hover:underline"
-                  >
-                    dedicated internet access
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/services/managed-lan-wifi"
-                    className="text-white/88 underline-offset-4 hover:underline"
-                  >
-                    managed LAN and Wi-Fi
-                  </Link>
-                  , continuity services, cloud voice, and infrastructure options for Ontario organizations.
-                  Start with the service that matches the environment, then move into availability, fit, and commercial review.
-                </p>
-
-                <div className="mt-7 flex flex-wrap gap-2">
-                  {[
-                    "Business fibre internet",
-                    "Dedicated internet access",
-                    "Managed LAN & Wi-Fi",
-                    "Continuity, voice, and infrastructure",
-                  ].map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/66"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                  <Link
-                    href="/contact#intake"
-                    className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                  >
-                    Check Availability
-                  </Link>
-                  <Link
-                    href="/locations"
-                    className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                  >
-                    View Locations
-                  </Link>
-                  <Link
-                    href="/trust"
-                    className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                  >
-                    Trust & Compliance
-                  </Link>
-                </div>
-              </div>
+              Ontario Business Connectivity Services
             </div>
 
-            <div className="lg:col-span-4">
-              <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.045] p-6">
-                <div className="pointer-events-none absolute inset-0">
-                  <div className="absolute -right-10 top-0 h-28 w-28 rounded-full bg-blue-500/10 blur-3xl" />
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-                </div>
+            <h1 className="mt-6 max-w-5xl text-[2.35rem] font-semibold leading-[0.98] tracking-tight text-white sm:text-[3.3rem] lg:text-[4.7rem] xl:text-[5.3rem]">
+              Business connectivity services
+              <span className="block text-white/62">
+                built for real operating environments
+              </span>
+            </h1>
 
-                <div className="relative">
-                  <div className="text-[11px] tracking-[0.24em] text-white/50">COMMERCIAL START</div>
-                  <div className="mt-3 text-lg font-semibold text-white">
-                    Pick the service that matches the business objective
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-white/64">
-                    Start with internet, managed networking, continuity, voice, or infrastructure.
-                    Then move into a clearer request with address, timing, and service scope.
-                  </p>
+            <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/82 sm:text-[1.08rem]">
+              Explore business fibre internet, dedicated internet access, managed LAN and
+              Wi-Fi, backup connectivity, voice, and infrastructure services for Ontario
+              organizations. Start with the service that fits the site, then move into
+              availability, fit, and commercial review.
+            </p>
 
-                  <div className="mt-5 grid gap-3">
-                    <MetricPill label="STEP 1" value="Choose the service path" />
-                    <MetricPill label="STEP 2" value="Add site context" />
-                    <MetricPill label="STEP 3" value="Request review and direction" />
-                  </div>
-                </div>
-              </div>
+            <div className="mt-7 flex flex-wrap gap-2">
+              {[
+                "Business fibre internet",
+                "Dedicated internet access",
+                "Managed LAN & Wi-Fi",
+                "Backup connectivity",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/68 sm:text-xs"
+                >
+                  {item}
+                </span>
+              ))}
             </div>
-          </div>
 
-          <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <MetricPill label="BEST FOR" value="Ontario business sites and multi-location organizations" />
-            <MetricPill label="BUYER MODE" value="Clear, serious, business-ready" />
-            <MetricPill label="NEXT STEP" value="Availability • Fit • Direction" />
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link
+                href="/contact#intake"
+                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-6 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+              >
+                Check Availability
+              </Link>
+
+              <Link
+                href="/contact#intake"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-6 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Request Pricing
+              </Link>
+
+              <Link
+                href="/locations"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-6 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                View Locations
+              </Link>
+            </div>
+
+            <div className="mt-4 text-xs text-white/55">
+              Business-only review • Address-based qualification • Clear next step
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              <TrustPill text="Operated by TIRAV Technologies Inc." />
+              <TrustPill text="CRTC-registered reseller" />
+              <TrustPill text="Ontario commercial focus" />
+            </div>
           </div>
         </div>
       </section>
