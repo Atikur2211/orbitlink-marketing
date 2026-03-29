@@ -117,7 +117,7 @@ function SignalCard({
   text: string;
 }) {
   return (
-    <div className="rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[24px]">
+    <div className="rounded-[22px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#FACC15]/25 hover:bg-white/[0.05] sm:rounded-[24px]">
       <div className="text-sm font-medium text-white/90">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/64">{text}</p>
     </div>
@@ -134,11 +134,26 @@ function StepCard({
   text: string;
 }) {
   return (
-    <div className="rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[24px]">
+    <div className="rounded-[22px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05] sm:rounded-[24px]">
       <div className="text-[10px] tracking-[0.22em] text-white/50 sm:text-[11px]">
         {step}
       </div>
       <div className="mt-3 text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/64">{text}</p>
+    </div>
+  );
+}
+
+function PromiseCard({
+  title,
+  text,
+}: {
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[24px]">
+      <div className="text-sm font-medium text-white/90">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/64">{text}</p>
     </div>
   );
@@ -269,11 +284,11 @@ export default function ContactPage() {
   return (
     <PageShell
       eyebrow="CONTACT"
-      title="Check availability and submit your business request"
+      title="Start a commercial review for your business location"
       subtitle="Business fibre, dedicated internet, managed Wi-Fi, voice, continuity, and infrastructure enquiries for Ontario commercial locations."
       pills={[
         "Business-only service intake",
-        "Address-based review",
+        "Address-qualified review",
         "Clear commercial next step",
       ]}
       actions={[
@@ -299,16 +314,16 @@ export default function ContactPage() {
           <div className="lg:col-span-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[10px] text-[#FDE68A] sm:text-[11px]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Business service intake
+              Commercial review desk
             </div>
 
             <h2 className="mt-5 text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl">
-              Start with the site and the service you need
+              Start with the site, the service, and what the business actually needs
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              Submit your business address, the service you need, and your timing.
-              Orbitlink reviews availability, service fit, and the next useful commercial step.
+              Submit your business address, required service, and timing. Orbitlink reviews
+              availability, service fit, and the clearest commercial next step for the site.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
@@ -323,7 +338,7 @@ export default function ContactPage() {
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <MetricPill label="BEST FOR" value="Ontario business enquiries" />
               <MetricPill label="REVIEW BASIS" value="Address • Fit • Timing" />
-              <MetricPill label="OUTCOME" value="Clear next step" />
+              <MetricPill label="OUTCOME" value="Clear commercial direction" />
             </div>
           </div>
 
@@ -334,25 +349,25 @@ export default function ContactPage() {
                 Keep it simple
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64">
-                The best requests include the exact address, the main service need,
-                and any timing or technical detail that matters.
+                The best requests include the exact service address, the main service need,
+                and any timing or technical detail that materially affects the site.
               </p>
 
               <div className="mt-5 grid gap-3">
                 <StepCard
                   step="STEP 1"
                   title="Choose the service"
-                  text="Business fibre, dedicated internet, managed Wi-Fi, voice, continuity, or another network need."
+                  text="Business fibre, dedicated internet, managed Wi-Fi, voice, continuity, or another network requirement."
                 />
                 <StepCard
                   step="STEP 2"
-                  title="Add the address"
-                  text="Use the exact service address so the site can be reviewed properly."
+                  title="Add the exact address"
+                  text="Use the precise service address so the building and service path can be reviewed properly."
                 />
                 <StepCard
                   step="STEP 3"
                   title="Add what matters"
-                  text="Timeline, user count, static IPs, continuity, voice, or multi-site details."
+                  text="Timeline, user count, static IPs, continuity, voice, or multi-site details when relevant."
                 />
               </div>
             </div>
@@ -363,22 +378,46 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <SignalCard
               title="Business-only intake"
-              text="This form is for commercial connectivity and network service requests."
+              text="This form is designed for commercial connectivity and network service requests."
             />
             <SignalCard
-              title="Ontario-focused"
+              title="Ontario-focused review"
               text="Requests are reviewed for Ontario business addresses, buildings, and service fit."
             />
             <SignalCard
               title="Clear operating entity"
-              text="Orbitlink is operated by TIRAV Technologies Inc. for stronger buyer confidence."
+              text="Orbitlink is operated by TIRAV Technologies Inc. for stronger buyer confidence and accountability."
             />
             <SignalCard
               title="Practical response"
-              text="The goal is a useful next step, not a generic acknowledgement."
+              text="The goal is a useful next step, not a generic acknowledgement email."
             />
           </div>
         </div>
+      </section>
+
+      <section className="mt-5">
+        <Surface className="p-5 sm:p-7">
+          <SectionEyebrow>WHAT YOU CAN EXPECT</SectionEyebrow>
+          <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
+            A cleaner buying experience for serious business enquiries
+          </h2>
+
+          <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
+            <PromiseCard
+              title="Address-qualified review"
+              text="Requests are reviewed against the actual site, building context, and service type."
+            />
+            <PromiseCard
+              title="Practical commercial direction"
+              text="The objective is to help you move toward the right path, not into a generic sales loop."
+            />
+            <PromiseCard
+              title="Clearer next step"
+              text="You receive direction based on fit, timing, and the operating requirement."
+            />
+          </div>
+        </Surface>
       </section>
 
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-12">
@@ -423,9 +462,37 @@ export default function ContactPage() {
                 </div>
               </div>
               <p className="mt-4 text-xs leading-5 text-white/55">
-                Best results come from submitting the exact address, required
-                service, and timing.
+                Best results come from submitting the exact address, required service,
+                and timing.
               </p>
+            </div>
+          </Surface>
+
+          <Surface className="p-5 sm:p-7">
+            <SectionEyebrow>COMMERCIAL REVIEW</SectionEyebrow>
+            <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
+              Reviewed directly by Orbitlink
+            </h2>
+
+            <div className="mt-4 text-sm leading-6 text-white/66">
+              Requests are reviewed based on service fit, building context, address details,
+              timing, and operating requirements. This intake path is designed to provide a
+              useful commercial next step.
+            </div>
+
+            <div className="mt-5 grid grid-cols-1 gap-3">
+              <SignalCard
+                title="Site-first review"
+                text="The service address is reviewed before the path is recommended."
+              />
+              <SignalCard
+                title="Business-fit focus"
+                text="Recommendations are framed around the operating environment, not generic package language."
+              />
+              <SignalCard
+                title="Controlled intake posture"
+                text="Orbitlink is a brand of TIRAV Technologies Inc., supporting a clearer buyer confidence layer."
+              />
             </div>
           </Surface>
 
@@ -538,6 +605,16 @@ export default function ContactPage() {
                 Use a work email when possible.
               </p>
             </div>
+          </div>
+
+          <div className="mt-5 rounded-[22px] border border-[#FACC15]/15 bg-[#FACC15]/[0.05] p-4 sm:rounded-[24px]">
+            <div className="text-[10px] tracking-[0.22em] text-[#FDE68A] sm:text-[11px]">
+              BEFORE YOU SUBMIT
+            </div>
+            <p className="mt-2 text-sm leading-6 text-white/72">
+              The strongest requests include the exact service address, the main business need,
+              and any continuity, voice, routing, or timing detail that materially affects the site.
+            </p>
           </div>
 
           <div className="mt-5">
