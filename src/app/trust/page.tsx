@@ -115,7 +115,7 @@ function StatusTile({
   tone: "ok" | "inprogress" | "info";
 }) {
   return (
-    <div className="group relative h-full overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.045] p-6 transition hover:border-white/15 hover:bg-white/[0.055] sm:p-7">
+    <div className="group relative h-full overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.045] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:bg-white/[0.055] sm:p-7">
       <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100">
         <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/[0.04] blur-2xl" />
       </div>
@@ -158,7 +158,7 @@ function EvidenceCard({
   note?: string;
 }) {
   return (
-    <div className="h-full rounded-[26px] border border-white/10 bg-black/20 p-5 transition hover:border-white/15 hover:bg-black/25 sm:p-6">
+    <div className="h-full rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25 sm:p-6">
       <div className="text-[11px] tracking-[0.28em] text-white/50">{heading}</div>
 
       <ul className="mt-4 space-y-2.5 text-sm text-white/65">
@@ -185,7 +185,7 @@ function ReviewStep({
   desc: string;
 }) {
   return (
-    <div className="h-full rounded-[24px] border border-white/10 bg-white/[0.035] p-5">
+    <div className="h-full rounded-[24px] border border-white/10 bg-white/[0.035] p-5 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.045]">
       <div className="flex items-center gap-3">
         <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
           {step}
@@ -205,7 +205,7 @@ function TrustPrinciple({
   desc: string;
 }) {
   return (
-    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/15 hover:bg-black/25">
+    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25">
       <div className="text-sm font-medium text-white/90">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/65">{desc}</p>
     </div>
@@ -220,7 +220,7 @@ function ModuleChip({
   tagline: string;
 }) {
   return (
-    <div className="h-full rounded-[22px] border border-white/10 bg-black/20 p-4">
+    <div className="h-full rounded-[22px] border border-white/10 bg-black/20 p-4 transition-all duration-300 hover:border-white/15 hover:bg-black/25">
       <div className="text-sm font-medium text-white/88">{name}</div>
       <div className="mt-1 text-xs leading-5 text-white/55">{tagline}</div>
     </div>
@@ -235,7 +235,22 @@ function BuyerFitCard({
   text: string;
 }) {
   return (
-    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5">
+    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25">
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/65">{text}</p>
+    </div>
+  );
+}
+
+function MeaningCard({
+  title,
+  text,
+}: {
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25">
       <div className="text-sm font-medium text-white/90">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/65">{text}</p>
     </div>
@@ -488,6 +503,42 @@ export default function TrustPage() {
             tone={tile.tone}
           />
         ))}
+      </section>
+
+      <section className="mt-4 rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:mt-6 sm:p-7 lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>WHAT THIS MEANS IN PRACTICE</SectionEyebrow>
+            <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+              Clear trust language should help a buyer make a safer decision
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+              This trust model is designed to reduce uncertainty, prevent overclaiming,
+              and give buyers a more realistic view of how Orbitlink communicates,
+              qualifies scope, and supports review.
+            </p>
+          </div>
+
+          <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+            <div className="text-[11px] tracking-[0.22em] text-white/55">PRACTICAL VALUE</div>
+            <div className="mt-1 text-sm text-white/80">Less ambiguity • Better decisions</div>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <MeaningCard
+            title="No broad unsupported claims"
+            text="Public statements are intended to remain supportable, reviewable, and proportionate to actual readiness."
+          />
+          <MeaningCard
+            title="Scope is clarified before commitment"
+            text="Orbitlink separates live scope, planned scope, and request-only material before the commercial path moves forward."
+          />
+          <MeaningCard
+            title="Verification is available when the review path is real"
+            text="Scoped or redacted material can support diligence without exposing sensitive internals broadly."
+          />
+        </div>
       </section>
 
       <section className="mt-4 rounded-[32px] border border-white/10 bg-black/25 p-6 sm:mt-6 sm:p-7 lg:p-8">
