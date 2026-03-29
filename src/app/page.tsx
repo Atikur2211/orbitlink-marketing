@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import TopNav from "@/components/TopNav";
 import StickyStatusStrip from "@/components/StickyStatusStrip";
+import BentoServices from "@/components/BentoServices";
 import ConciergeBlock from "@/components/ConciergeBlock";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -13,13 +14,13 @@ const LEGAL_NAME = "TIRAV Technologies Inc.";
 const CANONICAL_URL = `${SITE_URL}/`;
 
 const SITE_DESC =
-  "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, and backup connectivity for Ontario businesses.";
+  "Business fibre internet, dedicated internet access (DIA), managed Wi-Fi, voice, and backup connectivity for Ontario businesses. Serving Mississauga, Toronto, Brampton, Vaughan, and across Ontario.";
 
 const OG_TITLE =
   "Business Fibre Internet & Dedicated Internet Access in Ontario | Orbitlink";
 
 const OG_DESC =
-  "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, and backup connectivity for Ontario businesses.";
+  "Business fibre internet, dedicated internet access (DIA), managed Wi-Fi, voice, and backup connectivity for Ontario businesses. Serving Mississauga, Toronto, Brampton, Vaughan, and across Ontario.";
 
 const TWITTER_DESC =
   "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, and backup connectivity for Ontario businesses.";
@@ -43,6 +44,15 @@ export const metadata: Metadata = {
     "backup internet for business",
     "lte failover business internet",
     "commercial internet provider ontario",
+    "business fibre mississauga",
+    "dedicated internet mississauga",
+    "business internet for offices ontario",
+    "business internet for warehouses ontario",
+    "business internet for clinics ontario",
+    "business connectivity ontario",
+    "business internet availability ontario",
+    "enterprise internet ontario",
+    "commercial connectivity ontario",
   ],
   alternates: {
     canonical: CANONICAL_URL,
@@ -59,7 +69,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink business internet for Ontario businesses",
+        alt: "Orbitlink business fibre internet and dedicated internet access for Ontario businesses",
       },
     ],
   },
@@ -82,46 +92,22 @@ export const metadata: Metadata = {
   },
 };
 
-function ServiceCard({
-  index,
+function MiniMetaCard({
   title,
-  desc,
-  href,
+  value,
 }: {
-  index: string;
   title: string;
-  desc: string;
-  href: string;
+  value: string;
 }) {
   return (
-    <Link
-      href={href}
-      className="group relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.03] p-5 transition duration-300 hover:border-white/20 hover:bg-white/[0.05]"
-    >
-      <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-        <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-cyan-400/10 blur-3xl" />
-        <div className="absolute -left-10 bottom-0 h-24 w-24 rounded-full bg-[#FACC15]/10 blur-3xl" />
-      </div>
-
-      <div className="relative">
-        <div className="text-[10px] tracking-[0.22em] text-white/40">{index}</div>
-        <h3 className="mt-3 text-sm font-medium text-white/92">{title}</h3>
-        <p className="mt-2 text-sm leading-6 text-white/64">{desc}</p>
-        <div className="mt-4 text-xs text-white/50">Open service →</div>
-      </div>
-    </Link>
-  );
-}
-
-function PainCard({ text }: { text: string }) {
-  return (
-    <div className="rounded-[22px] border border-white/10 bg-black/20 p-5 text-sm text-white/80">
-      {text}
+    <div className="rounded-xl border border-white/10 bg-black/15 px-3 py-2.5">
+      <div className="text-[10px] tracking-[0.18em] text-white/42">{title}</div>
+      <div className="mt-1 text-[13px] leading-5 text-white/84">{value}</div>
     </div>
   );
 }
 
-function FlowCard({
+function StepCard({
   step,
   title,
   desc,
@@ -131,25 +117,27 @@ function FlowCard({
   desc: string;
 }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-6">
-      <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
-        {step}
+    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
+      <div className="flex items-center gap-3">
+        <div className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#FACC15]/20 bg-[#FACC15]/10 text-xs font-medium text-[#FDE68A]">
+          {step}
+        </div>
+        <div className="text-sm font-medium text-white/92">{title}</div>
       </div>
-      <h3 className="mt-4 text-sm font-medium text-white/92">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-white/64">{desc}</p>
+      <p className="mt-3 text-sm leading-6 text-white/66">{desc}</p>
     </div>
   );
 }
 
-function ProofPill({ text }: { text: string }) {
+function TrustPill({ text }: { text: string }) {
   return (
-    <div className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 text-[11px] text-white/70 sm:text-xs">
+    <div className="rounded-full border border-white/10 bg-black/25 px-3 py-2 text-[11px] text-white/70 sm:text-xs">
       {text}
     </div>
   );
 }
 
-function LocationCard({
+function CoverageCard({
   city,
   note,
   href,
@@ -161,14 +149,46 @@ function LocationCard({
   return (
     <Link
       href={href}
-      className="block rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/20 hover:bg-white/[0.05]"
+      className="block h-full rounded-[24px] border border-white/10 bg-black/20 p-5 transition hover:border-white/20 hover:bg-white/[0.05]"
     >
-      <div className="text-[11px] tracking-[0.22em] text-white/48">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">
         {city.toUpperCase()}
       </div>
-      <div className="mt-2 text-sm font-medium text-white/90">{note}</div>
-      <div className="mt-4 text-xs text-white/52">Open page →</div>
+      <div className="mt-2 text-sm font-medium leading-6 text-white/90">
+        {note}
+      </div>
+      <div className="mt-4 text-xs text-white/55">Open location →</div>
     </Link>
+  );
+}
+
+function FAQCard({
+  question,
+  answer,
+}: {
+  question: string;
+  answer: string;
+}) {
+  return (
+    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
+      <h3 className="text-sm font-medium text-white/92">{question}</h3>
+      <p className="mt-2 text-sm leading-6 text-white/66">{answer}</p>
+    </div>
+  );
+}
+
+function SolutionCard({
+  title,
+  desc,
+}: {
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5 transition hover:border-white/20 hover:bg-white/[0.06]">
+      <div className="text-sm font-medium text-white/92">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/66">{desc}</p>
+    </div>
   );
 }
 
@@ -196,6 +216,28 @@ export default function Home() {
       "@type": "AdministrativeArea",
       name: "Ontario, Canada",
     },
+    parentOrganization: {
+      "@type": "Organization",
+      name: LEGAL_NAME,
+    },
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        telephone: "+18888672480",
+        email: "sales@orbitlink.ca",
+        availableLanguage: ["en"],
+        areaServed: "CA-ON",
+      },
+      {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        telephone: "+18888672480",
+        email: "concierge@orbitlink.ca",
+        availableLanguage: ["en"],
+        areaServed: "CA-ON",
+      },
+    ],
   };
 
   const telecomSchema = {
@@ -211,6 +253,7 @@ export default function Home() {
       "Dedicated Internet Access",
       "Managed Wi-Fi",
       "Business VoIP",
+      "Network Infrastructure Services",
       "LTE and 5G Backup Connectivity",
     ],
     areaServed: [
@@ -227,8 +270,59 @@ export default function Home() {
     termsOfService: `${SITE_URL}/legal/terms`,
   };
 
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    name: SITE_NAME,
+    url: CANONICAL_URL,
+    publisher: {
+      "@id": `${SITE_URL}/#org`,
+    },
+    inLanguage: "en-CA",
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "How do I check if Orbitlink can serve my business location?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Submit your business address and service requirements through the Orbitlink contact intake. Availability is reviewed based on address, building infrastructure, and service type.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Does Orbitlink offer business fibre and dedicated internet access?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Orbitlink supports business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity for Ontario businesses.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What types of businesses does Orbitlink support?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Orbitlink supports offices, clinics, warehouses, commercial units, logistics environments, and multi-site business locations across Ontario.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What happens after I submit a request?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Orbitlink reviews the address, service requirements, building infrastructure, and available service paths, then responds with the most practical next step.",
+        },
+      },
+    ],
+  };
+
   return (
-    <main className="min-h-screen bg-[#06080C] text-white">
+    <main className="min-h-screen bg-[#07090D] text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
@@ -237,11 +331,19 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(telecomSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
 
       <TopNav />
       <StickyStatusStrip />
 
-      <section className="relative isolate overflow-hidden border-b border-white/10">
+      <section className="relative isolate min-h-[100dvh] overflow-hidden border-b border-white/10 lg:min-h-[92vh]">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-business-ontario.jpg"
@@ -251,266 +353,362 @@ export default function Home() {
             sizes="100vw"
             className="object-cover object-[74%_center] sm:object-[68%_center] lg:object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.28)_0%,rgba(4,7,12,0.52)_34%,rgba(4,7,12,0.86)_74%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.92)_0%,rgba(4,7,12,0.58)_34%,rgba(4,7,12,0.10)_66%,rgba(4,7,12,0.74)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(250,204,21,0.08),transparent_24%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.10),transparent_22%)]" />
-          <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:58px_58px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.28)_0%,rgba(4,7,12,0.50)_34%,rgba(4,7,12,0.82)_70%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.90)_0%,rgba(4,7,12,0.60)_34%,rgba(4,7,12,0.14)_66%,rgba(4,7,12,0.76)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.09),transparent_26%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.09),transparent_24%)]" />
+          <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[100dvh] max-w-7xl items-center px-5 pb-12 pt-28 sm:px-7 sm:pt-24 lg:min-h-[92vh] lg:px-10 lg:pb-16 lg:pt-20">
+        <div className="relative mx-auto flex min-h-[100dvh] max-w-7xl items-center justify-center px-5 pb-12 pt-28 sm:px-7 sm:pt-24 lg:min-h-[92vh] lg:px-10 lg:pb-16 lg:pt-20">
           <div className="w-full max-w-4xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/76 backdrop-blur sm:text-xs">
-              Ontario Business Connectivity
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:text-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
+              Business Fibre • Dedicated Internet • Managed Wi-Fi • Backup Connectivity
             </div>
 
-            <h1 className="mt-6 max-w-4xl text-[2.15rem] font-semibold leading-[0.98] tracking-tight sm:text-[3.15rem] lg:text-[4.4rem] xl:text-[5.1rem]">
-              Internet that actually fits your business
+            <h1 className="mt-6 max-w-4xl text-[2rem] font-semibold leading-[1] tracking-tight text-white sm:text-[3rem] lg:text-[4.25rem] xl:text-[5rem]">
+              Business Fibre Internet & Dedicated Internet Access in Ontario
             </h1>
 
-            <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/82 sm:text-[1.08rem]">
-              Not packages. Not guesses. Your building, your workload, and your
-              operating needs — reviewed properly before you commit.
+            <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/87 sm:text-[1.08rem]">
+              Orbitlink helps Ontario businesses choose the right internet, Wi-Fi,
+              voice, and backup connectivity for their location. We review building
+              infrastructure, provider options, and operational requirements before
+              recommending a path forward.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              {["Mississauga", "Toronto", "Brampton", "Vaughan", "Ontario-wide"].map(
-                (item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/68 sm:text-xs"
-                  >
-                    {item}
-                  </span>
-                )
-              )}
+              {[
+                "Mississauga",
+                "Toronto",
+                "Brampton",
+                "Vaughan",
+                "Ontario-wide",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[11px] text-white/72 sm:text-xs"
+                >
+                  {item}
+                </span>
+              ))}
             </div>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Link
-                href="/contact#intake"
-                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-6 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-              >
-                Check Availability
-              </Link>
-
-              <Link
-                href="/contact#intake"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-6 py-3 text-sm transition hover:bg-white/10"
-              >
-                Request Pricing
-              </Link>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start">
+              <div className="flex flex-col gap-2">
+                <Link
+                  href="/contact#intake"
+                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+                >
+                  Check Business Internet Availability
+                </Link>
+                <div className="text-center text-xs text-white/55 sm:text-left">
+                  Business-only review • No obligation • Clear response
+                </div>
+              </div>
 
               <Link
                 href="/services"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-6 py-3 text-sm transition hover:bg-white/10"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
-                View Service Catalog
+                Explore Services
+              </Link>
+
+              <Link
+                href="/compare"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Compare Options
               </Link>
             </div>
 
-            <div className="mt-4 text-xs text-white/55">
-              Business-only review • No obligation • Clear answer
-            </div>
-
-            <div className="mt-6 text-xs text-white/42">
-              Operated by TIRAV Technologies Inc. • CRTC-registered reseller
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-white/48 sm:text-xs">
+              <span>Operated by TIRAV Technologies Inc.</span>
+              <span className="hidden sm:inline">•</span>
+              <span>CRTC-registered provider</span>
+              <span className="hidden sm:inline">•</span>
+              <span>Ontario business-only review</span>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 py-20 sm:px-7 lg:px-10">
-        <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.28em] text-white/55">
-            SERVICE CATALOG
+      <section className="mx-auto max-w-6xl px-5 py-12 sm:px-7 sm:py-14">
+        <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-black/22 p-6 sm:p-8 lg:p-10">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -right-16 top-0 h-40 w-40 rounded-full bg-cyan-500/10 blur-3xl" />
+            <div className="absolute -left-10 bottom-0 h-40 w-40 rounded-full bg-[#FACC15]/10 blur-3xl" />
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.02),transparent_45%)]" />
           </div>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-[34px]">
-            What Orbitlink can actually help with
-          </h2>
-          <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            Clear categories for the most common business connectivity needs.
-          </p>
-        </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          <ServiceCard
-            index="01"
-            title="Business Fibre Internet"
-            desc="High-capacity access for offices, clinics, and commercial sites."
-            href="/services/business-fibre-internet"
-          />
-          <ServiceCard
-            index="02"
-            title="Dedicated Internet Access"
-            desc="Higher-assurance connectivity for uptime-sensitive operations."
-            href="/services/dedicated-internet-access"
-          />
-          <ServiceCard
-            index="03"
-            title="Managed Wi-Fi"
-            desc="Internal wireless performance aligned to real device demand."
-            href="/services/managed-lan-wifi"
-          />
-          <ServiceCard
-            index="04"
-            title="Backup Connectivity"
-            desc="Secondary path planning when continuity matters."
-            href="/services/lte-5g-continuity"
-          />
-        </div>
+          <div className="relative">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                BUSINESS INTERNET SOLUTIONS IN ONTARIO
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                Connectivity designed for real business environments
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                Orbitlink supports Ontario businesses with service options matched
+                to building infrastructure, operational needs, and continuity requirements.
+              </p>
+            </div>
 
-        <div className="mt-8 rounded-[28px] border border-white/10 bg-white/[0.03] p-6">
-          <p className="max-w-3xl text-sm leading-6 text-white/68">
-            Every recommendation is based on your address, infrastructure,
-            provider reach, and how the site actually operates.
-          </p>
+            <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
+              <SolutionCard
+                title="Business fibre internet"
+                desc="Business-grade fibre for offices, clinics, warehouses, and commercial sites."
+              />
+              <SolutionCard
+                title="Dedicated internet access"
+                desc="Higher-assurance internet for uptime-sensitive and performance-critical environments."
+              />
+              <SolutionCard
+                title="Managed Wi-Fi and network support"
+                desc="Improved internal coverage, device performance, and day-to-day wireless reliability."
+              />
+              <SolutionCard
+                title="LTE / 5G backup connectivity"
+                desc="Continuity planning and secondary connectivity when the primary link matters."
+              />
+              <SolutionCard
+                title="Business VoIP and voice solutions"
+                desc="Voice services aligned to business operations, support flow, and growth requirements."
+              />
+            </div>
+
+            <div className="mt-6 rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
+              <div className="text-sm leading-6 text-white/82">
+                Every solution is reviewed based on your address, building infrastructure,
+                provider reach, and business requirements.
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-20 sm:px-7 lg:px-10">
+      <section className="mx-auto max-w-6xl px-5 pb-12 sm:px-7 sm:pb-14">
         <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
-          <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">
-              WHY BUYERS REACH OUT
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                WHY BUYERS REACH OUT
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                Problems businesses run into with the wrong internet setup
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                Many business locations rely on internet service that was never matched
+                to actual workload, downtime risk, or long-term growth.
+              </p>
             </div>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-[34px]">
-              The usual issue is not speed. It is fit.
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              Businesses often end up on the wrong service path for the building,
-              internal layout, backup needs, or workload profile.
-            </p>
+            <MiniMetaCard
+              title="FOCUS"
+              value="Performance • Reliability • Backup • Accountability"
+            />
           </div>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            <PainCard text="Connection slows down when usage rises" />
-            <PainCard text="Wireless coverage inside the unit is inconsistent" />
-            <PainCard text="Current service is not aligned to the environment" />
-            <PainCard text="A backup path is needed for continuity" />
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {[
+              "Shared connections that slow down under peak demand",
+              "No backup path when continuity matters",
+              "Packages that do not match the real site requirement",
+              "Limited visibility into upgrades, support, or constraints",
+            ].map((item) => (
+              <div
+                key={item}
+                className="rounded-[24px] border border-white/10 bg-black/20 p-5 text-sm leading-6 text-white/82"
+              >
+                {item}
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-20 sm:px-7 lg:px-10">
-        <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.28em] text-white/55">
-            HOW IT WORKS
-          </div>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-[34px]">
-            A simple path from address to recommendation
-          </h2>
-        </div>
+      <BentoServices />
 
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          <FlowCard
-            step="1"
-            title="Submit your address"
-            desc="Share the location and what the connection needs to support."
-          />
-          <FlowCard
-            step="2"
-            title="We review options"
-            desc="We assess infrastructure, provider paths, and continuity fit."
-          />
-          <FlowCard
-            step="3"
-            title="Receive direction"
-            desc="You get a clear next step, not a generic package."
-          />
+      <section className="mx-auto max-w-6xl px-5 py-12 sm:px-7 sm:py-14">
+        <div className="rounded-[32px] border border-white/10 bg-black/22 p-6 sm:p-8 lg:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                HOW IT WORKS
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                A clear path from enquiry to recommendation
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                Submit your address, business requirements, and timeline. We review the site,
+                available service paths, and the most suitable next step.
+              </p>
+            </div>
+            <MiniMetaCard title="PROCESS" value="Address-based and practical" />
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+            <StepCard
+              step="1"
+              title="Submit your business address"
+              desc="Share the service location, business environment, and what the connection needs to support."
+            />
+            <StepCard
+              step="2"
+              title="We review available options"
+              desc="We assess infrastructure, provider reach, backup requirements, and whether a higher-assurance option is appropriate."
+            />
+            <StepCard
+              step="3"
+              title="Receive the right next step"
+              desc="You receive a clear recommendation, pricing direction, or the most suitable route for the site."
+            />
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-20 sm:px-7 lg:px-10">
-        <div className="rounded-[32px] border border-white/10 bg-white/[0.03] p-6 sm:p-8 lg:p-10">
-          <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">
-              TRUST
+      <section className="mx-auto max-w-6xl px-5 pb-12 sm:px-7 sm:pb-14">
+        <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                TRUST & BUYER CLARITY
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                Built for buyers who want clarity before commitment
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                Orbitlink is operated by TIRAV Technologies Inc., a CRTC-registered
+                telecommunications reseller. We provide clear, evidence-based recommendations
+                so businesses understand availability, limitations, and service options before
+                making a decision.
+              </p>
+              <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
+                Operated by TIRAV Technologies Inc. • CRTC-registered telecommunications reseller •
+                BITS licence active (2026)
+              </p>
             </div>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-[34px]">
-              Clear posture. Cleaner buying decision.
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              Orbitlink provides structured, transparent recommendations so buyers
-              understand availability, limitations, and next steps before committing.
-            </p>
+            <MiniMetaCard title="OPERATED BY" value="TIRAV Technologies Inc." />
           </div>
 
           <div className="mt-6 flex flex-wrap gap-2">
-            <ProofPill text="Operated by TIRAV Technologies Inc." />
-            <ProofPill text="CRTC-registered reseller" />
-            <ProofPill text="Address-reviewed availability" />
-            <ProofPill text="Documented commercial posture" />
+            <TrustPill text="Operated by TIRAV Technologies Inc." />
+            <TrustPill text="CRTC-registered provider" />
+            <TrustPill text="Disclosure-first recommendations" />
+            <TrustPill text="Availability reviewed by address" />
+            <TrustPill text="Ontario business coverage" />
+            <TrustPill text="Clear next-step guidance" />
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-20 sm:px-7 lg:px-10">
+      <section className="mx-auto max-w-6xl px-5 pb-12 sm:px-7 sm:pb-14">
         <div className="rounded-[32px] border border-white/10 bg-black/22 p-6 sm:p-8 lg:p-10">
-          <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">
-              ONTARIO LOCATIONS
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                ONTARIO LOCATIONS
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                Explore location-based business internet pages
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                Orbitlink is building location pages across Ontario to help businesses evaluate
+                service options, local availability, and market fit.
+              </p>
             </div>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-[34px]">
-              Explore location-based pages
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              Browse focused commercial pages built around local intent and
-              address-based availability.
-            </p>
+            <MiniMetaCard title="LOCAL DISCOVERY" value="Location pages support local search intent" />
           </div>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <LocationCard
-              city="Toronto"
-              note="Business internet and commercial connectivity"
-              href="/locations/toronto"
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <CoverageCard city="Toronto" note="Business internet and commercial connectivity" href="/locations/toronto" />
+            <CoverageCard city="Mississauga" note="Priority business market" href="/locations/mississauga" />
+            <CoverageCard city="Vaughan" note="Industrial and office environments" href="/locations/vaughan" />
+            <CoverageCard city="Brampton" note="Warehouse and logistics environments" href="/locations/brampton" />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pb-12 sm:px-7 sm:pb-14">
+        <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-white/55">
+                FREQUENTLY ASKED QUESTIONS
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                Questions businesses ask before submitting a request
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                These answers help buyers understand the process and improve search relevance.
+              </p>
+            </div>
+            <MiniMetaCard title="SEO + CLARITY" value="Useful answers for buyers and search" />
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+            <FAQCard
+              question="How do I check if Orbitlink can serve my business location?"
+              answer="Submit your business address and service requirements through the Orbitlink contact intake. Availability is reviewed based on address, building infrastructure, and service type."
             />
-            <LocationCard
-              city="Mississauga"
-              note="Priority business market"
-              href="/locations/mississauga"
+            <FAQCard
+              question="Does Orbitlink offer business fibre and dedicated internet access?"
+              answer="Yes. Orbitlink supports business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity for Ontario businesses."
             />
-            <LocationCard
-              city="Vaughan"
-              note="Industrial and office environments"
-              href="/locations/vaughan"
+            <FAQCard
+              question="What types of businesses does Orbitlink support?"
+              answer="Orbitlink supports offices, clinics, warehouses, commercial units, logistics environments, and multi-site business locations across Ontario."
             />
-            <LocationCard
-              city="Brampton"
-              note="Warehouse and logistics environments"
-              href="/locations/brampton"
+            <FAQCard
+              question="What happens after I submit a request?"
+              answer="Orbitlink reviews the address, service requirements, building infrastructure, and available service paths, then responds with the most practical next step."
             />
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-24 sm:px-7 lg:px-10">
-        <div className="rounded-[32px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 text-center sm:p-8 lg:p-10">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
-              READY TO REVIEW YOUR OPTIONS?
+      <section className="mx-auto max-w-6xl px-5 pb-16 sm:px-7 sm:pb-20">
+        <div className="rounded-[32px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-8 lg:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
+                READY TO REVIEW YOUR OPTIONS?
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                Choose the right business internet solution for your location.
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
+                We review your building, available providers, and infrastructure to recommend the most
+                reliable and scalable option for your business.
+              </p>
             </div>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-[34px]">
-              Stop guessing your internet setup
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-              Most businesses are on the wrong connection for their workload.
-              We fix that.
-            </p>
+            <MiniMetaCard title="NEXT STEP" value="Availability • Recommendation • Direction" />
           </div>
 
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4 sm:flex-wrap">
+            <div className="flex flex-col gap-2">
+              <Link
+                href="/contact#intake"
+                className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
+              >
+                Check Business Internet Availability
+              </Link>
+              <div className="text-xs text-white/55 sm:text-sm">
+                Business-only review • No obligation • Clear response
+              </div>
+            </div>
+
             <Link
-              href="/contact#intake"
-              className="rounded-2xl bg-[#FACC15] px-6 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+              href="/compare"
+              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
-              Get a Clear Recommendation
+              Compare Provider Models
             </Link>
 
             <Link
-              href="/contact#intake"
-              className="rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm transition hover:bg-white/10"
+              href="/trust"
+              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
-              Request Pricing
+              Review Trust & Compliance
             </Link>
           </div>
         </div>
