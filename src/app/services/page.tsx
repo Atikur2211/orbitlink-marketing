@@ -28,6 +28,7 @@ type GroupItem = {
   title: ServiceGroup;
   description: string;
   eyebrow: string;
+  id: string;
 };
 
 export const metadata: Metadata = {
@@ -87,13 +88,13 @@ const SERVICES: readonly ServiceItem[] = [
   {
     title: "Dedicated Internet Access",
     subtitle:
-      "Higher-assurance connectivity for critical sites that require stronger performance posture, clearer escalation, and a more controlled service model.",
+      "Higher-assurance connectivity for critical sites that require stronger performance expectations, cleaner escalation, and a more controlled service model.",
     href: "/services/dedicated-internet-access",
-    bullets: ["Dedicated circuit", "Committed performance posture", "Critical environments"],
+    bullets: ["Dedicated circuit", "Committed performance", "Critical environments"],
     tag: "HIGHER ASSURANCE",
     group: "Connectivity",
     bestFit:
-      "Best for organizations that need more deterministic connectivity, cleaner escalation handling, and stronger service expectations.",
+      "Best for organizations that need more deterministic connectivity, clearer escalation handling, and stronger uptime expectations.",
   },
   {
     title: "Managed LAN & Wi-Fi",
@@ -148,7 +149,7 @@ const SERVICES: readonly ServiceItem[] = [
     tag: "CONNECTED SYSTEMS",
     group: "Infrastructure",
     bestFit:
-      "Best for environments where connected systems need segmented, policy-aware, and more controlled service handling.",
+      "Best for environments where connected systems need segmented and controlled service handling.",
   },
   {
     title: "Static IP Routing",
@@ -180,30 +181,35 @@ const GROUPS: readonly GroupItem[] = [
     eyebrow: "PRIMARY ACCESS",
     description:
       "Internet services for organizations that need strong primary connectivity and a cleaner commercial starting point.",
+    id: "connectivity",
   },
   {
     title: "Managed Network",
     eyebrow: "INTERNAL NETWORK",
     description:
       "Managed LAN and Wi-Fi services for businesses that need better internal stability, cleaner segmentation, and easier support.",
+    id: "managed-network",
   },
   {
     title: "Continuity",
     eyebrow: "BACKUP & RESILIENCE",
     description:
       "Continuity services for organizations that want stronger uptime planning and alternative path resilience.",
+    id: "continuity",
   },
   {
     title: "Voice",
     eyebrow: "COMMUNICATIONS",
     description:
       "Business voice services for teams that need professional call handling, routing flexibility, and cleaner communications control.",
+    id: "voice",
   },
   {
     title: "Infrastructure",
     eyebrow: "ADVANCED SERVICES",
     description:
-      "Routing, IoT, and infrastructure services for more technical, policy-aware, and future-ready business environments.",
+      "Routing, IoT, and infrastructure services for more technical and future-ready business environments.",
+    id: "infrastructure",
   },
 ];
 
@@ -302,22 +308,26 @@ function GroupBlock({
   title,
   eyebrow,
   description,
+  id,
   services,
 }: {
   title: string;
   eyebrow: string;
   description: string;
+  id: string;
   services: readonly ServiceItem[];
 }) {
   return (
-    <section className="mt-16 first:mt-0">
+    <section id={id} className="scroll-mt-28 mt-16 first:mt-0">
       <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-3xl">
           <div className="text-[11px] tracking-[0.30em] text-white/40">{eyebrow}</div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
             {title}
           </h2>
-          <p className="mt-3 text-sm leading-6 text-white/62 sm:text-[15px]">{description}</p>
+          <p className="mt-3 text-sm leading-6 text-white/62 sm:text-[15px]">
+            {description}
+          </p>
         </div>
 
         <MetricPill label="SERVICES" value={`${services.length}`} />
@@ -329,6 +339,84 @@ function GroupBlock({
         ))}
       </div>
     </section>
+  );
+}
+
+function Breadcrumbs() {
+  return (
+    <nav aria-label="Breadcrumb" className="mb-6">
+      <div className="flex flex-wrap items-center gap-2 text-sm text-white/52">
+        <Link href="/" className="transition hover:text-white">
+          Home
+        </Link>
+        <span>/</span>
+        <span className="text-white/76">Services</span>
+      </div>
+    </nav>
+  );
+}
+
+function JumpNav() {
+  return (
+    <Surface className="p-4 sm:p-5">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <div className="text-[11px] tracking-[0.30em] text-white/42">JUMP TO</div>
+          <div className="mt-2 text-sm text-white/72">
+            Go directly to the service family that matches the business need.
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {GROUPS.map((group) => (
+            <a
+              key={group.id}
+              href={`#${group.id}`}
+              className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-white/72 transition hover:bg-white/10"
+            >
+              {group.title}
+            </a>
+          ))}
+          <a
+            href="#faq"
+            className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-white/72 transition hover:bg-white/10"
+          >
+            FAQ
+          </a>
+        </div>
+      </div>
+    </Surface>
+  );
+}
+
+function AudienceStrip() {
+  const items = [
+    "Professional offices",
+    "Clinics",
+    "Warehouses",
+    "Commercial buildings",
+    "Multi-site organizations",
+  ];
+
+  return (
+    <Surface className="p-6 sm:p-8">
+      <div className="max-w-3xl">
+        <div className="text-[11px] tracking-[0.30em] text-white/42">WHO THIS PAGE IS FOR</div>
+        <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+          Built for serious commercial buyers
+        </h2>
+        <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+          This page is designed for organizations reviewing business connectivity,
+          managed networking, continuity, voice, and infrastructure services in Ontario.
+        </p>
+      </div>
+
+      <div className="mt-6 flex flex-wrap gap-2">
+        {items.map((item) => (
+          <TrustPill key={item} text={item} />
+        ))}
+      </div>
+    </Surface>
   );
 }
 
@@ -376,6 +464,153 @@ function QuickStartStrip() {
             <p className="mt-3 text-sm leading-6 text-white/63">{step.body}</p>
           </div>
         ))}
+      </div>
+    </Surface>
+  );
+}
+
+function ComparisonBlock() {
+  const rows = [
+    {
+      label: "Best for",
+      fibre: "General business connectivity",
+      dia: "Critical environments",
+      wifi: "Internal coverage and stability",
+      backup: "Continuity and failover",
+    },
+    {
+      label: "When it makes sense",
+      fibre: "Primary internet for business sites",
+      dia: "Higher-assurance service expectations",
+      wifi: "Wireless performance is limiting operations",
+      backup: "Downtime creates operational risk",
+    },
+    {
+      label: "Main benefit",
+      fibre: "Strong primary access",
+      dia: "More predictable performance",
+      wifi: "Better day-to-day user experience",
+      backup: "Secondary path resilience",
+    },
+    {
+      label: "Typical concern",
+      fibre: "Building and service fit",
+      dia: "Commercial model and escalation",
+      wifi: "Coverage and segmentation",
+      backup: "Failover readiness",
+    },
+  ];
+
+  return (
+    <Surface className="p-6 sm:p-8 lg:p-10">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+        <div className="max-w-3xl">
+          <div className="text-[11px] tracking-[0.30em] text-white/42">HOW TO CHOOSE</div>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+            Compare the main service paths quickly
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+            This is the fastest way to understand which category fits the business objective before moving deeper into review.
+          </p>
+        </div>
+
+        <MetricPill label="BUYER TOOL" value="Fast self-qualification" />
+      </div>
+
+      <div className="mt-7 overflow-x-auto">
+        <div className="min-w-[760px] rounded-[26px] border border-white/10 bg-black/20">
+          <div className="grid grid-cols-5 border-b border-white/10">
+            <div className="p-4 text-[11px] tracking-[0.22em] text-white/40">COMPARE</div>
+            <div className="p-4 text-sm font-medium text-white/90">Business Fibre</div>
+            <div className="p-4 text-sm font-medium text-white/90">Dedicated Internet</div>
+            <div className="p-4 text-sm font-medium text-white/90">Managed Wi-Fi</div>
+            <div className="p-4 text-sm font-medium text-white/90">Backup Connectivity</div>
+          </div>
+
+          {rows.map((row, idx) => (
+            <div
+              key={row.label}
+              className={[
+                "grid grid-cols-5",
+                idx !== rows.length - 1 ? "border-b border-white/10" : "",
+              ].join(" ")}
+            >
+              <div className="p-4 text-sm text-white/82">{row.label}</div>
+              <div className="p-4 text-sm text-white/62">{row.fibre}</div>
+              <div className="p-4 text-sm text-white/62">{row.dia}</div>
+              <div className="p-4 text-sm text-white/62">{row.wifi}</div>
+              <div className="p-4 text-sm text-white/62">{row.backup}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Surface>
+  );
+}
+
+function BuyerIntentStrip() {
+  const items = [
+    "Service selected without building fit",
+    "No backup path for continuity needs",
+    "Internal Wi-Fi treated as an afterthought",
+    "Wrong access model for the actual workload",
+  ];
+
+  return (
+    <Surface className="p-6 sm:p-8 lg:p-10">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+        <div className="max-w-3xl">
+          <div className="text-[11px] tracking-[0.30em] text-white/42">COMMON BUYER MISTAKES</div>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+            Why businesses end up on the wrong service
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+            Most mismatches happen because the decision starts with a package instead of the site, the workload, and the operational context.
+          </p>
+        </div>
+
+        <MetricPill label="VALUE" value="Better fit • Less rework" />
+      </div>
+
+      <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {items.map((item) => (
+          <div key={item} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+            <div className="text-sm font-medium text-white/88">{item}</div>
+          </div>
+        ))}
+      </div>
+    </Surface>
+  );
+}
+
+function MidPageCTA() {
+  return (
+    <Surface className="p-6 sm:p-8 lg:p-10">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <div className="max-w-3xl">
+          <div className="text-[11px] tracking-[0.30em] text-white/42">NEED HELP CHOOSING?</div>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+            Not sure which service fits?
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+            Start with a service review. Orbitlink can help narrow the right path based on the address, business need, and operating requirements.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/contact#intake"
+            className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+          >
+            Request a Service Review
+          </Link>
+          <Link
+            href="/contact#intake"
+            className="rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+          >
+            Request Pricing
+          </Link>
+        </div>
       </div>
     </Surface>
   );
@@ -510,7 +745,7 @@ function FAQStrip() {
   ];
 
   return (
-    <Surface className="p-6 sm:p-8 lg:p-10">
+    <Surface id="faq" className="scroll-mt-28 p-6 sm:p-8 lg:p-10">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
           <div className="text-[11px] tracking-[0.30em] text-white/42">
@@ -699,7 +934,7 @@ export default function ServicesIndexPage() {
 
       <section className="relative overflow-hidden border-b border-white/10">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
+          <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
           <div className="absolute -top-24 left-10 h-72 w-72 rounded-full bg-blue-500/12 blur-3xl" />
           <div className="absolute right-10 top-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
           <div className="absolute bottom-[-140px] left-1/2 h-80 w-[56rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
@@ -707,6 +942,8 @@ export default function ServicesIndexPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-5 pb-14 pt-14 sm:px-7 sm:pb-18 sm:pt-18 lg:px-10 lg:pb-24 lg:pt-20">
+          <Breadcrumbs />
+
           <div className="max-w-6xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] text-white/70">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
@@ -723,12 +960,25 @@ export default function ServicesIndexPage() {
 
                 <h1 className="mt-4 text-[2.5rem] font-semibold tracking-tight text-white sm:text-6xl lg:text-[5rem] lg:leading-[0.97]">
                   Business connectivity services
-                  <span className="block text-white/60">organized around real operating needs</span>
+                  <span className="block text-white/60">
+                    organized around real operating needs
+                  </span>
                 </h1>
 
                 <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/66 sm:text-lg">
-                  Explore Orbitlink business fibre internet, dedicated internet access, managed LAN and Wi-Fi,
-                  continuity services, cloud voice, and infrastructure options for Ontario organizations.
+                  Explore{" "}
+                  <Link href="/services/business-fibre-internet" className="text-white/88 underline-offset-4 hover:underline">
+                    business fibre internet
+                  </Link>
+                  ,{" "}
+                  <Link href="/services/dedicated-internet-access" className="text-white/88 underline-offset-4 hover:underline">
+                    dedicated internet access
+                  </Link>
+                  ,{" "}
+                  <Link href="/services/managed-lan-wifi" className="text-white/88 underline-offset-4 hover:underline">
+                    managed LAN and Wi-Fi
+                  </Link>
+                  , continuity services, cloud voice, and infrastructure options for Ontario organizations.
                   Start with the service that matches the environment, then move into availability, fit, and commercial review.
                 </p>
 
@@ -798,27 +1048,6 @@ export default function ServicesIndexPage() {
             </div>
           </div>
 
-          <div className="mt-10 rounded-[28px] border border-white/10 bg-white/[0.04] p-5 sm:p-6">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div className="max-w-3xl">
-                <div className="text-[11px] tracking-[0.28em] text-white/45">
-                  COMMERCIAL TRUST SIGNALS
-                </div>
-                <p className="mt-2 text-sm leading-6 text-white/66">
-                  This page is structured for business buyers that need service clarity,
-                  address-aware qualification, and a more direct path toward pricing and commercial review.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:min-w-[520px]">
-                <TrustPill text="Business-only service categories" />
-                <TrustPill text="Ontario commercial focus" />
-                <TrustPill text="Availability reviewed by address" />
-                <TrustPill text="Operated by TIRAV Technologies Inc." />
-              </div>
-            </div>
-          </div>
-
           <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
             <MetricPill label="BEST FOR" value="Ontario business sites and multi-location organizations" />
             <MetricPill label="BUYER MODE" value="Clear, serious, business-ready" />
@@ -828,15 +1057,20 @@ export default function ServicesIndexPage() {
       </section>
 
       <section className="relative mx-auto max-w-7xl px-5 py-12 sm:px-7 sm:py-16 lg:px-10 lg:py-20">
-        <div className="pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:88px_88px]" />
+        <div className="pointer-events-none absolute inset-0 opacity-[0.03] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:88px_88px]" />
 
         <div className="relative space-y-6">
+          <JumpNav />
+          <AudienceStrip />
           <QuickStartStrip />
+          <ComparisonBlock />
+          <BuyerIntentStrip />
           <DecisionStrip />
 
           {GROUPS.map((group) => (
             <GroupBlock
               key={group.title}
+              id={group.id}
               title={group.title}
               eyebrow={group.eyebrow}
               description={group.description}
@@ -844,6 +1078,7 @@ export default function ServicesIndexPage() {
             />
           ))}
 
+          <MidPageCTA />
           <ValueStrip />
           <FAQStrip />
           <FinalCTA />
