@@ -108,7 +108,7 @@ function MetricCard({
   tone: "ok" | "info" | "warn";
 }) {
   return (
-    <div className="rounded-[28px] border border-white/10 bg-black/20 p-5 sm:p-6">
+    <div className="rounded-[28px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:bg-black/25 sm:p-6">
       <div className="flex items-start justify-between gap-4">
         <div className="text-[11px] tracking-[0.22em] text-white/55">{label}</div>
         <div className={`rounded-full border px-3 py-1.5 text-[11px] ${tonePill(tone)}`}>
@@ -118,6 +118,21 @@ function MetricCard({
 
       <div className={`mt-4 text-xl font-semibold ${toneClass(tone)}`}>{value}</div>
       <p className="mt-2 text-sm leading-6 text-white/62">{note}</p>
+    </div>
+  );
+}
+
+function MeaningCard({
+  title,
+  text,
+}: {
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25">
+      <div className="text-sm font-medium text-white/90">{title}</div>
+      <p className="mt-3 text-sm leading-6 text-white/63">{text}</p>
     </div>
   );
 }
@@ -170,9 +185,9 @@ function HeroCommandPanel() {
 
             <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68 sm:text-[15px]">
               Orbitlink presents network readiness the way serious business buyers expect to
-              see it: clearly, carefully, and without blanket overclaiming. This page is not
-              a universal coverage promise. It explains how availability, service readiness,
-              escalation, and change handling are approached before, during, and after activation.
+              see it: clearly, carefully, and without blanket overclaiming. This page explains
+              how availability, service readiness, escalation, and change handling are approached
+              before, during, and after activation.
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -352,7 +367,10 @@ function NetworkAtlas() {
             note: "Expansion is disclosed only when milestones and delivery conditions are confirmed.",
           },
         ].map((p) => (
-          <div key={p.name} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={p.name}
+            className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25"
+          >
             <div className="flex items-start justify-between gap-4">
               <div className="text-sm font-medium text-white/90">{p.name}</div>
               <div className={`rounded-full border px-3 py-1.5 text-[11px] ${tonePill(p.tone)}`}>
@@ -362,6 +380,46 @@ function NetworkAtlas() {
             <p className="mt-3 text-sm leading-6 text-white/63">{p.note}</p>
           </div>
         ))}
+      </div>
+    </Surface>
+  );
+}
+
+function WhatThisMeansStrip() {
+  return (
+    <Surface className="p-6 sm:p-7">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+        <div>
+          <SectionEyebrow>WHAT THIS MEANS IN PRACTICE</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
+            Network posture should help a buyer make a better decision
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
+            This page is designed to reduce uncertainty, explain how Orbitlink qualifies
+            service, and make network-related claims easier to understand before the
+            commercial conversation moves forward.
+          </p>
+        </div>
+
+        <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+          <div className="text-[11px] tracking-[0.22em] text-white/55">BUYER VALUE</div>
+          <div className="mt-1 text-sm text-white/80">Clarity • Confidence • Direction</div>
+        </div>
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <MeaningCard
+          title="Availability is not guessed"
+          text="Serviceability is reviewed against address, building context, and requested service scope rather than broad coverage claims."
+        />
+        <MeaningCard
+          title="Escalation is structured"
+          text="When service events happen, ownership, diagnosis, and provider coordination follow a more ordered path."
+        />
+        <MeaningCard
+          title="Public statements stay controlled"
+          text="Network language is updated conservatively so serious buyers can rely on what is shown publicly."
+        />
       </div>
     </Surface>
   );
@@ -391,7 +449,10 @@ function CapabilityField() {
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
         {NETWORK_CAPABILITIES.map((c) => (
-          <div key={c.title} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={c.title}
+            className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25"
+          >
             <div className="text-sm font-medium text-white/90">{c.title}</div>
             <p className="mt-2 text-sm leading-6 text-white/63">{c.desc}</p>
           </div>
@@ -435,7 +496,10 @@ function BuyerOutcomesStrip() {
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {items.map((item) => (
-          <div key={item.t} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={item.t}
+            className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25"
+          >
             <div className="text-sm font-medium text-white/90">{item.t}</div>
             <p className="mt-3 text-sm leading-6 text-white/63">{item.b}</p>
           </div>
@@ -479,7 +543,10 @@ function OperatingPhilosophy() {
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {items.map((item) => (
-          <div key={item.t} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={item.t}
+            className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25"
+          >
             <div className="text-sm font-medium text-white/90">{item.t}</div>
             <p className="mt-3 text-sm leading-6 text-white/63">{item.b}</p>
           </div>
@@ -518,7 +585,10 @@ function LatencyPosture() {
             b: "When issues occur, updates explain what changed, what was observed, and what restored stability.",
           },
         ].map((item) => (
-          <div key={item.t} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={item.t}
+            className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25"
+          >
             <div className="text-sm font-medium text-white/90">{item.t}</div>
             <p className="mt-3 text-sm leading-6 text-white/63">{item.b}</p>
           </div>
@@ -579,7 +649,10 @@ function EscalationModel() {
 
       <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
         {steps.map((s) => (
-          <div key={s.level} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={s.level}
+            className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25"
+          >
             <div className="text-sm font-medium text-white/90">{s.level}</div>
             <ul className="mt-3 space-y-2 text-sm text-white/63">
               {s.bullets.map((b) => (
@@ -627,7 +700,10 @@ function AssuranceModel() {
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {items.map((item) => (
-          <div key={item.t} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={item.t}
+            className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25"
+          >
             <div className="text-sm font-medium text-white/90">{item.t}</div>
             <p className="mt-3 text-sm leading-6 text-white/63">{item.b}</p>
           </div>
@@ -669,7 +745,10 @@ function ChangeLogStrip() {
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
         {items.map((i) => (
-          <div key={i.label} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={i.label}
+            className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25"
+          >
             <div className="flex items-start justify-between gap-4">
               <div className="text-[11px] tracking-[0.22em] text-white/55">{i.label}</div>
               <div className={`rounded-full border px-3 py-1.5 text-[11px] ${tonePill(i.tone)}`}>
@@ -727,7 +806,10 @@ function TelemetryDisclosureStrip() {
             b: "After milestones complete, service conditions stabilize, and disclosure can remain accurate and defensible.",
           },
         ].map((item) => (
-          <div key={item.t} className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+          <div
+            key={item.t}
+            className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25"
+          >
             <div className="text-[11px] tracking-[0.22em] text-white/55">
               {item.t.toUpperCase()}
             </div>
@@ -774,7 +856,7 @@ function EnterpriseReadinessStrip() {
         {items.map((item) => (
           <div
             key={item}
-            className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4 text-sm text-white/72"
+            className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4 text-sm text-white/72 transition-all duration-300 hover:border-white/15 hover:bg-black/25"
           >
             {item}
           </div>
@@ -1008,6 +1090,7 @@ export default function NetworkPage() {
 
       <div className="space-y-4 sm:space-y-6">
         <HeroCommandPanel />
+        <WhatThisMeansStrip />
         <NetworkAtlas />
         <CapabilityField />
         <BuyerOutcomesStrip />
