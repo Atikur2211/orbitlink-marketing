@@ -998,8 +998,8 @@ export default function ServicesIndexPage() {
             </div>
 
             <h1 className="mt-5 max-w-4xl text-[2rem] font-semibold leading-[0.98] tracking-tight text-white sm:text-[3rem] lg:text-[4rem]">
-              Business connectivity services
-              <span className="block text-white/62">for real business environments</span>
+              Connectivity engineered
+              <span className="block text-white/62">for real business operations</span>
             </h1>
 
             <p className="mt-4 max-w-2xl text-[14px] leading-7 text-white/80 sm:text-[15px]">
