@@ -210,7 +210,12 @@ export async function POST(req: Request) {
       archived: false,
     };
 
-    await appendLeadToFile(CHAT_LEADS_FILE, lead);
+    const isVercel = process.env.VERCEL === "1";
+
+    // Only write to file in local/dev
+    if (!isVercel) {
+      await appendLeadToFile(CHAT_LEADS_FILE, lead);
+    }
 
     let emailStatus:
       | { sent: true }
@@ -234,6 +239,7 @@ export async function POST(req: Request) {
       ok: true,
       leadId: lead.id,
       emailStatus,
+      storageMode: isVercel ? "email-only" : "file+email",
     });
   } catch (error) {
     return NextResponse.json(
