@@ -1,34 +1,44 @@
-import { promises as fs } from "fs";
-import path from "path";
 import PageShell from "@/components/PageShell";
 import ChatLeadsDashboard, {
   type ChatLeadRecord,
 } from "@/components/ChatLeadsDashboard";
-
-const CHAT_LEADS_FILE =
-  process.env.CHAT_LEADS_FILE || path.join(process.cwd(), "chat-leads.json");
+import { getSupabaseAdmin } from "@/lib/supabase";
 
 async function getChatLeads(): Promise<ChatLeadRecord[]> {
-  const isVercel = process.env.VERCEL === "1";
+  const supabaseAdmin = getSupabaseAdmin();
 
-  if (isVercel) {
+  const { data, error } = await supabaseAdmin
+    .from("chat_leads")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("SUPABASE READ ERROR:", error);
     return [];
   }
 
-  try {
-    const raw = await fs.readFile(CHAT_LEADS_FILE, "utf8");
-    const parsed = JSON.parse(raw);
-
-    if (!Array.isArray(parsed)) return [];
-
-    return parsed;
-  } catch {
-    return [];
-  }
+  return (data || []).map((row) => ({
+    id: row.id,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+    name: row.name,
+    email: row.email,
+    phone: row.phone || "",
+    company: row.company || "",
+    location: row.location || "",
+    intent: row.intent,
+    source: row.source,
+    page: row.page || "",
+    notes: row.notes || "",
+    messages: Array.isArray(row.messages) ? row.messages : [],
+    status: row.status,
+    followUpDate: row.follow_up_date || "",
+    internalNotes: row.internal_notes || "",
+    archived: Boolean(row.archived),
+  }));
 }
 
 export default async function ChatLeadsPage() {
-  const isVercel = process.env.VERCEL === "1";
   const leads = await getChatLeads();
 
   return (
@@ -37,19 +47,6 @@ export default async function ChatLeadsPage() {
       title="Chat Leads"
       subtitle="Internal review surface for live-agent requests, chat transcripts, lead status, follow-up timing, and sales notes."
     >
-      {isVercel ? (
-        <div className="mb-6 rounded-[24px] border border-[#FACC15]/20 bg-[#FACC15]/[0.06] p-5">
-          <div className="text-[11px] tracking-[0.22em] text-[#FDE68A]">
-            PRODUCTION NOTICE
-          </div>
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-white/78">
-            Production lead storage is currently running in email-only mode. The internal
-            dashboard will show local development leads, but live production persistence
-            requires a database such as Supabase.
-          </p>
-        </div>
-      ) : null}
-
       <ChatLeadsDashboard initialLeads={leads} />
     </PageShell>
   );
