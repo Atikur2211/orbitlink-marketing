@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase";
 
 type ChatLeadMessage = {
   role: "user" | "assistant";
@@ -45,7 +45,17 @@ function normalizeMessages(messages: unknown): ChatLeadMessage[] {
     .filter((m): m is ChatLeadMessage => Boolean(m));
 }
 
-async function sendEmailNotification(lead: any) {
+async function sendEmailNotification(
+  lead: {
+    name: string;
+    email: string;
+    phone: string;
+    company: string;
+    location: string;
+    notes: string;
+    messages: ChatLeadMessage[];
+  }
+) {
   const resendKey = process.env.RESEND_API_KEY;
   const intakeTo = process.env.INTAKE_TO_EMAIL;
   const fromEmail = process.env.INTAKE_FROM_EMAIL;
@@ -55,7 +65,7 @@ async function sendEmailNotification(lead: any) {
   }
 
   const transcript = lead.messages
-    .map((m: any) => `${m.role.toUpperCase()}: ${m.text}`)
+    .map((m) => `${m.role.toUpperCase()}: ${m.text}`)
     .join("\n\n");
 
   const body = [
@@ -74,7 +84,7 @@ async function sendEmailNotification(lead: any) {
     transcript || "No transcript available",
   ].join("\n");
 
-  await fetch("https://api.resend.com/emails", {
+  const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${resendKey}`,
@@ -88,11 +98,18 @@ async function sendEmailNotification(lead: any) {
     }),
   });
 
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Resend error: ${errorText}`);
+  }
+
   return { sent: true as const };
 }
 
 export async function POST(req: Request) {
   try {
+    const supabaseAdmin = getSupabaseAdmin();
+
     const payload = (await req.json()) as ChatLeadPayload;
 
     const name = safeString(payload.name);
@@ -147,7 +164,6 @@ export async function POST(req: Request) {
       archived: false,
     };
 
-    // ✅ INSERT INTO SUPABASE
     const { error: dbError } = await supabaseAdmin
       .from("chat_leads")
       .insert([lead]);
@@ -155,16 +171,27 @@ export async function POST(req: Request) {
     if (dbError) {
       console.error("DB ERROR:", dbError);
       return NextResponse.json(
-        { ok: false, error: "Database insert failed." },
+        { ok: false, error: dbError.message || "Database insert failed." },
         { status: 500 }
       );
     }
 
-    // ✅ SEND EMAIL
-    let emailStatus;
+    let emailStatus:
+      | { sent: true }
+      | { sent: false; reason: "missing_email_env" }
+      | { sent: false; reason: "send_failed" };
+
     try {
-      emailStatus = await sendEmailNotification(lead);
-    } catch (err) {
+      emailStatus = await sendEmailNotification({
+        name,
+        email,
+        phone,
+        company,
+        location,
+        notes,
+        messages,
+      });
+    } catch {
       emailStatus = { sent: false, reason: "send_failed" };
     }
 
