@@ -73,6 +73,20 @@ async function writeLeads(filePath: string, leads: StoredChatLead[]) {
 
 export async function POST(req: Request) {
   try {
+    const isVercel = process.env.VERCEL === "1";
+
+    if (isVercel) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error:
+            "Lead status updates are disabled in production until persistent database storage is connected.",
+          storageMode: "email-only",
+        },
+        { status: 503 },
+      );
+    }
+
     const payload = (await req.json()) as UpdatePayload;
     const id = safeString(payload.id);
 
@@ -127,6 +141,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       ok: true,
       lead: leads[index],
+      storageMode: "file+email",
     });
   } catch (error) {
     return NextResponse.json(
