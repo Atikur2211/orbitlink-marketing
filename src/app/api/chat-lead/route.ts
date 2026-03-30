@@ -1,6 +1,5 @@
-import { promises as fs } from "fs";
-import path from "path";
 import { NextResponse } from "next/server";
+import { supabaseAdmin } from "@/lib/supabase";
 
 type ChatLeadMessage = {
   role: "user" | "assistant";
@@ -19,29 +18,6 @@ type ChatLeadPayload = {
   notes?: string;
   messages: ChatLeadMessage[];
 };
-
-type StoredChatLead = {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  name: string;
-  email: string;
-  phone: string;
-  company: string;
-  location: string;
-  intent: "live-agent";
-  source: "chat";
-  page: string;
-  notes: string;
-  messages: ChatLeadMessage[];
-  status: "new" | "contacted" | "qualified" | "won" | "lost";
-  followUpDate: string;
-  internalNotes: string;
-  archived: boolean;
-};
-
-const CHAT_LEADS_FILE =
-  process.env.CHAT_LEADS_FILE || path.join(process.cwd(), "chat-leads.json");
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -69,37 +45,7 @@ function normalizeMessages(messages: unknown): ChatLeadMessage[] {
     .filter((m): m is ChatLeadMessage => Boolean(m));
 }
 
-async function ensureFileExists(filePath: string) {
-  try {
-    await fs.access(filePath);
-  } catch {
-    await fs.writeFile(filePath, "[]", "utf8");
-  }
-}
-
-async function readLeads(filePath: string): Promise<StoredChatLead[]> {
-  await ensureFileExists(filePath);
-
-  try {
-    const raw = await fs.readFile(filePath, "utf8");
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-async function writeLeads(filePath: string, leads: StoredChatLead[]) {
-  await fs.writeFile(filePath, JSON.stringify(leads, null, 2), "utf8");
-}
-
-async function appendLeadToFile(filePath: string, lead: StoredChatLead) {
-  const leads = await readLeads(filePath);
-  leads.unshift(lead);
-  await writeLeads(filePath, leads);
-}
-
-async function sendEmailNotification(lead: StoredChatLead) {
+async function sendEmailNotification(lead: any) {
   const resendKey = process.env.RESEND_API_KEY;
   const intakeTo = process.env.INTAKE_TO_EMAIL;
   const fromEmail = process.env.INTAKE_FROM_EMAIL;
@@ -109,7 +55,7 @@ async function sendEmailNotification(lead: StoredChatLead) {
   }
 
   const transcript = lead.messages
-    .map((m) => `${m.role.toUpperCase()}: ${m.text}`)
+    .map((m: any) => `${m.role.toUpperCase()}: ${m.text}`)
     .join("\n\n");
 
   const body = [
@@ -120,10 +66,6 @@ async function sendEmailNotification(lead: StoredChatLead) {
     `Phone: ${lead.phone || ""}`,
     `Company: ${lead.company || ""}`,
     `Location: ${lead.location || ""}`,
-    `Status: ${lead.status}`,
-    `Source: ${lead.source}`,
-    `Page: ${lead.page || ""}`,
-    `Created At: ${lead.createdAt}`,
     "",
     "Notes:",
     lead.notes || "",
@@ -132,7 +74,7 @@ async function sendEmailNotification(lead: StoredChatLead) {
     transcript || "No transcript available",
   ].join("\n");
 
-  const response = await fetch("https://api.resend.com/emails", {
+  await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${resendKey}`,
@@ -141,15 +83,10 @@ async function sendEmailNotification(lead: StoredChatLead) {
     body: JSON.stringify({
       from: fromEmail,
       to: [intakeTo],
-      subject: `New Orbitlink chat lead: ${lead.name || "Unknown visitor"}`,
+      subject: `New Orbitlink chat lead: ${lead.name}`,
       text: body,
     }),
   });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Resend error: ${errorText}`);
-  }
 
   return { sent: true as const };
 }
@@ -170,30 +107,30 @@ export async function POST(req: Request) {
     if (!name) {
       return NextResponse.json(
         { ok: false, error: "Name is required." },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
     if (!email || !isValidEmail(email)) {
       return NextResponse.json(
-        { ok: false, error: "A valid email is required." },
-        { status: 400 },
+        { ok: false, error: "Valid email required." },
+        { status: 400 }
       );
     }
 
     if (messages.length === 0) {
       return NextResponse.json(
-        { ok: false, error: "Chat transcript is required." },
-        { status: 400 },
+        { ok: false, error: "Chat transcript required." },
+        { status: 400 }
       );
     }
 
     const now = new Date().toISOString();
 
-    const lead: StoredChatLead = {
+    const lead = {
       id: crypto.randomUUID(),
-      createdAt: now,
-      updatedAt: now,
+      created_at: now,
+      updated_at: now,
       name,
       email,
       phone,
@@ -205,41 +142,37 @@ export async function POST(req: Request) {
       notes,
       messages,
       status: "new",
-      followUpDate: "",
-      internalNotes: "",
+      follow_up_date: null,
+      internal_notes: "",
       archived: false,
     };
 
-    const isVercel = process.env.VERCEL === "1";
+    // ✅ INSERT INTO SUPABASE
+    const { error: dbError } = await supabaseAdmin
+      .from("chat_leads")
+      .insert([lead]);
 
-    // Only write to file in local/dev
-    if (!isVercel) {
-      await appendLeadToFile(CHAT_LEADS_FILE, lead);
+    if (dbError) {
+      console.error("DB ERROR:", dbError);
+      return NextResponse.json(
+        { ok: false, error: "Database insert failed." },
+        { status: 500 }
+      );
     }
 
-    let emailStatus:
-      | { sent: true }
-      | { sent: false; reason: "missing_email_env" }
-      | { sent: false; reason: "send_failed"; detail: string } = {
-      sent: false,
-      reason: "missing_email_env",
-    };
-
+    // ✅ SEND EMAIL
+    let emailStatus;
     try {
       emailStatus = await sendEmailNotification(lead);
-    } catch (error) {
-      emailStatus = {
-        sent: false,
-        reason: "send_failed",
-        detail: error instanceof Error ? error.message : "unknown error",
-      };
+    } catch (err) {
+      emailStatus = { sent: false, reason: "send_failed" };
     }
 
     return NextResponse.json({
       ok: true,
       leadId: lead.id,
       emailStatus,
-      storageMode: isVercel ? "email-only" : "file+email",
+      storageMode: "supabase",
     });
   } catch (error) {
     return NextResponse.json(
@@ -248,7 +181,7 @@ export async function POST(req: Request) {
         error:
           error instanceof Error ? error.message : "Unexpected server error.",
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
