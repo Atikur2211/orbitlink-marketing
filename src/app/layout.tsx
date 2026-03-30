@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import ChatWidget from "@/components/ChatWidget";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
@@ -244,6 +245,9 @@ export default function RootLayout({
 
       <body className="min-h-screen bg-[#09090B] text-white antialiased">
         {children}
+        
+        {/* Orbitlink Connectivity Advisor */}
+        <ChatWidget />
       </body>
     </html>
   );
