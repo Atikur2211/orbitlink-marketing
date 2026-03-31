@@ -33,7 +33,7 @@ type StoredChatState = {
   draftSessionId?: string;
 };
 
-const STORAGE_KEY = "orbitlink-chat-state-v6";
+const STORAGE_KEY = "orbitlink-chat-state-v7";
 
 const QUICK_ACTIONS: Array<{
   label: string;
@@ -458,11 +458,18 @@ export default function ChatWidget() {
           messages: transcriptMessages,
         });
 
-        if (result?.ok && typeof result?.draftLeadId === "string") {
+        if (!result?.ok) {
+          throw new Error(result?.error || "Draft lead sync failed.");
+        }
+
+        if (typeof result?.draftLeadId === "string") {
           setDraftLeadId(result.draftLeadId);
         }
       } catch (error) {
         console.error("Draft lead sync failed:", error);
+        setLeadError(
+          error instanceof Error ? error.message : "Draft lead sync failed.",
+        );
       } finally {
         draftSyncingRef.current = false;
       }
@@ -618,13 +625,38 @@ export default function ChatWidget() {
               },
             ];
 
+      let finalDraftLeadId = draftLeadId;
+
+      if (!finalDraftLeadId && fallbackTranscript.length > 0) {
+        const draftResult = await upsertDraftLead({
+          draftLeadId: undefined,
+          draftSessionId,
+          name: leadForm.name,
+          email: leadForm.email,
+          phone: leadForm.phone,
+          company: leadForm.company,
+          location: leadForm.location,
+          intent: leadForm.intent,
+          page: typeof window !== "undefined" ? window.location.pathname : "",
+          notes: leadForm.notes,
+          messages: fallbackTranscript,
+        });
+
+        if (!draftResult?.ok || !draftResult?.draftLeadId) {
+          throw new Error(draftResult?.error || "Failed to create draft lead.");
+        }
+
+        finalDraftLeadId = draftResult.draftLeadId;
+        setDraftLeadId(finalDraftLeadId);
+      }
+
       const response = await fetch("/api/chat-leads", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          draftLeadId: draftLeadId || undefined,
+          draftLeadId: finalDraftLeadId || undefined,
           ...leadForm,
           intent: leadForm.intent,
           source: "chat",
@@ -749,6 +781,12 @@ export default function ChatWidget() {
                 </div>
               )}
 
+              {leadError && (
+                <div className="rounded-2xl border border-red-400/20 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+                  {leadError}
+                </div>
+              )}
+
               {leadSuccess && (
                 <div className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-200">
                   {leadSuccess}
@@ -854,12 +892,6 @@ export default function ChatWidget() {
                   <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-white/55">
                     Request type: {leadForm.intent}
                   </div>
-
-                  {leadError && (
-                    <div className="rounded-xl border border-red-400/20 bg-red-500/10 px-3 py-2 text-sm text-red-200">
-                      {leadError}
-                    </div>
-                  )}
 
                   <div className="flex gap-2">
                     <button
