@@ -22,13 +22,12 @@ type RenderedMessage = {
   text: string;
 };
 
-const STORAGE_KEY = "orbitlink-chat-state-v2";
+const STORAGE_KEY = "orbitlink-chat-state-v3";
 
 const QUICK_ACTIONS: Array<{
   label: string;
   value: string;
   intent: LeadIntent;
-  openLeadForm?: boolean;
 }> = [
   {
     label: "Business Internet",
@@ -44,25 +43,21 @@ const QUICK_ACTIONS: Array<{
     label: "Technical Support",
     value: "Our business internet is not working properly.",
     intent: "technical",
-    openLeadForm: true,
   },
   {
     label: "Billing Question",
     value: "I have a billing question for a business account.",
     intent: "billing",
-    openLeadForm: true,
   },
   {
     label: "Get Pricing",
     value: "I want pricing for business internet.",
     intent: "sales",
-    openLeadForm: true,
   },
   {
     label: "Book Appointment",
     value: "I want to book a connectivity review.",
     intent: "appointment",
-    openLeadForm: true,
   },
 ];
 
@@ -83,22 +78,6 @@ function detectIntentFromText(text: string): LeadIntent {
   }
 
   if (
-    lower.includes("technical") ||
-    lower.includes("outage") ||
-    lower.includes("not working") ||
-    lower.includes("internet down") ||
-    lower.includes("slow") ||
-    lower.includes("speed") ||
-    lower.includes("wifi") ||
-    lower.includes("wi-fi") ||
-    lower.includes("reliability") ||
-    lower.includes("voice issue") ||
-    lower.includes("support")
-  ) {
-    return "technical";
-  }
-
-  if (
     lower.includes("appointment") ||
     lower.includes("book") ||
     lower.includes("schedule") ||
@@ -114,68 +93,48 @@ function detectIntentFromText(text: string): LeadIntent {
     lower.includes("quote") ||
     lower.includes("review") ||
     lower.includes("consultation") ||
-    lower.includes("internet") ||
-    lower.includes("dia") ||
-    lower.includes("backup") ||
     lower.includes("new setup") ||
-    lower.includes("fibre")
+    lower.includes("install") ||
+    lower.includes("upgrade") ||
+    lower.includes("fibre") ||
+    lower.includes("fiber") ||
+    lower.includes("dia") ||
+    lower.includes("dedicated internet") ||
+    lower.includes("backup internet") ||
+    lower.includes("business internet")
   ) {
+    return "sales";
+  }
+
+  if (
+    lower.includes("technical") ||
+    lower.includes("outage") ||
+    lower.includes("not working") ||
+    lower.includes("internet down") ||
+    lower.includes("slow") ||
+    lower.includes("speed") ||
+    lower.includes("wifi") ||
+    lower.includes("wi-fi") ||
+    lower.includes("reliability") ||
+    lower.includes("voice issue") ||
+    lower.includes("support") ||
+    lower.includes("disconnect") ||
+    lower.includes("dropping")
+  ) {
+    return "technical";
+  }
+
+  if (lower.includes("internet")) {
     return "sales";
   }
 
   return "general";
 }
 
-function shouldOpenLeadFormFromConversation(messages: RenderedMessage[]) {
+function shouldSuggestLeadForm(messages: RenderedMessage[]) {
   const fullConversation = messages.map((m) => safeLower(m.text)).join(" ");
 
-  const likelyBusiness =
-    fullConversation.includes("clinic") ||
-    fullConversation.includes("office") ||
-    fullConversation.includes("warehouse") ||
-    fullConversation.includes("business") ||
-    fullConversation.includes("firm") ||
-    fullConversation.includes("building") ||
-    fullConversation.includes("company") ||
-    fullConversation.includes("site") ||
-    fullConversation.includes("organization");
-
-  const hasLocation =
-    fullConversation.includes("mississauga") ||
-    fullConversation.includes("toronto") ||
-    fullConversation.includes("brampton") ||
-    fullConversation.includes("vaughan") ||
-    fullConversation.includes("markham") ||
-    fullConversation.includes("oakville") ||
-    fullConversation.includes("milton") ||
-    fullConversation.includes("ottawa") ||
-    fullConversation.includes("ontario");
-
-  const hasNeed =
-    fullConversation.includes("slow") ||
-    fullConversation.includes("speed") ||
-    fullConversation.includes("wifi") ||
-    fullConversation.includes("wi-fi") ||
-    fullConversation.includes("reliability") ||
-    fullConversation.includes("backup") ||
-    fullConversation.includes("upgrade") ||
-    fullConversation.includes("dia") ||
-    fullConversation.includes("internet") ||
-    fullConversation.includes("billing") ||
-    fullConversation.includes("invoice") ||
-    fullConversation.includes("outage") ||
-    fullConversation.includes("technical");
-
-  const hasTiming =
-    fullConversation.includes("now") ||
-    fullConversation.includes("future") ||
-    fullConversation.includes("planning") ||
-    fullConversation.includes("soon") ||
-    fullConversation.includes("this week") ||
-    fullConversation.includes("next week") ||
-    fullConversation.includes("urgent");
-
-  const strongIntent =
+  return (
     fullConversation.includes("pricing") ||
     fullConversation.includes("quote") ||
     fullConversation.includes("talk to someone") ||
@@ -185,11 +144,9 @@ function shouldOpenLeadFormFromConversation(messages: RenderedMessage[]) {
     fullConversation.includes("review") ||
     fullConversation.includes("consultation") ||
     fullConversation.includes("book a call") ||
-    fullConversation.includes("billing issue") ||
-    fullConversation.includes("technical issue") ||
-    fullConversation.includes("live agent");
-
-  return strongIntent || (likelyBusiness && hasLocation && hasNeed) || (likelyBusiness && hasNeed && hasTiming);
+    fullConversation.includes("live agent") ||
+    fullConversation.includes("someone reach out")
+  );
 }
 
 export default function ChatWidget() {
@@ -201,6 +158,7 @@ export default function ChatWidget() {
   const [leadError, setLeadError] = useState("");
   const [hydrated, setHydrated] = useState(false);
   const [detectedIntent, setDetectedIntent] = useState<LeadIntent>("general");
+  const [showLeadPrompt, setShowLeadPrompt] = useState(false);
 
   const [leadForm, setLeadForm] = useState<LeadFormState>({
     name: "",
@@ -248,6 +206,7 @@ export default function ChatWidget() {
       if (saved?.messages) setMessages(saved.messages);
       if (typeof saved?.open === "boolean") setOpen(saved.open);
       if (typeof saved?.showLeadForm === "boolean") setShowLeadForm(saved.showLeadForm);
+      if (typeof saved?.showLeadPrompt === "boolean") setShowLeadPrompt(saved.showLeadPrompt);
       if (saved?.leadForm) setLeadForm(saved.leadForm);
       if (saved?.detectedIntent) setDetectedIntent(saved.detectedIntent);
     } catch {
@@ -266,11 +225,12 @@ export default function ChatWidget() {
         messages,
         open,
         showLeadForm,
+        showLeadPrompt,
         leadForm,
         detectedIntent,
       }),
     );
-  }, [messages, open, showLeadForm, leadForm, detectedIntent, hydrated]);
+  }, [messages, open, showLeadForm, showLeadPrompt, leadForm, detectedIntent, hydrated]);
 
   useEffect(() => {
     if (renderedMessages.length === 0) return;
@@ -285,10 +245,10 @@ export default function ChatWidget() {
       intent: nextIntent,
     }));
 
-    if (shouldOpenLeadFormFromConversation(renderedMessages)) {
-      setShowLeadForm(true);
+    if (!showLeadForm && shouldSuggestLeadForm(renderedMessages)) {
+      setShowLeadPrompt(true);
     }
-  }, [renderedMessages]);
+  }, [renderedMessages, showLeadForm]);
 
   function updateLeadField<K extends keyof LeadFormState>(
     key: K,
@@ -300,12 +260,30 @@ export default function ChatWidget() {
     }));
   }
 
+  function openLeadFormPanel(intent?: LeadIntent) {
+    if (intent) {
+      setDetectedIntent(intent);
+      setLeadForm((prev) => ({
+        ...prev,
+        intent,
+      }));
+    }
+
+    setShowLeadPrompt(false);
+    setShowLeadForm(true);
+  }
+
+  function closeLeadFormPanel() {
+    setShowLeadForm(false);
+  }
+
   function resetChat() {
     localStorage.removeItem(STORAGE_KEY);
     setMessages([]);
     setLeadSuccess("");
     setLeadError("");
     setShowLeadForm(false);
+    setShowLeadPrompt(false);
     setDetectedIntent("general");
     setLeadForm({
       name: "",
@@ -326,10 +304,6 @@ export default function ChatWidget() {
       ...prev,
       intent: action.intent,
     }));
-
-    if (action.openLeadForm) {
-      setShowLeadForm(true);
-    }
 
     sendMessage({ text: action.value });
   }
@@ -370,7 +344,7 @@ export default function ChatWidget() {
     }));
 
     if (leadIntentPhrases.some((phrase) => lower.includes(phrase))) {
-      setShowLeadForm(true);
+      setShowLeadPrompt(true);
     }
 
     sendMessage({ text: value });
@@ -432,6 +406,7 @@ export default function ChatWidget() {
       );
       setLeadError("");
       setShowLeadForm(false);
+      setShowLeadPrompt(false);
       setLeadForm({
         name: "",
         email: "",
@@ -459,7 +434,7 @@ export default function ChatWidget() {
       </button>
 
       {open && (
-        <div className="fixed bottom-20 right-6 z-50 w-[390px] overflow-hidden rounded-[28px] border border-white/10 bg-black/90 shadow-2xl backdrop-blur-xl">
+        <div className="fixed bottom-20 right-6 z-50 w-[430px] overflow-hidden rounded-[28px] border border-white/10 bg-black/90 shadow-2xl backdrop-blur-xl">
           <div className="border-b border-white/10 p-4">
             <div className="flex items-start justify-between gap-3">
               <div>
@@ -484,167 +459,208 @@ export default function ChatWidget() {
             </div>
           </div>
 
-          <div className="h-[380px] space-y-3 overflow-y-auto p-4">
-            {renderedMessages.length === 0 && (
-              <div className="space-y-3">
-                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm leading-6 text-white/80">
-                  Tell me what you're trying to solve. I can help review internet,
-                  Wi-Fi, reliability, backup connectivity, billing, technical issues,
-                  or a new setup.
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-[1fr]">
+            <div className="h-[420px] space-y-3 overflow-y-auto p-4">
+              {renderedMessages.length === 0 && (
+                <div className="space-y-3">
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm leading-6 text-white/80">
+                    Tell me what you're trying to solve. I can help review internet,
+                    Wi-Fi, reliability, backup connectivity, billing, technical issues,
+                    or a new setup.
+                  </div>
 
-                <div className="grid grid-cols-2 gap-2">
-                  {QUICK_ACTIONS.map((action) => (
+                  <div className="grid grid-cols-2 gap-2">
+                    {QUICK_ACTIONS.map((action) => (
+                      <button
+                        key={action.label}
+                        onClick={() => handleQuickAction(action)}
+                        className="rounded-xl border border-white/10 px-3 py-2 text-xs text-white/80 transition hover:bg-white/10"
+                      >
+                        {action.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {renderedMessages.map((message) => (
+                <div
+                  key={message.id}
+                  className={
+                    message.role === "user"
+                      ? "ml-10 rounded-2xl bg-[#FACC15] px-3 py-2 text-sm text-black"
+                      : "mr-10 rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-white/75"
+                  }
+                >
+                  {message.text || (
+                    <span className="text-white/40">
+                      {message.role === "assistant" ? "Thinking..." : ""}
+                    </span>
+                  )}
+                </div>
+              ))}
+
+              {(status === "submitted" || status === "streaming") && (
+                <div className="mr-10 rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-white/50">
+                  Typing...
+                </div>
+              )}
+
+              {error && (
+                <div className="rounded-2xl border border-red-400/20 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+                  Chat is temporarily unavailable. You can still send a follow-up request below.
+                </div>
+              )}
+
+              {leadSuccess && (
+                <div className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-200">
+                  {leadSuccess}
+                </div>
+              )}
+
+              {showLeadPrompt && !showLeadForm && (
+                <div className="rounded-2xl border border-[#FACC15]/20 bg-[#FACC15]/[0.08] p-4">
+                  <div className="text-sm font-medium text-white">
+                    Ready to move this forward?
+                  </div>
+                  <div className="mt-1 text-xs leading-5 text-white/65">
+                    You can keep chatting, or open a quick Orbitlink follow-up request without leaving this page.
+                  </div>
+                  <div className="mt-3 flex gap-2">
                     <button
-                      key={action.label}
-                      onClick={() => handleQuickAction(action)}
-                      className="rounded-xl border border-white/10 px-3 py-2 text-xs text-white/80 transition hover:bg-white/10"
+                      type="button"
+                      onClick={() => openLeadFormPanel(detectedIntent)}
+                      className="rounded-xl bg-[#FACC15] px-4 py-2 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                     >
-                      {action.label}
+                      Open request
                     </button>
-                  ))}
+                    <button
+                      type="button"
+                      onClick={() => setShowLeadPrompt(false)}
+                      className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/70 transition hover:bg-white/10"
+                    >
+                      Keep chatting
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
-
-            {renderedMessages.map((message) => (
-              <div
-                key={message.id}
-                className={
-                  message.role === "user"
-                    ? "ml-10 rounded-2xl bg-[#FACC15] px-3 py-2 text-sm text-black"
-                    : "mr-10 rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-white/75"
-                }
-              >
-                {message.text || (
-                  <span className="text-white/40">
-                    {message.role === "assistant" ? "Thinking..." : ""}
-                  </span>
-                )}
-              </div>
-            ))}
-
-            {(status === "submitted" || status === "streaming") && (
-              <div className="mr-10 rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-white/50">
-                Typing...
-              </div>
-            )}
-
-            {error && (
-              <div className="rounded-2xl border border-red-400/20 bg-red-500/10 px-3 py-2 text-sm text-red-200">
-                Chat is temporarily unavailable. You can still send a follow-up request below.
-              </div>
-            )}
-
-            {leadSuccess && (
-              <div className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-200">
-                {leadSuccess}
-              </div>
-            )}
+              )}
+            </div>
 
             {showLeadForm && (
-              <form
-                onSubmit={submitLeadRequest}
-                className="space-y-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4"
-              >
-                <div className="text-sm font-medium text-white">
-                  Start a business connectivity review
-                </div>
+              <div className="border-t border-white/10 bg-black/40 p-4">
+                <form onSubmit={submitLeadRequest} className="space-y-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <div className="text-sm font-medium text-white">
+                        Start a business connectivity review
+                      </div>
+                      <div className="mt-1 text-xs text-white/50">
+                        We’ll review your location, requirements, and next steps.
+                      </div>
+                    </div>
 
-                <div className="text-xs text-white/50">
-                  We’ll review your location, requirements, and next steps.
-                </div>
-
-                <input
-                  value={leadForm.name}
-                  onChange={(e) => updateLeadField("name", e.target.value)}
-                  placeholder="Your name"
-                  className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm text-white outline-none placeholder:text-white/35"
-                  required
-                />
-
-                <input
-                  value={leadForm.email}
-                  onChange={(e) => updateLeadField("email", e.target.value)}
-                  placeholder="Work email"
-                  type="email"
-                  className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm text-white outline-none placeholder:text-white/35"
-                  required
-                />
-
-                <input
-                  value={leadForm.phone}
-                  onChange={(e) => updateLeadField("phone", e.target.value)}
-                  placeholder="Phone"
-                  className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm text-white outline-none placeholder:text-white/35"
-                />
-
-                <input
-                  value={leadForm.company}
-                  onChange={(e) => updateLeadField("company", e.target.value)}
-                  placeholder="Company / organization"
-                  className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm text-white outline-none placeholder:text-white/35"
-                />
-
-                <input
-                  value={leadForm.location}
-                  onChange={(e) => updateLeadField("location", e.target.value)}
-                  placeholder="City or service location"
-                  className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm text-white outline-none placeholder:text-white/35"
-                />
-
-                <textarea
-                  value={leadForm.notes}
-                  onChange={(e) => updateLeadField("notes", e.target.value)}
-                  placeholder="Anything important we should know?"
-                  rows={3}
-                  className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm text-white outline-none placeholder:text-white/35"
-                />
-
-                <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-white/55">
-                  Request type: {leadForm.intent}
-                </div>
-
-                {leadError && (
-                  <div className="rounded-xl border border-red-400/20 bg-red-500/10 px-3 py-2 text-sm text-red-200">
-                    {leadError}
+                    <button
+                      type="button"
+                      onClick={closeLeadFormPanel}
+                      className="text-xs text-white/45 transition hover:text-white/75"
+                    >
+                      Close
+                    </button>
                   </div>
-                )}
 
-                <div className="flex gap-2">
-                  <button
-                    type="submit"
-                    disabled={leadSubmitting}
-                    className="rounded-xl bg-[#FACC15] px-4 py-2 text-sm font-medium text-black transition hover:bg-[#FDE047] disabled:opacity-60"
-                  >
-                    {leadSubmitting ? "Submitting..." : "Send request"}
-                  </button>
+                  <input
+                    value={leadForm.name}
+                    onChange={(e) => updateLeadField("name", e.target.value)}
+                    placeholder="Your name"
+                    className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm text-white outline-none placeholder:text-white/35"
+                    required
+                  />
 
-                  <button
-                    type="button"
-                    onClick={() => setShowLeadForm(false)}
-                    className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/70 transition hover:bg-white/10"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
+                  <input
+                    value={leadForm.email}
+                    onChange={(e) => updateLeadField("email", e.target.value)}
+                    placeholder="Work email"
+                    type="email"
+                    className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm text-white outline-none placeholder:text-white/35"
+                    required
+                  />
+
+                  <input
+                    value={leadForm.phone}
+                    onChange={(e) => updateLeadField("phone", e.target.value)}
+                    placeholder="Phone"
+                    className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm text-white outline-none placeholder:text-white/35"
+                  />
+
+                  <input
+                    value={leadForm.company}
+                    onChange={(e) => updateLeadField("company", e.target.value)}
+                    placeholder="Company / organization"
+                    className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm text-white outline-none placeholder:text-white/35"
+                  />
+
+                  <input
+                    value={leadForm.location}
+                    onChange={(e) => updateLeadField("location", e.target.value)}
+                    placeholder="City or service location"
+                    className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm text-white outline-none placeholder:text-white/35"
+                  />
+
+                  <textarea
+                    value={leadForm.notes}
+                    onChange={(e) => updateLeadField("notes", e.target.value)}
+                    placeholder="Anything important we should know?"
+                    rows={3}
+                    className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm text-white outline-none placeholder:text-white/35"
+                  />
+
+                  <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-white/55">
+                    Request type: {leadForm.intent}
+                  </div>
+
+                  {leadError && (
+                    <div className="rounded-xl border border-red-400/20 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+                      {leadError}
+                    </div>
+                  )}
+
+                  <div className="flex gap-2">
+                    <button
+                      type="submit"
+                      disabled={leadSubmitting}
+                      className="rounded-xl bg-[#FACC15] px-4 py-2 text-sm font-medium text-black transition hover:bg-[#FDE047] disabled:opacity-60"
+                    >
+                      {leadSubmitting ? "Submitting..." : "Send request"}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={closeLeadFormPanel}
+                      className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/70 transition hover:bg-white/10"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
             )}
           </div>
 
-          <div className="border-t border-white/10 p-3">
-            <button
-              type="button"
-              onClick={() => setShowLeadForm(true)}
-              className="block w-full rounded-xl bg-[#FACC15] px-3 py-2 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
-            >
-              Start Business Review
-            </button>
+          {!showLeadForm && (
+            <div className="border-t border-white/10 p-3">
+              <button
+                type="button"
+                onClick={() => openLeadFormPanel(detectedIntent)}
+                className="block w-full rounded-xl bg-[#FACC15] px-3 py-2 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
+              >
+                Start Business Review
+              </button>
 
-            <div className="mt-2 text-center text-xs text-white/50">
-              Or speak directly with Orbitlink • 1-888-867-2480
+              <div className="mt-2 text-center text-xs text-white/50">
+                Or speak directly with Orbitlink • 1-888-867-2480
+              </div>
             </div>
-          </div>
+          )}
 
           <form onSubmit={onSubmit} className="flex gap-2 border-t border-white/10 p-3">
             <input
