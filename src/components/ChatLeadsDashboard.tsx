@@ -149,6 +149,7 @@ function formatDate(value?: string) {
     return new Intl.DateTimeFormat("en-CA", {
       dateStyle: "medium",
       timeStyle: "short",
+      timeZone: "America/Toronto",
     }).format(parsed);
   } catch {
     return "—";
@@ -216,10 +217,6 @@ export default function ChatLeadsDashboard({
     setLeads(initialLeads);
     setActiveId((current) => current ?? initialLeads[0]?.id ?? null);
   }, [initialLeads]);
-
-  /* -----------------------------
-     REALTIME SYNC (SAFE)
-  ----------------------------- */
 
   useEffect(() => {
     let isMounted = true;
@@ -292,10 +289,6 @@ export default function ChatLeadsDashboard({
     };
   }, []);
 
-  /* -----------------------------
-     DERIVED
-  ----------------------------- */
-
   const sortedLeads = useMemo(() => {
     return [...leads].sort(
       (a, b) => getSafeTime(b.createdAt) - getSafeTime(a.createdAt),
@@ -321,10 +314,6 @@ export default function ChatLeadsDashboard({
       setActiveId(sortedLeads[0].id);
     }
   }, [sortedLeads, activeId]);
-
-  /* -----------------------------
-     UI
-  ----------------------------- */
 
   if (!sortedLeads.length) {
     return (

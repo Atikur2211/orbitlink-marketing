@@ -1,7 +1,6 @@
 import PageShell from "@/components/PageShell";
-import ChatLeadsDashboard, {
-  type ChatLeadRecord,
-} from "@/components/ChatLeadsDashboard";
+import ChatLeadsDashboardClient from "@/components/ChatLeadsDashboardClient";
+import type { ChatLeadRecord } from "@/components/ChatLeadsDashboard";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
 async function getChatLeads(): Promise<ChatLeadRecord[]> {
@@ -35,10 +34,7 @@ async function getChatLeads(): Promise<ChatLeadRecord[]> {
     followUpDate: row.follow_up_date || "",
     internalNotes: row.internal_notes || "",
     archived: Boolean(row.archived),
-
-    // upgraded CRM fields
     department: row.department || "general",
-    assignedTo: row.assigned_to || "",
     priority: row.priority || "normal",
   }));
 }
@@ -137,7 +133,7 @@ export default async function ChatLeadsPage() {
           </div>
         </div>
 
-        <ChatLeadsDashboard initialLeads={leads} />
+        <ChatLeadsDashboardClient initialLeads={leads} />
       </section>
     </PageShell>
   );
