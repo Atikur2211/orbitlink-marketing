@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 
@@ -22,7 +22,16 @@ type RenderedMessage = {
   text: string;
 };
 
-const STORAGE_KEY = "orbitlink-chat-state-v3";
+type StoredChatState = {
+  messages?: unknown;
+  open?: boolean;
+  showLeadForm?: boolean;
+  showLeadPrompt?: boolean;
+  leadForm?: Partial<LeadFormState>;
+  detectedIntent?: LeadIntent;
+};
+
+const STORAGE_KEY = "orbitlink-chat-state-v4";
 
 const QUICK_ACTIONS: Array<{
   label: string;
@@ -65,6 +74,28 @@ function safeLower(value: string) {
   return value.toLowerCase();
 }
 
+function isLeadIntent(value: unknown): value is LeadIntent {
+  return (
+    value === "sales" ||
+    value === "billing" ||
+    value === "technical" ||
+    value === "appointment" ||
+    value === "general"
+  );
+}
+
+function getEmptyLeadForm(intent: LeadIntent = "general"): LeadFormState {
+  return {
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    location: "",
+    notes: "",
+    intent,
+  };
+}
+
 function detectIntentFromText(text: string): LeadIntent {
   const lower = safeLower(text);
 
@@ -88,6 +119,7 @@ function detectIntentFromText(text: string): LeadIntent {
     return "appointment";
   }
 
+  // sales before technical, but more precise
   if (
     lower.includes("pricing") ||
     lower.includes("quote") ||
@@ -132,9 +164,12 @@ function detectIntentFromText(text: string): LeadIntent {
 }
 
 function shouldSuggestLeadForm(messages: RenderedMessage[]) {
+  const userMessages = messages.filter((m) => m.role === "user");
+  if (userMessages.length < 2) return false;
+
   const fullConversation = messages.map((m) => safeLower(m.text)).join(" ");
 
-  return (
+  const explicitFollowUpIntent =
     fullConversation.includes("pricing") ||
     fullConversation.includes("quote") ||
     fullConversation.includes("talk to someone") ||
@@ -145,8 +180,51 @@ function shouldSuggestLeadForm(messages: RenderedMessage[]) {
     fullConversation.includes("consultation") ||
     fullConversation.includes("book a call") ||
     fullConversation.includes("live agent") ||
-    fullConversation.includes("someone reach out")
-  );
+    fullConversation.includes("someone reach out");
+
+  const likelyQualifiedBusinessLead =
+    (fullConversation.includes("clinic") ||
+      fullConversation.includes("office") ||
+      fullConversation.includes("warehouse") ||
+      fullConversation.includes("business") ||
+      fullConversation.includes("retail") ||
+      fullConversation.includes("firm") ||
+      fullConversation.includes("company")) &&
+    (fullConversation.includes("mississauga") ||
+      fullConversation.includes("toronto") ||
+      fullConversation.includes("brampton") ||
+      fullConversation.includes("vaughan") ||
+      fullConversation.includes("markham") ||
+      fullConversation.includes("oakville") ||
+      fullConversation.includes("milton") ||
+      fullConversation.includes("ontario")) &&
+    (fullConversation.includes("new setup") ||
+      fullConversation.includes("upgrade") ||
+      fullConversation.includes("pricing") ||
+      fullConversation.includes("quote") ||
+      fullConversation.includes("business internet") ||
+      fullConversation.includes("dia") ||
+      fullConversation.includes("backup internet"));
+
+  return explicitFollowUpIntent || likelyQualifiedBusinessLead;
+}
+
+function normalizeStoredLeadForm(value: unknown, fallbackIntent: LeadIntent) {
+  if (!value || typeof value !== "object") {
+    return getEmptyLeadForm(fallbackIntent);
+  }
+
+  const obj = value as Partial<LeadFormState>;
+
+  return {
+    name: typeof obj.name === "string" ? obj.name : "",
+    email: typeof obj.email === "string" ? obj.email : "",
+    phone: typeof obj.phone === "string" ? obj.phone : "",
+    company: typeof obj.company === "string" ? obj.company : "",
+    location: typeof obj.location === "string" ? obj.location : "",
+    notes: typeof obj.notes === "string" ? obj.notes : "",
+    intent: isLeadIntent(obj.intent) ? obj.intent : fallbackIntent,
+  };
 }
 
 export default function ChatWidget() {
@@ -160,15 +238,9 @@ export default function ChatWidget() {
   const [detectedIntent, setDetectedIntent] = useState<LeadIntent>("general");
   const [showLeadPrompt, setShowLeadPrompt] = useState(false);
 
-  const [leadForm, setLeadForm] = useState<LeadFormState>({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-    location: "",
-    notes: "",
-    intent: "general",
-  });
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  const [leadForm, setLeadForm] = useState<LeadFormState>(getEmptyLeadForm());
 
   const { messages, sendMessage, status, error, setMessages } = useChat({
     transport: new DefaultChatTransport({
@@ -193,6 +265,13 @@ export default function ChatWidget() {
   }, [messages]);
 
   useEffect(() => {
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [renderedMessages, status, showLeadPrompt, showLeadForm, leadSuccess, leadError]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
 
@@ -201,14 +280,30 @@ export default function ChatWidget() {
         return;
       }
 
-      const saved = JSON.parse(raw);
+      const saved = JSON.parse(raw) as StoredChatState;
+      const nextIntent = isLeadIntent(saved?.detectedIntent)
+        ? saved.detectedIntent
+        : "general";
 
-      if (saved?.messages) setMessages(saved.messages);
-      if (typeof saved?.open === "boolean") setOpen(saved.open);
-      if (typeof saved?.showLeadForm === "boolean") setShowLeadForm(saved.showLeadForm);
-      if (typeof saved?.showLeadPrompt === "boolean") setShowLeadPrompt(saved.showLeadPrompt);
-      if (saved?.leadForm) setLeadForm(saved.leadForm);
-      if (saved?.detectedIntent) setDetectedIntent(saved.detectedIntent);
+      if (saved?.messages) {
+        setMessages(saved.messages as never);
+      }
+
+      if (typeof saved?.open === "boolean") {
+        setOpen(saved.open);
+      }
+
+      // safer restore: do not force restore overlays aggressively
+      if (typeof saved?.showLeadForm === "boolean") {
+        setShowLeadForm(false);
+      }
+
+      if (typeof saved?.showLeadPrompt === "boolean") {
+        setShowLeadPrompt(false);
+      }
+
+      setDetectedIntent(nextIntent);
+      setLeadForm(normalizeStoredLeadForm(saved?.leadForm, nextIntent));
     } catch {
       // ignore restore errors
     } finally {
@@ -217,19 +312,18 @@ export default function ChatWidget() {
   }, [setMessages]);
 
   useEffect(() => {
-    if (!hydrated) return;
+    if (!hydrated || typeof window === "undefined") return;
 
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({
-        messages,
-        open,
-        showLeadForm,
-        showLeadPrompt,
-        leadForm,
-        detectedIntent,
-      }),
-    );
+    const stateToStore: StoredChatState = {
+      messages,
+      open,
+      showLeadForm,
+      showLeadPrompt,
+      leadForm,
+      detectedIntent,
+    };
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToStore));
   }, [messages, open, showLeadForm, showLeadPrompt, leadForm, detectedIntent, hydrated]);
 
   useEffect(() => {
@@ -245,10 +339,10 @@ export default function ChatWidget() {
       intent: nextIntent,
     }));
 
-    if (!showLeadForm && shouldSuggestLeadForm(renderedMessages)) {
+    if (!showLeadForm && !showLeadPrompt && shouldSuggestLeadForm(renderedMessages)) {
       setShowLeadPrompt(true);
     }
-  }, [renderedMessages, showLeadForm]);
+  }, [renderedMessages, showLeadForm, showLeadPrompt]);
 
   function updateLeadField<K extends keyof LeadFormState>(
     key: K,
@@ -261,50 +355,48 @@ export default function ChatWidget() {
   }
 
   function openLeadFormPanel(intent?: LeadIntent) {
-    if (intent) {
-      setDetectedIntent(intent);
-      setLeadForm((prev) => ({
-        ...prev,
-        intent,
-      }));
-    }
+    const nextIntent = intent ?? detectedIntent;
 
+    setDetectedIntent(nextIntent);
+    setLeadForm((prev) => ({
+      ...prev,
+      intent: nextIntent,
+    }));
+    setLeadError("");
+    setLeadSuccess("");
     setShowLeadPrompt(false);
     setShowLeadForm(true);
   }
 
   function closeLeadFormPanel() {
     setShowLeadForm(false);
+    setLeadError("");
   }
 
   function resetChat() {
-    localStorage.removeItem(STORAGE_KEY);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
     setMessages([]);
     setLeadSuccess("");
     setLeadError("");
     setShowLeadForm(false);
     setShowLeadPrompt(false);
     setDetectedIntent("general");
-    setLeadForm({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-      location: "",
-      notes: "",
-      intent: "general",
-    });
+    setLeadForm(getEmptyLeadForm());
+    setInput("");
   }
 
   function handleQuickAction(action: (typeof QUICK_ACTIONS)[number]) {
     setOpen(true);
     setDetectedIntent(action.intent);
-
     setLeadForm((prev) => ({
       ...prev,
       intent: action.intent,
     }));
-
+    setLeadSuccess("");
+    setLeadError("");
     sendMessage({ text: action.value });
   }
 
@@ -347,6 +439,8 @@ export default function ChatWidget() {
       setShowLeadPrompt(true);
     }
 
+    setLeadSuccess("");
+    setLeadError("");
     sendMessage({ text: value });
     setInput("");
   }
@@ -374,7 +468,9 @@ export default function ChatWidget() {
                 text: [
                   leadForm.company ? `Company: ${leadForm.company}` : "",
                   leadForm.location ? `Location: ${leadForm.location}` : "",
-                  leadForm.notes ? `Request: ${leadForm.notes}` : "Requested Orbitlink follow-up",
+                  leadForm.notes
+                    ? `Request: ${leadForm.notes}`
+                    : "Requested Orbitlink follow-up",
                 ]
                   .filter(Boolean)
                   .join(" | "),
@@ -407,15 +503,7 @@ export default function ChatWidget() {
       setLeadError("");
       setShowLeadForm(false);
       setShowLeadPrompt(false);
-      setLeadForm({
-        name: "",
-        email: "",
-        phone: "",
-        company: "",
-        location: "",
-        notes: "",
-        intent: detectedIntent,
-      });
+      setLeadForm(getEmptyLeadForm(detectedIntent));
     } catch (err) {
       setLeadError(err instanceof Error ? err.message : "Failed to submit request.");
     } finally {
@@ -426,6 +514,7 @@ export default function ChatWidget() {
   return (
     <>
       <button
+        type="button"
         onClick={() => setOpen((v) => !v)}
         className="fixed bottom-6 right-6 z-50 rounded-full bg-[#FACC15] px-5 py-3 text-sm font-medium text-black shadow-[0_20px_60px_rgba(250,204,21,0.22)] transition hover:bg-[#FDE047]"
         aria-label="Open Orbitlink chat"
@@ -434,7 +523,7 @@ export default function ChatWidget() {
       </button>
 
       {open && (
-        <div className="fixed bottom-20 right-6 z-50 w-[430px] overflow-hidden rounded-[28px] border border-white/10 bg-black/90 shadow-2xl backdrop-blur-xl">
+        <div className="fixed bottom-20 right-6 z-50 w-[430px] overflow-hidden rounded-[28px] border border-white/10 bg-black/90 shadow-2xl backdrop-blur-xl max-sm:left-4 max-sm:right-4 max-sm:bottom-24 max-sm:w-auto">
           <div className="border-b border-white/10 p-4">
             <div className="flex items-start justify-between gap-3">
               <div>
@@ -459,8 +548,11 @@ export default function ChatWidget() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-[1fr]">
-            <div className="h-[420px] space-y-3 overflow-y-auto p-4">
+          <div className="grid grid-cols-1">
+            <div
+              ref={scrollRef}
+              className="h-[420px] space-y-3 overflow-y-auto p-4"
+            >
               {renderedMessages.length === 0 && (
                 <div className="space-y-3">
                   <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm leading-6 text-white/80">
@@ -473,6 +565,7 @@ export default function ChatWidget() {
                     {QUICK_ACTIONS.map((action) => (
                       <button
                         key={action.label}
+                        type="button"
                         onClick={() => handleQuickAction(action)}
                         className="rounded-xl border border-white/10 px-3 py-2 text-xs text-white/80 transition hover:bg-white/10"
                       >
