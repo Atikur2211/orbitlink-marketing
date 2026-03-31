@@ -295,31 +295,48 @@ export async function POST(req: Request) {
       is_draft: false,
     };
 
-    let leadId = draftLeadId;
+    let leadId: string | null = null;
+
+    /* -----------------------------
+       TRY UPDATE EXISTING DRAFT
+    ----------------------------- */
 
     if (draftLeadId) {
+      console.log("Attempting to finalize draft:", draftLeadId);
+
       const { data, error } = await supabaseAdmin
         .from("chat_leads")
         .update(leadData)
         .eq("id", draftLeadId)
+        .eq("is_draft", true)
         .select("id")
-        .single();
+        .maybeSingle();
 
       if (error) {
-        return NextResponse.json(
-          { ok: false, error: error.message || "Lead finalize failed." },
-          { status: 500 }
-        );
+        console.error("DRAFT UPDATE ERROR:", error);
       }
 
-      leadId = data.id;
-    } else {
+      if (data?.id) {
+        leadId = data.id;
+        console.log("Draft successfully finalized:", leadId);
+      } else {
+        console.warn("Draft not found or already finalized, fallback to insert");
+      }
+    }
+
+    /* -----------------------------
+       FALLBACK → CREATE NEW LEAD
+    ----------------------------- */
+
+    if (!leadId) {
+      console.log("Creating new lead (no valid draft)");
+
       const { data, error } = await supabaseAdmin
         .from("chat_leads")
         .insert([
           {
             id: crypto.randomUUID(),
-            created_at: now,
+            created_at: new Date().toISOString(),
             ...leadData,
           },
         ])
@@ -327,7 +344,7 @@ export async function POST(req: Request) {
         .single();
 
       if (error) {
-        console.error("CHAT LEADS DB ERROR:", error);
+        console.error("CHAT LEADS INSERT ERROR:", error);
 
         return NextResponse.json(
           { ok: false, error: error.message || "Database insert failed." },
