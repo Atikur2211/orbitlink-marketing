@@ -681,7 +681,7 @@ export default function Home() {
                 It is a structured commercial review designed for serious buyers.
               </p>
               <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-                Operated by TIRAV Technologies Inc. • CRTC-registered telecommunications reseller •
+                Operated by TIRAV Technologies Inc. • CRTC-registered telecommunications provider •
                 Ontario commercial review posture
               </p>
             </div>

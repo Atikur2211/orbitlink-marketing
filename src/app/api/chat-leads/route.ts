@@ -1,10 +1,21 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
+/* -----------------------------
+   TYPES
+----------------------------- */
+
 type ChatLeadMessage = {
   role: "user" | "assistant";
   text: string;
 };
+
+type ChatLeadIntent =
+  | "sales"
+  | "billing"
+  | "technical"
+  | "appointment"
+  | "general";
 
 type ChatLeadPayload = {
   name: string;
@@ -12,12 +23,15 @@ type ChatLeadPayload = {
   phone?: string;
   company?: string;
   location?: string;
-  intent: "live-agent";
-  source: "chat";
+  intent?: ChatLeadIntent;
   page?: string;
   notes?: string;
   messages: ChatLeadMessage[];
 };
+
+/* -----------------------------
+   HELPERS
+----------------------------- */
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -35,27 +49,67 @@ function normalizeMessages(messages: unknown): ChatLeadMessage[] {
       if (!m || typeof m !== "object") return null;
 
       const role =
-        (m as { role?: unknown }).role === "assistant" ? "assistant" : "user";
+        (m as { role?: unknown }).role === "assistant"
+          ? "assistant"
+          : "user";
+
       const text = safeString((m as { text?: unknown }).text);
 
       if (!text) return null;
 
-      return { role, text } as ChatLeadMessage;
+      return { role, text };
     })
     .filter((m): m is ChatLeadMessage => Boolean(m));
 }
 
-async function sendEmailNotification(
-  lead: {
-    name: string;
-    email: string;
-    phone: string;
-    company: string;
-    location: string;
-    notes: string;
-    messages: ChatLeadMessage[];
+/* -----------------------------
+   ROUTING LOGIC (Tier-1)
+----------------------------- */
+
+function resolveDepartment(intent?: ChatLeadIntent) {
+  switch (intent) {
+    case "billing":
+      return "billing";
+    case "technical":
+      return "technical";
+    case "appointment":
+      return "appointments";
+    case "sales":
+      return "sales";
+    default:
+      return "general";
   }
-) {
+}
+
+function resolvePriority(intent?: ChatLeadIntent) {
+  switch (intent) {
+    case "technical":
+      return "high";
+    case "billing":
+      return "normal";
+    case "appointment":
+      return "normal";
+    case "sales":
+      return "high";
+    default:
+      return "normal";
+  }
+}
+
+/* -----------------------------
+   EMAIL (RESEND)
+----------------------------- */
+
+async function sendEmailNotification(lead: {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  location: string;
+  notes: string;
+  messages: ChatLeadMessage[];
+  intent?: string;
+}) {
   const resendKey = process.env.RESEND_API_KEY;
   const intakeTo = process.env.INTAKE_TO_EMAIL;
   const fromEmail = process.env.INTAKE_FROM_EMAIL;
@@ -68,14 +122,17 @@ async function sendEmailNotification(
     .map((m) => `${m.role.toUpperCase()}: ${m.text}`)
     .join("\n\n");
 
+  const subject = `Orbitlink ${lead.intent || "general"} request • ${lead.name}`;
+
   const body = [
-    "New Orbitlink commercial review request from chat",
+    "New Orbitlink request (Chat Intake)",
     "",
     `Name: ${lead.name}`,
     `Email: ${lead.email}`,
     `Phone: ${lead.phone || ""}`,
     `Company: ${lead.company || ""}`,
     `Location: ${lead.location || ""}`,
+    `Intent: ${lead.intent || "general"}`,
     "",
     "Notes:",
     lead.notes || "",
@@ -93,23 +150,25 @@ async function sendEmailNotification(
     body: JSON.stringify({
       from: fromEmail,
       to: [intakeTo],
-      subject: `New Orbitlink chat lead: ${lead.name}`,
+      subject,
       text: body,
     }),
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Resend error: ${errorText}`);
+    throw new Error(await response.text());
   }
 
   return { sent: true as const };
 }
 
+/* -----------------------------
+   MAIN ROUTE
+----------------------------- */
+
 export async function POST(req: Request) {
   try {
     const supabaseAdmin = getSupabaseAdmin();
-
     const payload = (await req.json()) as ChatLeadPayload;
 
     const name = safeString(payload.name);
@@ -119,7 +178,13 @@ export async function POST(req: Request) {
     const location = safeString(payload.location);
     const page = safeString(payload.page);
     const notes = safeString(payload.notes);
+    const intent = payload.intent || "general";
+
     const messages = normalizeMessages(payload.messages);
+
+    /* -----------------------------
+       VALIDATION
+    ----------------------------- */
 
     if (!name) {
       return NextResponse.json(
@@ -142,6 +207,10 @@ export async function POST(req: Request) {
       );
     }
 
+    /* -----------------------------
+       BUILD LEAD (Tier-1 CRM)
+    ----------------------------- */
+
     const now = new Date().toISOString();
 
     const lead = {
@@ -158,11 +227,21 @@ export async function POST(req: Request) {
       page,
       notes,
       messages,
+
+      /* CRM */
       status: "new",
+      department: resolveDepartment(intent),
+      priority: resolvePriority(intent),
+      assigned_to: null,
+
       follow_up_date: null,
       internal_notes: "",
       archived: false,
     };
+
+    /* -----------------------------
+       DATABASE INSERT
+    ----------------------------- */
 
     const { error: dbError } = await supabaseAdmin
       .from("chat_leads")
@@ -170,16 +249,18 @@ export async function POST(req: Request) {
 
     if (dbError) {
       console.error("DB ERROR:", dbError);
+
       return NextResponse.json(
         { ok: false, error: dbError.message || "Database insert failed." },
         { status: 500 }
       );
     }
 
-    let emailStatus:
-      | { sent: true }
-      | { sent: false; reason: "missing_email_env" }
-      | { sent: false; reason: "send_failed" };
+    /* -----------------------------
+       EMAIL NOTIFICATION
+    ----------------------------- */
+
+    let emailStatus;
 
     try {
       emailStatus = await sendEmailNotification({
@@ -190,18 +271,29 @@ export async function POST(req: Request) {
         location,
         notes,
         messages,
+        intent,
       });
     } catch {
       emailStatus = { sent: false, reason: "send_failed" };
     }
 
+    /* -----------------------------
+       RESPONSE
+    ----------------------------- */
+
     return NextResponse.json({
       ok: true,
       leadId: lead.id,
       emailStatus,
+      routing: {
+        department: lead.department,
+        priority: lead.priority,
+      },
       storageMode: "supabase",
     });
   } catch (error) {
+    console.error("CHAT LEAD ROUTE ERROR:", error);
+
     return NextResponse.json(
       {
         ok: false,
