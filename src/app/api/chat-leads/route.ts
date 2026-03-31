@@ -45,26 +45,22 @@ function normalizeMessages(messages: unknown): ChatLeadMessage[] {
   if (!Array.isArray(messages)) return [];
 
   return messages
-    .map((m) => {
-      if (!m || typeof m !== "object") return null;
+    .map((item) => {
+      if (!item || typeof item !== "object") return null;
 
       const role =
-        (m as { role?: unknown }).role === "assistant"
+        (item as { role?: unknown }).role === "assistant"
           ? "assistant"
           : "user";
 
-      const text = safeString((m as { text?: unknown }).text);
+      const text = safeString((item as { text?: unknown }).text);
 
       if (!text) return null;
 
       return { role, text };
     })
-    .filter((m): m is ChatLeadMessage => Boolean(m));
+    .filter((item): item is ChatLeadMessage => Boolean(item));
 }
-
-/* -----------------------------
-   ROUTING LOGIC (Tier-1)
------------------------------ */
 
 function resolveDepartment(intent?: ChatLeadIntent) {
   switch (intent) {
@@ -85,19 +81,17 @@ function resolvePriority(intent?: ChatLeadIntent) {
   switch (intent) {
     case "technical":
       return "high";
-    case "billing":
-      return "normal";
-    case "appointment":
-      return "normal";
     case "sales":
       return "high";
+    case "billing":
+    case "appointment":
     default:
       return "normal";
   }
 }
 
 /* -----------------------------
-   EMAIL (RESEND)
+   EMAIL (OPTIONAL)
 ----------------------------- */
 
 async function sendEmailNotification(lead: {
@@ -179,12 +173,7 @@ export async function POST(req: Request) {
     const page = safeString(payload.page);
     const notes = safeString(payload.notes);
     const intent = payload.intent || "general";
-
     const messages = normalizeMessages(payload.messages);
-
-    /* -----------------------------
-       VALIDATION
-    ----------------------------- */
 
     if (!name) {
       return NextResponse.json(
@@ -207,10 +196,6 @@ export async function POST(req: Request) {
       );
     }
 
-    /* -----------------------------
-       BUILD LEAD (Tier-1 CRM)
-    ----------------------------- */
-
     const now = new Date().toISOString();
 
     const lead = {
@@ -227,28 +212,20 @@ export async function POST(req: Request) {
       page,
       notes,
       messages,
-
-      /* CRM */
       status: "new",
       department: resolveDepartment(intent),
       priority: resolvePriority(intent),
-      assigned_to: null,
-
       follow_up_date: null,
       internal_notes: "",
       archived: false,
     };
-
-    /* -----------------------------
-       DATABASE INSERT
-    ----------------------------- */
 
     const { error: dbError } = await supabaseAdmin
       .from("chat_leads")
       .insert([lead]);
 
     if (dbError) {
-      console.error("DB ERROR:", dbError);
+      console.error("CHAT LEADS DB ERROR:", dbError);
 
       return NextResponse.json(
         { ok: false, error: dbError.message || "Database insert failed." },
@@ -256,11 +233,9 @@ export async function POST(req: Request) {
       );
     }
 
-    /* -----------------------------
-       EMAIL NOTIFICATION
-    ----------------------------- */
-
-    let emailStatus;
+    let emailStatus:
+      | { sent: true }
+      | { sent: false; reason: "missing_email_env" | "send_failed" };
 
     try {
       emailStatus = await sendEmailNotification({
@@ -277,10 +252,6 @@ export async function POST(req: Request) {
       emailStatus = { sent: false, reason: "send_failed" };
     }
 
-    /* -----------------------------
-       RESPONSE
-    ----------------------------- */
-
     return NextResponse.json({
       ok: true,
       leadId: lead.id,
@@ -292,7 +263,7 @@ export async function POST(req: Request) {
       storageMode: "supabase",
     });
   } catch (error) {
-    console.error("CHAT LEAD ROUTE ERROR:", error);
+    console.error("CHAT LEADS ROUTE ERROR:", error);
 
     return NextResponse.json(
       {
