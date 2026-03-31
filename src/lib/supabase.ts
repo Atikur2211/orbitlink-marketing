@@ -13,17 +13,7 @@ function requireEnv(name: string): string {
 }
 
 /* -----------------------------
-   ENV VALUES (STRICT)
------------------------------ */
-
-const SUPABASE_URL = requireEnv("SUPABASE_URL");
-const SUPABASE_SERVICE_ROLE_KEY = requireEnv("SUPABASE_SERVICE_ROLE_KEY");
-
-const PUBLIC_SUPABASE_URL = requireEnv("NEXT_PUBLIC_SUPABASE_URL");
-const PUBLIC_SUPABASE_ANON_KEY = requireEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
-
-/* -----------------------------
-   SINGLETONS (IMPORTANT)
+   SINGLETONS
 ----------------------------- */
 
 let adminClient: SupabaseClient | null = null;
@@ -39,7 +29,10 @@ export function getSupabaseAdmin(): SupabaseClient {
   }
 
   if (!adminClient) {
-    adminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+    const supabaseUrl = requireEnv("SUPABASE_URL");
+    const serviceRoleKey = requireEnv("SUPABASE_SERVICE_ROLE_KEY");
+
+    adminClient = createClient(supabaseUrl, serviceRoleKey, {
       auth: {
         persistSession: false,
         autoRefreshToken: false,
@@ -60,10 +53,17 @@ export function getSupabaseAdmin(): SupabaseClient {
 ----------------------------- */
 
 export function getSupabaseBrowserClient(): SupabaseClient {
+  if (typeof window === "undefined") {
+    throw new Error("getSupabaseBrowserClient() must only be used in the browser.");
+  }
+
   if (!browserClient) {
+    const publicSupabaseUrl = requireEnv("NEXT_PUBLIC_SUPABASE_URL");
+    const publicSupabaseAnonKey = requireEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
+
     browserClient = createClient(
-      PUBLIC_SUPABASE_URL,
-      PUBLIC_SUPABASE_ANON_KEY,
+      publicSupabaseUrl,
+      publicSupabaseAnonKey,
       {
         auth: {
           persistSession: true,

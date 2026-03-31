@@ -92,9 +92,11 @@ function normalizeMessages(value: unknown): ChatLeadMessage[] {
 
       const role =
         (item as { role?: unknown }).role === "assistant" ? "assistant" : "user";
-      const text = typeof (item as { text?: unknown }).text === "string"
-        ? (item as { text?: string }).text!.trim()
-        : "";
+
+      const text =
+        typeof (item as { text?: unknown }).text === "string"
+          ? (item as { text?: string }).text!.trim()
+          : "";
 
       if (!text) return null;
 
@@ -130,6 +132,11 @@ function mapRowToLead(row: Record<string, unknown>): ChatLeadRecord | null {
     department: isValidDepartment(row.department) ? row.department : "general",
     priority: isValidPriority(row.priority) ? row.priority : "normal",
   };
+}
+
+function getSafeTime(value?: string) {
+  const parsed = new Date(value || "").getTime();
+  return Number.isFinite(parsed) ? parsed : 0;
 }
 
 function formatDate(value?: string) {
@@ -215,80 +222,74 @@ export default function ChatLeadsDashboard({
   ----------------------------- */
 
   useEffect(() => {
-    let channel:
-      | ReturnType<ReturnType<typeof getSupabaseBrowserClient>["channel"]>
-      | null = null;
+    let isMounted = true;
+    const supabase = getSupabaseBrowserClient();
 
-    try {
-      const supabase = getSupabaseBrowserClient();
+    const channel = supabase
+      .channel("chat-leads-live")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "chat_leads" },
+        (payload) => {
+          if (!isMounted) return;
 
-      channel = supabase
-        .channel("chat-leads-live")
-        .on(
-          "postgres_changes",
-          { event: "*", schema: "public", table: "chat_leads" },
-          (payload) => {
-            try {
-              if (payload.eventType === "DELETE") {
-                const oldRow =
-                  payload.old && typeof payload.old === "object"
-                    ? (payload.old as Record<string, unknown>)
-                    : null;
+          try {
+            if (!payload || (!payload.new && !payload.old)) return;
 
-                const deletedId =
-                  oldRow && typeof oldRow.id === "string" ? oldRow.id : "";
-
-                if (!deletedId) return;
-
-                setLeads((prev) => prev.filter((lead) => lead.id !== deletedId));
-                setActiveId((prev) => (prev === deletedId ? null : prev));
-                return;
-              }
-
-              const newRow =
-                payload.new && typeof payload.new === "object"
-                  ? (payload.new as Record<string, unknown>)
+            if (payload.eventType === "DELETE") {
+              const oldRow =
+                payload.old && typeof payload.old === "object"
+                  ? (payload.old as Record<string, unknown>)
                   : null;
 
-              if (!newRow) return;
+              const deletedId =
+                oldRow && typeof oldRow.id === "string" ? oldRow.id : "";
 
-              const updated = mapRowToLead(newRow);
-              if (!updated) return;
+              if (!deletedId) return;
 
-              setLeads((prev) => {
-                const exists = prev.some((lead) => lead.id === updated.id);
-
-                const next = exists
-                  ? prev.map((lead) => (lead.id === updated.id ? updated : lead))
-                  : [updated, ...prev];
-
-                return next.sort(
-                  (a, b) =>
-                    new Date(b.createdAt).getTime() -
-                    new Date(a.createdAt).getTime(),
-                );
-              });
-
-              setActiveId((prev) => prev ?? updated.id);
-            } catch (error) {
-              console.error("Chat leads realtime event error:", error);
+              setLeads((prev) => prev.filter((lead) => lead.id !== deletedId));
+              setActiveId((prev) => (prev === deletedId ? null : prev));
+              return;
             }
-          },
-        )
-        .subscribe((status) => {
-          if (status === "CHANNEL_ERROR") {
-            console.error("Chat leads realtime channel error.");
-          }
-        });
 
-      return () => {
-        if (channel) {
-          void supabase.removeChannel(channel);
+            const newRow =
+              payload.new && typeof payload.new === "object"
+                ? (payload.new as Record<string, unknown>)
+                : null;
+
+            if (!newRow) return;
+
+            const updated = mapRowToLead(newRow);
+            if (!updated) return;
+
+            setLeads((prev) => {
+              const exists = prev.some((lead) => lead.id === updated.id);
+
+              const next = exists
+                ? prev.map((lead) => (lead.id === updated.id ? updated : lead))
+                : [updated, ...prev];
+
+              return next.sort(
+                (a, b) => getSafeTime(b.createdAt) - getSafeTime(a.createdAt),
+              );
+            });
+
+            setActiveId((prev) => prev ?? updated.id);
+          } catch (error) {
+            console.error("Chat leads realtime event error:", error);
+          }
+        },
+      )
+      .subscribe((status) => {
+        if (status === "CHANNEL_ERROR") {
+          console.error("Chat leads realtime channel error.");
         }
-      };
-    } catch (error) {
-      console.error("Chat leads realtime setup failed:", error);
-    }
+      });
+
+    return () => {
+      isMounted = false;
+      void supabase.removeChannel(channel);
+    };
   }, []);
 
   /* -----------------------------
@@ -297,8 +298,7 @@ export default function ChatLeadsDashboard({
 
   const sortedLeads = useMemo(() => {
     return [...leads].sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+      (a, b) => getSafeTime(b.createdAt) - getSafeTime(a.createdAt),
     );
   }, [leads]);
 
@@ -367,7 +367,9 @@ export default function ChatLeadsDashboard({
                   <div className="font-medium text-white">
                     {lead.name || "Unknown contact"}
                   </div>
-                  <div className="mt-1 text-sm text-white/60">{lead.email}</div>
+                  <div className="mt-1 text-sm text-white/60">
+                    {lead.email || "—"}
+                  </div>
                 </div>
 
                 <div
