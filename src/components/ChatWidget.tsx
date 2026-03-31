@@ -29,9 +29,11 @@ type StoredChatState = {
   showLeadPrompt?: boolean;
   leadForm?: Partial<LeadFormState>;
   detectedIntent?: LeadIntent;
+  draftLeadId?: string;
+  draftSessionId?: string;
 };
 
-const STORAGE_KEY = "orbitlink-chat-state-v4";
+const STORAGE_KEY = "orbitlink-chat-state-v6";
 
 const QUICK_ACTIONS: Array<{
   label: string;
@@ -96,6 +98,10 @@ function getEmptyLeadForm(intent: LeadIntent = "general"): LeadFormState {
   };
 }
 
+function makeDraftSessionId() {
+  return `chat_${crypto.randomUUID()}`;
+}
+
 function detectIntentFromText(text: string): LeadIntent {
   const lower = safeLower(text);
 
@@ -119,7 +125,6 @@ function detectIntentFromText(text: string): LeadIntent {
     return "appointment";
   }
 
-  // sales before technical, but more precise
   if (
     lower.includes("pricing") ||
     lower.includes("quote") ||
@@ -197,6 +202,7 @@ function shouldSuggestLeadForm(messages: RenderedMessage[]) {
       fullConversation.includes("markham") ||
       fullConversation.includes("oakville") ||
       fullConversation.includes("milton") ||
+      fullConversation.includes("ottawa") ||
       fullConversation.includes("ontario")) &&
     (fullConversation.includes("new setup") ||
       fullConversation.includes("upgrade") ||
@@ -207,6 +213,11 @@ function shouldSuggestLeadForm(messages: RenderedMessage[]) {
       fullConversation.includes("backup internet"));
 
   return explicitFollowUpIntent || likelyQualifiedBusinessLead;
+}
+
+function shouldCreateDraftLead(messages: RenderedMessage[]) {
+  const userMessages = messages.filter((m) => m.role === "user");
+  return userMessages.length >= 2;
 }
 
 function normalizeStoredLeadForm(value: unknown, fallbackIntent: LeadIntent) {
@@ -227,6 +238,49 @@ function normalizeStoredLeadForm(value: unknown, fallbackIntent: LeadIntent) {
   };
 }
 
+function extractEmail(text: string) {
+  const match = text.match(/[^\s@]+@[^\s@]+\.[^\s@]+/);
+  return match ? match[0] : "";
+}
+
+function extractPhone(text: string) {
+  const match = text.match(
+    /(\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/,
+  );
+  return match ? match[0] : "";
+}
+
+function extractLocation(text: string) {
+  const cities = [
+    "mississauga",
+    "toronto",
+    "brampton",
+    "vaughan",
+    "markham",
+    "oakville",
+    "milton",
+    "ottawa",
+    "ontario",
+  ];
+
+  const lower = text.toLowerCase();
+  const found = cities.find((city) => lower.includes(city));
+
+  return found ? found.charAt(0).toUpperCase() + found.slice(1) : "";
+}
+
+async function upsertDraftLead(body: Record<string, unknown>) {
+  const response = await fetch("/api/chat-leads/draft", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  return response.json();
+}
+
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -237,7 +291,10 @@ export default function ChatWidget() {
   const [hydrated, setHydrated] = useState(false);
   const [detectedIntent, setDetectedIntent] = useState<LeadIntent>("general");
   const [showLeadPrompt, setShowLeadPrompt] = useState(false);
+  const [draftLeadId, setDraftLeadId] = useState("");
+  const [draftSessionId, setDraftSessionId] = useState("");
 
+  const draftSyncingRef = useRef(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const [leadForm, setLeadForm] = useState<LeadFormState>(getEmptyLeadForm());
@@ -276,6 +333,8 @@ export default function ChatWidget() {
       const raw = localStorage.getItem(STORAGE_KEY);
 
       if (!raw) {
+        const sessionId = makeDraftSessionId();
+        setDraftSessionId(sessionId);
         setHydrated(true);
         return;
       }
@@ -293,19 +352,19 @@ export default function ChatWidget() {
         setOpen(saved.open);
       }
 
-      // safer restore: do not force restore overlays aggressively
-      if (typeof saved?.showLeadForm === "boolean") {
-        setShowLeadForm(false);
-      }
-
-      if (typeof saved?.showLeadPrompt === "boolean") {
-        setShowLeadPrompt(false);
-      }
-
+      setShowLeadForm(false);
+      setShowLeadPrompt(false);
       setDetectedIntent(nextIntent);
       setLeadForm(normalizeStoredLeadForm(saved?.leadForm, nextIntent));
+
+      setDraftLeadId(typeof saved?.draftLeadId === "string" ? saved.draftLeadId : "");
+      setDraftSessionId(
+        typeof saved?.draftSessionId === "string" && saved.draftSessionId
+          ? saved.draftSessionId
+          : makeDraftSessionId(),
+      );
     } catch {
-      // ignore restore errors
+      setDraftSessionId(makeDraftSessionId());
     } finally {
       setHydrated(true);
     }
@@ -321,28 +380,108 @@ export default function ChatWidget() {
       showLeadPrompt,
       leadForm,
       detectedIntent,
+      draftLeadId,
+      draftSessionId,
     };
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToStore));
-  }, [messages, open, showLeadForm, showLeadPrompt, leadForm, detectedIntent, hydrated]);
+  }, [
+    messages,
+    open,
+    showLeadForm,
+    showLeadPrompt,
+    leadForm,
+    detectedIntent,
+    draftLeadId,
+    draftSessionId,
+    hydrated,
+  ]);
 
   useEffect(() => {
     if (renderedMessages.length === 0) return;
 
     const fullConversation = renderedMessages.map((m) => m.text).join(" ");
+    const lastUserMessage =
+      [...renderedMessages].reverse().find((m) => m.role === "user")?.text || "";
+
     const nextIntent = detectIntentFromText(fullConversation);
 
     setDetectedIntent(nextIntent);
 
-    setLeadForm((prev) => ({
-      ...prev,
-      intent: nextIntent,
-    }));
+    setLeadForm((prev) => {
+      const email = extractEmail(lastUserMessage);
+      const phone = extractPhone(lastUserMessage);
+      const location = extractLocation(lastUserMessage);
+
+      return {
+        ...prev,
+        intent: nextIntent,
+        email: prev.email || email,
+        phone: prev.phone || phone,
+        location: prev.location || location,
+      };
+    });
 
     if (!showLeadForm && !showLeadPrompt && shouldSuggestLeadForm(renderedMessages)) {
       setShowLeadPrompt(true);
     }
   }, [renderedMessages, showLeadForm, showLeadPrompt]);
+
+  useEffect(() => {
+    async function syncDraftLead() {
+      if (!hydrated) return;
+      if (!draftSessionId) return;
+      if (!shouldCreateDraftLead(renderedMessages)) return;
+      if (draftSyncingRef.current) return;
+
+      draftSyncingRef.current = true;
+
+      try {
+        const transcriptMessages = renderedMessages
+          .filter((m) => m.text.trim())
+          .map((m) => ({
+            role: m.role,
+            text: m.text,
+          }));
+
+        const result = await upsertDraftLead({
+          draftLeadId: draftLeadId || undefined,
+          draftSessionId,
+          name: leadForm.name,
+          email: leadForm.email,
+          phone: leadForm.phone,
+          company: leadForm.company,
+          location: leadForm.location,
+          intent: detectedIntent,
+          page: typeof window !== "undefined" ? window.location.pathname : "",
+          notes: leadForm.notes,
+          messages: transcriptMessages,
+        });
+
+        if (result?.ok && typeof result?.draftLeadId === "string") {
+          setDraftLeadId(result.draftLeadId);
+        }
+      } catch (error) {
+        console.error("Draft lead sync failed:", error);
+      } finally {
+        draftSyncingRef.current = false;
+      }
+    }
+
+    void syncDraftLead();
+  }, [
+    hydrated,
+    draftSessionId,
+    draftLeadId,
+    renderedMessages,
+    leadForm.name,
+    leadForm.email,
+    leadForm.phone,
+    leadForm.company,
+    leadForm.location,
+    leadForm.notes,
+    detectedIntent,
+  ]);
 
   function updateLeadField<K extends keyof LeadFormState>(
     key: K,
@@ -386,6 +525,8 @@ export default function ChatWidget() {
     setDetectedIntent("general");
     setLeadForm(getEmptyLeadForm());
     setInput("");
+    setDraftLeadId("");
+    setDraftSessionId(makeDraftSessionId());
   }
 
   function handleQuickAction(action: (typeof QUICK_ACTIONS)[number]) {
@@ -483,6 +624,7 @@ export default function ChatWidget() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          draftLeadId: draftLeadId || undefined,
           ...leadForm,
           intent: leadForm.intent,
           source: "chat",
@@ -504,6 +646,8 @@ export default function ChatWidget() {
       setShowLeadForm(false);
       setShowLeadPrompt(false);
       setLeadForm(getEmptyLeadForm(detectedIntent));
+      setDraftLeadId("");
+      setDraftSessionId(makeDraftSessionId());
     } catch (err) {
       setLeadError(err instanceof Error ? err.message : "Failed to submit request.");
     } finally {
