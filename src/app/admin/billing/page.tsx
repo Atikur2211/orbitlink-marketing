@@ -7,12 +7,8 @@ type Invoice = {
   due_date: string | null;
   status: string | null;
   stripe_invoice_id: string | null;
-  accounts: {
-    account_name: string;
-  } | null;
-  service_instances: {
-    service_name: string;
-  } | null;
+  accounts: { account_name: string }[] | null;
+  service_instances: { service_name: string }[] | null;
 };
 
 export default async function AdminBillingPage() {
@@ -21,7 +17,7 @@ export default async function AdminBillingPage() {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const { data: invoices, error } = await supabase
+  const { data, error } = await supabase
     .from("invoices")
     .select(`
       id,
@@ -34,6 +30,8 @@ export default async function AdminBillingPage() {
       service_instances ( service_name )
     `)
     .order("created_at", { ascending: false });
+
+  const invoices = (data as Invoice[] | null) ?? [];
 
   return (
     <main style={{ padding: "32px" }}>
@@ -62,13 +60,19 @@ export default async function AdminBillingPage() {
               </tr>
             </thead>
             <tbody>
-              {(invoices as Invoice[] | null)?.length ? (
-                (invoices as Invoice[]).map((invoice) => (
+              {invoices.length ? (
+                invoices.map((invoice) => (
                   <tr key={invoice.id} style={{ borderTop: "1px solid #eee" }}>
                     <td style={{ padding: "12px" }}>{invoice.invoice_number}</td>
-                    <td style={{ padding: "12px" }}>{invoice.accounts?.account_name ?? "—"}</td>
-                    <td style={{ padding: "12px" }}>{invoice.service_instances?.service_name ?? "—"}</td>
-                    <td style={{ padding: "12px" }}>${Number(invoice.amount).toFixed(2)}</td>
+                    <td style={{ padding: "12px" }}>
+                      {invoice.accounts?.[0]?.account_name ?? "—"}
+                    </td>
+                    <td style={{ padding: "12px" }}>
+                      {invoice.service_instances?.[0]?.service_name ?? "—"}
+                    </td>
+                    <td style={{ padding: "12px" }}>
+                      ${Number(invoice.amount).toFixed(2)}
+                    </td>
                     <td style={{ padding: "12px" }}>{invoice.due_date ?? "—"}</td>
                     <td style={{ padding: "12px" }}>{invoice.status ?? "—"}</td>
                   </tr>
