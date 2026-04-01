@@ -10,9 +10,7 @@ type Location = {
   contact_name: string | null;
   contact_phone: string | null;
   status: string | null;
-  accounts: {
-    account_name: string;
-  } | null;
+  accounts: { account_name: string }[] | null;
 };
 
 export default async function AdminLocationsPage() {
@@ -21,7 +19,7 @@ export default async function AdminLocationsPage() {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const { data: locations, error } = await supabase
+  const { data, error } = await supabase
     .from("locations")
     .select(`
       id,
@@ -36,6 +34,8 @@ export default async function AdminLocationsPage() {
       accounts ( account_name )
     `)
     .order("created_at", { ascending: false });
+
+  const locations = (data as Location[] | null) ?? [];
 
   return (
     <main style={{ padding: "32px" }}>
@@ -63,16 +63,20 @@ export default async function AdminLocationsPage() {
               </tr>
             </thead>
             <tbody>
-              {(locations as Location[] | null)?.length ? (
-                (locations as Location[]).map((location) => (
+              {locations.length ? (
+                locations.map((location) => (
                   <tr key={location.id} style={{ borderTop: "1px solid #eee" }}>
                     <td style={{ padding: "12px" }}>{location.location_name ?? "—"}</td>
-                    <td style={{ padding: "12px" }}>{location.accounts?.account_name ?? "—"}</td>
+                    <td style={{ padding: "12px" }}>
+                      {location.accounts?.[0]?.account_name ?? "—"}
+                    </td>
                     <td style={{ padding: "12px" }}>
                       {location.address_line_1}
                       <br />
                       <span style={{ color: "#666" }}>
-                        {[location.city, location.province, location.postal_code].filter(Boolean).join(", ")}
+                        {[location.city, location.province, location.postal_code]
+                          .filter(Boolean)
+                          .join(", ")}
                       </span>
                     </td>
                     <td style={{ padding: "12px" }}>

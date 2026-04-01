@@ -7,15 +7,9 @@ type Ticket = {
   priority: string | null;
   status: string | null;
   created_at: string | null;
-  accounts: {
-    account_name: string;
-  } | null;
-  locations: {
-    location_name: string | null;
-  } | null;
-  service_instances: {
-    service_name: string;
-  } | null;
+  accounts: { account_name: string }[] | null;
+  locations: { location_name: string | null }[] | null;
+  service_instances: { service_name: string }[] | null;
 };
 
 export default async function AdminSupportPage() {
@@ -24,7 +18,7 @@ export default async function AdminSupportPage() {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const { data: tickets, error } = await supabase
+  const { data, error } = await supabase
     .from("tickets")
     .select(`
       id,
@@ -38,6 +32,8 @@ export default async function AdminSupportPage() {
       service_instances ( service_name )
     `)
     .order("created_at", { ascending: false });
+
+  const tickets = (data as Ticket[] | null) ?? [];
 
   return (
     <main style={{ padding: "32px" }}>
@@ -67,13 +63,19 @@ export default async function AdminSupportPage() {
               </tr>
             </thead>
             <tbody>
-              {(tickets as Ticket[] | null)?.length ? (
-                (tickets as Ticket[]).map((ticket) => (
+              {tickets.length ? (
+                tickets.map((ticket) => (
                   <tr key={ticket.id} style={{ borderTop: "1px solid #eee" }}>
                     <td style={{ padding: "12px" }}>{ticket.subject ?? "—"}</td>
-                    <td style={{ padding: "12px" }}>{ticket.accounts?.account_name ?? "—"}</td>
-                    <td style={{ padding: "12px" }}>{ticket.locations?.location_name ?? "—"}</td>
-                    <td style={{ padding: "12px" }}>{ticket.service_instances?.service_name ?? "—"}</td>
+                    <td style={{ padding: "12px" }}>
+                      {ticket.accounts?.[0]?.account_name ?? "—"}
+                    </td>
+                    <td style={{ padding: "12px" }}>
+                      {ticket.locations?.[0]?.location_name ?? "—"}
+                    </td>
+                    <td style={{ padding: "12px" }}>
+                      {ticket.service_instances?.[0]?.service_name ?? "—"}
+                    </td>
                     <td style={{ padding: "12px" }}>{ticket.category ?? "—"}</td>
                     <td style={{ padding: "12px" }}>{ticket.priority ?? "—"}</td>
                     <td style={{ padding: "12px" }}>{ticket.status ?? "—"}</td>

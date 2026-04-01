@@ -8,9 +8,7 @@ type ScheduledAction = {
   effective_date: string;
   reason: string | null;
   status: string | null;
-  accounts: {
-    account_name: string;
-  } | null;
+  accounts: { account_name: string }[] | null;
 };
 
 export default async function AdminScheduledActionsPage() {
@@ -19,7 +17,7 @@ export default async function AdminScheduledActionsPage() {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const { data: actions, error } = await supabase
+  const { data, error } = await supabase
     .from("scheduled_actions")
     .select(`
       id,
@@ -32,6 +30,8 @@ export default async function AdminScheduledActionsPage() {
       accounts ( account_name )
     `)
     .order("effective_date", { ascending: true });
+
+  const actions = (data as ScheduledAction[] | null) ?? [];
 
   return (
     <main style={{ padding: "32px" }}>
@@ -61,10 +61,12 @@ export default async function AdminScheduledActionsPage() {
               </tr>
             </thead>
             <tbody>
-              {(actions as ScheduledAction[] | null)?.length ? (
-                (actions as ScheduledAction[]).map((action) => (
+              {actions.length ? (
+                actions.map((action) => (
                   <tr key={action.id} style={{ borderTop: "1px solid #eee" }}>
-                    <td style={{ padding: "12px" }}>{action.accounts?.account_name ?? "—"}</td>
+                    <td style={{ padding: "12px" }}>
+                      {action.accounts?.[0]?.account_name ?? "—"}
+                    </td>
                     <td style={{ padding: "12px" }}>{action.entity_type}</td>
                     <td style={{ padding: "12px" }}>{action.action_type}</td>
                     <td style={{ padding: "12px" }}>{action.target_status ?? "—"}</td>

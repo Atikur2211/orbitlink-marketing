@@ -7,9 +7,7 @@ type LifecycleEvent = {
   event_label: string | null;
   notes: string | null;
   created_at: string | null;
-  accounts: {
-    account_name: string;
-  } | null;
+  accounts: { account_name: string }[] | null;
 };
 
 export default async function AdminLifecyclePage() {
@@ -18,7 +16,7 @@ export default async function AdminLifecyclePage() {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const { data: events, error } = await supabase
+  const { data, error } = await supabase
     .from("lifecycle_events")
     .select(`
       id,
@@ -30,6 +28,8 @@ export default async function AdminLifecyclePage() {
       accounts ( account_name )
     `)
     .order("created_at", { ascending: false });
+
+  const events = (data as LifecycleEvent[] | null) ?? [];
 
   return (
     <main style={{ padding: "32px" }}>
@@ -58,10 +58,12 @@ export default async function AdminLifecyclePage() {
               </tr>
             </thead>
             <tbody>
-              {(events as LifecycleEvent[] | null)?.length ? (
-                (events as LifecycleEvent[]).map((event) => (
+              {events.length ? (
+                events.map((event) => (
                   <tr key={event.id} style={{ borderTop: "1px solid #eee" }}>
-                    <td style={{ padding: "12px" }}>{event.accounts?.account_name ?? "—"}</td>
+                    <td style={{ padding: "12px" }}>
+                      {event.accounts?.[0]?.account_name ?? "—"}
+                    </td>
                     <td style={{ padding: "12px" }}>{event.entity_type}</td>
                     <td style={{ padding: "12px" }}>{event.event_type}</td>
                     <td style={{ padding: "12px" }}>{event.event_label ?? "—"}</td>
