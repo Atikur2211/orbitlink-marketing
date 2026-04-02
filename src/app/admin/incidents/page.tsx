@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
 
 type Incident = {
@@ -11,6 +12,8 @@ type Incident = {
   summary: string | null;
   root_cause: string | null;
   notes: string | null;
+  incident_impacts: { id: string }[] | null;
+  tickets: { id: string }[] | null;
 };
 
 function getSeverityStyles(severity: string): React.CSSProperties {
@@ -102,20 +105,34 @@ export default async function AdminIncidentsPage() {
       resolved_at,
       summary,
       root_cause,
-      notes
+      notes,
+      incident_impacts ( id ),
+      tickets ( id )
     `)
     .order("opened_at", { ascending: false });
 
   const incidents = (data as Incident[] | null) ?? [];
 
   const totalIncidents = incidents.length;
-  const openIncidents = incidents.filter((i) =>
-    ["open", "investigating", "identified", "monitoring"].includes(i.status)
+  const openIncidents = incidents.filter((incident) =>
+    ["open", "investigating", "identified", "monitoring"].includes(incident.status)
   ).length;
-  const criticalIncidents = incidents.filter((i) => i.severity === "critical").length;
-  const resolvedIncidents = incidents.filter((i) =>
-    ["resolved", "closed"].includes(i.status)
+  const criticalIncidents = incidents.filter(
+    (incident) => incident.severity === "critical"
   ).length;
+  const resolvedIncidents = incidents.filter((incident) =>
+    ["resolved", "closed"].includes(incident.status)
+  ).length;
+
+  const totalImpacts = incidents.reduce(
+    (sum, incident) => sum + (incident.incident_impacts?.length ?? 0),
+    0
+  );
+
+  const totalTickets = incidents.reduce(
+    (sum, incident) => sum + (incident.tickets?.length ?? 0),
+    0
+  );
 
   return (
     <main
@@ -123,66 +140,92 @@ export default async function AdminIncidentsPage() {
         minHeight: "100vh",
         padding: "32px",
         background:
-          "radial-gradient(circle at top, rgba(212,175,55,0.08) 0%, rgba(10,10,10,1) 28%), linear-gradient(180deg, #080808 0%, #111111 48%, #161616 100%)",
+          "radial-gradient(circle at top, rgba(212,175,55,0.10) 0%, rgba(10,10,10,1) 28%), linear-gradient(180deg, #080808 0%, #111111 48%, #161616 100%)",
         color: "#f5f5f5",
       }}
     >
-      <div style={{ maxWidth: "1480px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1500px", margin: "0 auto" }}>
         <div
           style={{
+            position: "relative",
+            overflow: "hidden",
             marginBottom: "28px",
-            padding: "30px",
-            borderRadius: "28px",
+            padding: "32px",
+            borderRadius: "30px",
             border: "1px solid rgba(212, 175, 55, 0.18)",
             background:
-              "linear-gradient(135deg, rgba(212, 175, 55, 0.10) 0%, rgba(255,255,255,0.04) 38%, rgba(255,255,255,0.02) 100%)",
-            boxShadow: "0 24px 60px rgba(0,0,0,0.38)",
+              "linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(255,255,255,0.04) 38%, rgba(255,255,255,0.02) 100%)",
+            boxShadow: "0 28px 70px rgba(0,0,0,0.40)",
           }}
         >
           <div
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontSize: "12px",
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: "#d4af37",
-              marginBottom: "12px",
+              position: "absolute",
+              top: "-10%",
+              right: "-5%",
+              width: "360px",
+              height: "360px",
+              borderRadius: "999px",
+              background:
+                "radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0.05) 32%, rgba(212,175,55,0.00) 70%)",
+              pointerEvents: "none",
+              filter: "blur(8px)",
             }}
-          >
-            Orbitlink OS
+          />
+
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "8px 14px",
+                borderRadius: "999px",
+                border: "1px solid rgba(212, 175, 55, 0.22)",
+                background: "rgba(212, 175, 55, 0.08)",
+                fontSize: "12px",
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "#e2c15c",
+                marginBottom: "16px",
+              }}
+            >
+              Orbitlink OS · Incident Intelligence
+            </div>
+
+            <h1
+              style={{
+                fontSize: "40px",
+                lineHeight: 1.08,
+                fontWeight: 700,
+                margin: "0 0 12px 0",
+                color: "#fff7db",
+                maxWidth: "920px",
+              }}
+            >
+              Incidents
+            </h1>
+
+            <p
+              style={{
+                fontSize: "15px",
+                color: "rgba(255,255,255,0.74)",
+                margin: 0,
+                maxWidth: "900px",
+                lineHeight: 1.72,
+              }}
+            >
+              Review outage, degradation, automation-linked failures, customer
+              impact records, and related tickets from one operator-grade incident
+              surface.
+            </p>
           </div>
-
-          <h1
-            style={{
-              fontSize: "38px",
-              fontWeight: 700,
-              margin: "0 0 10px 0",
-              color: "#fff7db",
-            }}
-          >
-            Incidents
-          </h1>
-
-          <p
-            style={{
-              fontSize: "15px",
-              color: "rgba(255,255,255,0.72)",
-              margin: 0,
-              maxWidth: "860px",
-              lineHeight: 1.65,
-            }}
-          >
-            Review outage, degradation, and system-impact events across Orbitlink
-            operations from one operator-grade incident surface.
-          </p>
         </div>
 
         <section
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+            gridTemplateColumns: "repeat(6, minmax(0, 1fr))",
             gap: "16px",
             marginBottom: "24px",
           }}
@@ -192,6 +235,8 @@ export default async function AdminIncidentsPage() {
             { label: "Open", value: openIncidents },
             { label: "Critical", value: criticalIncidents },
             { label: "Resolved", value: resolvedIncidents },
+            { label: "Impact Records", value: totalImpacts },
+            { label: "Linked Tickets", value: totalTickets },
           ].map((item) => (
             <div
               key={item.label}
@@ -199,15 +244,16 @@ export default async function AdminIncidentsPage() {
                 borderRadius: "20px",
                 padding: "20px",
                 border: "1px solid rgba(212, 175, 55, 0.14)",
-                background: "rgba(255,255,255,0.03)",
-                boxShadow: "0 10px 30px rgba(0,0,0,0.22)",
+                background:
+                  "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%)",
+                boxShadow: "0 12px 32px rgba(0,0,0,0.24)",
               }}
             >
               <div
                 style={{
                   fontSize: "12px",
                   textTransform: "uppercase",
-                  letterSpacing: "0.1em",
+                  letterSpacing: "0.10em",
                   color: "rgba(255,255,255,0.58)",
                   marginBottom: "10px",
                 }}
@@ -243,18 +289,19 @@ export default async function AdminIncidentsPage() {
         ) : (
           <div
             style={{
-              borderRadius: "24px",
+              borderRadius: "26px",
               overflow: "hidden",
               border: "1px solid rgba(212, 175, 55, 0.16)",
               background: "rgba(255,255,255,0.03)",
-              boxShadow: "0 20px 50px rgba(0,0,0,0.30)",
+              boxShadow: "0 22px 55px rgba(0,0,0,0.32)",
             }}
           >
             <div
               style={{
                 padding: "18px 22px",
                 borderBottom: "1px solid rgba(255,255,255,0.08)",
-                background: "rgba(212, 175, 55, 0.06)",
+                background:
+                  "linear-gradient(90deg, rgba(212,175,55,0.08) 0%, rgba(255,255,255,0.02) 100%)",
               }}
             >
               <h2
@@ -274,7 +321,7 @@ export default async function AdminIncidentsPage() {
                 style={{
                   width: "100%",
                   borderCollapse: "collapse",
-                  minWidth: "1400px",
+                  minWidth: "1620px",
                 }}
               >
                 <thead>
@@ -288,6 +335,8 @@ export default async function AdminIncidentsPage() {
                     <th style={headerCell}>Type</th>
                     <th style={headerCell}>Severity</th>
                     <th style={headerCell}>Status</th>
+                    <th style={headerCell}>Impacts</th>
+                    <th style={headerCell}>Tickets</th>
                     <th style={headerCell}>Opened</th>
                     <th style={headerCell}>Resolved</th>
                     <th style={headerCell}>Summary</th>
@@ -301,6 +350,8 @@ export default async function AdminIncidentsPage() {
                     incidents.map((incident) => {
                       const severityBadge = getSeverityStyles(incident.severity);
                       const statusBadge = getStatusStyles(incident.status);
+                      const impactCount = incident.incident_impacts?.length ?? 0;
+                      const ticketCount = incident.tickets?.length ?? 0;
 
                       return (
                         <tr
@@ -309,7 +360,18 @@ export default async function AdminIncidentsPage() {
                             borderTop: "1px solid rgba(255,255,255,0.06)",
                           }}
                         >
-                          <td style={bodyCell}>{incident.title}</td>
+                          <td style={bodyCell}>
+                            <Link
+                              href={`/admin/incidents/${incident.id}`}
+                              style={{
+                                color: "#fff7db",
+                                textDecoration: "none",
+                                fontWeight: 600,
+                              }}
+                            >
+                              {incident.title}
+                            </Link>
+                          </td>
                           <td style={bodyCell}>{incident.incident_type}</td>
                           <td style={bodyCell}>
                             <span
@@ -343,6 +405,12 @@ export default async function AdminIncidentsPage() {
                               {incident.status}
                             </span>
                           </td>
+                          <td style={bodyCell}>
+                            <span style={countBadgeGold}>{impactCount}</span>
+                          </td>
+                          <td style={bodyCell}>
+                            <span style={countBadgeNeutral}>{ticketCount}</span>
+                          </td>
                           <td style={bodyCell}>{incident.opened_at}</td>
                           <td style={bodyCell}>{incident.resolved_at ?? "—"}</td>
                           <td style={bodyCell}>{incident.summary ?? "—"}</td>
@@ -353,7 +421,7 @@ export default async function AdminIncidentsPage() {
                     })
                   ) : (
                     <tr>
-                      <td style={bodyCell} colSpan={9}>
+                      <td style={bodyCell} colSpan={11}>
                         No incidents found.
                       </td>
                     </tr>
@@ -381,4 +449,32 @@ const bodyCell: React.CSSProperties = {
   fontSize: "14px",
   color: "#f5f5f5",
   verticalAlign: "top",
+};
+
+const countBadgeGold: React.CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minWidth: "42px",
+  padding: "6px 10px",
+  borderRadius: "999px",
+  fontSize: "12px",
+  fontWeight: 700,
+  background: "rgba(212, 175, 55, 0.14)",
+  border: "1px solid rgba(212, 175, 55, 0.30)",
+  color: "#f4d57b",
+};
+
+const countBadgeNeutral: React.CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minWidth: "42px",
+  padding: "6px 10px",
+  borderRadius: "999px",
+  fontSize: "12px",
+  fontWeight: 700,
+  background: "rgba(255,255,255,0.06)",
+  border: "1px solid rgba(255,255,255,0.14)",
+  color: "#f5f5f5",
 };
