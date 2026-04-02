@@ -10,15 +10,20 @@ type ServiceInstance = {
   activation_date: string | null;
   billing_start_date: string | null;
   account_id: string;
-  accounts: {
-    account_name: string;
-  } | null;
-  locations: {
-    location_name: string | null;
-  } | null;
-  orders: {
-    order_number: string;
-  } | null;
+  accounts: { account_name: string }[] | null;
+  locations: { location_name: string | null }[] | null;
+  orders: { order_number: string }[] | null;
+};
+
+type ScheduledAction = {
+  id: string;
+  entity_type: string;
+  entity_id: string;
+  action_type: string;
+  target_status: string | null;
+  effective_date: string;
+  reason: string | null;
+  status: string | null;
 };
 
 function getStatusStyles(status: string | null): React.CSSProperties {
@@ -65,30 +70,15 @@ function getStatusStyles(status: string | null): React.CSSProperties {
 function getEventMeta(nextStatus: string) {
   switch (nextStatus) {
     case "active":
-      return {
-        event_type: "service_activated",
-        event_label: "Service activated",
-      };
+      return { event_type: "service_activated", event_label: "Service activated" };
     case "suspended":
-      return {
-        event_type: "service_suspended",
-        event_label: "Service suspended",
-      };
+      return { event_type: "service_suspended", event_label: "Service suspended" };
     case "terminated":
-      return {
-        event_type: "service_terminated",
-        event_label: "Service terminated",
-      };
+      return { event_type: "service_terminated", event_label: "Service terminated" };
     case "degraded":
-      return {
-        event_type: "service_degraded",
-        event_label: "Service degraded",
-      };
+      return { event_type: "service_degraded", event_label: "Service degraded" };
     default:
-      return {
-        event_type: "service_updated",
-        event_label: "Service updated",
-      };
+      return { event_type: "service_updated", event_label: "Service updated" };
   }
 }
 
@@ -196,9 +186,7 @@ export default async function AdminServicesPage() {
     const targetStatus = formData.get("target_status") as string;
     const effectiveDate = formData.get("effective_date") as string;
 
-    if (!effectiveDate) {
-      return;
-    }
+    if (!effectiveDate) return;
 
     const { error } = await supabase.from("scheduled_actions").insert({
       account_id: accountId,
@@ -230,24 +218,42 @@ export default async function AdminServicesPage() {
     revalidatePath("/admin/lifecycle");
   }
 
-  const { data: services, error } = await supabase
-    .from("service_instances")
-    .select(`
-      id,
-      service_name,
-      service_type,
-      carrier,
-      status,
-      activation_date,
-      billing_start_date,
-      account_id,
-      accounts ( account_name ),
-      locations ( location_name ),
-      orders ( order_number )
-    `)
-    .order("created_at", { ascending: false });
+  const [{ data: servicesData, error }, { data: scheduledData }] = await Promise.all([
+    supabase
+      .from("service_instances")
+      .select(`
+        id,
+        service_name,
+        service_type,
+        carrier,
+        status,
+        activation_date,
+        billing_start_date,
+        account_id,
+        accounts ( account_name ),
+        locations ( location_name ),
+        orders ( order_number )
+      `)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("scheduled_actions")
+      .select(`
+        id,
+        entity_type,
+        entity_id,
+        action_type,
+        target_status,
+        effective_date,
+        reason,
+        status
+      `)
+      .eq("entity_type", "service")
+      .eq("status", "scheduled")
+      .order("effective_date", { ascending: true }),
+  ]);
 
-  const serviceList = (services as ServiceInstance[] | null) ?? [];
+  const serviceList = (servicesData as ServiceInstance[] | null) ?? [];
+  const scheduledActions = (scheduledData as ScheduledAction[] | null) ?? [];
 
   const totalServices = serviceList.length;
   const activeServices = serviceList.filter((service) => service.status === "active").length;
@@ -313,8 +319,8 @@ export default async function AdminServicesPage() {
             }}
           >
             Manage live customer connectivity, monitor operational state, apply
-            immediate service changes, and schedule future lifecycle actions across
-            Orbitlink accounts with a premium operator-grade interface.
+            immediate service changes, and review future-dated service actions from
+            one premium operator-grade interface.
           </p>
         </div>
 
@@ -414,7 +420,7 @@ export default async function AdminServicesPage() {
                 style={{
                   width: "100%",
                   borderCollapse: "collapse",
-                  minWidth: "1600px",
+                  minWidth: "1680px",
                 }}
               >
                 <thead>
@@ -433,7 +439,8 @@ export default async function AdminServicesPage() {
                     <th style={headerCell}>Billing Start</th>
                     <th style={headerCell}>Status</th>
                     <th style={headerCell}>Immediate Actions</th>
-                    <th style={headerCell}>Future Action</th>
+                    <th style={headerCell}>Scheduled Actions</th>
+                    <th style={headerCell}>Add Future Action</th>
                   </tr>
                 </thead>
 
@@ -442,6 +449,9 @@ export default async function AdminServicesPage() {
                     serviceList.map((service) => {
                       const badge = getStatusStyles(service.status);
                       const actions = getAvailableActions(service.status);
+                      const rowScheduled = scheduledActions.filter(
+                        (item) => item.entity_id === service.id
+                      );
 
                       return (
                         <tr
@@ -454,37 +464,28 @@ export default async function AdminServicesPage() {
                             <div style={{ fontWeight: 600, color: "#fff7db" }}>
                               {service.service_name}
                             </div>
-                            <div
-                              style={{
-                                color: "rgba(255,255,255,0.58)",
-                                marginTop: "4px",
-                              }}
-                            >
+                            <div style={{ color: "rgba(255,255,255,0.58)", marginTop: "4px" }}>
                               {service.service_type}
                             </div>
                           </td>
 
                           <td style={bodyCell}>
-                            {service.accounts?.account_name ?? "—"}
+                            {service.accounts?.[0]?.account_name ?? "—"}
                           </td>
 
                           <td style={bodyCell}>
-                            {service.locations?.location_name ?? "—"}
+                            {service.locations?.[0]?.location_name ?? "—"}
                           </td>
 
                           <td style={bodyCell}>
-                            {service.orders?.order_number ?? "—"}
+                            {service.orders?.[0]?.order_number ?? "—"}
                           </td>
 
                           <td style={bodyCell}>{service.carrier ?? "—"}</td>
 
-                          <td style={bodyCell}>
-                            {service.activation_date ?? "—"}
-                          </td>
+                          <td style={bodyCell}>{service.activation_date ?? "—"}</td>
 
-                          <td style={bodyCell}>
-                            {service.billing_start_date ?? "—"}
-                          </td>
+                          <td style={bodyCell}>{service.billing_start_date ?? "—"}</td>
 
                           <td style={bodyCell}>
                             <span
@@ -505,111 +506,71 @@ export default async function AdminServicesPage() {
 
                           <td style={bodyCell}>
                             {actions.length ? (
-                              <div
-                                style={{
-                                  display: "flex",
-                                  gap: "8px",
-                                  flexWrap: "wrap",
-                                }}
-                              >
+                              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                                 {actions.map((nextStatus) => (
                                   <form key={nextStatus} action={updateServiceStatus}>
-                                    <input
-                                      type="hidden"
-                                      name="service_id"
-                                      value={service.id}
-                                    />
-                                    <input
-                                      type="hidden"
-                                      name="account_id"
-                                      value={service.account_id}
-                                    />
-                                    <input
-                                      type="hidden"
-                                      name="service_name"
-                                      value={service.service_name}
-                                    />
-                                    <input
-                                      type="hidden"
-                                      name="next_status"
-                                      value={nextStatus}
-                                    />
-                                    <button
-                                      style={getActionStyle(nextStatus)}
-                                      type="submit"
-                                    >
+                                    <input type="hidden" name="service_id" value={service.id} />
+                                    <input type="hidden" name="account_id" value={service.account_id} />
+                                    <input type="hidden" name="service_name" value={service.service_name} />
+                                    <input type="hidden" name="next_status" value={nextStatus} />
+                                    <button style={getActionStyle(nextStatus)} type="submit">
                                       {getActionLabel(nextStatus)}
                                     </button>
                                   </form>
                                 ))}
                               </div>
                             ) : (
-                              <span
-                                style={{
-                                  color: "rgba(255,255,255,0.52)",
-                                  fontSize: "13px",
-                                }}
-                              >
+                              <span style={{ color: "rgba(255,255,255,0.52)", fontSize: "13px" }}>
                                 No actions available
                               </span>
                             )}
                           </td>
 
                           <td style={bodyCell}>
-                            <div
-                              style={{
-                                display: "grid",
-                                gap: "8px",
-                                minWidth: "260px",
-                              }}
-                            >
+                            {rowScheduled.length ? (
+                              <div style={{ display: "grid", gap: "8px" }}>
+                                {rowScheduled.map((item) => (
+                                  <div
+                                    key={item.id}
+                                    style={{
+                                      border: "1px solid rgba(255,255,255,0.1)",
+                                      background: "rgba(255,255,255,0.04)",
+                                      borderRadius: "12px",
+                                      padding: "10px 12px",
+                                    }}
+                                  >
+                                    <div style={{ fontSize: "12px", color: "#fff2c4", fontWeight: 600 }}>
+                                      {item.action_type} → {item.target_status ?? "—"}
+                                    </div>
+                                    <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.68)", marginTop: "4px" }}>
+                                      {item.effective_date}
+                                    </div>
+                                    <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.52)", marginTop: "4px" }}>
+                                      {item.reason ?? "No reason"}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <span style={{ color: "rgba(255,255,255,0.52)", fontSize: "13px" }}>
+                                No scheduled actions
+                              </span>
+                            )}
+                          </td>
+
+                          <td style={bodyCell}>
+                            <div style={{ display: "grid", gap: "8px", minWidth: "260px" }}>
                               <form
                                 action={scheduleServiceAction}
-                                style={{
-                                  display: "flex",
-                                  gap: "8px",
-                                  flexWrap: "wrap",
-                                  alignItems: "center",
-                                }}
+                                style={{ display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}
                               >
-                                <input
-                                  type="hidden"
-                                  name="service_id"
-                                  value={service.id}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="account_id"
-                                  value={service.account_id}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="service_name"
-                                  value={service.service_name}
-                                />
-
-                                <input
-                                  type="date"
-                                  name="effective_date"
-                                  required
-                                  style={dateInput}
-                                />
-
-                                <input
-                                  type="hidden"
-                                  name="action_type"
-                                  value="terminate"
-                                />
-                                <input
-                                  type="hidden"
-                                  name="target_status"
-                                  value="terminated"
-                                />
-
-                                <button
-                                  style={actionButtonDanger}
-                                  type="submit"
-                                >
+                                <input type="hidden" name="service_id" value={service.id} />
+                                <input type="hidden" name="account_id" value={service.account_id} />
+                                <input type="hidden" name="service_name" value={service.service_name} />
+                                <input type="hidden" name="action_type" value="terminate" />
+                                <input type="hidden" name="target_status" value="terminated" />
+                                <input type="date" name="effective_date" required style={dateInput} />
+                                <button style={actionButtonDanger} type="submit">
                                   Schedule Terminate
                                 </button>
                               </form>
@@ -617,61 +578,20 @@ export default async function AdminServicesPage() {
                               {service.status !== "terminated" ? (
                                 <form
                                   action={scheduleServiceAction}
-                                  style={{
-                                    display: "flex",
-                                    gap: "8px",
-                                    flexWrap: "wrap",
-                                    alignItems: "center",
-                                  }}
+                                  style={{ display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}
                                 >
-                                  <input
-                                    type="hidden"
-                                    name="service_id"
-                                    value={service.id}
-                                  />
-                                  <input
-                                    type="hidden"
-                                    name="account_id"
-                                    value={service.account_id}
-                                  />
-                                  <input
-                                    type="hidden"
-                                    name="service_name"
-                                    value={service.service_name}
-                                  />
-
-                                  <input
-                                    type="date"
-                                    name="effective_date"
-                                    required
-                                    style={dateInput}
-                                  />
-
-                                  <input
-                                    type="hidden"
-                                    name="action_type"
-                                    value="suspend"
-                                  />
-                                  <input
-                                    type="hidden"
-                                    name="target_status"
-                                    value="suspended"
-                                  />
-
-                                  <button
-                                    style={actionButton}
-                                    type="submit"
-                                  >
+                                  <input type="hidden" name="service_id" value={service.id} />
+                                  <input type="hidden" name="account_id" value={service.account_id} />
+                                  <input type="hidden" name="service_name" value={service.service_name} />
+                                  <input type="hidden" name="action_type" value="suspend" />
+                                  <input type="hidden" name="target_status" value="suspended" />
+                                  <input type="date" name="effective_date" required style={dateInput} />
+                                  <button style={actionButton} type="submit">
                                     Schedule Suspend
                                   </button>
                                 </form>
                               ) : (
-                                <span
-                                  style={{
-                                    fontSize: "12px",
-                                    color: "rgba(255,255,255,0.52)",
-                                  }}
-                                >
+                                <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.52)" }}>
                                   Suspended scheduling hidden for terminated state
                                 </span>
                               )}
@@ -682,7 +602,7 @@ export default async function AdminServicesPage() {
                     })
                   ) : (
                     <tr>
-                      <td style={bodyCell} colSpan={10}>
+                      <td style={bodyCell} colSpan={11}>
                         No services found.
                       </td>
                     </tr>
