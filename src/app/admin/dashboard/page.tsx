@@ -61,6 +61,7 @@ export default async function AdminDashboardPage() {
     ticketsRes,
     scheduledActionsRes,
     lifecycleRes,
+    incidentsRes,
     jobRunsRes,
   ] = await Promise.all([
     supabase.from("accounts").select("*", { count: "exact", head: true }),
@@ -75,6 +76,7 @@ export default async function AdminDashboardPage() {
       .select("*", { count: "exact", head: true })
       .in("status", ["scheduled", "queued", "running", "failed"]),
     supabase.from("lifecycle_events").select("*", { count: "exact", head: true }),
+    (supabase as any).from("incidents").select("*", { count: "exact", head: true }),
     (supabase as any)
       .from("job_runs")
       .select("*", { count: "exact", head: true }),
@@ -91,6 +93,7 @@ export default async function AdminDashboardPage() {
       tone: "neutral",
     },
     { label: "Lifecycle Events", value: lifecycleRes.count ?? 0, tone: "neutral" },
+    { label: "Incidents", value: incidentsRes.count ?? 0, tone: "danger" },
     { label: "Job Runs", value: jobRunsRes.count ?? 0, tone: "gold" },
   ];
 
@@ -150,6 +153,13 @@ export default async function AdminDashboardPage() {
       eyebrow: "Event ledger",
       description:
         "Review customer and service milestones with operator-grade event visibility.",
+    },
+    {
+      name: "Incidents",
+      href: "/admin/incidents",
+      eyebrow: "NOC visibility",
+      description:
+        "Review outage, degradation, and shared operational events across customers and services.",
     },
     {
       name: "Job Runs",
