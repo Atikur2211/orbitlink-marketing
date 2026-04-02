@@ -200,6 +200,75 @@ async function markScheduledActionExecuted(admin: any, actionId: string) {
   }
 }
 
+async function createIncidentForFailure(
+  admin: any,
+  action: ScheduledActionRow,
+  message: string
+) {
+  const incidentTitle = `Automation failure: ${action.entity_type} ${action.action_type}`;
+
+  const { data: incident, error: incidentError } = await admin
+    .from("incidents")
+    .insert({
+      title: incidentTitle,
+      incident_type: "system",
+      severity: "medium",
+      status: "open",
+      summary: `Scheduled action execution failed for ${action.entity_type}:${action.entity_id}.`,
+      root_cause: null,
+      notes: message,
+    })
+    .select("id")
+    .single();
+
+  if (incidentError) {
+    console.error("Failed to create incident:", incidentError.message);
+    return null;
+  }
+
+  const impactType =
+    action.entity_type === "service"
+      ? "service"
+      : action.entity_type === "location"
+        ? "location"
+        : "account";
+
+  const impactPayload: Record<string, string> = {
+    incident_id: incident.id,
+    impact_type: impactType,
+    status: "active",
+  };
+
+  if (impactType === "service") {
+    impactPayload.service_instance_id = action.entity_id;
+  } else if (impactType === "location") {
+    impactPayload.location_id = action.entity_id;
+  } else {
+    impactPayload.account_id = action.account_id;
+  }
+
+  const { error: impactError } = await admin.from("incident_impacts").insert(impactPayload);
+
+  if (impactError) {
+    console.error("Failed to create incident impact:", impactError.message);
+  }
+
+  const { error: lifecycleError } = await admin.from("lifecycle_events").insert({
+    account_id: action.account_id,
+    entity_type: "incident",
+    entity_id: incident.id,
+    event_type: "incident_opened",
+    event_label: "Incident opened",
+    notes: `Incident created automatically from failed scheduled action. ${message}`,
+  });
+
+  if (lifecycleError) {
+    console.error("Failed to write incident lifecycle event:", lifecycleError.message);
+  }
+
+  return incident;
+}
+
 export async function GET(request: Request) {
   const authHeader = request.headers.get("authorization");
   const cronSecret = process.env.CRON_SECRET;
@@ -278,6 +347,7 @@ export async function GET(request: Request) {
       result: "executed" | "failed" | "skipped";
       message: string;
       job_run_id?: string;
+      incident_id?: string;
     }>,
   };
 
@@ -302,6 +372,8 @@ export async function GET(request: Request) {
         await markScheduledActionFailed(admin, action.id, message);
         await markJobRunFailed(admin, jobRunId, message);
 
+        const incident = await createIncidentForFailure(admin, action, message);
+
         await admin.from("lifecycle_events").insert({
           account_id: action.account_id,
           entity_type: action.entity_type,
@@ -321,6 +393,7 @@ export async function GET(request: Request) {
           result: "failed",
           message,
           job_run_id: jobRunId,
+          incident_id: incident?.id,
         });
         continue;
       }
@@ -334,6 +407,8 @@ export async function GET(request: Request) {
         await markScheduledActionFailed(admin, action.id, message);
         await markJobRunFailed(admin, jobRunId, message);
 
+        const incident = await createIncidentForFailure(admin, action, message);
+
         await admin.from("lifecycle_events").insert({
           account_id: action.account_id,
           entity_type: action.entity_type,
@@ -353,6 +428,7 @@ export async function GET(request: Request) {
           result: "failed",
           message,
           job_run_id: jobRunId,
+          incident_id: incident?.id,
         });
         continue;
       }
@@ -364,6 +440,8 @@ export async function GET(request: Request) {
         await markScheduledActionFailed(admin, action.id, message);
         await markJobRunFailed(admin, jobRunId, message);
 
+        const incident = await createIncidentForFailure(admin, action, message);
+
         await admin.from("lifecycle_events").insert({
           account_id: action.account_id,
           entity_type: action.entity_type,
@@ -383,6 +461,7 @@ export async function GET(request: Request) {
           result: "failed",
           message,
           job_run_id: jobRunId,
+          incident_id: incident?.id,
         });
         continue;
       }
@@ -408,6 +487,8 @@ export async function GET(request: Request) {
         await markScheduledActionFailed(admin, action.id, message);
         await markJobRunFailed(admin, jobRunId, message);
 
+        const incident = await createIncidentForFailure(admin, action, message);
+
         await admin.from("lifecycle_events").insert({
           account_id: action.account_id,
           entity_type: action.entity_type,
@@ -427,6 +508,7 @@ export async function GET(request: Request) {
           result: "failed",
           message,
           job_run_id: jobRunId,
+          incident_id: incident?.id,
         });
         continue;
       }
@@ -438,6 +520,8 @@ export async function GET(request: Request) {
         await markScheduledActionFailed(admin, action.id, message);
         await markJobRunFailed(admin, jobRunId, message);
 
+        const incident = await createIncidentForFailure(admin, action, message);
+
         await admin.from("lifecycle_events").insert({
           account_id: action.account_id,
           entity_type: action.entity_type,
@@ -457,6 +541,7 @@ export async function GET(request: Request) {
           result: "failed",
           message,
           job_run_id: jobRunId,
+          incident_id: incident?.id,
         });
         continue;
       }
@@ -510,6 +595,8 @@ export async function GET(request: Request) {
         await markScheduledActionFailed(admin, action.id, message);
         await markJobRunFailed(admin, jobRunId, message);
 
+        const incident = await createIncidentForFailure(admin, action, message);
+
         await admin.from("lifecycle_events").insert({
           account_id: action.account_id,
           entity_type: action.entity_type,
@@ -529,6 +616,7 @@ export async function GET(request: Request) {
           result: "failed",
           message,
           job_run_id: jobRunId,
+          incident_id: incident?.id,
         });
         continue;
       }
@@ -586,6 +674,8 @@ export async function GET(request: Request) {
 
       await markScheduledActionFailed(admin, action.id, message);
 
+      const incident = await createIncidentForFailure(admin, action, message);
+
       await admin.from("lifecycle_events").insert({
         account_id: action.account_id,
         entity_type: action.entity_type,
@@ -605,6 +695,7 @@ export async function GET(request: Request) {
         result: "failed",
         message,
         job_run_id: jobRunId ?? undefined,
+        incident_id: incident?.id,
       });
     }
   }
