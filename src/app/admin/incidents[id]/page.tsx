@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { revalidatePath } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
 
 type IncidentDetail = {
@@ -109,6 +110,80 @@ function getStatusStyles(status: string): React.CSSProperties {
   }
 }
 
+function getAvailableIncidentStatuses(currentStatus: string) {
+  switch (currentStatus) {
+    case "open":
+      return ["investigating", "resolved", "closed"];
+    case "investigating":
+      return ["identified", "monitoring", "resolved", "closed"];
+    case "identified":
+      return ["monitoring", "resolved", "closed"];
+    case "monitoring":
+      return ["resolved", "closed"];
+    case "resolved":
+      return ["closed", "open"];
+    case "closed":
+      return ["open"];
+    default:
+      return ["investigating", "resolved"];
+  }
+}
+
+function getStatusActionLabel(status: string) {
+  switch (status) {
+    case "investigating":
+      return "Mark Investigating";
+    case "identified":
+      return "Mark Identified";
+    case "monitoring":
+      return "Mark Monitoring";
+    case "resolved":
+      return "Resolve";
+    case "closed":
+      return "Close";
+    case "open":
+      return "Reopen";
+    default:
+      return "Update";
+  }
+}
+
+function getActionButtonStyle(status: string): React.CSSProperties {
+  switch (status) {
+    case "resolved":
+    case "closed":
+      return {
+        background: "rgba(212, 175, 55, 0.18)",
+        color: "#fff2c4",
+        border: "1px solid rgba(212, 175, 55, 0.35)",
+        borderRadius: "999px",
+        padding: "8px 12px",
+        fontSize: "12px",
+        cursor: "pointer",
+      };
+    case "open":
+      return {
+        background: "rgba(255,255,255,0.06)",
+        color: "#f5f5f5",
+        border: "1px solid rgba(255,255,255,0.12)",
+        borderRadius: "999px",
+        padding: "8px 12px",
+        fontSize: "12px",
+        cursor: "pointer",
+      };
+    default:
+      return {
+        background: "rgba(255, 193, 7, 0.12)",
+        color: "#ffd666",
+        border: "1px solid rgba(255, 193, 7, 0.28)",
+        borderRadius: "999px",
+        padding: "8px 12px",
+        fontSize: "12px",
+        cursor: "pointer",
+      };
+  }
+}
+
 export default async function AdminIncidentDetailPage({
   params,
 }: {
@@ -120,6 +195,50 @@ export default async function AdminIncidentDetailPage({
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
+
+  async function updateIncidentStatus(formData: FormData) {
+    "use server";
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+    const incidentId = formData.get("incident_id") as string;
+    const nextStatus = formData.get("next_status") as string;
+    const incidentTitle = formData.get("incident_title") as string;
+    const resolvedAt =
+      nextStatus === "resolved" || nextStatus === "closed"
+        ? new Date().toISOString()
+        : null;
+
+    const { error } = await (supabase as any)
+      .from("incidents")
+      .update({
+        status: nextStatus,
+        resolved_at: resolvedAt,
+      })
+      .eq("id", incidentId);
+
+    if (error) {
+      console.error("Failed to update incident status:", error.message);
+      return;
+    }
+
+    await supabase.from("lifecycle_events").insert({
+      account_id: null,
+      entity_type: "incident",
+      entity_id: incidentId,
+      event_type: "incident_status_changed",
+      event_label: "Incident status changed",
+      notes: `${incidentTitle} moved to ${nextStatus}.`,
+    });
+
+    revalidatePath(`/admin/incidents/${incidentId}`);
+    revalidatePath("/admin/incidents");
+    revalidatePath("/admin/dashboard");
+    revalidatePath("/admin/lifecycle");
+  }
 
   const [{ data: incident, error }, { data: impacts }, { data: tickets }] =
     await Promise.all([
@@ -202,6 +321,7 @@ export default async function AdminIncidentDetailPage({
 
   const severityBadge = getSeverityStyles(incidentData.severity);
   const statusBadge = getStatusStyles(incidentData.status);
+  const availableStatuses = getAvailableIncidentStatuses(incidentData.status);
 
   return (
     <main
@@ -313,6 +433,30 @@ export default async function AdminIncidentDetailPage({
               <span style={metaPill}>{incidentData.incident_type}</span>
               <span style={metaPill}>Impacts {impactRows.length}</span>
               <span style={metaPill}>Tickets {ticketRows.length}</span>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "10px",
+                marginBottom: "20px",
+              }}
+            >
+              {availableStatuses.map((nextStatus) => (
+                <form key={nextStatus} action={updateIncidentStatus}>
+                  <input type="hidden" name="incident_id" value={incidentData.id} />
+                  <input
+                    type="hidden"
+                    name="incident_title"
+                    value={incidentData.title}
+                  />
+                  <input type="hidden" name="next_status" value={nextStatus} />
+                  <button type="submit" style={getActionButtonStyle(nextStatus)}>
+                    {getStatusActionLabel(nextStatus)}
+                  </button>
+                </form>
+              ))}
             </div>
 
             <div
