@@ -193,9 +193,7 @@ export default async function AdminIncidentDetailPage({
               background: "rgba(255, 99, 71, 0.08)",
             }}
           >
-            <p style={{ margin: 0, color: "#ffb29b" }}>
-              Incident not found.
-            </p>
+            <p style={{ margin: 0, color: "#ffb29b" }}>Incident not found.</p>
           </div>
         </div>
       </main>
@@ -419,7 +417,7 @@ export default async function AdminIncidentDetailPage({
                 style={{
                   width: "100%",
                   borderCollapse: "collapse",
-                  minWidth: "620px",
+                  minWidth: "760px",
                 }}
               >
                 <thead>
@@ -439,7 +437,11 @@ export default async function AdminIncidentDetailPage({
                         key={ticket.id}
                         style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
                       >
-                        <td style={bodyCell}>{ticket.subject ?? "—"}</td>
+                        <td style={bodyCell}>
+                          <div style={{ fontWeight: 600, color: "#fff7db" }}>
+                            {ticket.subject ?? "—"}
+                          </div>
+                        </td>
                         <td style={bodyCell}>{ticket.category ?? "—"}</td>
                         <td style={bodyCell}>{ticket.priority ?? "—"}</td>
                         <td style={bodyCell}>{ticket.status ?? "—"}</td>

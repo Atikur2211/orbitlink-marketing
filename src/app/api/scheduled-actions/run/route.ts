@@ -247,10 +247,42 @@ async function createIncidentForFailure(
     impactPayload.account_id = action.account_id;
   }
 
-  const { error: impactError } = await admin.from("incident_impacts").insert(impactPayload);
+  const { error: impactError } = await admin
+    .from("incident_impacts")
+    .insert(impactPayload);
 
   if (impactError) {
     console.error("Failed to create incident impact:", impactError.message);
+  }
+
+  if (action.entity_type === "service") {
+    const { error: ticketLinkError } = await admin
+      .from("tickets")
+      .update({ incident_id: incident.id })
+      .eq("service_instance_id", action.entity_id)
+      .is("incident_id", null)
+      .in("status", ["new", "open", "waiting_customer", "escalated"]);
+
+    if (ticketLinkError) {
+      console.error(
+        "Failed to link service tickets to incident:",
+        ticketLinkError.message
+      );
+    }
+  } else {
+    const { error: ticketLinkError } = await admin
+      .from("tickets")
+      .update({ incident_id: incident.id })
+      .eq("account_id", action.account_id)
+      .is("incident_id", null)
+      .in("status", ["new", "open", "waiting_customer", "escalated"]);
+
+    if (ticketLinkError) {
+      console.error(
+        "Failed to link account tickets to incident:",
+        ticketLinkError.message
+      );
+    }
   }
 
   const { error: lifecycleError } = await admin.from("lifecycle_events").insert({
