@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
 
 type JobRun = {
@@ -263,7 +264,18 @@ export default async function AdminJobRunsPage() {
                             borderTop: "1px solid rgba(255,255,255,0.06)",
                           }}
                         >
-                          <td style={bodyCell}>{job.job_type}</td>
+                          <td style={bodyCell}>
+                            <Link
+                              href={`/admin/job-runs/${job.id}`}
+                              style={{
+                                color: "#fff2c4",
+                                textDecoration: "none",
+                                fontWeight: 600,
+                              }}
+                            >
+                              {job.job_type}
+                            </Link>
+                          </td>
                           <td style={bodyCell}>{job.related_entity_type ?? "—"}</td>
                           <td style={bodyCell}>{job.related_entity_id ?? "—"}</td>
                           <td style={bodyCell}>{job.scheduled_action_id ?? "—"}</td>
