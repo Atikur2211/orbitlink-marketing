@@ -57,10 +57,57 @@ function getStatusStyles(status: string | null) {
         border: "1px solid rgba(255, 99, 71, 0.28)",
         color: "#ffb09a",
       };
+    case "pending_carrier":
+      return {
+        background: "rgba(255,255,255,0.05)",
+        border: "1px solid rgba(255,255,255,0.12)",
+        color: "#d8d8d8",
+      };
     default:
       return {
         background: "rgba(255, 255, 255, 0.05)",
         border: "1px solid rgba(255, 255, 255, 0.12)",
+        color: "#d8d8d8",
+      };
+  }
+}
+
+function getScheduledActionBadge(status: string | null) {
+  switch (status) {
+    case "scheduled":
+      return {
+        background: "rgba(212, 175, 55, 0.14)",
+        border: "1px solid rgba(212, 175, 55, 0.28)",
+        color: "#f4d57b",
+      };
+    case "running":
+      return {
+        background: "rgba(255, 193, 7, 0.12)",
+        border: "1px solid rgba(255, 193, 7, 0.28)",
+        color: "#ffd666",
+      };
+    case "executed":
+      return {
+        background: "rgba(212, 175, 55, 0.16)",
+        border: "1px solid rgba(212, 175, 55, 0.34)",
+        color: "#f5d67b",
+      };
+    case "failed":
+      return {
+        background: "rgba(255, 99, 71, 0.12)",
+        border: "1px solid rgba(255, 99, 71, 0.28)",
+        color: "#ffb09a",
+      };
+    case "cancelled":
+      return {
+        background: "rgba(255,255,255,0.06)",
+        border: "1px solid rgba(255,255,255,0.14)",
+        color: "#f5f5f5",
+      };
+    default:
+      return {
+        background: "rgba(255,255,255,0.05)",
+        border: "1px solid rgba(255,255,255,0.12)",
         color: "#d8d8d8",
       };
   }
@@ -96,6 +143,31 @@ function getEventMeta(nextStatus: string) {
   }
 }
 
+function getScheduledEventMeta(actionType: string) {
+  switch (actionType) {
+    case "schedule_install":
+      return {
+        event_type: "order_install_scheduled",
+        event_label: "Order install scheduled",
+      };
+    case "activate":
+      return {
+        event_type: "order_activation_scheduled",
+        event_label: "Order activation scheduled",
+      };
+    case "cancel":
+      return {
+        event_type: "order_cancellation_scheduled",
+        event_label: "Order cancellation scheduled",
+      };
+    default:
+      return {
+        event_type: "order_action_scheduled",
+        event_label: "Order action scheduled",
+      };
+  }
+}
+
 export default async function AdminOrdersPage() {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -110,10 +182,13 @@ export default async function AdminOrdersPage() {
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
-    const orderId = formData.get("order_id") as string;
-    const accountId = formData.get("account_id") as string;
-    const orderNumber = formData.get("order_number") as string;
-    const nextStatus = formData.get("next_status") as string;
+    const orderId = String(formData.get("order_id") ?? "");
+    const accountId = String(formData.get("account_id") ?? "");
+    const orderNumber = String(formData.get("order_number") ?? "");
+    const currentStatus = String(formData.get("current_status") ?? "");
+    const nextStatus = String(formData.get("next_status") ?? "");
+
+    if (!orderId || !nextStatus) return;
 
     const { error } = await supabase
       .from("orders")
@@ -133,7 +208,16 @@ export default async function AdminOrdersPage() {
       entity_id: orderId,
       event_type: meta.event_type,
       event_label: meta.event_label,
-      notes: `Order ${orderNumber} status changed to ${nextStatus}.`,
+      notes: `Order ${orderNumber} status changed from ${currentStatus || "unknown"} to ${nextStatus}.`,
+    });
+
+    await (supabase as any).from("audit_logs").insert({
+      entity_type: "order",
+      entity_id: orderId,
+      action: "status_change",
+      before_state: { status: currentStatus || null },
+      after_state: { status: nextStatus },
+      source_interface: "admin_orders_page",
     });
 
     revalidatePath("/admin/orders");
@@ -149,43 +233,81 @@ export default async function AdminOrdersPage() {
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
-    const orderId = formData.get("order_id") as string;
-    const accountId = formData.get("account_id") as string;
-    const orderNumber = formData.get("order_number") as string;
-    const actionType = formData.get("action_type") as string;
-    const targetStatus = formData.get("target_status") as string;
-    const effectiveDate = formData.get("effective_date") as string;
+    const orderId = String(formData.get("order_id") ?? "");
+    const accountId = String(formData.get("account_id") ?? "");
+    const orderNumber = String(formData.get("order_number") ?? "");
+    const actionType = String(formData.get("action_type") ?? "");
+    const targetStatus = String(formData.get("target_status") ?? "");
+    const effectiveDate = String(formData.get("effective_date") ?? "");
+    const reason = String(formData.get("reason") ?? "").trim();
 
-    if (!effectiveDate) return;
+    if (!orderId || !accountId || !actionType || !targetStatus || !effectiveDate) return;
 
-    const { error } = await supabase.from("scheduled_actions").insert({
-      account_id: accountId,
-      entity_type: "order",
-      entity_id: orderId,
-      action_type: actionType,
-      target_status: targetStatus,
-      effective_date: effectiveDate,
-      reason: `${actionType} scheduled via admin`,
-      status: "scheduled",
-    });
+    const { data: existingDuplicate } = await supabase
+      .from("scheduled_actions")
+      .select("id")
+      .eq("entity_type", "order")
+      .eq("entity_id", orderId)
+      .eq("action_type", actionType)
+      .eq("target_status", targetStatus)
+      .eq("effective_date", effectiveDate)
+      .eq("status", "scheduled")
+      .maybeSingle();
+
+    if (existingDuplicate) {
+      console.error("Duplicate scheduled action blocked");
+      return;
+    }
+
+    const { data: scheduledAction, error } = await supabase
+      .from("scheduled_actions")
+      .insert({
+        account_id: accountId,
+        entity_type: "order",
+        entity_id: orderId,
+        action_type: actionType,
+        target_status: targetStatus,
+        effective_date: effectiveDate,
+        reason: reason || `${actionType} scheduled via admin`,
+        status: "scheduled",
+      })
+      .select("id")
+      .single();
 
     if (error) {
       console.error(error);
       return;
     }
 
+    const meta = getScheduledEventMeta(actionType);
+
     await supabase.from("lifecycle_events").insert({
       account_id: accountId,
       entity_type: "order",
       entity_id: orderId,
-      event_type: `order_${actionType}_scheduled`,
-      event_label: `Order ${actionType} scheduled`,
-      notes: `${orderNumber} scheduled to ${actionType} on ${effectiveDate}.`,
+      event_type: meta.event_type,
+      event_label: meta.event_label,
+      notes: `${orderNumber} scheduled to ${actionType} (${targetStatus}) on ${effectiveDate}. Reason: ${reason || "No reason provided"}`,
+    });
+
+    await (supabase as any).from("audit_logs").insert({
+      entity_type: "order",
+      entity_id: orderId,
+      action: "create",
+      after_state: {
+        scheduled_action_id: scheduledAction?.id ?? null,
+        action_type: actionType,
+        target_status: targetStatus,
+        effective_date: effectiveDate,
+        reason: reason || `${actionType} scheduled via admin`,
+      },
+      source_interface: "admin_orders_page_schedule_action",
     });
 
     revalidatePath("/admin/orders");
     revalidatePath("/admin/scheduled-actions");
     revalidatePath("/admin/lifecycle");
+    revalidatePath("/admin/dashboard");
   }
 
   const [{ data: ordersData, error }, { data: scheduledData }] = await Promise.all([
@@ -217,7 +339,6 @@ export default async function AdminOrdersPage() {
         status
       `)
       .eq("entity_type", "order")
-      .eq("status", "scheduled")
       .order("effective_date", { ascending: true }),
   ]);
 
@@ -386,7 +507,7 @@ export default async function AdminOrdersPage() {
                 style={{
                   width: "100%",
                   borderCollapse: "collapse",
-                  minWidth: "1550px",
+                  minWidth: "1750px",
                 }}
               >
                 <thead>
@@ -416,6 +537,7 @@ export default async function AdminOrdersPage() {
                       const rowScheduled = scheduledActions.filter(
                         (item) => item.entity_id === order.id
                       );
+                      const currentStatus = order.status ?? "submitted";
 
                       return (
                         <tr
@@ -479,6 +601,7 @@ export default async function AdminOrdersPage() {
                                   <input type="hidden" name="order_id" value={order.id} />
                                   <input type="hidden" name="account_id" value={order.account_id} />
                                   <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="current_status" value={currentStatus} />
                                   <input type="hidden" name="next_status" value="scheduled" />
                                   <button style={actionButton} type="submit">
                                     Schedule
@@ -493,6 +616,7 @@ export default async function AdminOrdersPage() {
                                   <input type="hidden" name="order_id" value={order.id} />
                                   <input type="hidden" name="account_id" value={order.account_id} />
                                   <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="current_status" value={currentStatus} />
                                   <input type="hidden" name="next_status" value="installing" />
                                   <button style={actionButton} type="submit">
                                     Installing
@@ -505,6 +629,7 @@ export default async function AdminOrdersPage() {
                                   <input type="hidden" name="order_id" value={order.id} />
                                   <input type="hidden" name="account_id" value={order.account_id} />
                                   <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="current_status" value={currentStatus} />
                                   <input type="hidden" name="next_status" value="activated" />
                                   <button style={actionButtonGold} type="submit">
                                     Activate
@@ -517,6 +642,7 @@ export default async function AdminOrdersPage() {
                                   <input type="hidden" name="order_id" value={order.id} />
                                   <input type="hidden" name="account_id" value={order.account_id} />
                                   <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="current_status" value={currentStatus} />
                                   <input type="hidden" name="next_status" value="cancelled" />
                                   <button style={actionButtonDanger} type="submit">
                                     Cancel
@@ -539,13 +665,54 @@ export default async function AdminOrdersPage() {
                                       padding: "10px 12px",
                                     }}
                                   >
-                                    <div style={{ fontSize: "12px", color: "#fff2c4", fontWeight: 600 }}>
-                                      {item.action_type} → {item.target_status ?? "—"}
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        gap: "10px",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <div
+                                        style={{
+                                          fontSize: "12px",
+                                          color: "#fff2c4",
+                                          fontWeight: 600,
+                                        }}
+                                      >
+                                        {item.action_type} → {item.target_status ?? "—"}
+                                      </div>
+                                      <span
+                                        style={{
+                                          display: "inline-flex",
+                                          alignItems: "center",
+                                          padding: "4px 8px",
+                                          borderRadius: "999px",
+                                          fontSize: "11px",
+                                          fontWeight: 600,
+                                          textTransform: "capitalize",
+                                          ...getScheduledActionBadge(item.status),
+                                        }}
+                                      >
+                                        {item.status ?? "—"}
+                                      </span>
                                     </div>
-                                    <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.68)", marginTop: "4px" }}>
+                                    <div
+                                      style={{
+                                        fontSize: "12px",
+                                        color: "rgba(255,255,255,0.68)",
+                                        marginTop: "4px",
+                                      }}
+                                    >
                                       {item.effective_date}
                                     </div>
-                                    <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.52)", marginTop: "4px" }}>
+                                    <div
+                                      style={{
+                                        fontSize: "12px",
+                                        color: "rgba(255,255,255,0.52)",
+                                        marginTop: "4px",
+                                      }}
+                                    >
                                       {item.reason ?? "No reason"}
                                     </div>
                                   </div>
@@ -559,28 +726,79 @@ export default async function AdminOrdersPage() {
                           </td>
 
                           <td style={bodyCell}>
-                            <div style={{ display: "grid", gap: "8px", minWidth: "250px" }}>
-                              {order.status !== "cancelled" ? (
-                                <form
-                                  action={scheduleOrderAction}
-                                  style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}
-                                >
+                            {order.status !== "cancelled" ? (
+                              <div style={{ display: "grid", gap: "10px", minWidth: "320px" }}>
+                                <form action={scheduleOrderAction} style={futureActionForm}>
+                                  <input type="hidden" name="order_id" value={order.id} />
+                                  <input type="hidden" name="account_id" value={order.account_id} />
+                                  <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="action_type" value="schedule_install" />
+                                  <input type="hidden" name="target_status" value="scheduled" />
+                                  <input
+                                    type="date"
+                                    name="effective_date"
+                                    required
+                                    style={dateInput}
+                                  />
+                                  <input
+                                    name="reason"
+                                    placeholder="Install reason"
+                                    style={textInput}
+                                  />
+                                  <button style={actionButton} type="submit">
+                                    Schedule Install
+                                  </button>
+                                </form>
+
+                                <form action={scheduleOrderAction} style={futureActionForm}>
+                                  <input type="hidden" name="order_id" value={order.id} />
+                                  <input type="hidden" name="account_id" value={order.account_id} />
+                                  <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="action_type" value="activate" />
+                                  <input type="hidden" name="target_status" value="activated" />
+                                  <input
+                                    type="date"
+                                    name="effective_date"
+                                    required
+                                    style={dateInput}
+                                  />
+                                  <input
+                                    name="reason"
+                                    placeholder="Activation reason"
+                                    style={textInput}
+                                  />
+                                  <button style={actionButtonGold} type="submit">
+                                    Schedule Activate
+                                  </button>
+                                </form>
+
+                                <form action={scheduleOrderAction} style={futureActionForm}>
                                   <input type="hidden" name="order_id" value={order.id} />
                                   <input type="hidden" name="account_id" value={order.account_id} />
                                   <input type="hidden" name="order_number" value={order.order_number} />
                                   <input type="hidden" name="action_type" value="cancel" />
                                   <input type="hidden" name="target_status" value="cancelled" />
-                                  <input type="date" name="effective_date" required style={dateInput} />
+                                  <input
+                                    type="date"
+                                    name="effective_date"
+                                    required
+                                    style={dateInput}
+                                  />
+                                  <input
+                                    name="reason"
+                                    placeholder="Cancellation reason"
+                                    style={textInput}
+                                  />
                                   <button style={actionButtonDanger} type="submit">
                                     Schedule Cancel
                                   </button>
                                 </form>
-                              ) : (
-                                <span style={{ color: "rgba(255,255,255,0.52)", fontSize: "13px" }}>
-                                  Final state
-                                </span>
-                              )}
-                            </div>
+                              </div>
+                            ) : (
+                              <span style={{ color: "rgba(255,255,255,0.52)", fontSize: "13px" }}>
+                                Final state
+                              </span>
+                            )}
                           </td>
                         </tr>
                       );
@@ -654,4 +872,22 @@ const dateInput: React.CSSProperties = {
   borderRadius: "10px",
   padding: "8px 10px",
   fontSize: "12px",
+  minWidth: "120px",
+};
+
+const textInput: React.CSSProperties = {
+  background: "#111",
+  color: "#fff",
+  border: "1px solid rgba(255,255,255,0.14)",
+  borderRadius: "10px",
+  padding: "8px 10px",
+  fontSize: "12px",
+  minWidth: "150px",
+};
+
+const futureActionForm: React.CSSProperties = {
+  display: "flex",
+  gap: "8px",
+  flexWrap: "wrap",
+  alignItems: "center",
 };
