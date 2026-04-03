@@ -1,9 +1,11 @@
+import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
 
 type StatCard = {
   label: string;
   value: number;
-  tone?: "gold" | "neutral" | "danger" | "success";
+  tone?: "gold" | "neutral" | "danger" | "success" | "warn";
+  href?: string;
 };
 
 type SectionCard = {
@@ -38,6 +40,13 @@ function getStatCardStyle(
           "linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(255,248,220,0.04) 45%, rgba(255,255,255,0.02) 100%)",
         boxShadow: "0 22px 50px rgba(0,0,0,0.34)",
       };
+    case "warn":
+      return {
+        border: "1px solid rgba(255, 193, 7, 0.22)",
+        background:
+          "linear-gradient(135deg, rgba(255,193,7,0.10) 0%, rgba(255,255,255,0.04) 45%, rgba(255,255,255,0.02) 100%)",
+        boxShadow: "0 22px 50px rgba(0,0,0,0.34)",
+      };
     default:
       return {
         border: "1px solid rgba(255,255,255,0.10)",
@@ -45,6 +54,20 @@ function getStatCardStyle(
           "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%)",
         boxShadow: "0 18px 42px rgba(0,0,0,0.28)",
       };
+  }
+}
+
+function getStatValueColor(tone: StatCard["tone"]): string {
+  switch (tone) {
+    case "danger":
+      return "#ffd2c6";
+    case "gold":
+    case "success":
+      return "#fff2c4";
+    case "warn":
+      return "#ffe08a";
+    default:
+      return "#f5f5f5";
   }
 }
 
@@ -59,10 +82,10 @@ export default async function AdminDashboardPage() {
     ordersRes,
     servicesRes,
     ticketsRes,
-    scheduledActionsRes,
     lifecycleRes,
     incidentsRes,
     jobRunsRes,
+    scheduledActionsRes,
   ] = await Promise.all([
     supabase.from("accounts").select("*", { count: "exact", head: true }),
     supabase.from("orders").select("*", { count: "exact", head: true }),
@@ -71,30 +94,33 @@ export default async function AdminDashboardPage() {
       .from("tickets")
       .select("*", { count: "exact", head: true })
       .in("status", ["new", "open", "waiting_customer", "escalated"]),
+    supabase.from("lifecycle_events").select("*", { count: "exact", head: true }),
+
+    (supabase as any)
+      .from("incidents")
+      .select("*", { count: "exact", head: true })
+      .in("status", ["open", "investigating", "identified", "monitoring"]),
+
+    (supabase as any)
+      .from("job_runs")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "failed"),
+
     (supabase as any)
       .from("scheduled_actions")
       .select("*", { count: "exact", head: true })
-      .in("status", ["scheduled", "queued", "running", "failed"]),
-    supabase.from("lifecycle_events").select("*", { count: "exact", head: true }),
-    (supabase as any).from("incidents").select("*", { count: "exact", head: true }),
-    (supabase as any)
-      .from("job_runs")
-      .select("*", { count: "exact", head: true }),
+      .in("status", ["scheduled", "queued", "running"]),
   ]);
 
   const stats: StatCard[] = [
-    { label: "Accounts", value: accountsRes.count ?? 0, tone: "gold" },
-    { label: "Orders", value: ordersRes.count ?? 0, tone: "neutral" },
-    { label: "Services", value: servicesRes.count ?? 0, tone: "success" },
-    { label: "Open Tickets", value: ticketsRes.count ?? 0, tone: "danger" },
-    {
-      label: "Scheduled Actions",
-      value: scheduledActionsRes.count ?? 0,
-      tone: "neutral",
-    },
-    { label: "Lifecycle Events", value: lifecycleRes.count ?? 0, tone: "neutral" },
-    { label: "Incidents", value: incidentsRes.count ?? 0, tone: "danger" },
-    { label: "Job Runs", value: jobRunsRes.count ?? 0, tone: "gold" },
+    { label: "Accounts", value: accountsRes.count ?? 0, tone: "gold", href: "/admin/accounts" },
+    { label: "Orders", value: ordersRes.count ?? 0, tone: "neutral", href: "/admin/orders" },
+    { label: "Services", value: servicesRes.count ?? 0, tone: "success", href: "/admin/services" },
+    { label: "Open Tickets", value: ticketsRes.count ?? 0, tone: "gold", href: "/admin/support" },
+    { label: "Open Incidents", value: incidentsRes.count ?? 0, tone: "danger", href: "/admin/noc" },
+    { label: "Failed Jobs", value: jobRunsRes.count ?? 0, tone: "danger", href: "/admin/noc" },
+    { label: "Active Actions", value: scheduledActionsRes.count ?? 0, tone: "warn", href: "/admin/noc" },
+    { label: "Lifecycle Events", value: lifecycleRes.count ?? 0, tone: "neutral", href: "/admin/lifecycle" },
   ];
 
   const sections: SectionCard[] = [
@@ -160,6 +186,13 @@ export default async function AdminDashboardPage() {
       eyebrow: "NOC visibility",
       description:
         "Review outage, degradation, and shared operational events across customers and services.",
+    },
+    {
+      name: "NOC Console",
+      href: "/admin/noc",
+      eyebrow: "Real-time operations",
+      description:
+        "View open incidents, failed automation, active scheduled actions, and open ticket demand in one operator console.",
     },
     {
       name: "Job Runs",
@@ -255,15 +288,15 @@ export default async function AdminDashboardPage() {
             <p
               style={{
                 margin: 0,
-                maxWidth: "900px",
+                maxWidth: "960px",
                 fontSize: "15px",
                 lineHeight: 1.75,
                 color: "rgba(255,255,255,0.74)",
               }}
             >
               Premium internal command surface for customer accounts, provisioning,
-              services, billing, support, lifecycle, scheduled automation, and
-              execution monitoring across Orbitlink operations.
+              services, billing, support, lifecycle, scheduled automation,
+              incident visibility, and execution monitoring across Orbitlink operations.
             </p>
           </div>
         </section>
@@ -276,43 +309,54 @@ export default async function AdminDashboardPage() {
             marginBottom: "30px",
           }}
         >
-          {stats.map((item) => (
-            <div
-              key={item.label}
-              style={{
-                borderRadius: "22px",
-                padding: "22px",
-                ...getStatCardStyle(item.tone),
-              }}
-            >
+          {stats.map((item) => {
+            const card = (
               <div
                 style={{
-                  fontSize: "12px",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.11em",
-                  color: "rgba(255,255,255,0.58)",
-                  marginBottom: "10px",
+                  borderRadius: "22px",
+                  padding: "22px",
+                  ...getStatCardStyle(item.tone),
+                  height: "100%",
                 }}
               >
-                {item.label}
-              </div>
+                <div
+                  style={{
+                    fontSize: "12px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.11em",
+                    color: "rgba(255,255,255,0.58)",
+                    marginBottom: "10px",
+                  }}
+                >
+                  {item.label}
+                </div>
 
-              <div
-                style={{
-                  fontSize: "34px",
-                  fontWeight: 700,
-                  color:
-                    item.tone === "danger"
-                      ? "#ffd2c6"
-                      : item.tone === "gold" || item.tone === "success"
-                        ? "#fff2c4"
-                        : "#f5f5f5",
-                }}
-              >
-                {item.value}
+                <div
+                  style={{
+                    fontSize: "34px",
+                    fontWeight: 700,
+                    color: getStatValueColor(item.tone),
+                  }}
+                >
+                  {item.value}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+
+            if (item.href) {
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  {card}
+                </Link>
+              );
+            }
+
+            return <div key={item.label}>{card}</div>;
+          })}
         </section>
 
         <section
