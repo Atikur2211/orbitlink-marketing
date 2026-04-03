@@ -46,6 +46,13 @@ function getStatusBadgeStyle(status: string | null): React.CSSProperties {
   }
 }
 
+function getAvailableActions(currentStatus: string) {
+  if (currentStatus === "active") return ["inactive", "suspended", "archived"];
+  if (currentStatus === "inactive") return ["active", "archived"];
+  if (currentStatus === "suspended") return ["active", "archived"];
+  return ["active"];
+}
+
 const cardStyle: React.CSSProperties = {
   borderRadius: "22px",
   padding: "22px",
@@ -85,7 +92,7 @@ export default async function AdminAccountsPage() {
         primary_contact_email: contact_email || null,
         status: "active",
       })
-      .select("id, account_name")
+      .select("id, account_name, legal_name, primary_contact_name, primary_contact_email, status")
       .single();
 
     if (error || !account) {
@@ -107,13 +114,104 @@ export default async function AdminAccountsPage() {
       entity_id: account.id,
       action: "create",
       after_state: {
-        account_name,
-        legal_name: legal_name || null,
-        primary_contact_name: contact_name || null,
-        primary_contact_email: contact_email || null,
-        status: "active",
+        account_name: account.account_name,
+        legal_name: account.legal_name,
+        primary_contact_name: account.primary_contact_name,
+        primary_contact_email: account.primary_contact_email,
+        status: account.status,
       },
-      source_interface: "admin_accounts_page",
+      source_interface: "admin_accounts_page_create",
+    });
+
+    revalidatePath("/admin/accounts");
+    revalidatePath("/admin/dashboard");
+    revalidatePath("/admin/lifecycle");
+  }
+
+  async function updateAccountDetails(formData: FormData) {
+    "use server";
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+    const accountId = String(formData.get("account_id") ?? "");
+    const accountName = String(formData.get("account_name") ?? "").trim();
+    const legalName = String(formData.get("legal_name") ?? "").trim();
+    const contactName = String(formData.get("contact_name") ?? "").trim();
+    const contactEmail = String(formData.get("contact_email") ?? "").trim();
+
+    if (!accountId || !accountName) return;
+
+    const { data: before, error: beforeError } = await supabase
+      .from("accounts")
+      .select(
+        "id, account_name, legal_name, primary_contact_name, primary_contact_email, status"
+      )
+      .eq("id", accountId)
+      .single();
+
+    if (beforeError || !before) {
+      console.error("Failed to load account before update:", beforeError?.message);
+      return;
+    }
+
+    const beforeState = {
+      account_name: before.account_name,
+      legal_name: before.legal_name,
+      primary_contact_name: before.primary_contact_name,
+      primary_contact_email: before.primary_contact_email,
+      status: before.status,
+    };
+
+    const afterState = {
+      account_name: accountName,
+      legal_name: legalName || null,
+      primary_contact_name: contactName || null,
+      primary_contact_email: contactEmail || null,
+      status: before.status,
+    };
+
+    const noChanges =
+      beforeState.account_name === afterState.account_name &&
+      beforeState.legal_name === afterState.legal_name &&
+      beforeState.primary_contact_name === afterState.primary_contact_name &&
+      beforeState.primary_contact_email === afterState.primary_contact_email;
+
+    if (noChanges) return;
+
+    const { error } = await supabase
+      .from("accounts")
+      .update({
+        account_name: afterState.account_name,
+        legal_name: afterState.legal_name,
+        primary_contact_name: afterState.primary_contact_name,
+        primary_contact_email: afterState.primary_contact_email,
+      })
+      .eq("id", accountId);
+
+    if (error) {
+      console.error("Failed to update account details:", error.message);
+      return;
+    }
+
+    await supabase.from("lifecycle_events").insert({
+      account_id: accountId,
+      entity_type: "account",
+      entity_id: accountId,
+      event_type: "account_updated",
+      event_label: "Account updated",
+      notes: `Account details updated: ${accountName}`,
+    });
+
+    await (supabase as any).from("audit_logs").insert({
+      entity_type: "account",
+      entity_id: accountId,
+      action: "update",
+      before_state: beforeState,
+      after_state: afterState,
+      source_interface: "admin_accounts_page_edit",
     });
 
     revalidatePath("/admin/accounts");
@@ -135,6 +233,7 @@ export default async function AdminAccountsPage() {
     const nextStatus = String(formData.get("next_status") ?? "");
 
     if (!accountId || !nextStatus) return;
+    if (currentStatus === nextStatus) return;
 
     const { error } = await supabase
       .from("accounts")
@@ -171,7 +270,7 @@ export default async function AdminAccountsPage() {
       action: "status_change",
       before_state: { status: currentStatus || null },
       after_state: { status: nextStatus },
-      source_interface: "admin_accounts_page",
+      source_interface: "admin_accounts_page_status",
     });
 
     revalidatePath("/admin/accounts");
@@ -190,6 +289,7 @@ export default async function AdminAccountsPage() {
 
   const totalAccounts = accounts.length;
   const activeAccounts = accounts.filter((a) => (a.status ?? "active") === "active").length;
+  const inactiveAccounts = accounts.filter((a) => a.status === "inactive").length;
   const suspendedAccounts = accounts.filter((a) => a.status === "suspended").length;
   const archivedAccounts = accounts.filter((a) => a.status === "archived").length;
 
@@ -203,7 +303,7 @@ export default async function AdminAccountsPage() {
         color: "#f5f5f5",
       }}
     >
-      <div style={{ maxWidth: "1500px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1550px", margin: "0 auto" }}>
         <section
           style={{
             position: "relative",
@@ -249,7 +349,7 @@ export default async function AdminAccountsPage() {
                 marginBottom: "16px",
               }}
             >
-              Orbitlink OS · Customer Control
+              Orbitlink OS · CRM Layer
             </div>
 
             <h1
@@ -267,14 +367,14 @@ export default async function AdminAccountsPage() {
             <p
               style={{
                 margin: 0,
-                maxWidth: "940px",
+                maxWidth: "980px",
                 fontSize: "15px",
                 lineHeight: 1.75,
                 color: "rgba(255,255,255,0.74)",
               }}
             >
               Manage customer organizations, contact ownership, lifecycle posture,
-              and account status from one premium operator-grade control surface.
+              and CRM-level client details from one premium operator-grade control surface.
             </p>
           </div>
         </section>
@@ -282,7 +382,7 @@ export default async function AdminAccountsPage() {
         <section
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+            gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
             gap: "16px",
             marginBottom: "24px",
           }}
@@ -290,6 +390,7 @@ export default async function AdminAccountsPage() {
           {[
             { label: "Total Accounts", value: totalAccounts },
             { label: "Active", value: activeAccounts },
+            { label: "Inactive", value: inactiveAccounts },
             { label: "Suspended", value: suspendedAccounts },
             { label: "Archived", value: archivedAccounts },
           ].map((item) => (
@@ -362,8 +463,7 @@ export default async function AdminAccountsPage() {
                 color: "rgba(255,255,255,0.64)",
               }}
             >
-              Creates an account immediately, sets status to active, and writes a
-              lifecycle event for account creation.
+              Creates an account immediately, sets it active, and writes lifecycle plus audit history.
             </p>
 
             <form action={createAccount} style={{ display: "grid", gap: "12px" }}>
@@ -445,7 +545,7 @@ export default async function AdminAccountsPage() {
                   style={{
                     width: "100%",
                     borderCollapse: "collapse",
-                    minWidth: "1200px",
+                    minWidth: "1550px",
                   }}
                 >
                   <thead>
@@ -455,27 +555,22 @@ export default async function AdminAccountsPage() {
                         textAlign: "left",
                       }}
                     >
-                      <th style={headerCell}>Account</th>
+                      <th style={headerCell}>CRM Details</th>
                       <th style={headerCell}>Legal Name</th>
                       <th style={headerCell}>Primary Contact</th>
                       <th style={headerCell}>Email</th>
                       <th style={headerCell}>Status</th>
                       <th style={headerCell}>Created</th>
-                      <th style={headerCell}>Actions</th>
+                      <th style={headerCell}>Save</th>
+                      <th style={headerCell}>Lifecycle Actions</th>
                     </tr>
                   </thead>
+
                   <tbody>
                     {accounts.length ? (
                       accounts.map((account) => {
                         const currentStatus = account.status ?? "active";
-                        const availableActions =
-                          currentStatus === "active"
-                            ? ["inactive", "suspended", "archived"]
-                            : currentStatus === "inactive"
-                              ? ["active", "archived"]
-                              : currentStatus === "suspended"
-                                ? ["active", "archived"]
-                                : ["active"];
+                        const availableActions = getAvailableActions(currentStatus);
 
                         return (
                           <tr
@@ -485,13 +580,99 @@ export default async function AdminAccountsPage() {
                             }}
                           >
                             <td style={bodyCell}>
-                              <div style={{ fontWeight: 600, color: "#fff7db" }}>
-                                {account.account_name}
-                              </div>
+                              <form action={updateAccountDetails} style={{ display: "grid", gap: "8px" }}>
+                                <input type="hidden" name="account_id" value={account.id} />
+                                <input
+                                  name="account_name"
+                                  defaultValue={account.account_name}
+                                  style={miniInput}
+                                  placeholder="Account Name"
+                                />
+                              </form>
                             </td>
-                            <td style={bodyCell}>{account.legal_name ?? "—"}</td>
-                            <td style={bodyCell}>{account.primary_contact_name ?? "—"}</td>
-                            <td style={bodyCell}>{account.primary_contact_email ?? "—"}</td>
+
+                            <td style={bodyCell}>
+                              <form action={updateAccountDetails}>
+                                <input type="hidden" name="account_id" value={account.id} />
+                                <input
+                                  type="hidden"
+                                  name="account_name"
+                                  defaultValue={account.account_name}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="contact_name"
+                                  defaultValue={account.primary_contact_name ?? ""}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="contact_email"
+                                  defaultValue={account.primary_contact_email ?? ""}
+                                />
+                                <input
+                                  name="legal_name"
+                                  defaultValue={account.legal_name ?? ""}
+                                  placeholder="Legal Name"
+                                  style={miniInput}
+                                />
+                              </form>
+                            </td>
+
+                            <td style={bodyCell}>
+                              <form action={updateAccountDetails}>
+                                <input type="hidden" name="account_id" value={account.id} />
+                                <input
+                                  type="hidden"
+                                  name="account_name"
+                                  defaultValue={account.account_name}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="legal_name"
+                                  defaultValue={account.legal_name ?? ""}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="contact_email"
+                                  defaultValue={account.primary_contact_email ?? ""}
+                                />
+                                <input
+                                  name="contact_name"
+                                  defaultValue={account.primary_contact_name ?? ""}
+                                  placeholder="Primary Contact"
+                                  style={miniInput}
+                                />
+                              </form>
+                            </td>
+
+                            <td style={bodyCell}>
+                              <form action={updateAccountDetails}>
+                                <input type="hidden" name="account_id" value={account.id} />
+                                <input
+                                  type="hidden"
+                                  name="account_name"
+                                  defaultValue={account.account_name}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="legal_name"
+                                  defaultValue={account.legal_name ?? ""}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="contact_name"
+                                  defaultValue={account.primary_contact_name ?? ""}
+                                />
+                                <input
+                                  name="contact_email"
+                                  defaultValue={account.primary_contact_email ?? ""}
+                                  placeholder="Primary Email"
+                                  type="email"
+                                  style={miniInput}
+                                />
+                              </form>
+                            </td>
+
                             <td style={bodyCell}>
                               <span
                                 style={{
@@ -508,7 +689,43 @@ export default async function AdminAccountsPage() {
                                 {currentStatus}
                               </span>
                             </td>
+
                             <td style={bodyCell}>{account.created_at ?? "—"}</td>
+
+                            <td style={bodyCell}>
+                              <form action={updateAccountDetails} style={{ display: "grid", gap: "8px" }}>
+                                <input type="hidden" name="account_id" value={account.id} />
+                                <input
+                                  name="account_name"
+                                  defaultValue={account.account_name}
+                                  style={miniInput}
+                                  placeholder="Account Name"
+                                />
+                                <input
+                                  name="legal_name"
+                                  defaultValue={account.legal_name ?? ""}
+                                  placeholder="Legal Name"
+                                  style={miniInput}
+                                />
+                                <input
+                                  name="contact_name"
+                                  defaultValue={account.primary_contact_name ?? ""}
+                                  placeholder="Primary Contact"
+                                  style={miniInput}
+                                />
+                                <input
+                                  name="contact_email"
+                                  defaultValue={account.primary_contact_email ?? ""}
+                                  placeholder="Primary Email"
+                                  type="email"
+                                  style={miniInput}
+                                />
+                                <button type="submit" style={saveButton}>
+                                  Save Details
+                                </button>
+                              </form>
+                            </td>
+
                             <td style={bodyCell}>
                               <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                                 {availableActions.map((nextStatus) => (
@@ -547,7 +764,7 @@ export default async function AdminAccountsPage() {
                       })
                     ) : (
                       <tr>
-                        <td style={bodyCell} colSpan={7}>
+                        <td style={bodyCell} colSpan={8}>
                           No accounts found.
                         </td>
                       </tr>
@@ -588,6 +805,17 @@ const inputStyle: React.CSSProperties = {
   outline: "none",
 };
 
+const miniInput: React.CSSProperties = {
+  width: "100%",
+  padding: "9px 10px",
+  borderRadius: "10px",
+  border: "1px solid rgba(255,255,255,0.10)",
+  background: "rgba(255,255,255,0.05)",
+  color: "#f5f5f5",
+  outline: "none",
+  fontSize: "12px",
+};
+
 const primaryButton: React.CSSProperties = {
   marginTop: "4px",
   padding: "12px 16px",
@@ -595,6 +823,17 @@ const primaryButton: React.CSSProperties = {
   border: "1px solid rgba(212, 175, 55, 0.28)",
   background: "rgba(212, 175, 55, 0.14)",
   color: "#fff2c4",
+  fontWeight: 600,
+  cursor: "pointer",
+};
+
+const saveButton: React.CSSProperties = {
+  padding: "9px 12px",
+  borderRadius: "999px",
+  border: "1px solid rgba(212,175,55,0.35)",
+  background: "rgba(212,175,55,0.18)",
+  color: "#fff2c4",
+  fontSize: "12px",
   fontWeight: 600,
   cursor: "pointer",
 };
