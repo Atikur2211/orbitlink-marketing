@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
 
+export const revalidate = 30;
+
 type Incident = {
   id: string;
   title: string;
@@ -69,43 +71,39 @@ export default async function AdminNocPage() {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const [
-    incidentsRes,
-    failedJobsRes,
-    runningActionsRes,
-    openTicketsRes,
-  ] = await Promise.all([
-    (supabase as any)
-      .from("incidents")
-      .select("id, title, severity, status, opened_at")
-      .in("status", ["open", "investigating", "identified", "monitoring"])
-      .order("opened_at", { ascending: false })
-      .limit(10),
-    (supabase as any)
-      .from("job_runs")
-      .select("id, job_type, status, started_at, error_message")
-      .eq("status", "failed")
-      .order("started_at", { ascending: false })
-      .limit(10),
-    (supabase as any)
-      .from("scheduled_actions")
-      .select("id, entity_type, action_type, target_status, effective_date, status")
-      .in("status", ["scheduled", "queued", "running"])
-      .order("effective_date", { ascending: true })
-      .limit(10),
-    supabase
-      .from("tickets")
-      .select(`
-        id,
-        subject,
-        priority,
-        status,
-        accounts ( account_name )
-      `)
-      .in("status", ["new", "open", "waiting_customer", "escalated"])
-      .order("opened_at", { ascending: false })
-      .limit(10),
-  ]);
+  const [incidentsRes, failedJobsRes, runningActionsRes, openTicketsRes] =
+    await Promise.all([
+      (supabase as any)
+        .from("incidents")
+        .select("id, title, severity, status, opened_at")
+        .in("status", ["open", "investigating", "identified", "monitoring"])
+        .order("opened_at", { ascending: false })
+        .limit(10),
+      (supabase as any)
+        .from("job_runs")
+        .select("id, job_type, status, started_at, error_message")
+        .eq("status", "failed")
+        .order("started_at", { ascending: false })
+        .limit(10),
+      (supabase as any)
+        .from("scheduled_actions")
+        .select("id, entity_type, action_type, target_status, effective_date, status")
+        .in("status", ["scheduled", "queued", "running"])
+        .order("effective_date", { ascending: true })
+        .limit(10),
+      supabase
+        .from("tickets")
+        .select(`
+          id,
+          subject,
+          priority,
+          status,
+          accounts ( account_name )
+        `)
+        .in("status", ["new", "open", "waiting_customer", "escalated"])
+        .order("opened_at", { ascending: false })
+        .limit(10),
+    ]);
 
   const incidents = (incidentsRes.data as Incident[] | null) ?? [];
   const failedJobs = (failedJobsRes.data as JobRun[] | null) ?? [];
@@ -118,6 +116,8 @@ export default async function AdminNocPage() {
     { label: "Active Actions", value: runningActions.length, kind: "warn" as const },
     { label: "Open Tickets", value: openTickets.length, kind: "gold" as const },
   ];
+
+  const lastRefreshed = new Date().toISOString();
 
   return (
     <main
@@ -187,6 +187,17 @@ export default async function AdminNocPage() {
               Real-time operator view across incidents, failed automation, active
               scheduled actions, and open support demand.
             </p>
+
+            <div
+              style={{
+                marginTop: "14px",
+                fontSize: "12px",
+                color: "rgba(255,255,255,0.56)",
+                letterSpacing: "0.04em",
+              }}
+            >
+              Auto-refresh active · updates every 30 seconds · last rendered {lastRefreshed}
+            </div>
           </div>
         </section>
 
@@ -259,7 +270,14 @@ export default async function AdminNocPage() {
                       <div style={rowTitle}>{incident.title}</div>
                       <div style={rowMeta}>{incident.opened_at}</div>
                     </div>
-                    <span style={{ ...pillBase, ...badgeStyle(incident.severity === "critical" ? "danger" : "warn") }}>
+                    <span
+                      style={{
+                        ...pillBase,
+                        ...badgeStyle(
+                          incident.severity === "critical" ? "danger" : "warn"
+                        ),
+                      }}
+                    >
                       {incident.status}
                     </span>
                   </Link>
