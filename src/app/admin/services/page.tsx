@@ -10,8 +10,8 @@ type ServiceInstance = {
   activation_date: string | null;
   billing_start_date: string | null;
   account_id: string;
-  order_id?: string | null;
-  location_id?: string | null;
+  order_id: string | null;
+  location_id: string | null;
   accounts: { account_name: string }[] | null;
   locations: { location_name: string | null }[] | null;
   orders: { order_number: string }[] | null;
@@ -37,11 +37,14 @@ type OrderOption = {
   id: string;
   order_number: string;
   account_id: string;
+  location_id: string | null;
 };
 
 type LocationOption = {
   id: string;
   location_name: string | null;
+  address_line_1?: string | null;
+  city?: string | null;
   account_id: string;
 };
 
@@ -210,6 +213,18 @@ function getActionStyle(nextStatus: string): React.CSSProperties {
   }
 }
 
+function getLocationLabel(location: LocationOption | null | undefined) {
+  if (!location) return "—";
+  const name = location.location_name?.trim();
+  const address = location.address_line_1?.trim();
+  const city = location.city?.trim();
+  if (name && city) return `${name} · ${city}`;
+  if (name) return name;
+  if (address && city) return `${address} · ${city}`;
+  if (address) return address;
+  return "Unnamed location";
+}
+
 export default async function AdminServicesPage() {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -233,7 +248,23 @@ export default async function AdminServicesPage() {
     const activationDate = String(formData.get("activation_date") ?? "");
     const billingStartDate = String(formData.get("billing_start_date") ?? "");
 
-    if (!serviceName || !serviceType || !accountId) return;
+    if (!serviceName || !serviceType || !accountId || !locationId) return;
+
+    const { data: order } = orderId
+      ? await supabase
+          .from("orders")
+          .select("id, order_number, location_id")
+          .eq("id", orderId)
+          .single()
+      : { data: null };
+
+    const { data: location } = await supabase
+      .from("locations")
+      .select("id, location_name, address_line_1")
+      .eq("id", locationId)
+      .single();
+
+    const finalLocationId = order?.location_id || locationId || null;
 
     const { data: service, error } = await supabase
       .from("service_instances")
@@ -243,12 +274,14 @@ export default async function AdminServicesPage() {
         carrier: carrier || null,
         account_id: accountId,
         order_id: orderId || null,
-        location_id: locationId || null,
+        location_id: finalLocationId,
         activation_date: activationDate || null,
         billing_start_date: billingStartDate || null,
         status: "pending",
       })
-      .select("id, service_name, service_type, carrier, status, activation_date, billing_start_date")
+      .select(
+        "id, service_name, service_type, carrier, status, activation_date, billing_start_date, order_id, location_id"
+      )
       .single();
 
     if (error || !service) {
@@ -256,13 +289,17 @@ export default async function AdminServicesPage() {
       return;
     }
 
+    const locationLabel =
+      location?.location_name || location?.address_line_1 || "selected site";
+    const orderLabel = order?.order_number ? ` linked to ${order.order_number}` : "";
+
     await supabase.from("lifecycle_events").insert({
       account_id: accountId,
       entity_type: "service",
       entity_id: service.id,
       event_type: "service_created",
       event_label: "Service created",
-      notes: `Service created: ${service.service_name}`,
+      notes: `Service created: ${service.service_name} at ${locationLabel}${orderLabel}.`,
     });
 
     await (supabase as any).from("audit_logs").insert({
@@ -276,6 +313,8 @@ export default async function AdminServicesPage() {
         status: service.status,
         activation_date: service.activation_date,
         billing_start_date: service.billing_start_date,
+        order_id: service.order_id,
+        location_id: service.location_id,
       },
       source_interface: "admin_services_create",
     });
@@ -297,10 +336,12 @@ export default async function AdminServicesPage() {
     const serviceName = String(formData.get("service_name") ?? "").trim();
     const serviceType = String(formData.get("service_type") ?? "").trim();
     const carrier = String(formData.get("carrier") ?? "").trim();
+    const orderId = String(formData.get("order_id") ?? "");
+    const locationId = String(formData.get("location_id") ?? "");
     const activationDate = String(formData.get("activation_date") ?? "");
     const billingStartDate = String(formData.get("billing_start_date") ?? "");
 
-    if (!serviceId || !serviceName || !serviceType) return;
+    if (!serviceId || !serviceName || !serviceType || !locationId) return;
 
     const { data: before, error: beforeError } = await supabase
       .from("service_instances")
@@ -313,10 +354,28 @@ export default async function AdminServicesPage() {
       return;
     }
 
+    const { data: order } = orderId
+      ? await supabase
+          .from("orders")
+          .select("id, order_number, location_id")
+          .eq("id", orderId)
+          .single()
+      : { data: null };
+
+    const { data: location } = await supabase
+      .from("locations")
+      .select("id, location_name, address_line_1")
+      .eq("id", locationId)
+      .single();
+
+    const finalLocationId = order?.location_id || locationId || null;
+
     const beforeState = {
       service_name: before.service_name,
       service_type: before.service_type,
       carrier: before.carrier,
+      order_id: before.order_id,
+      location_id: before.location_id,
       activation_date: before.activation_date,
       billing_start_date: before.billing_start_date,
     };
@@ -325,6 +384,8 @@ export default async function AdminServicesPage() {
       service_name: serviceName,
       service_type: serviceType,
       carrier: carrier || null,
+      order_id: orderId || null,
+      location_id: finalLocationId,
       activation_date: activationDate || null,
       billing_start_date: billingStartDate || null,
     };
@@ -333,6 +394,8 @@ export default async function AdminServicesPage() {
       beforeState.service_name === afterState.service_name &&
       beforeState.service_type === afterState.service_type &&
       beforeState.carrier === afterState.carrier &&
+      beforeState.order_id === afterState.order_id &&
+      beforeState.location_id === afterState.location_id &&
       beforeState.activation_date === afterState.activation_date &&
       beforeState.billing_start_date === afterState.billing_start_date;
 
@@ -348,13 +411,17 @@ export default async function AdminServicesPage() {
       return;
     }
 
+    const locationLabel =
+      location?.location_name || location?.address_line_1 || "selected site";
+    const orderLabel = order?.order_number ? ` linked to ${order.order_number}` : "";
+
     await supabase.from("lifecycle_events").insert({
       account_id: before.account_id,
       entity_type: "service",
       entity_id: serviceId,
       event_type: "service_updated",
       event_label: "Service updated",
-      notes: `Service details updated: ${serviceName}`,
+      notes: `Service details updated: ${serviceName} at ${locationLabel}${orderLabel}.`,
     });
 
     await (supabase as any).from("audit_logs").insert({
@@ -382,6 +449,7 @@ export default async function AdminServicesPage() {
     const serviceId = String(formData.get("service_id") ?? "");
     const accountId = String(formData.get("account_id") ?? "");
     const serviceName = String(formData.get("service_name") ?? "");
+    const locationLabel = String(formData.get("location_label") ?? "");
     const currentStatus = String(formData.get("current_status") ?? "");
     const nextStatus = String(formData.get("next_status") ?? "");
 
@@ -406,7 +474,7 @@ export default async function AdminServicesPage() {
       entity_id: serviceId,
       event_type: meta.event_type,
       event_label: meta.event_label,
-      notes: `${serviceName} status changed from ${currentStatus || "unknown"} to ${nextStatus}.`,
+      notes: `${serviceName} at ${locationLabel || "site"} changed from ${currentStatus || "unknown"} to ${nextStatus}.`,
     });
 
     await (supabase as any).from("audit_logs").insert({
@@ -428,7 +496,7 @@ export default async function AdminServicesPage() {
           incident_type: incidentType,
           severity: "medium",
           status: "open",
-          summary: `${serviceName} moved to ${nextStatus}.`,
+          summary: `${serviceName} at ${locationLabel || "site"} moved to ${nextStatus}.`,
           notes: "Auto-created from service status change",
         })
         .select("id")
@@ -463,6 +531,7 @@ export default async function AdminServicesPage() {
     const serviceId = String(formData.get("service_id") ?? "");
     const accountId = String(formData.get("account_id") ?? "");
     const serviceName = String(formData.get("service_name") ?? "");
+    const locationLabel = String(formData.get("location_label") ?? "");
     const actionType = String(formData.get("action_type") ?? "");
     const targetStatus = String(formData.get("target_status") ?? "");
     const effectiveDate = String(formData.get("effective_date") ?? "");
@@ -514,7 +583,7 @@ export default async function AdminServicesPage() {
       entity_id: serviceId,
       event_type: meta.event_type,
       event_label: meta.event_label,
-      notes: `${serviceName} scheduled to ${actionType} (${targetStatus}) on ${effectiveDate}. Reason: ${reason || "No reason provided"}`,
+      notes: `${serviceName} at ${locationLabel || "site"} scheduled to ${actionType} (${targetStatus}) on ${effectiveDate}. Reason: ${reason || "No reason provided"}`,
     });
 
     await (supabase as any).from("audit_logs").insert({
@@ -583,13 +652,14 @@ export default async function AdminServicesPage() {
       .order("account_name", { ascending: true }),
     supabase
       .from("orders")
-      .select("id, order_number, account_id")
+      .select("id, order_number, account_id, location_id")
       .neq("status", "cancelled")
       .order("order_number", { ascending: true }),
     supabase
       .from("locations")
-      .select("id, location_name, account_id")
-      .order("location_name", { ascending: true }),
+      .select("id, location_name, address_line_1, city, account_id")
+      .neq("status", "archived")
+      .order("created_at", { ascending: false }),
   ]);
 
   const serviceList = (servicesData as ServiceInstance[] | null) ?? [];
@@ -614,7 +684,7 @@ export default async function AdminServicesPage() {
         color: "#f5f5f5",
       }}
     >
-      <div style={{ maxWidth: "1500px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1580px", margin: "0 auto" }}>
         <div
           style={{
             marginBottom: "28px",
@@ -657,13 +727,13 @@ export default async function AdminServicesPage() {
               fontSize: "15px",
               color: "rgba(255,255,255,0.72)",
               margin: 0,
-              maxWidth: "900px",
+              maxWidth: "960px",
               lineHeight: 1.65,
             }}
           >
-            Create services, manage live customer connectivity, edit operational
-            details, apply immediate service changes, and control future-dated
-            service actions from one premium operator-grade surface.
+            Create services against real customer sites, connect them to source
+            orders, manage live connectivity posture, and control future-dated
+            service actions from one premium location-linked operator surface.
           </p>
         </div>
 
@@ -784,7 +854,7 @@ export default async function AdminServicesPage() {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr 1fr 1fr",
+                  gridTemplateColumns: "1fr 1.2fr 1fr 1fr",
                   gap: "12px",
                 }}
               >
@@ -797,11 +867,11 @@ export default async function AdminServicesPage() {
                   ))}
                 </select>
 
-                <select name="location_id" style={textInput}>
-                  <option value="">Optional Location</option>
+                <select name="location_id" required style={textInput}>
+                  <option value="">Select Location</option>
                   {locationOptions.map((location) => (
                     <option key={location.id} value={location.id}>
-                      {location.location_name ?? "Unnamed location"}
+                      {getLocationLabel(location)}
                     </option>
                   ))}
                 </select>
@@ -875,7 +945,7 @@ export default async function AdminServicesPage() {
                 style={{
                   width: "100%",
                   borderCollapse: "collapse",
-                  minWidth: "2050px",
+                  minWidth: "2350px",
                 }}
               >
                 <thead>
@@ -890,6 +960,8 @@ export default async function AdminServicesPage() {
                     <th style={headerCell}>Account</th>
                     <th style={headerCell}>Location</th>
                     <th style={headerCell}>Order</th>
+                    <th style={headerCell}>Reassign Location</th>
+                    <th style={headerCell}>Reassign Order</th>
                     <th style={headerCell}>Carrier</th>
                     <th style={headerCell}>Activated</th>
                     <th style={headerCell}>Billing Start</th>
@@ -910,6 +982,8 @@ export default async function AdminServicesPage() {
                         (item) => item.entity_id === service.id
                       );
                       const currentStatus = service.status ?? "pending";
+                      const currentLocationLabel =
+                        service.locations?.[0]?.location_name ?? "Site not linked";
 
                       return (
                         <tr
@@ -930,6 +1004,16 @@ export default async function AdminServicesPage() {
                                 type="hidden"
                                 name="carrier"
                                 value={service.carrier ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="order_id"
+                                value={service.order_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="location_id"
+                                value={service.location_id ?? ""}
                               />
                               <input
                                 type="hidden"
@@ -964,6 +1048,16 @@ export default async function AdminServicesPage() {
                               />
                               <input
                                 type="hidden"
+                                name="order_id"
+                                value={service.order_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="location_id"
+                                value={service.location_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
                                 name="activation_date"
                                 value={service.activation_date ?? ""}
                               />
@@ -985,7 +1079,9 @@ export default async function AdminServicesPage() {
                           </td>
 
                           <td style={bodyCell}>
-                            {service.locations?.[0]?.location_name ?? "—"}
+                            <div style={{ color: "#fff2c4", fontWeight: 600 }}>
+                              {service.locations?.[0]?.location_name ?? "—"}
+                            </div>
                           </td>
 
                           <td style={bodyCell}>
@@ -1004,6 +1100,116 @@ export default async function AdminServicesPage() {
                                 type="hidden"
                                 name="service_type"
                                 value={service.service_type}
+                              />
+                              <input
+                                type="hidden"
+                                name="carrier"
+                                value={service.carrier ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="order_id"
+                                value={service.order_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="activation_date"
+                                value={service.activation_date ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="billing_start_date"
+                                value={service.billing_start_date ?? ""}
+                              />
+                              <select
+                                name="location_id"
+                                defaultValue={service.location_id ?? ""}
+                                style={textInput}
+                              >
+                                <option value="">Select Location</option>
+                                {locationOptions
+                                  .filter((location) => location.account_id === service.account_id)
+                                  .map((location) => (
+                                    <option key={location.id} value={location.id}>
+                                      {getLocationLabel(location)}
+                                    </option>
+                                  ))}
+                              </select>
+                            </form>
+                          </td>
+
+                          <td style={bodyCell}>
+                            <form action={updateServiceDetails}>
+                              <input type="hidden" name="service_id" value={service.id} />
+                              <input
+                                type="hidden"
+                                name="service_name"
+                                value={service.service_name}
+                              />
+                              <input
+                                type="hidden"
+                                name="service_type"
+                                value={service.service_type}
+                              />
+                              <input
+                                type="hidden"
+                                name="carrier"
+                                value={service.carrier ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="location_id"
+                                value={service.location_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="activation_date"
+                                value={service.activation_date ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="billing_start_date"
+                                value={service.billing_start_date ?? ""}
+                              />
+                              <select
+                                name="order_id"
+                                defaultValue={service.order_id ?? ""}
+                                style={textInput}
+                              >
+                                <option value="">Optional Order</option>
+                                {orderOptions
+                                  .filter((order) => order.account_id === service.account_id)
+                                  .map((order) => (
+                                    <option key={order.id} value={order.id}>
+                                      {order.order_number}
+                                    </option>
+                                  ))}
+                              </select>
+                            </form>
+                          </td>
+
+                          <td style={bodyCell}>
+                            <form action={updateServiceDetails}>
+                              <input type="hidden" name="service_id" value={service.id} />
+                              <input
+                                type="hidden"
+                                name="service_name"
+                                value={service.service_name}
+                              />
+                              <input
+                                type="hidden"
+                                name="service_type"
+                                value={service.service_type}
+                              />
+                              <input
+                                type="hidden"
+                                name="order_id"
+                                value={service.order_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="location_id"
+                                value={service.location_id ?? ""}
                               />
                               <input
                                 type="hidden"
@@ -1043,6 +1249,16 @@ export default async function AdminServicesPage() {
                               />
                               <input
                                 type="hidden"
+                                name="order_id"
+                                value={service.order_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="location_id"
+                                value={service.location_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
                                 name="billing_start_date"
                                 value={service.billing_start_date ?? ""}
                               />
@@ -1072,6 +1288,16 @@ export default async function AdminServicesPage() {
                                 type="hidden"
                                 name="carrier"
                                 value={service.carrier ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="order_id"
+                                value={service.order_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="location_id"
+                                value={service.location_id ?? ""}
                               />
                               <input
                                 type="hidden"
@@ -1112,6 +1338,7 @@ export default async function AdminServicesPage() {
                                     <input type="hidden" name="service_id" value={service.id} />
                                     <input type="hidden" name="account_id" value={service.account_id} />
                                     <input type="hidden" name="service_name" value={service.service_name} />
+                                    <input type="hidden" name="location_label" value={currentLocationLabel} />
                                     <input type="hidden" name="current_status" value={currentStatus} />
                                     <input type="hidden" name="next_status" value={nextStatus} />
                                     <button style={getActionStyle(nextStatus)} type="submit">
@@ -1189,6 +1416,7 @@ export default async function AdminServicesPage() {
                                   <input type="hidden" name="service_id" value={service.id} />
                                   <input type="hidden" name="account_id" value={service.account_id} />
                                   <input type="hidden" name="service_name" value={service.service_name} />
+                                  <input type="hidden" name="location_label" value={currentLocationLabel} />
                                   <input type="hidden" name="action_type" value="suspend" />
                                   <input type="hidden" name="target_status" value="suspended" />
                                   <input type="date" name="effective_date" required style={dateInput} />
@@ -1203,6 +1431,7 @@ export default async function AdminServicesPage() {
                                 <input type="hidden" name="service_id" value={service.id} />
                                 <input type="hidden" name="account_id" value={service.account_id} />
                                 <input type="hidden" name="service_name" value={service.service_name} />
+                                <input type="hidden" name="location_label" value={currentLocationLabel} />
                                 <input type="hidden" name="action_type" value="terminate" />
                                 <input type="hidden" name="target_status" value="terminated" />
                                 <input type="date" name="effective_date" required style={dateInput} />
@@ -1217,6 +1446,7 @@ export default async function AdminServicesPage() {
                                   <input type="hidden" name="service_id" value={service.id} />
                                   <input type="hidden" name="account_id" value={service.account_id} />
                                   <input type="hidden" name="service_name" value={service.service_name} />
+                                  <input type="hidden" name="location_label" value={currentLocationLabel} />
                                   <input type="hidden" name="action_type" value="activate" />
                                   <input type="hidden" name="target_status" value="active" />
                                   <input type="date" name="effective_date" required style={dateInput} />
@@ -1230,7 +1460,7 @@ export default async function AdminServicesPage() {
                           </td>
 
                           <td style={bodyCell}>
-                            <form action={updateServiceDetails} style={{ display: "grid", gap: "8px", minWidth: "180px" }}>
+                            <form action={updateServiceDetails} style={{ display: "grid", gap: "8px", minWidth: "240px" }}>
                               <input type="hidden" name="service_id" value={service.id} />
                               <input
                                 name="service_name"
@@ -1242,6 +1472,34 @@ export default async function AdminServicesPage() {
                                 defaultValue={service.service_type}
                                 style={textInput}
                               />
+                              <select
+                                name="location_id"
+                                defaultValue={service.location_id ?? ""}
+                                style={textInput}
+                              >
+                                <option value="">Select Location</option>
+                                {locationOptions
+                                  .filter((location) => location.account_id === service.account_id)
+                                  .map((location) => (
+                                    <option key={location.id} value={location.id}>
+                                      {getLocationLabel(location)}
+                                    </option>
+                                  ))}
+                              </select>
+                              <select
+                                name="order_id"
+                                defaultValue={service.order_id ?? ""}
+                                style={textInput}
+                              >
+                                <option value="">Optional Order</option>
+                                {orderOptions
+                                  .filter((order) => order.account_id === service.account_id)
+                                  .map((order) => (
+                                    <option key={order.id} value={order.id}>
+                                      {order.order_number}
+                                    </option>
+                                  ))}
+                              </select>
                               <input
                                 name="carrier"
                                 defaultValue={service.carrier ?? ""}
@@ -1269,7 +1527,7 @@ export default async function AdminServicesPage() {
                     })
                   ) : (
                     <tr>
-                      <td style={bodyCell} colSpan={13}>
+                      <td style={bodyCell} colSpan={15}>
                         No services found.
                       </td>
                     </tr>
