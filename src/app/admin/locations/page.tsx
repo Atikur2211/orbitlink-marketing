@@ -13,6 +13,9 @@ type Location = {
   status: string | null;
   account_id: string;
   accounts: { account_name: string }[] | null;
+  orders: { id: string }[] | null;
+  service_instances: { id: string }[] | null;
+  tickets: { id: string; status: string | null }[] | null;
 };
 
 type AccountOption = {
@@ -73,6 +76,58 @@ function getAvailableActions(currentStatus: string) {
   if (currentStatus === "inactive") return ["active", "archived"];
   if (currentStatus === "pending") return ["active", "inactive", "archived"];
   return ["active"];
+}
+
+function getOpsCountStyle(count: number, tone: "neutral" | "success" | "danger"): React.CSSProperties {
+  if (tone === "danger") {
+    return {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minWidth: "32px",
+      padding: "6px 10px",
+      borderRadius: "999px",
+      background: count > 0 ? "rgba(255, 99, 71, 0.12)" : "rgba(255,255,255,0.05)",
+      border: count > 0
+        ? "1px solid rgba(255, 99, 71, 0.28)"
+        : "1px solid rgba(255,255,255,0.12)",
+      color: count > 0 ? "#ffb29b" : "#d8d8d8",
+      fontWeight: 700,
+      fontSize: "12px",
+    };
+  }
+
+  if (tone === "success") {
+    return {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minWidth: "32px",
+      padding: "6px 10px",
+      borderRadius: "999px",
+      background: count > 0 ? "rgba(212, 175, 55, 0.16)" : "rgba(255,255,255,0.05)",
+      border: count > 0
+        ? "1px solid rgba(212, 175, 55, 0.34)"
+        : "1px solid rgba(255,255,255,0.12)",
+      color: count > 0 ? "#fff2c4" : "#d8d8d8",
+      fontWeight: 700,
+      fontSize: "12px",
+    };
+  }
+
+  return {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    minWidth: "32px",
+    padding: "6px 10px",
+    borderRadius: "999px",
+    background: "rgba(255,255,255,0.05)",
+    border: "1px solid rgba(255,255,255,0.12)",
+    color: "#f5f5f5",
+    fontWeight: 700,
+    fontSize: "12px",
+  };
 }
 
 export default async function AdminLocationsPage() {
@@ -322,7 +377,10 @@ export default async function AdminLocationsPage() {
         contact_phone,
         status,
         account_id,
-        accounts ( account_name )
+        accounts ( account_name ),
+        orders ( id ),
+        service_instances ( id ),
+        tickets ( id, status )
       `)
       .order("created_at", { ascending: false }),
     supabase
@@ -351,7 +409,7 @@ export default async function AdminLocationsPage() {
         color: "#f5f5f5",
       }}
     >
-      <div style={{ maxWidth: "1500px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1560px", margin: "0 auto" }}>
         <section
           style={{
             marginBottom: "28px",
@@ -394,12 +452,13 @@ export default async function AdminLocationsPage() {
               fontSize: "15px",
               color: "rgba(255,255,255,0.72)",
               margin: 0,
-              maxWidth: "900px",
+              maxWidth: "980px",
               lineHeight: 1.65,
             }}
           >
-            Create sites, manage service addresses, update site contacts, and
-            control location lifecycle from one premium operator-grade surface.
+            Create sites, manage service addresses, update site contacts, and review
+            operational load by location across orders, services, and support demand
+            from one premium operator-grade surface.
           </p>
         </section>
 
@@ -592,7 +651,7 @@ export default async function AdminLocationsPage() {
                 style={{
                   width: "100%",
                   borderCollapse: "collapse",
-                  minWidth: "1800px",
+                  minWidth: "2200px",
                 }}
               >
                 <thead>
@@ -605,6 +664,9 @@ export default async function AdminLocationsPage() {
                     <th style={headerCell}>Postal Code</th>
                     <th style={headerCell}>Site Contact</th>
                     <th style={headerCell}>Phone</th>
+                    <th style={headerCell}>Orders</th>
+                    <th style={headerCell}>Services</th>
+                    <th style={headerCell}>Open Tickets</th>
                     <th style={headerCell}>Status</th>
                     <th style={headerCell}>Immediate Actions</th>
                     <th style={headerCell}>Save Details</th>
@@ -616,6 +678,15 @@ export default async function AdminLocationsPage() {
                     locations.map((location) => {
                       const currentStatus = location.status ?? "active";
                       const availableActions = getAvailableActions(currentStatus);
+
+                      const ordersCount = location.orders?.length ?? 0;
+                      const servicesCount = location.service_instances?.length ?? 0;
+                      const openTicketsCount =
+                        location.tickets?.filter((ticket) =>
+                          ["new", "open", "waiting_customer", "escalated"].includes(
+                            ticket.status ?? ""
+                          )
+                        ).length ?? 0;
 
                       return (
                         <tr
@@ -750,6 +821,24 @@ export default async function AdminLocationsPage() {
                           </td>
 
                           <td style={bodyCell}>
+                            <span style={getOpsCountStyle(ordersCount, "neutral")}>
+                              {ordersCount}
+                            </span>
+                          </td>
+
+                          <td style={bodyCell}>
+                            <span style={getOpsCountStyle(servicesCount, "success")}>
+                              {servicesCount}
+                            </span>
+                          </td>
+
+                          <td style={bodyCell}>
+                            <span style={getOpsCountStyle(openTicketsCount, "danger")}>
+                              {openTicketsCount}
+                            </span>
+                          </td>
+
+                          <td style={bodyCell}>
                             <span
                               style={{
                                 display: "inline-flex",
@@ -811,7 +900,7 @@ export default async function AdminLocationsPage() {
                           </td>
 
                           <td style={bodyCell}>
-                            <form action={updateLocationDetails} style={{ display: "grid", gap: "8px", minWidth: "200px" }}>
+                            <form action={updateLocationDetails} style={{ display: "grid", gap: "8px", minWidth: "220px" }}>
                               <input type="hidden" name="location_id" value={location.id} />
                               <input
                                 name="location_name"
@@ -865,7 +954,7 @@ export default async function AdminLocationsPage() {
                     })
                   ) : (
                     <tr>
-                      <td style={bodyCell} colSpan={11}>
+                      <td style={bodyCell} colSpan={14}>
                         No locations found.
                       </td>
                     </tr>
