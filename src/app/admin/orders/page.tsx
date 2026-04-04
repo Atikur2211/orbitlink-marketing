@@ -9,6 +9,8 @@ type Order = {
   activation_target_date: string | null;
   notes: string | null;
   account_id: string;
+  location_id: string | null;
+  quote_id: string | null;
   accounts: { account_name: string }[] | null;
   locations: { location_name: string | null }[] | null;
   quotes: { quote_number: string }[] | null;
@@ -28,6 +30,20 @@ type ScheduledAction = {
 type AccountOption = {
   id: string;
   account_name: string;
+};
+
+type LocationOption = {
+  id: string;
+  account_id: string;
+  location_name: string | null;
+  address_line_1: string;
+  city: string | null;
+};
+
+type QuoteOption = {
+  id: string;
+  account_id: string;
+  quote_number: string;
 };
 
 function getStatusStyles(status: string | null) {
@@ -80,7 +96,7 @@ function getStatusStyles(status: string | null) {
         border: "1px solid rgba(255, 255, 255, 0.12)",
         color: "#d8d8d8",
       };
-  };
+  }
 }
 
 function getScheduledActionBadge(status: string | null) {
@@ -179,6 +195,16 @@ function getScheduledEventMeta(actionType: string) {
   }
 }
 
+function getLocationLabel(location: LocationOption | null | undefined) {
+  if (!location) return "—";
+  const name = location.location_name?.trim();
+  const city = location.city?.trim();
+  if (name && city) return `${name} · ${city}`;
+  if (name) return name;
+  if (city) return `${location.address_line_1} · ${city}`;
+  return location.address_line_1;
+}
+
 export default async function AdminOrdersPage() {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -195,23 +221,35 @@ export default async function AdminOrdersPage() {
 
     const orderNumber = String(formData.get("order_number") ?? "").trim();
     const accountId = String(formData.get("account_id") ?? "");
+    const locationId = String(formData.get("location_id") ?? "");
+    const quoteId = String(formData.get("quote_id") ?? "");
     const notes = String(formData.get("notes") ?? "").trim();
     const installTargetDate = String(formData.get("install_target_date") ?? "");
     const activationTargetDate = String(formData.get("activation_target_date") ?? "");
 
-    if (!orderNumber || !accountId) return;
+    if (!orderNumber || !accountId || !locationId) return;
+
+    const { data: location } = await supabase
+      .from("locations")
+      .select("id, location_name, address_line_1, city")
+      .eq("id", locationId)
+      .single();
 
     const { data: order, error } = await supabase
       .from("orders")
       .insert({
         order_number: orderNumber,
         account_id: accountId,
+        location_id: locationId,
+        quote_id: quoteId || null,
         status: "submitted",
         notes: notes || null,
         install_target_date: installTargetDate || null,
         activation_target_date: activationTargetDate || null,
       })
-      .select("id, order_number, status, notes, install_target_date, activation_target_date")
+      .select(
+        "id, order_number, status, notes, install_target_date, activation_target_date, location_id, quote_id"
+      )
       .single();
 
     if (error || !order) {
@@ -219,13 +257,16 @@ export default async function AdminOrdersPage() {
       return;
     }
 
+    const locationLabel =
+      location?.location_name || location?.address_line_1 || "selected site";
+
     await supabase.from("lifecycle_events").insert({
       account_id: accountId,
       entity_type: "order",
       entity_id: order.id,
       event_type: "order_created",
       event_label: "Order created",
-      notes: `Order ${order.order_number} created.`,
+      notes: `Order ${order.order_number} created for ${locationLabel}.`,
     });
 
     await (supabase as any).from("audit_logs").insert({
@@ -238,6 +279,8 @@ export default async function AdminOrdersPage() {
         notes: order.notes,
         install_target_date: order.install_target_date,
         activation_target_date: order.activation_target_date,
+        location_id: order.location_id,
+        quote_id: order.quote_id,
       },
       source_interface: "admin_orders_create",
     });
@@ -256,11 +299,13 @@ export default async function AdminOrdersPage() {
     );
 
     const orderId = String(formData.get("order_id") ?? "");
+    const locationId = String(formData.get("location_id") ?? "");
+    const quoteId = String(formData.get("quote_id") ?? "");
     const installDate = String(formData.get("install_target_date") ?? "");
     const activationDate = String(formData.get("activation_target_date") ?? "");
     const notes = String(formData.get("notes") ?? "").trim();
 
-    if (!orderId) return;
+    if (!orderId || !locationId) return;
 
     const { data: before, error: beforeError } = await supabase
       .from("orders")
@@ -273,19 +318,31 @@ export default async function AdminOrdersPage() {
       return;
     }
 
+    const { data: location } = await supabase
+      .from("locations")
+      .select("id, location_name, address_line_1")
+      .eq("id", locationId)
+      .single();
+
     const beforeState = {
+      location_id: before.location_id ?? null,
+      quote_id: before.quote_id ?? null,
       install_target_date: before.install_target_date,
       activation_target_date: before.activation_target_date,
       notes: before.notes,
     };
 
     const afterState = {
+      location_id: locationId || null,
+      quote_id: quoteId || null,
       install_target_date: installDate || null,
       activation_target_date: activationDate || null,
       notes: notes || null,
     };
 
     const noChanges =
+      beforeState.location_id === afterState.location_id &&
+      beforeState.quote_id === afterState.quote_id &&
       beforeState.install_target_date === afterState.install_target_date &&
       beforeState.activation_target_date === afterState.activation_target_date &&
       beforeState.notes === afterState.notes;
@@ -302,13 +359,16 @@ export default async function AdminOrdersPage() {
       return;
     }
 
+    const locationLabel =
+      location?.location_name || location?.address_line_1 || "selected site";
+
     await supabase.from("lifecycle_events").insert({
       account_id: before.account_id,
       entity_type: "order",
       entity_id: orderId,
       event_type: "order_updated",
       event_label: "Order updated",
-      notes: `Order ${before.order_number} details updated.`,
+      notes: `Order ${before.order_number} details updated for ${locationLabel}.`,
     });
 
     await (supabase as any).from("audit_logs").insert({
@@ -336,6 +396,7 @@ export default async function AdminOrdersPage() {
     const orderId = String(formData.get("order_id") ?? "");
     const accountId = String(formData.get("account_id") ?? "");
     const orderNumber = String(formData.get("order_number") ?? "");
+    const locationLabel = String(formData.get("location_label") ?? "");
     const currentStatus = String(formData.get("current_status") ?? "");
     const nextStatus = String(formData.get("next_status") ?? "");
 
@@ -360,7 +421,7 @@ export default async function AdminOrdersPage() {
       entity_id: orderId,
       event_type: meta.event_type,
       event_label: meta.event_label,
-      notes: `Order ${orderNumber} status changed from ${currentStatus || "unknown"} to ${nextStatus}.`,
+      notes: `Order ${orderNumber} at ${locationLabel || "site"} changed from ${currentStatus || "unknown"} to ${nextStatus}.`,
     });
 
     await (supabase as any).from("audit_logs").insert({
@@ -388,6 +449,7 @@ export default async function AdminOrdersPage() {
     const orderId = String(formData.get("order_id") ?? "");
     const accountId = String(formData.get("account_id") ?? "");
     const orderNumber = String(formData.get("order_number") ?? "");
+    const locationLabel = String(formData.get("location_label") ?? "");
     const actionType = String(formData.get("action_type") ?? "");
     const targetStatus = String(formData.get("target_status") ?? "");
     const effectiveDate = String(formData.get("effective_date") ?? "");
@@ -439,7 +501,7 @@ export default async function AdminOrdersPage() {
       entity_id: orderId,
       event_type: meta.event_type,
       event_label: meta.event_label,
-      notes: `${orderNumber} scheduled to ${actionType} (${targetStatus}) on ${effectiveDate}. Reason: ${reason || "No reason provided"}`,
+      notes: `${orderNumber} at ${locationLabel || "site"} scheduled to ${actionType} (${targetStatus}) on ${effectiveDate}. Reason: ${reason || "No reason provided"}`,
     });
 
     await (supabase as any).from("audit_logs").insert({
@@ -462,47 +524,65 @@ export default async function AdminOrdersPage() {
     revalidatePath("/admin/dashboard");
   }
 
-  const [{ data: ordersData, error }, { data: scheduledData }, { data: accountsData }] =
-    await Promise.all([
-      supabase
-        .from("orders")
-        .select(`
-          id,
-          order_number,
-          status,
-          install_target_date,
-          activation_target_date,
-          notes,
-          account_id,
-          accounts ( account_name ),
-          locations ( location_name ),
-          quotes ( quote_number )
-        `)
-        .order("created_at", { ascending: false }),
-      supabase
-        .from("scheduled_actions")
-        .select(`
-          id,
-          entity_type,
-          entity_id,
-          action_type,
-          target_status,
-          effective_date,
-          reason,
-          status
-        `)
-        .eq("entity_type", "order")
-        .order("effective_date", { ascending: true }),
-      supabase
-        .from("accounts")
-        .select("id, account_name")
-        .neq("status", "archived")
-        .order("account_name", { ascending: true }),
-    ]);
+  const [
+    { data: ordersData, error },
+    { data: scheduledData },
+    { data: accountsData },
+    { data: locationsData },
+    { data: quotesData },
+  ] = await Promise.all([
+    supabase
+      .from("orders")
+      .select(`
+        id,
+        order_number,
+        status,
+        install_target_date,
+        activation_target_date,
+        notes,
+        account_id,
+        location_id,
+        quote_id,
+        accounts ( account_name ),
+        locations ( location_name ),
+        quotes ( quote_number )
+      `)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("scheduled_actions")
+      .select(`
+        id,
+        entity_type,
+        entity_id,
+        action_type,
+        target_status,
+        effective_date,
+        reason,
+        status
+      `)
+      .eq("entity_type", "order")
+      .order("effective_date", { ascending: true }),
+    supabase
+      .from("accounts")
+      .select("id, account_name")
+      .neq("status", "archived")
+      .order("account_name", { ascending: true }),
+    supabase
+      .from("locations")
+      .select("id, account_id, location_name, address_line_1, city")
+      .neq("status", "archived")
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("quotes")
+      .select("id, account_id, quote_number")
+      .order("created_at", { ascending: false }),
+  ]);
 
   const orderList = (ordersData as Order[] | null) ?? [];
   const scheduledActions = (scheduledData as ScheduledAction[] | null) ?? [];
   const accountOptions = (accountsData as AccountOption[] | null) ?? [];
+  const locationOptions = (locationsData as LocationOption[] | null) ?? [];
+  const quoteOptions = (quotesData as QuoteOption[] | null) ?? [];
 
   const totalOrders = orderList.length;
   const submittedOrders = orderList.filter((order) => order.status === "submitted").length;
@@ -519,7 +599,7 @@ export default async function AdminOrdersPage() {
         color: "#f5f5f5",
       }}
     >
-      <div style={{ maxWidth: "1480px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1540px", margin: "0 auto" }}>
         <div
           style={{
             marginBottom: "28px",
@@ -562,13 +642,13 @@ export default async function AdminOrdersPage() {
               fontSize: "15px",
               color: "rgba(255,255,255,0.72)",
               margin: 0,
-              maxWidth: "840px",
+              maxWidth: "900px",
               lineHeight: 1.6,
             }}
           >
-            Create orders, edit operational details, track install progression,
+            Create orders against real customer sites, track install progression,
             manage activation readiness, and schedule future-dated actions from one
-            premium operator surface.
+            premium location-linked operator surface.
           </p>
         </div>
 
@@ -654,7 +734,7 @@ export default async function AdminOrdersPage() {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1.1fr 1fr 1fr 1fr",
+                  gridTemplateColumns: "1.1fr 1fr 1.2fr 1fr",
                   gap: "12px",
                 }}
               >
@@ -674,6 +754,32 @@ export default async function AdminOrdersPage() {
                   ))}
                 </select>
 
+                <select name="location_id" required style={textInput}>
+                  <option value="">Select Location</option>
+                  {locationOptions.map((location) => (
+                    <option key={location.id} value={location.id}>
+                      {getLocationLabel(location)}
+                    </option>
+                  ))}
+                </select>
+
+                <select name="quote_id" style={textInput}>
+                  <option value="">Optional Quote</option>
+                  {quoteOptions.map((quote) => (
+                    <option key={quote.id} value={quote.id}>
+                      {quote.quote_number}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr 1.4fr",
+                  gap: "12px",
+                }}
+              >
                 <input
                   name="install_target_date"
                   type="date"
@@ -685,13 +791,13 @@ export default async function AdminOrdersPage() {
                   type="date"
                   style={dateInput}
                 />
-              </div>
 
-              <input
-                name="notes"
-                placeholder="Order notes"
-                style={textInput}
-              />
+                <input
+                  name="notes"
+                  placeholder="Order notes"
+                  style={textInput}
+                />
+              </div>
 
               <div>
                 <button style={actionButtonGold} type="submit">
@@ -749,7 +855,7 @@ export default async function AdminOrdersPage() {
                 style={{
                   width: "100%",
                   borderCollapse: "collapse",
-                  minWidth: "1900px",
+                  minWidth: "2150px",
                 }}
               >
                 <thead>
@@ -763,6 +869,8 @@ export default async function AdminOrdersPage() {
                     <th style={headerCell}>Account</th>
                     <th style={headerCell}>Location</th>
                     <th style={headerCell}>Quote</th>
+                    <th style={headerCell}>Reassign Location</th>
+                    <th style={headerCell}>Reassign Quote</th>
                     <th style={headerCell}>Install Target</th>
                     <th style={headerCell}>Activation Target</th>
                     <th style={headerCell}>Editable Notes</th>
@@ -782,6 +890,8 @@ export default async function AdminOrdersPage() {
                         (item) => item.entity_id === order.id
                       );
                       const currentStatus = order.status ?? "submitted";
+                      const currentLocationLabel =
+                        order.locations?.[0]?.location_name ?? "Site not linked";
 
                       return (
                         <tr
@@ -801,7 +911,9 @@ export default async function AdminOrdersPage() {
                           </td>
 
                           <td style={bodyCell}>
-                            {order.locations?.[0]?.location_name ?? "—"}
+                            <div style={{ color: "#fff2c4", fontWeight: 600 }}>
+                              {order.locations?.[0]?.location_name ?? "—"}
+                            </div>
                           </td>
 
                           <td style={bodyCell}>
@@ -811,6 +923,96 @@ export default async function AdminOrdersPage() {
                           <td style={bodyCell}>
                             <form action={updateOrderDetails}>
                               <input type="hidden" name="order_id" value={order.id} />
+                              <input
+                                type="hidden"
+                                name="quote_id"
+                                value={order.quote_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="install_target_date"
+                                value={order.install_target_date ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="activation_target_date"
+                                value={order.activation_target_date ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="notes"
+                                value={order.notes ?? ""}
+                              />
+                              <select
+                                name="location_id"
+                                defaultValue={order.location_id ?? ""}
+                                style={textInput}
+                              >
+                                <option value="">Select Location</option>
+                                {locationOptions
+                                  .filter((location) => location.account_id === order.account_id)
+                                  .map((location) => (
+                                    <option key={location.id} value={location.id}>
+                                      {getLocationLabel(location)}
+                                    </option>
+                                  ))}
+                              </select>
+                            </form>
+                          </td>
+
+                          <td style={bodyCell}>
+                            <form action={updateOrderDetails}>
+                              <input type="hidden" name="order_id" value={order.id} />
+                              <input
+                                type="hidden"
+                                name="location_id"
+                                value={order.location_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="install_target_date"
+                                value={order.install_target_date ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="activation_target_date"
+                                value={order.activation_target_date ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="notes"
+                                value={order.notes ?? ""}
+                              />
+                              <select
+                                name="quote_id"
+                                defaultValue={order.quote_id ?? ""}
+                                style={textInput}
+                              >
+                                <option value="">Optional Quote</option>
+                                {quoteOptions
+                                  .filter((quote) => quote.account_id === order.account_id)
+                                  .map((quote) => (
+                                    <option key={quote.id} value={quote.id}>
+                                      {quote.quote_number}
+                                    </option>
+                                  ))}
+                              </select>
+                            </form>
+                          </td>
+
+                          <td style={bodyCell}>
+                            <form action={updateOrderDetails}>
+                              <input type="hidden" name="order_id" value={order.id} />
+                              <input
+                                type="hidden"
+                                name="location_id"
+                                value={order.location_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="quote_id"
+                                value={order.quote_id ?? ""}
+                              />
                               <input
                                 type="hidden"
                                 name="activation_target_date"
@@ -835,6 +1037,16 @@ export default async function AdminOrdersPage() {
                               <input type="hidden" name="order_id" value={order.id} />
                               <input
                                 type="hidden"
+                                name="location_id"
+                                value={order.location_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="quote_id"
+                                value={order.quote_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
                                 name="install_target_date"
                                 value={order.install_target_date ?? ""}
                               />
@@ -855,6 +1067,16 @@ export default async function AdminOrdersPage() {
                           <td style={bodyCell}>
                             <form action={updateOrderDetails}>
                               <input type="hidden" name="order_id" value={order.id} />
+                              <input
+                                type="hidden"
+                                name="location_id"
+                                value={order.location_id ?? ""}
+                              />
+                              <input
+                                type="hidden"
+                                name="quote_id"
+                                value={order.quote_id ?? ""}
+                              />
                               <input
                                 type="hidden"
                                 name="install_target_date"
@@ -900,6 +1122,7 @@ export default async function AdminOrdersPage() {
                                   <input type="hidden" name="order_id" value={order.id} />
                                   <input type="hidden" name="account_id" value={order.account_id} />
                                   <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="location_label" value={currentLocationLabel} />
                                   <input type="hidden" name="current_status" value={currentStatus} />
                                   <input type="hidden" name="next_status" value="scheduled" />
                                   <button style={actionButton} type="submit">
@@ -915,6 +1138,7 @@ export default async function AdminOrdersPage() {
                                   <input type="hidden" name="order_id" value={order.id} />
                                   <input type="hidden" name="account_id" value={order.account_id} />
                                   <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="location_label" value={currentLocationLabel} />
                                   <input type="hidden" name="current_status" value={currentStatus} />
                                   <input type="hidden" name="next_status" value="installing" />
                                   <button style={actionButton} type="submit">
@@ -928,6 +1152,7 @@ export default async function AdminOrdersPage() {
                                   <input type="hidden" name="order_id" value={order.id} />
                                   <input type="hidden" name="account_id" value={order.account_id} />
                                   <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="location_label" value={currentLocationLabel} />
                                   <input type="hidden" name="current_status" value={currentStatus} />
                                   <input type="hidden" name="next_status" value="activated" />
                                   <button style={actionButtonGold} type="submit">
@@ -941,6 +1166,7 @@ export default async function AdminOrdersPage() {
                                   <input type="hidden" name="order_id" value={order.id} />
                                   <input type="hidden" name="account_id" value={order.account_id} />
                                   <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="location_label" value={currentLocationLabel} />
                                   <input type="hidden" name="current_status" value={currentStatus} />
                                   <input type="hidden" name="next_status" value="cancelled" />
                                   <button style={actionButtonDanger} type="submit">
@@ -1031,6 +1257,7 @@ export default async function AdminOrdersPage() {
                                   <input type="hidden" name="order_id" value={order.id} />
                                   <input type="hidden" name="account_id" value={order.account_id} />
                                   <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="location_label" value={currentLocationLabel} />
                                   <input type="hidden" name="action_type" value="schedule_install" />
                                   <input type="hidden" name="target_status" value="scheduled" />
                                   <input
@@ -1053,6 +1280,7 @@ export default async function AdminOrdersPage() {
                                   <input type="hidden" name="order_id" value={order.id} />
                                   <input type="hidden" name="account_id" value={order.account_id} />
                                   <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="location_label" value={currentLocationLabel} />
                                   <input type="hidden" name="action_type" value="activate" />
                                   <input type="hidden" name="target_status" value="activated" />
                                   <input
@@ -1075,6 +1303,7 @@ export default async function AdminOrdersPage() {
                                   <input type="hidden" name="order_id" value={order.id} />
                                   <input type="hidden" name="account_id" value={order.account_id} />
                                   <input type="hidden" name="order_number" value={order.order_number} />
+                                  <input type="hidden" name="location_label" value={currentLocationLabel} />
                                   <input type="hidden" name="action_type" value="cancel" />
                                   <input type="hidden" name="target_status" value="cancelled" />
                                   <input
@@ -1101,8 +1330,36 @@ export default async function AdminOrdersPage() {
                           </td>
 
                           <td style={bodyCell}>
-                            <form action={updateOrderDetails} style={{ display: "grid", gap: "8px", minWidth: "180px" }}>
+                            <form action={updateOrderDetails} style={{ display: "grid", gap: "8px", minWidth: "220px" }}>
                               <input type="hidden" name="order_id" value={order.id} />
+                              <select
+                                name="location_id"
+                                defaultValue={order.location_id ?? ""}
+                                style={textInput}
+                              >
+                                <option value="">Select Location</option>
+                                {locationOptions
+                                  .filter((location) => location.account_id === order.account_id)
+                                  .map((location) => (
+                                    <option key={location.id} value={location.id}>
+                                      {getLocationLabel(location)}
+                                    </option>
+                                  ))}
+                              </select>
+                              <select
+                                name="quote_id"
+                                defaultValue={order.quote_id ?? ""}
+                                style={textInput}
+                              >
+                                <option value="">Optional Quote</option>
+                                {quoteOptions
+                                  .filter((quote) => quote.account_id === order.account_id)
+                                  .map((quote) => (
+                                    <option key={quote.id} value={quote.id}>
+                                      {quote.quote_number}
+                                    </option>
+                                  ))}
+                              </select>
                               <input
                                 name="install_target_date"
                                 defaultValue={order.install_target_date ?? ""}
@@ -1131,7 +1388,7 @@ export default async function AdminOrdersPage() {
                     })
                   ) : (
                     <tr>
-                      <td style={bodyCell} colSpan={12}>
+                      <td style={bodyCell} colSpan={14}>
                         No orders found.
                       </td>
                     </tr>
