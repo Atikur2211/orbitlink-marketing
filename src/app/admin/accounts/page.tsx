@@ -7,6 +7,7 @@ type Account = {
   legal_name: string | null;
   primary_contact_name: string | null;
   primary_contact_email: string | null;
+  primary_contact_phone: string | null;
   status: string | null;
   created_at: string | null;
 };
@@ -80,6 +81,7 @@ export default async function AdminAccountsPage() {
     const legal_name = String(formData.get("legal_name") ?? "").trim();
     const contact_name = String(formData.get("contact_name") ?? "").trim();
     const contact_email = String(formData.get("contact_email") ?? "").trim();
+    const contact_phone = String(formData.get("contact_phone") ?? "").trim();
 
     if (!account_name) return;
 
@@ -90,9 +92,12 @@ export default async function AdminAccountsPage() {
         legal_name: legal_name || null,
         primary_contact_name: contact_name || null,
         primary_contact_email: contact_email || null,
+        primary_contact_phone: contact_phone || null,
         status: "active",
       })
-      .select("id, account_name, legal_name, primary_contact_name, primary_contact_email, status")
+      .select(
+        "id, account_name, legal_name, primary_contact_name, primary_contact_email, primary_contact_phone, status"
+      )
       .single();
 
     if (error || !account) {
@@ -118,6 +123,7 @@ export default async function AdminAccountsPage() {
         legal_name: account.legal_name,
         primary_contact_name: account.primary_contact_name,
         primary_contact_email: account.primary_contact_email,
+        primary_contact_phone: account.primary_contact_phone,
         status: account.status,
       },
       source_interface: "admin_accounts_page_create",
@@ -141,13 +147,14 @@ export default async function AdminAccountsPage() {
     const legalName = String(formData.get("legal_name") ?? "").trim();
     const contactName = String(formData.get("contact_name") ?? "").trim();
     const contactEmail = String(formData.get("contact_email") ?? "").trim();
+    const contactPhone = String(formData.get("contact_phone") ?? "").trim();
 
     if (!accountId || !accountName) return;
 
     const { data: before, error: beforeError } = await supabase
       .from("accounts")
       .select(
-        "id, account_name, legal_name, primary_contact_name, primary_contact_email, status"
+        "id, account_name, legal_name, primary_contact_name, primary_contact_email, primary_contact_phone, status"
       )
       .eq("id", accountId)
       .single();
@@ -162,6 +169,7 @@ export default async function AdminAccountsPage() {
       legal_name: before.legal_name,
       primary_contact_name: before.primary_contact_name,
       primary_contact_email: before.primary_contact_email,
+      primary_contact_phone: before.primary_contact_phone,
       status: before.status,
     };
 
@@ -170,6 +178,7 @@ export default async function AdminAccountsPage() {
       legal_name: legalName || null,
       primary_contact_name: contactName || null,
       primary_contact_email: contactEmail || null,
+      primary_contact_phone: contactPhone || null,
       status: before.status,
     };
 
@@ -177,7 +186,8 @@ export default async function AdminAccountsPage() {
       beforeState.account_name === afterState.account_name &&
       beforeState.legal_name === afterState.legal_name &&
       beforeState.primary_contact_name === afterState.primary_contact_name &&
-      beforeState.primary_contact_email === afterState.primary_contact_email;
+      beforeState.primary_contact_email === afterState.primary_contact_email &&
+      beforeState.primary_contact_phone === afterState.primary_contact_phone;
 
     if (noChanges) return;
 
@@ -188,6 +198,7 @@ export default async function AdminAccountsPage() {
         legal_name: afterState.legal_name,
         primary_contact_name: afterState.primary_contact_name,
         primary_contact_email: afterState.primary_contact_email,
+        primary_contact_phone: afterState.primary_contact_phone,
       })
       .eq("id", accountId);
 
@@ -281,7 +292,7 @@ export default async function AdminAccountsPage() {
   const { data, error } = await supabase
     .from("accounts")
     .select(
-      "id, account_name, legal_name, primary_contact_name, primary_contact_email, status, created_at"
+      "id, account_name, legal_name, primary_contact_name, primary_contact_email, primary_contact_phone, status, created_at"
     )
     .order("created_at", { ascending: false });
 
@@ -303,7 +314,7 @@ export default async function AdminAccountsPage() {
         color: "#f5f5f5",
       }}
     >
-      <div style={{ maxWidth: "1550px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1650px", margin: "0 auto" }}>
         <section
           style={{
             position: "relative",
@@ -422,7 +433,7 @@ export default async function AdminAccountsPage() {
         <section
           style={{
             display: "grid",
-            gridTemplateColumns: "420px 1fr",
+            gridTemplateColumns: "430px 1fr",
             gap: "20px",
           }}
         >
@@ -489,6 +500,11 @@ export default async function AdminAccountsPage() {
                 type="email"
                 style={inputStyle}
               />
+              <input
+                name="contact_phone"
+                placeholder="Primary Contact Number"
+                style={inputStyle}
+              />
 
               <button type="submit" style={primaryButton}>
                 Create Account
@@ -545,7 +561,7 @@ export default async function AdminAccountsPage() {
                   style={{
                     width: "100%",
                     borderCollapse: "collapse",
-                    minWidth: "1550px",
+                    minWidth: "1850px",
                   }}
                 >
                   <thead>
@@ -555,10 +571,11 @@ export default async function AdminAccountsPage() {
                         textAlign: "left",
                       }}
                     >
-                      <th style={headerCell}>CRM Details</th>
+                      <th style={headerCell}>Account</th>
                       <th style={headerCell}>Legal Name</th>
                       <th style={headerCell}>Primary Contact</th>
                       <th style={headerCell}>Email</th>
+                      <th style={headerCell}>Phone</th>
                       <th style={headerCell}>Status</th>
                       <th style={headerCell}>Created</th>
                       <th style={headerCell}>Save</th>
@@ -580,8 +597,28 @@ export default async function AdminAccountsPage() {
                             }}
                           >
                             <td style={bodyCell}>
-                              <form action={updateAccountDetails} style={{ display: "grid", gap: "8px" }}>
+                              <form action={updateAccountDetails}>
                                 <input type="hidden" name="account_id" value={account.id} />
+                                <input
+                                  type="hidden"
+                                  name="legal_name"
+                                  defaultValue={account.legal_name ?? ""}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="contact_name"
+                                  defaultValue={account.primary_contact_name ?? ""}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="contact_email"
+                                  defaultValue={account.primary_contact_email ?? ""}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="contact_phone"
+                                  defaultValue={account.primary_contact_phone ?? ""}
+                                />
                                 <input
                                   name="account_name"
                                   defaultValue={account.account_name}
@@ -608,6 +645,11 @@ export default async function AdminAccountsPage() {
                                   type="hidden"
                                   name="contact_email"
                                   defaultValue={account.primary_contact_email ?? ""}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="contact_phone"
+                                  defaultValue={account.primary_contact_phone ?? ""}
                                 />
                                 <input
                                   name="legal_name"
@@ -637,6 +679,11 @@ export default async function AdminAccountsPage() {
                                   defaultValue={account.primary_contact_email ?? ""}
                                 />
                                 <input
+                                  type="hidden"
+                                  name="contact_phone"
+                                  defaultValue={account.primary_contact_phone ?? ""}
+                                />
+                                <input
                                   name="contact_name"
                                   defaultValue={account.primary_contact_name ?? ""}
                                   placeholder="Primary Contact"
@@ -664,10 +711,47 @@ export default async function AdminAccountsPage() {
                                   defaultValue={account.primary_contact_name ?? ""}
                                 />
                                 <input
+                                  type="hidden"
+                                  name="contact_phone"
+                                  defaultValue={account.primary_contact_phone ?? ""}
+                                />
+                                <input
                                   name="contact_email"
                                   defaultValue={account.primary_contact_email ?? ""}
                                   placeholder="Primary Email"
                                   type="email"
+                                  style={miniInput}
+                                />
+                              </form>
+                            </td>
+
+                            <td style={bodyCell}>
+                              <form action={updateAccountDetails}>
+                                <input type="hidden" name="account_id" value={account.id} />
+                                <input
+                                  type="hidden"
+                                  name="account_name"
+                                  defaultValue={account.account_name}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="legal_name"
+                                  defaultValue={account.legal_name ?? ""}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="contact_name"
+                                  defaultValue={account.primary_contact_name ?? ""}
+                                />
+                                <input
+                                  type="hidden"
+                                  name="contact_email"
+                                  defaultValue={account.primary_contact_email ?? ""}
+                                />
+                                <input
+                                  name="contact_phone"
+                                  defaultValue={account.primary_contact_phone ?? ""}
+                                  placeholder="Primary Contact Number"
                                   style={miniInput}
                                 />
                               </form>
@@ -693,7 +777,7 @@ export default async function AdminAccountsPage() {
                             <td style={bodyCell}>{account.created_at ?? "—"}</td>
 
                             <td style={bodyCell}>
-                              <form action={updateAccountDetails} style={{ display: "grid", gap: "8px" }}>
+                              <form action={updateAccountDetails} style={{ display: "grid", gap: "8px", minWidth: "220px" }}>
                                 <input type="hidden" name="account_id" value={account.id} />
                                 <input
                                   name="account_name"
@@ -718,6 +802,12 @@ export default async function AdminAccountsPage() {
                                   defaultValue={account.primary_contact_email ?? ""}
                                   placeholder="Primary Email"
                                   type="email"
+                                  style={miniInput}
+                                />
+                                <input
+                                  name="contact_phone"
+                                  defaultValue={account.primary_contact_phone ?? ""}
+                                  placeholder="Primary Contact Number"
                                   style={miniInput}
                                 />
                                 <button type="submit" style={saveButton}>
@@ -764,7 +854,7 @@ export default async function AdminAccountsPage() {
                       })
                     ) : (
                       <tr>
-                        <td style={bodyCell} colSpan={8}>
+                        <td style={bodyCell} colSpan={9}>
                           No accounts found.
                         </td>
                       </tr>
