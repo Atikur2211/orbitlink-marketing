@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Business Connectivity Services for Ontario Organizations | Orbitlink",
     description:
-      "Business fibre internet, dedicated internet access, managed networking, continuity services, voice, routing, and infrastructure services for Ontario organizations.",
+      "Business fibre internet, dedicated internet access, managed networking, backup connectivity, voice, routing, and infrastructure services for Ontario organizations.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Business Connectivity Services for Ontario Organizations | Orbitlink",
     description:
-      "Business fibre, dedicated internet, managed networking, continuity, voice, routing, and infrastructure services for Ontario organizations.",
+      "Business fibre, dedicated internet, managed networking, backup connectivity, voice, routing, and infrastructure services for Ontario organizations.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -80,110 +80,110 @@ const SERVICES: readonly ServiceItem[] = [
   {
     title: "Business Fibre Internet",
     subtitle:
-      "Primary connectivity for offices, clinics, commercial units, and operating sites that need dependable internet with a cleaner commercial path.",
+      "Fast, reliable internet for offices, clinics, warehouses, and commercial locations.",
     href: "/services/business-fibre-internet",
-    bullets: ["Primary internet", "Address-qualified review", "Commercial onboarding"],
-    tag: "PRIMARY CONNECTIVITY",
+    bullets: ["Primary internet", "Business locations", "Fast onboarding"],
+    tag: "PRIMARY INTERNET",
     group: "Connectivity",
     bestFit:
-      "Best for sites that need strong primary access, practical qualification, and a more structured buying experience.",
-    typicalFit: "Office • Clinic • Commercial unit • Day-to-day operations",
+      "Best for daily business use, stable connectivity, and straightforward service needs.",
+    typicalFit: "Office • Clinic • Commercial unit • Daily operations",
   },
   {
     title: "Dedicated Internet Access",
     subtitle:
-      "Higher-assurance connectivity for critical environments that require stronger performance expectations, clearer escalation handling, and a more controlled service model.",
+      "Higher-assurance internet for sites that need stronger uptime and more predictable performance.",
     href: "/services/dedicated-internet-access",
-    bullets: ["Dedicated circuit", "Committed performance", "Critical environments"],
+    bullets: ["Dedicated circuit", "Predictable performance", "Critical sites"],
     tag: "HIGHER ASSURANCE",
     group: "Connectivity",
     bestFit:
-      "Best for organizations that need more deterministic connectivity, stronger uptime posture, and cleaner escalation expectations.",
-    typicalFit: "Critical site • Multi-site operations • Higher-dependency workloads",
+      "Best for businesses that need stronger uptime, cleaner escalation, and more controlled service.",
+    typicalFit: "Critical site • Multi-site operations • High-dependency workloads",
   },
   {
     title: "Managed LAN & Wi-Fi",
     subtitle:
-      "Managed internal networking for organizations that need better wireless coverage, cleaner segmentation, and more stable day-to-day site performance.",
+      "Managed internal networking for better Wi-Fi coverage, segmentation, and day-to-day performance.",
     href: "/services/managed-lan-wifi",
     bullets: ["Managed Wi-Fi", "LAN support", "Segmentation"],
     tag: "MANAGED NETWORK",
     group: "Managed Network",
     bestFit:
-      "Best for environments where internal network quality matters as much as the internet circuit itself.",
-    typicalFit: "Office floor • Clinic • Warehouse • Multi-room environments",
+      "Best for businesses where internal Wi-Fi and network quality affect staff, devices, and operations.",
+    typicalFit: "Office floor • Clinic • Warehouse • Multi-room spaces",
   },
   {
     title: "LTE / 5G Backup Connectivity",
     subtitle:
-      "Continuity services for organizations that want failover readiness, secondary path planning, and stronger resilience when primary connectivity is disrupted.",
+      "Backup internet for businesses that want failover protection and better continuity.",
     href: "/services/lte-5g-continuity",
-    bullets: ["Backup path", "Failover posture", "Continuity planning"],
-    tag: "RESILIENCE",
+    bullets: ["Backup path", "Failover", "Business continuity"],
+    tag: "BACKUP",
     group: "Continuity",
     bestFit:
-      "Best for businesses that want continuity planning built into the service model from the start.",
-    typicalFit: "Critical access • Backup path • Continuity-conscious buyers",
+      "Best for businesses that want a second path ready when the primary connection goes down.",
+    typicalFit: "Critical access • Backup path • Continuity-focused sites",
   },
   {
     title: "Starlink",
     subtitle:
-      "Satellite connectivity for remote, constrained, or edge environments where terrestrial service is limited or continuity requires an alternative path.",
+      "Satellite connectivity for remote sites, constrained locations, or alternative path needs.",
     href: "/services/starlink-agent",
-    bullets: ["Satellite path", "Remote sites", "Alternative connectivity"],
+    bullets: ["Satellite service", "Remote sites", "Alternative path"],
     tag: "SATELLITE",
     group: "Continuity",
     bestFit:
-      "Best for sites where standard terrestrial availability is constrained and operations still require a viable connection path.",
+      "Best for sites where standard terrestrial service is limited but connectivity is still required.",
     typicalFit: "Remote site • Edge location • Limited terrestrial availability",
   },
   {
     title: "VoIP & Cloud Voice",
     subtitle:
-      "Business voice services for teams that need number porting, call routing, professional call handling, and stronger control over communications.",
+      "Business voice services with number porting, call routing, and professional call handling.",
     href: "/services/voip-cloud-voice",
     bullets: ["Cloud voice", "Number porting", "Call routing"],
     tag: "VOICE",
     group: "Voice",
     bestFit:
-      "Best for organizations that want business voice aligned with the rest of their communications and network environment.",
+      "Best for teams that want business voice aligned with how they work and answer calls.",
     typicalFit: "Front desk • Office teams • Multi-user business calling",
   },
   {
     title: "IoT Connectivity",
     subtitle:
-      "Controlled uplinks for gateways, sensors, field devices, and connected operational systems inside managed business environments.",
+      "Controlled connectivity for sensors, gateways, field devices, and connected systems.",
     href: "/services/iot-connectivity",
-    bullets: ["IoT uplinks", "Segmentation", "Monitoring-ready"],
+    bullets: ["IoT uplinks", "Segmentation", "Connected systems"],
     tag: "CONNECTED SYSTEMS",
     group: "Infrastructure",
     bestFit:
-      "Best for environments where connected systems need segmented, stable, and controlled service handling.",
+      "Best for environments where connected devices need stable, segmented, and managed service.",
     typicalFit: "Sensors • Gateways • Field devices • Segmented environments",
   },
   {
     title: "Static IP Routing",
     subtitle:
-      "Fixed addressing and routing options for VPNs, firewalls, hosted services, remote access, and stable business endpoints.",
+      "Fixed addressing for VPNs, firewalls, remote access, and hosted business systems.",
     href: "/services/static-ip-routing",
-    bullets: ["Static IPs", "Routing options", "Stable endpoints"],
+    bullets: ["Static IPs", "Routing", "Stable endpoints"],
     tag: "ROUTING",
     group: "Infrastructure",
     bestFit:
-      "Best for businesses that need fixed endpoints for VPNs, firewall policy, remote access, or hosted business systems.",
+      "Best for businesses that need fixed endpoints for security, remote access, and hosted applications.",
     typicalFit: "VPN • Firewall • Remote access • Hosted applications",
   },
   {
     title: "Colocation & Infrastructure Services",
     subtitle:
-      "Infrastructure coordination for organizations planning rack presence, cross-connects, interconnection, or longer-term network architecture.",
+      "Infrastructure support for rack space, cross-connects, interconnection, and future network planning.",
     href: "/services/colocation-infrastructure",
-    bullets: ["Cross-connects", "Rack coordination", "Infrastructure planning"],
+    bullets: ["Cross-connects", "Rack support", "Infrastructure planning"],
     tag: "INFRASTRUCTURE",
     group: "Infrastructure",
     bestFit:
-      "Best for buyers planning beyond standard connectivity into interconnection, infrastructure coordination, or future network presence.",
-    typicalFit: "Rack presence • Interconnection • Advanced network planning",
+      "Best for buyers planning beyond internet service into interconnection and infrastructure growth.",
+    typicalFit: "Rack presence • Interconnection • Advanced planning",
   },
 ];
 
@@ -192,35 +192,35 @@ const GROUPS: readonly GroupItem[] = [
     title: "Connectivity",
     eyebrow: "PRIMARY ACCESS",
     description:
-      "Internet services for organizations that need strong primary connectivity and a cleaner commercial starting point.",
+      "Internet services for businesses that need strong primary connectivity and a clear starting point.",
     id: "connectivity",
   },
   {
     title: "Managed Network",
     eyebrow: "INTERNAL NETWORK",
     description:
-      "Managed LAN and Wi-Fi services for businesses that need better internal stability, cleaner segmentation, and easier support.",
+      "Managed LAN and Wi-Fi services for businesses that need better internal stability and support.",
     id: "managed-network",
   },
   {
     title: "Continuity",
     eyebrow: "BACKUP & RESILIENCE",
     description:
-      "Continuity services for organizations that want stronger uptime planning and alternative path resilience.",
+      "Backup and continuity services for businesses that want better uptime planning.",
     id: "continuity",
   },
   {
     title: "Voice",
     eyebrow: "COMMUNICATIONS",
     description:
-      "Business voice services for teams that need professional call handling, routing flexibility, and cleaner communications control.",
+      "Business voice services for teams that need professional call handling and flexible routing.",
     id: "voice",
   },
   {
     title: "Infrastructure",
     eyebrow: "ADVANCED SERVICES",
     description:
-      "Routing, IoT, and infrastructure services for more technical and future-ready business environments.",
+      "Routing, IoT, and infrastructure services for technical and future-ready business environments.",
     id: "infrastructure",
   },
 ];
@@ -380,7 +380,7 @@ function JumpNav() {
             JUMP TO
           </div>
           <div className="mt-2 text-sm text-white/72">
-            Go directly to the service family that matches the business need.
+            Go to the service type that matches your business need.
           </div>
         </div>
 
@@ -410,15 +410,15 @@ function StartHereStrip() {
   const items = [
     {
       title: "Offices & Clinics",
-      body: "Reliable day-to-day connectivity and stable business operations.",
+      body: "Reliable internet and stable day-to-day business operations.",
     },
     {
       title: "Critical Operations",
-      body: "Dedicated internet and stronger uptime posture for higher-dependency environments.",
+      body: "Dedicated internet and stronger uptime for higher-dependency sites.",
     },
     {
       title: "Internal Network Issues",
-      body: "Wi-Fi, LAN, segmentation, and performance correction inside the site.",
+      body: "Wi-Fi, LAN, segmentation, and performance issues inside the business.",
     },
   ];
 
@@ -429,10 +429,10 @@ function StartHereStrip() {
           START HERE
         </div>
         <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-          Choose where your business fits
+          Choose the right internet setup for your business
         </h2>
         <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-          Start with the real requirement. That usually makes the right service path clearer much faster.
+          Start with your business type. That makes the right service much clearer.
         </p>
       </div>
 
@@ -467,11 +467,10 @@ function AudienceStrip() {
           WHO THIS PAGE IS FOR
         </div>
         <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-          Built for serious commercial buyers
+          Built for Ontario businesses
         </h2>
         <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-          This page is designed for organizations reviewing business connectivity, managed networking,
-          continuity, voice, and infrastructure services in Ontario.
+          This page is for businesses reviewing internet, managed networking, backup, voice, and infrastructure services in Ontario.
         </p>
       </div>
 
@@ -488,18 +487,18 @@ function QuickStartStrip() {
   const steps = [
     {
       label: "STEP 1",
-      title: "Choose the business need",
-      body: "Start with the real requirement: primary internet, dedicated connectivity, managed networking, continuity, voice, or infrastructure.",
+      title: "Choose what you need",
+      body: "Start with primary internet, dedicated connectivity, managed networking, backup, voice, or infrastructure.",
     },
     {
       label: "STEP 2",
-      title: "Add site and operating context",
-      body: "Share the address, timeline, and the technical or operational requirements that matter to the organization.",
+      title: "Add your address",
+      body: "Share the business address and any timing or technical details that matter.",
     },
     {
       label: "STEP 3",
-      title: "Move into qualification",
-      body: "Receive a clearer next step for serviceability, fit, and commercial direction.",
+      title: "Get the next step",
+      body: "We help you move toward availability, pricing, and the right service path.",
     },
   ];
 
@@ -508,18 +507,17 @@ function QuickStartStrip() {
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
           <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
-            HOW TO BUY
+            HOW TO CHOOSE
           </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-            A cleaner path from service interest to commercial review
+            How to choose the right service
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            Serious buyers do not need a maze of telecom pages. They need the right service,
-            the right qualification path, and a clear next step.
+            Pick the service that matches your business need, then check availability and pricing.
           </p>
         </div>
 
-        <MetricPill label="MODE" value="Clear • Practical • Business-ready" />
+        <MetricPill label="MODE" value="Simple • Clear • Business-ready" />
       </div>
 
       <div className="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -544,29 +542,29 @@ function ComparisonBlock() {
   const rows = [
     {
       label: "Best for",
-      fibre: "General business connectivity",
-      dia: "Critical environments",
+      fibre: "General business internet",
+      dia: "Critical business sites",
       wifi: "Internal coverage and stability",
       backup: "Continuity and failover",
     },
     {
       label: "When it makes sense",
-      fibre: "Primary internet for business sites",
-      dia: "Higher-assurance service expectations",
-      wifi: "Wireless performance is limiting operations",
-      backup: "Downtime creates operational risk",
+      fibre: "Primary internet for most business locations",
+      dia: "When uptime and predictability matter more",
+      wifi: "When Wi-Fi issues affect staff or operations",
+      backup: "When downtime creates business risk",
     },
     {
       label: "Main benefit",
       fibre: "Strong primary access",
       dia: "More predictable performance",
-      wifi: "Better day-to-day user experience",
-      backup: "Secondary path resilience",
+      wifi: "Better user experience",
+      backup: "Second path protection",
     },
     {
       label: "Typical concern",
-      fibre: "Building and service fit",
-      dia: "Commercial model and escalation",
+      fibre: "Building fit and availability",
+      dia: "Service model and escalation",
       wifi: "Coverage and segmentation",
       backup: "Failover readiness",
     },
@@ -577,17 +575,17 @@ function ComparisonBlock() {
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
           <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
-            HOW TO CHOOSE
+            QUICK COMPARISON
           </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-            Compare the main service paths quickly
+            Compare the main service types quickly
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            This is the fastest way to understand which category fits the business objective before moving deeper into review.
+            This gives you a quick way to see which service fits your business best.
           </p>
         </div>
 
-        <MetricPill label="BUYER TOOL" value="Fast self-qualification" />
+        <MetricPill label="BUYER TOOL" value="Fast comparison" />
       </div>
 
       <div className="mt-7 overflow-x-auto">
@@ -625,10 +623,10 @@ function ComparisonBlock() {
 
 function BuyerMistakesStrip() {
   const items = [
-    "Service selected before checking building fit",
+    "Choosing a service before checking building fit",
     "No backup path for continuity-sensitive operations",
-    "Internal Wi-Fi treated as separate from business performance",
-    "Wrong access model for the actual workload",
+    "Treating Wi-Fi as separate from business performance",
+    "Using the wrong service model for the real workload",
   ];
 
   return (
@@ -636,14 +634,13 @@ function BuyerMistakesStrip() {
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
           <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
-            COMMON MISMATCHES
+            COMMON PROBLEMS
           </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-            Why service decisions go wrong
+            Common problems with business internet
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            Most mismatches happen because the decision starts with a package instead of the site,
-            the workload, and the operating environment.
+            Most problems start when the business picks a package before checking the site, workload, and real requirements.
           </p>
         </div>
 
@@ -673,11 +670,10 @@ function MidPageCTA() {
             NEED HELP CHOOSING?
           </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-            Not sure which path fits?
+            Not sure which service fits?
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            Start with a service review. Orbitlink can help narrow the right path based on the address,
-            business need, and operating requirements.
+            Start with your address and business need. We can help narrow the right path.
           </p>
         </div>
 
@@ -686,7 +682,7 @@ function MidPageCTA() {
             href="/contact#intake"
             className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
           >
-            Request a Service Review
+            Check Availability
           </Link>
           <Link
             href="/contact#intake"
@@ -703,14 +699,14 @@ function MidPageCTA() {
 function BuyerValueStrip() {
   const items = [
     {
-      title: "Business-first qualification",
+      title: "Business-first service review",
       body:
-        "Orbitlink is positioned around commercial fit, site conditions, and operational relevance instead of generic consumer-style intake.",
+        "Orbitlink is designed around site fit, business needs, and practical service choices instead of generic consumer-style intake.",
     },
     {
-      title: "Clearer next-step logic",
+      title: "Clear next step",
       body:
-        "The page is designed to move buyers from interest into qualification without unnecessary friction or vague direction.",
+        "This page helps buyers move from interest into availability, pricing, and the right service path.",
     },
   ];
 
@@ -719,14 +715,13 @@ function BuyerValueStrip() {
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
           <div className="text-[10px] tracking-[0.30em] text-[#FDE68A] sm:text-[11px]">
-            WHY THIS PAGE WORKS
+            WHY THIS PAGE HELPS
           </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-            More than a service catalog
+            More than a list of services
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-            Serious buyers need more than a list. They need a structure that helps them understand fit,
-            move into qualification, and trust the next step.
+            Businesses need more than a catalog. They need help understanding fit and the next step.
           </p>
         </div>
 
@@ -754,21 +749,20 @@ function HumanAnchor() {
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
           <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
-            COMMERCIAL REVIEW
+            REVIEWED BY ORBITLINK
           </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-            Reviewed directly by Orbitlink
+            Every request is reviewed by Orbitlink
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            Every request is reviewed based on the business location, service fit, and operating requirements.
-            This is not a generic sales loop. It is a structured commercial review designed to help serious buyers
-            move into the right next step.
+            Every request is reviewed based on the business location, service fit, and business requirements.
+            The goal is to help you move toward the right next step.
           </p>
 
           <div className="mt-5 flex flex-wrap gap-2">
             <TrustPill text="Business-only review" />
-            <TrustPill text="Address-qualified direction" />
-            <TrustPill text="Handled under TIRAV Technologies Inc." />
+            <TrustPill text="Reviewed by address" />
+            <TrustPill text="Operated by TIRAV Technologies Inc." />
           </div>
         </div>
 
@@ -782,19 +776,19 @@ function FAQStrip() {
   const items = [
     {
       q: "How do I choose between business fibre and dedicated internet access?",
-      a: "Business fibre is often the right fit for general business connectivity, while dedicated internet access is better for environments that need stronger performance posture, cleaner escalation, and higher service expectations.",
+      a: "Business fibre is often the right fit for general business internet, while dedicated internet is better for environments that need stronger uptime, cleaner escalation, and more predictable performance.",
     },
     {
-      q: "Can I use this page to start a pricing request?",
-      a: "Yes. Start with the service category that best matches the business need, then move into qualification using the address, timing, and operational requirements.",
+      q: "Can I use this page to request pricing?",
+      a: "Yes. Start with the service that best matches your business need, then move into availability and pricing with your address and timeline.",
     },
     {
       q: "Is this page for residential internet?",
-      a: "No. Orbitlink’s services page is designed for commercial buyers, business locations, and Ontario operational environments.",
+      a: "No. Orbitlink’s services page is designed for business locations and commercial environments in Ontario.",
     },
     {
       q: "What happens after I pick a service?",
-      a: "The next step is to submit the business location and service requirements so Orbitlink can review availability, fit, and the clearest commercial path forward.",
+      a: "The next step is to submit your business location and service need so Orbitlink can review availability and the best path forward.",
     },
   ];
 
@@ -809,7 +803,7 @@ function FAQStrip() {
             Questions buyers commonly ask
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            These answers help business buyers understand the service categories before moving into qualification.
+            These answers help business buyers understand the service types before moving forward.
           </p>
         </div>
 
@@ -847,15 +841,14 @@ function FinalCTA() {
               NEXT STEP
             </div>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-              Move from browsing to a real service decision
+              Check availability for your business location
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              Start with the address, operating requirements, and primary service priority.
-              Orbitlink can then review fit, availability, and the clearest next step.
+              Start with your address, timing, and service need. Orbitlink can then review fit, availability, and the best next step.
             </p>
           </div>
 
-          <MetricPill label="COMMERCIAL MODE" value="Availability • Fit • Direction" />
+          <MetricPill label="NEXT STEP" value="Availability • Pricing • Direction" />
         </div>
 
         <div className="mt-7 flex flex-wrap gap-3">
@@ -886,7 +879,7 @@ function FinalCTA() {
         </div>
 
         <div className="mt-5 text-xs text-white/55 sm:text-sm">
-          Best results come from selecting the primary service first, then submitting the exact business address and timing requirement.
+          Best results come from choosing the main service first, then submitting the exact business address and timeline.
         </div>
       </div>
     </div>
@@ -914,7 +907,7 @@ export default function ServicesIndexPage() {
         name: "Orbitlink Services",
         url: PAGE_URL,
         description:
-          "Business fibre internet, dedicated internet access, managed networking, continuity services, cloud voice, and infrastructure services for Ontario organizations.",
+          "Business fibre internet, dedicated internet access, managed networking, backup connectivity, cloud voice, and infrastructure services for Ontario organizations.",
       },
       {
         "@type": "ItemList",
@@ -934,15 +927,15 @@ export default function ServicesIndexPage() {
             name: "How do I choose between business fibre and dedicated internet access?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Business fibre is often the right fit for general business connectivity, while dedicated internet access is better for environments that need stronger performance posture, cleaner escalation, and higher service expectations.",
+              text: "Business fibre is often the right fit for general business internet, while dedicated internet is better for environments that need stronger uptime, cleaner escalation, and more predictable performance.",
             },
           },
           {
             "@type": "Question",
-            name: "Can I use this page to start a pricing request?",
+            name: "Can I use this page to request pricing?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Yes. Start with the service category that best matches the business need, then move into qualification using the address, timing, and operational requirements.",
+              text: "Yes. Start with the service that best matches your business need, then move into availability and pricing with your address and timeline.",
             },
           },
           {
@@ -950,7 +943,7 @@ export default function ServicesIndexPage() {
             name: "Is this page for residential internet?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "No. Orbitlink’s services page is designed for commercial buyers, business locations, and Ontario operational environments.",
+              text: "No. Orbitlink’s services page is designed for business locations and commercial environments in Ontario.",
             },
           },
           {
@@ -958,7 +951,7 @@ export default function ServicesIndexPage() {
             name: "What happens after I pick a service?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "The next step is to submit the business location and service requirements so Orbitlink can review availability, fit, and the clearest commercial path forward.",
+              text: "The next step is to submit your business location and service need so Orbitlink can review availability and the best path forward.",
             },
           },
         ],
@@ -1015,15 +1008,18 @@ export default function ServicesIndexPage() {
             </div>
 
             <h1 className="mt-5 max-w-4xl text-[2rem] font-semibold leading-[0.98] tracking-tight text-white sm:text-[3rem] lg:text-[4rem]">
-              Connectivity engineered
-              <span className="block text-white/62">for real business operations</span>
+              Business fibre internet, dedicated internet, and managed network services
+              <span className="block text-white/62">for Ontario businesses</span>
             </h1>
 
             <p className="mt-4 max-w-2xl text-[14px] leading-7 text-white/80 sm:text-[15px]">
-              Business fibre, dedicated internet, managed networking, continuity, and voice —
-              structured around real operating environments. Start with what the business actually
-              needs, then move into availability, fit, and a clear commercial next step.
+              Explore business internet, dedicated connections, managed Wi-Fi, backup, and voice services.
+              Start with what your business needs, then check availability and pricing.
             </p>
+
+            <div className="mt-3 text-sm text-white/70">
+              Used by Ontario offices, clinics, warehouses, and growing businesses.
+            </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {[
@@ -1046,19 +1042,19 @@ export default function ServicesIndexPage() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Check Availability for Your Location
+                Check Availability
               </Link>
 
               <Link
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
-                Request Commercial Review
+                Request Pricing
               </Link>
             </div>
 
             <div className="mt-4 text-xs text-white/55">
-              Business-only • Address-qualified • Clear next step
+              Business-only • Reviewed by address • Clear next step
             </div>
           </div>
         </div>
