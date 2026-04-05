@@ -15,7 +15,7 @@ const CANONICAL_URL = `${SITE_URL}/`;
 
 const META_TITLE = "Business Fibre & Dedicated Internet Ontario | Orbitlink";
 const META_DESCRIPTION =
-  "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, and backup connectivity for Ontario businesses.";
+  "Business fibre, dedicated internet, and managed network solutions for Ontario businesses. Check availability by address.";
 
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
@@ -386,25 +386,16 @@ export default function Home() {
           <div className="w-full max-w-4xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:text-xs">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Business Fibre • Dedicated Internet • Managed Wi-Fi • Backup Connectivity
+              Business Connectivity • Fibre & Dedicated Infrastructure
             </div>
 
             <h1 className="mt-6 max-w-5xl text-[2.2rem] font-semibold leading-[0.96] tracking-tight text-white sm:text-[3.15rem] lg:text-[4.3rem] xl:text-[5rem]">
-              Business Internet Built for Real Operations
-              <span className="mt-2 block text-white/62">
-                Fibre • Dedicated Internet • Managed Network
-              </span>
+              Connectivity. Engineered for Business.
             </h1>
 
-            <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/87 sm:text-[1.08rem]">
-              For offices, clinics, warehouses, and multi-site teams. Check
-              availability by address and get the right internet, voice, backup,
-              and network setup for your location.
+            <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/80 sm:text-[1.05rem]">
+              Fibre and dedicated internet with managed network infrastructure — designed for Ontario organizations.
             </p>
-
-            <div className="mt-4 text-sm text-white/70">
-              For offices, clinics, warehouses, and multi-location businesses across Ontario.
-            </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {[
