@@ -10,14 +10,14 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: "Compare Business Internet Provider Models | Orbitlink",
+  title: "Compare Business Internet Providers | Orbitlink",
   description:
-    "Compare Orbitlink with large telecom providers and typical smaller ISPs across business buying experience, qualification, service clarity, trust posture, and commercial fit.",
+    "Compare Orbitlink with large telecom providers and smaller ISPs across service clarity, support, onboarding, trust, and business fit.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Compare Business Internet Provider Models | Orbitlink",
+    title: "Compare Business Internet Providers | Orbitlink",
     description:
-      "A business-focused comparison of Orbitlink, large telecom providers, and typical smaller ISPs across clarity, onboarding, trust posture, and buyer experience.",
+      "A business-focused comparison of Orbitlink, large telecom providers, and smaller ISPs across clarity, support, trust, and business fit.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Compare Business Internet Provider Models | Orbitlink",
+    title: "Compare Business Internet Providers | Orbitlink",
     description:
-      "Compare business provider models across clarity, trust posture, onboarding, and commercial fit.",
+      "Compare business internet providers across clarity, support, trust, and business fit.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -52,40 +52,40 @@ export const metadata: Metadata = {
 };
 
 const HERO_POINTS = [
-  "Clearer qualification before commitment",
-  "More visible trust and operating posture",
-  "Better explanation of service fit and commercial path",
-  "A more structured experience for business buyers",
+  "Clearer service fit before you commit",
+  "More visible trust and business information",
+  "Simpler next steps for business buyers",
+  "A cleaner path from interest to request",
 ] as const;
 
 const SCORECARDS = [
   {
-    title: "Clarity before purchase",
-    orbitlink: "Structured and explicit",
+    title: "Clarity before contact",
+    orbitlink: "Clear and business-focused",
     bigTelco: "Often broad and catalog-led",
-    smallIsp: "Varies by operator",
-    note: "Orbitlink is designed to explain service fit, qualification logic, and next steps before commitment.",
+    smallIsp: "Varies by provider",
+    note: "Orbitlink is designed to explain service fit, buying path, and next steps before you reach out.",
   },
   {
-    title: "Business-first onboarding posture",
-    orbitlink: "Address-aware and guided",
-    bigTelco: "Process-driven at scale",
-    smallIsp: "Often direct but inconsistent",
-    note: "Orbitlink aims to create a cleaner path from first request to qualification and commercial direction.",
+    title: "Business buying experience",
+    orbitlink: "Guided and easier to follow",
+    bigTelco: "Standardized at scale",
+    smallIsp: "Often direct but less structured",
+    note: "Orbitlink aims to make the buying process easier to understand from the first visit.",
   },
   {
-    title: "Trust and disclosure visibility",
-    orbitlink: "Surfaced early",
-    bigTelco: "Often implied by brand scale",
-    smallIsp: "Often limited on-page",
-    note: "Trust, qualification, and escalation posture are treated as part of the buyer experience rather than hidden details.",
+    title: "Trust on the site",
+    orbitlink: "Shown early",
+    bigTelco: "Often implied by brand size",
+    smallIsp: "Often lighter on-page",
+    note: "Orbitlink treats trust, business fit, and service guidance as part of the buying experience.",
   },
   {
-    title: "Service consistency across pages",
-    orbitlink: "Deliberate and aligned",
+    title: "Consistency across pages",
+    orbitlink: "Aligned and business-ready",
     bigTelco: "Broad but sometimes segmented",
-    smallIsp: "Often simpler but uneven",
-    note: "Orbitlink is built to make the service surface feel coherent, business-ready, and easier to navigate.",
+    smallIsp: "Can vary by page",
+    note: "Orbitlink is built to feel more coherent and easier to navigate for business buyers.",
   },
 ] as const;
 
@@ -93,53 +93,53 @@ const COMPARISON_ROWS = [
   {
     category: "Buying experience",
     orbitlink:
-      "Guided, business-focused, and designed to reduce decision friction",
+      "Guided, business-focused, and built to reduce confusion",
     bigTelco:
-      "Broad catalog and established scale, but often more generic and harder to navigate",
+      "Broad selection and big scale, but often more generic",
     smallIsp:
-      "Can feel direct and personal, though structure and polish vary widely",
+      "Can feel direct and personal, but quality varies",
   },
   {
-    category: "Availability language",
-    orbitlink: "Address-aware and qualification-led",
-    bigTelco: "Broad market positioning with later qualification",
-    smallIsp: "Varies by provider and footprint",
+    category: "Availability guidance",
+    orbitlink: "Reviewed by address early",
+    bigTelco: "Often discussed later in the process",
+    smallIsp: "Depends on provider and footprint",
   },
   {
-    category: "Onboarding posture",
-    orbitlink: "Structured from the initial request",
-    bigTelco: "Usually process-based across multiple teams",
-    smallIsp: "Often reactive or relationship-led",
-  },
-  {
-    category: "Trust surface",
-    orbitlink: "Visible operating posture and buyer guidance",
-    bigTelco: "Strong brand recognition but less explanatory",
-    smallIsp: "Often limited trust context on-site",
+    category: "Support path visibility",
+    orbitlink: "Explained earlier",
+    bigTelco: "Often clearer after engagement",
+    smallIsp: "Often based on direct relationship",
   },
   {
     category: "Service explanation",
-    orbitlink: "Role-based and business-fit oriented",
-    bigTelco: "Often bundle-led or mass-market in tone",
-    smallIsp: "Can be simple, but sometimes too feature-led",
+    orbitlink: "Built around business fit",
+    bigTelco: "Often bundle-led or mass-market",
+    smallIsp: "Can be simple, but sometimes feature-heavy",
   },
   {
-    category: "Escalation visibility",
-    orbitlink: "Operational posture is surfaced earlier",
-    bigTelco: "Usually clearer later in the process",
-    smallIsp: "Often depends on direct contact",
+    category: "Trust surface",
+    orbitlink: "Clearer on-page",
+    bigTelco: "Strong brand familiarity",
+    smallIsp: "Often lighter on trust details",
   },
   {
     category: "Commercial feel",
-    orbitlink: "Premium, controlled, and deliberate",
-    bigTelco: "Polished, but mass-scale",
-    smallIsp: "Often practical and local, but not always enterprise-grade",
+    orbitlink: "Premium and deliberate",
+    bigTelco: "Polished but mass-scale",
+    smallIsp: "Often practical and local",
   },
   {
-    category: "Buyer confidence before contact",
+    category: "Confidence before contact",
     orbitlink: "Built to increase confidence early",
     bigTelco: "Brand familiarity drives confidence",
-    smallIsp: "Confidence often depends on the operator relationship",
+    smallIsp: "Confidence depends on operator relationship",
+  },
+  {
+    category: "Best fit",
+    orbitlink: "Businesses wanting clarity and guidance",
+    bigTelco: "Buyers prioritizing scale and familiarity",
+    smallIsp: "Buyers wanting a local or direct relationship",
   },
 ] as const;
 
@@ -148,94 +148,94 @@ const BEST_FOR = [
     title: "Choose Orbitlink if you want...",
     items: [
       "A clearer business buying experience from the start",
-      "A more premium commercial surface than generic telecom marketing",
-      "Visible trust, qualification, and operating posture",
-      "A provider that explains fit before pushing a commitment",
-      "A cleaner path from interest to qualified request",
+      "Better explanation of service fit before contact",
+      "Visible trust and business information on the site",
+      "A more premium and organized service surface",
+      "A cleaner path from interest to request",
     ],
   },
   {
     title: "Choose a large telecom provider if you want...",
     items: [
       "A nationally familiar brand",
-      "A broad product catalog and established scale",
+      "A large product catalog",
       "A provider that may already serve many buildings",
-      "A larger standardized process",
-      "A familiar name even if the buying path feels less tailored",
+      "A more standardized process",
+      "Brand familiarity over a tailored buying path",
     ],
   },
   {
-    title: "Choose a typical smaller ISP if you want...",
+    title: "Choose a smaller ISP if you want...",
     items: [
       "A more local or direct operator relationship",
-      "A simpler buying conversation for a straightforward need",
+      "A simpler buying conversation",
       "A leaner regional provider",
-      "A relationship-led approach instead of a structured enterprise surface",
-      "A practical option where trust is built directly with the operator",
+      "A practical option for a straightforward need",
+      "Trust built mainly through direct contact",
     ],
   },
 ] as const;
 
 const ORBITLINK_ADVANTAGES = [
   {
-    title: "Clearer before commitment",
+    title: "Clearer before you contact us",
     body:
-      "Orbitlink is built to explain service fit, qualification logic, and commercial direction without forcing buyers through vague telecom language.",
+      "Orbitlink is built to explain service fit, business use cases, and next steps in plainer English.",
   },
   {
     title: "More premium business presentation",
     body:
-      "The design, structure, and copy are intentionally built to feel calmer, more credible, and more business-ready than most smaller providers.",
+      "The site, layout, and messaging are designed to feel calmer, clearer, and more business-ready than most smaller providers.",
   },
   {
-    title: "More visible operating discipline",
+    title: "More visible trust signals",
     body:
-      "Trust posture, disclosure, onboarding logic, and operating signals are treated as part of the buying experience instead of hidden details.",
+      "Trust, onboarding, and business positioning are surfaced earlier instead of being hidden deeper in the process.",
   },
   {
-    title: "A stronger request path",
+    title: "Stronger lead path",
     body:
-      "The site is designed to guide buyers toward a better initial request instead of making them guess which service, page, or form matters most.",
+      "The site is designed to guide buyers toward the right request instead of making them guess what to click next.",
   },
 ] as const;
 
 const BUYER_PATH = [
   {
     step: "1",
-    title: "Understand the service fit",
+    title: "Understand the right fit",
     body:
-      "Orbitlink helps buyers understand what each service is for, when it fits, and when a higher-assurance path may be more appropriate.",
+      "Orbitlink helps buyers understand which service fits the business and when a higher-assurance option makes sense.",
   },
   {
     step: "2",
-    title: "Qualify the site properly",
+    title: "Review the address properly",
     body:
-      "Availability and delivery are reviewed against the address, building context, and business requirement before overcommitting.",
+      "Availability is reviewed against the address, building context, and business need before overpromising.",
   },
   {
     step: "3",
-    title: "Move with clearer direction",
+    title: "Move forward with a clear next step",
     body:
-      "The buyer receives a more structured next step into qualification, commercial review, or onboarding.",
+      "The buyer gets a simpler path toward availability, pricing, and the right service direction.",
   },
 ] as const;
 
 const FAQ_ITEMS = [
   {
     q: "Why compare Orbitlink with large telecom providers and smaller ISPs?",
-    a: "This page helps business buyers understand how Orbitlink differs in buying experience, qualification logic, service clarity, and trust posture.",
+    a: "This page helps business buyers understand how Orbitlink differs in clarity, business fit, support visibility, and overall buying experience.",
   },
   {
-    q: "Is Orbitlink the right fit for every requirement?",
-    a: "No. This comparison is meant to show where Orbitlink is the stronger fit and where another provider model may suit a different requirement better.",
+    q: "Is Orbitlink the right fit for every business?",
+    a: "No. This page is meant to show where Orbitlink is a stronger fit and where another provider model may suit a different need better.",
   },
   {
     q: "What is Orbitlink’s strongest difference?",
-    a: "Orbitlink is designed to provide a clearer, more structured, and more trust-forward business buying experience than most provider websites.",
+    a: "Orbitlink is designed to provide a clearer, more business-friendly, and more trust-forward buying experience.",
   },
   {
-    q: "Who is this comparison page built for?",
-    a: "It is built for business owners, office managers, IT leads, operations teams, and commercial buyers comparing connectivity providers for their organization.",
+    q: "Who is this page for?",
+    a: "It is built for business owners, office managers, IT leads, operations teams, and other buyers comparing providers for a business location.",
   },
 ] as const;
 
@@ -348,11 +348,11 @@ export default function ComparePage() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Compare Business Internet Provider Models",
+        name: "Compare Business Internet Providers",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#org` },
         description:
-          "A business internet comparison page showing how Orbitlink differs from large telecom providers and typical smaller ISPs.",
+          "A business internet comparison page showing how Orbitlink differs from large telecom providers and smaller ISPs.",
       },
       {
         "@type": "BreadcrumbList",
@@ -388,8 +388,8 @@ export default function ComparePage() {
   return (
     <PageShell
       eyebrow="COMPARE"
-      title="Compare business internet provider models"
-      subtitle="A clearer comparison for organizations evaluating Orbitlink, large telecom providers, and typical smaller ISPs."
+      title="Compare business internet providers"
+      subtitle="A clearer comparison for businesses evaluating Orbitlink, large telecom providers, and smaller ISPs."
     >
       <script
         type="application/ld+json"
@@ -408,21 +408,20 @@ export default function ComparePage() {
           <div className="lg:col-span-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[11px] text-[#FDE68A]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Buyer-first comparison
+              Business-first comparison
             </div>
 
             <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[44px] lg:leading-[1.02]">
-              The right provider model is not only about bandwidth.
+              The right provider is not only about speed or bandwidth.
               <span className="block text-white/72">
-                It is also about clarity, fit, and confidence before commitment.
+                It is also about clarity, trust, and how easy the buying process feels.
               </span>
             </h2>
 
             <p className="mt-4 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              Large telecom providers bring scale. Smaller ISPs can bring direct operator
-              attention. Orbitlink is being built to combine premium presentation,
-              clearer service logic, visible trust posture, and a more structured buying
-              experience for Ontario business connectivity.
+              Large telecom providers bring scale. Smaller ISPs can bring a more direct relationship.
+              Orbitlink is being built to combine premium presentation, clearer service logic,
+              visible trust, and a more business-friendly buying experience.
             </p>
 
             <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -441,7 +440,7 @@ export default function ComparePage() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Send a Business Request
+                Check Availability
               </Link>
               <Link
                 href="/why-orbitlink"
@@ -460,19 +459,18 @@ export default function ComparePage() {
 
           <div className="lg:col-span-4">
             <div className="rounded-[28px] border border-white/10 bg-black/25 p-5 sm:p-6">
-              <SectionEyebrow>BUYER SNAPSHOT</SectionEyebrow>
+              <SectionEyebrow>QUICK TAKE</SectionEyebrow>
               <div className="mt-3 text-lg font-semibold text-white">
-                Orbitlink’s strongest edge is structured buyer confidence
+                Orbitlink stands out most in clarity and buyer experience
               </div>
               <p className="mt-3 text-sm leading-6 text-white/64">
-                The difference is not only the service list. It is how clearly the
-                business is presented, how disciplined the request path feels, and how
-                visible the trust posture is before the first conversation.
+                The difference is not only the service list. It is how clear the business feels,
+                how easy the request path is, and how much trust is visible before the first conversation.
               </p>
 
               <div className="mt-5 grid gap-3">
                 <MetricPill label="CLARITY" value="More explicit" />
-                <MetricPill label="STRUCTURE" value="More guided" />
+                <MetricPill label="GUIDANCE" value="More helpful" />
                 <MetricPill label="TRUST" value="More visible" />
               </div>
             </div>
@@ -488,12 +486,11 @@ export default function ComparePage() {
               Where Orbitlink stands out
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              This page is not about claiming to be everything for everyone. It is
-              about showing where Orbitlink creates a stronger business buying experience.
+              This is not about being everything for everyone. It is about showing where Orbitlink creates a better business buying experience.
             </p>
           </div>
 
-          <MetricPill label="FOCUS" value="Business readability and trust" />
+          <MetricPill label="FOCUS" value="Clarity and trust" />
         </div>
 
         <div className="mt-7 grid grid-cols-1 gap-4 xl:grid-cols-2">
@@ -525,7 +522,7 @@ export default function ComparePage() {
 
                 <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
                   <div className="text-[11px] tracking-[0.22em] text-white/45">
-                    TYPICAL SMALLER ISP
+                    SMALLER ISP
                   </div>
                   <div className="mt-2">
                     <NeutralPill value={item.smallIsp} />
@@ -547,12 +544,11 @@ export default function ComparePage() {
               The real difference in buying experience
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              This section compares the factors that actually shape trust, buyer comfort,
-              and decision-making before a provider is chosen.
+              This comparison focuses on the things that shape trust and decision-making before a provider is chosen.
             </p>
           </div>
 
-          <MetricPill label="OUTCOME" value="Cleaner decision path" />
+          <MetricPill label="OUTCOME" value="Cleaner choice" />
         </div>
 
         <div className="mt-7 space-y-3">
@@ -586,7 +582,7 @@ export default function ComparePage() {
 
                 <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
                   <div className="text-[11px] tracking-[0.22em] text-white/45">
-                    TYPICAL SMALLER ISP
+                    SMALLER ISP
                   </div>
                   <p className="mt-2 text-sm leading-6 text-white/65">
                     {row.smallIsp}
@@ -609,15 +605,14 @@ export default function ComparePage() {
           <div className="max-w-3xl">
             <SectionEyebrow>WHICH FIT IS RIGHT?</SectionEyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-              Choose the provider model that fits the requirement
+              Choose the provider model that fits your business
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              This section helps buyers self-qualify. That makes Orbitlink feel more
-              confident, more transparent, and easier to trust.
+              This section helps buyers compare provider types more honestly and choose the one that fits best.
             </p>
           </div>
 
-          <MetricPill label="POSITIONING" value="Clear fit, not generic selling" />
+          <MetricPill label="POSITIONING" value="Clear fit" />
         </div>
 
         <div className="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -643,14 +638,12 @@ export default function ComparePage() {
       <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <SectionEyebrow>HOW ORBITLINK CLOSES BETTER</SectionEyebrow>
+            <SectionEyebrow>HOW ORBITLINK HELPS</SectionEyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-              Orbitlink removes friction from telecom buying
+              Orbitlink removes friction from business telecom buying
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              The goal is simple: help the buyer feel more informed, more comfortable,
-              and more ready to act because the provider surface already feels organized
-              and credible.
+              The goal is simple: help the buyer feel more informed and more ready to act because the provider already feels organized and credible.
             </p>
           </div>
 
@@ -676,8 +669,7 @@ export default function ComparePage() {
             Common questions about this comparison
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-            These answers help buyers understand the purpose of this page and when
-            Orbitlink is the right fit.
+            These answers explain the purpose of this page and when Orbitlink is the right fit.
           </p>
         </div>
 
@@ -699,13 +691,12 @@ export default function ComparePage() {
           <div className="max-w-3xl">
             <SectionEyebrow>FINAL TAKE</SectionEyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-              Orbitlink is the stronger fit when the buyer values clarity, structure, and trust
+              Orbitlink is the stronger fit when your business values clarity, trust, and a cleaner buying path
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              Large telecom providers win on scale. Smaller ISPs can win on direct
-              operator relationships. Orbitlink is being built to win where many serious
-              business buyers care most: a cleaner buying journey, a more premium service
-              surface, and a provider that feels easier to trust from the start.
+              Large telecom providers win on scale. Smaller ISPs can win on direct relationships.
+              Orbitlink is being built to win where many serious business buyers care most:
+              a clearer buying journey, a more premium service surface, and a provider that feels easier to trust from the start.
             </p>
           </div>
 
@@ -714,7 +705,7 @@ export default function ComparePage() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Send a Business Request
+              Check Availability
             </Link>
             <Link
               href="/why-orbitlink"
