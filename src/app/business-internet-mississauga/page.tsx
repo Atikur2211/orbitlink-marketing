@@ -417,7 +417,7 @@ export default function BusinessInternetMississaugaPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <SectionEyebrow>SERVICE OPTIONS</SectionEyEBROW>
+              <SectionEyebrow>SERVICE OPTIONS</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
                 Choose the right service
               </h2>
