@@ -398,22 +398,25 @@ export default function Home() {
             </div>
 
             <h1 className="mt-6 max-w-5xl text-[2rem] font-semibold leading-[1] tracking-tight text-white sm:text-[3rem] lg:text-[4.25rem] xl:text-[5rem]">
-              Connectivity engineered
-              <span className="block text-white/62">for real business operations</span>
+              Business fibre internet, dedicated internet, and managed Wi-Fi
+              <span className="block text-white/62">for Ontario businesses</span>
             </h1>
 
             <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/87 sm:text-[1.08rem]">
-              Orbitlink helps Ontario businesses choose the right internet, Wi-Fi,
-              voice, and backup connectivity for their location. We review building
-              infrastructure, provider options, and operational requirements before
-              recommending a clear path forward.
+              For offices, clinics, warehouses, and multi-site teams. Check
+              availability by address and get the right internet, voice, backup,
+              and network solution for your location.
             </p>
+
+            <div className="mt-4 text-sm text-white/70">
+              Used by Ontario offices, clinics, warehouses, and growing teams.
+            </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {[
-                "Address-qualified review",
-                "Ontario business-only",
-                "Structured commercial path",
+                "Business-only service",
+                "Available across Ontario",
+                "Reviewed by address",
                 "Clear next step",
               ].map((item) => (
                 <span
@@ -431,7 +434,7 @@ export default function Home() {
                   href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
-                  Check Availability for Your Location
+                  Check Availability
                 </Link>
                 <div className="text-center text-xs text-white/55 sm:text-left">
                   Business-only review • No obligation • Clear response
@@ -439,26 +442,28 @@ export default function Home() {
               </div>
 
               <Link
+                href="/contact#intake"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Request Pricing
+              </Link>
+
+              <Link
                 href="/services"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
                 Explore Services
               </Link>
-
-              <Link
-                href="/trust"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-              >
-                Review Trust Posture
-              </Link>
             </div>
 
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-white/48 sm:text-xs">
-              <span>Operated by TIRAV Technologies Inc.</span>
+              <span>Business-only provider</span>
               <span className="hidden sm:inline">•</span>
-              <span>CRTC-registered provider</span>
+              <span>CRTC-registered</span>
               <span className="hidden sm:inline">•</span>
-              <span>Ontario commercial review</span>
+              <span>Ontario coverage</span>
+              <span className="hidden sm:inline">•</span>
+              <span>Direct support path</span>
             </div>
           </div>
         </div>
@@ -471,26 +476,26 @@ export default function Home() {
               START HERE
             </div>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-              Choose the path that fits the business
+              Choose the right internet setup for your business
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              Start with the real operating requirement. That usually makes the right
-              connectivity path much clearer.
+              Start with how your business operates. That makes the right internet
+              and network setup much clearer.
             </p>
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
             <FitCard
               title="Offices & Clinics"
-              body="Stable day-to-day connectivity, managed Wi-Fi, and a cleaner commercial buying path."
+              body="Stable day-to-day connectivity, managed Wi-Fi, and a cleaner path for professional business environments."
             />
             <FitCard
               title="Critical Operations"
-              body="Dedicated internet, stronger uptime posture, and continuity planning for higher-dependency environments."
+              body="Dedicated internet, stronger uptime planning, and continuity options for higher-dependency environments."
             />
             <FitCard
               title="Internal Network Problems"
-              body="Coverage, segmentation, and LAN / Wi-Fi issues that affect user experience and operations."
+              body="Coverage, segmentation, and LAN / Wi-Fi issues that affect staff experience, devices, and operations."
             />
           </div>
         </div>
@@ -510,11 +515,10 @@ export default function Home() {
                 BUSINESS INTERNET SOLUTIONS IN ONTARIO
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Connectivity designed for real business environments
+                Business internet and network solutions for Ontario organizations
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink supports Ontario businesses with service options matched
-                to building infrastructure, operational needs, and continuity requirements.
+                Choose the service that fits your site, then check availability.
               </p>
             </div>
 
@@ -543,8 +547,8 @@ export default function Home() {
 
             <div className="mt-6 rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
               <div className="text-sm leading-6 text-white/82">
-                Every solution is reviewed based on your address, building infrastructure,
-                provider reach, and business requirements.
+                Every solution is reviewed based on your address, building
+                infrastructure, provider reach, and business requirements.
               </div>
             </div>
           </div>
@@ -556,14 +560,14 @@ export default function Home() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <div className="text-[11px] tracking-[0.28em] text-white/55">
-                WHY SERIOUS BUYERS REACH OUT
+                COMMON BUSINESS INTERNET PROBLEMS
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Problems businesses run into with the wrong service model
+                Common problems with business internet
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
                 Many business locations rely on internet service that was never matched
-                to actual workload, continuity risk, or long-term operational needs.
+                to actual workload, continuity risk, or day-to-day operating needs.
               </p>
             </div>
             <MiniMetaCard
@@ -603,8 +607,8 @@ export default function Home() {
                 A clear path from enquiry to recommendation
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Submit your address, business requirements, and timeline. Orbitlink reviews the site,
-                available service paths, and the most suitable next step.
+                Submit your address, business requirements, and timeline. Orbitlink
+                reviews the site, available service paths, and the most suitable next step.
               </p>
             </div>
             <MiniMetaCard title="PROCESS" value="Address-based and practical" />
@@ -638,11 +642,11 @@ export default function Home() {
                 WHY BUYERS CHOOSE ORBITLINK
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Structured for business fit, not generic package selling
+                Built for real business needs, not generic packages
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-                Orbitlink is built around commercial review, address-qualified direction,
-                and clearer next-step guidance for Ontario organizations.
+                Orbitlink is designed to help Ontario organizations choose the right
+                service for the site, the workload, and the next stage of growth.
               </p>
             </div>
             <MiniMetaCard title="BUYER SIGNAL" value="Fit • Confidence • Action" />
@@ -650,16 +654,16 @@ export default function Home() {
 
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
             <ProofCard
-              title="Address-qualified review"
-              body="Availability and service direction are reviewed based on the actual location, infrastructure, and operating requirement."
+              title="Reviewed by address"
+              body="Availability and service direction are assessed based on the actual location, infrastructure, and operating requirement."
             />
             <ProofCard
-              title="Cleaner commercial path"
-              body="The process is designed to help serious buyers move from interest into a practical decision without unnecessary friction."
+              title="Cleaner buying path"
+              body="The process helps serious buyers move from interest into a practical decision without unnecessary friction."
             />
             <ProofCard
-              title="Disclosure-first posture"
-              body="The buying experience is framed around clarity, fit, and realistic service expectations before commitment."
+              title="Clear expectations before you commit"
+              body="We focus on service fit, realistic next steps, and practical guidance before commitment."
             />
           </div>
         </div>
@@ -673,16 +677,15 @@ export default function Home() {
                 COMMERCIAL REVIEW
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Reviewed directly by Orbitlink
+                Every request is reviewed by Orbitlink
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Every request is reviewed based on the business location, service fit,
-                building context, and operating requirements. This is not a generic sales loop.
-                It is a structured commercial review designed for serious buyers.
+                We review your business location, available infrastructure, and
+                service options to recommend the right setup.
               </p>
               <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
                 Operated by TIRAV Technologies Inc. • CRTC-registered telecommunications provider •
-                Ontario commercial review posture
+                Ontario business coverage
               </p>
             </div>
             <MiniMetaCard title="OPERATED BY" value="TIRAV Technologies Inc." />
@@ -714,14 +717,33 @@ export default function Home() {
                 service options, local availability, and market fit.
               </p>
             </div>
-            <MiniMetaCard title="LOCAL DISCOVERY" value="Location pages support local search intent" />
+            <MiniMetaCard
+              title="LOCAL DISCOVERY"
+              value="Location pages support local search intent"
+            />
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <CoverageCard city="Toronto" note="Business internet and commercial connectivity" href="/locations/toronto" />
-            <CoverageCard city="Mississauga" note="Priority business market" href="/locations/mississauga" />
-            <CoverageCard city="Vaughan" note="Industrial and office environments" href="/locations/vaughan" />
-            <CoverageCard city="Brampton" note="Warehouse and logistics environments" href="/locations/brampton" />
+            <CoverageCard
+              city="Toronto"
+              note="Business internet and commercial connectivity"
+              href="/locations/toronto"
+            />
+            <CoverageCard
+              city="Mississauga"
+              note="Priority business market"
+              href="/locations/mississauga"
+            />
+            <CoverageCard
+              city="Vaughan"
+              note="Industrial and office environments"
+              href="/locations/vaughan"
+            />
+            <CoverageCard
+              city="Brampton"
+              note="Warehouse and logistics environments"
+              href="/locations/brampton"
+            />
           </div>
         </div>
       </section>
@@ -769,17 +791,16 @@ export default function Home() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
-                READY TO REVIEW YOUR OPTIONS?
+                READY TO CHECK YOUR OPTIONS?
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Move from browsing to a real service decision.
+                Check availability for your business location
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-                We review your building, available providers, and infrastructure to recommend the most
-                reliable and scalable option for your business.
+                Get availability, pricing direction, and next steps for your site.
               </p>
             </div>
-            <MiniMetaCard title="NEXT STEP" value="Availability • Recommendation • Direction" />
+            <MiniMetaCard title="NEXT STEP" value="Availability • Pricing • Direction" />
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4 sm:flex-wrap">
@@ -788,7 +809,7 @@ export default function Home() {
                 href="/contact#intake"
                 className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Check Availability for Your Location
+                Check Availability
               </Link>
               <div className="text-xs text-white/55 sm:text-sm">
                 Business-only review • No obligation • Clear response
@@ -796,17 +817,17 @@ export default function Home() {
             </div>
 
             <Link
+              href="/contact#intake"
+              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
+            >
+              Request Pricing
+            </Link>
+
+            <Link
               href="/services"
               className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
             >
               Explore Services
-            </Link>
-
-            <Link
-              href="/trust"
-              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
-            >
-              Review Trust & Compliance
             </Link>
           </div>
         </div>
