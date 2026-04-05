@@ -152,21 +152,27 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
       <SectionTitle
         eyebrow="REQUEST DETAILS"
         title="Tell us what you need"
-        desc="Add your business address, service need, and timeline."
+        desc="Add your business address, service need, and timing. We review the request and guide the next step clearly."
       />
 
-      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
         <InfoPanel
           eyebrow="WHAT YOU GET"
-          title="A clear next step"
-          text="We review your address and service need, then reply with availability, pricing direction, or the best next step."
+          title="Availability, pricing direction, and service recommendation"
+          text="We review your address and service need, then reply with availability, pricing direction, or the best next step for the site."
           tone="accent"
         />
         <InfoPanel
           eyebrow="RESPONSE TIME"
-          title="Usually within 1 business day"
+          title="Usually within 1 business day (often faster)"
           text="Response time depends on the address, service type, and detail provided."
           tone="positive"
+        />
+        <InfoPanel
+          eyebrow="NO OBLIGATION"
+          title="Business review first"
+          text="Your request is reviewed without commitment. Orbitlink focuses on clarity first, then the right next step."
+          tone="neutral"
         />
       </div>
 
@@ -195,7 +201,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             placeholder="name@company.com"
             className={fieldClassName}
           />
-          <FieldHint>Work email is preferred.</FieldHint>
+          <FieldHint>Work email is preferred for business requests.</FieldHint>
         </div>
       </div>
 
@@ -214,8 +220,10 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
         </div>
 
         <div className="grid gap-2">
-          <FieldLabel htmlFor="role">Your role</FieldLabel>
-          <select id="role" name="role" required defaultValue="" className={fieldClassName}>
+          <FieldLabel htmlFor="role" optional>
+            Your role
+          </FieldLabel>
+          <select id="role" name="role" defaultValue="" className={fieldClassName}>
             <option value="" disabled>
               Select your role
             </option>
@@ -227,6 +235,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             <option value="partner_vendor">Partner / vendor</option>
             <option value="other">Other</option>
           </select>
+          <FieldHint>Optional, but helpful for routing the request properly.</FieldHint>
         </div>
       </div>
 
@@ -242,7 +251,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             placeholder="Street address, city, province"
             className={fieldClassName}
           />
-          <FieldHint>Use the exact service address.</FieldHint>
+          <FieldHint>Use the exact service address for the best review.</FieldHint>
         </div>
 
         <div className="grid gap-2">
@@ -257,7 +266,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
               </option>
             ))}
           </select>
-          <FieldHint>Choose the main service first.</FieldHint>
+          <FieldHint>Choose the main service first. You can mention additional services below.</FieldHint>
         </div>
       </div>
 
@@ -304,17 +313,20 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
           id="notes"
           name="notes"
           rows={5}
-          placeholder="Tell us what you need. Helpful details: current provider, timing, user count, static IPs, Wi-Fi, voice, backup, landlord coordination, or multi-site needs."
+          placeholder="Example: 20-user office, need fibre + Wi-Fi, current provider Bell, moving in 30 days, may need static IPs and backup internet."
           className={textareaClassName()}
         />
-        <FieldHint>Add anything important for the site.</FieldHint>
+        <FieldHint>
+          Mention fibre, Wi-Fi, voice, backup, static IPs, timing, landlord coordination,
+          or anything important for the site.
+        </FieldHint>
       </div>
 
       <div className="rounded-[24px] border border-white/10 bg-black/20 p-4">
         <div className="text-[11px] tracking-[0.22em] text-white/55">HELPFUL DETAILS</div>
         <p className="mt-2 text-sm leading-6 text-white/65">
           Static IPs, managed Wi-Fi, voice, backup connectivity, install window, building details,
-          landlord coordination, or anything else that affects the site.
+          landlord coordination, multi-site needs, or any service combination that matters to the location.
         </p>
       </div>
 
@@ -323,10 +335,21 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
           type="submit"
           className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
         >
-          Check Availability
+          Check Availability & Get Next Step
         </button>
 
-        <div className="text-xs text-white/55">
+        <a
+          href="tel:+18888672480"
+          className="text-center rounded-2xl border border-white/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+        >
+          Or call 1-888-867-2480
+        </a>
+
+        <p className="text-center text-xs text-white/50">
+          Business-only requests • No obligation • Reviewed by address
+        </p>
+
+        <div className="text-xs text-white/55 text-center">
           Prefer email?{" "}
           <a
             href="mailto:concierge@orbitlink.ca"

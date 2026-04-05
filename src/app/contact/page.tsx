@@ -12,6 +12,8 @@ const SITE_URL = "https://orbitlink.ca";
 const PAGE_URL = `${SITE_URL}/contact`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
+const PHONE_E164 = "+18888672480";
+const PHONE_DISPLAY = "1-888-867-2480";
 
 export const metadata: Metadata = {
   title: "Contact Orbitlink | Check Availability & Request Pricing",
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact Orbitlink | Check Availability & Request Pricing",
     description:
-      "Submit a request for business fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity.",
+      "Submit a request for business fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity for Ontario business sites.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -56,7 +58,13 @@ function Pill({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Surface({ children, className = "" }: any) {
+function Surface({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
     <div className={`rounded-[28px] border border-white/10 bg-white/[0.04] ${className}`}>
       {children}
@@ -64,7 +72,11 @@ function Surface({ children, className = "" }: any) {
   );
 }
 
-function SectionEyebrow({ children }: any) {
+function SectionEyebrow({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="text-[10px] tracking-[0.28em] text-white/45">
       {children}
@@ -72,11 +84,32 @@ function SectionEyebrow({ children }: any) {
   );
 }
 
-function MetricPill({ label, value }: any) {
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-      <div className="text-[10px] text-white/50">{label}</div>
+      <div className="text-[10px] tracking-[0.18em] text-white/50">{label}</div>
       <div className="mt-1 text-sm text-white/82">{value}</div>
+    </div>
+  );
+}
+
+function InfoCard({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 p-4 sm:p-5">
+      <div className="font-medium text-white/90">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/70">{body}</p>
     </div>
   );
 }
@@ -84,11 +117,44 @@ function MetricPill({ label, value }: any) {
 export default function ContactPage() {
   const moduleOptions = SERVICE_CATALOG.map((s) => s.publicLabel);
 
+  const schemaGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#org`,
+        name: "Orbitlink",
+        url: SITE_URL,
+        telephone: PHONE_E164,
+        email: "concierge@orbitlink.ca",
+        brand: { "@type": "Brand", name: "Orbitlink" },
+        parentOrganization: {
+          "@type": "Organization",
+          name: "TIRAV Technologies Inc.",
+        },
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: "Contact Orbitlink",
+        description:
+          "Check availability and request pricing for business internet and network services.",
+        about: { "@id": `${SITE_URL}/#org` },
+      },
+      {
+        "@type": "ContactPage",
+        url: PAGE_URL,
+        name: "Contact Orbitlink",
+      },
+    ],
+  };
+
   return (
     <PageShell
       eyebrow="CONTACT"
       title="Check availability for your business location"
-      subtitle="Tell us your address and what you need. We confirm availability and guide the next step."
+      subtitle="Submit your address and requirements. Orbitlink confirms availability, matches the right service, and guides the next step clearly."
       pills={[
         "Business-only requests",
         "Availability checked by address",
@@ -99,41 +165,113 @@ export default function ContactPage() {
         { label: "View Services", href: "/services", variant: "secondary" },
       ]}
     >
-      {/* HERO */}
-      <section className="p-6">
-        <h2 className="text-2xl font-semibold">
-          Tell us your address and service need
-        </h2>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+      />
 
-        <p className="mt-3 text-white/70 max-w-2xl">
-          Submit your business address, required service, and timing.
-          We check what is available and guide you to the right setup.
-        </p>
-
-        <div className="mt-6 flex gap-2 flex-wrap">
-          <Pill>Business fibre</Pill>
-          <Pill>Dedicated internet</Pill>
-          <Pill>Managed Wi-Fi</Pill>
-          <Pill>Voice</Pill>
-          <Pill>Backup internet</Pill>
+      <Surface className="relative overflow-hidden p-6 sm:p-8 lg:p-10">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -left-16 top-0 h-40 w-40 rounded-full bg-blue-500/10 blur-3xl" />
+          <div className="absolute right-0 top-8 h-40 w-40 rounded-full bg-emerald-500/10 blur-3xl" />
+          <div className="absolute bottom-0 left-1/2 h-32 w-[26rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
         </div>
 
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <MetricPill label="BEST FOR" value="Ontario businesses" />
-          <MetricPill label="CHECKED BY" value="Address and building" />
-          <MetricPill label="YOU GET" value="Availability + next step" />
+        <div className="relative grid grid-cols-1 gap-8 lg:grid-cols-12">
+          <div className="lg:col-span-8">
+            <SectionEyebrow>BUSINESS CONNECTIVITY REQUEST</SectionEyebrow>
+
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-[40px] lg:leading-[1.04]">
+              Tell us your address and service requirement
+            </h2>
+
+            <p className="mt-4 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
+              Orbitlink reviews business fibre, dedicated internet, managed Wi-Fi,
+              voice, backup connectivity, and related network requirements for Ontario
+              business locations. Start with the address, what you need, and your
+              timing. The next step stays clear.
+            </p>
+
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/60 sm:text-[15px]">
+              Every request is reviewed by address, building condition, and business
+              requirements before moving forward. That helps reduce confusion and keeps
+              the buying path more structured.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Pill>Business fibre</Pill>
+              <Pill>Dedicated internet</Pill>
+              <Pill>Managed Wi-Fi</Pill>
+              <Pill>Voice</Pill>
+              <Pill>Backup internet</Pill>
+              <Pill>Ontario business locations</Pill>
+            </div>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <a
+                href="#intake"
+                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+              >
+                Check Availability
+              </a>
+
+              <a
+                href={`tel:${PHONE_E164}`}
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Call {PHONE_DISPLAY}
+              </a>
+
+              <Link
+                href="/services"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                View Services
+              </Link>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <MetricPill label="BEST FOR" value="Ontario businesses" />
+              <MetricPill label="CHECKED BY" value="Address and building fit" />
+              <MetricPill label="YOU GET" value="Availability + next step" />
+            </div>
+          </div>
+
+          <div className="lg:col-span-4">
+            <div className="rounded-[28px] border border-white/10 bg-black/25 p-5 sm:p-6">
+              <SectionEyebrow>QUICK SUMMARY</SectionEyebrow>
+              <div className="mt-3 text-lg font-semibold text-white">
+                What to include for the fastest review
+              </div>
+              <p className="mt-3 text-sm leading-6 text-white/64">
+                The best requests include the service address, service type, business
+                use case, and preferred timing. That helps Orbitlink confirm the right
+                direction faster.
+              </p>
+
+              <div className="mt-5 grid gap-3">
+                <MetricPill label="INCLUDE" value="Full address" />
+                <MetricPill label="INCLUDE" value="Service required" />
+                <MetricPill label="INCLUDE" value="Timing or go-live target" />
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
+      </Surface>
 
-      {/* FORM */}
-      <section id="intake" className="p-6">
-        <h2 className="text-xl font-semibold">Submit your request</h2>
+      <Surface id="intake" className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
+        <div className="max-w-3xl">
+          <SectionEyebrow>SUBMIT YOUR REQUEST</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+            Start your availability review
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
+            Fill out the form below to check availability, request pricing direction,
+            and move toward the right service path for your business location.
+          </p>
+        </div>
 
-        <p className="mt-2 text-white/70">
-          Fill out the form to check availability and get the next step.
-        </p>
-
-        <div className="mt-4">
+        <div className="mt-5">
           <Suspense fallback={null}>
             <IntakeStatusBanner />
           </Suspense>
@@ -143,72 +281,224 @@ export default function ContactPage() {
           <ContactIntakeForm moduleOptions={moduleOptions} />
         </div>
 
-        <p className="mt-4 text-xs text-white/50">
-          Best results: include full address, service type, and timing.
+        <p className="mt-4 text-xs leading-5 text-white/50">
+          Best results: include the full service address, service type, company name,
+          and timing. Business-only requests.
         </p>
-      </section>
+      </Surface>
 
-      {/* WHAT HAPPENS */}
-      <section className="p-6">
-        <h2 className="text-xl font-semibold">What happens next</h2>
-
-        <div className="mt-4 grid md:grid-cols-3 gap-4">
-          <div className="border border-white/10 p-4 rounded-xl">
-            <div className="font-medium">1. We check availability</div>
-            <p className="text-sm text-white/70 mt-2">
-              Based on your address and building.
-            </p>
-          </div>
-
-          <div className="border border-white/10 p-4 rounded-xl">
-            <div className="font-medium">2. We match the service</div>
-            <p className="text-sm text-white/70 mt-2">
-              Fibre, dedicated internet, or backup.
-            </p>
-          </div>
-
-          <div className="border border-white/10 p-4 rounded-xl">
-            <div className="font-medium">3. You get next steps</div>
-            <p className="text-sm text-white/70 mt-2">
-              Pricing direction or deployment path.
-            </p>
-          </div>
+      <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
+        <div className="max-w-3xl">
+          <SectionEyebrow>WHAT HAPPENS NEXT</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+            A clear path after you submit
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
+            Orbitlink is designed to make the next step easy to understand.
+          </p>
         </div>
-      </section>
 
-      {/* CONTACT */}
-      <section className="p-6">
-        <h2 className="text-xl font-semibold">Direct contact</h2>
-
-        <div className="mt-4 text-white/70 space-y-2">
-          <div>📧 concierge@orbitlink.ca</div>
-          <div>📧 sales@orbitlink.ca</div>
-          <div>📞 1-888-867-2480</div>
-          <div>Hours: Mon–Fri 9AM–6PM</div>
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <InfoCard
+            title="1. Availability review"
+            body="The address, building context, and access conditions are reviewed first."
+          />
+          <InfoCard
+            title="2. Service matching"
+            body="The request is aligned to business fibre, dedicated internet, managed Wi-Fi, voice, or backup requirements."
+          />
+          <InfoCard
+            title="3. Clear next step"
+            body="You receive pricing direction, feasibility guidance, or the recommended deployment path."
+          />
         </div>
-      </section>
+      </Surface>
 
-      {/* FAQ */}
-      <section className="p-6">
-        <h2 className="text-xl font-semibold">FAQ</h2>
-
-        <div className="mt-4 grid md:grid-cols-2 gap-4 text-white/70">
+      <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div>
-            <strong>What should I include?</strong>
-            <p>Address, service type, and timing.</p>
+            <SectionEyebrow>WHY THIS CONTACT PAGE WORKS</SectionEyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+              Built for higher-intent business buyers
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
+              This page is designed to reduce friction. The buyer knows what to do,
+              what to include, and what happens after submission.
+            </p>
+
+            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <MetricPill label="CLARITY" value="Simple request flow" />
+              <MetricPill label="TRUST" value="Address-based review" />
+              <MetricPill label="FIT" value="Business-only" />
+              <MetricPill label="OUTCOME" value="Clear next step" />
+            </div>
           </div>
 
           <div>
-            <strong>What happens after?</strong>
-            <p>We review and guide the next step.</p>
+            <SectionEyebrow>COMMON REQUEST TYPES</SectionEyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+              What buyers usually ask for
+            </h2>
+
+            <div className="mt-6 grid grid-cols-1 gap-3">
+              <InfoCard
+                title="Business fibre availability"
+                body="Primary internet for offices, clinics, studios, and commercial locations."
+              />
+              <InfoCard
+                title="Dedicated internet review"
+                body="Higher-assurance connectivity for business-critical environments."
+              />
+              <InfoCard
+                title="Wi-Fi, voice, and continuity"
+                body="Managed Wi-Fi, business voice, backup internet, and upgrade planning around the primary connection."
+              />
+            </div>
+          </div>
+        </div>
+      </Surface>
+
+      <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <div>
+            <SectionEyebrow>DIRECT CONTACT</SectionEyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+              Speak directly
+            </h2>
+
+            <div className="mt-5 space-y-3">
+              <a
+                href={`tel:${PHONE_E164}`}
+                className="block rounded-2xl border border-white/10 bg-black/20 p-4 transition hover:bg-black/30"
+              >
+                <div className="text-sm font-medium text-white/90">
+                  Call {PHONE_DISPLAY}
+                </div>
+                <div className="mt-1 text-sm text-white/65">
+                  Business enquiries and availability requests
+                </div>
+              </a>
+
+              <a
+                href="mailto:concierge@orbitlink.ca"
+                className="block rounded-2xl border border-white/10 bg-black/20 p-4 transition hover:bg-black/30"
+              >
+                <div className="text-sm font-medium text-white/90">
+                  concierge@orbitlink.ca
+                </div>
+                <div className="mt-1 text-sm text-white/65">
+                  General business connectivity enquiries
+                </div>
+              </a>
+
+              <a
+                href="mailto:sales@orbitlink.ca"
+                className="block rounded-2xl border border-white/10 bg-black/20 p-4 transition hover:bg-black/30"
+              >
+                <div className="text-sm font-medium text-white/90">
+                  sales@orbitlink.ca
+                </div>
+                <div className="mt-1 text-sm text-white/65">
+                  Pricing and service review enquiries
+                </div>
+              </a>
+
+              <div className="text-sm text-white/55">
+                Hours: Monday to Friday, 9:00 AM to 6:00 PM
+              </div>
+            </div>
           </div>
 
           <div>
-            <strong>Is this for business?</strong>
-            <p>Yes, business locations only.</p>
+            <SectionEyebrow>BEFORE YOU SUBMIT</SectionEyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+              Best results come from better details
+            </h2>
+
+            <div className="mt-5 grid grid-cols-1 gap-3">
+              <InfoCard
+                title="Service address"
+                body="Include the full building or unit address so availability can be reviewed properly."
+              />
+              <InfoCard
+                title="Service type"
+                body="Business fibre, dedicated internet, managed Wi-Fi, voice, backup connectivity, or multi-service review."
+              />
+              <InfoCard
+                title="Timing and business use"
+                body="Include your go-live timing, current provider situation, and what the service needs to support."
+              />
+            </div>
           </div>
         </div>
-      </section>
+      </Surface>
+
+      <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
+        <div className="max-w-3xl">
+          <SectionEyebrow>FAQ</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+            Common questions
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
+            Clear answers for business buyers before they submit a request.
+          </p>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <InfoCard
+            title="What should I include?"
+            body="Include the address, required service, company name, and timing for the best review."
+          />
+          <InfoCard
+            title="What happens after I submit?"
+            body="Orbitlink reviews the request and guides the next step, including availability, pricing direction, or service fit."
+          />
+          <InfoCard
+            title="Is this for business only?"
+            body="Yes. This intake is designed for Ontario business locations and commercial connectivity requirements."
+          />
+          <InfoCard
+            title="Can I ask about more than one service?"
+            body="Yes. You can request fibre, dedicated internet, Wi-Fi, voice, and backup connectivity together."
+          />
+        </div>
+      </Surface>
+
+      <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>FINAL CTA</SectionEyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+              Ready to check availability?
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
+              Start with your address and requirements. Orbitlink will guide the next
+              step clearly, whether that is availability, pricing, or the right service direction.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a
+              href="#intake"
+              className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+            >
+              Check Availability
+            </a>
+            <a
+              href={`tel:${PHONE_E164}`}
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+            >
+              Call {PHONE_DISPLAY}
+            </a>
+            <Link
+              href="/services"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+            >
+              Explore Services
+            </Link>
+          </div>
+        </div>
+      </Surface>
     </PageShell>
   );
 }
