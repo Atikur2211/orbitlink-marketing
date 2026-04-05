@@ -301,7 +301,7 @@ export default function Page() {
 
             <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-12">
               <div className="lg:col-span-8">
-                <SectionEyebrow>ONTARIO BUSINESS INTERNET</SectionEyEBROW>
+                <SectionEyebrow>ONTARIO BUSINESS INTERNET</SectionEyebrow>
 
                 <h1 className="mt-4 text-[2.3rem] font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.4rem] lg:leading-[0.98]">
                   Business Fibre Internet
