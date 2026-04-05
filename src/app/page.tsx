@@ -395,7 +395,7 @@ export default function Home() {
           <div className="w-full max-w-4xl">
             <div className="w-full max-w-[325px] truncate rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:max-w-max sm:text-xs">
               <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Business Fibre • Dedicated Internet • Managed Network
+              Fibre • Dedicated Internet • Managed Network Infrastructure
             </div>
 
             <h1 className="mt-5 max-w-[11ch] text-[2.15rem] font-semibold leading-[0.94] tracking-tight text-white sm:max-w-[12.5ch] sm:text-[3.2rem] lg:max-w-5xl lg:text-[4.4rem] xl:text-[5.1rem]">
@@ -410,7 +410,7 @@ export default function Home() {
             </p>
 
             <div className="mt-3 text-[13px] leading-5 text-white/64 sm:text-sm">
-              Address-based review. Clear next step. Business-first support.
+              Address-qualified review. Clear commercial direction. Operator-grade support path.
             </div>
 
             <div className="mt-5 flex flex-wrap gap-2">
@@ -438,7 +438,7 @@ export default function Home() {
                   Check Availability
                 </Link>
                 <div className="text-center text-[11px] text-white/55 sm:text-left sm:text-xs">
-                  Business-only review • No obligation
+                  Business-only review • No obligation • Clear next step
                 </div>
               </div>
 
@@ -738,7 +738,7 @@ export default function Home() {
                 Check Availability
               </Link>
               <div className="text-center text-[11px] text-white/55 sm:text-left sm:text-xs">
-                Business-only review • No obligation
+                Business-only review • No obligation • Clear next step
               </div>
             </div>
 
