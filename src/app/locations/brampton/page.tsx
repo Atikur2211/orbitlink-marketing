@@ -32,9 +32,9 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Fibre Internet in Brampton, ON | Orbitlink™";
+const PAGE_TITLE = "Business Internet in Brampton, ON | Orbitlink";
 const PAGE_DESCRIPTION =
-  "Business internet in Brampton with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
+  "Business internet in Brampton with fibre, dedicated internet, managed Wi-Fi, static IPs, voice, and backup connectivity. Availability is checked by address.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: PAGE_TITLE,
     description:
-      "Business connectivity in Brampton with fibre, DIA, managed LAN and Wi-Fi, continuity, and address-qualified service review.",
+      "Business internet in Brampton with fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: PAGE_TITLE,
     description:
-      "Business internet in Brampton with fibre, DIA, managed LAN and Wi-Fi, and structured service review.",
+      "Business internet in Brampton with fibre, dedicated internet, managed Wi-Fi, and backup connectivity.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -69,31 +69,31 @@ export const metadata: Metadata = {
 const FAQ = [
   {
     q: "Do you service my address in Brampton?",
-    a: "Availability depends on building infrastructure, access feasibility, and upstream serviceability. Orbitlink confirms feasibility by address before moving forward.",
+    a: "Availability depends on the building, access feasibility, and upstream serviceability. Orbitlink confirms availability by address before moving forward.",
   },
   {
     q: "Do you support industrial and logistics sites in Brampton?",
-    a: "Yes. Brampton includes many industrial, warehouse, and logistics environments where stable connectivity is essential. Orbitlink reviews feasibility per site and recommends the right access model based on operational needs.",
+    a: "Yes. Brampton includes many industrial, warehouse, and logistics environments where stable connectivity is essential. Orbitlink reviews each site and recommends the right access model based on business needs.",
   },
   {
-    q: "Do you offer Dedicated Internet Access in Brampton?",
-    a: "Yes. Dedicated Internet Access is available for business-critical environments where stronger performance and a clearer delivery posture are required, subject to feasibility.",
+    q: "Do you offer dedicated internet in Brampton?",
+    a: "Yes. Dedicated internet is available for business-critical environments that need stronger uptime and more predictable performance, subject to feasibility.",
   },
   {
     q: "Do you provide static IPs?",
-    a: "Static IP options are available where feasible and depend on the access type, service design, and site location.",
+    a: "Yes. Static IP options are available where feasible and depend on the access type, service design, and site location.",
   },
   {
     q: "How long does installation take in Brampton?",
-    a: "Install timelines vary by building readiness, access type, landlord coordination, and upstream coordination. Expectations are reviewed before activation.",
+    a: "Install timing depends on building readiness, access type, landlord coordination, and upstream serviceability.",
   },
   {
     q: "Can you manage LAN and Wi-Fi across office and warehouse environments?",
-    a: "Yes. Orbitlink provides managed LAN and enterprise Wi-Fi, including segmentation, coverage planning, and support for business environments.",
+    a: "Yes. Orbitlink provides managed LAN and business Wi-Fi, including segmentation, coverage planning, and support for office and warehouse environments.",
   },
   {
-    q: "Do you offer failover and continuity options?",
-    a: "Yes. Orbitlink can design LTE and 5G continuity options for sites that require uptime during access disruptions.",
+    q: "Do you offer backup connectivity?",
+    a: "Yes. Orbitlink can design LTE and 5G backup options for sites that need uptime during access disruptions.",
   },
   {
     q: "Are you a reseller?",
@@ -101,7 +101,7 @@ const FAQ = [
   },
   {
     q: "Do you provide business internet for warehouses in Brampton?",
-    a: "Yes. Orbitlink frequently evaluates warehouse and logistics environments across Brampton where voice, cloud platforms, cameras, VPNs, and line-of-business systems rely on stable internet service.",
+    a: "Yes. Orbitlink regularly evaluates warehouse and logistics environments in Brampton where voice, cloud platforms, cameras, VPNs, and line-of-business systems rely on stable internet service.",
   },
 ] as const;
 
@@ -109,7 +109,7 @@ const serviceModules = [
   { title: "Business Fibre Internet", href: "/services/business-fibre-internet" },
   { title: "Dedicated Internet Access", href: "/services/dedicated-internet-access" },
   { title: "Managed LAN & Wi-Fi", href: "/services/managed-lan-wifi" },
-  { title: "LTE / 5G Continuity", href: "/services/lte-5g-continuity" },
+  { title: "LTE / 5G Backup", href: "/services/lte-5g-continuity" },
   { title: "VoIP & Cloud Voice", href: "/services/voip-cloud-voice" },
   { title: "Static IP Routing", href: "/services/static-ip-routing" },
 ] as const;
@@ -119,23 +119,23 @@ const buildingTypes = [
   "Logistics and transportation facilities",
   "Professional offices and commercial units",
   "Retail and service businesses",
-  "Hybrid office and warehouse environments",
+  "Office and warehouse spaces",
 ] as const;
 
 const whyOrbitlink = [
-  "Address-qualified availability review",
-  "Clear distinction between broadband and DIA",
+  "Availability checked by address",
+  "Clear difference between broadband and dedicated internet",
   "Managed network options for office and warehouse sites",
-  "Continuity design for uptime-sensitive operations",
+  "Backup options for uptime-sensitive operations",
   "Documented onboarding and delivery",
-  "Business-first support posture",
+  "Business-first support",
 ] as const;
 
 const heroTags = [
   "Business fibre internet",
-  "Dedicated Internet Access",
-  "Managed LAN & Wi-Fi",
-  "Continuity options",
+  "Dedicated internet",
+  "Managed Wi-Fi",
+  "Backup connectivity",
   "Industrial and warehouse fit",
 ] as const;
 
@@ -182,7 +182,7 @@ function jsonLd() {
 
   const telecomService = {
     "@context": "https://schema.org",
-    "@type": "TelecomService",
+    "@type": "Service",
     "@id": `${PAGE_URL}#service`,
     name: "Business Internet in Brampton",
     url: PAGE_URL,
@@ -191,8 +191,8 @@ function jsonLd() {
     serviceType: [
       "Business Fibre Internet",
       "Dedicated Internet Access",
-      "Managed LAN and Enterprise Wi-Fi",
-      "LTE and 5G Continuity",
+      "Managed LAN and Wi-Fi",
+      "LTE and 5G Backup Connectivity",
       "VoIP and Cloud Voice",
       "Static IP Routing",
     ],
@@ -253,7 +253,7 @@ export default function BramptonLocationPage() {
         <div className="relative mx-auto max-w-6xl px-6 pb-12 pt-16 md:pb-16 md:pt-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
             <span className="h-2 w-2 rounded-full bg-[#38FDFE]" />
-            <span className="text-sm tracking-wide text-white/60">Brampton Service Area</span>
+            <span className="text-sm tracking-wide text-white/60">Brampton business service area</span>
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -263,10 +263,14 @@ export default function BramptonLocationPage() {
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
-                Orbitlink supports Brampton businesses with fibre, dedicated internet, managed
-                Wi-Fi, voice, and continuity services. Availability is reviewed by address,
-                building, and service fit before the next step is confirmed.
+                Orbitlink supports Brampton businesses with fibre, dedicated internet,
+                managed Wi-Fi, voice, static IPs, and backup connectivity. Availability is
+                checked by address, building, and service fit before the next step is confirmed.
               </p>
+
+              <div className="mt-3 text-sm text-white/70">
+                Built for warehouses, industrial sites, logistics operations, offices, and commercial business locations.
+              </div>
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {heroTags.map((x) => (
@@ -295,28 +299,28 @@ export default function BramptonLocationPage() {
               </div>
 
               <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <MetricPill label="MARKET" value="Brampton business locations" />
-                <MetricPill label="QUALIFICATION" value="Address and building based" />
-                <MetricPill label="NEXT STEP" value="Availability and pricing review" />
+                <MetricPill label="CITY" value="Brampton business locations" />
+                <MetricPill label="CHECKED BY" value="Address and building fit" />
+                <MetricPill label="NEXT STEP" value="Availability and pricing direction" />
               </div>
             </div>
 
             <div className="lg:col-span-4">
               <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-                <SectionEyebrow>HOW IT WORKS</SectionEyebrow>
+                <SectionEyebrow>HOW TO START</SectionEyebrow>
                 <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
                   Start with your address
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-white/70">
-                  The strongest requests include the service address, service needed, target
-                  timeline, and any important requirements such as DIA, static IPs, managed
-                  Wi-Fi, or continuity.
+                  The best requests include the service address, service needed, target
+                  timeline, and important details such as dedicated internet, static IPs,
+                  managed Wi-Fi, voice, or backup connectivity.
                 </p>
 
                 <div className="mt-5 grid gap-3">
                   <MetricPill label="STEP 1" value="Choose the service" />
-                  <MetricPill label="STEP 2" value="Add address and scope" />
-                  <MetricPill label="STEP 3" value="Receive the next step" />
+                  <MetricPill label="STEP 2" value="Add address and timing" />
+                  <MetricPill label="STEP 3" value="Get the next step" />
                 </div>
               </div>
             </div>
@@ -340,15 +344,15 @@ export default function BramptonLocationPage() {
                 </p>
 
                 <p>
-                  Orbitlink approaches this market with a simple model: confirm serviceability,
-                  match the site to the right access type, define any managed network scope,
-                  and move into a cleaner onboarding path.
+                  Orbitlink approaches this market simply: check availability, match the site
+                  to the right access type, define any managed network needs, and move into the
+                  next business step.
                 </p>
 
                 <p>
                   Commercial areas around Airport Road, Steeles Avenue, Queen Street corridors,
-                  and major industrial zones often need more than generic broadband. Fibre, DIA,
-                  managed LAN, segmentation, and continuity can all matter depending on the site.
+                  and major industrial zones often need more than generic broadband. Fibre,
+                  dedicated internet, managed LAN, segmentation, and backup connectivity can all matter depending on the site.
                 </p>
               </div>
             </div>
@@ -373,8 +377,8 @@ export default function BramptonLocationPage() {
               </div>
 
               <p className="mt-5 leading-relaxed text-white/70">
-                Available services may include business fibre internet, dedicated internet
-                access, managed LAN and Wi-Fi, continuity planning, voice, and static IP
+                Available services may include business fibre, dedicated internet,
+                managed LAN and Wi-Fi, backup connectivity, voice, and static IP
                 options depending on the site and service design.
               </p>
             </div>
@@ -382,7 +386,7 @@ export default function BramptonLocationPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>COMMON BUILDING TYPES</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Building environments we commonly review
+                Business environments we commonly review
               </h2>
 
               <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -397,7 +401,7 @@ export default function BramptonLocationPage() {
               </div>
 
               <p className="mt-5 leading-relaxed text-white/70">
-                Final serviceability depends on the specific property, landlord access,
+                Final availability depends on the property, landlord access,
                 building cabling, upstream reach, and service design.
               </p>
             </div>
@@ -423,9 +427,9 @@ export default function BramptonLocationPage() {
 
           <aside className="space-y-4">
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <SectionEyebrow>LOCAL DETAILS</SectionEyebrow>
+              <SectionEyebrow>BUSINESS DETAILS</SectionEyebrow>
               <h2 className="mt-3 text-lg font-semibold tracking-tight text-white">
-                Orbitlink business details
+                Orbitlink contact details
               </h2>
 
               <div className="mt-4 space-y-3 text-sm text-white/70">
@@ -473,11 +477,11 @@ export default function BramptonLocationPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
               <SectionEyebrow>BEST NEXT STEP</SectionEyebrow>
               <h3 className="mt-3 text-sm font-semibold tracking-tight">
-                Request availability review
+                Check availability for your location
               </h3>
               <p className="mt-2 text-sm text-white/70 leading-relaxed">
-                Submit your address, business type, and service requirements to begin
-                serviceability and pricing review.
+                Submit your address, business type, and service needs to begin
+                availability and pricing review.
               </p>
               <div className="mt-4 flex flex-col gap-2">
                 <Link
