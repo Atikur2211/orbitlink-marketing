@@ -151,21 +151,21 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
 
       <SectionTitle
         eyebrow="REQUEST DETAILS"
-        title="Tell us about the site and the service need"
-        desc="The more specific the request, the easier it is to review availability, fit, and the right commercial next step."
+        title="Tell us what you need"
+        desc="Add your business address, service need, and timeline."
       />
 
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
         <InfoPanel
-          eyebrow="WHAT HAPPENS NEXT"
-          title="We review the request properly"
-          text="Orbitlink reviews the address, service need, timing, and operating context, then responds with the most useful next step for availability, pricing direction, or service qualification."
+          eyebrow="WHAT YOU GET"
+          title="A clear next step"
+          text="We review your address and service need, then reply with availability, pricing direction, or the best next step."
           tone="accent"
         />
         <InfoPanel
-          eyebrow="RESPONSE EXPECTATION"
-          title="Clear commercial follow-up"
-          text="Most business enquiries receive a response within 1 business day. The response path depends on address, service type, scope, and request detail."
+          eyebrow="RESPONSE TIME"
+          title="Usually within 1 business day"
+          text="Response time depends on the address, service type, and detail provided."
           tone="positive"
         />
       </div>
@@ -195,9 +195,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             placeholder="name@company.com"
             className={fieldClassName}
           />
-          <FieldHint>
-            Using a work email usually helps us review and respond more efficiently.
-          </FieldHint>
+          <FieldHint>Work email is preferred.</FieldHint>
         </div>
       </div>
 
@@ -221,11 +219,11 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             <option value="" disabled>
               Select your role
             </option>
-            <option value="business_owner">Business owner / leadership</option>
-            <option value="business_buyer">Procurement / business buyer</option>
+            <option value="business_owner">Owner / leadership</option>
+            <option value="business_buyer">Buyer / procurement</option>
             <option value="it_network">IT / network lead</option>
             <option value="operations_facilities">Operations / facilities</option>
-            <option value="property_management">Property / building management</option>
+            <option value="property_management">Property management</option>
             <option value="partner_vendor">Partner / vendor</option>
             <option value="other">Other</option>
           </select>
@@ -234,7 +232,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="grid gap-2">
-          <FieldLabel htmlFor="location">Service address</FieldLabel>
+          <FieldLabel htmlFor="location">Business address</FieldLabel>
           <input
             id="location"
             name="location"
@@ -244,13 +242,11 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             placeholder="Street address, city, province"
             className={fieldClassName}
           />
-          <FieldHint>
-            The exact service address is the most important detail for availability review.
-          </FieldHint>
+          <FieldHint>Use the exact service address.</FieldHint>
         </div>
 
         <div className="grid gap-2">
-          <FieldLabel htmlFor="module">Primary service needed</FieldLabel>
+          <FieldLabel htmlFor="module">Service needed</FieldLabel>
           <select id="module" name="module" required defaultValue="" className={fieldClassName}>
             <option value="" disabled>
               Select a service
@@ -261,14 +257,14 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
               </option>
             ))}
           </select>
-          <FieldHint>Choose the main service you want reviewed first.</FieldHint>
+          <FieldHint>Choose the main service first.</FieldHint>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="grid gap-2">
           <FieldLabel htmlFor="timeline" optional>
-            Project timeline
+            Timeline
           </FieldLabel>
           <select id="timeline" name="timeline" defaultValue="" className={fieldClassName}>
             <option value="" disabled>
@@ -280,9 +276,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             <option value="planning_stage">Planning stage</option>
             <option value="not_sure">Not sure yet</option>
           </select>
-          <FieldHint>
-            Timing helps us understand urgency and the likely commercial path.
-          </FieldHint>
+          <FieldHint>Helps us understand urgency.</FieldHint>
         </div>
 
         <div className="grid gap-2">
@@ -298,9 +292,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
             <option value="6_20">6–20 sites</option>
             <option value="20_plus">20+ sites</option>
           </select>
-          <FieldHint>
-            Add this if the request covers multiple offices, branches, or facilities.
-          </FieldHint>
+          <FieldHint>Add this for multi-site requests.</FieldHint>
         </div>
       </div>
 
@@ -311,21 +303,18 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
         <textarea
           id="notes"
           name="notes"
-          rows={6}
-          placeholder="Describe what you need. Helpful details include your current provider, target install timing, user count, static IP needs, managed Wi-Fi, voice, backup connectivity, landlord coordination, or multi-site requirements."
+          rows={5}
+          placeholder="Tell us what you need. Helpful details: current provider, timing, user count, static IPs, Wi-Fi, voice, backup, landlord coordination, or multi-site needs."
           className={textareaClassName()}
         />
-        <FieldHint>
-          Strong requests usually include current service, timing, site context, and any technical requirements.
-        </FieldHint>
+        <FieldHint>Add anything important for the site.</FieldHint>
       </div>
 
       <div className="rounded-[24px] border border-white/10 bg-black/20 p-4">
-        <div className="text-[11px] tracking-[0.22em] text-white/55">HELPFUL TO INCLUDE</div>
+        <div className="text-[11px] tracking-[0.22em] text-white/55">HELPFUL DETAILS</div>
         <p className="mt-2 text-sm leading-6 text-white/65">
-          Static IPs, managed Wi-Fi, voice, backup connectivity, building details, desired
-          install window, landlord coordination, and anything that affects the site or
-          the commercial decision.
+          Static IPs, managed Wi-Fi, voice, backup connectivity, install window, building details,
+          landlord coordination, or anything else that affects the site.
         </p>
       </div>
 
@@ -334,7 +323,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
           type="submit"
           className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
         >
-          Submit Request & Check Availability
+          Check Availability
         </button>
 
         <div className="text-xs text-white/55">
