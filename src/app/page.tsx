@@ -392,7 +392,7 @@ export default function Home() {
             <h1 className="mt-6 max-w-5xl text-[2.2rem] font-semibold leading-[0.96] tracking-tight text-white sm:text-[3.15rem] lg:text-[4.3rem] xl:text-[5rem]">
               Business Internet Built for Real Operations
               <span className="mt-2 block text-white/62">
-                Fibre • Dedicated Internet • Managed Network
+                Fibre • Dedicated Internet Managed Network
               </span>
             </h1>
 
