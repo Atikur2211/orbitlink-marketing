@@ -33,7 +33,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink contact page for business internet availability and pricing",
+        alt: "Orbitlink business internet availability and pricing page",
       },
     ],
   },
@@ -77,21 +77,6 @@ function SectionEyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
-function InfoCard({
-  title,
-  body,
-}: {
-  title: string;
-  body: string;
-}) {
-  return (
-    <div className="rounded-[22px] border border-white/10 bg-black/20 p-4 sm:rounded-2xl sm:p-5">
-      <div className="text-sm font-medium text-white/92">{title}</div>
-      <p className="mt-2 text-sm leading-6 text-white/68">{body}</p>
-    </div>
-  );
-}
-
 function MetricPill({
   label,
   value,
@@ -103,6 +88,21 @@ function MetricPill({
     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
       <div className="text-[10px] tracking-[0.18em] text-white/45">{label}</div>
       <div className="mt-1 text-sm text-white/82">{value}</div>
+    </div>
+  );
+}
+
+function InfoCard({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="rounded-[22px] border border-white/10 bg-black/20 p-4 sm:rounded-2xl sm:p-5">
+      <div className="text-sm font-medium text-white/92">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/68">{body}</p>
     </div>
   );
 }
