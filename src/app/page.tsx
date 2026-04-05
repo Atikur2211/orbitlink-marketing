@@ -13,53 +13,38 @@ const SITE_NAME = "Orbitlink";
 const LEGAL_NAME = "TIRAV Technologies Inc.";
 const CANONICAL_URL = `${SITE_URL}/`;
 
-const SITE_DESC =
-  "Business fibre internet, dedicated internet access (DIA), managed Wi-Fi, voice, and backup connectivity for Ontario businesses. Serving Mississauga, Toronto, Brampton, Vaughan, and across Ontario.";
-
-const OG_TITLE =
-  "Business Fibre Internet & Dedicated Internet Access in Ontario | Orbitlink";
-
-const OG_DESC =
-  "Business fibre internet, dedicated internet access (DIA), managed Wi-Fi, voice, and backup connectivity for Ontario businesses. Serving Mississauga, Toronto, Brampton, Vaughan, and across Ontario.";
-
-const TWITTER_DESC =
+const META_TITLE = "Business Fibre & Dedicated Internet Ontario | Orbitlink";
+const META_DESCRIPTION =
   "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, and backup connectivity for Ontario businesses.";
 
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: OG_TITLE,
-  description: SITE_DESC,
+  title: META_TITLE,
+  description: META_DESCRIPTION,
   keywords: [
     "business fibre internet ontario",
     "dedicated internet access ontario",
+    "business internet ontario",
     "business internet mississauga",
     "business internet toronto",
-    "business internet brampton",
-    "business internet vaughan",
     "managed wi-fi ontario",
-    "managed network services ontario",
-    "business voip ontario",
-    "backup internet for business",
-    "lte failover business internet",
+    "business voice ontario",
+    "backup connectivity ontario",
     "commercial internet provider ontario",
     "business fibre mississauga",
-    "dedicated internet mississauga",
+    "dedicated internet toronto",
     "business internet for offices ontario",
-    "business internet for warehouses ontario",
     "business internet for clinics ontario",
-    "business connectivity ontario",
-    "business internet availability ontario",
-    "enterprise internet ontario",
-    "commercial connectivity ontario",
+    "business internet for warehouses ontario",
   ],
   alternates: {
     canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: OG_TITLE,
-    description: OG_DESC,
+    title: META_TITLE,
+    description: META_DESCRIPTION,
     url: CANONICAL_URL,
     siteName: SITE_NAME,
     type: "website",
@@ -69,14 +54,14 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink business fibre internet and dedicated internet access for Ontario businesses",
+        alt: "Orbitlink business fibre and dedicated internet for Ontario businesses",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: OG_TITLE,
-    description: TWITTER_DESC,
+    title: META_TITLE,
+    description: META_DESCRIPTION,
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -92,6 +77,12 @@ export const metadata: Metadata = {
   },
 };
 
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="text-[11px] tracking-[0.26em] text-white/55">{children}</div>
+  );
+}
+
 function MiniMetaCard({
   title,
   value,
@@ -100,9 +91,39 @@ function MiniMetaCard({
   value: string;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-black/15 px-3 py-2.5">
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-3 py-2.5">
       <div className="text-[10px] tracking-[0.18em] text-white/42">{title}</div>
       <div className="mt-1 text-[13px] leading-5 text-white/84">{value}</div>
+    </div>
+  );
+}
+
+function FitCard({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#FACC15]/25 hover:bg-white/[0.05]">
+      <div className="text-sm font-medium text-white/92">{title}</div>
+      <p className="mt-3 text-sm leading-6 text-white/66">{body}</p>
+    </div>
+  );
+}
+
+function SolutionCard({
+  title,
+  desc,
+}: {
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#FACC15]/25 hover:bg-white/[0.06]">
+      <div className="text-sm font-medium text-white/92">{title}</div>
+      <p className="mt-2 text-sm leading-6 text-white/66">{desc}</p>
     </div>
   );
 }
@@ -129,10 +150,32 @@ function StepCard({
   );
 }
 
-function TrustPill({ text }: { text: string }) {
+function ProofCard({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
   return (
-    <div className="rounded-full border border-white/10 bg-black/25 px-3 py-2 text-[11px] text-white/70 sm:text-xs">
-      {text}
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
+      <div className="text-sm font-medium text-white/92">{title}</div>
+      <p className="mt-3 text-sm leading-6 text-white/66">{body}</p>
+    </div>
+  );
+}
+
+function FAQCard({
+  question,
+  answer,
+}: {
+  question: string;
+  answer: string;
+}) {
+  return (
+    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
+      <h3 className="text-sm font-medium text-white/92">{question}</h3>
+      <p className="mt-2 text-sm leading-6 text-white/66">{answer}</p>
     </div>
   );
 }
@@ -164,62 +207,10 @@ function CoverageCard({
   );
 }
 
-function FAQCard({
-  question,
-  answer,
-}: {
-  question: string;
-  answer: string;
-}) {
+function TrustPill({ text }: { text: string }) {
   return (
-    <div className="h-full rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
-      <h3 className="text-sm font-medium text-white/92">{question}</h3>
-      <p className="mt-2 text-sm leading-6 text-white/66">{answer}</p>
-    </div>
-  );
-}
-
-function SolutionCard({
-  title,
-  desc,
-}: {
-  title: string;
-  desc: string;
-}) {
-  return (
-    <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#FACC15]/25 hover:bg-white/[0.06]">
-      <div className="text-sm font-medium text-white/92">{title}</div>
-      <p className="mt-2 text-sm leading-6 text-white/66">{desc}</p>
-    </div>
-  );
-}
-
-function FitCard({
-  title,
-  body,
-}: {
-  title: string;
-  body: string;
-}) {
-  return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.05]">
-      <div className="text-sm font-medium text-white/92">{title}</div>
-      <p className="mt-3 text-sm leading-6 text-white/66">{body}</p>
-    </div>
-  );
-}
-
-function ProofCard({
-  title,
-  body,
-}: {
-  title: string;
-  body: string;
-}) {
-  return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
-      <div className="text-sm font-medium text-white/92">{title}</div>
-      <p className="mt-3 text-sm leading-6 text-white/66">{body}</p>
+    <div className="rounded-full border border-white/10 bg-black/25 px-3 py-2 text-[11px] text-white/70 sm:text-xs">
+      {text}
     </div>
   );
 }
@@ -375,41 +366,44 @@ export default function Home() {
       <TopNav />
       <StickyStatusStrip />
 
-      <section className="relative isolate min-h-[100dvh] overflow-hidden border-b border-white/10 lg:min-h-[92vh]">
+      <section className="relative isolate min-h-[72vh] overflow-hidden border-b border-white/10 lg:min-h-[78vh]">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-business-ontario.jpg"
             alt="Ontario business team in a modern office environment"
             fill
             priority
-            sizes="100vw"
-            className="object-cover object-[74%_center] sm:object-[68%_center] lg:object-center"
+            quality={70}
+            sizes="(max-width: 768px) 100vw, 1600px"
+            className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.28)_0%,rgba(4,7,12,0.52)_34%,rgba(4,7,12,0.84)_70%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.93)_0%,rgba(4,7,12,0.62)_34%,rgba(4,7,12,0.14)_66%,rgba(4,7,12,0.78)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.09),transparent_26%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.09),transparent_24%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.36)_0%,rgba(4,7,12,0.60)_34%,rgba(4,7,12,0.88)_72%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.94)_0%,rgba(4,7,12,0.70)_36%,rgba(4,7,12,0.18)_68%,rgba(4,7,12,0.84)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.10),transparent_26%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.08),transparent_24%)]" />
           <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:58px_58px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[100dvh] max-w-7xl items-center justify-center px-5 pb-12 pt-28 sm:px-7 sm:pt-24 lg:min-h-[92vh] lg:px-10 lg:pb-16 lg:pt-20">
+        <div className="relative mx-auto flex max-w-7xl items-center px-5 pb-12 pt-24 sm:px-7 lg:px-10 lg:pb-16 lg:pt-20">
           <div className="w-full max-w-4xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:text-xs">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
               Business Fibre • Dedicated Internet • Managed Wi-Fi • Backup Connectivity
             </div>
 
-            <h1 className="mt-6 max-w-5xl text-[2rem] font-semibold leading-[1] tracking-tight text-white sm:text-[3rem] lg:text-[4.25rem] xl:text-[5rem]">
-              Business fibre internet, dedicated internet, and managed Wi-Fi
-              <span className="block text-white/62">for Ontario businesses</span>
+            <h1 className="mt-6 max-w-5xl text-[2.2rem] font-semibold leading-[0.96] tracking-tight text-white sm:text-[3.15rem] lg:text-[4.3rem] xl:text-[5rem]">
+              Business Internet Built for Real Operations
+              <span className="mt-2 block text-white/62">
+                Fibre • Dedicated Internet • Managed Network
+              </span>
             </h1>
 
             <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/87 sm:text-[1.08rem]">
               For offices, clinics, warehouses, and multi-site teams. Check
               availability by address and get the right internet, voice, backup,
-              and network solution for your location.
+              and network setup for your location.
             </p>
 
             <div className="mt-4 text-sm text-white/70">
-              Used by Ontario offices, clinics, warehouses, and growing teams.
+              For offices, clinics, warehouses, and multi-location businesses across Ontario.
             </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
@@ -434,7 +428,7 @@ export default function Home() {
                   href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
-                  Check Availability
+                  Check Availability by Address
                 </Link>
                 <div className="text-center text-xs text-white/55 sm:text-left">
                   Business-only review • No obligation • Clear response
@@ -472,22 +466,20 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-5 py-12 sm:px-7 sm:py-14">
         <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
           <div className="max-w-3xl">
-            <div className="text-[11px] tracking-[0.28em] text-white/55">
-              START HERE
-            </div>
+            <SectionEyebrow>START HERE</SectionEyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
               Choose the right internet setup for your business
             </h2>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              Start with how your business operates. That makes the right internet
-              and network setup much clearer.
+              Start with how your business operates. That makes the right service
+              and internal network setup much clearer.
             </p>
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
             <FitCard
               title="Offices & Clinics"
-              body="Stable day-to-day connectivity, managed Wi-Fi, and a cleaner path for professional business environments."
+              body="Stable day-to-day connectivity, managed Wi-Fi, and a cleaner fit for professional business environments."
             />
             <FitCard
               title="Critical Operations"
@@ -495,7 +487,7 @@ export default function Home() {
             />
             <FitCard
               title="Internal Network Problems"
-              body="Coverage, segmentation, and LAN / Wi-Fi issues that affect staff experience, devices, and operations."
+              body="Coverage, segmentation, and LAN or Wi-Fi issues that affect staff experience, devices, and operations."
             />
           </div>
         </div>
@@ -510,16 +502,20 @@ export default function Home() {
           </div>
 
           <div className="relative">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">
-                BUSINESS INTERNET SOLUTIONS IN ONTARIO
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>BUSINESS INTERNET SOLUTIONS</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                  Business internet and network solutions for Ontario organizations
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                  Choose the service that fits your site, then check availability.
+                </p>
               </div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Business internet and network solutions for Ontario organizations
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Choose the service that fits your site, then check availability.
-              </p>
+              <MiniMetaCard
+                title="FOCUS"
+                value="Fibre • Dedicated • Managed Wi-Fi • Backup"
+              />
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
@@ -555,54 +551,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-12 sm:px-7 sm:pb-14">
-        <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">
-                COMMON BUSINESS INTERNET PROBLEMS
-              </div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Common problems with business internet
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Many business locations rely on internet service that was never matched
-                to actual workload, continuity risk, or day-to-day operating needs.
-              </p>
-            </div>
-            <MiniMetaCard
-              title="FOCUS"
-              value="Performance • Reliability • Backup • Accountability"
-            />
-          </div>
-
-          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {[
-              "Shared connections that slow down under peak demand",
-              "No backup path when continuity matters",
-              "Packages that do not match the real site requirement",
-              "Limited visibility into upgrades, support, or constraints",
-            ].map((item) => (
-              <div
-                key={item}
-                className="rounded-[24px] border border-white/10 bg-black/20 p-5 text-sm leading-6 text-white/82"
-              >
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <BentoServices />
 
       <section className="mx-auto max-w-6xl px-5 py-12 sm:px-7 sm:py-14">
         <div className="rounded-[32px] border border-white/10 bg-black/22 p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">
-                HOW IT WORKS
-              </div>
+              <SectionEyebrow>HOW IT WORKS</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
                 A clear path from enquiry to recommendation
               </h2>
@@ -618,17 +573,17 @@ export default function Home() {
             <StepCard
               step="1"
               title="Submit your business address"
-              desc="Share the service location, business environment, and what the connection needs to support."
+              desc="Share the location, environment, and what the connection needs to support."
             />
             <StepCard
               step="2"
               title="We review available options"
-              desc="We assess infrastructure, provider reach, backup requirements, and whether a higher-assurance option is appropriate."
+              desc="We assess infrastructure, provider reach, backup requirements, and overall service fit."
             />
             <StepCard
               step="3"
               title="Receive the right next step"
-              desc="You receive a clear recommendation, pricing direction, or the most suitable route for the site."
+              desc="You receive clear direction, pricing guidance, or the most suitable route for the site."
             />
           </div>
         </div>
@@ -638,9 +593,7 @@ export default function Home() {
         <div className="rounded-[32px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
-                WHY BUYERS CHOOSE ORBITLINK
-              </div>
+              <SectionEyebrow>WHY BUSINESSES CHOOSE ORBITLINK</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
                 Built for real business needs, not generic packages
               </h2>
@@ -666,30 +619,6 @@ export default function Home() {
               body="We focus on service fit, realistic next steps, and practical guidance before commitment."
             />
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-5 pb-12 sm:px-7 sm:pb-14">
-        <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">
-                COMMERCIAL REVIEW
-              </div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Every request is reviewed by Orbitlink
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                We review your business location, available infrastructure, and
-                service options to recommend the right setup.
-              </p>
-              <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-                Operated by TIRAV Technologies Inc. • CRTC-registered telecommunications provider •
-                Ontario business coverage
-              </p>
-            </div>
-            <MiniMetaCard title="OPERATED BY" value="TIRAV Technologies Inc." />
-          </div>
 
           <div className="mt-6 flex flex-wrap gap-2">
             <TrustPill text="Operated by TIRAV Technologies Inc." />
@@ -703,24 +632,19 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-12 sm:px-7 sm:pb-14">
-        <div className="rounded-[32px] border border-white/10 bg-black/22 p-6 sm:p-8 lg:p-10">
+        <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">
-                ONTARIO LOCATIONS
-              </div>
+              <SectionEyebrow>ONTARIO LOCATIONS</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
                 Explore location-based business internet pages
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Orbitlink is building location pages across Ontario to help businesses evaluate
-                service options, local availability, and market fit.
+                Browse Ontario location pages to evaluate service options, local
+                availability, and business fit.
               </p>
             </div>
-            <MiniMetaCard
-              title="LOCAL DISCOVERY"
-              value="Location pages support local search intent"
-            />
+            <MiniMetaCard title="LOCAL DISCOVERY" value="Built for local search intent" />
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -752,17 +676,15 @@ export default function Home() {
         <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-white/55">
-                FREQUENTLY ASKED QUESTIONS
-              </div>
+              <SectionEyebrow>FREQUENTLY ASKED QUESTIONS</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
                 Questions businesses ask before submitting a request
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                These answers help buyers understand the process and improve search relevance.
+                Clear answers for buyers comparing business internet and network options.
               </p>
             </div>
-            <MiniMetaCard title="SEO + CLARITY" value="Useful answers for buyers and search" />
+            <MiniMetaCard title="CLARITY" value="Useful answers for buyers" />
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -790,9 +712,7 @@ export default function Home() {
         <div className="rounded-[32px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="text-[11px] tracking-[0.28em] text-[#FDE68A]">
-                READY TO CHECK YOUR OPTIONS?
-              </div>
+              <SectionEyebrow>READY TO CHECK YOUR OPTIONS?</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
                 Check availability for your business location
               </h2>
@@ -803,13 +723,13 @@ export default function Home() {
             <MiniMetaCard title="NEXT STEP" value="Availability • Pricing • Direction" />
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4 sm:flex-wrap">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <div className="flex flex-col gap-2">
               <Link
                 href="/contact#intake"
                 className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Check Availability
+                Check Availability by Address
               </Link>
               <div className="text-xs text-white/55 sm:text-sm">
                 Business-only review • No obligation • Clear response
@@ -832,8 +752,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <div id="hero-sentinel" className="h-2 w-full" />
 
       <ConciergeBlock />
       <SiteFooter />
