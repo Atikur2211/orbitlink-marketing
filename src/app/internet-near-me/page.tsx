@@ -26,17 +26,17 @@ const BUSINESS = {
     { day: "Thursday", opens: "09:00", closes: "18:00" },
     { day: "Friday", opens: "09:00", closes: "18:00" },
   ],
-};
+} as const;
 
 export const metadata: Metadata = {
-  title: "Internet Near Me | Business Internet in Ontario | Orbitlink™",
+  title: "Internet Near Me | Business Internet in Ontario | Orbitlink",
   description:
-    "Searching for business internet near you? Orbitlink provides business fibre, dedicated internet access, managed network infrastructure, and continuity options across Ontario with availability confirmed per address.",
+    "Searching for business internet near you? Orbitlink provides business fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity across Ontario. Availability is checked by address.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
-    title: "Internet Near Me | Orbitlink™",
+    title: "Internet Near Me | Business Internet in Ontario | Orbitlink",
     description:
-      "Business internet near you with structured onboarding, documented delivery, and enterprise support posture. Availability confirmed per address across Ontario.",
+      "Business internet near you with fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity across Ontario. Availability is checked by address.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -44,40 +44,40 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Internet Near Me | Orbitlink™",
+    title: "Internet Near Me | Orbitlink",
     description:
-      "Operator-grade business internet across Ontario. Fibre, DIA, managed network options, and availability confirmed per address.",
+      "Business internet near you across Ontario. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity.",
   },
 };
 
 const FAQ = [
   {
-    q: "Do you provide “internet near me” for businesses?",
-    a: "Yes. Orbitlink provides business internet across Ontario, including commercial markets like Mississauga and other major cities. Availability depends on building infrastructure and upstream feasibility, so serviceability is confirmed per address before activation.",
+    q: "Do you provide business internet near me?",
+    a: "Yes. Orbitlink supports Ontario business locations, including major commercial markets like Mississauga, Toronto, Brampton, Markham, Vaughan, Oakville, Hamilton, and Ottawa. Availability depends on the building and upstream serviceability, so it is checked by address before moving forward.",
   },
   {
     q: "Do you service my exact address?",
-    a: "Submit your service address and requirements, including whether you need Business Fibre, Dedicated Internet Access, static IPs, managed LAN/Wi-Fi, or continuity design. Orbitlink will confirm feasibility and scope before activation.",
+    a: "Submit your service address and what you need, such as business fibre, dedicated internet, static IPs, managed Wi-Fi, voice, or backup connectivity. Orbitlink reviews what is available before the next step is confirmed.",
   },
   {
-    q: "What’s the difference between Business Fibre and DIA?",
-    a: "Business Fibre is often the right fit for organizations that need strong capacity and a premium onboarding posture. Dedicated Internet Access is better suited to performance-critical environments requiring a more deterministic delivery posture.",
+    q: "What’s the difference between business fibre and dedicated internet?",
+    a: "Business fibre is often the right fit for strong day-to-day business connectivity and value. Dedicated internet is better for sites that need stronger uptime, cleaner escalation, and more predictable performance.",
   },
   {
     q: "Do you offer managed Wi-Fi and LAN support?",
-    a: "Yes. Orbitlink provides managed LAN and enterprise Wi-Fi, including segmentation posture, guest network planning, and coverage design aligned with a business-grade support model.",
+    a: "Yes. Orbitlink provides managed LAN and business Wi-Fi, including segmentation, guest networking, and coverage planning for business environments.",
   },
   {
     q: "Do you provide static IPs?",
-    a: "Static IP options are available where feasible and depend on the access type, service design, and location. Orbitlink confirms options during onboarding.",
+    a: "Yes. Static IP options are available where feasible and depend on the access type, service design, and location.",
   },
   {
     q: "How fast can you install?",
-    a: "Install timelines vary by building readiness, access type, landlord coordination, and upstream feasibility. Orbitlink uses structured onboarding and documented acceptance so expectations are clear before activation.",
+    a: "Installation timing depends on building readiness, access type, landlord coordination, and upstream serviceability. Expectations are reviewed before activation.",
   },
   {
     q: "Is Orbitlink residential internet?",
-    a: "Orbitlink is designed primarily for business connectivity and managed network posture. If you have a mixed-use or edge-case requirement, submit your details and Orbitlink will advise what is feasible.",
+    a: "Orbitlink is focused mainly on business connectivity and managed network services. Mixed-use or edge-case requests can still be submitted for review.",
   },
 ] as const;
 
@@ -120,7 +120,7 @@ function jsonLd() {
 
   const telecomService = {
     "@context": "https://schema.org",
-    "@type": "TelecomService",
+    "@type": "Service",
     "@id": `${PAGE_URL}#service`,
     name: "Business Internet Near Me",
     url: PAGE_URL,
@@ -129,8 +129,8 @@ function jsonLd() {
     serviceType: [
       "Business Fibre Internet",
       "Dedicated Internet Access",
-      "Managed LAN and Enterprise Wi-Fi",
-      "LTE and 5G Continuity",
+      "Managed LAN and Wi-Fi",
+      "LTE and 5G Backup Connectivity",
       "VoIP and Cloud Voice",
       "Static IP Routing",
     ],
@@ -167,25 +167,44 @@ const QUICK_CITIES = [
 const modules = [
   {
     title: "Business Fibre Internet",
-    desc: "Strong value with disciplined onboarding and business-grade delivery posture.",
+    desc: "Reliable primary internet for offices, commercial sites, and growing businesses.",
     href: "/services/business-fibre-internet",
   },
   {
-    title: "Dedicated Internet Access (DIA)",
-    desc: "Deterministic posture for critical operations and clearer enterprise handoff expectations.",
+    title: "Dedicated Internet Access",
+    desc: "Stronger uptime and more predictable performance for critical environments.",
     href: "/services/dedicated-internet-access",
   },
   {
-    title: "Managed LAN & Enterprise Wi-Fi",
-    desc: "Segmentation, stability, and coverage design for business environments.",
-    href: "/services",
+    title: "Managed LAN & Wi-Fi",
+    desc: "Managed internal networking, segmentation, and better Wi-Fi coverage.",
+    href: "/services/managed-lan-wifi",
   },
   {
-    title: "LTE / 5G Continuity",
-    desc: "Continuity architecture for uptime-sensitive sites during disruption events.",
+    title: "LTE / 5G Backup",
+    desc: "Backup internet for businesses that need continuity during outages.",
     href: "/services/lte-5g-continuity",
   },
 ] as const;
+
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.28em] text-white/50">{children}</div>;
+}
+
+function MetricPill({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
+      <div className="mt-1 text-sm text-white/80">{value}</div>
+    </div>
+  );
+}
 
 export default function InternetNearMePage() {
   return (
@@ -195,31 +214,31 @@ export default function InternetNearMePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
-      {/* Hero */}
-      <section className="mx-auto max-w-6xl px-6 pt-16 pb-10">
+      <section className="mx-auto max-w-6xl px-6 pb-10 pt-16">
         <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
           <span className="h-2 w-2 rounded-full bg-white/60" />
-          <span className="text-sm tracking-wide text-white/60">High-intent search page</span>
+          <span className="text-sm tracking-wide text-white/60">Business search page</span>
         </div>
 
-        <h1 className="mt-5 text-4xl md:text-5xl font-semibold tracking-tight">
-          Internet near me — business fibre, DIA, and operator-grade delivery
+        <h1 className="mt-5 text-4xl font-semibold tracking-tight md:text-5xl">
+          Internet near me for Ontario businesses
         </h1>
 
-        <p className="mt-4 max-w-3xl text-base md:text-lg text-white/70 leading-relaxed">
-          If you are searching for <span className="text-white/85 font-medium">internet near me</span>,
-          what usually matters is simple: can the provider serve your address, scope the work clearly,
-          and support the service properly after activation? Orbitlink serves Ontario businesses with
-          structured onboarding, documented acceptance, and availability confirmed per building.
+        <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
+          If you are searching for <span className="font-medium text-white/85">internet near me</span>,
+          the real question is simple: can the provider serve your address, recommend the right
+          setup, and support the service properly after installation? Orbitlink helps Ontario
+          businesses with fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity,
+          with availability checked by address.
         </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
           {[
-            "Availability confirmed per address",
-            "Structured onboarding",
-            "Documented delivery",
-            "Enterprise support posture",
-            "Ontario service footprint",
+            "Availability checked by address",
+            "Business-first service model",
+            "Ontario coverage",
+            "Clear next step",
+            "Built for business locations",
           ].map((x) => (
             <span
               key={x}
@@ -230,98 +249,102 @@ export default function InternetNearMePage() {
           ))}
         </div>
 
-        <div className="mt-7 flex flex-col sm:flex-row gap-3">
+        <div className="mt-7 flex flex-col gap-3 sm:flex-row">
           <Link
             href="/contact#intake"
-            className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-5 py-3 text-sm font-semibold hover:bg-white/90 transition"
+            className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
           >
             Check Availability
           </Link>
           <Link
             href="/locations"
-            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
           >
             Browse Service Areas
           </Link>
           <Link
             href="/services"
-            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
           >
-            View Service Modules
+            View Services
           </Link>
         </div>
 
         <div className="mt-6 text-xs text-white/55">
           Phone:{" "}
-          <a className="text-white/75 hover:text-white transition" href={`tel:${BUSINESS.phoneE164}`}>
+          <a className="text-white/75 transition hover:text-white" href={`tel:${BUSINESS.phoneE164}`}>
             {BUSINESS.phoneDisplay}
           </a>{" "}
-          • Ontario • Business-first posture
+          • Ontario • Business-first
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <MetricPill label="BEST FOR" value="Ontario business locations" />
+          <MetricPill label="CHECKED BY" value="Address and building fit" />
+          <MetricPill label="NEXT STEP" value="Availability and pricing direction" />
         </div>
       </section>
 
-      {/* Core content */}
       <section className="mx-auto max-w-6xl px-6 pb-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-2 space-y-4">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <div className="space-y-4 lg:col-span-2">
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <h2 className="text-xl font-semibold tracking-tight">
-                What “internet near me” really means for business
+              <SectionEyebrow>WHAT THIS SEARCH REALLY MEANS</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Business internet near you should be simple
               </h2>
 
               <div className="mt-3 space-y-4 text-white/70 leading-relaxed">
                 <p>
-                  “Near me” searches are high-intent. You are not looking for generic marketing
-                  language — you are trying to find a provider that can actually serve your address,
-                  install with a clear timeline, and support the connection in a way that matches
-                  business operations.
+                  “Internet near me” is a high-intent search. Most business buyers are not looking
+                  for generic marketing language. They want to know whether the provider can serve
+                  the address, install clearly, and support the service properly afterward.
                 </p>
 
                 <p>
-                  Orbitlink handles this with a disciplined operator posture: feasibility first,
-                  scope clarity before commitment, and documented acceptance before go-live. This is
-                  especially important when the site depends on voice, VPN, cameras, cloud apps,
-                  guest Wi-Fi, or continuity design.
+                  Orbitlink is built around that process: check the address first, match the right
+                  service to the site, and guide the next step clearly before activation.
                 </p>
 
                 <p>
-                  If your business needs more than “just a circuit,” Orbitlink aligns the right
-                  service module: Business Fibre for strong value, DIA for deterministic posture,
-                  managed LAN/Wi-Fi for internal stability, and LTE/5G continuity for disruption events.
+                  This matters most when the business depends on voice, VPNs, cameras, cloud apps,
+                  guest Wi-Fi, static IPs, or backup internet.
                 </p>
               </div>
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <h2 className="text-xl font-semibold tracking-tight">Choose the right service module</h2>
+              <SectionEyebrow>SERVICE OPTIONS</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">Choose the right service</h2>
 
-              <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
                 {modules.map((x) => (
                   <Link
                     key={x.href}
                     href={x.href}
-                    className="rounded-3xl border border-white/10 bg-white/[0.04] p-5 hover:bg-white/[0.06] transition"
+                    className="rounded-3xl border border-white/10 bg-white/[0.04] p-5 transition hover:bg-white/[0.06]"
                   >
                     <div className="text-sm font-semibold text-white/90">{x.title}</div>
-                    <div className="mt-2 text-sm text-white/70 leading-relaxed">{x.desc}</div>
-                    <div className="mt-3 text-xs text-white/60">Open module →</div>
+                    <div className="mt-2 text-sm leading-relaxed text-white/70">{x.desc}</div>
+                    <div className="mt-3 text-xs text-white/60">Open service →</div>
                   </Link>
                 ))}
               </div>
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-              <h3 className="text-lg font-semibold tracking-tight">
+              <SectionEyebrow>FASTEST WAY TO CHECK</SectionEyebrow>
+              <h3 className="mt-3 text-lg font-semibold tracking-tight">
                 What to send for the fastest availability check
               </h3>
               <ul className="mt-4 space-y-2 text-sm text-white/70">
                 {[
-                  "Service address (unit / suite if applicable)",
-                  "Preferred module: Business Fibre or DIA",
-                  "Static IP requirement (yes/no)",
-                  "Managed LAN / Wi-Fi needed (yes/no)",
-                  "Continuity requirement: LTE / 5G failover (yes/no)",
-                  "Timeline and any building or landlord access constraints",
+                  "Service address, including unit or suite if applicable",
+                  "Preferred service: business fibre or dedicated internet",
+                  "Static IPs needed or not",
+                  "Managed Wi-Fi or LAN support needed or not",
+                  "Backup internet needed or not",
+                  "Timeline and any building or landlord constraints",
                 ].map((x) => (
                   <li key={x} className="flex items-start gap-2">
                     <span className="mt-2 h-1.5 w-1.5 rounded-full bg-white/40" />
@@ -330,18 +353,18 @@ export default function InternetNearMePage() {
                 ))}
               </ul>
 
-              <div className="mt-5 flex flex-col sm:flex-row gap-3">
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-5 py-3 text-sm font-semibold hover:bg-white/90 transition"
+                  className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
                 >
-                  Request Access
+                  Check Availability
                 </Link>
                 <Link
                   href="/trust"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                 >
-                  Trust & Delivery Posture
+                  Trust & Compliance
                 </Link>
               </div>
             </div>
@@ -349,9 +372,10 @@ export default function InternetNearMePage() {
 
           <aside className="space-y-4">
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <h2 className="text-lg font-semibold tracking-tight">Popular service areas</h2>
-              <p className="mt-2 text-sm text-white/70 leading-relaxed">
-                Browse a city page to see local context, FAQs, and direct service links.
+              <SectionEyebrow>POPULAR CITIES</SectionEyebrow>
+              <h2 className="mt-3 text-lg font-semibold tracking-tight">Browse service areas</h2>
+              <p className="mt-2 text-sm leading-relaxed text-white/70">
+                Open a city page to see local context, direct service links, and location-specific FAQs.
               </p>
 
               <div className="mt-4 grid gap-2">
@@ -359,7 +383,7 @@ export default function InternetNearMePage() {
                   <Link
                     key={c.href}
                     href={c.href}
-                    className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/85 hover:bg-white/10 transition flex items-center justify-between"
+                    className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/85 transition hover:bg-white/10"
                   >
                     <span>{c.name}</span>
                     <span className="text-[#FACC15]">→</span>
@@ -371,21 +395,21 @@ export default function InternetNearMePage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-5">
               <div className="text-[11px] tracking-[0.26em] text-white/55">LOCAL SIGNALS</div>
               <div className="mt-2 text-sm text-white/80">
-                Business-first • Ontario coverage • feasibility-first
+                Business-first • Ontario coverage • Address-first review
               </div>
               <div className="mt-3 text-sm text-white/70">
                 Address: {BUSINESS.address.street}, {BUSINESS.address.city}, {BUSINESS.address.region}{" "}
                 {BUSINESS.address.postal}
               </div>
               <div className="mt-2 text-sm">
-                <a className="text-white/75 hover:text-white transition" href={`tel:${BUSINESS.phoneE164}`}>
+                <a className="text-white/75 transition hover:text-white" href={`tel:${BUSINESS.phoneE164}`}>
                   {BUSINESS.phoneDisplay}
                 </a>
               </div>
               <div className="mt-4">
                 <Link
                   href="/locations/ontario"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:bg-white/10 transition w-full"
+                  className="inline-flex w-full items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                 >
                   Ontario Coverage Hub
                 </Link>
@@ -394,14 +418,13 @@ export default function InternetNearMePage() {
 
             <div className="rounded-3xl border border-white/10 bg-black/20 p-5">
               <div className="text-[11px] tracking-[0.22em] text-white/55">START HERE</div>
-              <p className="mt-2 text-sm text-white/70 leading-relaxed">
+              <p className="mt-2 text-sm leading-relaxed text-white/70">
                 If you are searching for a provider near your business location, the best next step
-                is to request availability with your address and requirements so Orbitlink can confirm
-                what is feasible.
+                is to submit your address and requirements so Orbitlink can confirm what is available.
               </p>
               <Link
                 href="/contact#intake"
-                className="mt-4 inline-flex w-full items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-4 py-2.5 text-sm font-semibold hover:bg-white/90 transition"
+                className="mt-4 inline-flex w-full items-center justify-center rounded-2xl bg-white px-4 py-2.5 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
               >
                 Check Availability
               </Link>
@@ -410,41 +433,41 @@ export default function InternetNearMePage() {
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="mx-auto max-w-6xl px-6 pb-16">
         <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-          <h2 className="text-2xl font-semibold tracking-tight">Internet near me FAQs</h2>
-          <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
-            Clear answers for high-intent searches, built to move from interest to an availability request.
+          <SectionEyebrow>FAQ</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">Internet near me FAQs</h2>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
+            Clear answers built to move from search interest to an availability request.
           </p>
 
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
             {FAQ.map((f) => (
               <div key={f.q} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
                 <h3 className="text-base font-semibold tracking-tight">{f.q}</h3>
-                <p className="mt-2 text-sm text-white/70 leading-relaxed">{f.a}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">{f.a}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/contact#intake"
-              className="inline-flex items-center justify-center rounded-2xl bg-white text-[#0B0F14] px-5 py-3 text-sm font-semibold hover:bg-white/90 transition"
+              className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
             >
               Check Availability
             </Link>
             <Link
               href="/locations"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
               Browse Locations
             </Link>
             <Link
               href="/services"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 transition"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
-              Services
+              View Services
             </Link>
           </div>
         </div>
