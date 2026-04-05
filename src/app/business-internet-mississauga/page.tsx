@@ -20,17 +20,17 @@ const BUSINESS = {
     postal: "L5R 3E7",
     country: "CA",
   },
-};
+} as const;
 
 export const metadata: Metadata = {
-  title: "Business Internet in Mississauga, ON | Fibre, DIA & Managed Network | Orbitlink™",
+  title: "Business Internet in Mississauga, ON | Check Availability | Orbitlink",
   description:
-    "Business internet in Mississauga for offices, warehouses, clinics, logistics sites, and commercial buildings. Fibre, Dedicated Internet Access, managed LAN & Wi-Fi, and continuity design with availability confirmed per building.",
+    "Business internet in Mississauga for offices, warehouses, clinics, logistics sites, and commercial buildings. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity with availability checked by address.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
-    title: "Business Internet in Mississauga, ON | Orbitlink™",
+    title: "Business Internet in Mississauga, ON | Check Availability | Orbitlink",
     description:
-      "Operator-grade business internet in Mississauga including fibre, DIA, managed network infrastructure, and continuity architecture. Availability confirmed per address.",
+      "Business internet in Mississauga for offices, warehouses, logistics sites, and commercial buildings. Availability is checked by address.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -38,36 +38,36 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Internet in Mississauga, ON | Orbitlink™",
+    title: "Business Internet in Mississauga, ON | Orbitlink",
     description:
-      "Business internet in Mississauga for offices, warehouses, logistics, and uptime-sensitive commercial environments.",
+      "Business internet in Mississauga for offices, warehouses, logistics, and commercial business environments.",
   },
 };
 
 const FAQ = [
   {
     q: "Do you provide business internet in Mississauga?",
-    a: "Yes. Orbitlink evaluates business internet opportunities across Mississauga for offices, warehouses, logistics environments, clinics, studios, and commercial buildings. Availability depends on building infrastructure and upstream feasibility, and is confirmed per address before activation.",
+    a: "Yes. Orbitlink supports business internet opportunities across Mississauga for offices, warehouses, logistics environments, clinics, studios, and commercial buildings. Availability depends on the building and upstream serviceability, so it is checked by address before moving forward.",
   },
   {
     q: "What type of business internet is available in Mississauga?",
-    a: "Depending on site feasibility, Orbitlink may provide Business Fibre Internet, Dedicated Internet Access, managed LAN and enterprise Wi-Fi, continuity architecture, VoIP and cloud voice, and static IP routing.",
+    a: "Depending on the site, Orbitlink may provide business fibre internet, dedicated internet, managed LAN and Wi-Fi, backup internet, voice, and static IP routing.",
   },
   {
     q: "Do you support commercial buildings and office environments in Mississauga?",
-    a: "Yes. Mississauga includes major office corridors, industrial parks, and mixed-use commercial environments where delivery posture, building access, and serviceability vary by site. Orbitlink confirms feasibility per building and scopes constraints before activation.",
+    a: "Yes. Mississauga includes major office corridors, industrial parks, and mixed-use commercial environments where building access and serviceability vary by site. Orbitlink checks feasibility by address before the next step is confirmed.",
   },
   {
-    q: "What is the difference between Business Fibre and DIA?",
-    a: "Business Fibre is often the right fit when a site needs strong performance, disciplined onboarding, and good value. Dedicated Internet Access is better suited to performance-critical environments where more deterministic delivery posture and cleaner enterprise handoff expectations are required.",
+    q: "What is the difference between business fibre and dedicated internet?",
+    a: "Business fibre is often the right fit when a site needs strong performance and good value. Dedicated internet is better for critical environments that need stronger uptime and more predictable performance.",
   },
   {
     q: "Can you manage LAN and Wi-Fi in Mississauga offices and commercial spaces?",
-    a: "Yes. Orbitlink supports managed LAN and enterprise Wi-Fi including segmentation posture, guest access, device separation, and coverage planning for business environments.",
+    a: "Yes. Orbitlink supports managed LAN and business Wi-Fi including segmentation, guest access, device separation, and coverage planning.",
   },
   {
-    q: "Do you offer failover and continuity options?",
-    a: "Yes. Orbitlink designs LTE and 5G continuity patterns for uptime-sensitive business environments, subject to feasibility and site constraints.",
+    q: "Do you offer backup internet options?",
+    a: "Yes. Orbitlink can design LTE and 5G backup options for uptime-sensitive business environments, subject to feasibility and site constraints.",
   },
 ] as const;
 
@@ -107,7 +107,7 @@ function jsonLd() {
 
   const telecomService = {
     "@context": "https://schema.org",
-    "@type": "TelecomService",
+    "@type": "Service",
     "@id": `${PAGE_URL}#service`,
     name: "Business Internet in Mississauga",
     url: PAGE_URL,
@@ -117,8 +117,8 @@ function jsonLd() {
       "Business Internet",
       "Business Fibre Internet",
       "Dedicated Internet Access",
-      "Managed LAN and Enterprise Wi-Fi",
-      "LTE and 5G Continuity",
+      "Managed LAN and Wi-Fi",
+      "LTE and 5G Backup Connectivity",
       "VoIP and Cloud Voice",
       "Static IP Routing",
     ],
@@ -155,36 +155,55 @@ const fitCards = [
   },
   {
     title: "Industrial parks",
-    desc: "Business internet designed for mixed device environments, managed Wi-Fi, segmentation, and predictable support posture.",
+    desc: "Business internet for mixed-device environments, managed Wi-Fi, segmentation, and predictable day-to-day support.",
   },
   {
     title: "Performance-critical sites",
-    desc: "DIA and continuity design for organizations where internet access is tightly linked to operations and client service.",
+    desc: "Dedicated internet and backup design for organizations where internet access is tightly linked to operations and client service.",
   },
 ] as const;
 
 const modules = [
   {
     title: "Business Fibre Internet",
-    desc: "Strong value with disciplined onboarding and business-grade delivery posture.",
+    desc: "Reliable primary internet for offices, clinics, warehouses, and growing business sites.",
     href: "/services/business-fibre-internet",
   },
   {
-    title: "Dedicated Internet Access (DIA)",
-    desc: "Deterministic posture for critical operations and cleaner enterprise handoff expectations.",
+    title: "Dedicated Internet Access",
+    desc: "Stronger uptime and more predictable performance for critical operations.",
     href: "/services/dedicated-internet-access",
   },
   {
-    title: "Managed LAN & Enterprise Wi-Fi",
-    desc: "Segmentation, stability, coverage planning, and structured support for business environments.",
+    title: "Managed LAN & Wi-Fi",
+    desc: "Segmentation, stability, coverage planning, and better internal network support.",
     href: "/services/managed-lan-wifi",
   },
   {
-    title: "LTE / 5G Continuity",
-    desc: "Continuity architecture for sites that need uptime during access disruptions.",
+    title: "LTE / 5G Backup",
+    desc: "Backup internet for sites that need continuity during access disruptions.",
     href: "/services/lte-5g-continuity",
   },
 ] as const;
+
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <div className="text-[11px] tracking-[0.24em] text-white/50">{children}</div>;
+}
+
+function MetricCard({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
+      <div className="mt-1 text-sm text-white/82">{value}</div>
+    </div>
+  );
+}
 
 export default function BusinessInternetMississaugaPage() {
   return (
@@ -208,7 +227,7 @@ export default function BusinessInternetMississaugaPage() {
         <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
           <span className="h-2 w-2 rounded-full bg-cyan-300/80" />
           <span className="text-sm tracking-wide text-white/65">
-            Commercial Search Landing Page
+            Mississauga business internet page
           </span>
         </div>
 
@@ -221,18 +240,21 @@ export default function BusinessInternetMississaugaPage() {
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/72 md:text-lg">
               Orbitlink provides business internet in Mississauga for offices,
               warehouses, logistics environments, clinics, studios, and commercial
-              buildings. Availability is confirmed per building and delivery is
-              approached with structured onboarding, documented acceptance, and an
-              enterprise support posture.
+              buildings. Availability is checked by address so the right service
+              setup can be matched to the site before moving forward.
             </p>
+
+            <div className="mt-3 text-sm text-white/68">
+              Built for office towers, warehouses, industrial parks, logistics teams, and commercial business environments.
+            </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {[
                 "Business internet",
-                "Fibre & DIA",
+                "Fibre & dedicated internet",
                 "Office and warehouse fit",
-                "Availability by building",
-                "Structured onboarding",
+                "Availability checked by address",
+                "Clear next step",
               ].map((x) => (
                 <span
                   key={x}
@@ -263,28 +285,32 @@ export default function BusinessInternetMississaugaPage() {
                 Explore Services
               </Link>
             </div>
+
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <MetricCard label="BEST FOR" value="Mississauga business locations" />
+              <MetricCard label="CHECKED BY" value="Address and building fit" />
+              <MetricCard label="NEXT STEP" value="Availability and pricing direction" />
+            </div>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.25)]">
-            <div className="text-[11px] tracking-[0.22em] text-white/55">
-              FLAGSHIP COMMERCIAL MARKET
-            </div>
+            <SectionEyebrow>MISSISSAUGA MARKET FIT</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold tracking-tight">
-              Designed for Mississauga’s office, logistics, and commercial corridors
+              Built for Mississauga’s office, logistics, and commercial corridors
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-white/70">
-              Mississauga is one of Orbitlink’s strongest commercial markets. This
-              page is positioned for organizations that need more than a generic ISP
-              experience, including multi-tenant office environments, industrial
-              sites, logistics operations, and uptime-sensitive commercial workflows.
+              Mississauga is one of Orbitlink’s strongest commercial markets.
+              This page is built for organizations that need more than generic
+              broadband, including multi-tenant office environments, industrial
+              sites, logistics operations, and uptime-sensitive business workflows.
             </p>
 
             <div className="mt-6 grid grid-cols-1 gap-3">
               {[
-                "Availability confirmed per address",
+                "Availability checked per address",
                 "Office and industrial fit",
                 "Managed LAN and Wi-Fi support",
-                "Continuity and failover design",
+                "Backup internet options",
               ].map((item) => (
                 <div
                   key={item}
@@ -302,7 +328,8 @@ export default function BusinessInternetMississaugaPage() {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="space-y-4 lg:col-span-2">
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <h2 className="text-xl font-semibold tracking-tight">
+              <SectionEyebrow>BUSINESS INTERNET IN MISSISSAUGA</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
                 Business internet for Mississauga’s office, industrial, and commercial environments
               </h2>
 
@@ -311,24 +338,23 @@ export default function BusinessInternetMississaugaPage() {
                   Mississauga is one of Ontario’s strongest commercial markets, with
                   office towers, industrial parks, logistics corridors, mixed-use
                   business environments, and major professional-service clusters.
-                  Business internet in this market is not just about speed. It is
-                  about stable operations, clean activation, the right service model,
-                  and support posture that fits daily business workflows.
+                  Business internet in this market is not only about speed. It is
+                  about stable operations, clean installation, the right service
+                  model, and support that fits daily business workflows.
                 </p>
 
                 <p>
                   Sites around Eglinton, Airport Corporate Centre, Meadowvale, Dixie,
-                  and other employment zones may have very different building
-                  infrastructure and serviceability. Orbitlink confirms feasibility
-                  per address and scopes constraints before activation instead of
-                  making blanket availability claims.
+                  and other employment zones can have very different building
+                  infrastructure and serviceability. Orbitlink checks what is
+                  available per address instead of making blanket claims.
                 </p>
 
                 <p>
                   For many organizations, the right solution is not only internet
-                  access. It may include Business Fibre Internet, Dedicated Internet
-                  Access, managed LAN and Wi-Fi, continuity architecture, static IP
-                  requirements, or voice support aligned to daily operations.
+                  access. It may also include business fibre, dedicated internet,
+                  managed LAN and Wi-Fi, backup internet, static IPs, or voice
+                  support aligned to daily operations.
                 </p>
 
                 <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
@@ -340,8 +366,8 @@ export default function BusinessInternetMississaugaPage() {
                   applications, VoIP, VPNs, cameras, guest Wi-Fi, booking and
                   payment systems, collaboration platforms, logistics software, and
                   internal operational networks all running together. That makes
-                  access design, segmentation, and uptime posture more important than
-                  a simple speed claim.
+                  access design, segmentation, and uptime more important than a
+                  simple speed claim.
                 </p>
 
                 <p>
@@ -372,8 +398,9 @@ export default function BusinessInternetMississaugaPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <h2 className="text-xl font-semibold tracking-tight">
-                Typical Mississauga fit
+              <SectionEyebrow>TYPICAL MISSISSAUGA FIT</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Common Mississauga business environments
               </h2>
 
               <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -390,8 +417,9 @@ export default function BusinessInternetMississaugaPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <h2 className="text-xl font-semibold tracking-tight">
-                Choose the right service posture
+              <SectionEyebrow>SERVICE OPTIONS</SectionEyEBROW>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Choose the right service
               </h2>
 
               <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -403,27 +431,27 @@ export default function BusinessInternetMississaugaPage() {
                   >
                     <div className="text-sm font-semibold text-white/90">{x.title}</div>
                     <div className="mt-2 text-sm leading-relaxed text-white/70">{x.desc}</div>
-                    <div className="mt-3 text-xs text-white/60">Open module →</div>
+                    <div className="mt-3 text-xs text-white/60">Open service →</div>
                   </Link>
                 ))}
               </div>
 
               <h3 className="pt-6 text-lg font-semibold tracking-tight text-white">
-                Business Fibre vs DIA in Mississauga
+                Business fibre vs dedicated internet in Mississauga
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-white/70">
-                Business Fibre is often the right fit when you need strong
-                performance, clean onboarding, and stable day-to-day operations.
-                Dedicated Internet Access is better suited to performance-critical
-                environments where more deterministic delivery posture and cleaner
-                enterprise handoff expectations matter.
+                Business fibre is often the right fit when you need strong
+                performance, value, and stable day-to-day operations. Dedicated
+                internet is better for critical environments where stronger uptime
+                and more predictable performance matter.
               </p>
             </div>
           </div>
 
           <aside className="space-y-4">
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <h2 className="text-lg font-semibold tracking-tight">Request availability</h2>
+              <SectionEyebrow>REQUEST AVAILABILITY</SectionEyebrow>
+              <h2 className="mt-3 text-lg font-semibold tracking-tight">Check availability</h2>
 
               <div className="mt-4 space-y-3 text-sm text-white/70">
                 <div>
@@ -447,10 +475,10 @@ export default function BusinessInternetMississaugaPage() {
                 </div>
 
                 <div>
-                  <div className="text-white/60">What to include</div>
+                  <div className="text-white/60">Helpful details</div>
                   <div className="text-white/85">
-                    Service address, broadband vs DIA, static IP needs, managed
-                    LAN/Wi-Fi, and continuity requirements.
+                    Service address, fibre vs dedicated internet, static IP needs,
+                    managed Wi-Fi, and backup internet requirements.
                   </div>
                 </div>
               </div>
@@ -460,8 +488,7 @@ export default function BusinessInternetMississaugaPage() {
                 <p className="mt-2 text-sm leading-relaxed text-white/70">
                   Start with an availability request. If your environment is
                   office-heavy, logistics-based, or uptime-sensitive, include
-                  operational details so Orbitlink can scope the right delivery
-                  posture.
+                  operational details so Orbitlink can guide the right setup.
                 </p>
 
                 <div className="mt-4 flex flex-col gap-2">
@@ -469,13 +496,13 @@ export default function BusinessInternetMississaugaPage() {
                     href="/contact#intake"
                     className="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
                   >
-                    Request Access
+                    Check Availability
                   </Link>
                   <Link
                     href="/trust"
                     className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                   >
-                    Trust & Delivery Posture
+                    Trust & Compliance
                   </Link>
                 </div>
               </div>
@@ -512,12 +539,13 @@ export default function BusinessInternetMississaugaPage() {
 
       <section className="mx-auto max-w-6xl px-6 pb-16">
         <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-          <h2 className="text-2xl font-semibold tracking-tight">
+          <SectionEyebrow>FAQ</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">
             Mississauga business internet FAQs
           </h2>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
-            Clear answers for commercial search intent, with availability confirmed
-            per site before activation.
+            Clear answers for Mississauga commercial search intent, with availability
+            checked per site before moving forward.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
