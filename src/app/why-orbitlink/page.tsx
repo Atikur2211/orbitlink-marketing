@@ -8,16 +8,20 @@ const PAGE_PATH = "/why-orbitlink";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
+const PHONE_E164 = "+18888672480";
+const PHONE_DISPLAY = "1-888-867-2480";
 
 export const metadata: Metadata = {
-  title: "Why Orbitlink | Business Connectivity with More Clarity",
+  title:
+    "Why Orbitlink | Business Internet & Connectivity for Ontario Businesses",
   description:
-    "Why Ontario businesses choose Orbitlink for business fibre, dedicated internet, managed networks, voice, continuity, and infrastructure services: clearer qualification, more structured onboarding, and a stronger trust posture.",
+    "Why Ontario businesses choose Orbitlink for business fibre internet, dedicated internet access, managed Wi-Fi, voice, backup connectivity, and infrastructure services: clearer qualification, structured onboarding, and a stronger trust posture.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Why Orbitlink | Business Connectivity with More Clarity",
+    title:
+      "Why Orbitlink | Business Internet & Connectivity for Ontario Businesses",
     description:
-      "A buyer-focused page explaining why Orbitlink is different: clearer qualification, better delivery posture, and a more structured business connectivity experience across Ontario.",
+      "A buyer-focused page explaining why Orbitlink is different for Ontario businesses: clearer qualification, better delivery posture, stronger trust signals, and a more structured connectivity experience.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -33,9 +37,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Why Orbitlink | Business Connectivity with More Clarity",
+    title:
+      "Why Orbitlink | Business Internet & Connectivity for Ontario Businesses",
     description:
-      "Why businesses choose Orbitlink for business internet, managed networks, and structured service delivery.",
+      "Why businesses choose Orbitlink for business internet, managed networks, voice, continuity, and structured service delivery.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -262,6 +267,29 @@ function StepCard({
   );
 }
 
+function CTAButton({
+  href,
+  children,
+  primary = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  primary?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={
+        primary
+          ? "inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+          : "inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+      }
+    >
+      {children}
+    </Link>
+  );
+}
+
 export default function WhyOrbitlinkPage() {
   const schemaGraph = {
     "@context": "https://schema.org",
@@ -273,6 +301,7 @@ export default function WhyOrbitlinkPage() {
         url: SITE_URL,
         logo: `${SITE_URL}/icon.png`,
         brand: { "@type": "Brand", name: "Orbitlink" },
+        telephone: PHONE_E164,
         parentOrganization: {
           "@type": "Organization",
           name: "TIRAV Technologies Inc.",
@@ -354,7 +383,7 @@ export default function WhyOrbitlinkPage() {
             </div>
 
             <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[44px] lg:leading-[1.02]">
-              Most telecom websites make business buying harder.
+              Most telecom websites make business buying harder.{" "}
               <span className="block text-white/72">
                 Orbitlink is designed to make it clearer.
               </span>
@@ -364,6 +393,17 @@ export default function WhyOrbitlinkPage() {
               Orbitlink is built for buyers who want a cleaner path from interest to action.
               The difference is not only visual. It is in how services are explained, how
               requests are qualified, how trust is surfaced, and how the next step is made easier.
+            </p>
+
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/60 sm:text-[15px]">
+              Business internet, dedicated internet access, managed Wi-Fi, voice,
+              backup connectivity, and infrastructure services for Ontario offices,
+              clinics, warehouses, and commercial environments.
+            </p>
+
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/60 sm:text-[15px]">
+              Orbitlink does not assume availability. Requests are reviewed by address,
+              building context, and business requirements before moving forward.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
@@ -378,30 +418,24 @@ export default function WhyOrbitlinkPage() {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Link
-                href="/contact#intake"
-                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-              >
-                Send a Business Request
-              </Link>
-              <Link
-                href="/services"
+              <CTAButton href="/contact#intake" primary>
+                Start Business Request
+              </CTAButton>
+              <a
+                href={`tel:${PHONE_E164}`}
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
+                Call {PHONE_DISPLAY}
+              </a>
+              <CTAButton href="/services">
                 Explore Services
-              </Link>
-              <Link
-                href="/trust"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-              >
+              </CTAButton>
+              <CTAButton href="/trust">
                 Review Trust Posture
-              </Link>
-              <Link
-                href="/compare"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-              >
+              </CTAButton>
+              <CTAButton href="/compare">
                 Compare Provider Models
-              </Link>
+              </CTAButton>
             </div>
           </div>
 
@@ -456,6 +490,11 @@ export default function WhyOrbitlinkPage() {
             <BenefitCard key={item.title} title={item.title} body={item.body} />
           ))}
         </div>
+
+        <p className="mt-6 max-w-3xl text-sm leading-6 text-white/60 sm:text-[15px]">
+          Orbitlink supports Ontario business markets including Mississauga, Toronto,
+          Brampton, Oakville, Vaughan, Markham, Milton, Ottawa, and surrounding commercial regions.
+        </p>
       </Surface>
 
       <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
@@ -522,18 +561,12 @@ export default function WhyOrbitlinkPage() {
         </div>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Link
-            href="/compare"
-            className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-          >
+          <CTAButton href="/compare" primary>
             Open Comparison Page
-          </Link>
-          <Link
-            href="/contact#intake"
-            className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-          >
-            Send a Business Request
-          </Link>
+          </CTAButton>
+          <CTAButton href="/contact#intake">
+            Start Business Request
+          </CTAButton>
         </div>
       </Surface>
 
@@ -603,21 +636,24 @@ export default function WhyOrbitlinkPage() {
               more structured than most smaller providers. That makes stronger buyers
               more willing to take the next step.
             </p>
+            <p className="mt-3 text-sm leading-6 text-white/60 sm:text-[15px]">
+              Start with your address and business requirements. Orbitlink will guide the next step clearly.
+            </p>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/contact#intake"
-              className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-            >
-              Send a Business Request
-            </Link>
-            <Link
-              href="/services"
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <CTAButton href="/contact#intake" primary>
+              Start Business Request
+            </CTAButton>
+            <a
+              href={`tel:${PHONE_E164}`}
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
             >
+              Call {PHONE_DISPLAY}
+            </a>
+            <CTAButton href="/services">
               Explore Services
-            </Link>
+            </CTAButton>
           </div>
         </div>
       </Surface>
