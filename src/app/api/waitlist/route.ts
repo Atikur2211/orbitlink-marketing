@@ -132,6 +132,10 @@ function buildRedirect(reqUrl: string, returnTo: string, params: Record<string, 
   return url;
 }
 
+function buildSuccessRedirect(reqUrl: string) {
+  return new URL("/contact/thank-you", reqUrl);
+}
+
 function escapeHtml(s: string) {
   return s
     .replaceAll("&", "&amp;")
@@ -222,8 +226,9 @@ function normalizeModuleName(input?: string, intent?: Intent): string | undefine
     "backup connectivity": "AUREX Internet",
     "lte / 5g continuity": "AUREX Internet",
     "lte/5g continuity": "AUREX Internet",
+    "lte 5g continuity": "AUREX Internet",
     "iot connectivity": "AUREX Smart",
-    "compliance automation": "TIRAV Horizon"
+    "compliance automation": "TIRAV Horizon",
   };
 
   return labelMap[lowered] ?? raw;
@@ -282,14 +287,14 @@ function buildTags(args: {
     ? [
         "careers",
         "pipeline",
-        moduleName ? slugifyTag(moduleName) : "general"
+        moduleName ? slugifyTag(moduleName) : "general",
       ]
     : [
         "lead",
         source,
         intent || "general",
         moduleName ? slugifyTag(moduleName) : "general",
-        deriveRegionTag(location)
+        deriveRegionTag(location),
       ];
 
   return Array.from(new Set(tags.filter(Boolean)));
@@ -309,7 +314,7 @@ async function readStoreLocal(filePath: string): Promise<Store> {
     if (parsed && Array.isArray(parsed.value)) {
       return {
         value: parsed.value as Submission[],
-        Count: Number(parsed.Count ?? parsed.value.length)
+        Count: Number(parsed.Count ?? parsed.value.length),
       };
     }
 
@@ -390,7 +395,7 @@ async function notifyOps(sub: Submission, isUpdate: boolean) {
         `When: ${when}`,
         "",
         "Notes:",
-        sub.notes || "(none)"
+        sub.notes || "(none)",
       ].join("\n")
     : [
         isUpdate ? "Orbitlink Lead Update" : "Orbitlink New Lead",
@@ -408,7 +413,7 @@ async function notifyOps(sub: Submission, isUpdate: boolean) {
         `When: ${when}`,
         "",
         "Project Details:",
-        sub.notes || "(none)"
+        sub.notes || "(none)",
       ].join("\n");
 
   const html = careers
@@ -468,7 +473,94 @@ async function notifyOps(sub: Submission, isUpdate: boolean) {
     subject,
     text,
     html,
-    replyTo: sub.email
+    replyTo: sub.email,
+  });
+}
+
+async function sendUserConfirmation(sub: Submission) {
+  if (!resend) return;
+  if (!sub.email) return;
+  if (isCareersPipeline(sub)) return;
+
+  const from = process.env.INTAKE_FROM_EMAIL || "Orbitlink <onboarding@resend.dev>";
+  const subject = "Orbitlink request received — next step";
+
+  const greeting = sub.fullName ? `Hi ${sub.fullName},` : "Hi,";
+  const moduleLabel = formatModuleLabel(sub.module, sub.intent);
+
+  const text = [
+    greeting,
+    "",
+    "Thank you for contacting Orbitlink.",
+    "",
+    "We’ve received your request and will review the address, service need, and business context before replying with the next recommended step.",
+    "",
+    "Depending on the request, the next response may include:",
+    "- availability direction",
+    "- pricing guidance",
+    "- service matching",
+    "- feasibility or deployment notes",
+    "",
+    `Service requested: ${moduleLabel}`,
+    `Address: ${sub.location || "N/A"}`,
+    "",
+    "Typical response time is within 1 business day.",
+    "",
+    "If your request is time-sensitive, you can also call 1-888-867-2480.",
+    "",
+    "Best regards,",
+    "Orbitlink",
+    "Business Connectivity",
+    "concierge@orbitlink.ca",
+  ].join("\n");
+
+  const html = `
+    <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; line-height:1.6; color:#111;">
+      <p>${escapeHtml(greeting)}</p>
+
+      <p>Thank you for contacting Orbitlink.</p>
+
+      <p>
+        We’ve received your request and will review the address, service need, and business context
+        before replying with the next recommended step.
+      </p>
+
+      <p>Depending on the request, the next response may include:</p>
+      <ul>
+        <li>availability direction</li>
+        <li>pricing guidance</li>
+        <li>service matching</li>
+        <li>feasibility or deployment notes</li>
+      </ul>
+
+      <p>
+        <strong>Service requested:</strong> ${escapeHtml(moduleLabel)}<br />
+        <strong>Address:</strong> ${escapeHtml(sub.location || "N/A")}
+      </p>
+
+      <p>Typical response time is within 1 business day.</p>
+
+      <p>
+        If your request is time-sensitive, you can also call
+        <a href="tel:+18888672480">1-888-867-2480</a>.
+      </p>
+
+      <p>
+        Best regards,<br />
+        Orbitlink<br />
+        Business Connectivity<br />
+        <a href="mailto:concierge@orbitlink.ca">concierge@orbitlink.ca</a>
+      </p>
+    </div>
+  `;
+
+  await resend.emails.send({
+    to: sub.email,
+    from,
+    subject,
+    text,
+    html,
+    replyTo: "concierge@orbitlink.ca",
   });
 }
 
@@ -488,7 +580,7 @@ export async function POST(req: Request) {
 
     const honeypot = clean(form.get("company_website"), 120);
     if (honeypot) {
-      return NextResponse.redirect(buildRedirect(req.url, "/contact", { ok: "1" }), 303);
+      return NextResponse.redirect(buildSuccessRedirect(req.url), 303);
     }
 
     const email = clean(form.get("email"), 180).toLowerCase();
@@ -517,7 +609,7 @@ export async function POST(req: Request) {
       source,
       intent,
       moduleName,
-      location
+      location,
     });
 
     const draft: Submission = {
@@ -546,7 +638,7 @@ export async function POST(req: Request) {
       reviewedAt: "",
       reviewedBy: "",
       reviewNote: "",
-      tags
+      tags,
     };
 
     if (!INTAKE_STORE_LOCAL) {
@@ -559,7 +651,13 @@ export async function POST(req: Request) {
         console.error("Intake email notify failed (prod no-store):", e);
       }
 
-      return NextResponse.redirect(buildRedirect(req.url, returnTo, { ok: "1" }), 303);
+      try {
+        await sendUserConfirmation(notifySub);
+      } catch (e) {
+        console.error("User confirmation email failed (prod no-store):", e);
+      }
+
+      return NextResponse.redirect(buildSuccessRedirect(req.url), 303);
     }
 
     const { default: pathMod } = await import("path");
@@ -629,7 +727,7 @@ export async function POST(req: Request) {
           reviewedBy: prev.reviewedBy || "",
           reviewNote: prev.reviewNote || "",
           lastContactedAt: prev.lastContactedAt || "",
-          tags: prev.tags?.length ? prev.tags : tags
+          tags: prev.tags?.length ? prev.tags : tags,
         };
 
         const lastNotify = prev.lastNotifiedAt ? Date.parse(prev.lastNotifiedAt) : 0;
@@ -657,7 +755,7 @@ export async function POST(req: Request) {
     });
 
     if (rateLimited) {
-      return NextResponse.redirect(buildRedirect(req.url, returnTo, { ok: "1" }), 303);
+      return NextResponse.redirect(buildSuccessRedirect(req.url), 303);
     }
 
     if (notifySub) {
@@ -666,9 +764,15 @@ export async function POST(req: Request) {
       } catch (e) {
         console.error("Intake email notify failed:", e);
       }
+
+      try {
+        await sendUserConfirmation(notifySub);
+      } catch (e) {
+        console.error("User confirmation email failed:", e);
+      }
     }
 
-    return NextResponse.redirect(buildRedirect(req.url, returnTo, { ok: "1" }), 303);
+    return NextResponse.redirect(buildSuccessRedirect(req.url), 303);
   } catch (e) {
     console.error("waitlist POST error", e);
     return NextResponse.redirect(buildRedirect(req.url, "/contact", { error: "server" }), 303);

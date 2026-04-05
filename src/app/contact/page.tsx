@@ -61,12 +61,17 @@ function Pill({ children }: { children: React.ReactNode }) {
 function Surface({
   children,
   className = "",
+  id,
 }: {
   children: React.ReactNode;
   className?: string;
+  id?: string;
 }) {
   return (
-    <div className={`rounded-[28px] border border-white/10 bg-white/[0.04] ${className}`}>
+    <div
+      id={id}
+      className={`rounded-[28px] border border-white/10 bg-white/[0.04] ${className}`}
+    >
       {children}
     </div>
   );
