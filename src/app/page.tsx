@@ -39,6 +39,8 @@ export const metadata: Metadata = {
     "business internet for clinics ontario",
     "business internet for warehouses ontario",
     "ontario business internet provider",
+    "business connectivity ontario",
+    "network infrastructure ontario",
   ],
   alternates: {
     canonical: CANONICAL_URL,
@@ -391,20 +393,19 @@ export default function Home() {
 
         <div className="relative mx-auto flex min-h-[70svh] max-w-7xl items-center px-4 pb-10 pt-20 sm:min-h-[76svh] sm:px-7 sm:pb-14 sm:pt-24 lg:min-h-[80vh] lg:px-10 lg:pb-16 lg:pt-20">
           <div className="w-full max-w-4xl">
-            <div className="w-full max-w-[320px] truncate rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:max-w-max sm:text-xs">
+            <div className="w-full max-w-[325px] truncate rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:max-w-max sm:text-xs">
               <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Business Fibre • Dedicated Internet • Managed Wi-Fi
+              Business Fibre • Dedicated Internet • Managed Network
             </div>
 
-            <h1 className="mt-5 max-w-[10.2ch] text-[2.15rem] font-semibold leading-[0.94] tracking-tight text-white sm:max-w-[11.2ch] sm:text-[3.2rem] lg:max-w-5xl lg:text-[4.4rem] xl:text-[5.1rem]">
-              Business Internet
-              <span className="block">Built for</span>
-              <span className="block text-white/64">Real Operations</span>
+            <h1 className="mt-5 max-w-[11ch] text-[2.15rem] font-semibold leading-[0.94] tracking-tight text-white sm:max-w-[12.5ch] sm:text-[3.2rem] lg:max-w-5xl lg:text-[4.4rem] xl:text-[5.1rem]">
+              Business Connectivity
+              <span className="block text-white/70">Engineered Properly</span>
             </h1>
 
-            <p className="mt-4 max-w-xl text-[15px] leading-6 text-white/86 sm:text-[1.04rem] sm:leading-7">
-              Business fibre, dedicated internet, managed Wi-Fi, voice, and backup
-              connectivity for offices, clinics, warehouses, and multi-site teams
+            <p className="mt-4 max-w-[42rem] text-[15px] leading-6 text-white/86 sm:text-[1.04rem] sm:leading-7">
+              Fibre, dedicated internet, and managed network infrastructure
+              designed for offices, clinics, warehouses, and multi-site operations
               across Ontario.
             </p>
 
@@ -508,7 +509,7 @@ export default function Home() {
           <div className="relative">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
-                <SectionEyebrow>BUSINESS INTERNET SOLUTIONS</SectionEyebrow>
+                <SectionEyebrow>BUSINESS CONNECTIVITY SOLUTIONS</SectionEyebrow>
                 <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
                   Connectivity designed for Ontario organizations
                 </h2>
@@ -519,7 +520,7 @@ export default function Home() {
               </div>
               <MiniMetaCard
                 title="FOCUS"
-                value="Fibre • Dedicated • Managed Wi-Fi • Backup"
+                value="Fibre • Dedicated • Managed Network • Backup"
               />
             </div>
 
