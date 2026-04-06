@@ -1,63 +1,133 @@
-// src/app/sitemap.ts
 import type { MetadataRoute } from "next";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://orbitlink.ca";
+const BASE_URL = "https://orbitlink.ca";
+const now = new Date();
 
-  return [
-    {
-      url: `${baseUrl}/`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/solutions`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/trust`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/legal/privacy`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/legal/terms`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/legal/cookies`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.4,
-    },
-    {
-      url: `${baseUrl}/legal/acceptable-use`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.4,
-    },
-  ];
+const staticPages = [
+  "/",
+  "/about",
+  "/business-fibre-internet-ontario",
+  "/business-internet-brampton",
+  "/business-internet-milton",
+  "/business-internet-mississauga",
+  "/business-internet-toronto",
+  "/compare",
+  "/contact",
+  "/contact/thank-you",
+  "/internet-near-me",
+  "/legal",
+  "/legal/acceptable-use",
+  "/legal/cookies",
+  "/legal/privacy",
+  "/legal/terms",
+  "/locations",
+  "/locations/ontario",
+  "/network",
+  "/services",
+  "/solutions",
+  "/trust",
+  "/why-orbitlink",
+] as const;
+
+const servicePages = [
+  "business-fibre-internet",
+  "colocation-infrastructure",
+  "dedicated-internet-access",
+  "iot-connectivity",
+  "lte-5g-continuity",
+  "managed-lan-wifi",
+  "starlink-agent",
+  "static-ip-routing",
+  "voip-cloud-voice",
+] as const;
+
+const locationPages = [
+  "aurora",
+  "barrie",
+  "brampton",
+  "burlington",
+  "cambridge",
+  "etobicoke",
+  "guelph",
+  "hamilton",
+  "kingston",
+  "kitchener-waterloo",
+  "london",
+  "markham",
+  "milton",
+  "mississauga",
+  "newmarket",
+  "niagara-st-catharines",
+  "north-york",
+  "oakville",
+  "oshawa",
+  "ottawa",
+  "peterborough",
+  "richmond-hill",
+  "scarborough",
+  "sudbury",
+  "thunder-bay",
+  "toronto",
+  "vaughan",
+  "whitby",
+  "windsor",
+] as const;
+
+function pagePriority(path: string): number {
+  if (path === "/") return 1.0;
+  if (
+    path === "/services" ||
+    path === "/locations" ||
+    path === "/business-fibre-internet-ontario" ||
+    path === "/contact" ||
+    path === "/solutions"
+  ) {
+    return 0.95;
+  }
+  if (path.startsWith("/business-internet-")) return 0.9;
+  if (path.startsWith("/services/")) return 0.9;
+  if (path.startsWith("/locations/")) return 0.85;
+  if (path.startsWith("/legal")) return 0.5;
+  return 0.8;
+}
+
+function changeFrequencyFor(
+  path: string
+): MetadataRoute.Sitemap[number]["changeFrequency"] {
+  if (path.startsWith("/legal")) return "yearly";
+  if (path === "/" || path.startsWith("/services") || path.startsWith("/locations")) {
+    return "weekly";
+  }
+  return "monthly";
+}
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const staticEntries = staticPages.map((path) => ({
+    url: `${BASE_URL}${path}`,
+    lastModified: now,
+    changeFrequency: changeFrequencyFor(path),
+    priority: pagePriority(path),
+  }));
+
+  const serviceEntries = servicePages.map((slug) => {
+    const path = `/services/${slug}`;
+    return {
+      url: `${BASE_URL}${path}`,
+      lastModified: now,
+      changeFrequency: changeFrequencyFor(path),
+      priority: pagePriority(path),
+    };
+  });
+
+  const locationEntries = locationPages.map((slug) => {
+    const path = `/locations/${slug}`;
+    return {
+      url: `${BASE_URL}${path}`,
+      lastModified: now,
+      changeFrequency: changeFrequencyFor(path),
+      priority: pagePriority(path),
+    };
+  });
+
+  return [...staticEntries, ...serviceEntries, ...locationEntries];
 }
