@@ -110,6 +110,11 @@ const relatedPages = [
     href: "/business-internet-brampton",
   },
   {
+    title: "Business Internet Milton",
+    desc: "Supports Milton industrial and warehouse-focused business demand and strengthens crawl flow.",
+    href: "/business-internet-milton",
+  },
+  {
     title: "Ontario Coverage Hub",
     desc: "Province-wide service coverage page connecting Orbitlink’s Ontario market footprint.",
     href: "/locations/ontario",
@@ -125,6 +130,10 @@ const cityLinks = [
   { name: "Markham", href: "/locations/markham" },
   { name: "Oakville", href: "/locations/oakville" },
   { name: "Ottawa", href: "/locations/ottawa" },
+  { name: "Windsor", href: "/locations/windsor" },
+  { name: "Burlington", href: "/locations/burlington" },
+  { name: "Cambridge", href: "/locations/cambridge" },
+  { name: "Peterborough", href: "/locations/peterborough" },
 ] as const;
 
 function jsonLd() {
@@ -415,6 +424,18 @@ export default function BusinessFibreInternetOntarioPage() {
                 </p>
 
                 <p>
+                  Businesses operating across multiple locations may also want to review{" "}
+                  <Link
+                    href="/business-internet-milton"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    business internet in Milton
+                  </Link>{" "}
+                  alongside broader Ontario planning, especially where warehouse,
+                  industrial, and logistics expansion is part of the operating model.
+                </p>
+
+                <p>
                   For many organizations, this makes business fibre one of the strongest
                   business internet options in Ontario when stable daily performance and a
                   cleaner support path matter.
@@ -504,12 +525,26 @@ export default function BusinessFibreInternetOntarioPage() {
                   >
                     Vaughan
                   </Link>
-                  , and{" "}
+                  ,{" "}
                   <Link
                     href="/locations/markham"
                     className="underline underline-offset-4 text-white/85 hover:text-white"
                   >
                     Markham
+                  </Link>
+                  ,{" "}
+                  <Link
+                    href="/locations/windsor"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    Windsor
+                  </Link>
+                  , and{" "}
+                  <Link
+                    href="/locations/burlington"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    Burlington
                   </Link>
                   .
                 </p>
@@ -543,7 +578,15 @@ export default function BusinessFibreInternetOntarioPage() {
 
               <p className="mt-4 text-sm leading-relaxed text-white/70">
                 Orbitlink helps determine which service model fits the site based on
-                business use case, operational sensitivity, and building reality.
+                business use case, operational sensitivity, and building reality. Learn
+                more about{" "}
+                <Link
+                  href="/services/dedicated-internet-access"
+                  className="underline underline-offset-4 text-white/85 hover:text-white"
+                >
+                  dedicated internet access
+                </Link>{" "}
+                when higher-criticality delivery and uptime expectations are required.
               </p>
             </div>
 
@@ -597,6 +640,14 @@ export default function BusinessFibreInternetOntarioPage() {
                   >
                     View Ontario coverage hub
                   </Link>
+                </div>
+
+                <div>
+                  <div className="text-white/60">Service model</div>
+                  <div className="text-white/85">
+                    Business connectivity delivered through structured onboarding,
+                    availability validation, and clearly defined next steps.
+                  </div>
                 </div>
 
                 <div>
@@ -663,6 +714,12 @@ export default function BusinessFibreInternetOntarioPage() {
                   className="underline underline-offset-4 text-white/80 hover:text-white"
                 >
                   Milton
+                </Link>
+                <Link
+                  href="/locations/windsor"
+                  className="underline underline-offset-4 text-white/80 hover:text-white"
+                >
+                  Windsor
                 </Link>
               </div>
             </div>

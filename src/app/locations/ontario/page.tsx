@@ -165,6 +165,72 @@ const CITIES: readonly City[] = [
     tags: ["Regional market", "Industrial demand", "Business internet"],
     signal: "Regional market",
   },
+
+  // Added to fix orphan pages
+  {
+    name: "Windsor",
+    href: "/locations/windsor",
+    subtitle:
+      "Industrial, logistics, and cross-border business environments with strong operational connectivity needs.",
+    tier: "Ontario",
+    tags: ["Industrial", "Logistics", "Operational fit"],
+    signal: "Ontario market",
+  },
+  {
+    name: "Peterborough",
+    href: "/locations/peterborough",
+    subtitle:
+      "Regional commercial environments where stable business internet supports day-to-day operations.",
+    tier: "Ontario",
+    tags: ["Regional", "Commercial", "Business internet"],
+    signal: "Ontario market",
+  },
+  {
+    name: "Niagara / St. Catharines",
+    href: "/locations/niagara-st-catharines",
+    subtitle:
+      "Commercial, retail, hospitality, and professional business demand across the Niagara region.",
+    tier: "Ontario",
+    tags: ["Commercial", "Retail", "Regional demand"],
+    signal: "Ontario market",
+  },
+  {
+    name: "Sudbury",
+    href: "/locations/sudbury",
+    subtitle:
+      "Industrial and regional business demand where reliable connectivity and structured service matter.",
+    tier: "Ontario",
+    tags: ["Industrial", "Regional", "Business-grade"],
+    signal: "Ontario market",
+  },
+  {
+    name: "Cambridge",
+    href: "/locations/cambridge",
+    subtitle:
+      "Manufacturing, industrial, and commercial business demand with strong operational fit.",
+    tier: "Ontario",
+    tags: ["Manufacturing", "Industrial", "Commercial"],
+    signal: "Ontario market",
+  },
+  {
+    name: "Thunder Bay",
+    href: "/locations/thunder-bay",
+    subtitle:
+      "Northern Ontario business and operational environments that benefit from structured connectivity review.",
+    tier: "Ontario",
+    tags: ["Northern Ontario", "Operations", "Regional"],
+    signal: "Ontario market",
+  },
+  {
+    name: "Burlington",
+    href: "/locations/burlington",
+    subtitle:
+      "Office, commercial, and professional service demand with strong business connectivity expectations.",
+    tier: "Ontario",
+    tags: ["Office", "Commercial", "Professional"],
+    signal: "Ontario market",
+  },
+
   {
     name: "Ottawa",
     href: "/locations/ottawa",
