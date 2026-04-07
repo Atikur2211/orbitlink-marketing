@@ -8,10 +8,9 @@ const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
 
 export const metadata: Metadata = {
-  title:
-    "Business Fibre Internet Ontario | Fast Business Internet for Offices, Clinics & Commercial Sites | Orbitlink",
+  title: "Business Fibre Internet Ontario | Orbitlink",
   description:
-    "Business fibre internet for Ontario businesses. Check availability by address and get pricing, install guidance, and upgrade options for offices, clinics, warehouses, and commercial locations.",
+    "Business fibre internet for Ontario offices, clinics, warehouses, and commercial locations. Check availability by address and get pricing, install guidance, and upgrade options.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
     title: "Business Fibre Internet Ontario | Orbitlink",
@@ -311,26 +310,28 @@ export default function Page() {
                 </h1>
 
                 <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/72 sm:text-lg">
-                  Fast, reliable business fibre internet for Ontario companies. Built for offices, clinics,
-                  warehouses, and growing teams that depend on cloud apps, VoIP, video meetings, and daily operations.
+                  Fast, reliable business fibre internet for Ontario companies. Built for offices,
+                  clinics, warehouses, and growing teams that depend on cloud apps, VoIP, video meetings,
+                  and daily operations.
                 </p>
 
                 <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/65">
-                  Check availability at your address and get clear pricing, installation guidance, and the right setup for your business.
+                  Check availability at your address and get clear pricing, installation guidance,
+                  and the right setup for your business.
                 </p>
 
-                <div className="mt-6 max-w-3xl text-sm leading-7 text-white/65">
-                  Business fibre internet is available in major Ontario markets including Toronto, Mississauga,
-                  Brampton, Milton, Oakville, Vaughan, Markham, and Ottawa. Common searches include business internet for office,
-                  fibre internet for clinic, internet for warehouse, and fast business internet near me.
-                </div>
+                <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/65">
+                  Business fibre internet is one of the strongest options for organizations moving
+                  away from unstable cable, older copper access, or internet that no longer fits
+                  a growing business environment.
+                </p>
 
                 <div className="mt-7 flex flex-wrap gap-2">
                   {[
                     "Check availability by address",
                     "Built for business use",
-                    "Fast install timelines where available",
-                    "Upgrade to static IP, Wi-Fi, voice, backup",
+                    "Clear path to pricing and install guidance",
+                    "Static IP, Wi-Fi, voice, and backup options",
                     "Ontario business-focused provider",
                   ].map((x) => (
                     <TrustPill key={x}>{x}</TrustPill>
@@ -347,6 +348,10 @@ export default function Page() {
                   <CTAButton href="/services/dedicated-internet-access">
                     Compare Options
                   </CTAButton>
+                </div>
+
+                <div className="mt-3 text-sm text-white/58">
+                  Availability varies by building. Submit your address to confirm service fit.
                 </div>
 
                 <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -369,8 +374,9 @@ export default function Page() {
                       Best for businesses that need a strong primary connection
                     </div>
                     <p className="mt-3 text-sm leading-6 text-white/64">
-                      Usually a strong fit for offices, clinics, studios, commercial suites, and operational teams that rely on
-                      cloud apps, video meetings, VoIP, and stable day-to-day internet.
+                      Usually a strong fit for offices, clinics, studios, commercial suites,
+                      and operational teams that rely on cloud apps, video meetings, VoIP,
+                      and stable day-to-day internet.
                     </p>
 
                     <div className="mt-5 grid gap-3">
@@ -396,8 +402,9 @@ export default function Page() {
                     COMMERCIAL TRUST SIGNALS
                   </div>
                   <p className="mt-2 text-sm leading-6 text-white/66">
-                    Business fibre should be sold with clarity around site fit, building feasibility, and operational use.
-                    This page is structured to help commercial buyers understand fit before installation.
+                    Business fibre should be sold with clarity around site fit, building feasibility,
+                    and operational use. This page is structured to help commercial buyers understand
+                    fit before installation.
                   </p>
                 </div>
 
@@ -423,19 +430,20 @@ export default function Page() {
 
             <div className="mt-4 space-y-4 text-white/70 leading-relaxed">
               <p>
-                Business fibre internet is often the right fit for organizations that need reliable primary internet for
-                staff, cloud applications, customer service workflows, business voice, and day-to-day operations.
+                Business fibre internet is often the right fit for organizations that need
+                reliable primary internet for staff, cloud applications, customer service
+                workflows, business voice, and day-to-day operations.
               </p>
 
               <p>
-                Instead of presenting this as a generic speed product, Orbitlink positions business fibre around address,
-                feasibility, business use, and onboarding clarity. That reduces confusion and gives buyers a better
-                understanding of what actually fits the site.
+                Instead of presenting this as a generic speed product, Orbitlink positions
+                business fibre around address, feasibility, business use, and onboarding clarity.
+                That reduces confusion and gives buyers a better understanding of what actually fits the site.
               </p>
 
               <p>
-                It also creates a cleaner path for future upgrades into managed Wi-Fi, static IPs, voice, LTE/5G backup internet,
-                or Dedicated Internet Access when requirements grow.
+                It also creates a cleaner path for future upgrades into managed Wi-Fi, static IPs,
+                voice, LTE/5G backup internet, or Dedicated Internet Access when requirements grow.
               </p>
             </div>
           </SectionShell>
@@ -502,7 +510,8 @@ export default function Page() {
                   Business Fibre Internet vs Dedicated Internet Access
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                  Many buyers compare these two services at the same time. This section helps you choose the right fit early.
+                  Many buyers compare these two services at the same time. This section helps
+                  you choose the right fit early.
                 </p>
               </div>
 
@@ -564,7 +573,7 @@ export default function Page() {
               Business fibre across Ontario commercial markets
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-white/68 sm:text-[15px]">
-              This service page should support both province-wide and city-level commercial SEO.
+              This page should support both province-wide and city-level commercial SEO.
               Use it together with your main location pages.
             </p>
 
@@ -596,8 +605,9 @@ export default function Page() {
               Build around the primary connection
             </h2>
             <p className="mt-3 text-sm text-white/70 leading-relaxed">
-              Business fibre is often the first layer. Depending on site requirements, Orbitlink may also review
-              managed Wi-Fi, business voice, static IPs, LTE/5G backup, and Dedicated Internet Access.
+              Business fibre is often the first layer. Depending on site requirements, Orbitlink
+              may also review managed Wi-Fi, business voice, static IPs, LTE/5G backup, and
+              Dedicated Internet Access.
             </p>
 
             <div className="mt-4 flex flex-wrap gap-3">
@@ -610,7 +620,8 @@ export default function Page() {
 
           <p className="text-xs text-white/55">
             Availability, install method, and optional features vary by building infrastructure,
-            serviceability, and access design. Orbitlink confirms fit per address and avoids blanket overclaims.
+            serviceability, and access design. Orbitlink confirms fit per address and avoids
+            blanket overclaims.
           </p>
         </div>
       </section>
