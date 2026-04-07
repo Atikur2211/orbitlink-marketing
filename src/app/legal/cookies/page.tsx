@@ -8,6 +8,30 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/legal/cookies",
   },
+  openGraph: {
+    title: "Cookies & Analytics | Orbitlink",
+    description:
+      "Orbitlink cookies and analytics policy explaining how cookies are used, visitor controls, and site measurement practices.",
+    url: "https://orbitlink.ca/legal/cookies",
+    type: "website",
+    siteName: "Orbitlink",
+    locale: "en_CA",
+    images: [
+      {
+        url: "https://orbitlink.ca/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink Cookies & Analytics",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cookies & Analytics | Orbitlink",
+    description:
+      "Orbitlink cookies and analytics policy explaining how cookies are used, visitor controls, and site measurement practices.",
+    images: ["https://orbitlink.ca/opengraph-image"],
+  },
 };
 
 function Section({
