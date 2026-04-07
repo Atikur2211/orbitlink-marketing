@@ -13,6 +13,7 @@ const BUSINESS = {
   legalName: "TIRAV Technologies Inc. o/a Orbitlink",
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
+  email: "concierge@orbitlink.ca",
   address: {
     street: "30 Eglinton Ave W, Suite 400-A77",
     city: "Mississauga",
@@ -23,14 +24,16 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet in Ontario | Check Availability | Orbitlink",
+  title: "Business Fibre Internet Ontario | Orbitlink",
   description:
-    "Business fibre internet in Ontario for offices, warehouses, clinics, logistics sites, and commercial buildings. Check availability by address and find the right business setup.",
-  alternates: { canonical: PAGE_PATH },
+    "Business fibre internet for Ontario offices, warehouses, clinics, and commercial sites. Check availability by address and find the right business internet setup.",
+  alternates: {
+    canonical: PAGE_PATH,
+  },
   openGraph: {
-    title: "Business Fibre Internet in Ontario | Check Availability | Orbitlink",
+    title: "Business Fibre Internet Ontario | Orbitlink",
     description:
-      "Business fibre internet across Ontario for offices, warehouses, clinics, and commercial sites. Availability is checked by address.",
+      "Reliable business fibre internet for Ontario businesses. Check address availability and find the right setup for offices, warehouses, clinics, and commercial sites.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -38,37 +41,90 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Fibre Internet in Ontario | Orbitlink",
+    title: "Business Fibre Internet Ontario | Orbitlink",
     description:
-      "Business fibre internet in Ontario for commercial and industrial business environments.",
+      "Business fibre internet for Ontario offices, warehouses, clinics, and commercial sites.",
   },
 };
 
 const FAQ = [
   {
     q: "Do you provide business fibre internet across Ontario?",
-    a: "Yes. Orbitlink supports business fibre opportunities across Ontario. Availability depends on building infrastructure, access feasibility, and upstream serviceability, so it is checked by address before moving forward.",
+    a: "Yes. Orbitlink supports business fibre opportunities across Ontario, subject to building infrastructure, upstream serviceability, and installation feasibility. Availability is confirmed by address before the next step is recommended.",
   },
   {
-    q: "What types of businesses is Ontario business fibre best suited for?",
-    a: "Business fibre is often a strong fit for offices, warehouses, clinics, agencies, logistics environments, and commercial buildings that need stable day-to-day connectivity.",
+    q: "Who is Ontario business fibre best suited for?",
+    a: "Business fibre is often a strong fit for offices, clinics, warehouses, logistics environments, agencies, and commercial operations that rely on stable day-to-day connectivity for multiple users and systems.",
   },
   {
     q: "Is business fibre the same as Dedicated Internet Access?",
-    a: "No. Business fibre is often the right fit when strong performance and good value matter most. Dedicated Internet Access is better for business-critical environments that need stronger uptime and more predictable performance.",
+    a: "No. Business fibre is often the right fit where strong performance and value matter most. Dedicated Internet Access is better for mission-critical environments that need stronger uptime, cleaner consistency, and more predictable performance.",
   },
   {
-    q: "Do you provide managed LAN and Wi-Fi with business fibre?",
-    a: "Yes. Orbitlink can support managed LAN and business Wi-Fi, including segmentation, guest access, internal device separation, and coverage planning.",
+    q: "Can Orbitlink provide managed Wi-Fi and LAN with business fibre?",
+    a: "Yes. Orbitlink can support managed LAN and Wi-Fi, including segmentation, guest access, internal device separation, and cleaner coverage planning for business environments.",
   },
   {
-    q: "Do you offer backup internet options?",
-    a: "Yes. Orbitlink can design LTE and 5G backup options for business environments where uptime matters, subject to feasibility and site constraints.",
+    q: "Do you offer backup connectivity options?",
+    a: "Yes. Orbitlink can support LTE and 5G continuity options for environments where uptime matters, subject to site fit and feasibility.",
   },
   {
     q: "How do I check fibre availability at my building?",
-    a: "Submit your service address and requirements through the intake form. Orbitlink checks what is available for the building before the next step is confirmed.",
+    a: "Start with your service address, business use case, and any requirements such as static IPs, managed Wi-Fi, or backup internet. Orbitlink checks building fit and serviceability before recommending the next step.",
   },
+] as const;
+
+const fitCards = [
+  {
+    title: "Commercial offices",
+    desc: "Stable business internet for cloud applications, VoIP, collaboration tools, VPN access, guest Wi-Fi, and multi-user daily operations.",
+  },
+  {
+    title: "Warehouses & logistics",
+    desc: "Reliable connectivity for scanners, tracking systems, cameras, cloud platforms, shipping workflows, and industrial operations.",
+  },
+  {
+    title: "Clinics & professional services",
+    desc: "Business fibre for booking systems, practice tools, voice systems, internal devices, and client-facing operations where consistency matters.",
+  },
+  {
+    title: "Multi-site organizations",
+    desc: "A more structured connectivity path for businesses operating across several Ontario locations with evolving network needs.",
+  },
+] as const;
+
+const relatedPages = [
+  {
+    title: "Business Internet Mississauga",
+    desc: "High-intent page for one of Ontario’s strongest office and commercial markets.",
+    href: "/business-internet-mississauga",
+  },
+  {
+    title: "Business Internet Toronto",
+    desc: "Strong local search page for Toronto offices, commercial spaces, and multi-user environments.",
+    href: "/business-internet-toronto",
+  },
+  {
+    title: "Business Internet Brampton",
+    desc: "Commercial and industrial-focused page for Brampton business and warehouse demand.",
+    href: "/business-internet-brampton",
+  },
+  {
+    title: "Ontario Coverage Hub",
+    desc: "Province-wide service coverage page connecting Orbitlink’s Ontario market footprint.",
+    href: "/locations/ontario",
+  },
+] as const;
+
+const cityLinks = [
+  { name: "Mississauga", href: "/locations/mississauga" },
+  { name: "Toronto", href: "/locations/toronto" },
+  { name: "Brampton", href: "/locations/brampton" },
+  { name: "Milton", href: "/locations/milton" },
+  { name: "Vaughan", href: "/locations/vaughan" },
+  { name: "Markham", href: "/locations/markham" },
+  { name: "Oakville", href: "/locations/oakville" },
+  { name: "Ottawa", href: "/locations/ottawa" },
 ] as const;
 
 function jsonLd() {
@@ -77,7 +133,12 @@ function jsonLd() {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Business Fibre Internet Ontario", item: PAGE_URL },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Business Fibre Internet Ontario",
+        item: PAGE_URL,
+      },
     ],
   };
 
@@ -89,7 +150,7 @@ function jsonLd() {
     legalName: BUSINESS.legalName,
     url: SITE_URL,
     telephone: BUSINESS.phoneE164,
-    email: "concierge@orbitlink.ca",
+    email: BUSINESS.email,
     parentOrganization: { "@id": ORG_ID },
     address: {
       "@type": "PostalAddress",
@@ -106,12 +167,13 @@ function jsonLd() {
     "@context": "https://schema.org",
     "@type": "Service",
     "@id": `${PAGE_URL}#service`,
-    name: "Business Fibre Internet in Ontario",
+    name: "Business Fibre Internet Ontario",
     url: PAGE_URL,
     provider: { "@id": ORG_ID },
     areaServed: { "@type": "AdministrativeArea", name: "Ontario" },
     serviceType: [
       "Business Fibre Internet",
+      "Business Internet Ontario",
       "Managed LAN and Wi-Fi",
       "LTE and 5G Backup Connectivity",
       "VoIP and Cloud Voice",
@@ -139,75 +201,31 @@ function jsonLd() {
   return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
-const fitCards = [
-  {
-    title: "Commercial offices",
-    desc: "Stable business fibre for collaboration, VoIP, cloud platforms, VPNs, guest Wi-Fi, and day-to-day workflows.",
-  },
-  {
-    title: "Warehouses & logistics",
-    desc: "Connectivity for scanners, cameras, cloud tools, shipping systems, and operations that depend on stable internet.",
-  },
-  {
-    title: "Clinics & professional services",
-    desc: "Business fibre for booking systems, voice, internal devices, practice applications, and client-facing reliability.",
-  },
-  {
-    title: "Multi-site organizations",
-    desc: "A cleaner onboarding and support path for businesses operating across several Ontario locations.",
-  },
-] as const;
-
-const relatedPages = [
-  {
-    title: "Business Internet in Mississauga",
-    desc: "High-intent landing page for one of Ontario’s strongest business markets.",
-    href: "/business-internet-mississauga",
-  },
-  {
-    title: "Business Internet in Toronto",
-    desc: "Ontario’s biggest office and commercial market with strong business internet demand.",
-    href: "/business-internet-toronto",
-  },
-  {
-    title: "Business Internet in Brampton",
-    desc: "Industrial and warehouse-oriented page for Brampton’s logistics-heavy market.",
-    href: "/business-internet-brampton",
-  },
-  {
-    title: "Ontario Coverage Hub",
-    desc: "Province-wide entry point into Orbitlink’s core and expanded service markets.",
-    href: "/locations/ontario",
-  },
-] as const;
-
-const cityLinks = [
-  { name: "Mississauga", href: "/locations/mississauga" },
-  { name: "Toronto", href: "/locations/toronto" },
-  { name: "Brampton", href: "/locations/brampton" },
-  { name: "Milton", href: "/locations/milton" },
-  { name: "Vaughan", href: "/locations/vaughan" },
-  { name: "Markham", href: "/locations/markham" },
-  { name: "Oakville", href: "/locations/oakville" },
-  { name: "Ottawa", href: "/locations/ottawa" },
-] as const;
-
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
   return <div className="text-[11px] tracking-[0.24em] text-white/50">{children}</div>;
 }
 
-function MetricCard({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
+function MetricCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
       <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
       <div className="mt-1 text-sm text-white/82">{value}</div>
     </div>
+  );
+}
+
+function BulletList({ items }: { items: readonly string[] }) {
+  return (
+    <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {items.map((item) => (
+        <li
+          key={item}
+          className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82"
+        >
+          {item}
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -233,40 +251,41 @@ export default function BusinessFibreInternetOntarioPage() {
         <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
           <span className="h-2 w-2 rounded-full bg-cyan-300/80" />
           <span className="text-sm tracking-wide text-white/65">
-            Ontario-wide business fibre page
+            Ontario business fibre landing page
           </span>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.25fr_0.75fr]">
+        <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
-            <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-              Business fibre internet in Ontario
+            <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
+              Business Fibre Internet for Ontario Businesses
             </h1>
 
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/72 md:text-lg">
-              Orbitlink provides business fibre internet in Ontario for offices,
-              warehouses, clinics, logistics environments, and commercial buildings.
-              Availability is checked by address so the right service path can be
-              matched to the site before moving forward.
+              Reliable business fibre internet for Ontario offices, warehouses, clinics,
+              logistics environments, and commercial sites. Orbitlink checks availability
+              by address so the right business internet setup can be matched to your
+              building before moving forward.
             </p>
 
             <div className="mt-3 text-sm text-white/68">
-              Serving offices, warehouses, clinics, and multi-site businesses across Ontario.
+              Built for business operations that depend on stable connectivity, cleaner
+              multi-user performance, and a clear next step.
             </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {[
-                "Business fibre internet",
-                "Ontario-wide business demand",
+                "Business fibre internet Ontario",
                 "Availability checked by address",
                 "Commercial and industrial fit",
-                "Clear next step",
-              ].map((x) => (
+                "Supports VoIP, cloud, and internal systems",
+                "Clear next step for business buyers",
+              ].map((item) => (
                 <span
-                  key={x}
+                  key={item}
                   className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
                 >
-                  {x}
+                  {item}
                 </span>
               ))}
             </div>
@@ -276,7 +295,7 @@ export default function BusinessFibreInternetOntarioPage() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
               >
-                Check Availability
+                Check Business Internet Availability
               </Link>
               <Link
                 href="/services/business-fibre-internet"
@@ -292,37 +311,37 @@ export default function BusinessFibreInternetOntarioPage() {
               </Link>
             </div>
 
+            <div className="mt-3 text-sm text-white/60">
+              Availability varies by building. Check your address to confirm options.
+            </div>
+
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <MetricCard label="BEST FOR" value="Ontario business locations" />
               <MetricCard label="CHECKED BY" value="Address and building fit" />
-              <MetricCard label="NEXT STEP" value="Availability and pricing direction" />
+              <MetricCard label="NEXT STEP" value="Availability and service direction" />
             </div>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.25)]">
-            <SectionEyebrow>WHY THIS PAGE MATTERS</SectionEyebrow>
+            <SectionEyebrow>WHY BUSINESSES SWITCH</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold tracking-tight">
-              Built for real business buying intent
+              Cleaner performance for real business operations
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-white/70">
-              This page is for business buyers who want to know if their building
-              can be served, what setup fits best, and what the next step looks like.
+              Businesses usually switch when internet instability starts affecting voice,
+              cloud tools, internal systems, remote access, or multi-user workflows.
+              Business fibre gives Ontario businesses a stronger day-to-day operating base.
             </p>
 
-            <div className="mt-6 grid grid-cols-1 gap-3">
-              {[
-                "Availability checked per address",
-                "Built for commercial and industrial sites",
-                "Managed LAN and Wi-Fi support available",
-                "Backup internet options available",
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82"
-                >
-                  {item}
-                </div>
-              ))}
+            <div className="mt-6">
+              <BulletList
+                items={[
+                  "Better fit for VoIP, cloud apps, and internal platforms",
+                  "Stronger multi-user stability during business hours",
+                  "Cleaner support for offices, clinics, and warehouse workflows",
+                  "Better starting point for managed Wi-Fi and backup design",
+                ]}
+              />
             </div>
           </div>
         </div>
@@ -332,44 +351,125 @@ export default function BusinessFibreInternetOntarioPage() {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="space-y-4 lg:col-span-2">
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <SectionEyebrow>ONTARIO BUSINESS FIBRE</SectionEyebrow>
+              <SectionEyebrow>CHECK AVAILABILITY</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Business fibre for commercial, industrial, and uptime-sensitive environments
+                Check business fibre availability for your location
               </h2>
 
               <div className="mt-3 space-y-4 leading-relaxed text-white/70">
                 <p>
-                  Ontario includes some of Canada’s most competitive commercial
-                  internet markets, from dense office corridors to industrial parks,
-                  warehouse clusters, and mixed-use business environments.
+                  Fibre availability depends on building infrastructure, upstream
+                  serviceability, installation feasibility, and the type of internet your
+                  site actually needs. Orbitlink checks this by address before
+                  recommending the next step.
                 </p>
 
                 <p>
-                  Business fibre is not only about speed. It is about stable
-                  operations, clean installation, the right service model, and support
-                  that fits business workflows.
+                  This matters because business internet in Ontario can vary widely
+                  between office towers, smaller commercial buildings, industrial parks,
+                  warehouses, and mixed-use properties.
                 </p>
 
                 <p>
-                  Building infrastructure, last-mile feasibility, and serviceability
-                  can vary significantly from one location to another. Orbitlink checks
-                  what is available per address instead of making blanket availability
-                  claims across an entire city or region.
+                  A quick availability request helps confirm what is realistic for the
+                  site instead of relying on generic assumptions.
                 </p>
 
-                <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
-                  What business fibre usually supports
-                </h3>
+                <BulletList
+                  items={[
+                    "What is available at your building",
+                    "Whether business fibre is the right fit",
+                    "Installation feasibility and service path",
+                    "Whether managed Wi-Fi, voice, or backup should be included",
+                  ]}
+                />
+              </div>
+            </div>
 
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>ONTARIO BUSINESS INTERNET</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Built for offices, warehouses, clinics, and commercial sites
+              </h2>
+
+              <div className="mt-3 space-y-4 leading-relaxed text-white/70">
                 <p>
-                  Ontario business environments often depend on cloud platforms,
-                  VoIP, VPNs, cameras, internal systems, guest Wi-Fi, collaboration
-                  tools, booking or payment systems, logistics software, and segmented
-                  internal networks.
+                  Business fibre internet in Ontario is not only about speed. It is about
+                  supporting daily operations with a more stable, business-ready internet
+                  foundation for multiple users, cloud platforms, voice, VPN, Wi-Fi,
+                  internal systems, and customer-facing services.
                 </p>
 
                 <p>
-                  Orbitlink’s strongest business fibre markets include{" "}
+                  Ontario businesses often depend on internet connectivity for SaaS tools,
+                  collaboration platforms, VoIP calling, booking systems, cameras,
+                  inventory systems, remote access, logistics software, payment flows,
+                  and segmented internal networks.
+                </p>
+
+                <p>
+                  Orbitlink focuses on matching the right business internet setup to the
+                  building and operating environment, with support for managed LAN and
+                  Wi-Fi, backup connectivity, static IP routing, and cloud voice where
+                  needed.
+                </p>
+
+                <p>
+                  For many organizations, this makes business fibre one of the strongest
+                  business internet options in Ontario when stable daily performance and a
+                  cleaner support path matter.
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>TYPICAL FIT</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Common Ontario business environments
+              </h2>
+
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {fitCards.map((card) => (
+                  <div
+                    key={card.title}
+                    className="rounded-3xl border border-white/10 bg-white/[0.04] p-5"
+                  >
+                    <div className="text-sm font-semibold text-white/90">{card.title}</div>
+                    <div className="mt-2 text-sm leading-relaxed text-white/70">
+                      {card.desc}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>KEY ONTARIO MARKETS</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Priority business markets across Ontario
+              </h2>
+
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/70">
+                Orbitlink’s strongest commercial demand includes major office, industrial,
+                and logistics markets across Ontario. Explore city-specific pages or move
+                directly into an availability review.
+              </p>
+
+              <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
+                {cityLinks.map((city) => (
+                  <Link
+                    key={city.href}
+                    href={city.href}
+                    className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-center text-sm text-white/85 transition hover:bg-white/[0.06]"
+                  >
+                    {city.name}
+                  </Link>
+                ))}
+              </div>
+
+              <div className="mt-6 space-y-4 text-sm leading-relaxed text-white/70">
+                <p>
+                  Strong commercial demand often comes from{" "}
                   <Link
                     href="/locations/mississauga"
                     className="underline underline-offset-4 text-white/85 hover:text-white"
@@ -390,12 +490,26 @@ export default function BusinessFibreInternetOntarioPage() {
                   >
                     Brampton
                   </Link>
-                  , and{" "}
+                  ,{" "}
                   <Link
                     href="/locations/milton"
                     className="underline underline-offset-4 text-white/85 hover:text-white"
                   >
                     Milton
+                  </Link>
+                  ,{" "}
+                  <Link
+                    href="/locations/vaughan"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    Vaughan
+                  </Link>
+                  , and{" "}
+                  <Link
+                    href="/locations/markham"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    Markham
                   </Link>
                   .
                 </p>
@@ -403,68 +517,53 @@ export default function BusinessFibreInternetOntarioPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <SectionEyebrow>TYPICAL FIT</SectionEyebrow>
+              <SectionEyebrow>SERVICE FIT</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Common Ontario business environments
-              </h2>
-
-              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
-                {fitCards.map((x) => (
-                  <div
-                    key={x.title}
-                    className="rounded-3xl border border-white/10 bg-white/[0.04] p-5"
-                  >
-                    <div className="text-sm font-semibold text-white/90">{x.title}</div>
-                    <div className="mt-2 text-sm leading-relaxed text-white/70">{x.desc}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <SectionEyebrow>PRIORITY ONTARIO MARKETS</SectionEyebrow>
-              <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Key Ontario cities
-              </h2>
-
-              <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
-                {cityLinks.map((x) => (
-                  <Link
-                    key={x.href}
-                    href={x.href}
-                    className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-center text-sm text-white/85 transition hover:bg-white/[0.06]"
-                  >
-                    {x.name}
-                  </Link>
-                ))}
-              </div>
-
-              <h3 className="pt-6 text-lg font-semibold tracking-tight text-white">
                 Business fibre vs Dedicated Internet Access
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/70">
-                Business fibre is often the right fit when you need strong
-                performance, value, and stable day-to-day operations. Dedicated
-                internet is better for critical environments where stronger uptime
-                and more predictable performance matter.
+              </h2>
+
+              <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
+                <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-5">
+                  <div className="text-sm font-semibold text-white/90">Business fibre</div>
+                  <p className="mt-2 text-sm leading-relaxed text-white/70">
+                    Often the right fit where strong performance, good value, and stable
+                    day-to-day operations matter most.
+                  </p>
+                </div>
+                <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-5">
+                  <div className="text-sm font-semibold text-white/90">
+                    Dedicated Internet Access
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-white/70">
+                    Better suited to business-critical environments that need stronger
+                    uptime, cleaner consistency, and more predictable performance.
+                  </p>
+                </div>
+              </div>
+
+              <p className="mt-4 text-sm leading-relaxed text-white/70">
+                Orbitlink helps determine which service model fits the site based on
+                business use case, operational sensitivity, and building reality.
               </p>
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <SectionEyebrow>RELATED PAGES</SectionEyebrow>
+              <SectionEyebrow>RELATED HIGH-INTENT PAGES</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Related high-intent pages
+                Related business internet pages
               </h2>
 
               <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
-                {relatedPages.map((x) => (
+                {relatedPages.map((page) => (
                   <Link
-                    key={x.href}
-                    href={x.href}
+                    key={page.href}
+                    href={page.href}
                     className="rounded-3xl border border-white/10 bg-white/[0.04] p-5 transition hover:bg-white/[0.06]"
                   >
-                    <div className="text-sm font-semibold text-white/90">{x.title}</div>
-                    <div className="mt-2 text-sm leading-relaxed text-white/70">{x.desc}</div>
+                    <div className="text-sm font-semibold text-white/90">{page.title}</div>
+                    <div className="mt-2 text-sm leading-relaxed text-white/70">
+                      {page.desc}
+                    </div>
                     <div className="mt-3 text-xs text-white/60">Open page →</div>
                   </Link>
                 ))}
@@ -476,7 +575,7 @@ export default function BusinessFibreInternetOntarioPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>REQUEST AVAILABILITY</SectionEyebrow>
               <h2 className="mt-3 text-lg font-semibold tracking-tight">
-                Check fibre availability
+                Check fibre availability for your business
               </h2>
 
               <div className="mt-4 space-y-3 text-sm text-white/70">
@@ -501,10 +600,11 @@ export default function BusinessFibreInternetOntarioPage() {
                 </div>
 
                 <div>
-                  <div className="text-white/60">Helpful details</div>
+                  <div className="text-white/60">Helpful details to include</div>
                   <div className="text-white/85">
-                    Service address, city, building type, business use case,
-                    static IP needs, managed LAN/Wi-Fi, and backup internet needs.
+                    Service address, city, building type, business use case, managed
+                    Wi-Fi needs, static IP needs, voice requirements, and backup internet
+                    requirements.
                   </div>
                 </div>
               </div>
@@ -512,9 +612,10 @@ export default function BusinessFibreInternetOntarioPage() {
               <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5">
                 <h3 className="text-sm font-semibold tracking-tight">Best next step</h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/70">
-                  Start with an availability request. If your site is office-heavy,
-                  industrial, multi-user, or uptime-sensitive, include operational
-                  details so Orbitlink can guide the right setup.
+                  Start with an address-based availability check. If your site is
+                  office-heavy, warehouse-oriented, industrial, multi-user, or
+                  uptime-sensitive, include those details so the right setup can be
+                  recommended.
                 </p>
 
                 <div className="mt-4 flex flex-col gap-2">
@@ -522,7 +623,7 @@ export default function BusinessFibreInternetOntarioPage() {
                     href="/contact#intake"
                     className="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
                   >
-                    Check Availability
+                    Check Business Internet Availability
                   </Link>
                   <Link
                     href="/trust"
@@ -576,18 +677,18 @@ export default function BusinessFibreInternetOntarioPage() {
             Ontario business fibre internet FAQs
           </h2>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
-            Clear answers for province-wide business search intent, with availability
-            checked per site before moving forward.
+            Clear answers for business buyers researching fibre internet in Ontario,
+            with availability confirmed by site before moving forward.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {FAQ.map((f) => (
+            {FAQ.map((item) => (
               <div
-                key={f.q}
+                key={item.q}
                 className="rounded-3xl border border-white/10 bg-white/[0.04] p-6"
               >
-                <h3 className="text-base font-semibold tracking-tight">{f.q}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/70">{f.a}</p>
+                <h3 className="text-base font-semibold tracking-tight">{item.q}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">{item.a}</p>
               </div>
             ))}
           </div>
@@ -597,7 +698,7 @@ export default function BusinessFibreInternetOntarioPage() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
             >
-              Check Availability
+              Check Business Internet Availability
             </Link>
             <Link
               href="/services/business-fibre-internet"

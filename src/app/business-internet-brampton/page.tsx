@@ -13,6 +13,7 @@ const BUSINESS = {
   legalName: "TIRAV Technologies Inc. o/a Orbitlink",
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
+  email: "concierge@orbitlink.ca",
   address: {
     street: "30 Eglinton Ave W, Suite 400-A77",
     city: "Mississauga",
@@ -23,14 +24,14 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Internet in Brampton, ON | Check Availability | Orbitlink",
+  title: "Business Internet Brampton | Orbitlink",
   description:
-    "Business internet in Brampton for warehouses, industrial sites, logistics operations, and offices. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity with availability checked by address.",
+    "Business internet in Brampton for warehouses, industrial sites, logistics operations, and offices. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
-    title: "Business Internet in Brampton, ON | Check Availability | Orbitlink",
+    title: "Business Internet Brampton | Orbitlink",
     description:
-      "Business internet in Brampton for industrial, warehouse, logistics, and office environments. Availability is checked by address.",
+      "Business internet in Brampton for industrial, warehouse, logistics, and office environments. Check availability by address and find the right setup for your business.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Internet in Brampton, ON | Orbitlink",
+    title: "Business Internet Brampton | Orbitlink",
     description:
       "Business internet in Brampton for industrial, warehouse, logistics, and office environments.",
   },
@@ -47,102 +48,29 @@ export const metadata: Metadata = {
 const FAQ = [
   {
     q: "Do you provide business internet in Brampton?",
-    a: "Yes. Orbitlink supports business internet opportunities in Brampton for industrial, warehouse, logistics, and office environments. Availability depends on the building and upstream serviceability, so it is checked by address before moving forward.",
+    a: "Yes. Orbitlink supports business internet opportunities in Brampton for industrial, warehouse, logistics, and office environments. Availability depends on building infrastructure and upstream serviceability, so it is confirmed by address before moving forward.",
   },
   {
     q: "What type of business internet is available in Brampton?",
-    a: "Depending on the site, Orbitlink may provide business fibre internet, dedicated internet, managed LAN and Wi-Fi, backup internet, voice, and static IP routing.",
+    a: "Depending on the site, Orbitlink may support business fibre internet, dedicated internet, managed LAN and Wi-Fi, backup internet, cloud voice, and static IP routing.",
   },
   {
     q: "Do you support warehouses and logistics sites in Brampton?",
-    a: "Yes. Brampton has one of Ontario’s strongest industrial and logistics footprints. Sites with scanners, cameras, cloud platforms, VPNs, voice systems, and IoT devices often need more than generic broadband.",
+    a: "Yes. Brampton has one of Ontario’s strongest industrial and logistics footprints. Sites with scanners, cameras, cloud platforms, VPNs, voice systems, and operational devices often need more than generic broadband.",
   },
   {
     q: "What is the difference between business fibre and dedicated internet?",
-    a: "Business fibre is often the right fit when you need strong performance and good value. Dedicated internet is better for critical environments that need stronger uptime and more predictable performance.",
+    a: "Business fibre is often the right fit when you need strong performance, good value, and stable day-to-day operations. Dedicated internet is better for critical environments that need stronger uptime and more predictable performance.",
   },
   {
     q: "Can you manage LAN and Wi-Fi in Brampton offices and warehouses?",
-    a: "Yes. Orbitlink supports managed LAN and business Wi-Fi, including segmentation, guest access, operational device separation, and coverage planning.",
+    a: "Yes. Orbitlink supports managed LAN and business Wi-Fi, including segmentation, guest access, operational device separation, and cleaner coverage planning.",
   },
   {
     q: "Do you offer backup internet options?",
-    a: "Yes. Orbitlink can design LTE and 5G backup options for uptime-sensitive business environments, subject to feasibility and site constraints.",
+    a: "Yes. Orbitlink can support LTE and 5G backup options for uptime-sensitive business environments, subject to site fit and feasibility.",
   },
 ] as const;
-
-function jsonLd() {
-  const breadcrumb = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Business Internet Brampton", item: PAGE_URL },
-    ],
-  };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: "concierge@orbitlink.ca",
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [
-      { "@type": "City", name: "Brampton" },
-      { "@type": "AdministrativeArea", name: "Ontario" },
-    ],
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Internet in Brampton",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: { "@type": "City", name: "Brampton" },
-    serviceType: [
-      "Business Internet",
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed LAN and Wi-Fi",
-      "LTE and 5G Backup Connectivity",
-      "VoIP and Cloud Voice",
-      "Static IP Routing",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
-      },
-    })),
-  };
-
-  return [breadcrumb, localBusiness, telecomService, faqPage];
-}
 
 const fitCards = [
   {
@@ -186,22 +114,104 @@ const modules = [
   },
 ] as const;
 
+function jsonLd() {
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+      { "@type": "ListItem", position: 2, name: "Business Internet Brampton", item: PAGE_URL },
+    ],
+  };
+
+  const localBusiness = {
+    "@context": "https://schema.org",
+    "@type": ["LocalBusiness", "TelecomCompany"],
+    "@id": `${PAGE_URL}#business`,
+    name: BUSINESS.name,
+    legalName: BUSINESS.legalName,
+    url: SITE_URL,
+    telephone: BUSINESS.phoneE164,
+    email: BUSINESS.email,
+    parentOrganization: { "@id": ORG_ID },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: BUSINESS.address.street,
+      addressLocality: BUSINESS.address.city,
+      addressRegion: BUSINESS.address.region,
+      postalCode: BUSINESS.address.postal,
+      addressCountry: BUSINESS.address.country,
+    },
+    areaServed: [
+      { "@type": "City", name: "Brampton" },
+      { "@type": "AdministrativeArea", name: "Ontario" },
+    ],
+  };
+
+  const telecomService = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${PAGE_URL}#service`,
+    name: "Business Internet Brampton",
+    url: PAGE_URL,
+    provider: { "@id": ORG_ID },
+    areaServed: { "@type": "City", name: "Brampton" },
+    serviceType: [
+      "Business Internet",
+      "Business Fibre Internet",
+      "Dedicated Internet Access",
+      "Managed LAN and Wi-Fi",
+      "LTE and 5G Backup Connectivity",
+      "VoIP and Cloud Voice",
+      "Static IP Routing",
+    ],
+    availableChannel: {
+      "@type": "ServiceChannel",
+      serviceUrl: PAGE_URL,
+    },
+  };
+
+  const faqPage = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: f.a,
+      },
+    })),
+  };
+
+  return [breadcrumb, localBusiness, telecomService, faqPage];
+}
+
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
   return <div className="text-[11px] tracking-[0.24em] text-white/50">{children}</div>;
 }
 
-function MetricCard({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
+function MetricCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
       <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
       <div className="mt-1 text-sm text-white/82">{value}</div>
     </div>
+  );
+}
+
+function BulletList({ items }: { items: readonly string[] }) {
+  return (
+    <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {items.map((item) => (
+        <li
+          key={item}
+          className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82"
+        >
+          {item}
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -227,40 +237,41 @@ export default function BusinessInternetBramptonPage() {
         <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
           <span className="h-2 w-2 rounded-full bg-cyan-300/80" />
           <span className="text-sm tracking-wide text-white/65">
-            Brampton business internet page
+            Brampton business internet landing page
           </span>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.25fr_0.75fr]">
+        <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
-            <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-              Business internet in Brampton, ON
+            <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
+              Business Internet for Brampton Businesses
             </h1>
 
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/72 md:text-lg">
               Orbitlink provides business internet in Brampton for industrial,
-              warehouse, logistics, and office environments. Availability is
-              checked by address so the right service setup can be matched to the site
+              warehouse, logistics, and office environments. Availability is checked
+              by address so the right service setup can be matched to your location
               before moving forward.
             </p>
 
-            <div className="mt-3 text-sm text-white/68">
-              Built for warehouses, industrial sites, logistics operations, offices, and multi-site businesses.
-            </div>
+            <p className="mt-3 text-sm text-white/68">
+              For many organizations, this becomes a more reliable business internet
+              option in Brampton when uptime, operational stability, and day-to-day performance matter.
+            </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {[
-                "Business internet",
+                "Business internet Brampton",
                 "Fibre & dedicated internet",
                 "Industrial and warehouse fit",
                 "Availability checked by address",
-                "Clear next step",
-              ].map((x) => (
+                "Clear next step for business buyers",
+              ].map((item) => (
                 <span
-                  key={x}
+                  key={item}
                   className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
                 >
-                  {x}
+                  {item}
                 </span>
               ))}
             </div>
@@ -270,7 +281,7 @@ export default function BusinessInternetBramptonPage() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
               >
-                Check Availability
+                Check Business Internet Availability
               </Link>
               <Link
                 href="/locations/brampton"
@@ -286,38 +297,38 @@ export default function BusinessInternetBramptonPage() {
               </Link>
             </div>
 
+            <div className="mt-3 text-sm text-white/60">
+              Availability varies by building. Submit your address to confirm options.
+            </div>
+
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <MetricCard label="BEST FOR" value="Brampton business locations" />
               <MetricCard label="CHECKED BY" value="Address and building fit" />
-              <MetricCard label="NEXT STEP" value="Availability and pricing direction" />
+              <MetricCard label="NEXT STEP" value="Availability and service direction" />
             </div>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.25)]">
-            <SectionEyebrow>BRAMPTON MARKET FIT</SectionEyebrow>
+            <SectionEyebrow>WHY BUSINESSES SWITCH</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold tracking-tight">
-              Built for Brampton’s logistics and industrial corridors
+              Cleaner performance for real Brampton operations
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-white/70">
-              Brampton is one of Ontario’s strongest warehouse and logistics markets.
-              Business buyers here often need more than basic broadband. They need
-              stable service, clear installation, and support that fits real operations.
+              Businesses usually switch when internet instability starts affecting voice,
+              cloud tools, internal systems, remote access, scanners, cameras, or
+              multi-user workflows. The right Brampton business internet setup needs to fit
+              both the building and the way the site actually operates.
             </p>
 
-            <div className="mt-6 grid grid-cols-1 gap-3">
-              {[
-                "Availability checked per address",
-                "Warehouse and industrial fit",
-                "Managed LAN and Wi-Fi support",
-                "Backup internet options",
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82"
-                >
-                  {item}
-                </div>
-              ))}
+            <div className="mt-6">
+              <BulletList
+                items={[
+                  "Better fit for cloud apps, VoIP, and internal platforms",
+                  "Stronger multi-user stability during business hours",
+                  "Cleaner support for warehouses, industrial sites, and offices",
+                  "Better starting point for managed Wi-Fi and backup design",
+                ]}
+              />
             </div>
           </div>
         </div>
@@ -329,31 +340,34 @@ export default function BusinessInternetBramptonPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>BUSINESS INTERNET IN BRAMPTON</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Business internet for Brampton’s industrial and commercial environments
+                Business internet for Brampton industrial, warehouse, and commercial environments
               </h2>
 
               <div className="mt-3 space-y-4 leading-relaxed text-white/70">
                 <p>
-                  Brampton is one of Ontario’s strongest industrial and logistics
-                  markets. Business internet in this environment is not only about
-                  speed. It is about stable operations, clean installation, the right
-                  service model, and support that fits warehouses, offices,
-                  distribution centres, and mixed-device environments.
+                  Business internet in Brampton is not only about speed. It is about
+                  supporting daily operations with stable connectivity for multiple users,
+                  cloud platforms, scanners, cameras, voice systems, operational devices,
+                  and customer-facing services.
                 </p>
 
                 <p>
-                  Sites near Airport Road, Steeles Avenue, Bramalea industrial
-                  areas, Queen Street corridors, and other employment zones can have
-                  very different building infrastructure and serviceability. Orbitlink
-                  checks what is available per address instead of making blanket
-                  claims across the whole market.
+                  Brampton is one of Ontario’s strongest industrial and logistics markets,
+                  with warehouses, industrial facilities, business parks, and office
+                  environments spread across major employment corridors.
                 </p>
 
                 <p>
-                  For many organizations, the right solution is not only internet
-                  access. It may also include business fibre, dedicated internet,
-                  managed LAN and Wi-Fi, backup internet, static IPs, or voice
-                  support aligned to daily operations.
+                  Orbitlink checks what is available by address instead of making blanket
+                  claims. That makes it easier to recommend the right combination of
+                  business fibre, dedicated internet, managed LAN and Wi-Fi, backup
+                  connectivity, static IPs, and voice support where needed.
+                </p>
+
+                <p>
+                  This makes Orbitlink a strong option for businesses looking for reliable
+                  business internet in Brampton with a clearer deployment path and more
+                  structured support.
                 </p>
 
                 <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
@@ -361,11 +375,11 @@ export default function BusinessInternetBramptonPage() {
                 </h3>
 
                 <p>
-                  Industrial and logistics environments often depend on scanners,
-                  handheld devices, cloud platforms, cameras, VPNs, voice systems,
-                  IoT devices, and office networks operating together. That makes
-                  access design, segmentation, and uptime more important than a
-                  simple speed claim.
+                  Industrial and logistics environments often depend on scanners, handheld
+                  devices, cloud platforms, cameras, VPNs, voice systems, IoT devices,
+                  office users, and internal operational networks running together. That
+                  makes uptime, segmentation, and day-to-day consistency more important
+                  than a simple speed claim.
                 </p>
 
                 <p>
@@ -396,19 +410,57 @@ export default function BusinessInternetBramptonPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>CHECK AVAILABILITY</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Check business internet availability for your location
+              </h2>
+
+              <div className="mt-3 space-y-4 leading-relaxed text-white/70">
+                <p>
+                  Availability depends on building infrastructure, upstream serviceability,
+                  installation feasibility, and the type of business internet your site
+                  actually needs. Orbitlink checks this by address before recommending the
+                  next step.
+                </p>
+
+                <p>
+                  This matters because Brampton business environments can vary sharply
+                  between warehouse sites, industrial units, office spaces, and mixed-use
+                  commercial properties.
+                </p>
+
+                <p>
+                  A quick availability request helps confirm what is realistic for the site
+                  instead of relying on generic assumptions.
+                </p>
+
+                <BulletList
+                  items={[
+                    "What is available at your building",
+                    "Whether fibre or dedicated internet is the right fit",
+                    "Installation feasibility and service path",
+                    "Whether managed Wi-Fi, voice, or backup should be included",
+                  ]}
+                />
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>TYPICAL BRAMPTON FIT</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
                 Common Brampton business environments
               </h2>
 
               <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
-                {fitCards.map((x) => (
+                {fitCards.map((card) => (
                   <div
-                    key={x.title}
+                    key={card.title}
                     className="rounded-3xl border border-white/10 bg-white/[0.04] p-5"
                   >
-                    <div className="text-sm font-semibold text-white/90">{x.title}</div>
-                    <div className="mt-2 text-sm leading-relaxed text-white/70">{x.desc}</div>
+                    <div className="text-sm font-semibold text-white/90">{card.title}</div>
+                    <div className="mt-2 text-sm leading-relaxed text-white/70">
+                      {card.desc}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -417,18 +469,20 @@ export default function BusinessInternetBramptonPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>SERVICE OPTIONS</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Choose the right service
+                Choose the right service for the site
               </h2>
 
               <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
-                {modules.map((x) => (
+                {modules.map((module) => (
                   <Link
-                    key={x.href}
-                    href={x.href}
+                    key={module.href}
+                    href={module.href}
                     className="rounded-3xl border border-white/10 bg-white/[0.04] p-5 transition hover:bg-white/[0.06]"
                   >
-                    <div className="text-sm font-semibold text-white/90">{x.title}</div>
-                    <div className="mt-2 text-sm leading-relaxed text-white/70">{x.desc}</div>
+                    <div className="text-sm font-semibold text-white/90">{module.title}</div>
+                    <div className="mt-2 text-sm leading-relaxed text-white/70">
+                      {module.desc}
+                    </div>
                     <div className="mt-3 text-xs text-white/60">Open service →</div>
                   </Link>
                 ))}
@@ -438,10 +492,10 @@ export default function BusinessInternetBramptonPage() {
                 Business fibre vs dedicated internet in Brampton
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-white/70">
-                Business fibre is often the right fit when you need strong
-                performance, value, and stable day-to-day operations. Dedicated
-                internet is better for critical environments where stronger uptime
-                and more predictable performance matter.
+                Business fibre is often the right fit when you need strong performance,
+                good value, and stable day-to-day operations. Dedicated internet is
+                better for critical environments where stronger uptime and more
+                predictable performance matter.
               </p>
             </div>
           </div>
@@ -449,7 +503,9 @@ export default function BusinessInternetBramptonPage() {
           <aside className="space-y-4">
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>REQUEST AVAILABILITY</SectionEyebrow>
-              <h2 className="mt-3 text-lg font-semibold tracking-tight">Check availability</h2>
+              <h2 className="mt-3 text-lg font-semibold tracking-tight">
+                Check business internet availability
+              </h2>
 
               <div className="mt-4 space-y-3 text-sm text-white/70">
                 <div>
@@ -473,10 +529,10 @@ export default function BusinessInternetBramptonPage() {
                 </div>
 
                 <div>
-                  <div className="text-white/60">Helpful details</div>
+                  <div className="text-white/60">Helpful details to include</div>
                   <div className="text-white/85">
-                    Service address, fibre vs dedicated internet, static IP needs,
-                    managed Wi-Fi, and backup internet requirements.
+                    Service address, fibre vs dedicated internet needs, static IP
+                    requirements, managed Wi-Fi, and backup internet requirements.
                   </div>
                 </div>
               </div>
@@ -484,9 +540,9 @@ export default function BusinessInternetBramptonPage() {
               <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5">
                 <h3 className="text-sm font-semibold tracking-tight">Best next step</h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/70">
-                  Start with an availability request. If your environment is
-                  warehouse-heavy or uptime-sensitive, include operational details
-                  so Orbitlink can guide the right setup.
+                  Start with an address-based availability check. If your environment is
+                  warehouse-heavy, industrial, or uptime-sensitive, include those details
+                  so the right setup can be recommended.
                 </p>
 
                 <div className="mt-4 flex flex-col gap-2">
@@ -494,7 +550,7 @@ export default function BusinessInternetBramptonPage() {
                     href="/contact#intake"
                     className="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
                   >
-                    Check Availability
+                    Check Business Internet Availability
                   </Link>
                   <Link
                     href="/trust"
@@ -542,18 +598,18 @@ export default function BusinessInternetBramptonPage() {
             Brampton business internet FAQs
           </h2>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
-            Clear answers for Brampton commercial search intent, with availability
-            checked per site before moving forward.
+            Clear answers for Brampton business buyers, with availability checked by site
+            before moving forward.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {FAQ.map((f) => (
+            {FAQ.map((item) => (
               <div
-                key={f.q}
+                key={item.q}
                 className="rounded-3xl border border-white/10 bg-white/[0.04] p-6"
               >
-                <h3 className="text-base font-semibold tracking-tight">{f.q}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/70">{f.a}</p>
+                <h3 className="text-base font-semibold tracking-tight">{item.q}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">{item.a}</p>
               </div>
             ))}
           </div>
@@ -563,7 +619,7 @@ export default function BusinessInternetBramptonPage() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
             >
-              Check Availability
+              Check Business Internet Availability
             </Link>
             <Link
               href="/locations/brampton"

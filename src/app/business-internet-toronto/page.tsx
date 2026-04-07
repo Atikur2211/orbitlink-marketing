@@ -13,6 +13,7 @@ const BUSINESS = {
   legalName: "TIRAV Technologies Inc. o/a Orbitlink",
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
+  email: "concierge@orbitlink.ca",
   address: {
     street: "30 Eglinton Ave W, Suite 400-A77",
     city: "Mississauga",
@@ -23,14 +24,14 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Internet in Toronto, ON | Check Availability | Orbitlink",
+  title: "Business Internet Toronto | Orbitlink",
   description:
-    "Business internet in Toronto for offices, commercial buildings, clinics, studios, and performance-sensitive business environments. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity with availability checked by address.",
+    "Business internet in Toronto for offices, clinics, and commercial spaces. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
-    title: "Business Internet in Toronto, ON | Check Availability | Orbitlink",
+    title: "Business Internet Toronto | Orbitlink",
     description:
-      "Business internet in Toronto for offices, multi-tenant buildings, clinics, studios, and performance-sensitive business environments. Availability is checked by address.",
+      "Business internet in Toronto for offices, clinics, studios, and commercial spaces. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity with address-based availability checks.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -38,36 +39,78 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Internet in Toronto, ON | Orbitlink",
+    title: "Business Internet Toronto | Orbitlink",
     description:
-      "Business internet in Toronto for offices, multi-tenant buildings, and performance-sensitive business environments.",
+      "Business internet in Toronto for offices, clinics, and commercial spaces.",
   },
 };
 
 const FAQ = [
   {
     q: "Do you provide business internet in Toronto?",
-    a: "Yes. Orbitlink supports business internet opportunities across Toronto for offices, clinics, studios, professional firms, and performance-sensitive environments. Availability depends on building infrastructure and upstream serviceability, so it is checked by address before moving forward.",
+    a: "Yes. Orbitlink supports business internet opportunities across Toronto for offices, clinics, commercial spaces, studios, and performance-sensitive environments. Availability depends on building infrastructure and upstream serviceability, so it is confirmed by address before moving forward.",
   },
   {
     q: "What type of business internet is available in Toronto?",
-    a: "Depending on the site, Orbitlink may provide business fibre internet, dedicated internet, managed LAN and Wi-Fi, backup internet, voice, and static IP routing.",
+    a: "Depending on the site, Orbitlink may support business fibre internet, dedicated internet, managed LAN and Wi-Fi, backup internet, cloud voice, and static IP routing.",
   },
   {
     q: "Do you support downtown Toronto office buildings?",
-    a: "Yes. Toronto includes dense office and multi-tenant commercial environments where building access and serviceability can vary significantly. Orbitlink checks feasibility by address before the next step is confirmed.",
+    a: "Yes. Toronto includes dense office and multi-tenant commercial environments where access and serviceability can vary significantly by site. Orbitlink checks building fit before the next step is recommended.",
   },
   {
     q: "What is the difference between business fibre and dedicated internet?",
-    a: "Business fibre is often the right fit when a site needs strong performance and good value. Dedicated internet is better for critical environments that need stronger uptime and more predictable performance.",
+    a: "Business fibre is often the right fit when a site needs strong performance, good value, and stable daily operations. Dedicated internet is better for critical environments that need stronger uptime and more predictable performance.",
   },
   {
     q: "Can you manage LAN and Wi-Fi in Toronto offices and mixed-use environments?",
-    a: "Yes. Orbitlink supports managed LAN and business Wi-Fi, including segmentation, guest access, device separation, and coverage planning.",
+    a: "Yes. Orbitlink supports managed LAN and business Wi-Fi, including segmentation, guest access, device separation, and cleaner coverage planning.",
   },
   {
     q: "Do you offer backup internet options?",
-    a: "Yes. Orbitlink can design LTE and 5G backup options for uptime-sensitive business environments, subject to feasibility and site constraints.",
+    a: "Yes. Orbitlink can support LTE and 5G backup options for uptime-sensitive business environments, subject to site fit and feasibility.",
+  },
+] as const;
+
+const fitCards = [
+  {
+    title: "Downtown office towers",
+    desc: "Connectivity for law firms, finance teams, agencies, and professional services in multi-tenant office environments.",
+  },
+  {
+    title: "Clinics & studios",
+    desc: "Stable internet for voice, booking systems, cloud apps, cameras, and uptime-sensitive daily workflows.",
+  },
+  {
+    title: "Commercial buildings",
+    desc: "Business internet for mixed-device teams, guest access, managed Wi-Fi, and more predictable day-to-day support.",
+  },
+  {
+    title: "Performance-critical sites",
+    desc: "Dedicated internet and backup design for organizations where downtime directly affects operations and client service.",
+  },
+] as const;
+
+const modules = [
+  {
+    title: "Business Fibre Internet",
+    desc: "Reliable primary internet for offices, clinics, studios, and growing business locations.",
+    href: "/services/business-fibre-internet",
+  },
+  {
+    title: "Dedicated Internet Access",
+    desc: "Stronger uptime and more predictable performance for critical operations.",
+    href: "/services/dedicated-internet-access",
+  },
+  {
+    title: "Managed LAN & Wi-Fi",
+    desc: "Segmentation, stability, coverage planning, and stronger internal network support.",
+    href: "/services/managed-lan-wifi",
+  },
+  {
+    title: "LTE / 5G Backup",
+    desc: "Backup internet for sites that need continuity during access disruptions.",
+    href: "/services/lte-5g-continuity",
   },
 ] as const;
 
@@ -89,7 +132,7 @@ function jsonLd() {
     legalName: BUSINESS.legalName,
     url: SITE_URL,
     telephone: BUSINESS.phoneE164,
-    email: "concierge@orbitlink.ca",
+    email: BUSINESS.email,
     parentOrganization: { "@id": ORG_ID },
     address: {
       "@type": "PostalAddress",
@@ -109,7 +152,7 @@ function jsonLd() {
     "@context": "https://schema.org",
     "@type": "Service",
     "@id": `${PAGE_URL}#service`,
-    name: "Business Internet in Toronto",
+    name: "Business Internet Toronto",
     url: PAGE_URL,
     provider: { "@id": ORG_ID },
     areaServed: { "@type": "City", name: "Toronto" },
@@ -144,64 +187,31 @@ function jsonLd() {
   return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
-const fitCards = [
-  {
-    title: "Downtown office towers",
-    desc: "Connectivity for law firms, finance teams, agencies, and professional services in multi-tenant office environments.",
-  },
-  {
-    title: "Clinics & studios",
-    desc: "Stable internet for voice, booking systems, cloud apps, cameras, and uptime-sensitive daily workflows.",
-  },
-  {
-    title: "Commercial buildings",
-    desc: "Business internet for mixed-device teams, guest access, managed Wi-Fi, and predictable day-to-day support.",
-  },
-  {
-    title: "Performance-critical sites",
-    desc: "Dedicated internet and backup design for organizations where downtime directly affects operations and client service.",
-  },
-] as const;
-
-const modules = [
-  {
-    title: "Business Fibre Internet",
-    desc: "Reliable primary internet for offices, clinics, studios, and growing business locations.",
-    href: "/services/business-fibre-internet",
-  },
-  {
-    title: "Dedicated Internet Access",
-    desc: "Stronger uptime and more predictable performance for critical operations.",
-    href: "/services/dedicated-internet-access",
-  },
-  {
-    title: "Managed LAN & Wi-Fi",
-    desc: "Segmentation, stability, coverage planning, and better internal network support.",
-    href: "/services/managed-lan-wifi",
-  },
-  {
-    title: "LTE / 5G Backup",
-    desc: "Backup internet for sites that need continuity during access disruptions.",
-    href: "/services/lte-5g-continuity",
-  },
-] as const;
-
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
   return <div className="text-[11px] tracking-[0.24em] text-white/50">{children}</div>;
 }
 
-function MetricCard({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
+function MetricCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
       <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
       <div className="mt-1 text-sm text-white/82">{value}</div>
     </div>
+  );
+}
+
+function BulletList({ items }: { items: readonly string[] }) {
+  return (
+    <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {items.map((item) => (
+        <li
+          key={item}
+          className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82"
+        >
+          {item}
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -223,44 +233,45 @@ export default function BusinessInternetTorontoPage() {
 
       <TopNav />
 
-      <section className="mx-auto max-w-6xl px-6 pt-16 pb-10 md:pt-20">
+      <section className="mx-auto max-w-6xl px-6 pb-10 pt-16 md:pt-20">
         <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
           <span className="h-2 w-2 rounded-full bg-cyan-300/80" />
           <span className="text-sm tracking-wide text-white/65">
-            Toronto business internet page
+            Toronto business internet landing page
           </span>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.25fr_0.75fr]">
+        <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
-            <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-              Business internet in Toronto, ON
+            <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
+              Business Internet for Toronto Businesses
             </h1>
 
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/72 md:text-lg">
-              Orbitlink provides business internet in Toronto for offices,
-              commercial buildings, clinics, studios, professional firms, and
-              performance-sensitive environments. Availability is checked by address
-              so the right service setup can be matched to the site before moving forward.
+              Orbitlink provides business internet in Toronto for offices, commercial
+              buildings, clinics, studios, and performance-sensitive environments.
+              Availability is checked by address so the right service setup can be matched
+              to your location before moving forward.
             </p>
 
-            <div className="mt-3 text-sm text-white/68">
-              Built for downtown offices, multi-tenant buildings, clinics, studios, and uptime-sensitive teams.
-            </div>
+            <p className="mt-3 text-sm text-white/68">
+              For many organizations, this becomes a more reliable business internet option
+              in Toronto when stability, uptime, and day-to-day performance matter.
+            </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {[
-                "Business internet",
+                "Business internet Toronto",
                 "Fibre & dedicated internet",
                 "Office and commercial fit",
                 "Availability checked by address",
-                "Clear next step",
-              ].map((x) => (
+                "Clear next step for business buyers",
+              ].map((item) => (
                 <span
-                  key={x}
+                  key={item}
                   className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
                 >
-                  {x}
+                  {item}
                 </span>
               ))}
             </div>
@@ -270,7 +281,7 @@ export default function BusinessInternetTorontoPage() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
               >
-                Check Availability
+                Check Business Internet Availability
               </Link>
               <Link
                 href="/locations/toronto"
@@ -286,40 +297,38 @@ export default function BusinessInternetTorontoPage() {
               </Link>
             </div>
 
+            <div className="mt-3 text-sm text-white/60">
+              Availability varies by building. Submit your address to confirm options.
+            </div>
+
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <MetricCard label="BEST FOR" value="Toronto business locations" />
               <MetricCard label="CHECKED BY" value="Address and building fit" />
-              <MetricCard label="NEXT STEP" value="Availability and pricing direction" />
+              <MetricCard label="NEXT STEP" value="Availability and service direction" />
             </div>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.25)]">
-            <SectionEyebrow>TORONTO MARKET FIT</SectionEyebrow>
+            <SectionEyebrow>WHY BUSINESSES SWITCH</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold tracking-tight">
-              Built for Toronto’s office and multi-tenant environments
+              Cleaner performance for real Toronto operations
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-white/70">
-              Toronto is a premium commercial market where building constraints,
-              serviceability, and business expectations can vary sharply by site.
-              Orbitlink is positioned for organizations that want more than a generic
-              ISP experience, including professional firms, clinics, studios,
-              multi-tenant offices, and performance-sensitive operations.
+              Businesses usually switch when internet instability starts affecting voice,
+              cloud tools, internal systems, remote access, or multi-user workflows.
+              The right Toronto business internet setup needs to fit both the building and
+              the way the organization actually operates.
             </p>
 
-            <div className="mt-6 grid grid-cols-1 gap-3">
-              {[
-                "Availability checked per address",
-                "Office and multi-tenant fit",
-                "Managed LAN and Wi-Fi support",
-                "Backup internet options",
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/82"
-                >
-                  {item}
-                </div>
-              ))}
+            <div className="mt-6">
+              <BulletList
+                items={[
+                  "Better fit for VoIP, cloud apps, and internal platforms",
+                  "Stronger multi-user stability during business hours",
+                  "Cleaner support for offices, clinics, and studio workflows",
+                  "Better starting point for managed Wi-Fi and backup design",
+                ]}
+              />
             </div>
           </div>
         </div>
@@ -331,30 +340,36 @@ export default function BusinessInternetTorontoPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>BUSINESS INTERNET IN TORONTO</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Business internet for Toronto’s office and commercial environments
+                Business internet for Toronto offices and commercial environments
               </h2>
 
               <div className="mt-3 space-y-4 leading-relaxed text-white/70">
                 <p>
-                  Toronto is one of the most competitive commercial internet markets
-                  in Canada. Business internet in this environment is not only about
-                  speed. It is about stable operations, clean installation, the right
-                  service model, and support that fits office towers, clinics,
-                  studios, agencies, retail offices, and multi-tenant business environments.
+                  Business internet in Toronto is not only about speed. It is about
+                  supporting daily operations with stable connectivity for multiple users,
+                  cloud applications, VoIP, internal systems, and customer-facing services.
+                  The right setup depends on your building, infrastructure, and operational
+                  requirements.
                 </p>
 
                 <p>
-                  Sites across downtown, midtown, financial districts, professional
-                  corridors, and mixed commercial areas can have very different
-                  building infrastructure and serviceability. Orbitlink checks what
-                  is available per address instead of making blanket claims.
+                  Toronto is one of the most competitive commercial internet markets in
+                  Canada. Office towers, professional corridors, clinics, retail offices,
+                  studios, and multi-tenant buildings can all have very different
+                  infrastructure and serviceability conditions.
                 </p>
 
                 <p>
-                  For many organizations, the right solution is not only internet
-                  access. It may also include business fibre, dedicated internet,
-                  managed LAN and Wi-Fi, backup internet, static IPs, or voice
-                  support aligned to daily operations.
+                  Orbitlink checks what is available by address instead of making blanket
+                  claims. That makes it easier to recommend the right combination of
+                  business fibre, dedicated internet, managed LAN and Wi-Fi, backup
+                  connectivity, static IPs, and voice support where needed.
+                </p>
+
+                <p>
+                  This makes Orbitlink a strong option for businesses looking for reliable
+                  business internet in Toronto with a clearer deployment path and more
+                  structured support.
                 </p>
 
                 <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
@@ -362,11 +377,11 @@ export default function BusinessInternetTorontoPage() {
                 </h3>
 
                 <p>
-                  Toronto business environments often depend on cloud applications,
-                  VoIP, VPNs, cameras, guest Wi-Fi, payment systems, collaboration
-                  platforms, booking systems, and operational networks running
-                  together. That makes access design, segmentation, and uptime more
-                  important than a simple speed claim.
+                  Toronto business environments often depend on cloud applications, VoIP,
+                  VPNs, cameras, guest Wi-Fi, payment systems, collaboration platforms,
+                  booking systems, and operational networks running together. That makes
+                  uptime, segmentation, and day-to-day consistency more important than a
+                  simple speed claim.
                 </p>
 
                 <p>
@@ -397,19 +412,57 @@ export default function BusinessInternetTorontoPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>CHECK AVAILABILITY</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Check business internet availability for your location
+              </h2>
+
+              <div className="mt-3 space-y-4 leading-relaxed text-white/70">
+                <p>
+                  Availability depends on building infrastructure, upstream serviceability,
+                  installation feasibility, and the type of business internet your site
+                  actually needs. Orbitlink checks this by address before recommending the
+                  next step.
+                </p>
+
+                <p>
+                  This matters because Toronto business environments can vary sharply
+                  between downtown towers, smaller mixed-use buildings, clinics, studios,
+                  and commercial properties across the city.
+                </p>
+
+                <p>
+                  A quick availability request helps confirm what is realistic for the site
+                  instead of relying on generic assumptions.
+                </p>
+
+                <BulletList
+                  items={[
+                    "What is available at your building",
+                    "Whether fibre or dedicated internet is the right fit",
+                    "Installation feasibility and service path",
+                    "Whether managed Wi-Fi, voice, or backup should be included",
+                  ]}
+                />
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>TYPICAL TORONTO FIT</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
                 Common Toronto business environments
               </h2>
 
               <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
-                {fitCards.map((x) => (
+                {fitCards.map((card) => (
                   <div
-                    key={x.title}
+                    key={card.title}
                     className="rounded-3xl border border-white/10 bg-white/[0.04] p-5"
                   >
-                    <div className="text-sm font-semibold text-white/90">{x.title}</div>
-                    <div className="mt-2 text-sm leading-relaxed text-white/70">{x.desc}</div>
+                    <div className="text-sm font-semibold text-white/90">{card.title}</div>
+                    <div className="mt-2 text-sm leading-relaxed text-white/70">
+                      {card.desc}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -418,18 +471,20 @@ export default function BusinessInternetTorontoPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>SERVICE OPTIONS</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Choose the right service
+                Choose the right service for the site
               </h2>
 
               <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
-                {modules.map((x) => (
+                {modules.map((module) => (
                   <Link
-                    key={x.href}
-                    href={x.href}
+                    key={module.href}
+                    href={module.href}
                     className="rounded-3xl border border-white/10 bg-white/[0.04] p-5 transition hover:bg-white/[0.06]"
                   >
-                    <div className="text-sm font-semibold text-white/90">{x.title}</div>
-                    <div className="mt-2 text-sm leading-relaxed text-white/70">{x.desc}</div>
+                    <div className="text-sm font-semibold text-white/90">{module.title}</div>
+                    <div className="mt-2 text-sm leading-relaxed text-white/70">
+                      {module.desc}
+                    </div>
                     <div className="mt-3 text-xs text-white/60">Open service →</div>
                   </Link>
                 ))}
@@ -439,10 +494,10 @@ export default function BusinessInternetTorontoPage() {
                 Business fibre vs dedicated internet in Toronto
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-white/70">
-                Business fibre is often the right fit when you need strong
-                performance, value, and stable day-to-day operations. Dedicated
-                internet is better for critical environments where stronger uptime
-                and more predictable performance matter.
+                Business fibre is often the right fit when you need strong performance,
+                good value, and stable day-to-day operations. Dedicated internet is
+                better for critical environments where stronger uptime and more
+                predictable performance matter.
               </p>
             </div>
           </div>
@@ -450,7 +505,9 @@ export default function BusinessInternetTorontoPage() {
           <aside className="space-y-4">
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>REQUEST AVAILABILITY</SectionEyebrow>
-              <h2 className="mt-3 text-lg font-semibold tracking-tight">Check availability</h2>
+              <h2 className="mt-3 text-lg font-semibold tracking-tight">
+                Check business internet availability
+              </h2>
 
               <div className="mt-4 space-y-3 text-sm text-white/70">
                 <div>
@@ -474,10 +531,10 @@ export default function BusinessInternetTorontoPage() {
                 </div>
 
                 <div>
-                  <div className="text-white/60">Helpful details</div>
+                  <div className="text-white/60">Helpful details to include</div>
                   <div className="text-white/85">
-                    Service address, fibre vs dedicated internet, static IP needs,
-                    managed Wi-Fi, and backup internet requirements.
+                    Service address, fibre vs dedicated internet needs, static IP
+                    requirements, managed Wi-Fi, and backup internet requirements.
                   </div>
                 </div>
               </div>
@@ -485,9 +542,9 @@ export default function BusinessInternetTorontoPage() {
               <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5">
                 <h3 className="text-sm font-semibold tracking-tight">Best next step</h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/70">
-                  Start with an availability request. If your environment is
-                  performance-sensitive or multi-tenant, include operational details
-                  so Orbitlink can guide the right setup.
+                  Start with an address-based availability check. If your environment is
+                  multi-tenant, performance-sensitive, or uptime-sensitive, include those
+                  details so the right setup can be recommended.
                 </p>
 
                 <div className="mt-4 flex flex-col gap-2">
@@ -495,7 +552,7 @@ export default function BusinessInternetTorontoPage() {
                     href="/contact#intake"
                     className="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
                   >
-                    Check Availability
+                    Check Business Internet Availability
                   </Link>
                   <Link
                     href="/trust"
@@ -543,18 +600,18 @@ export default function BusinessInternetTorontoPage() {
             Toronto business internet FAQs
           </h2>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
-            Clear answers for Toronto commercial search intent, with availability
-            checked per site before moving forward.
+            Clear answers for Toronto business buyers, with availability checked by site
+            before moving forward.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {FAQ.map((f) => (
+            {FAQ.map((item) => (
               <div
-                key={f.q}
+                key={item.q}
                 className="rounded-3xl border border-white/10 bg-white/[0.04] p-6"
               >
-                <h3 className="text-base font-semibold tracking-tight">{f.q}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/70">{f.a}</p>
+                <h3 className="text-base font-semibold tracking-tight">{item.q}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">{item.a}</p>
               </div>
             ))}
           </div>
@@ -564,7 +621,7 @@ export default function BusinessInternetTorontoPage() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
             >
-              Check Availability
+              Check Business Internet Availability
             </Link>
             <Link
               href="/locations/toronto"
