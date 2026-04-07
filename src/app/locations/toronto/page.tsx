@@ -349,6 +349,17 @@ export default function TorontoLocationPage() {
                 </p>
 
                 <p>
+                  Businesses evaluating connectivity options can also explore{" "}
+                  <Link
+                    href="/business-internet-toronto"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    business internet in Toronto
+                  </Link>{" "}
+                  to understand availability, service fit, and next steps for their location.
+                </p>
+
+                <p>
                   Requests are commonly reviewed across downtown, midtown, and broader
                   commercial corridors where building infrastructure and upstream reach can vary significantly.
                 </p>

@@ -350,6 +350,17 @@ export default function BramptonLocationPage() {
                 </p>
 
                 <p>
+                  Businesses evaluating connectivity options can also explore{" "}
+                  <Link
+                    href="/business-internet-brampton"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    business internet in Brampton
+                  </Link>{" "}
+                  to understand availability, service fit, and next steps for their location.
+                </p>
+
+                <p>
                   Commercial areas around Airport Road, Steeles Avenue, Queen Street corridors,
                   and major industrial zones often need more than generic broadband. Fibre,
                   dedicated internet, managed LAN, segmentation, and backup connectivity can all matter depending on the site.

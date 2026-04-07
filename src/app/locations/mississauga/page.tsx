@@ -338,7 +338,18 @@ export default function MississaugaLocationPage() {
                   to the right access type, define any managed network needs, and move into the
                   next business step.
                 </p>
-
+                  
+                <p>
+                  Businesses evaluating connectivity options can also explore{" "}
+                  <Link
+                    href="/business-internet-mississauga"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    business internet in Mississauga
+                  </Link>{" "}
+                  to understand availability, service fit, and next steps for their location.
+                </p>
+              
                 <p>
                   Requests are commonly reviewed for office buildings, industrial business parks,
                   commercial units, and multi-tenant environments where service quality, uptime,
