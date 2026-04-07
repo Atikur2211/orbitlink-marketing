@@ -15,7 +15,7 @@ const CANONICAL_URL = `${SITE_URL}/`;
 
 const META_TITLE = "Business Fibre Internet Ontario | Orbitlink";
 const META_DESCRIPTION =
-  "Business fibre internet, dedicated internet, managed Wi-Fi, voice, and backup connectivity for Ontario businesses.";
+  "Business fibre internet, dedicated internet access, managed Wi-Fi, VoIP, and backup connectivity for Ontario businesses. Check availability by address and get a tailored connectivity recommendation.";
 
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
