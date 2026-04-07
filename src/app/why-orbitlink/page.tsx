@@ -1,4 +1,3 @@
-// src/app/why-orbitlink/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageShell from "@/components/PageShell";
@@ -12,14 +11,12 @@ const PHONE_E164 = "+18888672480";
 const PHONE_DISPLAY = "1-888-867-2480";
 
 export const metadata: Metadata = {
-  title:
-    "Why Orbitlink | Business Internet & Connectivity for Ontario Businesses",
+  title: "Why Orbitlink | Business Internet for Ontario Businesses",
   description:
-    "Why Ontario businesses choose Orbitlink for business fibre internet, dedicated internet access, managed Wi-Fi, voice, backup connectivity, and infrastructure services: clearer qualification, structured onboarding, and a stronger trust posture.",
+    "Why Ontario businesses choose Orbitlink for business fibre internet, dedicated internet, managed Wi-Fi, voice, backup connectivity, and structured service delivery.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title:
-      "Why Orbitlink | Business Internet & Connectivity for Ontario Businesses",
+    title: "Why Orbitlink | Business Internet for Ontario Businesses",
     description:
       "A buyer-focused page explaining why Orbitlink is different for Ontario businesses: clearer qualification, better delivery posture, stronger trust signals, and a more structured connectivity experience.",
     url: PAGE_URL,
@@ -37,8 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Why Orbitlink | Business Internet & Connectivity for Ontario Businesses",
+    title: "Why Orbitlink | Business Internet for Ontario Businesses",
     description:
       "Why businesses choose Orbitlink for business internet, managed networks, voice, continuity, and structured service delivery.",
     images: [TWITTER_IMAGE_URL],
@@ -427,15 +423,9 @@ export default function WhyOrbitlinkPage() {
               >
                 Call {PHONE_DISPLAY}
               </a>
-              <CTAButton href="/services">
-                Explore Services
-              </CTAButton>
-              <CTAButton href="/trust">
-                Review Trust Posture
-              </CTAButton>
-              <CTAButton href="/compare">
-                Compare Provider Models
-              </CTAButton>
+              <CTAButton href="/services">Explore Services</CTAButton>
+              <CTAButton href="/trust">Review Trust Posture</CTAButton>
+              <CTAButton href="/compare">Compare Provider Models</CTAButton>
             </div>
           </div>
 
