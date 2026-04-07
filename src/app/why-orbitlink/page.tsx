@@ -397,6 +397,17 @@ export default function WhyOrbitlinkPage() {
               clinics, warehouses, and commercial environments.
             </p>
 
+            <p className="mt-3 text-sm leading-6 text-white/60 sm:text-[15px]">
+              Businesses evaluating connectivity options across Ontario can also explore{" "}
+              <Link
+                href="/business-internet-milton"
+                className="underline underline-offset-4 text-white/85 hover:text-white"
+              >
+                business internet in Milton
+              </Link>{" "}
+              to understand availability, service fit, and next steps for their location.
+            </p>
+            
             <p className="mt-3 max-w-3xl text-sm leading-6 text-white/60 sm:text-[15px]">
               Orbitlink does not assume availability. Requests are reviewed by address,
               building context, and business requirements before moving forward.

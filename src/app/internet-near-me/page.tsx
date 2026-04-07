@@ -324,6 +324,17 @@ export default function InternetNearMePage() {
                 </p>
 
                 <p>
+                  Businesses expanding across Ontario markets can also explore{" "}
+                  <Link
+                    href="/business-internet-milton"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    business internet in Milton
+                  </Link>{" "}
+                  to understand availability, service fit, and next steps for warehouse, industrial, and office environments.
+                </p>
+
+                <p>
                   This matters most when the business depends on voice, VPNs, cameras, cloud
                   apps, guest Wi-Fi, static IPs, or backup internet.
                 </p>

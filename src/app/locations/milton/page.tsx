@@ -347,6 +347,17 @@ export default function MiltonLocationPage() {
                 </p>
 
                 <p>
+                  Businesses evaluating connectivity options can also explore{" "}
+                  <Link
+                    href="/business-internet-milton"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    business internet in Milton
+                  </Link>{" "}
+                  to understand availability, service fit, and next steps for their location.
+                </p>
+
+                <p>
                   Many Milton sites operate across mixed environments with office teams,
                   scanners, cameras, IoT endpoints, cloud applications, voice systems,
                   and operational platforms. Depending on the site, fibre, dedicated
