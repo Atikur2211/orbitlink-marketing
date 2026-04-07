@@ -32,7 +32,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet & Fibre in Richmond Hill, ON | Orbitlink™";
+const PAGE_TITLE = "Business Internet Richmond Hill | Orbitlink";
 const PAGE_DESCRIPTION =
   "Business internet in Richmond Hill with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
 

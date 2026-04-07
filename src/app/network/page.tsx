@@ -14,14 +14,14 @@ const PAGE_URL = `${SITE_URL}/network`;
 const OG_IMAGE_URL = `${SITE_URL}/network/opengraph-image`;
 
 export const metadata: Metadata = {
-  title: "Network Availability, Service Readiness & Escalation | Orbitlink",
+  title: "Business Network Availability & Service Readiness | Orbitlink",
   description:
     "A business-first view of Orbitlink network availability, service readiness, structured escalation, and address-qualified delivery posture for Ontario organizations.",
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: "Network Availability, Service Readiness & Escalation | Orbitlink",
+    title: "Business Network Availability & Service Readiness | Orbitlink",
     description:
       "A clearer view of Orbitlink network readiness, service communication, escalation handling, and address-qualified business availability.",
     url: PAGE_URL,
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Network Availability, Service Readiness & Escalation | Orbitlink",
+    title: "Business Network Availability & Service Readiness | Orbitlink",
     description:
       "Business-first network visibility, structured escalation, and address-qualified service availability.",
     images: [OG_IMAGE_URL],
@@ -251,6 +251,66 @@ function HeroCommandPanel() {
             />
           ))}
         </div>
+      </div>
+    </Surface>
+  );
+}
+
+function NextStepBridge() {
+  return (
+    <Surface className="p-6 sm:p-7">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+        <div>
+          <SectionEyebrow>NEXT STEP</SectionEyebrow>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
+            Move from network review to service selection
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-white/65 sm:text-[15px]">
+            Once the network posture makes sense, the next step is choosing the right
+            service for the site. Orbitlink helps connect availability review to the
+            correct business service path.
+          </p>
+        </div>
+
+        <div className="shrink-0 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+          <div className="text-[11px] tracking-[0.22em] text-white/55">PURPOSE</div>
+          <div className="mt-1 text-sm text-white/80">Trust → Service → Action</div>
+        </div>
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <Link
+          href="/services/business-fibre-internet"
+          className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:bg-black/25"
+        >
+          <div className="text-sm font-medium text-white/90">Business Fibre Internet</div>
+          <p className="mt-3 text-sm leading-6 text-white/63">
+            Primary business internet for offices, clinics, warehouses, and everyday operations.
+          </p>
+          <div className="mt-4 text-sm text-white/75">Open service →</div>
+        </Link>
+
+        <Link
+          href="/services/dedicated-internet-access"
+          className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:bg-black/25"
+        >
+          <div className="text-sm font-medium text-white/90">Dedicated Internet Access</div>
+          <p className="mt-3 text-sm leading-6 text-white/63">
+            Stronger uptime and more predictable performance for higher-criticality environments.
+          </p>
+          <div className="mt-4 text-sm text-white/75">Open service →</div>
+        </Link>
+
+        <Link
+          href="/locations"
+          className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:bg-black/25"
+        >
+          <div className="text-sm font-medium text-white/90">Browse Service Locations</div>
+          <p className="mt-3 text-sm leading-6 text-white/63">
+            Review Ontario service areas and move from market interest into address-based qualification.
+          </p>
+          <div className="mt-4 text-sm text-white/75">View locations →</div>
+        </Link>
       </div>
     </Surface>
   );
@@ -1090,6 +1150,7 @@ export default function NetworkPage() {
 
       <div className="space-y-4 sm:space-y-6">
         <HeroCommandPanel />
+        <NextStepBridge />
         <WhatThisMeansStrip />
         <NetworkAtlas />
         <CapabilityField />
