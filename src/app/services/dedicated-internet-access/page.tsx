@@ -8,16 +8,14 @@ const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
 
 export const metadata: Metadata = {
-  title:
-    "Dedicated Internet Access (DIA) Ontario | Dedicated Business Internet for Critical Operations | Orbitlink",
+  title: "Dedicated Internet Access Ontario | Orbitlink",
   description:
-    "Dedicated Internet Access for Ontario businesses that need stronger uptime, dedicated business internet, static IP options, and a more formal service model for critical operations. Check availability by address.",
+    "Dedicated Internet Access for Ontario businesses that need stronger uptime, more predictable performance, static IP options, and a more formal service model. Check availability by address.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
-    title:
-      "Dedicated Internet Access (DIA) Ontario | Orbitlink",
+    title: "Dedicated Internet Access Ontario | Orbitlink",
     description:
-      "Dedicated business internet for Ontario offices, healthcare, logistics, warehouses, and multi-site operations. Check DIA availability by address.",
+      "Dedicated business internet for Ontario offices, healthcare, logistics, warehouses, and multi-site operations. Check availability by address.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -25,8 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Dedicated Internet Access (DIA) Ontario | Orbitlink",
+    title: "Dedicated Internet Access Ontario | Orbitlink",
     description:
       "Dedicated business internet for Ontario organizations that need stronger uptime and a more formal service model.",
   },
@@ -325,17 +322,16 @@ export default function Page() {
                 </p>
 
                 <p className="mt-4 max-w-3xl text-base leading-7 text-white/65">
-                  This is often the right fit for head offices, healthcare, logistics, warehouses,
-                  multi-site operations, voice-heavy environments, and other sites where downtime
-                  carries a bigger business impact.
+                  This is often the right fit for head offices, healthcare, logistics,
+                  warehouses, multi-site operations, voice-heavy environments, and other sites
+                  where downtime carries a bigger business impact.
                 </p>
 
-                <div className="mt-6 max-w-3xl text-sm leading-7 text-white/65">
-                  Dedicated internet is available across major Ontario business markets including
-                  Mississauga, Toronto, Brampton, Oakville, Vaughan, Markham, Milton, and Ottawa.
-                  Common searches include dedicated business internet, enterprise internet, dedicated fibre internet,
-                  and internet for critical operations.
-                </div>
+                <p className="mt-4 max-w-3xl text-base leading-7 text-white/65">
+                  If your business depends on internet for operations, downtime is not just an
+                  inconvenience. It becomes a business risk. Dedicated Internet Access is designed
+                  for environments where that risk needs to be reduced.
+                </p>
 
                 <div className="mt-7 flex flex-wrap gap-2">
                   {[
@@ -363,6 +359,11 @@ export default function Page() {
                   </CTAButton>
                 </div>
 
+                <div className="mt-3 text-sm text-white/58">
+                  Availability depends on building infrastructure and upstream access. Submit your
+                  address to confirm feasibility.
+                </div>
+
                 <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
                   <MetricPill label="BEST FOR" value="Critical business internet needs" />
                   <MetricPill label="START WITH" value="Address, building, and operational need" />
@@ -383,8 +384,9 @@ export default function Page() {
                       Better for organizations where downtime matters more
                     </div>
                     <p className="mt-3 text-sm leading-6 text-white/64">
-                      Usually the stronger fit for healthcare, head offices, logistics, warehouses,
-                      cloud-heavy sites, voice-dependent teams, and multi-site business environments.
+                      Usually the stronger fit for healthcare, head offices, logistics,
+                      warehouses, cloud-heavy sites, voice-dependent teams, and multi-site
+                      business environments.
                     </p>
 
                     <div className="mt-5 grid gap-3">
@@ -459,8 +461,9 @@ export default function Page() {
             </div>
 
             <div className="mt-6 text-xs text-white/55">
-              Availability, routing model, static IP options, handoff assumptions, and install timelines vary by address and building conditions.
-              Orbitlink confirms what is practical before commitment.
+              Availability, routing model, static IP options, handoff assumptions, and install
+              timelines vary by address and building conditions. Orbitlink confirms what is practical
+              before commitment.
             </div>
           </SectionShell>
 
@@ -526,7 +529,8 @@ export default function Page() {
                   A structured path from review to operational use
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                  This section gives Orbitlink a stronger enterprise signal in simpler, buyer-readable language.
+                  This section gives Orbitlink a stronger enterprise signal in simpler,
+                  buyer-readable language.
                 </p>
               </div>
 
@@ -549,8 +553,9 @@ export default function Page() {
               When to choose Business Fibre instead
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-white/70">
-              If your organization needs strong everyday business internet for offices, clinics, or commercial suites,
-              and does not need the more formal dedicated internet model, Business Fibre is often the better starting point.
+              If your organization needs strong everyday business internet for offices, clinics,
+              or commercial suites, and does not need the more formal dedicated internet model,
+              Business Fibre is often the better starting point.
             </p>
             <Link
               href="/services/business-fibre-internet"
@@ -589,7 +594,8 @@ export default function Page() {
               <SectionEyebrow>NEXT STEP</SectionEyebrow>
               <p className="mt-3 text-sm leading-relaxed text-white/70">
                 Request a DIA assessment and include your address, target install timing,
-                uptime expectations, voice or network requirements, and whether static IPs or managed services are needed.
+                uptime expectations, voice or network requirements, and whether static IPs
+                or managed services are needed.
               </p>
               <Link
                 href="/contact#intake"
