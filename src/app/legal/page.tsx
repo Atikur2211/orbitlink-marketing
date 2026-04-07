@@ -120,6 +120,18 @@ export default function LegalIndexPage() {
             />
           </div>
 
+          <p className="mt-6 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
+            You can also review our{" "}
+            <Link
+              href="/legal/cookies"
+              className="underline underline-offset-4 text-white/85 hover:text-white"
+            >
+              cookies and analytics policy
+            </Link>{" "}
+            for details on site measurement, browser-based controls, and Orbitlink’s
+            transparency posture around analytics.
+          </p>
+
           <div className="mt-8 rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
             <div className="text-[11px] tracking-[0.22em] text-white/55">
               REGULATORY-SAFE NOTE
