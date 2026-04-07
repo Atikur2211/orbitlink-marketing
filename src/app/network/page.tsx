@@ -14,7 +14,7 @@ const PAGE_URL = `${SITE_URL}/network`;
 const OG_IMAGE_URL = `${SITE_URL}/network/opengraph-image`;
 
 export const metadata: Metadata = {
-  title: "Business Network Availability & Service Readiness | Orbitlink",
+  title: "Network Availability & Service Readiness | Orbitlink",
   description:
     "A business-first view of Orbitlink network availability, service readiness, structured escalation, and address-qualified delivery posture for Ontario organizations.",
   alternates: {
