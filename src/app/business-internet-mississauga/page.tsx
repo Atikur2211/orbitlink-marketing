@@ -365,6 +365,18 @@ export default function BusinessInternetMississaugaPage() {
                 </p>
 
                 <p>
+                  Businesses operating across multiple locations may also want to review{" "}
+                  <Link
+                    href="/business-fibre-internet-ontario"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    business fibre internet across Ontario
+                  </Link>{" "}
+                  as part of broader connectivity planning, procurement, and long-term
+                  network standardization.
+                </p>
+
+                <p>
                   This makes Orbitlink a strong option for businesses looking for reliable
                   business internet in Mississauga with a clearer deployment path and more
                   structured support.
@@ -495,7 +507,14 @@ export default function BusinessInternetMississaugaPage() {
                 Business fibre is often the right fit when you need strong performance,
                 good value, and stable day-to-day operations. Dedicated internet is
                 better for critical environments where stronger uptime and more
-                predictable performance matter.
+                predictable performance matter. Learn more about{" "}
+                <Link
+                  href="/services/dedicated-internet-access"
+                  className="underline underline-offset-4 text-white/85 hover:text-white"
+                >
+                  dedicated internet access
+                </Link>{" "}
+                and how it compares based on your site.
               </p>
             </div>
           </div>
@@ -526,6 +545,14 @@ export default function BusinessInternetMississaugaPage() {
                   >
                     View Mississauga service area page
                   </Link>
+                </div>
+
+                <div>
+                  <div className="text-white/60">Service model</div>
+                  <div className="text-white/85">
+                    Business connectivity delivered through structured onboarding,
+                    availability validation, and clearly defined next steps.
+                  </div>
                 </div>
 
                 <div>
