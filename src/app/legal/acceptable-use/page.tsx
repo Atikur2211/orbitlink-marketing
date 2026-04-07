@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 
+export const metadata: Metadata = {
+  title: "Acceptable Use Policy | Orbitlink",
+  description:
+    "Orbitlink acceptable use policy outlining permitted and prohibited use of services, including security, abuse prevention, and service integrity.",
+  alternates: {
+    canonical: "/legal/acceptable-use",
+  },
+};
 function Item({
   title,
   children,

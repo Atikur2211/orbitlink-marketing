@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
+
+export const metadata: Metadata = {
+  title: "Cookies & Analytics | Orbitlink",
+  description:
+    "Orbitlink cookies and analytics policy explaining how cookies are used, visitor controls, and site measurement practices.",
+  alternates: {
+    canonical: "/legal/cookies",
+  },
+};
 
 function Section({
   label,

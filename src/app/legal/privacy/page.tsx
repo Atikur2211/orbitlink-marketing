@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | Orbitlink",
+  description:
+    "Orbitlink privacy policy explaining how information is collected, used, stored, and protected across site interactions and business workflows.",
+  alternates: {
+    canonical: "/legal/privacy",
+  },
+};
 
 function Section({
   label,

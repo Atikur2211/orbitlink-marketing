@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
+
+export const metadata: Metadata = {
+  title: "Terms of Use | Orbitlink",
+  description:
+    "Orbitlink terms of use outlining site conditions, acceptable use, limitations, and legal responsibilities for visitors and businesses.",
+  alternates: {
+    canonical: "/legal/terms",
+  },
+};
 
 function Block({
   label,
