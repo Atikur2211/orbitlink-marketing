@@ -7,18 +7,17 @@ const PAGE_PATH = "/services/starlink-agent";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE = `${SITE_URL}/twitter-image`;
-const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
   title: "Starlink Access Coordination Ontario | Orbitlink",
   description:
-    "Starlink internet for Ontario businesses where fibre is not available. Fast setup for remote and backup connectivity. Check availability.",
+    "Starlink internet coordination for Ontario businesses where fibre is unavailable, delayed, or impractical.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Starlink Access Coordination Ontario | Orbitlink",
     description:
-      "Satellite connectivity coordination for environments where terrestrial connectivity is constrained, delayed, or impractical.",
+      "Satellite connectivity coordination for business sites where terrestrial connectivity is constrained, delayed, or impractical.",
     url: PAGE_URL,
     siteName: SITE_NAME,
     locale: "en_CA",
@@ -181,8 +180,8 @@ function CTAButton({
   );
 }
 
-export default function Page() {
-  const schemaGraph = {
+function jsonLd() {
+  return {
     "@context": "https://schema.org",
     "@graph": [
       {
@@ -191,37 +190,17 @@ export default function Page() {
         url: PAGE_URL,
         name: "Starlink Access Coordination Ontario | Orbitlink",
         description:
-          "Starlink access coordination for Ontario organizations where terrestrial connectivity is limited, delayed, or impractical. Structured qualification and clearer deployment expectations.",
+          "Starlink internet coordination for Ontario businesses where fibre is unavailable, delayed, or impractical.",
         isPartOf: {
+          "@type": "WebSite",
           "@id": WEBSITE_ID,
+          url: SITE_URL,
+          name: SITE_NAME,
         },
         about: {
-          "@id": ORG_ID,
+          "@type": "Thing",
+          name: "Starlink internet for business",
         },
-      },
-      {
-        "@type": "Service",
-        "@id": `${PAGE_URL}#service`,
-        name: "Starlink Access Coordination",
-        serviceType: "Satellite Internet Coordination",
-        provider: {
-          "@id": ORG_ID,
-        },
-        areaServed: {
-          "@type": "AdministrativeArea",
-          name: "Ontario",
-        },
-        audience: {
-          "@type": "Audience",
-          audienceType: "Business",
-        },
-        availableChannel: {
-          "@type": "ServiceChannel",
-          serviceUrl: `${SITE_URL}/contact#intake`,
-        },
-        url: PAGE_URL,
-        description:
-          "Starlink access coordination for business environments where terrestrial connectivity is limited, delayed, or impractical.",
       },
       {
         "@type": "BreadcrumbList",
@@ -261,12 +240,14 @@ export default function Page() {
       },
     ],
   };
+}
 
+export default function Page() {
   return (
-    <main className="min-h-screen bg-[#09090B] text-white">
+    <div className="min-h-screen bg-[#09090B] text-white">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
       <section className="relative overflow-hidden border-b border-white/10">
@@ -305,7 +286,29 @@ export default function Page() {
               <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
                 The goal is not to present satellite as a universal replacement for terrestrial
                 service. It is to clarify where Starlink genuinely fits, where it does not, and how
-                it should be introduced within a cleaner business connectivity strategy.
+                it should be introduced within a cleaner business connectivity strategy. Compare it
+                against{" "}
+                <Link
+                  href="/services/business-fibre-internet"
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  business fibre
+                </Link>
+                ,{" "}
+                <Link
+                  href="/services/dedicated-internet-access"
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  dedicated internet access
+                </Link>
+                , and{" "}
+                <Link
+                  href="/services/lte-5g-continuity"
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  LTE / 5G continuity
+                </Link>
+                .
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -555,6 +558,6 @@ export default function Page() {
           </SectionShell>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -5,7 +5,6 @@ const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/locations/niagara-st-catharines";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const ORG_ID = `${SITE_URL}/#org`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
@@ -22,18 +21,11 @@ const BUSINESS = {
     postal: "L5R 3E7",
     country: "CA",
   },
-  hours: [
-    { day: "Monday", opens: "09:00", closes: "18:00" },
-    { day: "Tuesday", opens: "09:00", closes: "18:00" },
-    { day: "Wednesday", opens: "09:00", closes: "18:00" },
-    { day: "Thursday", opens: "09:00", closes: "18:00" },
-    { day: "Friday", opens: "09:00", closes: "18:00" },
-  ],
 } as const;
 
 const PAGE_TITLE = "Business Internet & Fibre in Niagara / St. Catharines, ON | Orbitlink™";
 const PAGE_DESCRIPTION =
-  "Business internet in Niagara and St. Catharines with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
+  "Business internet in Niagara and St. Catharines with fibre, dedicated internet, managed Wi-Fi, and address-based service review.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -42,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: PAGE_TITLE,
     description:
-      "Business connectivity in Niagara and St. Catharines with fibre, DIA, managed LAN and Wi-Fi, continuity, and address-qualified service review.",
+      "Business connectivity in Niagara and St. Catharines with fibre, dedicated internet, managed Wi-Fi, and address-based review.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -60,7 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: PAGE_TITLE,
     description:
-      "Business internet in Niagara and St. Catharines with fibre, DIA, managed LAN and Wi-Fi, and structured service review.",
+      "Business internet in Niagara and St. Catharines with fibre, dedicated internet, managed Wi-Fi, and service review.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -135,83 +127,49 @@ const heroTags = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
-      { "@type": "ListItem", position: 3, name: "Niagara / St. Catharines", item: PAGE_URL },
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": PAGE_URL,
+        url: PAGE_URL,
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+          url: SITE_URL,
+          name: SITE_NAME,
+        },
+        about: {
+          "@type": "Thing",
+          name: "Business internet in Niagara and St. Catharines",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
+          { "@type": "ListItem", position: 3, name: "Niagara / St. Catharines", item: PAGE_URL },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
+      },
     ],
   };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: BUSINESS.email,
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [
-      { "@type": "Place", name: "Niagara Region, Ontario" },
-      { "@type": "City", name: "St. Catharines" },
-      { "@type": "AdministrativeArea", name: "Ontario" },
-    ],
-    openingHoursSpecification: BUSINESS.hours.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: `https://schema.org/${h.day}`,
-      opens: h.opens,
-      closes: h.closes,
-    })),
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "TelecomService",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Internet in Niagara / St. Catharines",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: {
-      "@type": "Place",
-      name: "Niagara Region, Ontario",
-    },
-    serviceType: [
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed LAN and Enterprise Wi-Fi",
-      "LTE and 5G Continuity",
-      "VoIP and Cloud Voice",
-      "Static IP Routing",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-
-  return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -235,7 +193,7 @@ function MetricPill({
 
 export default function NiagaraStCatharinesLocationPage() {
   return (
-    <main className="min-h-screen bg-[#0B0F14] text-white">
+    <div className="relative text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
@@ -266,6 +224,31 @@ export default function NiagaraStCatharinesLocationPage() {
                 managed Wi-Fi, voice, and continuity services. Availability is reviewed
                 by address, building, and service fit before the next step is confirmed.
               </p>
+
+              <div className="mt-3 max-w-3xl text-sm leading-relaxed text-white/68">
+                Explore{" "}
+                <Link
+                  href="/services/business-fibre-internet"
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  business fibre internet
+                </Link>
+                ,{" "}
+                <Link
+                  href="/services/dedicated-internet-access"
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  dedicated internet access
+                </Link>
+                , and{" "}
+                <Link
+                  href="/services/managed-lan-wifi"
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  managed LAN &amp; Wi-Fi
+                </Link>
+                .
+              </div>
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {heroTags.map((x) => (
@@ -332,7 +315,7 @@ export default function NiagaraStCatharinesLocationPage() {
                 Niagara supports distributed business demand across multiple commercial districts
               </h2>
 
-              <div className="mt-4 space-y-4 text-white/70 leading-relaxed">
+              <div className="mt-4 space-y-4 leading-relaxed text-white/70">
                 <p>
                   Niagara is a multi-district market where businesses often begin with
                   local-intent searches and need a clearer path from discovery to service review.
@@ -464,8 +447,13 @@ export default function NiagaraStCatharinesLocationPage() {
                 </div>
 
                 <div>
-                  <div className="text-white/60">Hours</div>
-                  <div className="text-white/85">Mon–Fri 9:00 AM – 6:00 PM</div>
+                  <div className="text-white/60">Coverage hub</div>
+                  <Link
+                    href="/locations"
+                    className="text-white/85 underline underline-offset-4 hover:text-white"
+                  >
+                    Browse Ontario locations
+                  </Link>
                 </div>
               </div>
             </div>
@@ -475,7 +463,7 @@ export default function NiagaraStCatharinesLocationPage() {
               <h3 className="mt-3 text-sm font-semibold tracking-tight">
                 Request availability review
               </h3>
-              <p className="mt-2 text-sm text-white/70 leading-relaxed">
+              <p className="mt-2 text-sm leading-relaxed text-white/70">
                 Submit your address, business type, and service requirements to begin
                 serviceability and pricing review.
               </p>
@@ -500,10 +488,10 @@ export default function NiagaraStCatharinesLocationPage() {
               <SectionEyebrow>RELATED PAGES</SectionEyebrow>
               <div className="mt-4 flex flex-col gap-2 text-sm">
                 <Link
-                  href="/locations/hamilton"
+                  href="/locations"
                   className="text-white/80 underline underline-offset-4 hover:text-white"
                 >
-                  Hamilton
+                  All locations
                 </Link>
                 <Link
                   href="/locations/ontario"
@@ -512,10 +500,22 @@ export default function NiagaraStCatharinesLocationPage() {
                   Ontario coverage hub
                 </Link>
                 <Link
+                  href="/locations/hamilton"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
+                >
+                  Hamilton
+                </Link>
+                <Link
                   href="/services/business-fibre-internet"
                   className="text-white/80 underline underline-offset-4 hover:text-white"
                 >
                   Business Fibre Internet
+                </Link>
+                <Link
+                  href="/services/dedicated-internet-access"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
+                >
+                  Dedicated Internet Access
                 </Link>
               </div>
             </div>
@@ -527,20 +527,20 @@ export default function NiagaraStCatharinesLocationPage() {
         <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
           <SectionEyebrow>FAQ</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight">Niagara FAQs</h2>
-          <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
             Quick answers for buyers evaluating business internet in Niagara and St. Catharines.
           </p>
 
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
             {FAQ.map((f) => (
               <div key={f.q} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
                 <h3 className="text-base font-semibold tracking-tight">{f.q}</h3>
-                <p className="mt-2 text-sm text-white/70 leading-relaxed">{f.a}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">{f.a}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/services"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
@@ -562,6 +562,6 @@ export default function NiagaraStCatharinesLocationPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

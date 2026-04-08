@@ -1,4 +1,3 @@
-// src/app/locations/layout.tsx
 import TopNav from "@/components/TopNav";
 import ConciergeBlock from "@/components/ConciergeBlock";
 import SiteFooter from "@/components/SiteFooter";
@@ -10,10 +9,8 @@ export default function LocationsLayout({
 }) {
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-hidden bg-[#09090B] text-white">
-      
-      {/* atmosphere — same system used across site */}
+      {/* global atmosphere */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-
         {/* glow fields */}
         <div className="absolute -top-24 left-8 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
         <div className="absolute right-8 top-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
@@ -29,21 +26,18 @@ export default function LocationsLayout({
         <div className="absolute inset-x-0 top-[20%] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         <div className="absolute inset-x-0 bottom-[18%] h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
 
-        {/* side masks */}
+        {/* edge fade */}
         <div className="absolute inset-y-0 left-0 hidden w-16 bg-gradient-to-r from-[#09090B] to-transparent lg:block" />
         <div className="absolute inset-y-0 right-0 hidden w-16 bg-gradient-to-l from-[#09090B] to-transparent lg:block" />
 
+        {/* bottom fade for footer transition */}
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#09090B] to-transparent" />
       </div>
 
       {/* navigation */}
-      <div className="relative z-[140]">
+      <header className="relative z-[140]">
         <TopNav />
-      </div>
-
-      {/* status band */}
-      <div className="relative z-[120]">
-        
-      </div>
+      </header>
 
       {/* page content */}
       <main className="relative z-10 flex-1">
@@ -58,15 +52,14 @@ export default function LocationsLayout({
       </div>
 
       {/* concierge */}
-      <div className="relative z-10">
+      <section className="relative z-10">
         <ConciergeBlock />
-      </div>
+      </section>
 
       {/* footer */}
-      <div className="relative z-10">
+      <footer className="relative z-10">
         <SiteFooter />
-      </div>
-
+      </footer>
     </div>
   );
 }

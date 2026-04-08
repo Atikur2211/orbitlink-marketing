@@ -5,7 +5,6 @@ const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/locations/barrie";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const ORG_ID = `${SITE_URL}/#org`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
@@ -22,13 +21,6 @@ const BUSINESS = {
     postal: "L5R 3E7",
     country: "CA",
   },
-  hours: [
-    { day: "Monday", opens: "09:00", closes: "18:00" },
-    { day: "Tuesday", opens: "09:00", closes: "18:00" },
-    { day: "Wednesday", opens: "09:00", closes: "18:00" },
-    { day: "Thursday", opens: "09:00", closes: "18:00" },
-    { day: "Friday", opens: "09:00", closes: "18:00" },
-  ],
 } as const;
 
 const PAGE_TITLE = "Business Internet & Fibre in Barrie, ON | Orbitlink™";
@@ -135,82 +127,49 @@ const heroTags = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
-      { "@type": "ListItem", position: 3, name: "Barrie", item: PAGE_URL },
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": PAGE_URL,
+        url: PAGE_URL,
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+          url: SITE_URL,
+          name: SITE_NAME,
+        },
+        about: {
+          "@type": "Thing",
+          name: "Business internet in Barrie",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
+          { "@type": "ListItem", position: 3, name: "Barrie", item: PAGE_URL },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
+      },
     ],
   };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: BUSINESS.email,
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [
-      { "@type": "City", name: "Barrie" },
-      { "@type": "AdministrativeArea", name: "Ontario" },
-    ],
-    openingHoursSpecification: BUSINESS.hours.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: `https://schema.org/${h.day}`,
-      opens: h.opens,
-      closes: h.closes,
-    })),
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "TelecomService",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Internet in Barrie",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: {
-      "@type": "City",
-      name: "Barrie",
-    },
-    serviceType: [
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed LAN and Enterprise Wi-Fi",
-      "LTE and 5G Continuity",
-      "VoIP and Cloud Voice",
-      "Static IP Routing",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-
-  return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -234,7 +193,7 @@ function MetricPill({
 
 export default function BarrieLocationPage() {
   return (
-    <main className="min-h-screen bg-[#0B0F14] text-white">
+    <div className="relative text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
@@ -265,6 +224,31 @@ export default function BarrieLocationPage() {
                 managed Wi-Fi, voice, and continuity services. Availability is reviewed
                 by address, building, and service fit before the next step is confirmed.
               </p>
+
+              <div className="mt-5 max-w-3xl text-sm leading-relaxed text-white/68">
+                Explore related services including{" "}
+                <Link
+                  href="/services/business-fibre-internet"
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  business fibre internet
+                </Link>
+                ,{" "}
+                <Link
+                  href="/services/dedicated-internet-access"
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  dedicated internet access
+                </Link>
+                , and{" "}
+                <Link
+                  href="/services/managed-lan-wifi"
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  managed LAN &amp; Wi-Fi
+                </Link>
+                .
+              </div>
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {heroTags.map((x) => (
@@ -331,7 +315,7 @@ export default function BarrieLocationPage() {
                 Barrie continues to grow as a strong local-intent business market
               </h2>
 
-              <div className="mt-4 space-y-4 text-white/70 leading-relaxed">
+              <div className="mt-4 space-y-4 leading-relaxed text-white/70">
                 <p>
                   Barrie is a growing commercial market where many buyers begin with
                   local-intent searches and want a clear path from discovery to
@@ -464,8 +448,13 @@ export default function BarrieLocationPage() {
                 </div>
 
                 <div>
-                  <div className="text-white/60">Hours</div>
-                  <div className="text-white/85">Mon–Fri 9:00 AM – 6:00 PM</div>
+                  <div className="text-white/60">Coverage hub</div>
+                  <Link
+                    href="/locations"
+                    className="text-white/85 underline underline-offset-4 hover:text-white"
+                  >
+                    Browse Ontario locations
+                  </Link>
                 </div>
               </div>
             </div>
@@ -475,7 +464,7 @@ export default function BarrieLocationPage() {
               <h3 className="mt-3 text-sm font-semibold tracking-tight">
                 Request availability review
               </h3>
-              <p className="mt-2 text-sm text-white/70 leading-relaxed">
+              <p className="mt-2 text-sm leading-relaxed text-white/70">
                 Submit your address, business type, and service requirements to begin
                 serviceability and pricing review.
               </p>
@@ -500,10 +489,10 @@ export default function BarrieLocationPage() {
               <SectionEyebrow>RELATED PAGES</SectionEyebrow>
               <div className="mt-4 flex flex-col gap-2 text-sm">
                 <Link
-                  href="/locations/toronto"
+                  href="/locations"
                   className="text-white/80 underline underline-offset-4 hover:text-white"
                 >
-                  Toronto
+                  Ontario locations hub
                 </Link>
                 <Link
                   href="/locations/ontario"
@@ -512,10 +501,22 @@ export default function BarrieLocationPage() {
                   Ontario coverage hub
                 </Link>
                 <Link
+                  href="/locations/toronto"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
+                >
+                  Toronto
+                </Link>
+                <Link
                   href="/services/business-fibre-internet"
                   className="text-white/80 underline underline-offset-4 hover:text-white"
                 >
                   Business Fibre Internet
+                </Link>
+                <Link
+                  href="/services/dedicated-internet-access"
+                  className="text-white/80 underline underline-offset-4 hover:text-white"
+                >
+                  Dedicated Internet Access
                 </Link>
               </div>
             </div>
@@ -562,6 +563,6 @@ export default function BarrieLocationPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-// src/app/locations/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -6,7 +5,6 @@ import Image from "next/image";
 const SITE_URL = "https://orbitlink.ca";
 const PAGE_PATH = "/locations";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const ORG_ID = `${SITE_URL}/#org`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
@@ -326,67 +324,66 @@ const FAQ = [
 function jsonLd() {
   const all = [...PRIORITY_MARKETS, ...EXTENDED_MARKETS];
 
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Locations", item: PAGE_URL },
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": PAGE_URL,
+        url: PAGE_URL,
+        name: "Ontario Business Internet Locations | Orbitlink",
+        description:
+          "Business internet in Ontario cities. Fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Check availability by address.",
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+          url: SITE_URL,
+          name: "Orbitlink",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Locations",
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${PAGE_URL}#locations`,
+        name: "Orbitlink Ontario business internet locations",
+        itemListElement: all.map((l, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: l.name,
+          url: `${SITE_URL}${l.href}`,
+        })),
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
+      },
     ],
   };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    image: OG_IMAGE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: "concierge@orbitlink.ca",
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [{ "@type": "AdministrativeArea", name: "Ontario" }],
-    openingHoursSpecification: BUSINESS.hours.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: `https://schema.org/${h.day}`,
-      opens: h.opens,
-      closes: h.closes,
-    })),
-  };
-
-  const itemList = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "@id": `${PAGE_URL}#locations`,
-    name: "Orbitlink Ontario business internet locations",
-    itemListElement: all.map((l, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: l.name,
-      url: `${SITE_URL}${l.href}`,
-    })),
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-
-  return [breadcrumb, localBusiness, itemList, faqPage];
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -504,7 +501,7 @@ function SignalCard({
 
 export default function LocationsHubPage() {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#09090B] text-white">
+    <div className="relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
@@ -525,7 +522,7 @@ export default function LocationsHubPage() {
           <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[92dvh] max-w-7xl items-center px-6 pb-14 pt-16 sm:px-7 sm:min-h-[84dvh] sm:pb-18 sm:pt-20 lg:px-10 lg:min-h-[78vh] lg:pb-24">
+        <div className="relative mx-auto flex min-h-[92dvh] max-w-7xl items-center px-6 pb-14 pt-16 sm:min-h-[84dvh] sm:px-7 sm:pb-18 sm:pt-20 lg:min-h-[78vh] lg:px-10 lg:pb-24">
           <div className="w-full max-w-4xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur">
               <span className="h-2 w-2 rounded-full bg-[#FACC15]" />
@@ -595,6 +592,21 @@ export default function LocationsHubPage() {
               <MetricPill label="NEXT STEP" value="Availability and pricing direction" />
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-8 sm:px-7 lg:px-10">
+        <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-6 sm:rounded-[28px]">
+          <h2 className="text-lg font-semibold text-white">
+            Business Internet in Ontario Cities
+          </h2>
+          <ul className="mt-4 space-y-2 text-sm text-white/70">
+            <li>
+              <Link href="/locations/barrie" className="underline hover:text-white">
+                Business internet and fibre in Barrie
+              </Link>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -820,6 +832,6 @@ export default function LocationsHubPage() {
           </div>
         </Surface>
       </section>
-    </main>
+    </div>
   );
 }

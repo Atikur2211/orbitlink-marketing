@@ -7,18 +7,17 @@ const PAGE_PATH = "/services/colocation-infrastructure";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
-const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
   title: "Colocation & Infrastructure Services Ontario | Orbitlink",
   description:
-    "Colocation and infrastructure services for Ontario businesses. Rack space, cross-connects, and reliable network environments. Check availability.",
+    "Colocation and infrastructure services in Ontario. Rack space, cross-connects, and network deployment support for business environments.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Colocation & Infrastructure Services Ontario | Orbitlink",
     description:
-      "Infrastructure coordination for colocation, cross-connects, handoff planning, and business-critical network environments.",
+      "Colocation, cross-connect coordination, and network infrastructure support for Ontario business environments.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -36,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Colocation & Infrastructure Services Ontario | Orbitlink",
     description:
-      "Colocation guidance, cross-connect coordination, and infrastructure-grade delivery posture for business environments.",
+      "Colocation guidance, cross-connect coordination, and infrastructure support for business environments.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -190,8 +189,8 @@ function CTAButton({
   );
 }
 
-export default function Page() {
-  const schemaGraph = {
+function jsonLd() {
+  return {
     "@context": "https://schema.org",
     "@graph": [
       {
@@ -200,37 +199,17 @@ export default function Page() {
         url: PAGE_URL,
         name: "Colocation & Infrastructure Services Ontario | Orbitlink",
         description:
-          "Colocation and infrastructure services for Ontario businesses. Rack space guidance, cross-connect coordination, handoff planning, and structured deployment posture.",
+          "Colocation and infrastructure services in Ontario. Rack space, cross-connects, and network deployment support for business environments.",
         isPartOf: {
+          "@type": "WebSite",
           "@id": WEBSITE_ID,
+          url: SITE_URL,
+          name: SITE_NAME,
         },
         about: {
-          "@id": ORG_ID,
+          "@type": "Thing",
+          name: "Colocation and infrastructure services",
         },
-      },
-      {
-        "@type": "Service",
-        "@id": `${PAGE_URL}#service`,
-        name: "Colocation & Infrastructure Services",
-        serviceType: "Network Infrastructure Service",
-        provider: {
-          "@id": ORG_ID,
-        },
-        areaServed: {
-          "@type": "AdministrativeArea",
-          name: "Ontario",
-        },
-        audience: {
-          "@type": "Audience",
-          audienceType: "Business",
-        },
-        availableChannel: {
-          "@type": "ServiceChannel",
-          serviceUrl: `${SITE_URL}/contact#intake`,
-        },
-        url: PAGE_URL,
-        description:
-          "Colocation and infrastructure coordination for rack space, cross-connect pathways, edge equipment, and structured deployment posture.",
       },
       {
         "@type": "BreadcrumbList",
@@ -270,12 +249,14 @@ export default function Page() {
       },
     ],
   };
+}
 
+export default function Page() {
   return (
-    <main className="min-h-screen bg-[#09090B] text-white">
+    <div className="min-h-screen bg-[#09090B] text-white">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
       <section className="relative overflow-hidden border-b border-white/10">
@@ -312,7 +293,28 @@ export default function Page() {
               </p>
 
               <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
-                The goal is not just to place hardware. It is to align facility constraints,
+                This service often aligns with{" "}
+                <Link
+                  href="/services/dedicated-internet-access"
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  Dedicated Internet Access
+                </Link>
+                ,{" "}
+                <Link
+                  href="/services/static-ip-routing"
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  static IP routing
+                </Link>
+                , and broader{" "}
+                <Link
+                  href="/network"
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  network planning
+                </Link>
+                . The goal is not just to place hardware. It is to align facility constraints,
                 carrier touchpoints, rack posture, and handoff assumptions so the deployment path
                 is clearer before implementation begins.
               </p>
@@ -625,6 +627,6 @@ export default function Page() {
           </SectionShell>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
