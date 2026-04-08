@@ -34,7 +34,7 @@ const BUSINESS = {
 
 const PAGE_TITLE = "Business Internet in Oakville, ON | Orbitlink";
 const PAGE_DESCRIPTION =
-  "Business internet in Oakville with fibre, dedicated internet, managed Wi-Fi, static IPs, voice, and backup connectivity. Availability is checked by address.";
+  "Business internet in Oakville for offices, clinics, and commercial spaces. Fibre, dedicated internet, and backup connectivity. Check availability.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

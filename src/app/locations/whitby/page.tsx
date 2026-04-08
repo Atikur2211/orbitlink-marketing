@@ -32,7 +32,7 @@ const BUSINESS = {
 export const metadata: Metadata = {
   title: "Business Fibre Internet in Whitby, ON | Orbitlink™",
   description:
-    "Business fibre internet in Whitby with structured onboarding, documented delivery, and enterprise support posture. Fibre, DIA, managed LAN & Wi-Fi, continuity, and voice.",
+    "Business internet in Whitby for offices, warehouses, and commercial sites. Fibre, dedicated internet, and backup connectivity. Check availability.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
     title: "Business Fibre Internet in Whitby, ON | Orbitlink™",

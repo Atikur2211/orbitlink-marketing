@@ -34,7 +34,7 @@ const BUSINESS = {
 
 const PAGE_TITLE = "Business Internet & Fibre in Hamilton, ON | Orbitlink™";
 const PAGE_DESCRIPTION =
-  "Business internet in Hamilton with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
+  "Business internet in Hamilton for industrial sites, warehouses, and offices. Fibre, dedicated internet, and backup connectivity. Check availability.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

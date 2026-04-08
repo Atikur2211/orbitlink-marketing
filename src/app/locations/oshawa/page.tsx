@@ -30,7 +30,7 @@ const BUSINESS = {
 export const metadata: Metadata = {
   title: "Business Fibre Internet in Oshawa, ON | Orbitlink™",
   description:
-    "Operator-grade business fibre internet in Oshawa with structured onboarding, documented delivery, and enterprise support posture. Fibre, DIA, managed LAN & Wi-Fi, continuity, and voice.",
+    "Business internet in Oshawa for warehouses, industrial operations, and offices. Fibre, dedicated internet, and backup connectivity. Check availability.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
     title: "Business Fibre Internet in Oshawa, ON | Orbitlink™",

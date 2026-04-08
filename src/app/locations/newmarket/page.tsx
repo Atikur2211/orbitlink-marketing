@@ -30,7 +30,7 @@ const BUSINESS = {
 export const metadata: Metadata = {
   title: "Business Fibre Internet in Newmarket, ON | Orbitlink™",
   description:
-    "Operator-grade business fibre internet in Newmarket with structured onboarding, documented delivery, and enterprise support posture. Fibre, DIA, managed LAN & Wi-Fi, continuity, and voice.",
+    "business fibre internet in Newmarket with structured onboarding, documented delivery, and enterprise support. Fibre, DIA, managed LAN & Wi-Fi, continuity, and voice.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
     title: "Business Fibre Internet in Newmarket, ON | Orbitlink™",

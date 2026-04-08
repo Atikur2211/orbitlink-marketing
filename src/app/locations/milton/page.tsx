@@ -34,7 +34,7 @@ const BUSINESS = {
 
 const PAGE_TITLE = "Business Internet in Milton, ON | Orbitlink";
 const PAGE_DESCRIPTION =
-  "Business internet in Milton with fibre, dedicated internet, managed Wi-Fi, static IPs, voice, and backup connectivity. Availability is checked by address.";
+  "Business internet in Milton for warehouses, industrial and logistics operations, and offices. Fibre, dedicated internet, and backup connectivity. Check availability.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

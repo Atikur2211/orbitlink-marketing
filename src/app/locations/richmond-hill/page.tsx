@@ -34,7 +34,7 @@ const BUSINESS = {
 
 const PAGE_TITLE = "Business Internet Richmond Hill | Orbitlink";
 const PAGE_DESCRIPTION =
-  "Business internet in Richmond Hill with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
+  "Business internet in Richmond Hill for offices, clinics, and commercial spaces. Fibre, dedicated internet, and backup connectivity. Check availability.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
