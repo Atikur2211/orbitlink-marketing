@@ -64,8 +64,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/`,
     siteName: SITE_NAME,
     title: "Orbitlink",
-    description:
-      "Business fibre, dedicated internet access, managed network infrastructure, and audit-ready connectivity for organizations across Ontario.",
+    description: SITE_DESC,
     locale: "en_CA",
     images: [
       {
@@ -100,111 +99,69 @@ export default function RootLayout({
 }>) {
   const isDev = process.env.NODE_ENV !== "production";
 
-  const orgJsonLd = {
+  const globalJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${SITE_URL}/#org`,
-    name: SITE_NAME,
-    url: `${SITE_URL}/`,
-    logo: `${SITE_URL}/icon.png`,
-    image: `${SITE_URL}/opengraph-image`,
-    description:
-      "Business fibre, dedicated internet access, managed network infrastructure, and audit-ready connectivity for organizations across Ontario.",
-    brand: {
-      "@type": "Brand",
-      name: SITE_NAME,
-    },
-    parentOrganization: {
-      "@type": "Organization",
-      name: "TIRAV Technologies Inc.",
-    },
-    telephone: "+18888672480",
-    email: "concierge@orbitlink.ca",
-    contactPoint: [
+    "@graph": [
       {
-        "@type": "ContactPoint",
-        contactType: "sales",
-        telephone: "+18888672480",
-        email: "sales@orbitlink.ca",
-        availableLanguage: ["en"],
-        areaServed: "CA-ON",
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#org`,
+        name: SITE_NAME,
+        url: `${SITE_URL}/`,
+        logo: `${SITE_URL}/icon.png`,
+        image: `${SITE_URL}/opengraph-image`,
+        description: SITE_DESC,
+        brand: {
+          "@type": "Brand",
+          name: SITE_NAME,
+        },
+        parentOrganization: {
+          "@type": "Organization",
+          name: "TIRAV Technologies Inc.",
+        },
+        telephone: "+1-888-867-2480",
+        email: "concierge@orbitlink.ca",
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            telephone: "+1-888-867-2480",
+            email: "sales@orbitlink.ca",
+            availableLanguage: ["en"],
+            areaServed: "CA-ON",
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            telephone: "+1-888-867-2480",
+            email: "support@orbitlink.ca",
+            availableLanguage: ["en"],
+            areaServed: "CA-ON",
+          },
+        ],
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "30 Eglinton Ave W, Suite 400-A77",
+          addressLocality: "Mississauga",
+          addressRegion: "ON",
+          postalCode: "L5R 3E7",
+          addressCountry: "CA",
+        },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario, Canada",
+        },
       },
       {
-        "@type": "ContactPoint",
-        contactType: "customer support",
-        telephone: "+18888672480",
-        email: "support@orbitlink.ca",
-        availableLanguage: ["en"],
-        areaServed: "CA-ON",
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        name: SITE_NAME,
+        url: `${SITE_URL}/`,
+        description: SITE_DESC,
+        publisher: {
+          "@id": `${SITE_URL}/#org`,
+        },
+        inLanguage: "en-CA",
       },
-    ],
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "30 Eglinton Ave W, Suite 400-A77",
-      addressLocality: "Mississauga",
-      addressRegion: "ON",
-      postalCode: "L5R 3E7",
-      addressCountry: "CA",
-    },
-    areaServed: {
-      "@type": "AdministrativeArea",
-      name: "Ontario, Canada",
-    },
-    sameAs: [],
-  };
-
-  const websiteJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${SITE_URL}/#website`,
-    name: SITE_NAME,
-    url: `${SITE_URL}/`,
-    description: SITE_DESC,
-    publisher: {
-      "@id": `${SITE_URL}/#org`,
-    },
-    inLanguage: "en-CA",
-  };
-
-  const localBusinessJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "InternetServiceProvider",
-    "@id": `${SITE_URL}/#isp`,
-    name: SITE_NAME,
-    url: `${SITE_URL}/`,
-    image: `${SITE_URL}/opengraph-image`,
-    telephone: "+18888672480",
-    email: "concierge@orbitlink.ca",
-    priceRange: "$$",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "30 Eglinton Ave W, Suite 400-A77",
-      addressLocality: "Mississauga",
-      addressRegion: "ON",
-      postalCode: "L5R 3E7",
-      addressCountry: "CA",
-    },
-    areaServed: [
-      {
-        "@type": "AdministrativeArea",
-        name: "Ontario, Canada",
-      },
-      {
-        "@type": "City",
-        name: "Mississauga",
-      },
-    ],
-    provider: {
-      "@id": `${SITE_URL}/#org`,
-    },
-    knowsAbout: [
-      "Business Fibre",
-      "Dedicated Internet Access",
-      "Managed Network Infrastructure",
-      "Managed Wi-Fi",
-      "Business Connectivity",
-      "VoIP",
-      "Continuity Connectivity",
     ],
   };
 
@@ -213,15 +170,7 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(globalJsonLd) }}
         />
 
         <Script
@@ -245,8 +194,6 @@ export default function RootLayout({
 
       <body className="min-h-screen bg-[#09090B] text-white antialiased">
         {children}
-        
-        {/* Orbitlink Connectivity Advisor */}
         <ChatWidget />
       </body>
     </html>
