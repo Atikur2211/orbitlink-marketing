@@ -2,24 +2,26 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/services/colocation-infrastructure";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 const ORG_ID = `${SITE_URL}/#org`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
-  title: "Colocation & Infrastructure Services | Orbitlink™",
+  title: "Colocation & Infrastructure Services Ontario | Orbitlink",
   description:
-    "Colocation and infrastructure services for Ontario businesses. Operator-grade coordination for rack space, cross-connects, handoff planning, edge equipment placement, and a cleaner structured deployment posture.",
+    "Colocation and infrastructure services for Ontario businesses. Rack space guidance, cross-connect coordination, handoff planning, and structured deployment posture.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Colocation & Infrastructure Services | Orbitlink™",
+    title: "Colocation & Infrastructure Services Ontario | Orbitlink",
     description:
-      "Infrastructure coordination for colocation, cross-connects, handoff planning, and business-critical network environments with a cleaner delivery posture.",
+      "Infrastructure coordination for colocation, cross-connects, handoff planning, and business-critical network environments.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
     images: [
       {
@@ -32,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Colocation & Infrastructure Services | Orbitlink™",
+    title: "Colocation & Infrastructure Services Ontario | Orbitlink",
     description:
       "Colocation guidance, cross-connect coordination, and infrastructure-grade delivery posture for business environments.",
     images: [TWITTER_IMAGE_URL],
@@ -165,16 +167,46 @@ function MetricPill({
   );
 }
 
+function CTAButton({
+  href,
+  children,
+  primary = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  primary?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={
+        primary
+          ? "inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+          : "inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+      }
+    >
+      {children}
+    </Link>
+  );
+}
+
 export default function Page() {
   const schemaGraph = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Organization",
-        "@id": ORG_ID,
-        name: "Orbitlink",
-        url: SITE_URL,
-        logo: `${SITE_URL}/icon.png`,
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: "Colocation & Infrastructure Services Ontario | Orbitlink",
+        description:
+          "Colocation and infrastructure services for Ontario businesses. Rack space guidance, cross-connect coordination, handoff planning, and structured deployment posture.",
+        isPartOf: {
+          "@id": WEBSITE_ID,
+        },
+        about: {
+          "@id": ORG_ID,
+        },
       },
       {
         "@type": "Service",
@@ -184,13 +216,17 @@ export default function Page() {
         provider: {
           "@id": ORG_ID,
         },
-        areaServed: [
-          { "@type": "AdministrativeArea", name: "Ontario, Canada" },
-          { "@type": "City", name: "Mississauga" },
-        ],
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
         audience: {
           "@type": "Audience",
           audienceType: "Business",
+        },
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/contact#intake`,
         },
         url: PAGE_URL,
         description:
@@ -198,6 +234,7 @@ export default function Page() {
       },
       {
         "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
         itemListElement: [
           {
             "@type": "ListItem",
@@ -221,6 +258,7 @@ export default function Page() {
       },
       {
         "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
         mainEntity: FAQ.map((f) => ({
           "@type": "Question",
           name: f.q,
@@ -297,18 +335,12 @@ export default function Page() {
               </div>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                >
+                <CTAButton href="/contact#intake" primary>
                   Discuss Requirements
-                </Link>
-                <Link
-                  href="/services/dedicated-internet-access"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
+                </CTAButton>
+                <CTAButton href="/services/dedicated-internet-access">
                   Pair with Dedicated Internet
-                </Link>
+                </CTAButton>
               </div>
             </div>
 
@@ -553,18 +585,12 @@ export default function Page() {
               </p>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                >
+                <CTAButton href="/contact#intake" primary>
                   Discuss Requirements
-                </Link>
-                <Link
-                  href="/trust"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
+                </CTAButton>
+                <CTAButton href="/trust">
                   Review Trust Posture
-                </Link>
+                </CTAButton>
               </div>
             </SectionShell>
           </div>
@@ -589,18 +615,12 @@ export default function Page() {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/services"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
-              >
+              <CTAButton href="/services">
                 Explore Services
-              </Link>
-              <Link
-                href="/contact#intake"
-                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-semibold text-black transition hover:bg-[#FDE047]"
-              >
+              </CTAButton>
+              <CTAButton href="/contact#intake" primary>
                 Discuss Requirements
-              </Link>
+              </CTAButton>
             </div>
           </SectionShell>
         </div>

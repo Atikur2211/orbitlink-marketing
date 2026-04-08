@@ -2,23 +2,25 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/services/starlink-agent";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE = `${SITE_URL}/twitter-image`;
 const ORG_ID = `${SITE_URL}/#org`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
-  title: "Starlink Access (Agent / Reseller) | Orbitlink™",
+  title: "Starlink Access Coordination Ontario | Orbitlink",
   description:
-    "Starlink access coordination for Ontario organizations where terrestrial connectivity is limited, delayed, or impractical. Orbitlink clarifies use cases, constraints, onboarding posture, and where satellite fits within a wider business connectivity strategy.",
+    "Starlink access coordination for Ontario organizations where terrestrial connectivity is limited, delayed, or impractical. Structured qualification and clearer deployment expectations.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Starlink Access (Agent / Reseller) | Orbitlink™",
+    title: "Starlink Access Coordination Ontario | Orbitlink",
     description:
-      "Satellite connectivity coordination for environments where terrestrial connectivity is constrained. Structured qualification, clearer deployment expectations, and business-focused onboarding.",
+      "Satellite connectivity coordination for environments where terrestrial connectivity is constrained, delayed, or impractical.",
     url: PAGE_URL,
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
     type: "website",
     images: [
@@ -32,9 +34,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Starlink Access | Orbitlink™",
+    title: "Starlink Access Coordination | Orbitlink",
     description:
-      "Satellite connectivity coordination through an agent or reseller model where terrestrial options are limited or impractical.",
+      "Satellite connectivity coordination for business sites where terrestrial options are limited or impractical.",
     images: [TWITTER_IMAGE],
   },
 };
@@ -156,16 +158,46 @@ function MetricPill({
   );
 }
 
+function CTAButton({
+  href,
+  children,
+  primary = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  primary?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={
+        primary
+          ? "inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-semibold text-black transition hover:bg-[#FDE047]"
+          : "inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+      }
+    >
+      {children}
+    </Link>
+  );
+}
+
 export default function Page() {
   const schemaGraph = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Organization",
-        "@id": ORG_ID,
-        name: "Orbitlink",
-        url: SITE_URL,
-        logo: `${SITE_URL}/icon.png`,
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: "Starlink Access Coordination Ontario | Orbitlink",
+        description:
+          "Starlink access coordination for Ontario organizations where terrestrial connectivity is limited, delayed, or impractical. Structured qualification and clearer deployment expectations.",
+        isPartOf: {
+          "@id": WEBSITE_ID,
+        },
+        about: {
+          "@id": ORG_ID,
+        },
       },
       {
         "@type": "Service",
@@ -177,11 +209,15 @@ export default function Page() {
         },
         areaServed: {
           "@type": "AdministrativeArea",
-          name: "Ontario, Canada",
+          name: "Ontario",
         },
         audience: {
           "@type": "Audience",
           audienceType: "Business",
+        },
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/contact#intake`,
         },
         url: PAGE_URL,
         description:
@@ -189,6 +225,7 @@ export default function Page() {
       },
       {
         "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
         itemListElement: [
           {
             "@type": "ListItem",
@@ -212,6 +249,7 @@ export default function Page() {
       },
       {
         "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
         mainEntity: FAQ.map((f) => ({
           "@type": "Question",
           name: f.q,
@@ -288,19 +326,13 @@ export default function Page() {
               </div>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-6 py-3 text-sm font-semibold text-black transition hover:bg-[#FDE047]"
-                >
+                <CTAButton href="/contact#intake" primary>
                   Discuss Feasibility
-                </Link>
+                </CTAButton>
 
-                <Link
-                  href="/services/business-fibre-internet"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
-                >
+                <CTAButton href="/services/business-fibre-internet">
                   Review Terrestrial Options
-                </Link>
+                </CTAButton>
               </div>
             </div>
 
@@ -513,18 +545,12 @@ export default function Page() {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/services"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
-              >
+              <CTAButton href="/services">
                 Explore Services
-              </Link>
-              <Link
-                href="/contact#intake"
-                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-semibold text-black transition hover:bg-[#FDE047]"
-              >
+              </CTAButton>
+              <CTAButton href="/contact#intake" primary>
                 Discuss Feasibility
-              </Link>
+              </CTAButton>
             </div>
           </SectionShell>
         </div>
