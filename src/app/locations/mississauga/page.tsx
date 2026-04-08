@@ -6,12 +6,13 @@ const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/locations/mississauga";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
 
 const BUSINESS = {
-  name: "Orbitlink™",
+  name: "Orbitlink",
   legalName: "TIRAV Technologies Inc. o/a Orbitlink",
   phoneDisplay: "1-888-867-2480",
-  phoneE164: "+18888672480",
+  phoneE164: "+1-888-867-2480",
   email: "concierge@orbitlink.ca",
   address: {
     street: "30 Eglinton Ave W, Suite 400-A77",
@@ -47,12 +48,21 @@ export const metadata: Metadata = {
     type: "website",
     siteName: SITE_NAME,
     locale: "en_CA",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Business Internet in Mississauga | Orbitlink",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: PAGE_TITLE,
     description:
       "Business internet in Mississauga with fibre, dedicated internet, managed Wi-Fi, and backup connectivity.",
+    images: [`${SITE_URL}/opengraph-image`],
   },
 };
 
@@ -88,85 +98,96 @@ const FAQ = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
-      { "@type": "ListItem", position: 3, name: "Mississauga", item: PAGE_URL },
-    ],
-  };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: PAGE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: BUSINESS.email,
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [
-      { "@type": "City", name: "Mississauga" },
-      { "@type": "AdministrativeArea", name: "Ontario" },
-    ],
-    openingHoursSpecification: BUSINESS.hours.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: `https://schema.org/${h.day}`,
-      opens: h.opens,
-      closes: h.closes,
-    })),
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Internet in Mississauga",
-    serviceType: [
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed LAN and Wi-Fi",
-      "Static IP Routing",
-      "VoIP and Cloud Voice",
-      "LTE and 5G Backup Connectivity",
-    ],
-    provider: { "@id": ORG_ID },
-    areaServed: {
-      "@type": "City",
-      name: "Mississauga",
-    },
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-    url: PAGE_URL,
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: {
+          "@id": WEBSITE_ID,
+        },
+        about: {
+          "@id": ORG_ID,
+        },
       },
-    })),
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Locations",
+            item: `${SITE_URL}/locations`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "Mississauga",
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": `${PAGE_URL}#localbusiness`,
+        name: BUSINESS.name,
+        legalName: BUSINESS.legalName,
+        url: PAGE_URL,
+        telephone: BUSINESS.phoneE164,
+        email: BUSINESS.email,
+        parentOrganization: {
+          "@id": ORG_ID,
+        },
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: BUSINESS.address.street,
+          addressLocality: BUSINESS.address.city,
+          addressRegion: BUSINESS.address.region,
+          postalCode: BUSINESS.address.postal,
+          addressCountry: BUSINESS.address.country,
+        },
+        areaServed: [
+          {
+            "@type": "City",
+            name: "Mississauga",
+          },
+          {
+            "@type": "AdministrativeArea",
+            name: "Ontario",
+          },
+        ],
+        openingHoursSpecification: BUSINESS.hours.map((h) => ({
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: h.day,
+          opens: h.opens,
+          closes: h.closes,
+        })),
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
+      },
+    ],
   };
-
-  return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
 const serviceModules = [
@@ -338,7 +359,7 @@ export default function MississaugaLocationPage() {
                   to the right access type, define any managed network needs, and move into the
                   next business step.
                 </p>
-                  
+
                 <p>
                   Businesses evaluating connectivity options can also explore{" "}
                   <Link
@@ -349,7 +370,7 @@ export default function MississaugaLocationPage() {
                   </Link>{" "}
                   to understand availability, service fit, and next steps for their location.
                 </p>
-              
+
                 <p>
                   Requests are commonly reviewed for office buildings, industrial business parks,
                   commercial units, and multi-tenant environments where service quality, uptime,

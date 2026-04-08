@@ -3,29 +3,40 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/services/business-fibre-internet";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
   title: "Business Fibre Internet Ontario | Orbitlink",
   description:
     "Business fibre internet for Ontario offices, clinics, warehouses, and commercial locations. Check availability by address and get pricing, install guidance, and upgrade options.",
-  alternates: { canonical: PAGE_PATH },
+  alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Business Fibre Internet Ontario | Orbitlink",
     description:
       "Fast, reliable business fibre internet for Ontario offices, clinics, warehouses, and commercial locations. Check availability by address.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Business Fibre Internet Ontario | Orbitlink",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Business Fibre Internet Ontario | Orbitlink",
     description:
       "Business fibre internet for Ontario commercial locations with address-based availability and a clear path to pricing and installation.",
+    images: [`${SITE_URL}/opengraph-image`],
   },
 };
 
@@ -73,62 +84,79 @@ const FAQ = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-      { "@type": "ListItem", position: 2, name: "Services", item: `${SITE_URL}/services` },
-      { "@type": "ListItem", position: 3, name: "Business Fibre Internet", item: PAGE_URL },
-    ],
-  };
-
-  const service = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Fibre Internet",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: [
-      { "@type": "AdministrativeArea", name: "Ontario" },
-      { "@type": "City", name: "Mississauga" },
-      { "@type": "City", name: "Toronto" },
-      { "@type": "City", name: "Brampton" },
-      { "@type": "City", name: "Oakville" },
-      { "@type": "City", name: "Vaughan" },
-      { "@type": "City", name: "Markham" },
-      { "@type": "City", name: "Milton" },
-      { "@type": "City", name: "Ottawa" },
-    ],
-    serviceType: [
-      "Business Fibre Internet",
-      "Business Internet",
-      "Internet for Offices",
-      "Internet for Clinics",
-      "Internet for Commercial Sites",
-      "Ontario Business Connectivity",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: `${SITE_URL}/contact#intake`,
-    },
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: "Business Fibre Internet Ontario | Orbitlink",
+        description:
+          "Business fibre internet for Ontario offices, clinics, warehouses, and commercial locations. Check availability by address and get pricing, install guidance, and upgrade options.",
+        isPartOf: {
+          "@id": WEBSITE_ID,
+        },
+        about: {
+          "@id": ORG_ID,
+        },
       },
-    })),
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: SITE_URL,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Services",
+            item: `${SITE_URL}/services`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "Business Fibre Internet",
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "Service",
+        "@id": `${PAGE_URL}#service`,
+        name: "Business Fibre Internet",
+        url: PAGE_URL,
+        provider: {
+          "@id": ORG_ID,
+        },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
+        serviceType: "Business Fibre Internet",
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/contact#intake`,
+        },
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
+      },
+    ],
   };
-
-  return [breadcrumb, service, faqPage];
 }
 
 const fitCards = [
