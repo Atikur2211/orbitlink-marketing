@@ -13,7 +13,7 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 export const metadata: Metadata = {
   title: "Managed LAN & Enterprise Wi-Fi | Orbitlink",
   description:
-    "Managed LAN and enterprise Wi-Fi for Ontario business environments. Segmentation, guest access, coverage planning, cleaner internal networking, and structured support for offices, commercial suites, and multi-tenant sites.",
+    "Managed LAN and enterprise Wi-Fi for Ontario organizations. Improve coverage, performance, and secure network access. Check availability.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Managed LAN & Enterprise Wi-Fi | Orbitlink",

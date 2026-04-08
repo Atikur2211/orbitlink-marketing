@@ -13,7 +13,7 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 export const metadata: Metadata = {
   title: "LTE / 5G Continuity Architecture Ontario | Orbitlink",
   description:
-    "LTE and 5G continuity for Ontario businesses. Structured failover, traffic prioritization, and resilience planning. Check availability by address.",
+    "LTE and 5G backup connectivity for Ontario businesses. Reduce downtime with automatic failover and continuity support. Check availability by address.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "LTE / 5G Continuity Architecture Ontario | Orbitlink",

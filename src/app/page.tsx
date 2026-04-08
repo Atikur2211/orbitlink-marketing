@@ -12,10 +12,12 @@ const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
 const LEGAL_NAME = "TIRAV Technologies Inc.";
 const CANONICAL_URL = `${SITE_URL}/`;
+const ORG_ID = `${SITE_URL}/#org`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
 
 const META_TITLE = "Business Fibre Internet Ontario | Orbitlink";
 const META_DESCRIPTION =
-  "Business fibre internet, dedicated internet access, managed Wi-Fi, VoIP, and backup connectivity for Ontario businesses. Check availability by address and get a tailored connectivity recommendation.";
+  "Business fibre internet and dedicated internet for Ontario businesses. Check availability by address and get the right connectivity solution.";
 
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
@@ -225,130 +227,107 @@ function TrustPill({ text }: { text: string }) {
 }
 
 export default function Home() {
-  const organizationSchema = {
+  const schemaGraph = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${SITE_URL}/#org`,
-    name: SITE_NAME,
-    legalName: LEGAL_NAME,
-    url: CANONICAL_URL,
-    logo: `${SITE_URL}/icon.png`,
-    image: OG_IMAGE_URL,
-    telephone: "+18888672480",
-    email: "concierge@orbitlink.ca",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "30 Eglinton Ave W, Suite 400-A77",
-      addressLocality: "Mississauga",
-      addressRegion: "ON",
-      postalCode: "L5R 3E7",
-      addressCountry: "CA",
-    },
-    areaServed: {
-      "@type": "AdministrativeArea",
-      name: "Ontario, Canada",
-    },
-    parentOrganization: {
-      "@type": "Organization",
-      name: LEGAL_NAME,
-    },
-    contactPoint: [
+    "@graph": [
       {
-        "@type": "ContactPoint",
-        contactType: "sales",
-        telephone: "+18888672480",
-        email: "sales@orbitlink.ca",
-        availableLanguage: ["en"],
-        areaServed: "CA-ON",
-      },
-      {
-        "@type": "ContactPoint",
-        contactType: "customer support",
-        telephone: "+18888672480",
-        email: "concierge@orbitlink.ca",
-        availableLanguage: ["en"],
-        areaServed: "CA-ON",
-      },
-    ],
-  };
-
-  const telecomSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${SITE_URL}/#telecom`,
-    name: "Orbitlink Business Internet & Managed Network Services",
-    provider: {
-      "@id": `${SITE_URL}/#org`,
-    },
-    serviceType: [
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed Wi-Fi",
-      "Business VoIP",
-      "Network Infrastructure Services",
-      "LTE and 5G Backup Connectivity",
-    ],
-    areaServed: [
-      { "@type": "AdministrativeArea", name: "Ontario, Canada" },
-      { "@type": "City", name: "Mississauga" },
-      { "@type": "City", name: "Toronto" },
-      { "@type": "City", name: "Brampton" },
-      { "@type": "City", name: "Vaughan" },
-    ],
-    audience: {
-      "@type": "Audience",
-      audienceType: "Business",
-    },
-    termsOfService: `${SITE_URL}/legal/terms`,
-  };
-
-  const websiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${SITE_URL}/#website`,
-    name: SITE_NAME,
-    url: CANONICAL_URL,
-    publisher: {
-      "@id": `${SITE_URL}/#org`,
-    },
-    inLanguage: "en-CA",
-  };
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "How do I check if Orbitlink can serve my business location?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Submit your business address and service requirements through the Orbitlink contact intake. Availability is reviewed based on address, building infrastructure, and service type.",
+        "@type": "WebPage",
+        "@id": `${CANONICAL_URL}#webpage`,
+        url: CANONICAL_URL,
+        name: META_TITLE,
+        description: META_DESCRIPTION,
+        isPartOf: {
+          "@id": WEBSITE_ID,
+        },
+        about: {
+          "@id": ORG_ID,
+        },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: OG_IMAGE_URL,
         },
       },
       {
-        "@type": "Question",
-        name: "Does Orbitlink offer business fibre and dedicated internet access?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes. Orbitlink supports business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity for Ontario businesses.",
+        "@type": "Service",
+        "@id": `${SITE_URL}/#telecom`,
+        name: "Orbitlink Business Internet & Managed Network Services",
+        provider: {
+          "@id": ORG_ID,
         },
+        serviceType: [
+          "Business Fibre Internet",
+          "Dedicated Internet Access",
+          "Managed Wi-Fi",
+          "Business VoIP",
+          "Network Infrastructure Services",
+          "LTE and 5G Backup Connectivity",
+        ],
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
+        audience: {
+          "@type": "Audience",
+          audienceType: "Business",
+        },
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/contact#intake`,
+        },
+        termsOfService: `${SITE_URL}/legal/terms`,
+        url: CANONICAL_URL,
+        description:
+          "Business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity for Ontario organizations.",
       },
       {
-        "@type": "Question",
-        name: "What types of businesses does Orbitlink support?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Orbitlink supports offices, clinics, warehouses, commercial units, logistics environments, and multi-site business locations across Ontario.",
-        },
+        "@type": "BreadcrumbList",
+        "@id": `${CANONICAL_URL}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: CANONICAL_URL,
+          },
+        ],
       },
       {
-        "@type": "Question",
-        name: "What happens after I submit a request?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Orbitlink reviews the address, service requirements, building infrastructure, and available service paths, then responds with the most practical next step.",
-        },
+        "@type": "FAQPage",
+        "@id": `${CANONICAL_URL}#faq`,
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "How do I check if Orbitlink can serve my business location?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Submit your business address and service requirements through the Orbitlink contact intake. Availability is reviewed based on address, building infrastructure, and service type.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Does Orbitlink offer business fibre and dedicated internet access?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Yes. Orbitlink supports business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity for Ontario businesses.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What types of businesses does Orbitlink support?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Orbitlink supports offices, clinics, warehouses, commercial units, logistics environments, and multi-site business locations across Ontario.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What happens after I submit a request?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Orbitlink reviews the address, service requirements, building infrastructure, and available service paths, then responds with the most practical next step.",
+            },
+          },
+        ],
       },
     ],
   };
@@ -357,19 +336,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#07090D] text-white">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(telecomSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
       />
 
       <TopNav />
@@ -627,7 +594,7 @@ export default function Home() {
           </div>
 
           <div className="mt-5 flex flex-wrap gap-2 sm:mt-6">
-            <TrustPill text="Operated by TIRAV Technologies Inc." />
+            <TrustPill text={`Operated by ${LEGAL_NAME}`} />
             <TrustPill text="CRTC-registered provider" />
             <TrustPill text="Business-only review" />
             <TrustPill text="Address-based qualification" />

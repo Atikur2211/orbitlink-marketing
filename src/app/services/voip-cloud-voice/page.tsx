@@ -14,7 +14,7 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 export const metadata: Metadata = {
   title: "VoIP & Cloud Voice Ontario | Orbitlink",
   description:
-    "Business VoIP and cloud voice for Ontario organizations. Structured onboarding, number porting support, call routing, endpoint readiness, and a cleaner delivery posture.",
+    "Business VoIP and cloud voice for Ontario organizations. Reliable calling, number porting, and call routing. Check availability by address.",
   alternates: {
     canonical: PAGE_URL,
   },

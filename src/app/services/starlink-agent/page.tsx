@@ -13,7 +13,7 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 export const metadata: Metadata = {
   title: "Starlink Access Coordination Ontario | Orbitlink",
   description:
-    "Starlink access coordination for Ontario organizations where terrestrial connectivity is limited, delayed, or impractical. Structured qualification and clearer deployment expectations.",
+    "Starlink internet for Ontario businesses where fibre is not available. Fast setup for remote and backup connectivity. Check availability.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Starlink Access Coordination Ontario | Orbitlink",

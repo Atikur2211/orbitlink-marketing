@@ -12,7 +12,7 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 export const metadata: Metadata = {
   title: "Business Fibre Internet Ontario | Orbitlink",
   description:
-    "Business fibre internet for Ontario offices, clinics, warehouses, and commercial locations. Check availability by address and get pricing, install guidance, and upgrade options.",
+    "Business fibre internet for Ontario organizations. Reliable speeds for offices, clinics, warehouses, and commercial locations. Check availability.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Business Fibre Internet Ontario | Orbitlink",

@@ -13,7 +13,7 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 export const metadata: Metadata = {
   title: "IoT Connectivity & Secure Uplinks Ontario | Orbitlink",
   description:
-    "IoT connectivity and secure uplinks for Ontario businesses. Segmentation, monitoring-ready design, secure device boundaries, and cleaner deployment posture.",
+    "IoT connectivity for Ontario businesses. Secure uplinks for sensors, gateways, and devices with reliable performance. Check availability by address.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "IoT Connectivity & Secure Uplinks Ontario | Orbitlink",

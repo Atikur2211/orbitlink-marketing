@@ -12,7 +12,7 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 export const metadata: Metadata = {
   title: "Dedicated Internet Access Ontario | Orbitlink",
   description:
-    "Dedicated Internet Access for Ontario businesses that need stronger uptime, more predictable performance, static IP options, and a more formal service model. Check availability by address.",
+    "Dedicated internet access for Ontario organizations. Reliable uptime, predictable performance, and static IP options. Check availability.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Dedicated Internet Access Ontario | Orbitlink",

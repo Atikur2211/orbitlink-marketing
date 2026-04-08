@@ -13,7 +13,7 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 export const metadata: Metadata = {
   title: "Colocation & Infrastructure Services Ontario | Orbitlink",
   description:
-    "Colocation and infrastructure services for Ontario businesses. Rack space guidance, cross-connect coordination, handoff planning, and structured deployment posture.",
+    "Colocation and infrastructure services for Ontario businesses. Rack space, cross-connects, and reliable network environments. Check availability.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Colocation & Infrastructure Services Ontario | Orbitlink",
