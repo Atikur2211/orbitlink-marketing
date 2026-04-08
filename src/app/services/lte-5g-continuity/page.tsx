@@ -2,39 +2,41 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/services/lte-5g-continuity";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 const ORG_ID = `${SITE_URL}/#org`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
-  title: "LTE / 5G Continuity Architecture | Orbitlink™",
+  title: "LTE / 5G Continuity Architecture Ontario | Orbitlink",
   description:
-    "LTE and 5G continuity architecture for Ontario businesses. Reduce outage exposure with structured failover design, traffic prioritization, recovery planning, and a cleaner operational resilience model.",
-  alternates: { canonical: PAGE_PATH },
+    "LTE and 5G continuity for Ontario businesses. Structured failover, traffic prioritization, and resilience planning. Check availability by address.",
+  alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "LTE / 5G Continuity Architecture | Orbitlink™",
+    title: "LTE / 5G Continuity Architecture Ontario | Orbitlink",
     description:
-      "Business continuity architecture with structured failover, traffic prioritization, recovery planning, and cleaner resilience posture.",
+      "Business continuity using LTE/5G failover with structured recovery and resilience planning.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
     images: [
       {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink LTE / 5G Continuity Architecture",
+        alt: "Orbitlink LTE / 5G Continuity",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "LTE / 5G Continuity Architecture | Orbitlink™",
+    title: "LTE / 5G Continuity | Orbitlink",
     description:
-      "Business continuity architecture using LTE and 5G failover patterns for cleaner operational resilience.",
+      "Structured LTE/5G failover and continuity architecture for business resilience.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -174,35 +176,74 @@ function MetricPill({
   );
 }
 
+function CTAButton({
+  href,
+  children,
+  primary = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  primary?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={
+        primary
+          ? "inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+          : "inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+      }
+    >
+      {children}
+    </Link>
+  );
+}
+
 export default function Page() {
   const schemaGraph = {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: "LTE / 5G Continuity Architecture Ontario | Orbitlink",
+        description:
+          "LTE and 5G continuity for Ontario businesses. Structured failover, traffic prioritization, and resilience planning. Check availability by address.",
+        isPartOf: {
+          "@id": WEBSITE_ID,
+        },
+        about: {
+          "@id": ORG_ID,
+        },
+      },
       {
         "@type": "Service",
         "@id": `${PAGE_URL}#service`,
         name: "LTE / 5G Continuity Architecture",
         serviceType: "Business Continuity Network Service",
         provider: {
-          "@type": "Organization",
           "@id": ORG_ID,
-          name: "Orbitlink",
-          url: SITE_URL,
         },
-        areaServed: [
-          { "@type": "AdministrativeArea", name: "Ontario, Canada" },
-          { "@type": "City", name: "Mississauga" },
-        ],
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
         audience: {
           "@type": "Audience",
           audienceType: "Business",
         },
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/contact#intake`,
+        },
         url: PAGE_URL,
         description:
-          "LTE and 5G continuity architecture for business environments, including failover design, traffic prioritization, recovery planning, and defined operating procedures.",
+          "Business continuity design using LTE and 5G failover with traffic prioritization and recovery planning.",
       },
       {
         "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
         itemListElement: [
           {
             "@type": "ListItem",
@@ -219,13 +260,14 @@ export default function Page() {
           {
             "@type": "ListItem",
             position: 3,
-            name: "LTE / 5G Continuity Architecture",
+            name: "LTE / 5G Continuity",
             item: PAGE_URL,
           },
         ],
       },
       {
         "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
         mainEntity: FAQ.map((f) => ({
           "@type": "Question",
           name: f.q,
@@ -302,18 +344,12 @@ export default function Page() {
               </div>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                >
+                <CTAButton href="/contact#intake" primary>
                   Evaluate Continuity
-                </Link>
-                <Link
-                  href="/services/business-fibre-internet"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
+                </CTAButton>
+                <CTAButton href="/services/business-fibre-internet">
                   Pair with Primary Access
-                </Link>
+                </CTAButton>
               </div>
             </div>
 
@@ -561,18 +597,12 @@ export default function Page() {
               </p>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                >
+                <CTAButton href="/contact#intake" primary>
                   Evaluate Continuity
-                </Link>
-                <Link
-                  href="/trust"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-                >
+                </CTAButton>
+                <CTAButton href="/trust">
                   Review Trust Posture
-                </Link>
+                </CTAButton>
               </div>
             </SectionShell>
           </div>
@@ -597,18 +627,12 @@ export default function Page() {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/services"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
-              >
+              <CTAButton href="/services">
                 Explore Services
-              </Link>
-              <Link
-                href="/contact#intake"
-                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-semibold text-black transition hover:bg-[#FDE047]"
-              >
+              </CTAButton>
+              <CTAButton href="/contact#intake" primary>
                 Evaluate Continuity
-              </Link>
+              </CTAButton>
             </div>
           </SectionShell>
         </div>

@@ -3,29 +3,40 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/services/dedicated-internet-access";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
   title: "Dedicated Internet Access Ontario | Orbitlink",
   description:
     "Dedicated Internet Access for Ontario businesses that need stronger uptime, more predictable performance, static IP options, and a more formal service model. Check availability by address.",
-  alternates: { canonical: PAGE_PATH },
+  alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Dedicated Internet Access Ontario | Orbitlink",
     description:
       "Dedicated business internet for Ontario offices, healthcare, logistics, warehouses, and multi-site operations. Check availability by address.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Dedicated Internet Access Ontario | Orbitlink",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Dedicated Internet Access Ontario | Orbitlink",
     description:
       "Dedicated business internet for Ontario organizations that need stronger uptime and a more formal service model.",
+    images: [`${SITE_URL}/opengraph-image`],
   },
 };
 
@@ -65,71 +76,84 @@ const FAQ = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Services", item: `${SITE_URL}/services` },
+    "@graph": [
       {
-        "@type": "ListItem",
-        position: 3,
-        name: "Dedicated Internet Access",
-        item: PAGE_URL,
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: "Dedicated Internet Access Ontario | Orbitlink",
+        description:
+          "Dedicated Internet Access for Ontario businesses that need stronger uptime, more predictable performance, static IP options, and a more formal service model. Check availability by address.",
+        isPartOf: {
+          "@id": WEBSITE_ID,
+        },
+        about: {
+          "@id": ORG_ID,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Services",
+            item: `${SITE_URL}/services`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "Dedicated Internet Access",
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "Service",
+        "@id": `${PAGE_URL}#service`,
+        name: "Dedicated Internet Access (DIA)",
+        url: PAGE_URL,
+        provider: {
+          "@id": ORG_ID,
+        },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
+        serviceType: "Dedicated Internet Access",
+        audience: {
+          "@type": "Audience",
+          audienceType: "Business",
+        },
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/contact#intake`,
+        },
+        termsOfService: `${SITE_URL}/legal/terms`,
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
       },
     ],
   };
-
-  const service = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${PAGE_URL}#service`,
-    name: "Dedicated Internet Access (DIA)",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: [
-      { "@type": "AdministrativeArea", name: "Ontario" },
-      { "@type": "City", name: "Mississauga" },
-      { "@type": "City", name: "Toronto" },
-      { "@type": "City", name: "Brampton" },
-      { "@type": "City", name: "Oakville" },
-      { "@type": "City", name: "Vaughan" },
-      { "@type": "City", name: "Markham" },
-      { "@type": "City", name: "Milton" },
-      { "@type": "City", name: "Ottawa" },
-    ],
-    serviceType: [
-      "Dedicated Internet Access",
-      "Dedicated Business Internet",
-      "Enterprise Internet Service",
-      "Internet for Critical Operations",
-      "Ontario Business Connectivity",
-    ],
-    audience: {
-      "@type": "Audience",
-      audienceType: "Business",
-    },
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: `${SITE_URL}/contact#intake`,
-    },
-    termsOfService: `${SITE_URL}/legal/terms`,
-  };
-
-  const faq = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
-      },
-    })),
-  };
-
-  return [breadcrumb, service, faq];
 }
 
 const fitItems = [
