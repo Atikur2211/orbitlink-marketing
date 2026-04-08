@@ -12,7 +12,7 @@ const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 export const metadata: Metadata = {
   title: "Business Connectivity Solutions by Environment | Orbitlink",
   description:
-    "Business connectivity solutions for professional offices, clinics, warehouses, multi-site organizations, and commercial buildings across Ontario. Explore the right fit for fibre, dedicated internet, managed networking, voice, and continuity services.",
+    "Business connectivity solutions for Ontario organizations. Fibre, dedicated internet, managed network, voice, and backup services. Explore the right fit.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Business Connectivity Solutions by Environment | Orbitlink",

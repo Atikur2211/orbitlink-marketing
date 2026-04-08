@@ -17,7 +17,7 @@ const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 export const metadata: Metadata = {
   title: "Trust, Compliance & Operating Posture | Orbitlink",
   description:
-    "Trust and compliance review for Ontario business connectivity. Disclosure-first operations, structured onboarding, evidence-friendly governance, and controlled commercial delivery.",
+    "Trust and compliance for Ontario business connectivity. Disclosure-first operations, structured onboarding, and clear service standards.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Trust, Compliance & Operating Posture | Orbitlink",

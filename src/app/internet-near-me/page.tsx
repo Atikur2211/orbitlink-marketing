@@ -33,7 +33,7 @@ const BUSINESS = {
 export const metadata: Metadata = {
   title: "Business Internet Near Me | Orbitlink",
   description:
-    "Searching for business internet near you? Orbitlink helps Ontario businesses with fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Check availability by address.",
+    "Business internet near you in Ontario. Fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Check availability by address.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
     title: "Business Internet Near Me | Orbitlink",

@@ -11,7 +11,7 @@ const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 export const metadata: Metadata = {
   title: "About Orbitlink | Business Connectivity for Ontario",
   description:
-    "Learn about Orbitlink, a business connectivity brand built for Ontario organizations that want clearer communication, structured delivery, and a long-term infrastructure-led service experience.",
+    "About Orbitlink, a business connectivity provider for Ontario organizations. Fibre, dedicated internet, managed network, and structured service delivery.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "About Orbitlink | Business Connectivity for Ontario",

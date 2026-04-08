@@ -34,7 +34,7 @@ const BUSINESS = {
 export const metadata: Metadata = {
   title: "Ontario Business Internet Locations | Orbitlink",
   description:
-    "Browse Orbitlink Ontario city pages for business fibre internet, dedicated internet access, managed Wi-Fi, voice, and backup connectivity. Availability is checked by address.",
+    "Business internet in Ontario cities. Fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Check availability by address.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Ontario Business Internet Locations | Orbitlink",

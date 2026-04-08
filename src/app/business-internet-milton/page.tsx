@@ -26,7 +26,7 @@ const BUSINESS = {
 export const metadata: Metadata = {
   title: "Business Internet Milton | Orbitlink",
   description:
-    "Business internet in Milton for warehouses, industrial sites, logistics operations, and offices. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.",
+    "Business internet in Milton for warehouses, industrial and logistics operations, and offices. Fibre, dedicated internet, and backup connectivity. Check availability.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
     title: "Business Internet Milton | Orbitlink",
