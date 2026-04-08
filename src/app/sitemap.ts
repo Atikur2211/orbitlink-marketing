@@ -15,7 +15,6 @@ const staticPages = [
   "/contact",
   "/internet-near-me",
   "/legal/acceptable-use",
-  "/legal/cookies",
   "/legal/privacy",
   "/legal/terms",
   "/locations",
