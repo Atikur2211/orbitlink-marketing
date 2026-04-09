@@ -6,7 +6,7 @@ const PAGE_PATH = "/legal/cookies";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 
 export const metadata: Metadata = {
-  title: "Cookies & Analytics | Orbitlink",
+  title: "Cookies & Analytics",
   description:
     "Orbitlink cookies and analytics policy explaining how cookies are used, visitor controls, and site measurement practices.",
   alternates: {

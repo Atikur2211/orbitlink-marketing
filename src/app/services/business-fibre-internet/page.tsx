@@ -10,7 +10,7 @@ const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet Ontario | Orbitlink",
+  title: "Business Fibre Internet Ontario",
   description:
     "Business fibre internet for Ontario organizations. Reliable speeds for offices, clinics, warehouses, and commercial locations. Check availability.",
   alternates: { canonical: PAGE_URL },
@@ -91,7 +91,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Business Fibre Internet Ontario | Orbitlink",
+        name: "Business Fibre Internet Ontario",
         description:
           "Business fibre internet for Ontario offices, clinics, warehouses, and commercial locations. Check availability by address and get pricing, install guidance, and upgrade options.",
         isPartOf: {

@@ -12,7 +12,7 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet Oshawa | Orbitlink",
+  title: "Business Fibre Internet Oshawa",
   description:
     "Business internet in Oshawa for offices, industrial sites, and commercial locations. Fibre, dedicated internet, and address-based availability checks.",
   alternates: {
@@ -96,7 +96,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": PAGE_URL,
         url: PAGE_URL,
-        name: "Business Fibre Internet Oshawa | Orbitlink",
+        name: "Business Fibre Internet Oshawa",
         description:
           "Business internet in Oshawa for offices, industrial sites, and commercial locations. Fibre, dedicated internet, and address-based availability checks.",
         inLanguage: "en-CA",

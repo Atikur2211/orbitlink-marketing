@@ -10,7 +10,7 @@ const TWITTER_IMAGE = `${SITE_URL}/twitter-image`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
-  title: "Starlink Access Coordination Ontario | Orbitlink",
+  title: "Starlink Access Coordination Ontario",
   description:
     "Starlink internet coordination for Ontario businesses where fibre is unavailable, delayed, or impractical.",
   alternates: { canonical: PAGE_URL },
@@ -188,7 +188,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Starlink Access Coordination Ontario | Orbitlink",
+        name: "Starlink Access Coordination Ontario",
         description:
           "Starlink internet coordination for Ontario businesses where fibre is unavailable, delayed, or impractical.",
         isPartOf: {

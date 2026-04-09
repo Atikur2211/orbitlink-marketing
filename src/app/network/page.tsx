@@ -14,7 +14,7 @@ const PAGE_URL = `${SITE_URL}/network`;
 const OG_IMAGE_URL = `${SITE_URL}/network/opengraph-image`;
 
 export const metadata: Metadata = {
-  title: "Network Availability & Service Readiness | Orbitlink",
+  title: "Network Availability & Service Readiness",
   description:
     "Network availability and service readiness for Ontario businesses. Check fibre coverage, service options, and delivery by address.",
   alternates: {
@@ -1093,7 +1093,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Network Availability & Service Readiness | Orbitlink",
+        name: "Network Availability & Service Readiness",
         description:
           "Network availability and service readiness for Ontario businesses. Check fibre coverage, service options, and delivery by address.",
         isPartOf: {

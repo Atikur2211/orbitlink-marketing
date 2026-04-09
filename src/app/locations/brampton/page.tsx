@@ -32,7 +32,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet in Brampton, ON | Orbitlink";
+const PAGE_TITLE = "Business Internet in Brampton, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Brampton with fibre, dedicated internet, managed Wi-Fi, static IPs, voice, and backup connectivity. Availability is checked by address.";
 

@@ -32,7 +32,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet & Fibre in Kingston, ON | Orbitlink™";
+const PAGE_TITLE = "Business Internet & Fibre in Kingston, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Kingston with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
 

@@ -13,7 +13,7 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet Whitby | Orbitlink",
+  title: "Business Fibre Internet Whitby",
   description:
     "Business internet in Whitby for offices, warehouses, and commercial sites. Fibre, dedicated internet, and address-based availability checks.",
   alternates: {
@@ -140,7 +140,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": PAGE_URL,
         url: PAGE_URL,
-        name: "Business Fibre Internet Whitby | Orbitlink",
+        name: "Business Fibre Internet Whitby",
         description:
           "Business internet in Whitby for offices, warehouses, and commercial sites. Fibre, dedicated internet, and address-based availability checks.",
         inLanguage: "en-CA",

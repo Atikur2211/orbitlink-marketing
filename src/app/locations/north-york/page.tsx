@@ -23,7 +23,7 @@ const BUSINESS = {
   },
 } as const;
 
-const PAGE_TITLE = "Business Internet in North York, Toronto | Orbitlink";
+const PAGE_TITLE = "Business Internet in North York, Toronto, ON";
 const PAGE_DESCRIPTION =
   "Business internet in North York with fibre, dedicated internet, managed Wi-Fi, static IPs, voice, and backup connectivity. Availability is checked by address.";
 

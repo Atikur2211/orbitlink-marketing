@@ -12,7 +12,7 @@ const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
-  title: "Static IP Routing Ontario | Orbitlink",
+  title: "Static IP Routing Ontario",
   description:
     "Static IP routing for Ontario businesses. Support VPNs, servers, and secure access with predictable connectivity. Check availability by address.",
   alternates: {
@@ -241,7 +241,7 @@ export default function Page() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Static IP Routing Ontario | Orbitlink",
+        name: "Static IP Routing Ontario",
         description:
           "Business static IP routing for Ontario organizations. Support VPNs, fixed endpoints, hosted services, and policy-based access with structured onboarding and feasibility-led delivery.",
         isPartOf: {

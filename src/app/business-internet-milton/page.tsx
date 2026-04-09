@@ -26,7 +26,7 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Internet Milton | Orbitlink",
+  title: "Business Internet Milton",
   description:
     "Business internet in Milton for warehouses, industrial and logistics operations, and offices. Fibre, dedicated internet, and backup connectivity",
   alternates: { canonical: PAGE_URL },
@@ -133,7 +133,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Business Internet Milton | Orbitlink",
+        name: "Business Internet Milton",
         description:
           "Business internet in Milton for warehouses, industrial and logistics operations, and offices. Fibre, dedicated internet, and backup connectivity. Check availability.",
         isPartOf: {

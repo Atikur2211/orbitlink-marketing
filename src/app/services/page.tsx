@@ -35,7 +35,7 @@ type GroupItem = {
 };
 
 export const metadata: Metadata = {
-  title: "Business Connectivity Services Ontario | Orbitlink",
+  title: "Business Connectivity Services Ontario",
   description:
     "Business fibre internet, dedicated internet, managed Wi-Fi, voice, and backup connectivity for Ontario businesses. Explore services and check availability.",
   alternates: { canonical: PAGE_URL },

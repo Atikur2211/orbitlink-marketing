@@ -32,7 +32,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet in Markham, ON | Orbitlink";
+const PAGE_TITLE = "Business Internet in Markham, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Markham with fibre, dedicated internet, managed Wi-Fi, static IPs, voice, and backup connectivity. Availability is checked by address.";
 

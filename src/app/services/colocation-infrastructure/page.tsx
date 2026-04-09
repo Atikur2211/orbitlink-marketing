@@ -10,7 +10,7 @@ const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
-  title: "Colocation & Infrastructure Services Ontario | Orbitlink",
+  title: "Colocation & Infrastructure Services Ontario",
   description:
     "Colocation and infrastructure services in Ontario. Rack space, cross-connects, and network deployment support for business environments.",
   alternates: { canonical: PAGE_URL },
@@ -197,7 +197,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Colocation & Infrastructure Services Ontario | Orbitlink",
+        name: "Colocation & Infrastructure Services Ontario",
         description:
           "Colocation and infrastructure services in Ontario. Rack space, cross-connects, and network deployment support for business environments.",
         isPartOf: {

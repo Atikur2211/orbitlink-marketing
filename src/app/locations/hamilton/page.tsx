@@ -32,7 +32,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet & Fibre in Hamilton, ON | Orbitlink™";
+const PAGE_TITLE = "Business Internet & Fibre in Hamilton, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Hamilton for industrial sites, warehouses, and offices. Fibre, dedicated internet, and backup connectivity. Check availability.";
 

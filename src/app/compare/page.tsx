@@ -10,7 +10,7 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: "Compare Business Internet Providers in Ontario | Orbitlink",
+  title: "Compare Business Internet Providers in Ontario",
   description:
     "Compare Orbitlink with large telecom providers and smaller ISPs across clarity, support, trust, onboarding, and business fit.",
   alternates: { canonical: PAGE_URL },

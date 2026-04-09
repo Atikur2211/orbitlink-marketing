@@ -12,7 +12,7 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet Newmarket | Orbitlink",
+  title: "Business Fibre Internet Newmarket",
   description:
     "Business internet in Newmarket for offices, professional sites, and commercial locations. Fibre, dedicated internet, checks availability.",
   alternates: {
@@ -96,7 +96,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": PAGE_URL,
         url: PAGE_URL,
-        name: "Business Fibre Internet Newmarket | Orbitlink",
+        name: "Business Fibre Internet Newmarket",
         description:
           "Business internet in Newmarket for offices, professional sites, and commercial locations. Fibre, dedicated internet, and address-based availability checks.",
         inLanguage: "en-CA",

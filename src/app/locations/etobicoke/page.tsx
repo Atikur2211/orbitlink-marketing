@@ -32,7 +32,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Fibre Internet in Etobicoke, Toronto | Orbitlink™";
+const PAGE_TITLE = "Business Fibre Internet in Etobicoke, Toronto";
 const PAGE_DESCRIPTION =
   "Business internet in Etobicoke with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
 

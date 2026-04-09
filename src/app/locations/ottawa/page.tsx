@@ -32,7 +32,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet in Ottawa, ON | Orbitlink";
+const PAGE_TITLE = "Business Internet in Ottawa, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Ottawa with fibre, dedicated internet, managed Wi-Fi, static IPs, voice, and backup connectivity. Availability is checked by address.";
 

@@ -24,7 +24,7 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Internet Near Me | Orbitlink",
+  title: "Business Internet Near Me",
   description:
     "Business internet near you in Ontario. Fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Check availability by address.",
   alternates: { canonical: PAGE_URL },
@@ -127,7 +127,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Business Internet Near Me | Orbitlink",
+        name: "Business Internet Near Me",
         description:
           "Business internet near you in Ontario. Fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Check availability by address.",
         isPartOf: {

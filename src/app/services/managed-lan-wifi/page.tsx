@@ -11,7 +11,7 @@ const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
-  title: "Managed LAN & Enterprise Wi-Fi | Orbitlink",
+  title: "Managed LAN & Enterprise Wi-Fi",
   description:
     "Managed LAN and enterprise Wi-Fi for Ontario organizations. Improve coverage, performance, and secure network access. Check availability.",
   alternates: { canonical: PAGE_URL },
@@ -207,7 +207,7 @@ export default function Page() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Managed LAN & Enterprise Wi-Fi | Orbitlink",
+        name: "Managed LAN & Enterprise Wi-Fi",
         description:
           "Managed LAN and enterprise Wi-Fi for Ontario business environments. Segmentation, guest access, coverage planning, cleaner internal networking, and structured support for offices, commercial suites, and multi-tenant sites.",
         isPartOf: {

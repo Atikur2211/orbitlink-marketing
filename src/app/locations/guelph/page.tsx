@@ -32,7 +32,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet & Fibre in Guelph, ON | Orbitlink™";
+const PAGE_TITLE = "Business Internet & Fibre in Guelph, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Guelph with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
 

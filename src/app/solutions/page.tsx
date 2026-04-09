@@ -10,7 +10,7 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: "Business Connectivity Solutions by Environment | Orbitlink",
+  title: "Business Connectivity Solutions by Environment",
   description:
     "Business connectivity solutions for Ontario organizations. Fibre, dedicated internet, managed network, voice, and backup services. Explore the right fit.",
   alternates: { canonical: PAGE_URL },

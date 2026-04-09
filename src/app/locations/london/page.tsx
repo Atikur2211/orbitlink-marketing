@@ -31,7 +31,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet & Fibre in London, ON | Orbitlink™";
+const PAGE_TITLE = "Business Internet & Fibre in London, ON";
 const PAGE_DESCRIPTION =
   "Business internet in London with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
 

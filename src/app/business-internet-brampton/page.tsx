@@ -14,7 +14,7 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Internet Brampton | Orbitlink",
+  title: "Business Internet Brampton",
   description:
     "Business internet in Brampton for warehouses, offices, and commercial sites. Fibre, dedicated internet, address-based availability checks.",
   alternates: {
@@ -123,7 +123,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": PAGE_URL,
         url: PAGE_URL,
-        name: "Business Internet Brampton | Orbitlink",
+        name: "Business Internet Brampton",
         description:
           "Business internet in Brampton for warehouses, offices, and commercial sites. Fibre, dedicated internet, and address-based availability checks.",
         inLanguage: "en-CA",

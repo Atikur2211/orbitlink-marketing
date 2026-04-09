@@ -15,7 +15,7 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
-  title: "Trust, Compliance & Operating Posture | Orbitlink",
+  title: "Trust, Compliance & Operating Posture",
   description:
     "Trust and compliance for Ontario business connectivity. Disclosure-first operations, structured onboarding, and clear service standards.",
   alternates: { canonical: PAGE_URL },

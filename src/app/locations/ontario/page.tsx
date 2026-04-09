@@ -24,7 +24,7 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Ontario Business Internet Coverage | Orbitlink",
+  title: "Ontario Business Internet Coverage",
   description:
     "Business internet coverage across Ontario for fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Availability is checked by address.",
   alternates: { canonical: PAGE_URL },
@@ -345,7 +345,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Ontario Business Internet Coverage | Orbitlink",
+        name: "Ontario Business Internet Coverage",
         description:
           "Business internet coverage across Ontario for fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Availability is checked by address.",
         isPartOf: {

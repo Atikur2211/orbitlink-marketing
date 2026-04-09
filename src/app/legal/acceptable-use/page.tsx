@@ -6,7 +6,7 @@ const PAGE_PATH = "/legal/acceptable-use";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 
 export const metadata: Metadata = {
-  title: "Acceptable Use Policy | Orbitlink",
+  title: "Acceptable Use Policy",
   description:
     "Orbitlink acceptable use policy outlining permitted and prohibited use of services, including security, abuse prevention, and service integrity.",
   alternates: {

@@ -26,7 +26,7 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Internet Mississauga | Orbitlink",
+  title: "Business Internet Mississauga",
   description:
     "Business internet in Mississauga for offices, warehouses, clinics, and commercial spaces. Fibre, dedicated internet, backup connectivity. Check availability.",
   alternates: { canonical: PAGE_URL },
@@ -133,7 +133,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Business Internet Mississauga | Orbitlink",
+        name: "Business Internet Mississauga",
         description:
           "Business internet in Mississauga for offices, warehouses, clinics, and commercial spaces. Fibre, dedicated internet, and backup connectivity. Check availability.",
         isPartOf: {

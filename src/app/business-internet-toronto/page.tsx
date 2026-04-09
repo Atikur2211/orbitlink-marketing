@@ -133,7 +133,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Business Internet Toronto | Orbitlink",
+        name: "Business Internet Toronto",
         description:
           "Business internet in Toronto for offices, clinics, and commercial spaces. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.",
         isPartOf: {

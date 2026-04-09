@@ -32,7 +32,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet in Vaughan, ON | Orbitlink";
+const PAGE_TITLE = "Business Internet in Vaughan, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Vaughan with fibre, dedicated internet, managed Wi-Fi, static IPs, voice, and backup connectivity. Availability is checked by address.";
 

@@ -31,7 +31,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Fibre Internet in Burlington, ON | Orbitlink™";
+const PAGE_TITLE = "Business Fibre Internet in Burlington, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Burlington for offices, warehouses, and commercial operations. Fibre, dedicated internet, and backup connectivity. Check availability.";
 

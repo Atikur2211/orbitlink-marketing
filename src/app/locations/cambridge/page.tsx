@@ -31,7 +31,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet & Fibre in Cambridge, ON | Orbitlink™";
+const PAGE_TITLE = "Business Internet & Fibre in Cambridge, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Cambridge for industrial sites, warehouses, and offices. Fibre, dedicated internet, and backup connectivity. Check availability.";
 

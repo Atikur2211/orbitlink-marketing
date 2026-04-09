@@ -32,7 +32,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet in Oakville, ON | Orbitlink";
+const PAGE_TITLE = "Business Internet in Oakville, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Oakville for offices, clinics, and commercial spaces. Fibre, dedicated internet, and backup connectivity. Check availability.";
 

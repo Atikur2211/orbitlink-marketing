@@ -142,7 +142,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": PAGE_URL,
         url: PAGE_URL,
-        name: "Business Fibre Internet Milton | Orbitlink",
+        name: "Business Fibre Internet Milton",
         description: PAGE_DESCRIPTION,
         inLanguage: "en-CA",
       },

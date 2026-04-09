@@ -7,7 +7,7 @@ const PAGE_PATH = "/legal";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 
 export const metadata: Metadata = {
-  title: "Policies & Legal | Orbitlink",
+  title: "Policies & Legal",
   description:
     "Orbitlink legal and policy pages including privacy, terms, acceptable use, and cookies. Clear, business-readable documents for buyers and stakeholders.",
   alternates: {

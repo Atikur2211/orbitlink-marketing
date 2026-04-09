@@ -6,7 +6,7 @@ const PAGE_PATH = "/legal/terms";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 
 export const metadata: Metadata = {
-  title: "Terms of Use | Orbitlink",
+  title: "Terms of Use",
   description:
     "Orbitlink terms of use outlining site conditions, acceptable use, limitations, and legal responsibilities for visitors and businesses.",
   alternates: {

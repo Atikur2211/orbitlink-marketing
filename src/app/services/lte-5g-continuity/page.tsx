@@ -11,7 +11,7 @@ const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const metadata: Metadata = {
-  title: "LTE / 5G Continuity Architecture Ontario | Orbitlink",
+  title: "LTE / 5G Continuity Architecture Ontario",
   description:
     "LTE and 5G backup connectivity for Ontario businesses. Reduce downtime with automatic failover and continuity support. Check availability by address.",
   alternates: { canonical: PAGE_URL },
@@ -207,7 +207,7 @@ export default function Page() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "LTE / 5G Continuity Architecture Ontario | Orbitlink",
+        name: "LTE / 5G Continuity Architecture Ontario",
         description:
           "LTE and 5G continuity for Ontario businesses. Structured failover, traffic prioritization, and resilience planning. Check availability by address.",
         isPartOf: {

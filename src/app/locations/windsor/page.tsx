@@ -31,7 +31,7 @@ const BUSINESS = {
   ],
 } as const;
 
-const PAGE_TITLE = "Business Internet & Fibre in Windsor, ON | Orbitlink™";
+const PAGE_TITLE = "Business Internet & Fibre in Windsor, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Windsor with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
 
