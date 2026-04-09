@@ -1,3 +1,4 @@
+// src/app/locations/burlington/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -5,7 +6,6 @@ const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/locations/burlington";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const ORG_ID = `${SITE_URL}/#org`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
@@ -22,16 +22,10 @@ const BUSINESS = {
     postal: "L5R 3E7",
     country: "CA",
   },
-  hours: [
-    { day: "Monday", opens: "09:00", closes: "18:00" },
-    { day: "Tuesday", opens: "09:00", closes: "18:00" },
-    { day: "Wednesday", opens: "09:00", closes: "18:00" },
-    { day: "Thursday", opens: "09:00", closes: "18:00" },
-    { day: "Friday", opens: "09:00", closes: "18:00" },
-  ],
 } as const;
 
-const PAGE_TITLE = "Business Fibre Internet in Burlington, ON";
+const CITY_NAME = "Burlington";
+const PAGE_TITLE = "Business Internet in Burlington, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Burlington for offices, warehouses, and commercial operations. Fibre, dedicated internet, and backup connectivity. Check availability.";
 
@@ -42,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: PAGE_TITLE,
     description:
-      "Business connectivity in Burlington with fibre, DIA, managed LAN and Wi-Fi, continuity options, and address-qualified review.",
+      "Business connectivity in Burlington with fibre, dedicated internet, managed LAN and Wi-Fi, continuity options, and address-qualified review.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -60,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: PAGE_TITLE,
     description:
-      "Business internet in Burlington with fibre, DIA, managed LAN and Wi-Fi, and structured service review.",
+      "Business internet in Burlington with fibre, dedicated internet, managed LAN and Wi-Fi, and structured service review.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -135,82 +129,61 @@ const heroTags = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
-      { "@type": "ListItem", position: 3, name: "Burlington", item: PAGE_URL },
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+        },
+        breadcrumb: {
+          "@id": `${PAGE_URL}#breadcrumb`,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Locations",
+            item: `${SITE_URL}/locations`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: CITY_NAME,
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
+      },
     ],
   };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: BUSINESS.email,
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [
-      { "@type": "City", name: "Burlington" },
-      { "@type": "AdministrativeArea", name: "Ontario" },
-    ],
-    openingHoursSpecification: BUSINESS.hours.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: `https://schema.org/${h.day}`,
-      opens: h.opens,
-      closes: h.closes,
-    })),
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "TelecomService",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Fibre Internet in Burlington",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: {
-      "@type": "City",
-      name: "Burlington",
-    },
-    serviceType: [
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed LAN and Enterprise Wi-Fi",
-      "LTE and 5G Continuity",
-      "VoIP and Cloud Voice",
-      "Static IP Routing",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-
-  return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -257,7 +230,7 @@ export default function BurlingtonLocationPage() {
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="lg:col-span-8">
               <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl lg:leading-[1.02]">
-                Business fibre internet in Burlington
+                Business Internet in Burlington
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
@@ -465,8 +438,8 @@ export default function BurlingtonLocationPage() {
                 </div>
 
                 <div>
-                  <div className="text-white/60">Hours</div>
-                  <div className="text-white/85">Mon–Fri 9:00 AM – 6:00 PM</div>
+                  <div className="text-white/60">Coverage</div>
+                  <div className="text-white/85">Burlington, ON</div>
                 </div>
               </div>
             </div>
