@@ -23,7 +23,7 @@ const BUSINESS = {
   },
 } as const;
 
-const PAGE_TITLE = "Business Internet & Fibre in Niagara / St. Catharines, ON | Orbitlink™";
+const PAGE_TITLE = "Business Internet in Niagara / St. Catharines, ON | Orbitlink";
 const PAGE_DESCRIPTION =
   "Business internet in Niagara and St. Catharines with fibre, dedicated internet, managed Wi-Fi, and address-based service review.";
 

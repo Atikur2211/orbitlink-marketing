@@ -6,42 +6,43 @@ import SiteFooter from "@/components/SiteFooter";
 const SITE_URL = "https://orbitlink.ca";
 const PAGE_PATH = "/business-internet-brampton";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const ORG_ID = `${SITE_URL}/#org`;
 
 const BUSINESS = {
   name: "Orbitlink™",
-  legalName: "TIRAV Technologies Inc. o/a Orbitlink",
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
-  email: "concierge@orbitlink.ca",
-  address: {
-    street: "30 Eglinton Ave W, Suite 400-A77",
-    city: "Mississauga",
-    region: "ON",
-    postal: "L5R 3E7",
-    country: "CA",
-  },
 } as const;
 
 export const metadata: Metadata = {
   title: "Business Internet Brampton | Orbitlink",
   description:
-    "Business internet in Brampton for warehouses, industrial and logistics operations, and offices. Fibre, dedicated internet, and backup connectivity. Check availability.",
-  alternates: { canonical: PAGE_PATH },
+    "Business internet in Brampton for warehouses, offices, and commercial sites. Fibre, dedicated internet, address-based availability checks.",
+  alternates: {
+    canonical: PAGE_URL,
+  },
   openGraph: {
     title: "Business Internet Brampton | Orbitlink",
     description:
-      "Business internet in Brampton for industrial, warehouse, logistics, and office environments. Check availability by address and find the right setup for your business.",
+      "Business internet in Brampton for warehouses, offices, and commercial sites. Fibre, dedicated internet, and address-based availability checks.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
     locale: "en_CA",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink business internet in Brampton",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Business Internet Brampton | Orbitlink",
     description:
-      "Business internet in Brampton for industrial, warehouse, logistics, and office environments.",
+      "Business internet in Brampton for warehouses, offices, and commercial sites.",
+    images: [`${SITE_URL}/twitter-image`],
   },
 };
 
@@ -115,76 +116,48 @@ const modules = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Business Internet Brampton", item: PAGE_URL },
-    ],
-  };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: BUSINESS.email,
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [
-      { "@type": "City", name: "Brampton" },
-      { "@type": "AdministrativeArea", name: "Ontario" },
-    ],
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Internet Brampton",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: { "@type": "City", name: "Brampton" },
-    serviceType: [
-      "Business Internet",
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed LAN and Wi-Fi",
-      "LTE and 5G Backup Connectivity",
-      "VoIP and Cloud Voice",
-      "Static IP Routing",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": PAGE_URL,
+        url: PAGE_URL,
+        name: "Business Internet Brampton | Orbitlink",
+        description:
+          "Business internet in Brampton for warehouses, offices, and commercial sites. Fibre, dedicated internet, and address-based availability checks.",
+        inLanguage: "en-CA",
       },
-    })),
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Business Internet Brampton",
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
+      },
+    ],
   };
-
-  return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -256,7 +229,8 @@ export default function BusinessInternetBramptonPage() {
 
             <p className="mt-3 text-sm text-white/68">
               For many organizations, this becomes a more reliable business internet
-              option in Brampton when uptime, operational stability, and day-to-day performance matter.
+              option in Brampton when uptime, operational stability, and day-to-day
+              performance matter.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">

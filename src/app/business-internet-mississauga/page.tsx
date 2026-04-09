@@ -28,7 +28,7 @@ const BUSINESS = {
 export const metadata: Metadata = {
   title: "Business Internet Mississauga | Orbitlink",
   description:
-    "Business internet in Mississauga for offices, warehouses, clinics, and commercial spaces. Fibre, dedicated internet, and backup connectivity. Check availability.",
+    "Business internet in Mississauga for offices, warehouses, clinics, and commercial spaces. Fibre, dedicated internet, backup connectivity. Check availability.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Business Internet Mississauga | Orbitlink",

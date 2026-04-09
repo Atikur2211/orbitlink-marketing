@@ -18,7 +18,7 @@ const PHONE_DISPLAY = "1-888-867-2480";
 export const metadata: Metadata = {
   title: "Check Availability & Pricing | Orbitlink",
   description:
-    "Check business internet availability, pricing, and the right setup for your location.",
+    "Check business internet availability, pricing, and service fit for your location. Fibre, dedicated internet, and structured connectivity for real operations.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Check Availability & Pricing | Orbitlink",

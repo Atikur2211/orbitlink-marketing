@@ -5,76 +5,70 @@ import Link from "next/link";
 const SITE_URL = "https://orbitlink.ca";
 const PAGE_PATH = "/locations/whitby";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const ORG_ID = `${SITE_URL}/#org`;
 
 const BUSINESS = {
   name: "Orbitlink™",
-  legalName: "TIRAV Technologies Inc. o/a Orbitlink",
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
-  email: "concierge@orbitlink.ca",
-  address: {
-    street: "30 Eglinton Ave W, Suite 400-A77",
-    city: "Mississauga",
-    region: "ON",
-    postal: "L5R 3E7",
-    country: "CA",
-  },
-  hours: [
-    { day: "Monday", opens: "09:00", closes: "18:00" },
-    { day: "Tuesday", opens: "09:00", closes: "18:00" },
-    { day: "Wednesday", opens: "09:00", closes: "18:00" },
-    { day: "Thursday", opens: "09:00", closes: "18:00" },
-    { day: "Friday", opens: "09:00", closes: "18:00" },
-  ],
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet in Whitby, ON | Orbitlink™",
+  title: "Business Fibre Internet Whitby | Orbitlink",
   description:
-    "Business internet in Whitby for offices, warehouses, and commercial sites. Fibre, dedicated internet, and backup connectivity. Check availability.",
-  alternates: { canonical: PAGE_PATH },
+    "Business internet in Whitby for offices, warehouses, and commercial sites. Fibre, dedicated internet, and address-based availability checks.",
+  alternates: {
+    canonical: PAGE_URL,
+  },
   openGraph: {
-    title: "Business Fibre Internet in Whitby, ON | Orbitlink™",
+    title: "Business Fibre Internet Whitby | Orbitlink",
     description:
-      "Business connectivity in Whitby with fibre, DIA, managed LAN & Wi-Fi, continuity architecture, and voice. Availability reviewed by building.",
+      "Business internet in Whitby for offices, warehouses, and commercial sites. Fibre, dedicated internet, and address-based availability checks.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
     locale: "en_CA",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink business internet in Whitby",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Fibre Internet in Whitby, ON | Orbitlink™",
+    title: "Business Fibre Internet Whitby | Orbitlink",
     description:
-      "Operator-grade business connectivity in Whitby with structured onboarding, documented acceptance, and enterprise support posture.",
+      "Business internet in Whitby for offices, warehouses, and commercial sites.",
+    images: [`${SITE_URL}/twitter-image`],
   },
 };
 
 const FAQ = [
   {
     q: "Do you service my address in Whitby?",
-    a: "Availability depends on building infrastructure and upstream feasibility. Orbitlink confirms serviceability per address and clearly scopes any additional build or access work before activation.",
+    a: "Availability depends on building infrastructure and upstream feasibility. Orbitlink confirms serviceability by address and outlines any additional access or build requirements before activation.",
   },
   {
     q: "Is Whitby a strong market for business fibre internet?",
-    a: "Yes. Whitby is a growing Durham-region business market with office, commercial, and expansion-oriented demand where stable connectivity and clean delivery posture matter.",
+    a: "Yes. Whitby is a growing Durham-region business market with office, commercial, and expansion-oriented demand where stable connectivity and structured delivery matter.",
   },
   {
     q: "Do you offer Dedicated Internet Access in Whitby?",
-    a: "Yes. Dedicated Internet Access is available for performance-critical environments that require stronger delivery posture, deterministic performance expectations, and cleaner enterprise handoff, subject to feasibility.",
+    a: "Yes. Dedicated Internet Access may be available for performance-critical environments that require stronger uptime, more predictable performance, and cleaner enterprise handoff.",
   },
   {
     q: "Do you provide static IPs?",
-    a: "Static IP options are available where feasible and depend on access type, design, and location. Options are confirmed during qualification.",
+    a: "Static IP options may be available depending on access type, design, and location. Options are confirmed during qualification.",
   },
   {
     q: "Can you manage LAN and enterprise Wi-Fi?",
-    a: "Yes. Orbitlink supports managed LAN and enterprise Wi-Fi, including segmentation posture, guest access, and coverage planning aligned with a business-grade support model.",
+    a: "Yes. Orbitlink supports managed LAN and business Wi-Fi, including segmentation, guest access, and coverage planning aligned with business operational needs.",
   },
   {
     q: "Do you offer continuity and failover options?",
-    a: "Yes. Orbitlink can design LTE and 5G continuity patterns for sites that require stronger resilience during access disruption, subject to site conditions and feasibility.",
+    a: "Yes. Orbitlink can support LTE and 5G continuity options for sites that require resilience during access disruption, subject to site conditions and feasibility.",
   },
   {
     q: "How long does installation take in Whitby?",
@@ -82,7 +76,7 @@ const FAQ = [
   },
   {
     q: "Are you a reseller?",
-    a: "Orbitlink is the customer-facing operator responsible for commercial qualification, onboarding posture, documentation, and support experience. Some access products may be delivered through partner or reseller models and are clearly identified as such.",
+    a: "Orbitlink is the customer-facing provider responsible for qualification, onboarding, documentation, and support experience. Some access products may be delivered through partner or reseller models and are identified accordingly.",
   },
 ] as const;
 
@@ -139,79 +133,54 @@ const signals = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
-      { "@type": "ListItem", position: 3, name: "Whitby", item: PAGE_URL },
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": PAGE_URL,
+        url: PAGE_URL,
+        name: "Business Fibre Internet Whitby | Orbitlink",
+        description:
+          "Business internet in Whitby for offices, warehouses, and commercial sites. Fibre, dedicated internet, and address-based availability checks.",
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Locations",
+            item: `${SITE_URL}/locations`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "Whitby",
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
+      },
     ],
   };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: BUSINESS.email,
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [
-      { "@type": "City", name: "Whitby" },
-      { "@type": "AdministrativeArea", name: "Ontario" },
-    ],
-    openingHoursSpecification: BUSINESS.hours.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: `https://schema.org/${h.day}`,
-      opens: h.opens,
-      closes: h.closes,
-    })),
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "TelecomService",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Fibre Internet in Whitby",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: { "@type": "City", name: "Whitby" },
-    serviceType: [
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed LAN and Enterprise Wi-Fi",
-      "LTE and 5G Continuity",
-      "VoIP and Cloud Voice",
-      "Static IP Routing",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-
-  return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -335,8 +304,8 @@ export default function WhitbyLocationPage() {
                   Durham-region demand with cleaner qualification
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64">
-                  Whitby is well-suited to business fibre, DIA, managed networking, and continuity
-                  for sites that need a more disciplined buying and delivery path.
+                  Whitby is well-suited to business fibre, dedicated internet, managed networking,
+                  and continuity for sites that need a more disciplined buying and delivery path.
                 </p>
 
                 <div className="mt-5 grid gap-3">
@@ -379,8 +348,8 @@ export default function WhitbyLocationPage() {
                   </p>
                   <p>
                     For many Whitby businesses, the real requirement is not just access. It is the
-                    right mix of business fibre or DIA, internal network stability, and continuity
-                    planning where uptime matters.
+                    right mix of business fibre or dedicated internet, internal network stability,
+                    and continuity planning where uptime matters.
                   </p>
                 </div>
               </div>
@@ -392,8 +361,8 @@ export default function WhitbyLocationPage() {
                     Start with address qualification
                   </div>
                   <p className="mt-3 text-sm leading-6 text-white/63">
-                    If the environment is uptime-sensitive, request DIA and continuity review with
-                    the availability submission.
+                    If the environment is uptime-sensitive, request dedicated internet and
+                    continuity review with the availability submission.
                   </p>
 
                   <div className="mt-4 flex flex-col gap-2">
@@ -445,7 +414,7 @@ export default function WhitbyLocationPage() {
               <div className="lg:col-span-8">
                 <SectionEyebrow>NETWORK POSTURE</SectionEyebrow>
                 <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
-                  Fibre when value matters. DIA when certainty matters.
+                  Fibre when value matters. Dedicated internet when certainty matters.
                 </h2>
 
                 <div className="mt-4 space-y-4 text-sm leading-6 text-white/64 sm:text-[15px]">
@@ -454,14 +423,14 @@ export default function WhitbyLocationPage() {
                     onboarding and a professional delivery experience.
                   </p>
                   <p>
-                    Dedicated Internet Access is the stronger fit when deterministic performance,
+                    Dedicated Internet Access is the stronger fit when predictable performance,
                     cleaner enterprise handoff, or more formal delivery posture is required for
                     critical systems, multi-site routing, or uptime-sensitive operations.
                   </p>
                   <p>
                     Managed LAN and enterprise Wi-Fi help Whitby sites stay stable through better
                     segmentation, cleaner coverage planning, and a support posture that feels
-                    operator-grade rather than consumer-grade.
+                    business-grade rather than consumer-grade.
                   </p>
                 </div>
               </div>

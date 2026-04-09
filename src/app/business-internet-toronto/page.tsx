@@ -26,9 +26,9 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Internet Toronto | Orbitlink",
+  title: "Business Fibre Internet Toronto | Orbitlink",
   description:
-    "Business internet in Toronto for offices, clinics, and commercial spaces. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.",
+    "Business internet in Toronto for offices, clinics, and commercial spaces. Fibre, dedicated internet, and backup connectivity. Check availability by address.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Business Internet Toronto | Orbitlink",

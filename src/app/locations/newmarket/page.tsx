@@ -4,83 +4,78 @@ import Link from "next/link";
 const SITE_URL = "https://orbitlink.ca";
 const PAGE_PATH = "/locations/newmarket";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const ORG_ID = `${SITE_URL}/#org`;
 
 const BUSINESS = {
   name: "Orbitlink™",
-  legalName: "TIRAV Technologies Inc. o/a Orbitlink",
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
-  address: {
-    street: "30 Eglinton Ave W, Suite 400-A77",
-    city: "Mississauga",
-    region: "ON",
-    postal: "L5R 3E7",
-    country: "CA",
-  },
-  hours: [
-    { day: "Monday", opens: "09:00", closes: "18:00" },
-    { day: "Tuesday", opens: "09:00", closes: "18:00" },
-    { day: "Wednesday", opens: "09:00", closes: "18:00" },
-    { day: "Thursday", opens: "09:00", closes: "18:00" },
-    { day: "Friday", opens: "09:00", closes: "18:00" },
-  ],
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Fibre Internet in Newmarket, ON | Orbitlink™",
+  title: "Business Fibre Internet Newmarket | Orbitlink",
   description:
-    "business fibre internet in Newmarket with structured onboarding, documented delivery, and enterprise support. Fibre, DIA, managed LAN & Wi-Fi, continuity, and voice.",
-  alternates: { canonical: PAGE_PATH },
+    "Business internet in Newmarket for offices, professional sites, and commercial locations. Fibre, dedicated internet, checks availability.",
+  alternates: {
+    canonical: PAGE_URL,
+  },
   openGraph: {
-    title: "Business Fibre Internet in Newmarket, ON | Orbitlink™",
+    title: "Business Fibre Internet Newmarket | Orbitlink",
     description:
-      "Business connectivity in Newmarket: fibre, DIA, managed LAN & Wi-Fi, continuity architecture, and voice. Availability by building.",
+      "Business internet in Newmarket for offices, professional sites, and commercial locations. Fibre, dedicated internet, and address-based availability checks.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
     locale: "en_CA",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink business internet in Newmarket",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Fibre Internet in Newmarket, ON | Orbitlink™",
+    title: "Business Fibre Internet Newmarket | Orbitlink",
     description:
-      "Operator-grade business connectivity in Newmarket delivered with structured onboarding, documented acceptance, and enterprise support posture.",
+      "Business internet in Newmarket for offices, professional sites, and commercial locations.",
+    images: [`${SITE_URL}/twitter-image`],
   },
 };
 
 const FAQ = [
   {
     q: "Do you service my address in Newmarket?",
-    a: "Coverage depends on building infrastructure and upstream feasibility. Orbitlink is available on-net where possible, with clear scoping when additional build work is required. Submit an availability request and we’ll confirm feasibility.",
+    a: "Coverage depends on building infrastructure and upstream feasibility. Orbitlink confirms availability by address and outlines next steps when additional feasibility review is required.",
   },
   {
     q: "Is Newmarket a strong market for business fibre internet?",
-    a: "Yes. Newmarket is a strong business market with office, professional services, health sciences, business services, and growth-oriented commercial demand. Orbitlink confirms feasibility per site and aligns the correct service module to operational requirements.",
+    a: "Yes. Newmarket is a strong business market with office, professional services, health sciences, and broader commercial demand.",
   },
   {
     q: "Do you offer Dedicated Internet Access (DIA) in Newmarket?",
-    a: "Yes—DIA is available for performance-critical environments requiring deterministic throughput, cleaner enterprise handoff, and a more formal delivery posture, subject to feasibility.",
+    a: "Yes. Dedicated Internet Access may be available for performance-critical environments requiring stronger uptime, more predictable throughput, and cleaner enterprise handoff.",
   },
   {
     q: "Do you provide static IPs?",
-    a: "Static IP options are available where feasible and depend on the underlying access type and location. We’ll confirm options during onboarding.",
+    a: "Static IP options may be available depending on the underlying access type and location. Options are confirmed during onboarding.",
   },
   {
     q: "Can you manage LAN and enterprise Wi-Fi?",
-    a: "Yes—Orbitlink provides Managed LAN & Enterprise Wi-Fi including segmentation posture, guest access, and coverage planning aligned with an operator-grade support posture.",
+    a: "Yes. Orbitlink supports managed LAN and business Wi-Fi including segmentation, guest access, and coverage planning for operational environments.",
   },
   {
     q: "Do you offer continuity and failover options?",
-    a: "Yes—Orbitlink designs LTE/5G continuity patterns for sites that require uptime during access disruptions. Feasibility depends on site constraints and design.",
+    a: "Yes. Orbitlink can support LTE and 5G continuity options for sites that require uptime during access disruptions, subject to design and feasibility.",
   },
   {
     q: "How long does installation take in Newmarket?",
-    a: "Timelines vary by building readiness, access type, landlord coordination, and upstream delivery conditions. Orbitlink uses structured onboarding and documented acceptance so expectations are clear before activation.",
+    a: "Timelines vary by building readiness, access type, landlord coordination, and upstream delivery conditions. Expectations are confirmed during onboarding.",
   },
   {
     q: "Are you a reseller?",
-    a: "Orbitlink is the customer-facing operator responsible for onboarding posture, documentation, and support experience. Certain access products may be delivered via agent or reseller models and are clearly labeled as such.",
+    a: "Orbitlink is the customer-facing provider responsible for onboarding, documentation, and support experience. Certain access products may be delivered through reseller or agent models and are identified accordingly.",
   },
 ] as const;
 
@@ -94,79 +89,54 @@ const serviceModules = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
-      { "@type": "ListItem", position: 3, name: "Newmarket", item: PAGE_URL },
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": PAGE_URL,
+        url: PAGE_URL,
+        name: "Business Fibre Internet Newmarket | Orbitlink",
+        description:
+          "Business internet in Newmarket for offices, professional sites, and commercial locations. Fibre, dedicated internet, and address-based availability checks.",
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Locations",
+            item: `${SITE_URL}/locations`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "Newmarket",
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
+      },
     ],
   };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: "concierge@orbitlink.ca",
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [
-      { "@type": "City", name: "Newmarket" },
-      { "@type": "AdministrativeArea", name: "Ontario" },
-    ],
-    openingHoursSpecification: BUSINESS.hours.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: `https://schema.org/${h.day}`,
-      opens: h.opens,
-      closes: h.closes,
-    })),
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "TelecomService",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Fibre Internet in Newmarket",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: { "@type": "City", name: "Newmarket" },
-    serviceType: [
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed LAN and Enterprise Wi-Fi",
-      "LTE and 5G Continuity",
-      "VoIP and Cloud Voice",
-      "Static IP Routing",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-
-  return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
 export default function NewmarketLocationPage() {
@@ -177,31 +147,29 @@ export default function NewmarketLocationPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
-      <section className="mx-auto max-w-6xl px-6 pt-16 pb-10">
+      <section className="mx-auto max-w-6xl px-6 pb-10 pt-16">
         <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
           <span className="h-2 w-2 rounded-full bg-white/60" />
           <span className="text-sm tracking-wide text-white/60">Service Area</span>
         </div>
 
         <h1 className="mt-5 text-4xl font-semibold tracking-tight md:text-5xl">
-          Business Fibre Internet in Newmarket, ON
+          Business Fibre Internet in Newmarket
         </h1>
 
         <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
-          Orbitlink delivers operator-grade business connectivity in Newmarket with a disciplined
-          delivery posture: structured onboarding, documented acceptance, and enterprise support
-          posture. Availability is{" "}
-          <span className="font-medium text-white/85">confirmed per building</span>, with clear
-          feasibility scoping when additional build work is required.
+          Orbitlink supports business internet in Newmarket for offices, professional
+          environments, and commercial locations. Availability is confirmed by building so
+          the right service path can be matched before moving forward.
         </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
           {[
             "Availability by building",
             "Structured onboarding",
-            "Documented delivery",
-            "Enterprise support posture",
-            "Office and business-services fit",
+            "Business and office fit",
+            "Commercial qualification",
+            "Enterprise-ready support posture",
           ].map((x) => (
             <span
               key={x}
@@ -232,28 +200,27 @@ export default function NewmarketLocationPage() {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8 lg:col-span-2">
             <h2 className="text-xl font-semibold tracking-tight">
-              Newmarket connectivity for business services, offices, and growth-oriented environments
+              Newmarket connectivity for offices, professional services, and growth-oriented business environments
             </h2>
 
             <div className="mt-3 space-y-4 leading-relaxed text-white/70">
               <p>
-                Newmarket is a strong business location because it actively supports business growth,
-                partnerships, and expansion, with economic-development emphasis around business
-                services, health sciences, manufacturing, and retail.
+                Newmarket is a strong business location with office demand, professional services,
+                health-related activity, and broader commercial growth across York Region.
               </p>
 
               <p>
-                Orbitlink’s posture is operator-grade: confirm feasibility first, align the correct
-                service module, and deliver with documented acceptance checkpoints. That matters in
-                markets like Newmarket where office environments, professional services, clinics,
-                and modern multi-tenant buildings depend on stable access and clean support posture.
+                Orbitlink starts with feasibility confirmation, then aligns the correct service
+                path for the building. That matters in markets like Newmarket where offices,
+                clinics, business services, and commercial buildings can have very different
+                operating requirements.
               </p>
 
               <p>
                 Many Newmarket businesses rely on cloud workloads, voice, VPN access, internal
                 Wi-Fi, cameras, and distributed workflows. In those environments, stable outcomes
-                depend not just on access, but on correct service selection between business fibre
-                and DIA, plus managed LAN/Wi-Fi posture and continuity design where uptime matters.
+                often depend on the right combination of business fibre, dedicated internet,
+                managed LAN and Wi-Fi, and continuity design where uptime matters.
               </p>
 
               <h3 className="pt-2 text-lg font-semibold tracking-tight text-white">
@@ -277,31 +244,31 @@ export default function NewmarketLocationPage() {
               </ul>
 
               <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
-                Broadband fibre vs DIA
+                Business fibre vs dedicated internet
               </h3>
               <p>
-                Business fibre is ideal when you want strong value with disciplined onboarding and a
-                professional delivery posture. DIA is the better fit when deterministic performance,
-                cleaner enterprise handoff, or more formal delivery requirements are needed for
-                critical systems, regulated environments, or uptime-sensitive operations.
+                Business fibre is often the right fit when you need strong value, stable
+                day-to-day performance, and a structured business delivery path. Dedicated
+                internet is better when predictable throughput, stronger uptime, or cleaner
+                enterprise handoff matters for critical systems.
               </p>
 
               <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
                 Managed network posture
               </h3>
               <p>
-                Managed LAN/Wi-Fi helps Newmarket offices and professional environments stay stable:
-                segmentation posture, guest access, coverage planning, and a support experience that
-                feels operator-grade rather than consumer-grade.
+                Managed LAN and Wi-Fi helps Newmarket offices and professional environments stay
+                stable with segmentation, guest access, cleaner coverage planning, and more
+                structured operational support.
               </p>
 
               <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
                 Continuity architecture
               </h3>
               <p>
-                If uptime matters, Orbitlink can design LTE/5G continuity patterns aligned to your
-                critical traffic and operational priorities. Constraints and feasibility are scoped
-                before activation so expectations remain clear.
+                If uptime matters, Orbitlink can support LTE and 5G continuity options aligned
+                to the site’s operational priorities. Constraints and feasibility are reviewed
+                before activation.
               </p>
             </div>
           </div>
@@ -333,7 +300,8 @@ export default function NewmarketLocationPage() {
               <div>
                 <div className="text-white/60">What to include</div>
                 <div className="text-white/85">
-                  Address + posture (broadband vs DIA, static IP, managed LAN/Wi-Fi, continuity).
+                  Address, broadband vs DIA needs, static IP requirements, managed Wi-Fi,
+                  and continuity requirements.
                 </div>
               </div>
             </div>
@@ -341,8 +309,8 @@ export default function NewmarketLocationPage() {
             <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5">
               <h3 className="text-sm font-semibold tracking-tight">Recommended starting point</h3>
               <p className="mt-2 text-sm leading-relaxed text-white/70">
-                Start with feasibility confirmation. If performance is critical, request a DIA
-                assessment and continuity posture review.
+                Start with feasibility confirmation. If performance is critical, request a
+                dedicated internet assessment and continuity review.
               </p>
 
               <div className="mt-4 flex flex-col gap-2">
@@ -393,8 +361,7 @@ export default function NewmarketLocationPage() {
         <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
           <h2 className="text-2xl font-semibold tracking-tight">Newmarket FAQs</h2>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
-            Clear, operational answers—coverage confirmed per site, with scope and feasibility
-            defined before activation.
+            Clear answers with availability confirmed by site before moving forward.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
