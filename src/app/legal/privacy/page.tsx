@@ -6,7 +6,7 @@ const PAGE_PATH = "/legal/privacy";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Orbitlink",
+  title: "Privacy Policy",
   description:
     "Orbitlink privacy policy explaining how information is collected, used, stored, and protected across site interactions and business workflows.",
   alternates: {
