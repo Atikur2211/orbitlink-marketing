@@ -1,18 +1,33 @@
 // src/app/legal/_components/LegalShell.tsx
 import PageShell from "@/components/PageShell";
 
+function formatUpdatedAt(dateString: string) {
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) return dateString;
+
+  return new Intl.DateTimeFormat("en-CA", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(date);
+}
+
 export default function LegalShell({
   eyebrow,
   title,
   subtitle,
   children,
   updatedAt,
+  contactHref = "mailto:concierge@orbitlink.ca",
+  contactLabel = "concierge@orbitlink.ca",
 }: {
   eyebrow: string;
   title: string;
   subtitle: string;
   updatedAt: string; // ISO date like "2026-01-15"
   children: React.ReactNode;
+  contactHref?: string;
+  contactLabel?: string;
 }) {
   return (
     <PageShell eyebrow={eyebrow} title={title} subtitle={subtitle}>
@@ -38,7 +53,8 @@ export default function LegalShell({
             </div>
 
             <div className="text-xs text-white/55">
-              Last updated: <span className="text-white/75">{updatedAt}</span>
+              Last updated:{" "}
+              <span className="text-white/75">{formatUpdatedAt(updatedAt)}</span>
             </div>
           </div>
 
@@ -72,9 +88,9 @@ export default function LegalShell({
 
               <a
                 className="mt-3 inline-flex text-sm text-white/85 transition hover:text-white"
-                href="mailto:concierge@orbitlink.ca"
+                href={contactHref}
               >
-                concierge@orbitlink.ca
+                {contactLabel}
               </a>
 
               <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-xs leading-5 text-white/55">

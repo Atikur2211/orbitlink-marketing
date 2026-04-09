@@ -1,14 +1,43 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 
+const SITE_URL = "https://orbitlink.ca";
+const PAGE_PATH = "/legal/acceptable-use";
+const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
+
 export const metadata: Metadata = {
   title: "Acceptable Use Policy | Orbitlink",
   description:
     "Orbitlink acceptable use policy outlining permitted and prohibited use of services, including security, abuse prevention, and service integrity.",
   alternates: {
-    canonical: "/legal/acceptable-use",
+    canonical: PAGE_URL,
+  },
+  openGraph: {
+    title: "Acceptable Use Policy | Orbitlink",
+    description:
+      "Orbitlink acceptable use policy outlining permitted and prohibited use of services, including security, abuse prevention, and service integrity.",
+    url: PAGE_URL,
+    type: "website",
+    siteName: "Orbitlink",
+    locale: "en_CA",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink acceptable use policy",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Acceptable Use Policy | Orbitlink",
+    description:
+      "Orbitlink acceptable use policy covering permitted use, abuse prevention, and service integrity.",
+    images: [`${SITE_URL}/twitter-image`],
   },
 };
+
 function Item({
   title,
   children,

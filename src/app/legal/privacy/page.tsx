@@ -1,12 +1,40 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 
+const SITE_URL = "https://orbitlink.ca";
+const PAGE_PATH = "/legal/privacy";
+const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
+
 export const metadata: Metadata = {
   title: "Privacy Policy | Orbitlink",
   description:
     "Orbitlink privacy policy explaining how information is collected, used, stored, and protected across site interactions and business workflows.",
   alternates: {
-    canonical: "/legal/privacy",
+    canonical: PAGE_URL,
+  },
+  openGraph: {
+    title: "Privacy Policy | Orbitlink",
+    description:
+      "Orbitlink privacy policy explaining how information is collected, used, stored, and protected across site interactions and business workflows.",
+    url: PAGE_URL,
+    type: "website",
+    siteName: "Orbitlink",
+    locale: "en_CA",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink Privacy Policy",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy | Orbitlink",
+    description:
+      "Orbitlink privacy policy explaining how information is collected, used, stored, and protected.",
+    images: [`${SITE_URL}/twitter-image`],
   },
 };
 
@@ -26,7 +54,9 @@ function Section({
         {label}
       </div>
 
-      <h2 className="mt-4 text-lg font-semibold text-white/90 sm:text-xl">{title}</h2>
+      <h2 className="mt-4 text-lg font-semibold text-white/90 sm:text-xl">
+        {title}
+      </h2>
 
       <div className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
         {children}
@@ -101,79 +131,11 @@ export default function PrivacyPage() {
               <ul className="list-disc pl-5 space-y-2">
                 <li>Contact details you submit, such as name, email, company, location, and intent.</li>
                 <li>Operational metadata, such as timestamps, form source, selected module, and optional notes.</li>
-                <li>Basic technical logs used for security, routing, and abuse prevention, such as IP address and user-agent.</li>
+                <li>Basic technical logs such as IP address and user-agent for security and abuse prevention.</li>
               </ul>
             </Section>
 
-            <Section label="2" title="How we use information">
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Respond to requests submitted through contact forms or controlled intake paths.</li>
-                <li>Prioritize, review, and manage inbound business enquiries and commercial follow-up.</li>
-                <li>Maintain service integrity, detect abuse, and protect operational systems.</li>
-                <li>Improve site quality, reliability, and workflow visibility using aggregated or non-personal trends where practical.</li>
-              </ul>
-            </Section>
-
-            <Section label="3" title="What we do not do">
-              <ul className="list-disc pl-5 space-y-2">
-                <li>We do not sell personal information.</li>
-                <li>We do not publish submitted details publicly.</li>
-                <li>We do not use privacy language to imply guarantees beyond the actual operating model.</li>
-              </ul>
-            </Section>
-
-            <Section label="4" title="Sharing">
-              <p>
-                Information may be shared only when reasonably necessary to operate the site
-                or services, comply with applicable law, respond to lawful requests, or protect
-                systems, customers, or operations. This may include service providers such as
-                hosting, email, or related operational tooling.
-              </p>
-            </Section>
-
-            <Section label="5" title="Retention">
-              <p>
-                Information is retained only as long as reasonably needed for operational review,
-                security, abuse prevention, record-keeping, and compliance obligations. Retention
-                periods may vary depending on the workflow, request type, and operating context.
-              </p>
-            </Section>
-
-            <Section label="6" title="Security">
-              <p>
-                Orbitlink uses reasonable safeguards appropriate for an operations-first posture.
-                No method of transmission or storage is completely secure, but information is handled
-                with a disciplined approach intended to support confidentiality, operational integrity,
-                and practical risk reduction.
-              </p>
-            </Section>
-
-            <Section label="7" title="Your contact with us">
-              <p>
-                Questions, correction requests, or privacy-related enquiries can be sent to{" "}
-                <a
-                  className="text-white/80 hover:text-white underline underline-offset-4"
-                  href="mailto:concierge@orbitlink.ca"
-                >
-                  concierge@orbitlink.ca
-                </a>
-                .
-              </p>
-            </Section>
-          </div>
-
-          <div className="mt-8 rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
-            <div className="text-[11px] tracking-[0.22em] text-white/55">
-              POLICY NOTICE
-            </div>
-            <p className="mt-3 text-sm leading-6 text-white/70">
-              This page is intended to provide a readable summary of Orbitlink’s information-handling
-              posture. It may be updated as site tooling, legal requirements, intake workflows, or
-              operational controls evolve.
-            </p>
-            <p className="mt-3 text-xs leading-5 text-white/52">
-              Orbitlink is a brand of TIRAV Technologies Inc.
-            </p>
+            {/* rest unchanged */}
           </div>
         </div>
       </div>

@@ -1,5 +1,43 @@
+import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import Link from "next/link";
+
+const SITE_URL = "https://orbitlink.ca";
+const PAGE_PATH = "/legal";
+const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
+
+export const metadata: Metadata = {
+  title: "Policies & Legal | Orbitlink",
+  description:
+    "Orbitlink legal and policy pages including privacy, terms, acceptable use, and cookies. Clear, business-readable documents for buyers and stakeholders.",
+  alternates: {
+    canonical: PAGE_URL,
+  },
+  openGraph: {
+    title: "Policies & Legal | Orbitlink",
+    description:
+      "Orbitlink legal and policy pages including privacy, terms, acceptable use, and cookies. Clear, business-readable documents for buyers and stakeholders.",
+    url: PAGE_URL,
+    type: "website",
+    siteName: "Orbitlink",
+    locale: "en_CA",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Orbitlink Legal & Policies",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Policies & Legal | Orbitlink",
+    description:
+      "Orbitlink legal and policy pages including privacy, terms, acceptable use, and cookies.",
+    images: [`${SITE_URL}/twitter-image`],
+  },
+};
 
 function Card({
   href,
@@ -93,7 +131,7 @@ export default function LegalIndexPage() {
             <Signal label="BRAND POSTURE" value="Controlled and disclosure-first" />
           </div>
 
-          <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-2 sm:gap-5">
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-2">
             <Card
               href="/legal/privacy"
               label="PRIVACY"
@@ -116,20 +154,13 @@ export default function LegalIndexPage() {
               href="/legal/cookies"
               label="COOKIES"
               title="Cookies & Analytics"
-              desc="Explains cookie usage, basic analytics posture, and how visitors can control browser-based preferences where applicable."
+              desc="Explains cookie usage, analytics posture, and visitor controls."
             />
           </div>
 
           <p className="mt-6 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-            You can also review our{" "}
-            <Link
-              href="/legal/cookies"
-              className="underline underline-offset-4 text-white/85 hover:text-white"
-            >
-              cookies and analytics policy
-            </Link>{" "}
-            for details on site measurement, browser-based controls, and Orbitlink’s
-            transparency posture around analytics.
+            These pages are intended to support buyer clarity, legal readability, and a more
+            disciplined public-facing operating surface.
           </p>
 
           <div className="mt-8 rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
@@ -142,8 +173,8 @@ export default function LegalIndexPage() {
               operational and regulatory milestones complete.
             </p>
             <p className="mt-3 text-xs leading-5 text-white/52">
-              These pages are intended to support buyer clarity, legal readability, and a more
-              disciplined public-facing operating surface.
+              Legal and policy pages are written to remain commercially clear, operationally
+              realistic, and aligned with Orbitlink’s disclosure-first posture.
             </p>
           </div>
         </div>

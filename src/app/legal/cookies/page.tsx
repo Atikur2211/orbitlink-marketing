@@ -1,24 +1,28 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 
+const SITE_URL = "https://orbitlink.ca";
+const PAGE_PATH = "/legal/cookies";
+const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
+
 export const metadata: Metadata = {
   title: "Cookies & Analytics | Orbitlink",
   description:
     "Orbitlink cookies and analytics policy explaining how cookies are used, visitor controls, and site measurement practices.",
   alternates: {
-    canonical: "/legal/cookies",
+    canonical: PAGE_URL,
   },
   openGraph: {
     title: "Cookies & Analytics | Orbitlink",
     description:
       "Orbitlink cookies and analytics policy explaining how cookies are used, visitor controls, and site measurement practices.",
-    url: "https://orbitlink.ca/legal/cookies",
+    url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
     locale: "en_CA",
     images: [
       {
-        url: "https://orbitlink.ca/opengraph-image",
+        url: `${SITE_URL}/opengraph-image`,
         width: 1200,
         height: 630,
         alt: "Orbitlink Cookies & Analytics",
@@ -30,7 +34,7 @@ export const metadata: Metadata = {
     title: "Cookies & Analytics | Orbitlink",
     description:
       "Orbitlink cookies and analytics policy explaining how cookies are used, visitor controls, and site measurement practices.",
-    images: ["https://orbitlink.ca/opengraph-image"],
+    images: [`${SITE_URL}/twitter-image`],
   },
 };
 
@@ -50,7 +54,9 @@ function Section({
         {label}
       </div>
 
-      <h2 className="mt-4 text-lg font-semibold text-white/90 sm:text-xl">{title}</h2>
+      <h2 className="mt-4 text-lg font-semibold text-white/90 sm:text-xl">
+        {title}
+      </h2>
 
       <div className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
         {children}
@@ -121,33 +127,29 @@ export default function CookiesPage() {
 
             <Section label="2" title="How Orbitlink uses cookies">
               <ul className="list-disc pl-5 space-y-2">
-                <li>Essential site functionality, such as security, session behaviour, and basic routing.</li>
-                <li>Operational stability, where limited technical behaviour helps the site work as intended.</li>
-                <li>Optional aggregate measurement or analytics, if enabled in the future.</li>
+                <li>Essential site functionality such as security and session behaviour.</li>
+                <li>Operational stability where limited technical behaviour helps the site function properly.</li>
+                <li>Optional aggregate measurement or analytics if enabled.</li>
               </ul>
             </Section>
 
             <Section label="3" title="Analytics and measurement">
               <p>
                 Orbitlink may use basic analytics tools to understand high-level site activity,
-                such as page usage, broad traffic patterns, and visitor interaction trends.
-                These tools are intended to support site improvement and operational clarity,
-                not intrusive tracking.
+                including page usage and interaction trends, to improve site performance.
               </p>
             </Section>
 
             <Section label="4" title="Your control">
               <p>
                 You can control or restrict cookies through your browser settings. Disabling
-                certain cookies may affect how parts of the site function or how consistently
-                pages behave during a visit.
+                certain cookies may affect how parts of the site function.
               </p>
             </Section>
 
             <Section label="5" title="Updates to this page">
               <p>
-                As Orbitlink’s platform evolves, this page may be updated to reflect changes
-                in tooling, measurement practices, legal requirements, or operational needs.
+                This page may be updated as Orbitlink’s platform, tools, or requirements evolve.
               </p>
             </Section>
           </div>
@@ -157,7 +159,7 @@ export default function CookiesPage() {
               QUESTIONS
             </div>
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Questions about cookies, analytics, or related site behaviour can be directed to:
+              Questions about cookies, analytics, or site behaviour can be directed to:
             </p>
 
             <a
@@ -169,7 +171,7 @@ export default function CookiesPage() {
 
             <p className="mt-4 text-xs leading-5 text-white/52">
               Orbitlink is a brand of TIRAV Technologies Inc. This page may be updated as
-              site tooling, analytics posture, and operational requirements evolve.
+              site tooling and operational requirements evolve.
             </p>
           </div>
         </div>
