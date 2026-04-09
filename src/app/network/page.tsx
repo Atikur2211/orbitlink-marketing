@@ -1,4 +1,3 @@
-// src/app/network/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageShell from "@/components/PageShell";
@@ -10,6 +9,7 @@ import {
 } from "@/lib/siteStatus";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
 const PAGE_URL = `${SITE_URL}/network`;
 const OG_IMAGE_URL = `${SITE_URL}/network/opengraph-image`;
 
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
       "A clearer view of Orbitlink network readiness, service communication, escalation handling, and address-qualified business availability.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
     images: [
       {
@@ -190,6 +190,38 @@ function HeroCommandPanel() {
               before, during, and after activation.
             </p>
 
+            <div className="mt-4 max-w-2xl text-sm leading-7 text-white/62">
+              Move from network review into{" "}
+              <Link
+                href="/services/business-fibre-internet"
+                className="underline underline-offset-4 hover:text-white"
+              >
+                business fibre
+              </Link>
+              ,{" "}
+              <Link
+                href="/services/dedicated-internet-access"
+                className="underline underline-offset-4 hover:text-white"
+              >
+                dedicated internet
+              </Link>
+              ,{" "}
+              <Link
+                href="/services/colocation-infrastructure"
+                className="underline underline-offset-4 hover:text-white"
+              >
+                colocation & infrastructure services
+              </Link>
+              , or{" "}
+              <Link
+                href="/services/starlink-agent"
+                className="underline underline-offset-4 hover:text-white"
+              >
+                Starlink access coordination
+              </Link>
+              .
+            </div>
+
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/contact#intake"
@@ -310,6 +342,30 @@ function NextStepBridge() {
             Review Ontario service areas and move from market interest into address-based qualification.
           </p>
           <div className="mt-4 text-sm text-white/75">View locations →</div>
+        </Link>
+      </div>
+
+      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <Link
+          href="/services/colocation-infrastructure"
+          className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:bg-black/25"
+        >
+          <div className="text-sm font-medium text-white/90">Colocation & Infrastructure Services</div>
+          <p className="mt-3 text-sm leading-6 text-white/63">
+            Infrastructure-aligned delivery for rack planning, cross-connect coordination, and edge deployment posture.
+          </p>
+          <div className="mt-4 text-sm text-white/75">Open infrastructure service →</div>
+        </Link>
+
+        <Link
+          href="/services/starlink-agent"
+          className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:bg-black/25"
+        >
+          <div className="text-sm font-medium text-white/90">Starlink Access Coordination</div>
+          <p className="mt-3 text-sm leading-6 text-white/63">
+            Satellite coordination for remote, delayed, temporary, or continuity-oriented sites.
+          </p>
+          <div className="mt-4 text-sm text-white/75">Open satellite service →</div>
         </Link>
       </div>
     </Surface>
@@ -959,6 +1015,21 @@ function CoverageAndCTA() {
               View Services
             </Link>
           </div>
+
+          <div className="mt-4 grid grid-cols-1 gap-2 text-sm text-white/70 sm:grid-cols-2">
+            <Link href="/locations/barrie" className="underline hover:text-white">
+              Business internet in Barrie
+            </Link>
+            <Link href="/locations/north-york" className="underline hover:text-white">
+              Business internet in North York
+            </Link>
+            <Link href="/locations/niagara-st-catharines" className="underline hover:text-white">
+              Business internet in Niagara / St. Catharines
+            </Link>
+            <Link href="/internet-near-me" className="underline hover:text-white">
+              Business internet near me
+            </Link>
+          </div>
         </div>
 
         <div className="p-6 lg:col-span-4 sm:p-7">
@@ -1014,129 +1085,89 @@ function NetworkIntegrityFooter() {
   );
 }
 
+function jsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: "Network Availability & Service Readiness | Orbitlink",
+        description:
+          "Network availability and service readiness for Ontario businesses. Check fibre coverage, service options, and delivery by address.",
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+          url: SITE_URL,
+          name: SITE_NAME,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Network",
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "Is this a coverage map?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "No. This page shows Orbitlink’s business network view, not blanket service coverage. Availability is reviewed per address, building conditions, and service scope.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "How does Orbitlink handle outages or incidents?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "Orbitlink follows a structured incident sequence: intake and scope confirmation, network diagnosis, and provider coordination when needed. Updates are handled with documented escalation and clearer ownership.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Do you publish performance claims like latency numbers?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "Orbitlink treats latency and route quality as service measurements, not headline marketing claims. Performance is explained with route, timing, and service context where relevant.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Where do services operate?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "Orbitlink focuses on Ontario business connectivity, with serviceability confirmed through qualified intake by address and deployment scope.",
+            },
+          },
+        ],
+      },
+    ],
+  };
+}
+
 export default function NetworkPage() {
-  const schemaOrg = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${SITE_URL}/#org`,
-    name: "Orbitlink",
-    url: SITE_URL,
-    logo: `${SITE_URL}/logo.png`,
-    sameAs: [],
-    contactPoint: [
-      {
-        "@type": "ContactPoint",
-        contactType: "sales",
-        email: "sales@orbitlink.ca",
-        availableLanguage: ["English"],
-        areaServed: "CA-ON",
-      },
-      {
-        "@type": "ContactPoint",
-        contactType: "customer support",
-        email: "support@orbitlink.ca",
-        availableLanguage: ["English"],
-        areaServed: "CA-ON",
-      },
-    ],
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: "CA",
-      addressRegion: "ON",
-      addressLocality: "Mississauga",
-    },
-  };
-
-  const schemaTelecom = {
-    "@context": "https://schema.org",
-    "@type": "TelecomService",
-    "@id": `${PAGE_URL}#telecom`,
-    name: "Business Fibre & Network Infrastructure",
-    provider: { "@id": `${SITE_URL}/#org` },
-    serviceType: [
-      "Business Internet",
-      "Fibre Connectivity",
-      "Managed Network Services",
-      "Network Monitoring and Escalation",
-    ],
-    areaServed: [
-      { "@type": "AdministrativeArea", name: "Ontario, Canada" },
-      { "@type": "City", name: "Mississauga" },
-    ],
-    audience: {
-      "@type": "Audience",
-      audienceType: "Business",
-    },
-    termsOfService: `${SITE_URL}/legal/terms`,
-  };
-
-  const schemaBreadcrumbs = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: `${SITE_URL}/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Network",
-        item: PAGE_URL,
-      },
-    ],
-  };
-
-  const schemaFaq = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "Is this a coverage map?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "No. This page shows Orbitlink’s business network view, not blanket service coverage. Availability is reviewed per address, building conditions, and service scope.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "How does Orbitlink handle outages or incidents?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "Orbitlink follows a structured incident sequence: intake and scope confirmation, network diagnosis, and provider coordination when needed. Updates are handled with documented escalation and clearer ownership.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Do you publish performance claims like latency numbers?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "Orbitlink treats latency and route quality as service measurements, not headline marketing claims. Performance is explained with route, timing, and service context where relevant.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Where do services operate?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "Orbitlink focuses on Ontario business connectivity, with serviceability confirmed through qualified intake by address and deployment scope.",
-        },
-      },
-    ],
-  };
-
-  const schemaGraph = {
-    "@context": "https://schema.org",
-    "@graph": [schemaOrg, schemaTelecom, schemaBreadcrumbs, schemaFaq],
-  };
-
   return (
     <PageShell
       eyebrow="NETWORK"
@@ -1145,7 +1176,7 @@ export default function NetworkPage() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
       <div className="space-y-4 sm:space-y-6">

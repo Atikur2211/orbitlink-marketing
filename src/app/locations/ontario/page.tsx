@@ -1,4 +1,3 @@
-// src/app/locations/ontario/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -6,7 +5,6 @@ const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/locations/ontario";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const ORG_ID = `${SITE_URL}/#org`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
@@ -23,13 +21,6 @@ const BUSINESS = {
     postal: "L5R 3E7",
     country: "CA",
   },
-  hours: [
-    { day: "Monday", opens: "09:00", closes: "18:00" },
-    { day: "Tuesday", opens: "09:00", closes: "18:00" },
-    { day: "Wednesday", opens: "09:00", closes: "18:00" },
-    { day: "Thursday", opens: "09:00", closes: "18:00" },
-    { day: "Friday", opens: "09:00", closes: "18:00" },
-  ],
 } as const;
 
 export const metadata: Metadata = {
@@ -165,8 +156,6 @@ const CITIES: readonly City[] = [
     tags: ["Regional market", "Industrial demand", "Business internet"],
     signal: "Regional market",
   },
-
-  // Added to fix orphan pages
   {
     name: "Windsor",
     href: "/locations/windsor",
@@ -230,7 +219,6 @@ const CITIES: readonly City[] = [
     tags: ["Office", "Commercial", "Professional"],
     signal: "Ontario market",
   },
-
   {
     name: "Ottawa",
     href: "/locations/ottawa",
@@ -239,6 +227,42 @@ const CITIES: readonly City[] = [
     tier: "Ontario",
     tags: ["Professional services", "Dedicated internet", "Strategic market"],
     signal: "Strategic market",
+  },
+  {
+    name: "Barrie",
+    href: "/locations/barrie",
+    subtitle:
+      "Growing commercial demand with strong local-intent business connectivity needs.",
+    tier: "Ontario",
+    tags: ["Growth", "Local intent", "Business fibre"],
+    signal: "Ontario market",
+  },
+  {
+    name: "North York",
+    href: "/locations/north-york",
+    subtitle:
+      "Office, clinic, and multi-tenant business demand with strong uptime and support expectations.",
+    tier: "Ontario",
+    tags: ["Office", "Professional", "Business-grade"],
+    signal: "Ontario market",
+  },
+  {
+    name: "Newmarket",
+    href: "/locations/newmarket",
+    subtitle:
+      "SMB and office demand where business fibre and managed Wi-Fi are often a strong fit.",
+    tier: "Ontario",
+    tags: ["SMB", "Office", "Managed Wi-Fi"],
+    signal: "Ontario market",
+  },
+  {
+    name: "Kingston",
+    href: "/locations/kingston",
+    subtitle:
+      "Regional business demand with professional, education-adjacent, and operational use cases.",
+    tier: "Ontario",
+    tags: ["Regional", "Professional", "Operations"],
+    signal: "Ontario market",
   },
 ] as const;
 
@@ -301,92 +325,67 @@ const SERVICE_MODULES = [
     href: "/services/lte-5g-continuity",
     body: "Backup planning for outages and continuity-sensitive business operations.",
   },
+  {
+    title: "Colocation & Infrastructure Services",
+    href: "/services/colocation-infrastructure",
+    body: "Rack planning, cross-connect coordination, and infrastructure-aligned delivery posture.",
+  },
+  {
+    title: "Starlink Access Coordination",
+    href: "/services/starlink-agent",
+    body: "Satellite coordination for remote, delayed, temporary, or continuity-oriented business sites.",
+  },
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
-      { "@type": "ListItem", position: 3, name: "Ontario", item: PAGE_URL },
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: "Ontario Business Internet Coverage | Orbitlink",
+        description:
+          "Business internet coverage across Ontario for fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Availability is checked by address.",
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+          url: SITE_URL,
+          name: SITE_NAME,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
+          { "@type": "ListItem", position: 3, name: "Ontario", item: PAGE_URL },
+        ],
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${PAGE_URL}#locations`,
+        name: "Orbitlink Ontario service areas",
+        itemListElement: CITIES.map((c, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: c.name,
+          url: `${SITE_URL}${c.href}`,
+        })),
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
     ],
   };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: BUSINESS.email,
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [{ "@type": "AdministrativeArea", name: "Ontario" }],
-    openingHoursSpecification: BUSINESS.hours.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: `https://schema.org/${h.day}`,
-      opens: h.opens,
-      closes: h.closes,
-    })),
-  };
-
-  const itemList = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "@id": `${PAGE_URL}#locations`,
-    name: "Orbitlink Ontario service areas",
-    itemListElement: CITIES.map((c, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: c.name,
-      url: `${SITE_URL}${c.href}`,
-    })),
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Internet in Ontario",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: { "@type": "AdministrativeArea", name: "Ontario" },
-    serviceType: [
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed LAN and Wi-Fi",
-      "VoIP and Cloud Voice",
-      "LTE and 5G Backup Connectivity",
-      "Static IP Routing",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-
-  return [breadcrumb, localBusiness, itemList, telecomService, faqPage];
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -619,6 +618,36 @@ export default function OntarioHubPage() {
           <Surface className="p-6 sm:p-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
+                <SectionEyebrow>QUICK LINKS</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+                  Important Ontario pages
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                  Direct links to important city, service, and commercial pages across Orbitlink.
+                </p>
+              </div>
+
+              <MetricPill label="PURPOSE" value="Stronger discovery and easier navigation" />
+            </div>
+
+            <div className="mt-7 grid grid-cols-1 gap-2 text-sm text-white/70 sm:grid-cols-2 lg:grid-cols-3">
+              <Link href="/locations/barrie" className="underline hover:text-white">Business internet in Barrie</Link>
+              <Link href="/locations/north-york" className="underline hover:text-white">Business internet in North York</Link>
+              <Link href="/locations/niagara-st-catharines" className="underline hover:text-white">Business internet in Niagara / St. Catharines</Link>
+              <Link href="/locations/newmarket" className="underline hover:text-white">Business internet in Newmarket</Link>
+              <Link href="/locations/sudbury" className="underline hover:text-white">Business internet in Sudbury</Link>
+              <Link href="/locations/kingston" className="underline hover:text-white">Business internet in Kingston</Link>
+              <Link href="/locations/thunder-bay" className="underline hover:text-white">Business internet in Thunder Bay</Link>
+              <Link href="/services/colocation-infrastructure" className="underline hover:text-white">Colocation & infrastructure services</Link>
+              <Link href="/services/starlink-agent" className="underline hover:text-white">Starlink access coordination</Link>
+              <Link href="/why-orbitlink" className="underline hover:text-white">Why Orbitlink</Link>
+              <Link href="/internet-near-me" className="underline hover:text-white">Business internet near me</Link>
+            </div>
+          </Surface>
+
+          <Surface className="p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
                 <SectionEyebrow>PRIORITY MARKETS</SectionEyebrow>
                 <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
                   Core Ontario markets
@@ -678,7 +707,7 @@ export default function OntarioHubPage() {
               <MetricPill label="FLOW" value="Location • Service • Request" />
             </div>
 
-            <div className="mt-7 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-7 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
               {SERVICE_MODULES.map((item) => (
                 <Link
                   key={item.href}
@@ -753,6 +782,12 @@ export default function OntarioHubPage() {
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
                 Trust & Compliance
+              </Link>
+              <Link
+                href="/why-orbitlink"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Why Orbitlink
               </Link>
             </div>
           </Surface>

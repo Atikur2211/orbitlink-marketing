@@ -4,9 +4,11 @@ import TopNav from "@/components/TopNav";
 import SiteFooter from "@/components/SiteFooter";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/business-fibre-internet-ontario";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const ORG_ID = `${SITE_URL}/#org`;
+const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
+const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 const BUSINESS = {
   name: "Orbitlink™",
@@ -28,7 +30,7 @@ export const metadata: Metadata = {
   description:
     "Business fibre internet for Ontario offices, warehouses, clinics, and commercial sites. Check availability by address and find the right setup.",
   alternates: {
-    canonical: PAGE_PATH,
+    canonical: PAGE_URL,
   },
   openGraph: {
     title: "Business Fibre Internet Ontario | Orbitlink",
@@ -36,14 +38,23 @@ export const metadata: Metadata = {
       "Reliable business fibre internet for Ontario businesses. Check address availability and find the right setup for offices, warehouses, clinics, and commercial sites.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
+    images: [
+      {
+        url: OG_IMAGE_URL,
+        width: 1200,
+        height: 630,
+        alt: "Business Fibre Internet Ontario | Orbitlink",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Business Fibre Internet Ontario | Orbitlink",
     description:
       "Business fibre internet for Ontario offices, warehouses, clinics, and commercial sites.",
+    images: [TWITTER_IMAGE_URL],
   },
 };
 
@@ -137,77 +148,54 @@ const cityLinks = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+    "@graph": [
       {
-        "@type": "ListItem",
-        position: 2,
-        name: "Business Fibre Internet Ontario",
-        item: PAGE_URL,
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: "Business Fibre Internet Ontario | Orbitlink",
+        description:
+          "Business fibre internet for Ontario offices, warehouses, clinics, and commercial sites. Check availability by address and find the right setup.",
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+          url: SITE_URL,
+          name: SITE_NAME,
+        },
+        about: {
+          "@type": "Thing",
+          name: "Business fibre internet in Ontario",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Business Fibre Internet Ontario",
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
       },
     ],
   };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: BUSINESS.email,
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: { "@type": "AdministrativeArea", name: "Ontario" },
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Fibre Internet Ontario",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: { "@type": "AdministrativeArea", name: "Ontario" },
-    serviceType: [
-      "Business Fibre Internet",
-      "Business Internet Ontario",
-      "Managed LAN and Wi-Fi",
-      "LTE and 5G Backup Connectivity",
-      "VoIP and Cloud Voice",
-      "Static IP Routing",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
-      },
-    })),
-  };
-
-  return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -240,7 +228,7 @@ function BulletList({ items }: { items: readonly string[] }) {
 
 export default function BusinessFibreInternetOntarioPage() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-[#0B0F14] text-white">
+    <div className="relative min-h-screen overflow-x-hidden bg-[#0B0F14] text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
@@ -774,6 +762,6 @@ export default function BusinessFibreInternetOntarioPage() {
       </section>
 
       <SiteFooter />
-    </main>
+    </div>
   );
 }

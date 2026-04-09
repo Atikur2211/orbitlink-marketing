@@ -329,7 +329,7 @@ function jsonLd() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": PAGE_URL,
+        "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
         name: "Ontario Business Internet Locations | Orbitlink",
         description:
@@ -600,10 +600,65 @@ export default function LocationsHubPage() {
           <h2 className="text-lg font-semibold text-white">
             Business Internet in Ontario Cities
           </h2>
-          <ul className="mt-4 space-y-2 text-sm text-white/70">
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-white/68">
+            Explore Ontario location pages, service pages, and commercial guidance pages that help
+            buyers compare city fit, service options, and next-step availability review.
+          </p>
+
+          <ul className="mt-4 grid grid-cols-1 gap-2 text-sm text-white/70 sm:grid-cols-2 lg:grid-cols-3">
             <li>
               <Link href="/locations/barrie" className="underline hover:text-white">
-                Business internet and fibre in Barrie
+                Business internet in Barrie
+              </Link>
+            </li>
+            <li>
+              <Link href="/locations/north-york" className="underline hover:text-white">
+                Business internet in North York
+              </Link>
+            </li>
+            <li>
+              <Link href="/locations/niagara-st-catharines" className="underline hover:text-white">
+                Business internet in Niagara / St. Catharines
+              </Link>
+            </li>
+            <li>
+              <Link href="/locations/newmarket" className="underline hover:text-white">
+                Business internet in Newmarket
+              </Link>
+            </li>
+            <li>
+              <Link href="/locations/sudbury" className="underline hover:text-white">
+                Business internet in Sudbury
+              </Link>
+            </li>
+            <li>
+              <Link href="/locations/kingston" className="underline hover:text-white">
+                Business internet in Kingston
+              </Link>
+            </li>
+            <li>
+              <Link href="/locations/thunder-bay" className="underline hover:text-white">
+                Business internet in Thunder Bay
+              </Link>
+            </li>
+            <li>
+              <Link href="/services/colocation-infrastructure" className="underline hover:text-white">
+                Colocation & infrastructure services
+              </Link>
+            </li>
+            <li>
+              <Link href="/services/starlink-agent" className="underline hover:text-white">
+                Starlink access coordination
+              </Link>
+            </li>
+            <li>
+              <Link href="/why-orbitlink" className="underline hover:text-white">
+                Why Orbitlink
+              </Link>
+            </li>
+            <li>
+              <Link href="/internet-near-me" className="underline hover:text-white">
+                Business internet near me
               </Link>
             </li>
           </ul>
@@ -730,6 +785,34 @@ export default function LocationsHubPage() {
               </Link>
             ))}
           </div>
+
+          <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
+            <Link
+              href="/services/colocation-infrastructure"
+              className="rounded-[22px] border border-white/10 bg-black/20 p-5 transition hover:bg-white/[0.06] sm:rounded-3xl"
+            >
+              <div className="text-sm font-semibold text-white/90">
+                Colocation & Infrastructure Services
+              </div>
+              <div className="mt-2 text-sm leading-6 text-white/70">
+                Support for rack planning, cross-connect coordination, and infrastructure-aligned deployment.
+              </div>
+              <div className="mt-4 text-xs text-white/55">Open infrastructure service →</div>
+            </Link>
+
+            <Link
+              href="/services/starlink-agent"
+              className="rounded-[22px] border border-white/10 bg-black/20 p-5 transition hover:bg-white/[0.06] sm:rounded-3xl"
+            >
+              <div className="text-sm font-semibold text-white/90">
+                Starlink Access Coordination
+              </div>
+              <div className="mt-2 text-sm leading-6 text-white/70">
+                Satellite coordination for remote, delayed, temporary, or continuity-oriented business environments.
+              </div>
+              <div className="mt-4 text-xs text-white/55">Open satellite service →</div>
+            </Link>
+          </div>
         </Surface>
       </section>
 
@@ -828,6 +911,12 @@ export default function LocationsHubPage() {
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
             >
               View Network
+            </Link>
+            <Link
+              href="/why-orbitlink"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+            >
+              Why Orbitlink
             </Link>
           </div>
         </Surface>

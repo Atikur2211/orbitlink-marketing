@@ -3,6 +3,7 @@ import Link from "next/link";
 import PageShell from "@/components/PageShell";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/why-orbitlink";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
       "See why Ontario businesses choose Orbitlink for clearer qualification, structured onboarding, stronger trust posture, and a more business-ready connectivity experience.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
     images: [
       {
@@ -299,48 +300,27 @@ function ComparisonRow({
   );
 }
 
-export default function WhyOrbitlinkPage() {
-  const schemaGraph = {
+function jsonLd() {
+  return {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "Organization",
-        "@id": `${SITE_URL}/#org`,
-        name: "Orbitlink",
-        url: SITE_URL,
-        logo: `${SITE_URL}/icon.png`,
-        brand: { "@type": "Brand", name: "Orbitlink" },
-        telephone: PHONE_E164,
-        parentOrganization: {
-          "@type": "Organization",
-          name: "TIRAV Technologies Inc.",
-        },
-        contactPoint: {
-          "@type": "ContactPoint",
-          telephone: PHONE_E164,
-          contactType: "sales",
-          areaServed: "CA-ON",
-          availableLanguage: ["English"],
-        },
-      },
-      {
-        "@type": "WebSite",
-        "@id": `${SITE_URL}/#website`,
-        name: "Orbitlink",
-        url: SITE_URL,
-      },
       {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Why Orbitlink",
-        isPartOf: { "@id": `${SITE_URL}/#website` },
-        about: { "@id": `${SITE_URL}/#org` },
+        name: "Why Orbitlink | Business Internet for Ontario Businesses",
         description:
           "A buyer-focused page explaining why Orbitlink is different for business internet, managed networks, and structured service delivery.",
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+          url: SITE_URL,
+          name: SITE_NAME,
+        },
       },
       {
         "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
         itemListElement: [
           {
             "@type": "ListItem",
@@ -358,6 +338,7 @@ export default function WhyOrbitlinkPage() {
       },
       {
         "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
         mainEntity: FAQ_ITEMS.map((item) => ({
           "@type": "Question",
           name: item.q,
@@ -369,7 +350,9 @@ export default function WhyOrbitlinkPage() {
       },
     ],
   };
+}
 
+export default function WhyOrbitlinkPage() {
   return (
     <PageShell
       eyebrow="WHY ORBITLINK"
@@ -378,7 +361,7 @@ export default function WhyOrbitlinkPage() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
       <Surface className="relative overflow-hidden p-6 sm:p-8 lg:p-10">
@@ -419,6 +402,45 @@ export default function WhyOrbitlinkPage() {
               Orbitlink does not assume availability. Requests are reviewed by address,
               building context, and business requirements before moving forward.
             </p>
+
+            <div className="mt-4 max-w-3xl text-sm leading-6 text-white/60 sm:text-[15px]">
+              Explore{" "}
+              <Link
+                href="/services/business-fibre-internet"
+                className="underline underline-offset-4 hover:text-white"
+              >
+                business fibre internet
+              </Link>
+              ,{" "}
+              <Link
+                href="/services/dedicated-internet-access"
+                className="underline underline-offset-4 hover:text-white"
+              >
+                dedicated internet access
+              </Link>
+              ,{" "}
+              <Link
+                href="/services/managed-lan-wifi"
+                className="underline underline-offset-4 hover:text-white"
+              >
+                managed Wi-Fi
+              </Link>
+              ,{" "}
+              <Link
+                href="/services/colocation-infrastructure"
+                className="underline underline-offset-4 hover:text-white"
+              >
+                colocation & infrastructure services
+              </Link>
+              , and{" "}
+              <Link
+                href="/services/starlink-agent"
+                className="underline underline-offset-4 hover:text-white"
+              >
+                Starlink access coordination
+              </Link>
+              .
+            </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {HERO_SIGNALS.map((item) => (
@@ -504,6 +526,33 @@ export default function WhyOrbitlinkPage() {
           Toronto, Brampton, Oakville, Vaughan, Markham, Milton, Ottawa, and surrounding
           commercial regions.
         </p>
+
+        <div className="mt-4 grid grid-cols-1 gap-2 text-sm text-white/70 sm:grid-cols-2 lg:grid-cols-3">
+          <Link href="/locations/barrie" className="underline hover:text-white">
+            Business internet in Barrie
+          </Link>
+          <Link href="/locations/north-york" className="underline hover:text-white">
+            Business internet in North York
+          </Link>
+          <Link href="/locations/niagara-st-catharines" className="underline hover:text-white">
+            Business internet in Niagara / St. Catharines
+          </Link>
+          <Link href="/locations/newmarket" className="underline hover:text-white">
+            Business internet in Newmarket
+          </Link>
+          <Link href="/locations/sudbury" className="underline hover:text-white">
+            Business internet in Sudbury
+          </Link>
+          <Link href="/locations/kingston" className="underline hover:text-white">
+            Business internet in Kingston
+          </Link>
+          <Link href="/locations/thunder-bay" className="underline hover:text-white">
+            Business internet in Thunder Bay
+          </Link>
+          <Link href="/internet-near-me" className="underline hover:text-white">
+            Business internet near me
+          </Link>
+        </div>
       </Surface>
 
       <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
