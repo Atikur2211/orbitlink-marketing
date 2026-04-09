@@ -6,7 +6,6 @@ const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/locations/ottawa";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const ORG_ID = `${SITE_URL}/#org`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
@@ -23,15 +22,9 @@ const BUSINESS = {
     postal: "L5R 3E7",
     country: "CA",
   },
-  hours: [
-    { day: "Monday", opens: "09:00", closes: "18:00" },
-    { day: "Tuesday", opens: "09:00", closes: "18:00" },
-    { day: "Wednesday", opens: "09:00", closes: "18:00" },
-    { day: "Thursday", opens: "09:00", closes: "18:00" },
-    { day: "Friday", opens: "09:00", closes: "18:00" },
-  ],
 } as const;
 
+const CITY_NAME = "Ottawa";
 const PAGE_TITLE = "Business Internet in Ottawa, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Ottawa with fibre, dedicated internet, managed Wi-Fi, static IPs, voice, and backup connectivity. Availability is checked by address.";
@@ -136,79 +129,61 @@ const heroTags = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
-      { "@type": "ListItem", position: 3, name: "Ottawa", item: PAGE_URL },
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+        },
+        breadcrumb: {
+          "@id": `${PAGE_URL}#breadcrumb`,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Locations",
+            item: `${SITE_URL}/locations`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: CITY_NAME,
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
+      },
     ],
   };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: BUSINESS.email,
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [
-      { "@type": "City", name: "Ottawa" },
-      { "@type": "AdministrativeArea", name: "Ontario" },
-    ],
-    openingHoursSpecification: BUSINESS.hours.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: `https://schema.org/${h.day}`,
-      opens: h.opens,
-      closes: h.closes,
-    })),
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Internet in Ottawa",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: { "@type": "City", name: "Ottawa" },
-    serviceType: [
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed LAN and Wi-Fi",
-      "LTE and 5G Backup Connectivity",
-      "VoIP and Cloud Voice",
-      "Static IP Routing",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-
-  return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -255,7 +230,7 @@ export default function OttawaLocationPage() {
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="lg:col-span-8">
               <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl lg:leading-[1.02]">
-                Business internet in Ottawa
+                Business Internet in Ottawa
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
@@ -465,8 +440,8 @@ export default function OttawaLocationPage() {
                 </div>
 
                 <div>
-                  <div className="text-white/60">Hours</div>
-                  <div className="text-white/85">Mon–Fri 9:00 AM – 6:00 PM</div>
+                  <div className="text-white/60">Coverage</div>
+                  <div className="text-white/85">Ottawa, ON</div>
                 </div>
               </div>
             </div>
@@ -528,20 +503,20 @@ export default function OttawaLocationPage() {
         <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
           <SectionEyebrow>FAQ</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight">Ottawa FAQs</h2>
-          <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
             Quick answers for buyers evaluating business internet in Ottawa.
           </p>
 
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
             {FAQ.map((f) => (
               <div key={f.q} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
                 <h3 className="text-base font-semibold tracking-tight">{f.q}</h3>
-                <p className="mt-2 text-sm text-white/70 leading-relaxed">{f.a}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">{f.a}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/services"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"

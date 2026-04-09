@@ -6,7 +6,6 @@ const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/locations/toronto";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const ORG_ID = `${SITE_URL}/#org`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
@@ -23,15 +22,9 @@ const BUSINESS = {
     postal: "L5R 3E7",
     country: "CA",
   },
-  hours: [
-    { day: "Monday", opens: "09:00", closes: "18:00" },
-    { day: "Tuesday", opens: "09:00", closes: "18:00" },
-    { day: "Wednesday", opens: "09:00", closes: "18:00" },
-    { day: "Thursday", opens: "09:00", closes: "18:00" },
-    { day: "Friday", opens: "09:00", closes: "18:00" },
-  ],
 } as const;
 
+const CITY_NAME = "Toronto";
 const PAGE_TITLE = "Business Internet in Toronto, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Toronto with fibre, dedicated internet, managed Wi-Fi, static IPs, voice, and backup connectivity. Availability is checked by address.";
@@ -136,82 +129,61 @@ const heroTags = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
-      { "@type": "ListItem", position: 3, name: "Toronto", item: PAGE_URL },
-    ],
-  };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: BUSINESS.email,
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [
-      { "@type": "City", name: "Toronto" },
-      { "@type": "AdministrativeArea", name: "Ontario" },
-    ],
-    openingHoursSpecification: BUSINESS.hours.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: `https://schema.org/${h.day}`,
-      opens: h.opens,
-      closes: h.closes,
-    })),
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Internet in Toronto",
-    provider: { "@id": ORG_ID },
-    areaServed: { "@type": "City", name: "Toronto" },
-    serviceType: [
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed LAN and Wi-Fi",
-      "Static IP Routing",
-      "VoIP and Cloud Voice",
-      "LTE and 5G Backup Connectivity",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-    url: PAGE_URL,
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+        },
+        breadcrumb: {
+          "@id": `${PAGE_URL}#breadcrumb`,
+        },
       },
-    })),
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Locations",
+            item: `${SITE_URL}/locations`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: CITY_NAME,
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
+      },
+    ],
   };
-
-  return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -258,7 +230,7 @@ export default function TorontoLocationPage() {
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="lg:col-span-8">
               <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl lg:leading-[1.02]">
-                Business internet in Toronto
+                Business Internet in Toronto
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
@@ -477,8 +449,8 @@ export default function TorontoLocationPage() {
                 </div>
 
                 <div>
-                  <div className="text-white/60">Hours</div>
-                  <div className="text-white/85">Mon–Fri 9:00 AM – 6:00 PM</div>
+                  <div className="text-white/60">Coverage</div>
+                  <div className="text-white/85">Toronto, ON</div>
                 </div>
               </div>
             </div>
@@ -545,7 +517,7 @@ export default function TorontoLocationPage() {
         <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
           <SectionEyebrow>FAQ</SectionEyebrow>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight">Toronto FAQs</h2>
-          <p className="mt-2 text-sm text-white/70 max-w-3xl leading-relaxed">
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
             Quick answers for buyers evaluating business internet in Toronto.
           </p>
 
@@ -553,7 +525,7 @@ export default function TorontoLocationPage() {
             {FAQ.map((f) => (
               <div key={f.q} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
                 <h3 className="text-base font-semibold tracking-tight">{f.q}</h3>
-                <p className="mt-2 text-sm text-white/70 leading-relaxed">{f.a}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">{f.a}</p>
               </div>
             ))}
           </div>
