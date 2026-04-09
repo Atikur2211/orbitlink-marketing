@@ -33,7 +33,7 @@ const BUSINESS = {
 
 const PAGE_TITLE = "Business Fibre Internet Milton";
 const PAGE_DESCRIPTION =
-  "Business internet in Milton for warehouses, industrial sites, logistics operations, and offices. Fibre, dedicated internet, and address-based availability checks.";
+  "Business internet in Milton for warehouses, industrial sites, logistics operations, and offices. Fibre, dedicated internet, address-based availability checks.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
