@@ -228,7 +228,7 @@ export default function BusinessInternetTorontoPage() {
         <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
             <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-              Business Internet for Toronto Businesses
+              Business internet in Toronto for offices, clinics, and commercial spaces
             </h1>
 
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/72 md:text-lg">
