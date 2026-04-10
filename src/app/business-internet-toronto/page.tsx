@@ -25,13 +25,16 @@ const BUSINESS = {
   },
 } as const;
 
+const PAGE_TITLE = "Business Internet in Toronto, ON";
+const PAGE_DESCRIPTION =
+  "Business internet in Toronto for offices, clinics, and commercial spaces. Fibre, dedicated internet, and backup connectivity. Check availability by address.";
+
 export const metadata: Metadata = {
-  title: "Business Internet Toronto",
-  description:
-    "Business internet in Toronto for offices, clinics, and commercial spaces. Fibre, dedicated internet, and backup connectivity. Check availability by address.",
+  title: `${PAGE_TITLE} | Orbitlink`,
+  description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Business Internet Toronto | Orbitlink",
+    title: `${PAGE_TITLE} | Orbitlink`,
     description:
       "Business internet in Toronto for offices, clinics, studios, and commercial spaces. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity with address-based availability checks.",
     url: PAGE_URL,
@@ -43,13 +46,13 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Business Internet Toronto | Orbitlink",
+        alt: "Business Internet in Toronto, ON | Orbitlink",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Internet Toronto | Orbitlink",
+    title: `${PAGE_TITLE} | Orbitlink`,
     description:
       "Business internet in Toronto for offices, clinics, and commercial spaces.",
     images: [TWITTER_IMAGE_URL],
@@ -133,9 +136,8 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Business Internet Toronto",
-        description:
-          "Business internet in Toronto for offices, clinics, and commercial spaces. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.",
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
         isPartOf: {
           "@type": "WebSite",
           "@id": `${SITE_URL}/#website`,
@@ -152,7 +154,7 @@ function jsonLd() {
         "@id": `${PAGE_URL}#breadcrumb`,
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-          { "@type": "ListItem", position: 2, name: "Business Internet Toronto", item: PAGE_URL },
+          { "@type": "ListItem", position: 2, name: PAGE_TITLE, item: PAGE_URL },
         ],
       },
       {

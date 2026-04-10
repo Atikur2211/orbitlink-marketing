@@ -1,3 +1,4 @@
+// src/app/locations/thunder-bay/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -5,7 +6,6 @@ const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
 const PAGE_PATH = "/locations/thunder-bay";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const ORG_ID = `${SITE_URL}/#org`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
@@ -22,25 +22,19 @@ const BUSINESS = {
     postal: "L5R 3E7",
     country: "CA",
   },
-  hours: [
-    { day: "Monday", opens: "09:00", closes: "18:00" },
-    { day: "Tuesday", opens: "09:00", closes: "18:00" },
-    { day: "Wednesday", opens: "09:00", closes: "18:00" },
-    { day: "Thursday", opens: "09:00", closes: "18:00" },
-    { day: "Friday", opens: "09:00", closes: "18:00" },
-  ],
 } as const;
 
+const CITY_NAME = "Thunder Bay";
 const PAGE_TITLE = "Business Internet & Fibre in Thunder Bay, ON";
 const PAGE_DESCRIPTION =
   "Business internet in Thunder Bay with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity options, and address-qualified service review.";
 
 export const metadata: Metadata = {
-  title: PAGE_TITLE,
+  title: `${PAGE_TITLE} | Orbitlink`,
   description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: PAGE_TITLE,
+    title: `${PAGE_TITLE} | Orbitlink`,
     description:
       "Business connectivity in Thunder Bay with fibre, DIA, managed LAN and Wi-Fi, continuity options, and address-qualified review.",
     url: PAGE_URL,
@@ -58,7 +52,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: PAGE_TITLE,
+    title: `${PAGE_TITLE} | Orbitlink`,
     description:
       "Business internet in Thunder Bay with fibre, DIA, managed LAN and Wi-Fi, and structured service review.",
     images: [TWITTER_IMAGE_URL],
@@ -135,82 +129,58 @@ const heroTags = [
 ] as const;
 
 function jsonLd() {
-  const breadcrumb = {
+  return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-      { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
-      { "@type": "ListItem", position: 3, name: "Thunder Bay", item: PAGE_URL },
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Locations",
+            item: `${SITE_URL}/locations`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: CITY_NAME,
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq`,
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.a,
+          },
+        })),
+      },
     ],
   };
-
-  const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TelecomCompany"],
-    "@id": `${PAGE_URL}#business`,
-    name: BUSINESS.name,
-    legalName: BUSINESS.legalName,
-    url: SITE_URL,
-    telephone: BUSINESS.phoneE164,
-    email: BUSINESS.email,
-    parentOrganization: { "@id": ORG_ID },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.address.street,
-      addressLocality: BUSINESS.address.city,
-      addressRegion: BUSINESS.address.region,
-      postalCode: BUSINESS.address.postal,
-      addressCountry: BUSINESS.address.country,
-    },
-    areaServed: [
-      { "@type": "City", name: "Thunder Bay" },
-      { "@type": "AdministrativeArea", name: "Ontario" },
-    ],
-    openingHoursSpecification: BUSINESS.hours.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: `https://schema.org/${h.day}`,
-      opens: h.opens,
-      closes: h.closes,
-    })),
-  };
-
-  const telecomService = {
-    "@context": "https://schema.org",
-    "@type": "TelecomService",
-    "@id": `${PAGE_URL}#service`,
-    name: "Business Internet in Thunder Bay",
-    url: PAGE_URL,
-    provider: { "@id": ORG_ID },
-    areaServed: {
-      "@type": "City",
-      name: "Thunder Bay",
-    },
-    serviceType: [
-      "Business Fibre Internet",
-      "Dedicated Internet Access",
-      "Managed LAN and Enterprise Wi-Fi",
-      "LTE and 5G Continuity",
-      "VoIP and Cloud Voice",
-      "Static IP Routing",
-    ],
-    availableChannel: {
-      "@type": "ServiceChannel",
-      serviceUrl: PAGE_URL,
-    },
-  };
-
-  const faqPage = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-
-  return [breadcrumb, localBusiness, telecomService, faqPage];
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -257,7 +227,7 @@ export default function ThunderBayLocationPage() {
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="lg:col-span-8">
               <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl lg:leading-[1.02]">
-                Business internet in Thunder Bay
+                Business Internet in Thunder Bay
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
@@ -464,8 +434,8 @@ export default function ThunderBayLocationPage() {
                 </div>
 
                 <div>
-                  <div className="text-white/60">Hours</div>
-                  <div className="text-white/85">Mon–Fri 9:00 AM – 6:00 PM</div>
+                  <div className="text-white/60">Coverage</div>
+                  <div className="text-white/85">Thunder Bay, ON</div>
                 </div>
               </div>
             </div>
