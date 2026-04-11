@@ -5,9 +5,14 @@ import type { Metadata } from "next";
 import type { HTMLAttributes, ReactNode } from "react";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
 const PAGE_URL = `${SITE_URL}/services`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
+
+const PAGE_TITLE = "Business Connectivity Services in Ontario";
+const PAGE_DESCRIPTION =
+  "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, backup connectivity, and infrastructure services for Ontario businesses. Explore services and check availability.";
 
 type ServiceGroup =
   | "Connectivity"
@@ -35,17 +40,16 @@ type GroupItem = {
 };
 
 export const metadata: Metadata = {
-  title: "Business Connectivity Services Ontario",
-  description:
-    "Business fibre internet, dedicated internet, managed Wi-Fi, voice, and backup connectivity for Ontario businesses. Explore services and check availability.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Business Connectivity Services for Ontario Organizations | Orbitlink",
+    title: PAGE_TITLE,
     description:
       "Business fibre internet, dedicated internet access, managed networking, backup connectivity, voice, routing, and infrastructure services for Ontario organizations.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
     images: [
       {
@@ -58,7 +62,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Connectivity Services for Ontario Organizations | Orbitlink",
+    title: PAGE_TITLE,
     description:
       "Business fibre, dedicated internet, managed networking, backup connectivity, voice, routing, and infrastructure services for Ontario organizations.",
     images: [TWITTER_IMAGE_URL],
@@ -80,7 +84,7 @@ const SERVICES: readonly ServiceItem[] = [
   {
     title: "Business Fibre Internet",
     subtitle:
-      "Fast, reliable internet for offices, clinics, warehouses, and commercial locations.",
+      "Fast, reliable primary internet for offices, clinics, warehouses, and commercial locations.",
     href: "/services/business-fibre-internet",
     bullets: ["Primary internet", "Business locations", "Fast onboarding"],
     tag: "PRIMARY INTERNET",
@@ -102,7 +106,7 @@ const SERVICES: readonly ServiceItem[] = [
     typicalFit: "Critical site • Multi-site operations • High-dependency workloads",
   },
   {
-    title: "Managed LAN & Wi-Fi",
+    title: "Managed LAN and Wi-Fi",
     subtitle:
       "Managed internal networking for better Wi-Fi coverage, segmentation, and day-to-day performance.",
     href: "/services/managed-lan-wifi",
@@ -138,7 +142,7 @@ const SERVICES: readonly ServiceItem[] = [
     typicalFit: "Remote site • Edge location • Limited terrestrial availability",
   },
   {
-    title: "VoIP & Cloud Voice",
+    title: "VoIP and Cloud Voice",
     subtitle:
       "Business voice services with number porting, call routing, and professional call handling.",
     href: "/services/voip-cloud-voice",
@@ -174,7 +178,7 @@ const SERVICES: readonly ServiceItem[] = [
     typicalFit: "VPN • Firewall • Remote access • Hosted applications",
   },
   {
-    title: "Colocation & Infrastructure Services",
+    title: "Colocation and Infrastructure Services",
     subtitle:
       "Infrastructure support for rack space, cross-connects, interconnection, and future network planning.",
     href: "/services/colocation-infrastructure",
@@ -204,7 +208,7 @@ const GROUPS: readonly GroupItem[] = [
   },
   {
     title: "Continuity",
-    eyebrow: "BACKUP & RESILIENCE",
+    eyebrow: "BACKUP AND RESILIENCE",
     description:
       "Backup and continuity services for businesses that want better uptime planning.",
     id: "continuity",
@@ -409,15 +413,15 @@ function JumpNav() {
 function StartHereStrip() {
   const items = [
     {
-      title: "Offices & Clinics",
+      title: "Offices and clinics",
       body: "Reliable internet and stable day-to-day business operations.",
     },
     {
-      title: "Critical Operations",
+      title: "Critical operations",
       body: "Dedicated internet and stronger uptime for higher-dependency sites.",
     },
     {
-      title: "Internal Network Issues",
+      title: "Internal network issues",
       body: "Wi-Fi, LAN, segmentation, and performance issues inside the business.",
     },
   ];
@@ -893,10 +897,10 @@ export default function ServicesIndexPage() {
       {
         "@type": "Organization",
         "@id": `${SITE_URL}/#org`,
-        name: "Orbitlink",
+        name: SITE_NAME,
         url: SITE_URL,
         logo: `${SITE_URL}/icon.png`,
-        brand: { "@type": "Brand", name: "Orbitlink" },
+        brand: { "@type": "Brand", name: SITE_NAME },
         parentOrganization: {
           "@type": "Organization",
           name: "TIRAV Technologies Inc.",
@@ -904,13 +908,21 @@ export default function ServicesIndexPage() {
       },
       {
         "@type": "WebPage",
-        name: "Orbitlink Services",
+        "@id": `${PAGE_URL}#webpage`,
+        name: PAGE_TITLE,
         url: PAGE_URL,
         description:
           "Business fibre internet, dedicated internet access, managed networking, backup connectivity, cloud voice, and infrastructure services for Ontario organizations.",
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+          url: SITE_URL,
+          name: SITE_NAME,
+        },
       },
       {
         "@type": "ItemList",
+        "@id": `${PAGE_URL}#itemlist`,
         name: "Orbitlink Services",
         itemListElement: SERVICES.map((service, index) => ({
           "@type": "ListItem",
@@ -921,6 +933,7 @@ export default function ServicesIndexPage() {
       },
       {
         "@type": "FAQPage",
+        "@id": `${PAGE_URL}#faq-schema`,
         mainEntity: [
           {
             "@type": "Question",
@@ -958,6 +971,7 @@ export default function ServicesIndexPage() {
       },
       {
         "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
         itemListElement: [
           {
             "@type": "ListItem",
@@ -998,7 +1012,7 @@ export default function ServicesIndexPage() {
           <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[62svh] max-w-7xl items-center px-5 pb-10 pt-24 sm:px-7 sm:min-h-[58svh] sm:pb-12 sm:pt-22 lg:min-h-[56svh] lg:px-10 lg:pb-14 lg:pt-20">
+        <div className="relative mx-auto flex min-h-[62svh] max-w-7xl items-center px-5 pb-10 pt-24 sm:min-h-[58svh] sm:pb-12 sm:pt-22 lg:min-h-[56svh] lg:px-10 lg:pb-14 lg:pt-20">
           <div className="w-full max-w-[46rem]">
             <Breadcrumbs />
 
@@ -1013,8 +1027,9 @@ export default function ServicesIndexPage() {
             </h1>
 
             <p className="mt-4 max-w-2xl text-[14px] leading-7 text-white/80 sm:text-[15px]">
-              Explore business internet, dedicated connections, managed Wi-Fi, backup, and voice services.
-              Start with what your business needs, then check availability and pricing.
+              Explore business fibre, dedicated internet, managed Wi-Fi, backup connectivity,
+              voice, routing, and infrastructure services. Start with what your business needs,
+              then check availability and pricing.
             </p>
 
             <div className="mt-3 text-sm text-white/70">
@@ -1023,10 +1038,11 @@ export default function ServicesIndexPage() {
 
             <div className="mt-6 flex flex-wrap gap-2">
               {[
-                "Office & clinic environments",
-                "Warehouse & industrial",
+                "Office and clinic environments",
+                "Warehouse and industrial",
                 "Multi-site operations",
                 "Critical connectivity",
+                "Business-only review",
               ].map((item) => (
                 <span
                   key={item}
@@ -1042,7 +1058,7 @@ export default function ServicesIndexPage() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Check Availability
+                Check Business Internet Availability
               </Link>
 
               <Link
@@ -1050,6 +1066,13 @@ export default function ServicesIndexPage() {
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
                 Request Pricing
+              </Link>
+
+              <Link
+                href="/business-fibre-internet-ontario"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Ontario Fibre Hub
               </Link>
             </div>
 
