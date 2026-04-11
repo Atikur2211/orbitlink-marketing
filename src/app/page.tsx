@@ -15,9 +15,9 @@ const CANONICAL_URL = `${SITE_URL}/`;
 const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
-const META_TITLE = "Business Fibre Internet Ontario | Orbitlink";
+const META_TITLE = "Business Fibre Internet in Ontario";
 const META_DESCRIPTION =
-  "Business fibre internet and dedicated internet for Ontario businesses. Check availability by address and get the right connectivity solution.";
+  "Business fibre internet, dedicated internet access, managed Wi-Fi, and backup connectivity for Ontario businesses. Check availability by address and get the right commercial setup.";
 
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
@@ -127,15 +127,21 @@ function FitCard({
 function SolutionCard({
   title,
   desc,
+  href,
 }: {
   title: string;
   desc: string;
+  href: string;
 }) {
   return (
-    <div className="rounded-[20px] border border-white/10 bg-white/[0.04] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#FACC15]/25 hover:bg-white/[0.06] sm:rounded-[24px] sm:p-5">
+    <Link
+      href={href}
+      className="rounded-[20px] border border-white/10 bg-white/[0.04] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#FACC15]/25 hover:bg-white/[0.06] sm:rounded-[24px] sm:p-5"
+    >
       <div className="text-sm font-medium text-white/92">{title}</div>
       <p className="mt-2.5 text-sm leading-6 text-white/66">{desc}</p>
-    </div>
+      <div className="mt-3 text-xs text-white/58">Open service →</div>
+    </Link>
   );
 }
 
@@ -277,7 +283,7 @@ export default function Home() {
         termsOfService: `${SITE_URL}/legal/terms`,
         url: CANONICAL_URL,
         description:
-          "Business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity for Ontario organizations.",
+          "Business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity for Ontario businesses.",
       },
       {
         "@type": "BreadcrumbList",
@@ -360,20 +366,20 @@ export default function Home() {
 
         <div className="relative mx-auto flex min-h-[70svh] max-w-7xl items-center px-4 pb-10 pt-20 sm:min-h-[76svh] sm:px-7 sm:pb-14 sm:pt-24 lg:min-h-[80vh] lg:px-10 lg:pb-16 lg:pt-20">
           <div className="w-full max-w-4xl">
-            <div className="w-full max-w-[325px] truncate rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:max-w-max sm:text-xs">
+            <div className="w-full max-w-[355px] truncate rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:max-w-max sm:text-xs">
               <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Fibre • Dedicated Internet • Managed Network Infrastructure
+              Business Fibre • Dedicated Internet • Managed Network Infrastructure
             </div>
 
             <h1 className="mt-5 max-w-[11ch] text-[2.15rem] font-semibold leading-[0.94] tracking-tight text-white sm:max-w-[12.5ch] sm:text-[3.2rem] lg:max-w-5xl lg:text-[4.4rem] xl:text-[5.1rem]">
-              Business Connectivity
+              Business Internet
               <span className="block text-white/70">Engineered Properly</span>
             </h1>
 
             <p className="mt-4 max-w-[42rem] text-[15px] leading-6 text-white/86 sm:text-[1.04rem] sm:leading-7">
-              Fibre, dedicated internet, and managed network infrastructure
-              designed for offices, clinics, warehouses, and multi-site operations
-              across Ontario.
+              Fibre, dedicated internet access, managed Wi-Fi, and backup
+              connectivity designed for offices, clinics, warehouses, and
+              multi-site operations across Ontario.
             </p>
 
             <div className="mt-3 text-[13px] leading-5 text-white/64 sm:text-sm">
@@ -386,6 +392,7 @@ export default function Home() {
                 "Ontario coverage",
                 "Reviewed by address",
                 "Clear next step",
+                "Structured onboarding",
               ].map((item) => (
                 <span
                   key={item}
@@ -402,7 +409,7 @@ export default function Home() {
                   href="/contact#intake"
                   className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047] sm:rounded-2xl"
                 >
-                  Check Availability
+                  Check Business Internet Availability
                 </Link>
                 <div className="text-center text-[11px] text-white/55 sm:text-left sm:text-xs">
                   Business-only review • No obligation • Clear next step
@@ -417,10 +424,10 @@ export default function Home() {
               </Link>
 
               <Link
-                href="/services"
+                href="/business-fibre-internet-ontario"
                 className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10 sm:rounded-2xl"
               >
-                Explore Services
+                Ontario Fibre Hub
               </Link>
             </div>
 
@@ -450,15 +457,15 @@ export default function Home() {
 
           <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-3 sm:mt-8 sm:gap-4">
             <FitCard
-              title="Offices & Clinics"
+              title="Offices and clinics"
               body="Stable connectivity, managed Wi-Fi, and a cleaner fit for professional business environments."
             />
             <FitCard
-              title="Critical Operations"
-              body="Dedicated internet and continuity planning for uptime-sensitive environments."
+              title="Critical operations"
+              body="Dedicated internet access and continuity planning for uptime-sensitive environments."
             />
             <FitCard
-              title="Internal Network Issues"
+              title="Internal network issues"
               body="Coverage, LAN, and Wi-Fi problems that affect staff, devices, and day-to-day operations."
             />
           </div>
@@ -487,7 +494,7 @@ export default function Home() {
               </div>
               <MiniMetaCard
                 title="FOCUS"
-                value="Fibre • Dedicated • Managed Network • Backup"
+                value="Fibre • Dedicated • Managed Wi-Fi • Backup"
               />
             </div>
 
@@ -495,22 +502,27 @@ export default function Home() {
               <SolutionCard
                 title="Business fibre internet"
                 desc="Business-grade fibre for offices, clinics, warehouses, and commercial sites."
+                href="/services/business-fibre-internet"
               />
               <SolutionCard
                 title="Dedicated internet access"
                 desc="Higher-assurance internet for uptime-sensitive and performance-critical environments."
+                href="/services/dedicated-internet-access"
               />
               <SolutionCard
                 title="Managed Wi-Fi"
                 desc="Improved wireless coverage, device performance, and day-to-day reliability."
+                href="/services/managed-lan-wifi"
               />
               <SolutionCard
                 title="LTE / 5G backup"
                 desc="Secondary connectivity for continuity when the primary link matters."
+                href="/services/lte-5g-continuity"
               />
               <SolutionCard
                 title="Business voice"
                 desc="Voice services aligned to support flow, growth, and business operations."
+                href="/services/voip-cloud-voice"
               />
             </div>
 
@@ -624,12 +636,12 @@ export default function Home() {
             <CoverageCard
               city="Toronto"
               note="Business internet and commercial connectivity"
-              href="/locations/toronto"
+              href="/business-internet-toronto"
             />
             <CoverageCard
               city="Mississauga"
               note="Priority business market"
-              href="/locations/mississauga"
+              href="/business-internet-mississauga"
             />
             <CoverageCard
               city="Vaughan"
@@ -639,8 +651,19 @@ export default function Home() {
             <CoverageCard
               city="Brampton"
               note="Warehouse and logistics environments"
-              href="/locations/brampton"
+              href="/business-internet-brampton"
             />
+          </div>
+
+          <div className="mt-5 text-sm leading-6 text-white/64">
+            You can also review the{" "}
+            <Link
+              href="/business-fibre-internet-ontario"
+              className="underline underline-offset-4 text-white/84 hover:text-white"
+            >
+              Ontario business fibre hub
+            </Link>{" "}
+            for province-wide business connectivity planning.
           </div>
         </div>
       </section>
@@ -702,7 +725,7 @@ export default function Home() {
                 href="/contact#intake"
                 className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047] sm:rounded-2xl"
               >
-                Check Availability
+                Check Business Internet Availability
               </Link>
               <div className="text-center text-[11px] text-white/55 sm:text-left sm:text-xs">
                 Business-only review • No obligation • Clear next step
