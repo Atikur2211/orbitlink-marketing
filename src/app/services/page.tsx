@@ -1,4 +1,3 @@
-// src/app/services/page.tsx
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
@@ -6,13 +5,23 @@ import type { HTMLAttributes, ReactNode } from "react";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
+const LEGAL_NAME = "TIRAV Technologies Inc.";
+const BRAND_PHONE_E164 = "+18888672480";
 const PAGE_URL = `${SITE_URL}/services`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
+const ORG_ID = `${SITE_URL}/#organization`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const WEBPAGE_ID = `${PAGE_URL}#webpage`;
+const SERVICE_ID = `${PAGE_URL}#service`;
+const ITEMLIST_ID = `${PAGE_URL}#itemlist`;
+const FAQ_ID = `${PAGE_URL}#faq`;
+const BREADCRUMB_ID = `${PAGE_URL}#breadcrumb`;
+
 const PAGE_TITLE = "Business Connectivity Services in Ontario";
 const PAGE_DESCRIPTION =
-  "Business fibre internet, dedicated internet access, managed Wi-Fi, voice, backup connectivity, and infrastructure services for Ontario businesses. Explore services and check availability.";
+  "Business internet, dedicated fibre, managed Wi-Fi, voice, and backup connectivity for Ontario companies. Explore services and check availability.";
 
 type ServiceGroup =
   | "Connectivity"
@@ -45,8 +54,7 @@ export const metadata: Metadata = {
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: PAGE_TITLE,
-    description:
-      "Business fibre internet, dedicated internet access, managed networking, backup connectivity, voice, routing, and infrastructure services for Ontario organizations.",
+    description: PAGE_DESCRIPTION,
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -63,8 +71,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: PAGE_TITLE,
-    description:
-      "Business fibre, dedicated internet, managed networking, backup connectivity, voice, routing, and infrastructure services for Ontario organizations.",
+    description: PAGE_DESCRIPTION,
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -229,6 +236,25 @@ const GROUPS: readonly GroupItem[] = [
   },
 ];
 
+const FAQ_ITEMS = [
+  {
+    q: "How do I choose between business fibre and dedicated internet access?",
+    a: "Business fibre is often the right fit for general business internet, while dedicated internet is better for environments that need stronger uptime, cleaner escalation, and more predictable performance.",
+  },
+  {
+    q: "Can I use this page to request pricing?",
+    a: "Yes. Start with the service that best matches your business need, then move into availability and pricing with your address and timeline.",
+  },
+  {
+    q: "Is this page for residential internet?",
+    a: "No. Orbitlink’s services page is designed for business locations and commercial environments in Ontario.",
+  },
+  {
+    q: "What happens after I pick a service?",
+    a: "The next step is to submit your business location and service need so Orbitlink can review availability and the best path forward.",
+  },
+] as const;
+
 function MetricPill({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
@@ -288,7 +314,9 @@ function ServiceCard({ service }: { service: ServiceItem }) {
             <h3 className="mt-3 text-lg font-semibold tracking-tight text-white sm:text-xl">
               {service.title}
             </h3>
-            <p className="mt-3 text-sm leading-6 text-white/64">{service.subtitle}</p>
+            <p className="mt-3 text-sm leading-6 text-white/64">
+              {service.subtitle}
+            </p>
           </div>
 
           <div className="shrink-0 rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] text-white/66 transition group-hover:border-[#FACC15]/30 group-hover:bg-white/10 group-hover:text-white">
@@ -474,7 +502,8 @@ function AudienceStrip() {
           Built for Ontario businesses
         </h2>
         <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-          This page is for businesses reviewing internet, managed networking, backup, voice, and infrastructure services in Ontario.
+          This page is for businesses reviewing internet, managed networking, backup,
+          voice, and infrastructure services in Ontario.
         </p>
       </div>
 
@@ -766,7 +795,7 @@ function HumanAnchor() {
           <div className="mt-5 flex flex-wrap gap-2">
             <TrustPill text="Business-only review" />
             <TrustPill text="Reviewed by address" />
-            <TrustPill text="Operated by TIRAV Technologies Inc." />
+            <TrustPill text={`Operated by ${LEGAL_NAME}`} />
           </div>
         </div>
 
@@ -777,25 +806,6 @@ function HumanAnchor() {
 }
 
 function FAQStrip() {
-  const items = [
-    {
-      q: "How do I choose between business fibre and dedicated internet access?",
-      a: "Business fibre is often the right fit for general business internet, while dedicated internet is better for environments that need stronger uptime, cleaner escalation, and more predictable performance.",
-    },
-    {
-      q: "Can I use this page to request pricing?",
-      a: "Yes. Start with the service that best matches your business need, then move into availability and pricing with your address and timeline.",
-    },
-    {
-      q: "Is this page for residential internet?",
-      a: "No. Orbitlink’s services page is designed for business locations and commercial environments in Ontario.",
-    },
-    {
-      q: "What happens after I pick a service?",
-      a: "The next step is to submit your business location and service need so Orbitlink can review availability and the best path forward.",
-    },
-  ];
-
   return (
     <Surface id="faq" className="scroll-mt-28 p-5 sm:p-8 lg:p-10">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
@@ -815,7 +825,7 @@ function FAQStrip() {
       </div>
 
       <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
-        {items.map((item) => (
+        {FAQ_ITEMS.map((item) => (
           <div
             key={item.q}
             className="rounded-[22px] border border-white/10 bg-black/20 p-5 sm:rounded-[26px]"
@@ -896,33 +906,97 @@ export default function ServicesIndexPage() {
     "@graph": [
       {
         "@type": "Organization",
-        "@id": `${SITE_URL}/#org`,
+        "@id": ORG_ID,
         name: SITE_NAME,
+        legalName: LEGAL_NAME,
         url: SITE_URL,
-        logo: `${SITE_URL}/icon.png`,
-        brand: { "@type": "Brand", name: SITE_NAME },
-        parentOrganization: {
-          "@type": "Organization",
-          name: "TIRAV Technologies Inc.",
+        telephone: BRAND_PHONE_E164,
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
         },
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            telephone: BRAND_PHONE_E164,
+            areaServed: "CA-ON",
+            availableLanguage: ["English"],
+            url: `${SITE_URL}/contact`,
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            telephone: BRAND_PHONE_E164,
+            areaServed: "CA-ON",
+            availableLanguage: ["English"],
+            url: `${SITE_URL}/contact`,
+          },
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": WEBSITE_ID,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: {
+          "@id": ORG_ID,
+        },
+        inLanguage: "en-CA",
       },
       {
         "@type": "WebPage",
-        "@id": `${PAGE_URL}#webpage`,
+        "@id": WEBPAGE_ID,
         name: PAGE_TITLE,
         url: PAGE_URL,
-        description:
-          "Business fibre internet, dedicated internet access, managed networking, backup connectivity, cloud voice, and infrastructure services for Ontario organizations.",
-        isPartOf: {
-          "@type": "WebSite",
-          "@id": `${SITE_URL}/#website`,
-          url: SITE_URL,
-          name: SITE_NAME,
+        description: PAGE_DESCRIPTION,
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": ORG_ID },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: OG_IMAGE_URL,
         },
+        breadcrumb: { "@id": BREADCRUMB_ID },
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "Service",
+        "@id": SERVICE_ID,
+        name: "Orbitlink Business Connectivity Services",
+        url: PAGE_URL,
+        provider: {
+          "@id": ORG_ID,
+        },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
+        audience: {
+          "@type": "Audience",
+          audienceType: "Business",
+        },
+        serviceType: [
+          "Business Fibre Internet",
+          "Dedicated Internet Access",
+          "Managed LAN and Wi-Fi",
+          "LTE / 5G Backup Connectivity",
+          "Starlink",
+          "VoIP and Cloud Voice",
+          "IoT Connectivity",
+          "Static IP Routing",
+          "Colocation and Infrastructure Services",
+        ],
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/contact#intake`,
+        },
+        termsOfService: `${SITE_URL}/legal/terms`,
+        description:
+          "Business internet, dedicated fibre, managed Wi-Fi, voice, backup, and infrastructure services for Ontario businesses.",
       },
       {
         "@type": "ItemList",
-        "@id": `${PAGE_URL}#itemlist`,
+        "@id": ITEMLIST_ID,
         name: "Orbitlink Services",
         itemListElement: SERVICES.map((service, index) => ({
           "@type": "ListItem",
@@ -933,45 +1007,19 @@ export default function ServicesIndexPage() {
       },
       {
         "@type": "FAQPage",
-        "@id": `${PAGE_URL}#faq-schema`,
-        mainEntity: [
-          {
-            "@type": "Question",
-            name: "How do I choose between business fibre and dedicated internet access?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Business fibre is often the right fit for general business internet, while dedicated internet is better for environments that need stronger uptime, cleaner escalation, and more predictable performance.",
-            },
+        "@id": FAQ_ID,
+        mainEntity: FAQ_ITEMS.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.a,
           },
-          {
-            "@type": "Question",
-            name: "Can I use this page to request pricing?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Yes. Start with the service that best matches your business need, then move into availability and pricing with your address and timeline.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "Is this page for residential internet?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "No. Orbitlink’s services page is designed for business locations and commercial environments in Ontario.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "What happens after I pick a service?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "The next step is to submit your business location and service need so Orbitlink can review availability and the best path forward.",
-            },
-          },
-        ],
+        })),
       },
       {
         "@type": "BreadcrumbList",
-        "@id": `${PAGE_URL}#breadcrumb`,
+        "@id": BREADCRUMB_ID,
         itemListElement: [
           {
             "@type": "ListItem",

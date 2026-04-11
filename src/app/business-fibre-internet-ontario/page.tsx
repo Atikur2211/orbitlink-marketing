@@ -5,14 +5,24 @@ import SiteFooter from "@/components/SiteFooter";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
+const LEGAL_NAME = "TIRAV Technologies Inc. o/a Orbitlink";
 const PAGE_PATH = "/business-fibre-internet-ontario";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
+const ORG_ID = `${SITE_URL}/#organization`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const WEBPAGE_ID = `${PAGE_URL}#webpage`;
+const SERVICE_ID = `${PAGE_URL}#service`;
+const FAQ_ID = `${PAGE_URL}#faq`;
+const BREADCRUMB_ID = `${PAGE_URL}#breadcrumb`;
+const BUSINESS_PAGES_ID = `${PAGE_URL}#business-pages`;
+const SERVICE_PAGES_ID = `${PAGE_URL}#service-pages`;
+
 const BUSINESS = {
   name: "Orbitlink™",
-  legalName: "TIRAV Technologies Inc. o/a Orbitlink",
+  legalName: LEGAL_NAME,
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
   email: "concierge@orbitlink.ca",
@@ -27,7 +37,7 @@ const BUSINESS = {
 
 const PAGE_TITLE = "Business Fibre Internet in Ontario";
 const PAGE_DESCRIPTION =
-  "Business fibre internet in Ontario for offices, warehouses, clinics, and commercial sites. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.";
+  "Business fibre internet in Ontario for offices, warehouses, and clinics. Reliable connectivity with expert setup. Check availability.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -37,8 +47,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: PAGE_TITLE,
-    description:
-      "Business fibre internet in Ontario for offices, warehouses, clinics, and commercial sites. Check availability by address and find the right setup.",
+    description: PAGE_DESCRIPTION,
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -48,16 +57,26 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Business Fibre Internet in Ontario | Orbitlink",
+        alt: "Business Fibre Internet in Ontario",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: PAGE_TITLE,
-    description:
-      "Business fibre internet in Ontario for offices, warehouses, clinics, and commercial sites.",
+    description: PAGE_DESCRIPTION,
     images: [TWITTER_IMAGE_URL],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -225,25 +244,110 @@ function jsonLd() {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "Organization",
+        "@id": ORG_ID,
+        name: BUSINESS.name,
+        legalName: BUSINESS.legalName,
+        url: SITE_URL,
+        email: BUSINESS.email,
+        telephone: BUSINESS.phoneE164,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: BUSINESS.address.street,
+          addressLocality: BUSINESS.address.city,
+          addressRegion: BUSINESS.address.region,
+          postalCode: BUSINESS.address.postal,
+          addressCountry: BUSINESS.address.country,
+        },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            telephone: BUSINESS.phoneE164,
+            email: BUSINESS.email,
+            areaServed: "CA-ON",
+            availableLanguage: ["English"],
+            url: `${SITE_URL}/contact`,
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            telephone: BUSINESS.phoneE164,
+            email: "support@orbitlink.ca",
+            areaServed: "CA-ON",
+            availableLanguage: ["English"],
+            url: `${SITE_URL}/contact`,
+          },
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": WEBSITE_ID,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: {
+          "@id": ORG_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
         "@type": "WebPage",
-        "@id": `${PAGE_URL}#webpage`,
+        "@id": WEBPAGE_ID,
         url: PAGE_URL,
         name: PAGE_TITLE,
         description: PAGE_DESCRIPTION,
         isPartOf: {
-          "@type": "WebSite",
-          "@id": `${SITE_URL}/#website`,
-          url: SITE_URL,
-          name: SITE_NAME,
+          "@id": WEBSITE_ID,
         },
         about: {
-          "@type": "Thing",
-          name: "Business fibre internet in Ontario",
+          "@id": ORG_ID,
         },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: OG_IMAGE_URL,
+        },
+        breadcrumb: {
+          "@id": BREADCRUMB_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "Service",
+        "@id": SERVICE_ID,
+        name: "Business Fibre Internet in Ontario",
+        url: PAGE_URL,
+        provider: {
+          "@id": ORG_ID,
+        },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
+        audience: {
+          "@type": "Audience",
+          audienceType: "Business",
+        },
+        serviceType: [
+          "Business Fibre Internet",
+          "Dedicated Internet Access",
+          "Managed Wi-Fi",
+          "Backup Connectivity",
+        ],
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/contact#intake`,
+        },
+        termsOfService: `${SITE_URL}/legal/terms`,
+        description:
+          "Business fibre internet in Ontario for offices, warehouses, clinics, and commercial sites.",
       },
       {
         "@type": "BreadcrumbList",
-        "@id": `${PAGE_URL}#breadcrumb`,
+        "@id": BREADCRUMB_ID,
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
           {
@@ -256,7 +360,7 @@ function jsonLd() {
       },
       {
         "@type": "FAQPage",
-        "@id": `${PAGE_URL}#faq`,
+        "@id": FAQ_ID,
         mainEntity: FAQ.map((f) => ({
           "@type": "Question",
           name: f.q,
@@ -268,7 +372,7 @@ function jsonLd() {
       },
       {
         "@type": "ItemList",
-        "@id": `${PAGE_URL}#business-pages`,
+        "@id": BUSINESS_PAGES_ID,
         name: "Ontario Business Internet Pages",
         itemListElement: businessPages.map((page, index) => ({
           "@type": "ListItem",
@@ -279,7 +383,7 @@ function jsonLd() {
       },
       {
         "@type": "ItemList",
-        "@id": `${PAGE_URL}#service-pages`,
+        "@id": SERVICE_PAGES_ID,
         name: "Orbitlink Service Pages",
         itemListElement: servicePages.map((page, index) => ({
           "@type": "ListItem",

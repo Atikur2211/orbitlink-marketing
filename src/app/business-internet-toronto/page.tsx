@@ -5,14 +5,23 @@ import SiteFooter from "@/components/SiteFooter";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
+const LEGAL_NAME = "TIRAV Technologies Inc. o/a Orbitlink";
 const PAGE_PATH = "/business-internet-toronto";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
+const ORG_ID = `${SITE_URL}/#organization`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const WEBPAGE_ID = `${PAGE_URL}#webpage`;
+const SERVICE_ID = `${PAGE_URL}#service`;
+const FAQ_ID = `${PAGE_URL}#faq`;
+const BREADCRUMB_ID = `${PAGE_URL}#breadcrumb`;
+const MODULES_ID = `${PAGE_URL}#service-modules`;
+
 const BUSINESS = {
   name: "Orbitlink™",
-  legalName: "TIRAV Technologies Inc. o/a Orbitlink",
+  legalName: LEGAL_NAME,
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
   email: "concierge@orbitlink.ca",
@@ -27,7 +36,7 @@ const BUSINESS = {
 
 const PAGE_TITLE = "Business Internet in Toronto, ON";
 const PAGE_DESCRIPTION =
-  "Business internet in Toronto for offices, clinics, warehouses, and commercial spaces. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.";
+  "Business internet in Toronto for offices, clinics, and commercial spaces. Fibre, dedicated connectivity, and managed Wi-Fi. Check availability.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -35,8 +44,7 @@ export const metadata: Metadata = {
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: PAGE_TITLE,
-    description:
-      "Business internet in Toronto for offices, clinics, warehouses, studios, and commercial spaces. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity with address-based availability checks.",
+    description: PAGE_DESCRIPTION,
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -46,16 +54,26 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Business Internet in Toronto, ON | Orbitlink",
+        alt: "Business Internet in Toronto, ON",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: PAGE_TITLE,
-    description:
-      "Business internet in Toronto for offices, clinics, warehouses, and commercial spaces.",
+    description: PAGE_DESCRIPTION,
     images: [TWITTER_IMAGE_URL],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -142,25 +160,110 @@ function jsonLd() {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "Organization",
+        "@id": ORG_ID,
+        name: BUSINESS.name,
+        legalName: BUSINESS.legalName,
+        url: SITE_URL,
+        email: BUSINESS.email,
+        telephone: BUSINESS.phoneE164,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: BUSINESS.address.street,
+          addressLocality: BUSINESS.address.city,
+          addressRegion: BUSINESS.address.region,
+          postalCode: BUSINESS.address.postal,
+          addressCountry: BUSINESS.address.country,
+        },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Toronto, Ontario",
+        },
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            telephone: BUSINESS.phoneE164,
+            email: BUSINESS.email,
+            areaServed: "CA-ON",
+            availableLanguage: ["English"],
+            url: `${SITE_URL}/contact`,
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            telephone: BUSINESS.phoneE164,
+            email: "support@orbitlink.ca",
+            areaServed: "CA-ON",
+            availableLanguage: ["English"],
+            url: `${SITE_URL}/contact`,
+          },
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": WEBSITE_ID,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: {
+          "@id": ORG_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
         "@type": "WebPage",
-        "@id": `${PAGE_URL}#webpage`,
+        "@id": WEBPAGE_ID,
         url: PAGE_URL,
         name: PAGE_TITLE,
         description: PAGE_DESCRIPTION,
         isPartOf: {
-          "@type": "WebSite",
-          "@id": `${SITE_URL}/#website`,
-          url: SITE_URL,
-          name: SITE_NAME,
+          "@id": WEBSITE_ID,
         },
         about: {
-          "@type": "Thing",
-          name: "Business internet in Toronto",
+          "@id": ORG_ID,
         },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: OG_IMAGE_URL,
+        },
+        breadcrumb: {
+          "@id": BREADCRUMB_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "Service",
+        "@id": SERVICE_ID,
+        name: "Business Internet in Toronto",
+        url: PAGE_URL,
+        provider: {
+          "@id": ORG_ID,
+        },
+        areaServed: {
+          "@type": "City",
+          name: "Toronto",
+        },
+        audience: {
+          "@type": "Audience",
+          audienceType: "Business",
+        },
+        serviceType: [
+          "Business Fibre Internet",
+          "Dedicated Internet Access",
+          "Managed Wi-Fi",
+          "Backup Connectivity",
+        ],
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/contact#intake`,
+        },
+        termsOfService: `${SITE_URL}/legal/terms`,
+        description:
+          "Business internet in Toronto for offices, clinics, commercial spaces, and performance-sensitive environments.",
       },
       {
         "@type": "BreadcrumbList",
-        "@id": `${PAGE_URL}#breadcrumb`,
+        "@id": BREADCRUMB_ID,
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
           { "@type": "ListItem", position: 2, name: PAGE_TITLE, item: PAGE_URL },
@@ -168,7 +271,7 @@ function jsonLd() {
       },
       {
         "@type": "FAQPage",
-        "@id": `${PAGE_URL}#faq`,
+        "@id": FAQ_ID,
         mainEntity: FAQ.map((f) => ({
           "@type": "Question",
           name: f.q,
@@ -176,6 +279,17 @@ function jsonLd() {
             "@type": "Answer",
             text: f.a,
           },
+        })),
+      },
+      {
+        "@type": "ItemList",
+        "@id": MODULES_ID,
+        name: "Toronto Business Internet Service Modules",
+        itemListElement: modules.map((module, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: module.title,
+          url: `${SITE_URL}${module.href}`,
         })),
       },
     ],

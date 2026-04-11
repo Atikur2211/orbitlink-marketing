@@ -11,18 +11,25 @@ import SiteFooter from "@/components/SiteFooter";
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
 const LEGAL_NAME = "TIRAV Technologies Inc.";
+const BRAND_PHONE_DISPLAY = "1-888-867-2480";
+const BRAND_PHONE_E164 = "+18888672480";
 const CANONICAL_URL = `${SITE_URL}/`;
-const ORG_ID = `${SITE_URL}/#org`;
+const ORG_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
+const WEBPAGE_ID = `${CANONICAL_URL}#webpage`;
+const SERVICE_ID = `${CANONICAL_URL}#service`;
+const FAQ_ID = `${CANONICAL_URL}#faq`;
+const BREADCRUMB_ID = `${CANONICAL_URL}#breadcrumb`;
 
 const META_TITLE = "Business Fibre Internet in Ontario";
 const META_DESCRIPTION =
-  "Business fibre internet, dedicated internet access, managed Wi-Fi, and backup connectivity for Ontario businesses. Check availability by address and get the right commercial setup.";
+  "Business fibre internet in Ontario for offices, warehouses, and clinics. Fast, reliable connectivity with expert setup. Check availability.";
 
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: META_TITLE,
   description: META_DESCRIPTION,
   keywords: [
@@ -32,17 +39,13 @@ export const metadata: Metadata = {
     "business internet mississauga",
     "business internet toronto",
     "managed wi-fi ontario",
-    "business voice ontario",
     "backup connectivity ontario",
     "commercial internet provider ontario",
-    "business fibre mississauga",
-    "dedicated internet toronto",
+    "business connectivity ontario",
+    "network infrastructure ontario",
     "business internet for offices ontario",
     "business internet for clinics ontario",
     "business internet for warehouses ontario",
-    "ontario business internet provider",
-    "business connectivity ontario",
-    "network infrastructure ontario",
   ],
   alternates: {
     canonical: CANONICAL_URL,
@@ -59,7 +62,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink business fibre internet and dedicated internet for Ontario businesses",
+        alt: "Orbitlink business fibre internet and dedicated connectivity for Ontario businesses",
       },
     ],
   },
@@ -237,8 +240,48 @@ export default function Home() {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "Organization",
+        "@id": ORG_ID,
+        name: SITE_NAME,
+        legalName: LEGAL_NAME,
+        url: SITE_URL,
+        telephone: BRAND_PHONE_E164,
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            telephone: BRAND_PHONE_E164,
+            areaServed: "CA-ON",
+            availableLanguage: ["English"],
+            url: `${SITE_URL}/contact`,
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            telephone: BRAND_PHONE_E164,
+            areaServed: "CA-ON",
+            availableLanguage: ["English"],
+            url: `${SITE_URL}/contact`,
+          },
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": WEBSITE_ID,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: {
+          "@id": ORG_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
         "@type": "WebPage",
-        "@id": `${CANONICAL_URL}#webpage`,
+        "@id": WEBPAGE_ID,
         url: CANONICAL_URL,
         name: META_TITLE,
         description: META_DESCRIPTION,
@@ -252,22 +295,19 @@ export default function Home() {
           "@type": "ImageObject",
           url: OG_IMAGE_URL,
         },
+        breadcrumb: {
+          "@id": BREADCRUMB_ID,
+        },
+        inLanguage: "en-CA",
       },
       {
         "@type": "Service",
-        "@id": `${SITE_URL}/#telecom`,
+        "@id": SERVICE_ID,
         name: "Orbitlink Business Internet & Managed Network Services",
+        url: CANONICAL_URL,
         provider: {
           "@id": ORG_ID,
         },
-        serviceType: [
-          "Business Fibre Internet",
-          "Dedicated Internet Access",
-          "Managed Wi-Fi",
-          "Business VoIP",
-          "Network Infrastructure Services",
-          "LTE and 5G Backup Connectivity",
-        ],
         areaServed: {
           "@type": "AdministrativeArea",
           name: "Ontario",
@@ -276,18 +316,25 @@ export default function Home() {
           "@type": "Audience",
           audienceType: "Business",
         },
+        serviceType: [
+          "Business Fibre Internet",
+          "Dedicated Internet Access",
+          "Managed Wi-Fi",
+          "Business VoIP",
+          "LTE / 5G Backup Connectivity",
+          "Network Infrastructure Services",
+        ],
+        termsOfService: `${SITE_URL}/legal/terms`,
         availableChannel: {
           "@type": "ServiceChannel",
           serviceUrl: `${SITE_URL}/contact#intake`,
         },
-        termsOfService: `${SITE_URL}/legal/terms`,
-        url: CANONICAL_URL,
         description:
-          "Business fibre internet, dedicated internet access, managed Wi-Fi, business voice, and backup connectivity for Ontario businesses.",
+          "Business fibre internet, dedicated internet access, and managed connectivity solutions for Ontario businesses.",
       },
       {
         "@type": "BreadcrumbList",
-        "@id": `${CANONICAL_URL}#breadcrumb`,
+        "@id": BREADCRUMB_ID,
         itemListElement: [
           {
             "@type": "ListItem",
@@ -299,7 +346,7 @@ export default function Home() {
       },
       {
         "@type": "FAQPage",
-        "@id": `${CANONICAL_URL}#faq`,
+        "@id": FAQ_ID,
         mainEntity: [
           {
             "@type": "Question",
@@ -359,7 +406,7 @@ export default function Home() {
             sizes="100vw"
             className="object-cover object-[68%_center] sm:object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.52)_0%,rgba(4,7,12,0.72)_30%,rgba(4,7,12,0.92)_74%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.95)_0%,rgba(4,7,12,0.74)_36%,rgba(4,7,12,0.18)_68%,rgba(4,7,12,0.88)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.54)_0%,rgba(4,7,12,0.74)_30%,rgba(4,7,12,0.92)_74%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.95)_0%,rgba(4,7,12,0.76)_36%,rgba(4,7,12,0.22)_68%,rgba(4,7,12,0.90)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(250,204,21,0.10),transparent_24%),radial-gradient(circle_at_82%_16%,rgba(6,182,212,0.08),transparent_24%)]" />
           <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:56px_56px]" />
         </div>
@@ -437,6 +484,8 @@ export default function Home() {
               <span>Ontario business coverage</span>
               <span className="hidden sm:inline">•</span>
               <span>Direct support path</span>
+              <span className="hidden sm:inline">•</span>
+              <span>{BRAND_PHONE_DISPLAY}</span>
             </div>
           </div>
         </div>
@@ -659,7 +708,7 @@ export default function Home() {
             You can also review the{" "}
             <Link
               href="/business-fibre-internet-ontario"
-              className="underline underline-offset-4 text-white/84 hover:text-white"
+              className="text-white/84 underline underline-offset-4 hover:text-white"
             >
               Ontario business fibre hub
             </Link>{" "}
