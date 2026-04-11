@@ -3,16 +3,27 @@ import Link from "next/link";
 import Image from "next/image";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
+const LEGAL_NAME = "TIRAV Technologies Inc. o/a Orbitlink";
 const PAGE_PATH = "/locations";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
+const ORG_ID = `${SITE_URL}/#organization`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const WEBPAGE_ID = `${PAGE_URL}#webpage`;
+const SERVICE_ID = `${PAGE_URL}#service`;
+const BREADCRUMB_ID = `${PAGE_URL}#breadcrumb`;
+const LOCATIONS_ID = `${PAGE_URL}#locations`;
+const FAQ_ID = `${PAGE_URL}#faq`;
+
 const BUSINESS = {
   name: "Orbitlink™",
-  legalName: "TIRAV Technologies Inc. o/a Orbitlink",
+  legalName: LEGAL_NAME,
   phoneDisplay: "1-888-867-2480",
   phoneE164: "+18888672480",
+  email: "concierge@orbitlink.ca",
   address: {
     street: "30 Eglinton Ave W, Suite 400-A77",
     city: "Mississauga",
@@ -29,18 +40,21 @@ const BUSINESS = {
   ],
 } as const;
 
+const PAGE_TITLE = "Ontario Business Internet Locations";
+const PAGE_DESCRIPTION =
+  "Business internet in Ontario cities. Fibre, dedicated connectivity, and managed Wi-Fi for business locations. Check availability.";
+
 export const metadata: Metadata = {
-  title: "Ontario Business Internet Locations",
-  description:
-    "Business internet in Ontario cities. Fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Check availability by address.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Ontario Business Internet Locations | Orbitlink",
+    title: PAGE_TITLE,
     description:
       "Explore Orbitlink city pages across Ontario for business fibre internet, dedicated internet, managed networking, and address-based availability.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
     images: [
       {
@@ -53,7 +67,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ontario Business Internet Locations | Orbitlink",
+    title: PAGE_TITLE,
     description:
       "City pages across Ontario for business fibre internet, dedicated internet, managed Wi-Fi, and backup connectivity.",
     images: [TWITTER_IMAGE_URL],
@@ -321,29 +335,117 @@ const FAQ = [
   },
 ] as const;
 
-function jsonLd() {
+function buildJsonLd() {
   const all = [...PRIORITY_MARKETS, ...EXTENDED_MARKETS];
 
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "WebPage",
-        "@id": `${PAGE_URL}#webpage`,
-        url: PAGE_URL,
-        name: "Ontario Business Internet Locations",
-        description:
-          "Business internet in Ontario cities. Fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Check availability by address.",
-        isPartOf: {
-          "@type": "WebSite",
-          "@id": `${SITE_URL}/#website`,
-          url: SITE_URL,
-          name: "Orbitlink",
+        "@type": "Organization",
+        "@id": ORG_ID,
+        name: BUSINESS.name,
+        legalName: BUSINESS.legalName,
+        url: SITE_URL,
+        telephone: BUSINESS.phoneE164,
+        email: BUSINESS.email,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: BUSINESS.address.street,
+          addressLocality: BUSINESS.address.city,
+          addressRegion: BUSINESS.address.region,
+          postalCode: BUSINESS.address.postal,
+          addressCountry: BUSINESS.address.country,
         },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            telephone: BUSINESS.phoneE164,
+            email: BUSINESS.email,
+            areaServed: "CA-ON",
+            availableLanguage: ["English"],
+            url: `${SITE_URL}/contact`,
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            telephone: BUSINESS.phoneE164,
+            areaServed: "CA-ON",
+            availableLanguage: ["English"],
+            url: `${SITE_URL}/contact`,
+          },
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": WEBSITE_ID,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: {
+          "@id": ORG_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "WebPage",
+        "@id": WEBPAGE_ID,
+        url: PAGE_URL,
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: {
+          "@id": WEBSITE_ID,
+        },
+        about: {
+          "@id": ORG_ID,
+        },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: OG_IMAGE_URL,
+        },
+        breadcrumb: {
+          "@id": BREADCRUMB_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "Service",
+        "@id": SERVICE_ID,
+        name: "Ontario Business Internet Locations",
+        url: PAGE_URL,
+        provider: {
+          "@id": ORG_ID,
+        },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
+        audience: {
+          "@type": "Audience",
+          audienceType: "Business",
+        },
+        serviceType: [
+          "Business Fibre Internet",
+          "Dedicated Internet Access",
+          "Managed LAN and Wi-Fi",
+          "LTE / 5G Backup Connectivity",
+          "Ontario city availability review",
+        ],
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/contact#intake`,
+        },
+        termsOfService: `${SITE_URL}/legal/terms`,
+        description:
+          "Business internet locations across Ontario with address-based availability review for fibre, dedicated connectivity, managed Wi-Fi, and backup.",
       },
       {
         "@type": "BreadcrumbList",
-        "@id": `${PAGE_URL}#breadcrumb`,
+        "@id": BREADCRUMB_ID,
         itemListElement: [
           {
             "@type": "ListItem",
@@ -361,7 +463,7 @@ function jsonLd() {
       },
       {
         "@type": "ItemList",
-        "@id": `${PAGE_URL}#locations`,
+        "@id": LOCATIONS_ID,
         name: "Orbitlink Ontario business internet locations",
         itemListElement: all.map((l, i) => ({
           "@type": "ListItem",
@@ -372,7 +474,7 @@ function jsonLd() {
       },
       {
         "@type": "FAQPage",
-        "@id": `${PAGE_URL}#faq`,
+        "@id": FAQ_ID,
         mainEntity: FAQ.map((f) => ({
           "@type": "Question",
           name: f.q,
@@ -504,7 +606,7 @@ export default function LocationsHubPage() {
     <div className="relative">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd()) }}
       />
 
       <section className="relative overflow-hidden border-b border-white/10">
@@ -606,61 +708,17 @@ export default function LocationsHubPage() {
           </p>
 
           <ul className="mt-4 grid grid-cols-1 gap-2 text-sm text-white/70 sm:grid-cols-2 lg:grid-cols-3">
-            <li>
-              <Link href="/locations/barrie" className="underline hover:text-white">
-                Business internet in Barrie
-              </Link>
-            </li>
-            <li>
-              <Link href="/locations/north-york" className="underline hover:text-white">
-                Business internet in North York
-              </Link>
-            </li>
-            <li>
-              <Link href="/locations/niagara-st-catharines" className="underline hover:text-white">
-                Business internet in Niagara / St. Catharines
-              </Link>
-            </li>
-            <li>
-              <Link href="/locations/newmarket" className="underline hover:text-white">
-                Business internet in Newmarket
-              </Link>
-            </li>
-            <li>
-              <Link href="/locations/sudbury" className="underline hover:text-white">
-                Business internet in Sudbury
-              </Link>
-            </li>
-            <li>
-              <Link href="/locations/kingston" className="underline hover:text-white">
-                Business internet in Kingston
-              </Link>
-            </li>
-            <li>
-              <Link href="/locations/thunder-bay" className="underline hover:text-white">
-                Business internet in Thunder Bay
-              </Link>
-            </li>
-            <li>
-              <Link href="/services/colocation-infrastructure" className="underline hover:text-white">
-                Colocation & infrastructure services
-              </Link>
-            </li>
-            <li>
-              <Link href="/services/starlink-agent" className="underline hover:text-white">
-                Starlink access coordination
-              </Link>
-            </li>
-            <li>
-              <Link href="/why-orbitlink" className="underline hover:text-white">
-                Why Orbitlink
-              </Link>
-            </li>
-            <li>
-              <Link href="/internet-near-me" className="underline hover:text-white">
-                Business internet near me
-              </Link>
-            </li>
+            <li><Link href="/locations/barrie" className="underline hover:text-white">Business internet in Barrie</Link></li>
+            <li><Link href="/locations/north-york" className="underline hover:text-white">Business internet in North York</Link></li>
+            <li><Link href="/locations/niagara-st-catharines" className="underline hover:text-white">Business internet in Niagara / St. Catharines</Link></li>
+            <li><Link href="/locations/newmarket" className="underline hover:text-white">Business internet in Newmarket</Link></li>
+            <li><Link href="/locations/sudbury" className="underline hover:text-white">Business internet in Sudbury</Link></li>
+            <li><Link href="/locations/kingston" className="underline hover:text-white">Business internet in Kingston</Link></li>
+            <li><Link href="/locations/thunder-bay" className="underline hover:text-white">Business internet in Thunder Bay</Link></li>
+            <li><Link href="/services/colocation-infrastructure" className="underline hover:text-white">Colocation & infrastructure services</Link></li>
+            <li><Link href="/services/starlink-agent" className="underline hover:text-white">Starlink access coordination</Link></li>
+            <li><Link href="/why-orbitlink" className="underline hover:text-white">Why Orbitlink</Link></li>
+            <li><Link href="/internet-near-me" className="underline hover:text-white">Business internet near me</Link></li>
           </ul>
         </div>
       </section>

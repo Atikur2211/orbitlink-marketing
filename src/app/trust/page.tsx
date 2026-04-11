@@ -1,4 +1,3 @@
-// src/app/trust/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageShell from "@/components/PageShell";
@@ -10,22 +9,34 @@ import {
 } from "@/lib/siteStatus";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
+const LEGAL_NAME = "TIRAV Technologies Inc. o/a Orbitlink";
 const PAGE_URL = `${SITE_URL}/trust`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
+const ORG_ID = `${SITE_URL}/#organization`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const WEBPAGE_ID = `${PAGE_URL}#webpage`;
+const SERVICE_ID = `${PAGE_URL}#trust-surface`;
+const FAQ_ID = `${PAGE_URL}#faq`;
+const BREADCRUMB_ID = `${PAGE_URL}#breadcrumb`;
+
+const PAGE_TITLE = "Trust, Compliance & Operating Posture";
+const PAGE_DESCRIPTION =
+  "Trust and compliance for Ontario business connectivity. Disclosure-first operations, structured onboarding, and clear service standards.";
+
 export const metadata: Metadata = {
-  title: "Trust, Compliance & Operating Posture",
-  description:
-    "Trust and compliance for Ontario business connectivity. Disclosure-first operations, structured onboarding, and clear service standards.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Trust, Compliance & Operating Posture | Orbitlink",
+    title: PAGE_TITLE,
     description:
       "Disclosure-first trust posture with structured onboarding, evidence-friendly governance, and controlled commercial delivery for serious business buyers.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
     images: [
       {
@@ -38,7 +49,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Trust, Compliance & Operating Posture | Orbitlink",
+    title: PAGE_TITLE,
     description:
       "A premium trust surface for business buyers, partners, and regulated environments.",
     images: [TWITTER_IMAGE_URL],
@@ -257,142 +268,158 @@ function MeaningCard({
   );
 }
 
+function buildJsonLd() {
+  const faqItems = [
+    {
+      q: "What does controlled rollout mean?",
+      a: "Controlled rollout means Orbitlink confirms scope carefully and updates public statements only after milestones are complete and reviewable.",
+    },
+    {
+      q: "Do you provide review or verification material?",
+      a: "Orbitlink supports evidence-friendly operations, structured change posture, and scope-appropriate review material when the engagement and review path are real.",
+    },
+    {
+      q: "Can enterprise buyers or auditors request verification material?",
+      a: "Yes. Verification material is request-based and tailored to the engagement scope. Sensitive operational details remain private and are shared only when appropriate.",
+    },
+    {
+      q: "How are public trust statements updated?",
+      a: "Statements are maintained as a living disclosure and updated only when milestones are complete and internally reviewable.",
+    },
+  ] as const;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": ORG_ID,
+        name: SITE_NAME,
+        legalName: LEGAL_NAME,
+        url: SITE_URL,
+        logo: `${SITE_URL}/icon.png`,
+        brand: { "@type": "Brand", name: SITE_NAME },
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            email: "sales@orbitlink.ca",
+            availableLanguage: ["English"],
+            areaServed: "CA-ON",
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            email: "support@orbitlink.ca",
+            availableLanguage: ["English"],
+            areaServed: "CA-ON",
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "compliance",
+            email: "regulatory@tirav.com",
+            availableLanguage: ["English"],
+            areaServed: "CA-ON",
+          },
+        ],
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "30 Eglinton Ave W, Suite 400-A77",
+          addressCountry: "CA",
+          addressRegion: "ON",
+          addressLocality: "Mississauga",
+          postalCode: "L5R 3E7",
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": WEBSITE_ID,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: {
+          "@id": ORG_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "WebPage",
+        "@id": WEBPAGE_ID,
+        url: PAGE_URL,
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: {
+          "@id": WEBSITE_ID,
+        },
+        about: {
+          "@id": ORG_ID,
+        },
+        breadcrumb: {
+          "@id": BREADCRUMB_ID,
+        },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: OG_IMAGE_URL,
+        },
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "Service",
+        "@id": SERVICE_ID,
+        name: "Trust & Compliance Review Surface",
+        provider: { "@id": ORG_ID },
+        url: PAGE_URL,
+        serviceType: [
+          "Business Fibre Internet",
+          "Managed Network Infrastructure",
+          "Compliance-first Delivery Posture",
+          "Operational Escalation & Support",
+          "Verification Review Process",
+        ],
+        audience: { "@type": "Audience", audienceType: "Business" },
+        areaServed: [
+          { "@type": "AdministrativeArea", name: "Ontario, Canada" },
+          { "@type": "City", name: "Mississauga" },
+        ],
+        termsOfService: `${SITE_URL}/legal/terms`,
+        description:
+          "Trust and compliance review surface for buyers, partners, and regulated environments evaluating Orbitlink’s operating posture.",
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": BREADCRUMB_ID,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Trust & Compliance",
+            item: PAGE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": FAQ_ID,
+        mainEntity: faqItems.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.a,
+          },
+        })),
+      },
+    ],
+  };
+}
+
 export default function TrustPage() {
   const moduleOptions = SERVICE_CATALOG.map((s) => s.name);
-
-  const schemaOrg = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${SITE_URL}/#org`,
-    name: "Orbitlink",
-    legalName: "TIRAV Technologies Inc.",
-    url: SITE_URL,
-    logo: `${SITE_URL}/icon.png`,
-    brand: { "@type": "Brand", name: "Orbitlink" },
-    parentOrganization: {
-      "@type": "Organization",
-      name: "TIRAV Technologies Inc.",
-    },
-    contactPoint: [
-      {
-        "@type": "ContactPoint",
-        contactType: "sales",
-        email: "sales@orbitlink.ca",
-        availableLanguage: ["English"],
-        areaServed: "CA-ON",
-      },
-      {
-        "@type": "ContactPoint",
-        contactType: "customer support",
-        email: "support@orbitlink.ca",
-        availableLanguage: ["English"],
-        areaServed: "CA-ON",
-      },
-      {
-        "@type": "ContactPoint",
-        contactType: "compliance",
-        email: "regulatory@tirav.com",
-        availableLanguage: ["English"],
-        areaServed: "CA-ON",
-      },
-    ],
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "30 Eglinton Ave W, Suite 400-A77",
-      addressCountry: "CA",
-      addressRegion: "ON",
-      addressLocality: "Mississauga",
-      postalCode: "L5R 3E7",
-    },
-  };
-
-  const schemaService = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${PAGE_URL}#trust-surface`,
-    name: "Trust & Compliance Review Surface",
-    provider: { "@id": `${SITE_URL}/#org` },
-    serviceType: [
-      "Business Fibre Internet",
-      "Managed Network Infrastructure",
-      "Compliance-first Delivery Posture",
-      "Operational Escalation & Support",
-      "Verification Review Process",
-    ],
-    audience: { "@type": "Audience", audienceType: "Business" },
-    areaServed: [
-      { "@type": "AdministrativeArea", name: "Ontario, Canada" },
-      { "@type": "City", name: "Mississauga" },
-    ],
-    termsOfService: `${SITE_URL}/legal/terms`,
-  };
-
-  const schemaBreadcrumbs = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: `${SITE_URL}/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Trust & Compliance",
-        item: PAGE_URL,
-      },
-    ],
-  };
-
-  const schemaFaq = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "What does controlled rollout mean?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "Controlled rollout means Orbitlink confirms scope carefully and updates public statements only after milestones are complete and reviewable.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Do you provide review or verification material?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "Orbitlink supports evidence-friendly operations, structured change posture, and scope-appropriate review material when the engagement and review path are real.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Can enterprise buyers or auditors request verification material?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "Yes. Verification material is request-based and tailored to the engagement scope. Sensitive operational details remain private and are shared only when appropriate.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "How are public trust statements updated?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "Statements are maintained as a living disclosure and updated only when milestones are complete and internally reviewable.",
-        },
-      },
-    ],
-  };
-
-  const schemaGraph = {
-    "@context": "https://schema.org",
-    "@graph": [schemaOrg, schemaService, schemaBreadcrumbs, schemaFaq],
-  };
 
   return (
     <PageShell
@@ -402,7 +429,7 @@ export default function TrustPage() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd()) }}
       />
 
       <section className="relative overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
@@ -486,7 +513,7 @@ export default function TrustPage() {
                 <ReviewStep
                   step="3"
                   title="Support review"
-                  desc="Share redacted or scoped material when there is a real review path."
+                  desc="Share redacted or scoped material when the review path is active."
                 />
               </div>
             </div>

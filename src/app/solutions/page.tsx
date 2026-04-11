@@ -5,35 +5,48 @@ import PageShell from "@/components/PageShell";
 import StickyModuleNav from "@/components/StickyModuleNav";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
+const LEGAL_NAME = "TIRAV Technologies Inc. o/a Orbitlink";
 const PAGE_URL = `${SITE_URL}/solutions`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
+const ORG_ID = `${SITE_URL}/#organization`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const WEBPAGE_ID = `${PAGE_URL}#webpage`;
+const SERVICE_ID = `${PAGE_URL}#service`;
+const FAQ_ID = `${PAGE_URL}#faq`;
+const BREADCRUMB_ID = `${PAGE_URL}#breadcrumb`;
+const ITEMLIST_ID = `${PAGE_URL}#itemlist`;
+
+const PAGE_TITLE = "Business Connectivity Solutions by Environment";
+const PAGE_DESCRIPTION =
+  "Business connectivity solutions for Ontario organizations. Fibre, dedicated internet, managed networking, voice, and backup. Explore the right fit.";
+
 export const metadata: Metadata = {
-  title: "Business Connectivity Solutions by Environment",
-  description:
-    "Business connectivity solutions for Ontario organizations. Fibre, dedicated internet, managed network, voice, and backup services. Explore the right fit.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Business Connectivity Solutions by Environment | Orbitlink",
+    title: PAGE_TITLE,
     description:
-      "Explore business connectivity solutions by environment, including offices, clinics, warehouses, multi-site organizations, and commercial buildings across Ontario.",
+      "Explore business connectivity solutions for offices, clinics, warehouses, multi-site organizations, and commercial buildings across Ontario.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
     images: [
       {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink business connectivity solutions by business type",
+        alt: "Orbitlink business connectivity solutions by business environment",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Connectivity Solutions by Environment | Orbitlink",
+    title: PAGE_TITLE,
     description:
       "Find the right business connectivity solution for your site, building type, and operating environment.",
     images: [TWITTER_IMAGE_URL],
@@ -50,6 +63,25 @@ export const metadata: Metadata = {
     },
   },
 };
+
+const FAQ_ITEMS = [
+  {
+    q: "How should I use this solutions page?",
+    a: "Start with the business environment that best matches your site, then review the likely service fit before moving into address-qualified availability and commercial review.",
+  },
+  {
+    q: "Is this page for residential internet?",
+    a: "No. This page is designed for Ontario business environments such as offices, clinics, warehouses, commercial buildings, and multi-site organizations.",
+  },
+  {
+    q: "Does this page replace an availability check?",
+    a: "No. This page helps narrow likely fit, but availability and final service direction still depend on the site address, building conditions, and requested scope.",
+  },
+  {
+    q: "What happens after I choose a solution environment?",
+    a: "The next step is to submit the business address, timing, and service need so Orbitlink can review availability, fit, and the best commercial next step.",
+  },
+] as const;
 
 const SOLUTIONS = [
   {
@@ -347,34 +379,89 @@ function SolutionCard({ s }: { s: (typeof SOLUTIONS)[number] }) {
   );
 }
 
-export default function SolutionsPage() {
-  const modules = SOLUTIONS.map((s) => ({
-    id: s.id,
-    name: s.name,
-    tone: s.tone,
-  }));
+function FAQCard({ q, a }: { q: string; a: string }) {
+  return (
+    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25">
+      <h3 className="text-sm font-medium text-white/90">{q}</h3>
+      <p className="mt-3 text-sm leading-6 text-white/64">{a}</p>
+    </div>
+  );
+}
 
-  const schemaGraph = {
+function buildJsonLd() {
+  return {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
-        "@id": `${SITE_URL}/#org`,
-        name: "Orbitlink",
-        legalName: "TIRAV Technologies Inc.",
+        "@id": ORG_ID,
+        name: SITE_NAME,
+        legalName: LEGAL_NAME,
         url: SITE_URL,
         logo: `${SITE_URL}/icon.png`,
       },
       {
+        "@type": "WebSite",
+        "@id": WEBSITE_ID,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: {
+          "@id": ORG_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
         "@type": "WebPage",
-        "@id": `${PAGE_URL}#webpage`,
+        "@id": WEBPAGE_ID,
         url: PAGE_URL,
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: {
+          "@id": WEBSITE_ID,
+        },
+        about: {
+          "@id": ORG_ID,
+        },
+        breadcrumb: {
+          "@id": BREADCRUMB_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "Service",
+        "@id": SERVICE_ID,
         name: "Business Connectivity Solutions by Environment",
+        url: PAGE_URL,
+        provider: {
+          "@id": ORG_ID,
+        },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
+        audience: {
+          "@type": "Audience",
+          audienceType: "Business",
+        },
+        serviceType: [
+          "Business Fibre Internet",
+          "Dedicated Internet Access",
+          "Managed LAN and Wi-Fi",
+          "Business Voice",
+          "LTE / 5G Backup Connectivity",
+          "Environment-based solution review",
+        ],
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/contact#intake`,
+        },
+        termsOfService: `${SITE_URL}/legal/terms`,
         description:
-          "Business connectivity solutions for offices, clinics, warehouses, multi-site organizations, and commercial buildings across Ontario.",
+          "Business connectivity solutions organized by operating environment for Ontario organizations.",
       },
       {
         "@type": "ItemList",
+        "@id": ITEMLIST_ID,
         name: "Orbitlink Solutions",
         itemListElement: SOLUTIONS.map((solution, index) => ({
           "@type": "ListItem",
@@ -385,6 +472,7 @@ export default function SolutionsPage() {
       },
       {
         "@type": "BreadcrumbList",
+        "@id": BREADCRUMB_ID,
         itemListElement: [
           {
             "@type": "ListItem",
@@ -400,8 +488,28 @@ export default function SolutionsPage() {
           },
         ],
       },
+      {
+        "@type": "FAQPage",
+        "@id": FAQ_ID,
+        mainEntity: FAQ_ITEMS.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.a,
+          },
+        })),
+      },
     ],
   };
+}
+
+export default function SolutionsPage() {
+  const modules = SOLUTIONS.map((s) => ({
+    id: s.id,
+    name: s.name,
+    tone: s.tone,
+  }));
 
   return (
     <PageShell
@@ -411,7 +519,7 @@ export default function SolutionsPage() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd()) }}
       />
 
       <Surface className="relative overflow-hidden p-6 sm:p-8 lg:p-10">
@@ -604,6 +712,28 @@ export default function SolutionsPage() {
             title="Enter review with better context"
             text="The next step becomes more useful when the business environment is already clear."
           />
+        </div>
+      </Surface>
+
+      <Surface className="mt-6 p-6 sm:p-8 lg:p-10">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionEyebrow>FAQ</SectionEyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+              Questions buyers ask before moving forward
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+              These answers help clarify how to use this page and what happens next.
+            </p>
+          </div>
+
+          <MetricPill label="CLARITY" value="Useful for buyers and search" />
+        </div>
+
+        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
+          {FAQ_ITEMS.map((item) => (
+            <FAQCard key={item.q} q={item.q} a={item.a} />
+          ))}
         </div>
       </Surface>
 

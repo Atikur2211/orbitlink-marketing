@@ -10,18 +10,29 @@ import {
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
+const LEGAL_NAME = "TIRAV Technologies Inc. o/a Orbitlink";
 const PAGE_URL = `${SITE_URL}/network`;
 const OG_IMAGE_URL = `${SITE_URL}/network/opengraph-image`;
 
+const ORG_ID = `${SITE_URL}/#organization`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const WEBPAGE_ID = `${PAGE_URL}#webpage`;
+const SERVICE_ID = `${PAGE_URL}#service`;
+const FAQ_ID = `${PAGE_URL}#faq`;
+const BREADCRUMB_ID = `${PAGE_URL}#breadcrumb`;
+
+const PAGE_TITLE = "Network Availability & Service Readiness";
+const PAGE_DESCRIPTION =
+  "Network availability and service readiness for Ontario businesses. Check fibre coverage, service options, and delivery by address.";
+
 export const metadata: Metadata = {
-  title: "Network Availability & Service Readiness",
-  description:
-    "Network availability and service readiness for Ontario businesses. Check fibre coverage, service options, and delivery by address.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: "Business Network Availability & Service Readiness | Orbitlink",
+    title: PAGE_TITLE,
     description:
       "A clearer view of Orbitlink network readiness, service communication, escalation handling, and address-qualified business availability.",
     url: PAGE_URL,
@@ -39,7 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Network Availability & Service Readiness | Orbitlink",
+    title: PAGE_TITLE,
     description:
       "Business-first network visibility, structured escalation, and address-qualified service availability.",
     images: [OG_IMAGE_URL],
@@ -1085,27 +1096,104 @@ function NetworkIntegrityFooter() {
   );
 }
 
-function jsonLd() {
+function buildJsonLd() {
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "WebPage",
-        "@id": `${PAGE_URL}#webpage`,
-        url: PAGE_URL,
-        name: "Network Availability & Service Readiness",
-        description:
-          "Network availability and service readiness for Ontario businesses. Check fibre coverage, service options, and delivery by address.",
-        isPartOf: {
-          "@type": "WebSite",
-          "@id": `${SITE_URL}/#website`,
-          url: SITE_URL,
-          name: SITE_NAME,
+        "@type": "Organization",
+        "@id": ORG_ID,
+        name: SITE_NAME,
+        legalName: LEGAL_NAME,
+        url: SITE_URL,
+        telephone: "+18888672480",
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
         },
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            telephone: "+18888672480",
+            areaServed: "CA-ON",
+            availableLanguage: ["English"],
+            url: `${SITE_URL}/contact`,
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            telephone: "+18888672480",
+            areaServed: "CA-ON",
+            availableLanguage: ["English"],
+            url: `${SITE_URL}/contact`,
+          },
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": WEBSITE_ID,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: {
+          "@id": ORG_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "WebPage",
+        "@id": WEBPAGE_ID,
+        url: PAGE_URL,
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: {
+          "@id": WEBSITE_ID,
+        },
+        about: {
+          "@id": ORG_ID,
+        },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: OG_IMAGE_URL,
+        },
+        breadcrumb: {
+          "@id": BREADCRUMB_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "Service",
+        "@id": SERVICE_ID,
+        name: "Network Availability & Service Readiness",
+        url: PAGE_URL,
+        provider: {
+          "@id": ORG_ID,
+        },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
+        audience: {
+          "@type": "Audience",
+          audienceType: "Business",
+        },
+        serviceType: [
+          "Address-qualified availability review",
+          "Structured escalation handling",
+          "Service readiness communication",
+          "Network change disclosure",
+        ],
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/contact#intake`,
+        },
+        termsOfService: `${SITE_URL}/legal/terms`,
+        description:
+          "Network availability, service readiness, escalation handling, and address-qualified service review for Ontario businesses.",
       },
       {
         "@type": "BreadcrumbList",
-        "@id": `${PAGE_URL}#breadcrumb`,
+        "@id": BREADCRUMB_ID,
         itemListElement: [
           {
             "@type": "ListItem",
@@ -1123,7 +1211,7 @@ function jsonLd() {
       },
       {
         "@type": "FAQPage",
-        "@id": `${PAGE_URL}#faq`,
+        "@id": FAQ_ID,
         mainEntity: [
           {
             "@type": "Question",
@@ -1176,7 +1264,7 @@ export default function NetworkPage() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd()) }}
       />
 
       <div className="space-y-4 sm:space-y-6">

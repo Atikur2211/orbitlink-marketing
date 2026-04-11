@@ -1,25 +1,34 @@
-// src/app/about/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageShell from "@/components/PageShell";
 
 const SITE_URL = "https://orbitlink.ca";
+const SITE_NAME = "Orbitlink";
+const LEGAL_NAME = "TIRAV Technologies Inc. o/a Orbitlink";
 const PAGE_URL = `${SITE_URL}/about`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 
+const ORG_ID = `${SITE_URL}/#organization`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const ABOUTPAGE_ID = `${PAGE_URL}#aboutpage`;
+const BREADCRUMB_ID = `${PAGE_URL}#breadcrumb`;
+
+const PAGE_TITLE = "About Orbitlink";
+const PAGE_DESCRIPTION =
+  "About Orbitlink, a business connectivity brand for Ontario organizations. Fibre, dedicated internet, managed networking, and structured delivery.";
+
 export const metadata: Metadata = {
-  title: "About Orbitlink | Business Connectivity for Ontario",
-  description:
-    "About Orbitlink, a business connectivity provider for Ontario organizations. Fibre, dedicated internet, managed network, and structured service delivery.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "About Orbitlink | Business Connectivity for Ontario",
+    title: PAGE_TITLE,
     description:
       "Orbitlink is a business connectivity brand built for Ontario organizations that value clarity, structured delivery, and long-term trust.",
     url: PAGE_URL,
     type: "website",
-    siteName: "Orbitlink",
+    siteName: SITE_NAME,
     locale: "en_CA",
     images: [
       {
@@ -32,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Orbitlink | Business Connectivity for Ontario",
+    title: PAGE_TITLE,
     description:
       "A business connectivity brand built for clarity, structured delivery, and long-term trust.",
     images: [TWITTER_IMAGE_URL],
@@ -249,20 +258,20 @@ function InfoCard({
   );
 }
 
-export default function AboutPage() {
-  const schemaGraph = {
+function buildJsonLd() {
+  return {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
-        "@id": `${SITE_URL}/#org`,
-        name: "Orbitlink",
-        legalName: "TIRAV Technologies Inc.",
+        "@id": ORG_ID,
+        name: SITE_NAME,
+        legalName: LEGAL_NAME,
         url: SITE_URL,
         logo: `${SITE_URL}/icon.png`,
         brand: {
           "@type": "Brand",
-          name: "Orbitlink",
+          name: SITE_NAME,
         },
         parentOrganization: {
           "@type": "Organization",
@@ -280,32 +289,77 @@ export default function AboutPage() {
           "@type": "AdministrativeArea",
           name: "Ontario, Canada",
         },
-      },
-      {
-        "@type": "AboutPage",
-        "@id": `${PAGE_URL}#about`,
-        url: PAGE_URL,
-        name: "About Orbitlink",
-        isPartOf: {
-          "@id": `${SITE_URL}/#website`,
-        },
-        about: {
-          "@id": `${SITE_URL}/#org`,
-        },
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            email: "sales@orbitlink.ca",
+            availableLanguage: ["English"],
+            areaServed: "CA-ON",
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "customer support",
+            email: "support@orbitlink.ca",
+            availableLanguage: ["English"],
+            areaServed: "CA-ON",
+          },
+        ],
       },
       {
         "@type": "WebSite",
-        "@id": `${SITE_URL}/#website`,
-        name: "Orbitlink",
+        "@id": WEBSITE_ID,
+        name: SITE_NAME,
         url: SITE_URL,
         publisher: {
-          "@id": `${SITE_URL}/#org`,
+          "@id": ORG_ID,
         },
         inLanguage: "en-CA",
       },
+      {
+        "@type": "AboutPage",
+        "@id": ABOUTPAGE_ID,
+        url: PAGE_URL,
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: {
+          "@id": WEBSITE_ID,
+        },
+        about: {
+          "@id": ORG_ID,
+        },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: OG_IMAGE_URL,
+        },
+        breadcrumb: {
+          "@id": BREADCRUMB_ID,
+        },
+        inLanguage: "en-CA",
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": BREADCRUMB_ID,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "About",
+            item: PAGE_URL,
+          },
+        ],
+      },
     ],
   };
+}
 
+export default function AboutPage() {
   return (
     <PageShell
       eyebrow="ABOUT"
@@ -314,7 +368,7 @@ export default function AboutPage() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd()) }}
       />
 
       <SectionShell className="relative overflow-hidden p-6 sm:p-8 lg:p-10">
