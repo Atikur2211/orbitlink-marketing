@@ -1,4 +1,3 @@
-// src/app/locations/cambridge/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -27,16 +26,16 @@ const BUSINESS = {
 const CITY_NAME = "Cambridge";
 const PAGE_TITLE = "Business Internet & Fibre in Cambridge, ON";
 const PAGE_DESCRIPTION =
-  "Business internet in Cambridge for industrial sites, warehouses, and offices. Fibre, dedicated internet, and backup connectivity. Check availability.";
+  "Business internet in Cambridge for industrial sites, warehouses, offices, and commercial environments. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.";
 
 export const metadata: Metadata = {
-  title: `${PAGE_TITLE} | Orbitlink`,
+  title: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: `${PAGE_TITLE} | Orbitlink`,
+    title: PAGE_TITLE,
     description:
-      "Business connectivity in Cambridge with fibre, DIA, managed LAN and Wi-Fi, continuity, and address-qualified service review.",
+      "Business connectivity in Cambridge with fibre, dedicated internet access, managed LAN and Wi-Fi, continuity, and address-qualified service review.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -46,15 +45,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink Cambridge business internet",
+        alt: "Business Internet and Fibre in Cambridge, ON | Orbitlink",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${PAGE_TITLE} | Orbitlink`,
+    title: PAGE_TITLE,
     description:
-      "Business internet in Cambridge with fibre, DIA, managed LAN and Wi-Fi, and structured service review.",
+      "Business internet in Cambridge with fibre, dedicated internet access, managed LAN and Wi-Fi, and structured service review.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -113,7 +112,7 @@ const buildingTypes = [
 
 const whyOrbitlink = [
   "Address-qualified availability review",
-  "Clear separation between broadband and DIA",
+  "Clear separation between broadband and dedicated internet",
   "Managed network options for business sites",
   "Continuity design for uptime-sensitive operations",
   "Documented onboarding and delivery",
@@ -230,7 +229,10 @@ export default function CambridgeLocationPage() {
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="lg:col-span-8">
               <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl lg:leading-[1.02]">
-                Business Internet in Cambridge
+                Business Internet & Fibre in Cambridge, ON
+                <span className="block text-white/60">
+                  Built for industrial, warehouse, and business operations
+                </span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
@@ -255,13 +257,19 @@ export default function CambridgeLocationPage() {
                   href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
                 >
-                  Check Availability
+                  Check Business Internet Availability
                 </Link>
                 <Link
                   href="/services/business-fibre-internet"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                 >
                   Explore Fibre Service
+                </Link>
+                <Link
+                  href="/locations/ontario"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+                >
+                  Ontario Coverage Hub
                 </Link>
               </div>
 
@@ -280,8 +288,8 @@ export default function CambridgeLocationPage() {
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-white/70">
                   The strongest requests include the service address, service needed,
-                  target timeline, and any important requirements such as DIA, static IPs,
-                  managed Wi-Fi, or continuity.
+                  target timeline, and any important requirements such as dedicated internet,
+                  static IPs, managed Wi-Fi, or continuity.
                 </p>
 
                 <div className="mt-5 grid gap-3">
@@ -322,6 +330,24 @@ export default function CambridgeLocationPage() {
                   business fibre or dedicated internet, managed LAN and Wi-Fi,
                   static IP routing where needed, and continuity planning for
                   uptime-sensitive operations.
+                </p>
+
+                <p>
+                  Buyers comparing options often review{" "}
+                  <Link
+                    href="/services/business-fibre-internet"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    business fibre internet
+                  </Link>{" "}
+                  and{" "}
+                  <Link
+                    href="/services/dedicated-internet-access"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    dedicated internet access
+                  </Link>{" "}
+                  before moving into a location review.
                 </p>
               </div>
             </div>
@@ -458,13 +484,13 @@ export default function CambridgeLocationPage() {
                   href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
                 >
-                  Check Availability
+                  Check Business Internet Availability
                 </Link>
                 <Link
                   href="/trust"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                 >
-                  Trust & Compliance
+                  Trust and Compliance
                 </Link>
               </div>
             </div>
@@ -530,7 +556,7 @@ export default function CambridgeLocationPage() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
             >
-              Check Availability
+              Check Business Internet Availability
             </Link>
           </div>
         </div>

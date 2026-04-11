@@ -107,47 +107,108 @@ const fitCards = [
   },
 ] as const;
 
-const relatedPages = [
+const businessPages = [
   {
     title: "Business Internet Mississauga",
-    desc: "High-intent page for one of Ontario’s strongest office and commercial markets.",
+    desc: "High-intent business landing page for one of Ontario’s strongest office and commercial markets.",
     href: "/business-internet-mississauga",
   },
   {
     title: "Business Internet Toronto",
-    desc: "Strong local search page for Toronto offices, commercial spaces, and multi-user environments.",
+    desc: "High-intent business landing page for Toronto offices, commercial spaces, and multi-user environments.",
     href: "/business-internet-toronto",
   },
   {
     title: "Business Internet Brampton",
-    desc: "Commercial and industrial-focused page for Brampton business and warehouse demand.",
+    desc: "Commercial and industrial-focused business landing page for Brampton demand.",
     href: "/business-internet-brampton",
   },
   {
     title: "Business Internet Milton",
-    desc: "Supports Milton industrial and warehouse-focused business demand and strengthens crawl flow.",
+    desc: "Business landing page for Milton warehouse, industrial, and logistics demand.",
     href: "/business-internet-milton",
-  },
-  {
-    title: "Ontario Coverage Hub",
-    desc: "Province-wide service coverage page connecting Orbitlink’s Ontario market footprint.",
-    href: "/locations/ontario",
   },
 ] as const;
 
-const cityLinks = [
-  { name: "Mississauga", href: "/locations/mississauga" },
-  { name: "Toronto", href: "/locations/toronto" },
+const servicePages = [
+  {
+    title: "Business Fibre Internet",
+    desc: "Primary internet for offices, warehouses, clinics, and commercial environments.",
+    href: "/services/business-fibre-internet",
+  },
+  {
+    title: "Dedicated Internet Access",
+    desc: "Higher-assurance internet for uptime-sensitive and performance-critical sites.",
+    href: "/services/dedicated-internet-access",
+  },
+  {
+    title: "Managed LAN and Wi-Fi",
+    desc: "Managed internal network support, segmentation, coverage, and stability.",
+    href: "/services/managed-lan-wifi",
+  },
+  {
+    title: "LTE / 5G Continuity",
+    desc: "Backup internet and continuity planning for business resilience.",
+    href: "/services/lte-5g-continuity",
+  },
+  {
+    title: "VoIP and Cloud Voice",
+    desc: "Business voice with routing, porting, and professional call handling.",
+    href: "/services/voip-cloud-voice",
+  },
+  {
+    title: "Static IP Routing",
+    desc: "Fixed addressing for VPNs, firewalls, remote access, and hosted systems.",
+    href: "/services/static-ip-routing",
+  },
+  {
+    title: "IoT Connectivity",
+    desc: "Segmented connectivity for sensors, gateways, field devices, and connected systems.",
+    href: "/services/iot-connectivity",
+  },
+  {
+    title: "Starlink",
+    desc: "Satellite connectivity for remote sites, constrained buildings, and alternative path needs.",
+    href: "/services/starlink-agent",
+  },
+  {
+    title: "Colocation and Infrastructure",
+    desc: "Rack presence, cross-connects, and future infrastructure planning.",
+    href: "/services/colocation-infrastructure",
+  },
+] as const;
+
+const allCityLinks = [
+  { name: "Aurora", href: "/locations/aurora" },
+  { name: "Barrie", href: "/locations/barrie" },
   { name: "Brampton", href: "/locations/brampton" },
-  { name: "Milton", href: "/locations/milton" },
-  { name: "Vaughan", href: "/locations/vaughan" },
-  { name: "Markham", href: "/locations/markham" },
-  { name: "Oakville", href: "/locations/oakville" },
-  { name: "Ottawa", href: "/locations/ottawa" },
-  { name: "Windsor", href: "/locations/windsor" },
   { name: "Burlington", href: "/locations/burlington" },
   { name: "Cambridge", href: "/locations/cambridge" },
+  { name: "Etobicoke", href: "/locations/etobicoke" },
+  { name: "Guelph", href: "/locations/guelph" },
+  { name: "Hamilton", href: "/locations/hamilton" },
+  { name: "Kingston", href: "/locations/kingston" },
+  { name: "Kitchener-Waterloo", href: "/locations/kitchener-waterloo" },
+  { name: "London", href: "/locations/london" },
+  { name: "Markham", href: "/locations/markham" },
+  { name: "Milton", href: "/locations/milton" },
+  { name: "Mississauga", href: "/locations/mississauga" },
+  { name: "Newmarket", href: "/locations/newmarket" },
+  { name: "Niagara / St. Catharines", href: "/locations/niagara-st-catharines" },
+  { name: "North York", href: "/locations/north-york" },
+  { name: "Oakville", href: "/locations/oakville" },
+  { name: "Ontario", href: "/locations/ontario" },
+  { name: "Oshawa", href: "/locations/oshawa" },
+  { name: "Ottawa", href: "/locations/ottawa" },
   { name: "Peterborough", href: "/locations/peterborough" },
+  { name: "Richmond Hill", href: "/locations/richmond-hill" },
+  { name: "Scarborough", href: "/locations/scarborough" },
+  { name: "Sudbury", href: "/locations/sudbury" },
+  { name: "Thunder Bay", href: "/locations/thunder-bay" },
+  { name: "Toronto", href: "/locations/toronto" },
+  { name: "Vaughan", href: "/locations/vaughan" },
+  { name: "Whitby", href: "/locations/whitby" },
+  { name: "Windsor", href: "/locations/windsor" },
 ] as const;
 
 const whySwitch = [
@@ -203,6 +264,28 @@ function jsonLd() {
             "@type": "Answer",
             text: f.a,
           },
+        })),
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${PAGE_URL}#business-pages`,
+        name: "Ontario Business Internet Pages",
+        itemListElement: businessPages.map((page, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: page.title,
+          url: `${SITE_URL}${page.href}`,
+        })),
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${PAGE_URL}#service-pages`,
+        name: "Orbitlink Service Pages",
+        itemListElement: servicePages.map((page, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: page.title,
+          url: `${SITE_URL}${page.href}`,
         })),
       },
     ],
@@ -315,10 +398,10 @@ export default function BusinessFibreInternetOntarioPage() {
                 Call {BUSINESS.phoneDisplay}
               </Link>
               <Link
-                href="/trust"
+                href="/locations/ontario"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
               >
-                Trust and Compliance
+                Ontario Coverage Hub
               </Link>
             </div>
 
@@ -466,19 +549,64 @@ export default function BusinessFibreInternetOntarioPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <SectionEyebrow>KEY ONTARIO MARKETS</SectionEyebrow>
+              <SectionEyebrow>HIGH-INTENT BUSINESS PAGES</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Priority business markets across Ontario
+                Stronger Ontario money pages
+              </h2>
+
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {businessPages.map((page) => (
+                  <Link
+                    key={page.href}
+                    href={page.href}
+                    className="rounded-3xl border border-white/10 bg-white/[0.04] p-5 transition hover:bg-white/[0.06]"
+                  >
+                    <div className="text-sm font-semibold text-white/90">{page.title}</div>
+                    <div className="mt-2 text-sm leading-relaxed text-white/70">
+                      {page.desc}
+                    </div>
+                    <div className="mt-3 text-xs text-white/60">Open page →</div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>CORE SERVICES</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Explore Orbitlink service pages
+              </h2>
+
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {servicePages.map((page) => (
+                  <Link
+                    key={page.href}
+                    href={page.href}
+                    className="rounded-3xl border border-white/10 bg-white/[0.04] p-5 transition hover:bg-white/[0.06]"
+                  >
+                    <div className="text-sm font-semibold text-white/90">{page.title}</div>
+                    <div className="mt-2 text-sm leading-relaxed text-white/70">
+                      {page.desc}
+                    </div>
+                    <div className="mt-3 text-xs text-white/60">Open service →</div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>ALL ONTARIO CITIES</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Browse all Ontario service areas
               </h2>
 
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/70">
-                Orbitlink’s strongest commercial demand includes major office, industrial,
-                and logistics markets across Ontario. Explore city-specific pages or move
-                directly into an availability review.
+                Explore Orbitlink city pages across Ontario for local availability context,
+                business fit, and service direction.
               </p>
 
               <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
-                {cityLinks.map((city) => (
+                {allCityLinks.map((city) => (
                   <Link
                     key={city.href}
                     href={city.href}
@@ -487,68 +615,6 @@ export default function BusinessFibreInternetOntarioPage() {
                     {city.name}
                   </Link>
                 ))}
-              </div>
-
-              <div className="mt-6 space-y-4 text-sm leading-relaxed text-white/70">
-                <p>
-                  Strong commercial demand often comes from{" "}
-                  <Link
-                    href="/locations/mississauga"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
-                  >
-                    Mississauga
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/locations/toronto"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
-                  >
-                    Toronto
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/locations/brampton"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
-                  >
-                    Brampton
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/locations/milton"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
-                  >
-                    Milton
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/locations/vaughan"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
-                  >
-                    Vaughan
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/locations/markham"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
-                  >
-                    Markham
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/locations/windsor"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
-                  >
-                    Windsor
-                  </Link>
-                  , and{" "}
-                  <Link
-                    href="/locations/burlington"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
-                  >
-                    Burlington
-                  </Link>
-                  .
-                </p>
               </div>
             </div>
 
@@ -589,29 +655,6 @@ export default function BusinessFibreInternetOntarioPage() {
                 </Link>{" "}
                 when higher-criticality delivery and uptime expectations are required.
               </p>
-            </div>
-
-            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <SectionEyebrow>RELATED HIGH-INTENT PAGES</SectionEyebrow>
-              <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Related business internet pages
-              </h2>
-
-              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
-                {relatedPages.map((page) => (
-                  <Link
-                    key={page.href}
-                    href={page.href}
-                    className="rounded-3xl border border-white/10 bg-white/[0.04] p-5 transition hover:bg-white/[0.06]"
-                  >
-                    <div className="text-sm font-semibold text-white/90">{page.title}</div>
-                    <div className="mt-2 text-sm leading-relaxed text-white/70">
-                      {page.desc}
-                    </div>
-                    <div className="mt-3 text-xs text-white/60">Open page →</div>
-                  </Link>
-                ))}
-              </div>
             </div>
           </div>
 
@@ -693,25 +736,25 @@ export default function BusinessFibreInternetOntarioPage() {
               </div>
               <div className="mt-3 flex flex-col gap-2 text-sm">
                 <Link
-                  href="/locations/mississauga"
+                  href="/business-internet-mississauga"
                   className="underline underline-offset-4 text-white/80 hover:text-white"
                 >
                   Mississauga
                 </Link>
                 <Link
-                  href="/locations/toronto"
+                  href="/business-internet-toronto"
                   className="underline underline-offset-4 text-white/80 hover:text-white"
                 >
                   Toronto
                 </Link>
                 <Link
-                  href="/locations/brampton"
+                  href="/business-internet-brampton"
                   className="underline underline-offset-4 text-white/80 hover:text-white"
                 >
                   Brampton
                 </Link>
                 <Link
-                  href="/locations/milton"
+                  href="/business-internet-milton"
                   className="underline underline-offset-4 text-white/80 hover:text-white"
                 >
                   Milton
