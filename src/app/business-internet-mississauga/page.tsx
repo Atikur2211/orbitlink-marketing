@@ -25,15 +25,18 @@ const BUSINESS = {
   },
 } as const;
 
+const PAGE_TITLE = "Business Internet in Mississauga, ON";
+const PAGE_DESCRIPTION =
+  "Business internet in Mississauga for offices, warehouses, clinics, and commercial spaces. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.";
+
 export const metadata: Metadata = {
-  title: "Business Internet Mississauga",
-  description:
-    "Business internet in Mississauga for offices, warehouses, clinics, and commercial spaces. Fibre, dedicated internet, backup connectivity. Check availability.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Business Internet Mississauga | Orbitlink",
+    title: PAGE_TITLE,
     description:
-      "Business internet in Mississauga for offices, warehouses, logistics sites, and commercial spaces. Check availability by address and find the right setup for your business.",
+      "Business internet in Mississauga for offices, warehouses, logistics sites, clinics, and commercial spaces. Check availability by address and find the right setup for your business.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -43,13 +46,13 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Business Internet Mississauga | Orbitlink",
+        alt: "Business Internet in Mississauga, ON | Orbitlink",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Internet Mississauga | Orbitlink",
+    title: PAGE_TITLE,
     description:
       "Business internet in Mississauga for offices, warehouses, clinics, and commercial spaces.",
     images: [TWITTER_IMAGE_URL],
@@ -63,7 +66,7 @@ const FAQ = [
   },
   {
     q: "What type of business internet is available in Mississauga?",
-    a: "Depending on the site, Orbitlink may support business fibre internet, dedicated internet, managed LAN and Wi-Fi, backup internet, cloud voice, and static IP routing.",
+    a: "Depending on the site, Orbitlink may support business fibre internet, dedicated internet access, managed LAN and Wi-Fi, backup internet, cloud voice, and static IP routing.",
   },
   {
     q: "Do you support Mississauga office buildings and industrial sites?",
@@ -71,7 +74,7 @@ const FAQ = [
   },
   {
     q: "What is the difference between business fibre and dedicated internet?",
-    a: "Business fibre is often the right fit when a site needs strong performance, good value, and stable daily operations. Dedicated internet is better for critical environments that need stronger uptime and more predictable performance.",
+    a: "Business fibre is often the right fit when a site needs strong performance, good value, and stable daily operations. Dedicated internet access is better for critical environments that need stronger uptime and more predictable performance.",
   },
   {
     q: "Can you manage LAN and Wi-Fi in Mississauga offices and commercial spaces?",
@@ -85,11 +88,11 @@ const FAQ = [
 
 const fitCards = [
   {
-    title: "Office towers & commercial suites",
+    title: "Office towers and commercial suites",
     desc: "Connectivity for professional services, finance teams, agencies, clinics, and office environments in multi-tenant buildings.",
   },
   {
-    title: "Warehouses & logistics",
+    title: "Warehouses and logistics sites",
     desc: "Stable internet for scanners, shipping systems, cameras, cloud tools, VPNs, and operations that depend on uptime.",
   },
   {
@@ -97,7 +100,7 @@ const fitCards = [
     desc: "Business internet for mixed-device environments, managed Wi-Fi, segmentation, and more predictable day-to-day support.",
   },
   {
-    title: "Performance-critical sites",
+    title: "Performance-critical environments",
     desc: "Dedicated internet and backup design for organizations where internet access is tightly linked to operations and client service.",
   },
 ] as const;
@@ -114,7 +117,7 @@ const modules = [
     href: "/services/dedicated-internet-access",
   },
   {
-    title: "Managed LAN & Wi-Fi",
+    title: "Managed LAN and Wi-Fi",
     desc: "Segmentation, stability, coverage planning, and stronger internal network support.",
     href: "/services/managed-lan-wifi",
   },
@@ -125,6 +128,15 @@ const modules = [
   },
 ] as const;
 
+const whySwitch = [
+  "Current provider feels slow during business hours",
+  "Voice, cloud apps, or remote access are being affected",
+  "Moving into a new office, warehouse, or commercial unit",
+  "Need a cleaner setup for staff devices and guest Wi-Fi",
+  "Want backup internet and better business continuity",
+  "Need a more structured business onboarding process",
+] as const;
+
 function jsonLd() {
   return {
     "@context": "https://schema.org",
@@ -133,9 +145,8 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Business Internet Mississauga",
-        description:
-          "Business internet in Mississauga for offices, warehouses, clinics, and commercial spaces. Fibre, dedicated internet, and backup connectivity. Check availability.",
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
         isPartOf: {
           "@type": "WebSite",
           "@id": `${SITE_URL}/#website`,
@@ -152,7 +163,7 @@ function jsonLd() {
         "@id": `${PAGE_URL}#breadcrumb`,
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-          { "@type": "ListItem", position: 2, name: "Business Internet Mississauga", item: PAGE_URL },
+          { "@type": "ListItem", position: 2, name: PAGE_TITLE, item: PAGE_URL },
         ],
       },
       {
@@ -228,20 +239,38 @@ export default function BusinessInternetMississaugaPage() {
         <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
             <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-              Business Internet for Mississauga Businesses
+              Business Internet in Mississauga, ON
             </h1>
 
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/72 md:text-lg">
-              Orbitlink provides business internet in Mississauga for offices,
+              Orbitlink supports business internet in Mississauga for offices,
               warehouses, logistics environments, clinics, studios, and commercial
-              buildings. Availability is checked by address so the right service setup
+              spaces. Availability is checked by address so the right service setup
               can be matched to your location before moving forward.
             </p>
 
-            <p className="mt-3 text-sm text-white/68">
-              For many organizations, this becomes a more reliable business internet
-              option in Mississauga when stability, uptime, and day-to-day performance matter.
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/68">
+              Whether you need business fibre internet, dedicated internet access,
+              managed Wi-Fi, or backup connectivity, the goal is a cleaner fit for
+              real day-to-day operations.
             </p>
+
+            <div className="mt-5 flex flex-wrap gap-2">
+              {[
+                "Business fibre internet",
+                "Dedicated internet access",
+                "Managed Wi-Fi",
+                "Backup connectivity",
+                "Structured onboarding",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/72"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
 
             <div className="mt-4 max-w-3xl text-sm leading-6 text-white/62">
               Explore{" "}
@@ -263,7 +292,7 @@ export default function BusinessInternetMississaugaPage() {
                 href="/services/managed-lan-wifi"
                 className="underline underline-offset-4 hover:text-white"
               >
-                managed LAN & Wi-Fi
+                managed LAN and Wi-Fi
               </Link>
               , and{" "}
               <Link
@@ -275,23 +304,6 @@ export default function BusinessInternetMississaugaPage() {
               .
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-2">
-              {[
-                "Business internet Mississauga",
-                "Fibre & dedicated internet",
-                "Office and warehouse fit",
-                "Availability checked by address",
-                "Clear next step for business buyers",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/contact#intake"
@@ -300,16 +312,16 @@ export default function BusinessInternetMississaugaPage() {
                 Check Business Internet Availability
               </Link>
               <Link
-                href="/locations/mississauga"
+                href={`tel:${BUSINESS.phoneE164}`}
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
               >
-                Mississauga Service Area
+                Call {BUSINESS.phoneDisplay}
               </Link>
               <Link
-                href="/services"
+                href="/trust"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
               >
-                Explore Services
+                Trust and Compliance
               </Link>
             </div>
 
@@ -327,24 +339,17 @@ export default function BusinessInternetMississaugaPage() {
           <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.25)]">
             <SectionEyebrow>WHY BUSINESSES SWITCH</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold tracking-tight">
-              Cleaner performance for real Mississauga operations
+              A cleaner fit for real Mississauga operations
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-white/70">
-              Businesses usually switch when internet instability starts affecting voice,
-              cloud tools, internal systems, remote access, or multi-user workflows.
-              The right Mississauga business internet setup needs to fit both the building
-              and the way the organization actually operates.
+              Businesses usually switch when internet instability starts affecting
+              voice, cloud tools, internal systems, remote access, or multi-user
+              workflows. The right Mississauga business internet setup needs to fit
+              both the building and the way the organization actually operates.
             </p>
 
             <div className="mt-6">
-              <BulletList
-                items={[
-                  "Better fit for VoIP, cloud apps, and internal platforms",
-                  "Stronger multi-user stability during business hours",
-                  "Cleaner support for offices, warehouses, and clinics",
-                  "Better starting point for managed Wi-Fi and backup design",
-                ]}
-              />
+              <BulletList items={whySwitch} />
             </div>
           </div>
         </div>
@@ -376,8 +381,8 @@ export default function BusinessInternetMississaugaPage() {
                 <p>
                   Orbitlink checks what is available by address instead of making blanket
                   claims. That makes it easier to recommend the right combination of
-                  business fibre, dedicated internet, managed LAN and Wi-Fi, backup
-                  connectivity, static IPs, and voice support where needed.
+                  business fibre internet, dedicated internet access, managed LAN and Wi-Fi,
+                  backup connectivity, static IP routing, and voice support where needed.
                 </p>
 
                 <p>
@@ -397,43 +402,27 @@ export default function BusinessInternetMississaugaPage() {
                   business internet in Mississauga with a clearer deployment path and more
                   structured support.
                 </p>
+              </div>
+            </div>
 
-                <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
-                  What business internet usually needs to support in Mississauga
-                </h3>
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>WHO THIS PAGE IS FOR</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Common Mississauga business environments
+              </h2>
 
-                <p>
-                  Mississauga business environments often depend on cloud applications,
-                  VoIP, VPNs, cameras, guest Wi-Fi, booking and payment systems,
-                  collaboration tools, logistics software, and internal operational
-                  networks running together. That makes uptime, segmentation, and
-                  day-to-day consistency more important than a simple speed claim.
-                </p>
-
-                <p>
-                  Orbitlink also supports nearby commercial markets including{" "}
-                  <Link
-                    href="/locations/toronto"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {fitCards.map((card) => (
+                  <div
+                    key={card.title}
+                    className="rounded-3xl border border-white/10 bg-white/[0.04] p-5"
                   >
-                    Toronto
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/locations/brampton"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
-                  >
-                    Brampton
-                  </Link>
-                  , and{" "}
-                  <Link
-                    href="/locations/oakville"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
-                  >
-                    Oakville
-                  </Link>
-                  .
-                </p>
+                    <div className="text-sm font-semibold text-white/90">{card.title}</div>
+                    <div className="mt-2 text-sm leading-relaxed text-white/70">
+                      {card.desc}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -465,32 +454,11 @@ export default function BusinessInternetMississaugaPage() {
                 <BulletList
                   items={[
                     "What is available at your building",
-                    "Whether fibre or dedicated internet is the right fit",
+                    "Whether business fibre or dedicated internet is the right fit",
                     "Installation feasibility and service path",
                     "Whether managed Wi-Fi, voice, or backup should be included",
                   ]}
                 />
-              </div>
-            </div>
-
-            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <SectionEyebrow>TYPICAL MISSISSAUGA FIT</SectionEyebrow>
-              <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Common Mississauga business environments
-              </h2>
-
-              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
-                {fitCards.map((card) => (
-                  <div
-                    key={card.title}
-                    className="rounded-3xl border border-white/10 bg-white/[0.04] p-5"
-                  >
-                    <div className="text-sm font-semibold text-white/90">{card.title}</div>
-                    <div className="mt-2 text-sm leading-relaxed text-white/70">
-                      {card.desc}
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
 
@@ -520,10 +488,10 @@ export default function BusinessInternetMississaugaPage() {
                 Business fibre vs dedicated internet in Mississauga
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-white/70">
-                Business fibre is often the right fit when you need strong performance,
-                good value, and stable day-to-day operations. Dedicated internet is
-                better for critical environments where stronger uptime and more
-                predictable performance matter. Learn more about{" "}
+                Business fibre internet is often the right fit when you need strong
+                performance, good value, and stable day-to-day operations. Dedicated
+                internet access is better for critical environments where stronger uptime
+                and more predictable performance matter. Learn more about{" "}
                 <Link
                   href="/services/dedicated-internet-access"
                   className="underline underline-offset-4 text-white/85 hover:text-white"
@@ -596,10 +564,10 @@ export default function BusinessInternetMississaugaPage() {
                     Check Business Internet Availability
                   </Link>
                   <Link
-                    href="/trust"
+                    href="/services"
                     className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                   >
-                    Trust & Compliance
+                    Explore Services
                   </Link>
                 </div>
               </div>
@@ -671,10 +639,10 @@ export default function BusinessInternetMississaugaPage() {
               Mississauga Service Area
             </Link>
             <Link
-              href="/services"
+              href="/trust"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
-              Explore Services
+              Trust and Compliance
             </Link>
           </div>
         </div>

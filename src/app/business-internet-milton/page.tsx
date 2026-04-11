@@ -25,15 +25,18 @@ const BUSINESS = {
   },
 } as const;
 
+const PAGE_TITLE = "Business Internet in Milton, ON";
+const PAGE_DESCRIPTION =
+  "Business internet in Milton for warehouses, industrial, logistics, and office environments. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.";
+
 export const metadata: Metadata = {
-  title: "Business Internet Milton",
-  description:
-    "Business internet in Milton for warehouses, industrial and logistics operations, and offices. Fibre, dedicated internet, and backup connectivity",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Business Internet Milton | Orbitlink",
+    title: PAGE_TITLE,
     description:
-      "Business internet in Milton for industrial, logistics, warehouse, and office environments. Check availability by address and find the right setup for your business.",
+      "Business internet in Milton for industrial, warehouse, logistics, and office environments. Check availability by address and find the right setup for your business.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -43,15 +46,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Business Internet Milton | Orbitlink",
+        alt: "Business Internet in Milton, ON | Orbitlink",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Internet Milton | Orbitlink",
+    title: PAGE_TITLE,
     description:
-      "Business internet in Milton for industrial, logistics, warehouse, and office environments.",
+      "Business internet in Milton for warehouses, industrial, logistics, and office environments.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -63,7 +66,7 @@ const FAQ = [
   },
   {
     q: "What type of business internet is available in Milton?",
-    a: "Depending on the site, Orbitlink may support business fibre internet, dedicated internet, managed LAN and Wi-Fi, backup internet, cloud voice, and static IP routing.",
+    a: "Depending on the site, Orbitlink may support business fibre internet, dedicated internet access, managed LAN and Wi-Fi, backup internet, cloud voice, and static IP routing.",
   },
   {
     q: "Do you support warehouse and industrial sites in Milton?",
@@ -71,7 +74,7 @@ const FAQ = [
   },
   {
     q: "What is the difference between business fibre and dedicated internet?",
-    a: "Business fibre is often the right fit when a site needs strong performance, good value, and stable daily operations. Dedicated internet is better for critical environments that need stronger uptime and more predictable performance.",
+    a: "Business fibre internet is often the right fit when a site needs strong performance, good value, and stable daily operations. Dedicated internet access is better for critical environments that need stronger uptime and more predictable performance.",
   },
   {
     q: "Can you manage LAN and Wi-Fi in Milton offices and warehouses?",
@@ -85,7 +88,7 @@ const FAQ = [
 
 const fitCards = [
   {
-    title: "Warehouses & logistics",
+    title: "Warehouses and logistics",
     desc: "Stable connectivity for scanners, shipping systems, cameras, cloud tools, VPNs, and workflows that depend on uptime.",
   },
   {
@@ -93,7 +96,7 @@ const fitCards = [
     desc: "Segmentation between office users, operational devices, guest access, and site systems for cleaner day-to-day operations.",
   },
   {
-    title: "Business parks & offices",
+    title: "Business parks and offices",
     desc: "Business internet for collaboration, VoIP, cloud applications, and teams that depend on uptime.",
   },
   {
@@ -114,7 +117,7 @@ const modules = [
     href: "/services/dedicated-internet-access",
   },
   {
-    title: "Managed LAN & Wi-Fi",
+    title: "Managed LAN and Wi-Fi",
     desc: "Segmentation, stability, coverage planning, and stronger internal network support.",
     href: "/services/managed-lan-wifi",
   },
@@ -125,6 +128,15 @@ const modules = [
   },
 ] as const;
 
+const whySwitch = [
+  "Current provider is too slow during business hours",
+  "Scanners, cameras, or cloud systems are unreliable",
+  "Warehouse or logistics operations need stable uptime",
+  "Need better internal Wi-Fi and network segmentation",
+  "Want backup internet and uptime protection",
+  "Need structured business onboarding and support",
+] as const;
+
 function jsonLd() {
   return {
     "@context": "https://schema.org",
@@ -133,9 +145,8 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Business Internet Milton",
-        description:
-          "Business internet in Milton for warehouses, industrial and logistics operations, and offices. Fibre, dedicated internet, and backup connectivity. Check availability.",
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
         isPartOf: {
           "@type": "WebSite",
           "@id": `${SITE_URL}/#website`,
@@ -152,7 +163,7 @@ function jsonLd() {
         "@id": `${PAGE_URL}#breadcrumb`,
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-          { "@type": "ListItem", position: 2, name: "Business Internet Milton", item: PAGE_URL },
+          { "@type": "ListItem", position: 2, name: PAGE_TITLE, item: PAGE_URL },
         ],
       },
       {
@@ -228,20 +239,41 @@ export default function BusinessInternetMiltonPage() {
         <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
             <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-              Business Internet for Milton Businesses
+              Business Internet in Milton, ON
+              <span className="block text-white/60">
+                Built for industrial and logistics operations
+              </span>
             </h1>
 
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/72 md:text-lg">
-              Orbitlink provides business internet in Milton for industrial,
+              Orbitlink supports business internet in Milton for industrial,
               warehouse, logistics, and office environments. Availability is checked
               by address so the right service setup can be matched to your location
               before moving forward.
             </p>
 
-            <p className="mt-3 text-sm text-white/68">
-              For many organizations, this becomes a more reliable business internet
-              option in Milton when uptime, operational stability, and day-to-day performance matter.
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-white/68">
+              Whether you need business fibre internet, dedicated internet access,
+              managed Wi-Fi, or backup connectivity, the goal is a cleaner fit for
+              uptime-sensitive daily operations.
             </p>
+
+            <div className="mt-5 flex flex-wrap gap-2">
+              {[
+                "Business Fibre Internet",
+                "Dedicated Internet Access",
+                "Managed Wi-Fi",
+                "Backup Connectivity",
+                "Industrial and warehouse fit",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/72"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
 
             <div className="mt-4 max-w-3xl text-sm leading-6 text-white/62">
               Explore{" "}
@@ -263,7 +295,7 @@ export default function BusinessInternetMiltonPage() {
                 href="/services/managed-lan-wifi"
                 className="underline underline-offset-4 hover:text-white"
               >
-                managed LAN & Wi-Fi
+                managed LAN and Wi-Fi
               </Link>
               , and{" "}
               <Link
@@ -275,23 +307,6 @@ export default function BusinessInternetMiltonPage() {
               .
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-2">
-              {[
-                "Business internet Milton",
-                "Fibre & dedicated internet",
-                "Industrial and warehouse fit",
-                "Availability checked by address",
-                "Clear next step for business buyers",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/contact#intake"
@@ -300,16 +315,16 @@ export default function BusinessInternetMiltonPage() {
                 Check Business Internet Availability
               </Link>
               <Link
-                href="/locations/milton"
+                href={`tel:${BUSINESS.phoneE164}`}
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
               >
-                Milton Service Area
+                Call {BUSINESS.phoneDisplay}
               </Link>
               <Link
-                href="/services"
+                href="/trust"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
               >
-                Explore Services
+                Trust and Compliance
               </Link>
             </div>
 
@@ -327,24 +342,17 @@ export default function BusinessInternetMiltonPage() {
           <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.25)]">
             <SectionEyebrow>WHY BUSINESSES SWITCH</SectionEyebrow>
             <h2 className="mt-3 text-xl font-semibold tracking-tight">
-              Cleaner performance for real Milton operations
+              A cleaner fit for real Milton operations
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-white/70">
-              Businesses usually switch when internet instability starts affecting voice,
-              cloud tools, internal systems, remote access, scanners, cameras, or
-              multi-user workflows. The right Milton business internet setup needs to fit
-              both the building and the way the site actually operates.
+              Businesses usually switch when internet instability starts affecting
+              voice, cloud tools, internal systems, remote access, scanners, cameras,
+              or multi-user workflows. The right Milton business internet setup needs
+              to fit both the building and the way the site actually operates.
             </p>
 
             <div className="mt-6">
-              <BulletList
-                items={[
-                  "Better fit for cloud apps, VoIP, and internal platforms",
-                  "Stronger multi-user stability during business hours",
-                  "Cleaner support for warehouses, industrial sites, and offices",
-                  "Better starting point for managed Wi-Fi and backup design",
-                ]}
-              />
+              <BulletList items={whySwitch} />
             </div>
           </div>
         </div>
@@ -376,8 +384,26 @@ export default function BusinessInternetMiltonPage() {
                 <p>
                   Orbitlink checks what is available by address instead of making blanket
                   claims. That makes it easier to recommend the right combination of
-                  business fibre, dedicated internet, managed LAN and Wi-Fi, backup
-                  connectivity, static IPs, and voice support where needed.
+                  business fibre internet, dedicated internet access, managed LAN and Wi-Fi,
+                  backup connectivity, static IP routing, and voice support where needed.
+                </p>
+
+                <p>
+                  Businesses comparing options often review{" "}
+                  <Link
+                    href="/services/business-fibre-internet"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    business fibre internet
+                  </Link>{" "}
+                  and{" "}
+                  <Link
+                    href="/services/dedicated-internet-access"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    dedicated internet access
+                  </Link>{" "}
+                  to determine the right fit for warehouse, logistics, or office environments.
                 </p>
 
                 <p>
@@ -385,43 +411,27 @@ export default function BusinessInternetMiltonPage() {
                   business internet in Milton with a clearer deployment path and more
                   structured support.
                 </p>
+              </div>
+            </div>
 
-                <h3 className="pt-4 text-lg font-semibold tracking-tight text-white">
-                  What business internet usually needs to support in Milton
-                </h3>
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>WHO THIS PAGE IS FOR</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Common Milton business environments
+              </h2>
 
-                <p>
-                  Industrial and logistics environments often depend on scanners, handheld
-                  devices, cloud platforms, cameras, VPNs, voice systems, IoT devices,
-                  office users, and internal operational networks running together. That
-                  makes uptime, segmentation, and day-to-day consistency more important
-                  than a simple speed claim.
-                </p>
-
-                <p>
-                  Orbitlink also supports nearby commercial markets including{" "}
-                  <Link
-                    href="/locations/oakville"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {fitCards.map((card) => (
+                  <div
+                    key={card.title}
+                    className="rounded-3xl border border-white/10 bg-white/[0.04] p-5"
                   >
-                    Oakville
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href="/locations/mississauga"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
-                  >
-                    Mississauga
-                  </Link>
-                  , and{" "}
-                  <Link
-                    href="/locations/brampton"
-                    className="underline underline-offset-4 text-white/85 hover:text-white"
-                  >
-                    Brampton
-                  </Link>
-                  .
-                </p>
+                    <div className="text-sm font-semibold text-white/90">{card.title}</div>
+                    <div className="mt-2 text-sm leading-relaxed text-white/70">
+                      {card.desc}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -453,32 +463,11 @@ export default function BusinessInternetMiltonPage() {
                 <BulletList
                   items={[
                     "What is available at your building",
-                    "Whether fibre or dedicated internet is the right fit",
+                    "Whether business fibre or dedicated internet is the right fit",
                     "Installation feasibility and service path",
                     "Whether managed Wi-Fi, voice, or backup should be included",
                   ]}
                 />
-              </div>
-            </div>
-
-            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <SectionEyebrow>TYPICAL MILTON FIT</SectionEyebrow>
-              <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Common Milton business environments
-              </h2>
-
-              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
-                {fitCards.map((card) => (
-                  <div
-                    key={card.title}
-                    className="rounded-3xl border border-white/10 bg-white/[0.04] p-5"
-                  >
-                    <div className="text-sm font-semibold text-white/90">{card.title}</div>
-                    <div className="mt-2 text-sm leading-relaxed text-white/70">
-                      {card.desc}
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
 
@@ -508,10 +497,10 @@ export default function BusinessInternetMiltonPage() {
                 Business fibre vs dedicated internet in Milton
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-white/70">
-                Business fibre is often the right fit when you need strong performance,
-                good value, and stable day-to-day operations. Dedicated internet is
-                better for critical environments where stronger uptime and more
-                predictable performance matter.
+                Business fibre internet is often the right fit when you need strong
+                performance, good value, and stable day-to-day operations. Dedicated
+                internet access is better for critical environments where stronger uptime
+                and more predictable performance matter.
               </p>
             </div>
           </div>
@@ -569,10 +558,10 @@ export default function BusinessInternetMiltonPage() {
                     Check Business Internet Availability
                   </Link>
                   <Link
-                    href="/trust"
+                    href="/services"
                     className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                   >
-                    Trust & Compliance
+                    Explore Services
                   </Link>
                 </div>
               </div>
@@ -644,10 +633,10 @@ export default function BusinessInternetMiltonPage() {
               Milton Service Area
             </Link>
             <Link
-              href="/services"
+              href="/trust"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
             >
-              Explore Services
+              Trust and Compliance
             </Link>
           </div>
         </div>

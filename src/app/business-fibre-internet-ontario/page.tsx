@@ -25,17 +25,20 @@ const BUSINESS = {
   },
 } as const;
 
+const PAGE_TITLE = "Business Fibre Internet in Ontario";
+const PAGE_DESCRIPTION =
+  "Business fibre internet in Ontario for offices, warehouses, clinics, and commercial sites. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.";
+
 export const metadata: Metadata = {
-  title: "Business Fibre Internet Ontario",
-  description:
-    "Business fibre internet for Ontario offices, warehouses, clinics, and commercial sites. Check availability by address and find the right setup.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: "Business Fibre Internet Ontario | Orbitlink",
+    title: PAGE_TITLE,
     description:
-      "Reliable business fibre internet for Ontario businesses. Check address availability and find the right setup for offices, warehouses, clinics, and commercial sites.",
+      "Business fibre internet in Ontario for offices, warehouses, clinics, and commercial sites. Check availability by address and find the right setup.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -45,15 +48,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Business Fibre Internet Ontario | Orbitlink",
+        alt: "Business Fibre Internet in Ontario | Orbitlink",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Fibre Internet Ontario | Orbitlink",
+    title: PAGE_TITLE,
     description:
-      "Business fibre internet for Ontario offices, warehouses, clinics, and commercial sites.",
+      "Business fibre internet in Ontario for offices, warehouses, clinics, and commercial sites.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -91,11 +94,11 @@ const fitCards = [
     desc: "Stable business internet for cloud applications, VoIP, collaboration tools, VPN access, guest Wi-Fi, and multi-user daily operations.",
   },
   {
-    title: "Warehouses & logistics",
+    title: "Warehouses and logistics",
     desc: "Reliable connectivity for scanners, tracking systems, cameras, cloud platforms, shipping workflows, and industrial operations.",
   },
   {
-    title: "Clinics & professional services",
+    title: "Clinics and professional services",
     desc: "Business fibre for booking systems, practice tools, voice systems, internal devices, and client-facing operations where consistency matters.",
   },
   {
@@ -147,6 +150,15 @@ const cityLinks = [
   { name: "Peterborough", href: "/locations/peterborough" },
 ] as const;
 
+const whySwitch = [
+  "Current provider is too slow during business hours",
+  "VoIP, cloud apps, or internal systems are unreliable",
+  "Warehouse or office operations need stable uptime",
+  "Need better internal Wi-Fi and network segmentation",
+  "Want backup internet and uptime protection",
+  "Need structured onboarding and business-grade support",
+] as const;
+
 function jsonLd() {
   return {
     "@context": "https://schema.org",
@@ -155,9 +167,8 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Business Fibre Internet Ontario",
-        description:
-          "Business fibre internet for Ontario offices, warehouses, clinics, and commercial sites. Check availability by address and find the right setup.",
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
         isPartOf: {
           "@type": "WebSite",
           "@id": `${SITE_URL}/#website`,
@@ -177,7 +188,7 @@ function jsonLd() {
           {
             "@type": "ListItem",
             position: 2,
-            name: "Business Fibre Internet Ontario",
+            name: PAGE_TITLE,
             item: PAGE_URL,
           },
         ],
@@ -255,7 +266,10 @@ export default function BusinessFibreInternetOntarioPage() {
         <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
             <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-              Business Fibre Internet for Ontario Businesses
+              Business Fibre Internet in Ontario
+              <span className="block text-white/60">
+                Built for real operations across offices, warehouses, and commercial sites
+              </span>
             </h1>
 
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/72 md:text-lg">
@@ -265,22 +279,22 @@ export default function BusinessFibreInternetOntarioPage() {
               building before moving forward.
             </p>
 
-            <div className="mt-3 text-sm text-white/68">
+            <div className="mt-3 max-w-3xl text-sm leading-6 text-white/68">
               Built for business operations that depend on stable connectivity, cleaner
               multi-user performance, and a clear next step.
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-5 flex flex-wrap gap-2">
               {[
-                "Business fibre internet Ontario",
-                "Availability checked by address",
-                "Commercial and industrial fit",
-                "Supports VoIP, cloud, and internal systems",
-                "Clear next step for business buyers",
+                "Business Fibre Internet",
+                "Dedicated Internet Access",
+                "Managed Wi-Fi",
+                "Backup Connectivity",
+                "Ontario-wide coverage",
               ].map((item) => (
                 <span
                   key={item}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
+                  className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/72"
                 >
                   {item}
                 </span>
@@ -295,16 +309,16 @@ export default function BusinessFibreInternetOntarioPage() {
                 Check Business Internet Availability
               </Link>
               <Link
-                href="/services/business-fibre-internet"
+                href={`tel:${BUSINESS.phoneE164}`}
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
               >
-                View Fibre Service
+                Call {BUSINESS.phoneDisplay}
               </Link>
               <Link
-                href="/locations/ontario"
+                href="/trust"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
               >
-                Ontario Coverage Hub
+                Trust and Compliance
               </Link>
             </div>
 
@@ -331,14 +345,7 @@ export default function BusinessFibreInternetOntarioPage() {
             </p>
 
             <div className="mt-6">
-              <BulletList
-                items={[
-                  "Better fit for VoIP, cloud apps, and internal platforms",
-                  "Stronger multi-user stability during business hours",
-                  "Cleaner support for offices, clinics, and warehouse workflows",
-                  "Better starting point for managed Wi-Fi and backup design",
-                ]}
-              />
+              <BulletList items={whySwitch} />
             </div>
           </div>
         </div>
@@ -412,15 +419,21 @@ export default function BusinessFibreInternetOntarioPage() {
                 </p>
 
                 <p>
-                  Businesses operating across multiple locations may also want to review{" "}
+                  Businesses comparing options often review{" "}
                   <Link
-                    href="/business-internet-milton"
+                    href="/services/business-fibre-internet"
                     className="underline underline-offset-4 text-white/85 hover:text-white"
                   >
-                    business internet in Milton
+                    business fibre internet
                   </Link>{" "}
-                  alongside broader Ontario planning, especially where warehouse,
-                  industrial, and logistics expansion is part of the operating model.
+                  and{" "}
+                  <Link
+                    href="/services/dedicated-internet-access"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    dedicated internet access
+                  </Link>{" "}
+                  to determine the right fit for their operations.
                 </p>
 
                 <p>
@@ -432,7 +445,7 @@ export default function BusinessFibreInternetOntarioPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
-              <SectionEyebrow>TYPICAL FIT</SectionEyebrow>
+              <SectionEyebrow>WHO THIS PAGE IS FOR</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
                 Common Ontario business environments
               </h2>
@@ -665,10 +678,10 @@ export default function BusinessFibreInternetOntarioPage() {
                     Check Business Internet Availability
                   </Link>
                   <Link
-                    href="/trust"
+                    href="/services"
                     className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                   >
-                    Trust & Compliance
+                    Explore Services
                   </Link>
                 </div>
               </div>

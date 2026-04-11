@@ -1,7 +1,11 @@
 import TopNav from "@/components/TopNav";
 import SiteFooter from "@/components/SiteFooter";
 
-export default function InternetNearMeLayout({ children }: { children: React.ReactNode }) {
+export default function InternetNearMeLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <TopNav />

@@ -23,13 +23,16 @@ const BUSINESS = {
   },
 } as const;
 
+const PAGE_TITLE = "Business Internet Near Me in Ontario";
+const PAGE_DESCRIPTION =
+  "Business internet near you in Ontario. Fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Check availability by address.";
+
 export const metadata: Metadata = {
-  title: "Business Internet Near Me",
-  description:
-    "Business internet near you in Ontario. Fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Check availability by address.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Business Internet Near Me | Orbitlink",
+    title: PAGE_TITLE,
     description:
       "Business internet near you for Ontario offices, warehouses, clinics, and commercial sites. Check availability by address and find the right setup for your business.",
     url: PAGE_URL,
@@ -41,13 +44,13 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Business Internet Near Me | Orbitlink",
+        alt: "Business Internet Near Me in Ontario | Orbitlink",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Business Internet Near Me | Orbitlink",
+    title: PAGE_TITLE,
     description:
       "Business internet near you across Ontario. Fibre, dedicated internet, managed Wi-Fi, and backup connectivity.",
     images: [TWITTER_IMAGE_URL],
@@ -106,9 +109,9 @@ const modules = [
     title: "Dedicated Internet Access",
     desc: "Stronger uptime and more predictable performance for critical environments.",
     href: "/services/dedicated-internet-access",
-    },
+  },
   {
-    title: "Managed LAN & Wi-Fi",
+    title: "Managed LAN and Wi-Fi",
     desc: "Managed internal networking, segmentation, and better Wi-Fi coverage.",
     href: "/services/managed-lan-wifi",
   },
@@ -119,6 +122,15 @@ const modules = [
   },
 ] as const;
 
+const whySwitch = [
+  "Current provider is too slow during business hours",
+  "VoIP, cloud apps, or internal systems are unreliable",
+  "Need better internal Wi-Fi and network segmentation",
+  "Want backup internet and uptime protection",
+  "Moving into a new office, warehouse, or commercial unit",
+  "Need structured onboarding and business-grade support",
+] as const;
+
 function jsonLd() {
   return {
     "@context": "https://schema.org",
@@ -127,14 +139,17 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Business Internet Near Me",
-        description:
-          "Business internet near you in Ontario. Fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Check availability by address.",
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
         isPartOf: {
           "@type": "WebSite",
           "@id": `${SITE_URL}/#website`,
           url: SITE_URL,
           name: SITE_NAME,
+        },
+        about: {
+          "@type": "Thing",
+          name: "Business internet near me in Ontario",
         },
       },
       {
@@ -142,7 +157,7 @@ function jsonLd() {
         "@id": `${PAGE_URL}#breadcrumb`,
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-          { "@type": "ListItem", position: 2, name: "Business Internet Near Me", item: PAGE_URL },
+          { "@type": "ListItem", position: 2, name: PAGE_TITLE, item: PAGE_URL },
         ],
       },
       {
@@ -188,20 +203,31 @@ function BulletGrid({ items }: { items: readonly string[] }) {
 
 export default function InternetNearMePage() {
   return (
-    <div className="min-h-screen bg-[#0B0F14] text-white">
+    <div className="relative min-h-screen overflow-x-hidden bg-[#0B0F14] text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
 
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute -top-24 left-8 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
+        <div className="absolute right-0 top-16 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
+        <div className="absolute bottom-[-160px] left-1/2 h-96 w-[60rem] -translate-x-1/2 rounded-full bg-white/5 blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_35%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.02),transparent_25%,transparent_75%,rgba(255,255,255,0.02))]" />
+      </div>
+
       <section className="mx-auto max-w-6xl px-6 pb-10 pt-16 md:pt-20">
         <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-          <span className="h-2 w-2 rounded-full bg-white/60" />
+          <span className="h-2 w-2 rounded-full bg-cyan-300/80" />
           <span className="text-sm tracking-wide text-white/60">High-intent business search page</span>
         </div>
 
         <h1 className="mt-5 max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-          Business Internet Near You for Ontario Businesses
+          Business Internet Near You in Ontario
+          <span className="block text-white/60">
+            Built for offices, warehouses, clinics, and commercial sites
+          </span>
         </h1>
 
         <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
@@ -212,21 +238,21 @@ export default function InternetNearMePage() {
           with availability checked by address.
         </p>
 
-        <p className="mt-3 text-sm text-white/60">
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-white/60">
           Availability varies by building. Submit your address to confirm what fits your site.
         </p>
 
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div className="mt-5 flex flex-wrap gap-2">
           {[
-            "Availability checked by address",
-            "Business-first service model",
-            "Ontario coverage",
-            "Clear next step for business buyers",
-            "Built for offices, warehouses, clinics, and commercial locations",
+            "Business Fibre Internet",
+            "Dedicated Internet Access",
+            "Managed Wi-Fi",
+            "Backup Connectivity",
+            "Address-first review",
           ].map((item) => (
             <span
               key={item}
-              className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70"
+              className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/72"
             >
               {item}
             </span>
@@ -241,25 +267,17 @@ export default function InternetNearMePage() {
             Check Business Internet Availability
           </Link>
           <Link
-            href="/locations"
+            href={`tel:${BUSINESS.phoneE164}`}
             className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
           >
-            Browse Service Areas
+            Call {BUSINESS.phoneDisplay}
           </Link>
           <Link
-            href="/services"
+            href="/trust"
             className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
           >
-            View Services
+            Trust and Compliance
           </Link>
-        </div>
-
-        <div className="mt-6 text-xs text-white/55">
-          Phone:{" "}
-          <a className="text-white/75 transition hover:text-white" href={`tel:${BUSINESS.phoneE164}`}>
-            {BUSINESS.phoneDisplay}
-          </a>{" "}
-          • Ontario • Business-first
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -291,14 +309,21 @@ export default function InternetNearMePage() {
                 </p>
 
                 <p>
-                  Businesses expanding across Ontario markets can also explore{" "}
+                  Businesses comparing options often review{" "}
                   <Link
-                    href="/business-internet-milton"
+                    href="/services/business-fibre-internet"
                     className="underline underline-offset-4 text-white/85 hover:text-white"
                   >
-                    business internet in Milton
+                    business fibre internet
                   </Link>{" "}
-                  to understand availability, service fit, and next steps for warehouse, industrial, and office environments.
+                  and{" "}
+                  <Link
+                    href="/services/dedicated-internet-access"
+                    className="underline underline-offset-4 text-white/85 hover:text-white"
+                  >
+                    dedicated internet access
+                  </Link>{" "}
+                  before deciding what best fits the site.
                 </p>
 
                 <p>
@@ -311,6 +336,17 @@ export default function InternetNearMePage() {
                   for business internet near me in Ontario with a clearer deployment path and
                   more structured support.
                 </p>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>WHY BUSINESSES SWITCH</SectionEyebrow>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Common reasons businesses start looking
+              </h2>
+
+              <div className="mt-5">
+                <BulletGrid items={whySwitch} />
               </div>
             </div>
 
@@ -346,30 +382,6 @@ export default function InternetNearMePage() {
                   </Link>
                 ))}
               </div>
-
-              <div className="mt-5 grid grid-cols-1 gap-2 text-sm text-white/70 sm:grid-cols-2">
-                <Link href="/locations/barrie" className="underline hover:text-white">
-                  Business internet in Barrie
-                </Link>
-                <Link href="/locations/north-york" className="underline hover:text-white">
-                  Business internet in North York
-                </Link>
-                <Link href="/locations/niagara-st-catharines" className="underline hover:text-white">
-                  Business internet in Niagara / St. Catharines
-                </Link>
-                <Link href="/locations/newmarket" className="underline hover:text-white">
-                  Business internet in Newmarket
-                </Link>
-                <Link href="/locations/sudbury" className="underline hover:text-white">
-                  Business internet in Sudbury
-                </Link>
-                <Link href="/locations/kingston" className="underline hover:text-white">
-                  Business internet in Kingston
-                </Link>
-                <Link href="/locations/thunder-bay" className="underline hover:text-white">
-                  Business internet in Thunder Bay
-                </Link>
-              </div>
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 md:p-8">
@@ -404,10 +416,10 @@ export default function InternetNearMePage() {
                   Check Business Internet Availability
                 </Link>
                 <Link
-                  href="/trust"
+                  href="/services"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                 >
-                  Trust & Compliance
+                  Explore Services
                 </Link>
               </div>
             </div>
