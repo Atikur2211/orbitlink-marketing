@@ -424,10 +424,10 @@ export default function Home() {
               </Link>
 
               <Link
-                href="/business-fibre-internet-ontario"
+                href="/locations/ontario"
                 className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10 sm:rounded-2xl"
               >
-                Ontario Fibre Hub
+                Ontario Coverage Hub
               </Link>
             </div>
 
