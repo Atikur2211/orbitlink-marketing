@@ -589,15 +589,6 @@ function getScheduledEventMeta(actionType: string) {
   }
 }
 
-function getLocationLabel(location: LocationOption | null | undefined) {
-  if (!location) return "—";
-  const name = location.location_name?.trim();
-  const city = location.city?.trim();
-  if (name && city) return `${name} · ${city}`;
-  if (name) return name;
-  if (city) return `${location.address_line_1} · ${city}`;
-  return location.address_line_1;
-}
 
 export default async function AdminOrdersPage() {
   const supabase = createClient(
