@@ -26,10 +26,12 @@ if (!resendApiKey) {
 
 const resend = new Resend(resendApiKey);
 
-// Force the verified production sender.
-// This avoids stale env values still pointing to onboarding@resend.dev.
 const VERIFIED_FROM_EMAIL = "Orbitlink <noreply@orbitlink.ca>";
-const DEFAULT_REPLY_TO = process.env.INTAKE_TO_EMAIL || "concierge@orbitlink.ca";
+const DEFAULT_REPLY_TO = "concierge@orbitlink.ca";
+const DEFAULT_CC_EMAIL = "concierge@orbitlink.ca";
+
+// Replace this with your final public hosted premium logo URL on orbitlink.ca
+const EMAIL_LOGO_URL = "https://orbitlink.ca/brand/orbitlink-email-logo.png";
 
 function escapeHtml(value: string) {
   return value
@@ -49,23 +51,41 @@ function isValidEmail(value: string) {
 }
 
 function buildWelcomeEmail(account: WelcomeEmailPayload) {
-  const contactName = escapeHtml(account.primary_contact_name || "there");
+  const contactName = escapeHtml(account.primary_contact_name || "Customer");
   const accountName = escapeHtml(account.account_name);
 
   return `
-  <div style="margin:0;padding:0;background:#f6f4ee;">
-    <div style="max-width:640px;margin:0 auto;padding:32px 20px;">
-      <div style="background:#ffffff;border:1px solid #e8e1cc;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,0.08);">
-        <div style="background:linear-gradient(135deg,#111111 0%,#1c1c1c 100%);padding:28px 32px;border-bottom:1px solid rgba(212,175,55,0.22);">
-          <div style="font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#d4af37;margin-bottom:10px;">
-            Orbitlink™
-          </div>
-          <h1 style="margin:0;font-family:Arial,sans-serif;font-size:28px;line-height:1.2;color:#fff7db;">
-            Account Created
-          </h1>
+  <div style="margin:0;padding:0;background:#f3f1ea;">
+    <div style="max-width:720px;margin:0 auto;padding:28px 18px;">
+      <div style="background:#ffffff;border:1px solid #e7decb;border-radius:20px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,0.10);">
+
+        <div style="background:linear-gradient(135deg,#0b0f16 0%,#13213b 55%,#0f172a 100%);padding:30px 34px;border-bottom:1px solid rgba(212,175,55,0.22);">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+            <tr>
+              <td style="vertical-align:middle;">
+                <div style="font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#d4af37;margin-bottom:8px;">
+                  Orbitlink™
+                </div>
+                <div style="font-family:Arial,sans-serif;font-size:30px;line-height:1.14;font-weight:700;color:#fff7db;">
+                  Customer Account Opened
+                </div>
+                <div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,0.76);margin-top:8px;">
+                  Business Internet &amp; Network Infrastructure
+                </div>
+              </td>
+              <td align="right" style="vertical-align:middle;">
+                <img
+                  src="${EMAIL_LOGO_URL}"
+                  alt="Orbitlink"
+                  width="150"
+                  style="display:block;border:0;outline:none;max-width:150px;height:auto;"
+                />
+              </td>
+            </tr>
+          </table>
         </div>
 
-        <div style="padding:32px;font-family:Arial,sans-serif;color:#161616;line-height:1.7;font-size:15px;">
+        <div style="padding:36px 34px;font-family:Arial,sans-serif;color:#181818;font-size:15px;line-height:1.82;">
           <p style="margin:0 0 16px 0;">Hi ${contactName},</p>
 
           <p style="margin:0 0 16px 0;">
@@ -73,43 +93,59 @@ function buildWelcomeEmail(account: WelcomeEmailPayload) {
           </p>
 
           <p style="margin:0 0 16px 0;">
-            Your customer account has been successfully created in our system.
+            Your customer account has been opened successfully in our operations system.
           </p>
 
-          <p style="margin:0 0 12px 0;">
-            We are now preparing your service workflow, including:
+          <p style="margin:0 0 16px 0;">
+            Our team is now preparing the next stage of your service workflow. Depending on service type and location, this may include address validation, building qualification, network availability confirmation, service design review, order progression, and activation planning.
           </p>
 
-          <ul style="margin:0 0 20px 20px;padding:0;">
-            <li style="margin:0 0 8px 0;">Serviceability review</li>
-            <li style="margin:0 0 8px 0;">Network availability validation</li>
-            <li style="margin:0;">Installation planning</li>
-          </ul>
-
-          <div style="margin:22px 0;padding:16px 18px;background:#faf7ef;border:1px solid #eadfb8;border-radius:12px;">
+          <div style="margin:24px 0;padding:18px 20px;background:#faf7ef;border:1px solid #eadfb8;border-radius:14px;">
             <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#8b6b14;margin-bottom:6px;">
-              Account
+              Account Reference
             </div>
-            <div style="font-size:18px;font-weight:700;color:#111111;">
+            <div style="font-size:20px;font-weight:700;color:#111111;">
               ${accountName}
             </div>
           </div>
 
           <p style="margin:0 0 16px 0;">
-            If you need to update any contact or service details, contact Orbitlink directly.
+            If you need to update customer information, service requirements, or location details, please reply to this message and an Orbitlink representative will assist.
           </p>
 
           <p style="margin:0;">
-            Thank you,<br />
-            <strong>Orbitlink™</strong>
+            Regards,<br />
+            <strong>Orbitlink™ Operations</strong>
           </p>
         </div>
 
-        <div style="padding:22px 32px;background:#fcfbf7;border-top:1px solid #eee7d3;font-family:Arial,sans-serif;font-size:14px;line-height:1.7;color:#575757;">
-          <strong style="color:#111111;">Orbitlink™</strong><br />
-          Business Internet &amp; Network Infrastructure<br />
-          1-888-867-2480<br />
-          orbitlink.ca
+        <div style="padding:24px 34px;background:#fcfbf7;border-top:1px solid #ece4cf;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+            <tr>
+              <td style="vertical-align:top;">
+                <img
+                  src="${EMAIL_LOGO_URL}"
+                  alt="Orbitlink"
+                  width="110"
+                  style="display:block;border:0;outline:none;max-width:110px;height:auto;margin-bottom:12px;"
+                />
+                <div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.75;color:#5a5a5a;">
+                  <strong style="color:#111111;">Orbitlink™</strong><br />
+                  Business Internet &amp; Network Infrastructure<br />
+                  1-888-867-2480<br />
+                  orbitlink.ca
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <div style="margin-top:16px;padding-top:16px;border-top:1px solid #ece4cf;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#777777;">
+            This communication was issued by Orbitlink™ as part of a customer account and service operations workflow. Service availability, network design, provisioning intervals, implementation requirements, and activation timelines may vary by address, building access, carrier facilities, and final qualification outcomes. All services remain subject to applicable terms, policies, and final service acceptance.
+          </div>
+
+          <div style="margin-top:10px;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#777777;">
+            Terms: https://orbitlink.ca/legal/terms &nbsp;|&nbsp; Privacy: https://orbitlink.ca/privacy
+          </div>
         </div>
       </div>
     </div>
@@ -219,8 +255,9 @@ export default async function AdminAccountsPage() {
         const { data, error: resendError } = await resend.emails.send({
           from: VERIFIED_FROM_EMAIL,
           to: recipientEmail,
+          cc: [DEFAULT_CC_EMAIL],
           replyTo: DEFAULT_REPLY_TO,
-          subject: "Orbitlink™ — Welcome, We’ve Opened Your Account",
+          subject: "Orbitlink™ — Customer Account Opened",
           html: buildWelcomeEmail({
             account_name: account.account_name,
             primary_contact_name: account.primary_contact_name,
@@ -746,26 +783,10 @@ export default async function AdminAccountsPage() {
                             <td style={bodyCell}>
                               <form action={updateAccountDetails}>
                                 <input type="hidden" name="account_id" value={account.id} />
-                                <input
-                                  type="hidden"
-                                  name="legal_name"
-                                  defaultValue={account.legal_name ?? ""}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="contact_name"
-                                  defaultValue={account.primary_contact_name ?? ""}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="contact_email"
-                                  defaultValue={account.primary_contact_email ?? ""}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="contact_phone"
-                                  defaultValue={account.primary_contact_phone ?? ""}
-                                />
+                                <input type="hidden" name="legal_name" defaultValue={account.legal_name ?? ""} />
+                                <input type="hidden" name="contact_name" defaultValue={account.primary_contact_name ?? ""} />
+                                <input type="hidden" name="contact_email" defaultValue={account.primary_contact_email ?? ""} />
+                                <input type="hidden" name="contact_phone" defaultValue={account.primary_contact_phone ?? ""} />
                                 <input
                                   name="account_name"
                                   defaultValue={account.account_name}
@@ -778,26 +799,10 @@ export default async function AdminAccountsPage() {
                             <td style={bodyCell}>
                               <form action={updateAccountDetails}>
                                 <input type="hidden" name="account_id" value={account.id} />
-                                <input
-                                  type="hidden"
-                                  name="account_name"
-                                  defaultValue={account.account_name}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="contact_name"
-                                  defaultValue={account.primary_contact_name ?? ""}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="contact_email"
-                                  defaultValue={account.primary_contact_email ?? ""}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="contact_phone"
-                                  defaultValue={account.primary_contact_phone ?? ""}
-                                />
+                                <input type="hidden" name="account_name" defaultValue={account.account_name} />
+                                <input type="hidden" name="contact_name" defaultValue={account.primary_contact_name ?? ""} />
+                                <input type="hidden" name="contact_email" defaultValue={account.primary_contact_email ?? ""} />
+                                <input type="hidden" name="contact_phone" defaultValue={account.primary_contact_phone ?? ""} />
                                 <input
                                   name="legal_name"
                                   defaultValue={account.legal_name ?? ""}
@@ -810,26 +815,10 @@ export default async function AdminAccountsPage() {
                             <td style={bodyCell}>
                               <form action={updateAccountDetails}>
                                 <input type="hidden" name="account_id" value={account.id} />
-                                <input
-                                  type="hidden"
-                                  name="account_name"
-                                  defaultValue={account.account_name}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="legal_name"
-                                  defaultValue={account.legal_name ?? ""}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="contact_email"
-                                  defaultValue={account.primary_contact_email ?? ""}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="contact_phone"
-                                  defaultValue={account.primary_contact_phone ?? ""}
-                                />
+                                <input type="hidden" name="account_name" defaultValue={account.account_name} />
+                                <input type="hidden" name="legal_name" defaultValue={account.legal_name ?? ""} />
+                                <input type="hidden" name="contact_email" defaultValue={account.primary_contact_email ?? ""} />
+                                <input type="hidden" name="contact_phone" defaultValue={account.primary_contact_phone ?? ""} />
                                 <input
                                   name="contact_name"
                                   defaultValue={account.primary_contact_name ?? ""}
@@ -842,26 +831,10 @@ export default async function AdminAccountsPage() {
                             <td style={bodyCell}>
                               <form action={updateAccountDetails}>
                                 <input type="hidden" name="account_id" value={account.id} />
-                                <input
-                                  type="hidden"
-                                  name="account_name"
-                                  defaultValue={account.account_name}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="legal_name"
-                                  defaultValue={account.legal_name ?? ""}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="contact_name"
-                                  defaultValue={account.primary_contact_name ?? ""}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="contact_phone"
-                                  defaultValue={account.primary_contact_phone ?? ""}
-                                />
+                                <input type="hidden" name="account_name" defaultValue={account.account_name} />
+                                <input type="hidden" name="legal_name" defaultValue={account.legal_name ?? ""} />
+                                <input type="hidden" name="contact_name" defaultValue={account.primary_contact_name ?? ""} />
+                                <input type="hidden" name="contact_phone" defaultValue={account.primary_contact_phone ?? ""} />
                                 <input
                                   name="contact_email"
                                   defaultValue={account.primary_contact_email ?? ""}
@@ -875,26 +848,10 @@ export default async function AdminAccountsPage() {
                             <td style={bodyCell}>
                               <form action={updateAccountDetails}>
                                 <input type="hidden" name="account_id" value={account.id} />
-                                <input
-                                  type="hidden"
-                                  name="account_name"
-                                  defaultValue={account.account_name}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="legal_name"
-                                  defaultValue={account.legal_name ?? ""}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="contact_name"
-                                  defaultValue={account.primary_contact_name ?? ""}
-                                />
-                                <input
-                                  type="hidden"
-                                  name="contact_email"
-                                  defaultValue={account.primary_contact_email ?? ""}
-                                />
+                                <input type="hidden" name="account_name" defaultValue={account.account_name} />
+                                <input type="hidden" name="legal_name" defaultValue={account.legal_name ?? ""} />
+                                <input type="hidden" name="contact_name" defaultValue={account.primary_contact_name ?? ""} />
+                                <input type="hidden" name="contact_email" defaultValue={account.primary_contact_email ?? ""} />
                                 <input
                                   name="contact_phone"
                                   defaultValue={account.primary_contact_phone ?? ""}
@@ -971,21 +928,9 @@ export default async function AdminAccountsPage() {
                                 {availableActions.map((nextStatus) => (
                                   <form key={nextStatus} action={updateAccountStatus}>
                                     <input type="hidden" name="account_id" value={account.id} />
-                                    <input
-                                      type="hidden"
-                                      name="account_name"
-                                      value={account.account_name}
-                                    />
-                                    <input
-                                      type="hidden"
-                                      name="current_status"
-                                      value={currentStatus}
-                                    />
-                                    <input
-                                      type="hidden"
-                                      name="next_status"
-                                      value={nextStatus}
-                                    />
+                                    <input type="hidden" name="account_name" value={account.account_name} />
+                                    <input type="hidden" name="current_status" value={currentStatus} />
+                                    <input type="hidden" name="next_status" value={nextStatus} />
                                     <button type="submit" style={actionButton(nextStatus)}>
                                       {nextStatus === "active"
                                         ? "Activate"
