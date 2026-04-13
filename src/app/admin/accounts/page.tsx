@@ -336,6 +336,7 @@ export default async function AdminAccountsPage() {
     });
 
     revalidatePath("/admin/accounts");
+    revalidatePath("/admin/locations");
     revalidatePath("/admin/orders");
     revalidatePath("/admin/dashboard");
     revalidatePath("/admin/lifecycle");
@@ -435,6 +436,7 @@ export default async function AdminAccountsPage() {
     });
 
     revalidatePath("/admin/accounts");
+    revalidatePath("/admin/locations");
     revalidatePath("/admin/orders"); 
     revalidatePath("/admin/dashboard");
     revalidatePath("/admin/lifecycle");
@@ -495,6 +497,7 @@ export default async function AdminAccountsPage() {
     });
 
     revalidatePath("/admin/accounts");
+    revalidatePath("/admin/locations");
     revalidatePath("/admin/orders");
     revalidatePath("/admin/dashboard");
     revalidatePath("/admin/lifecycle");
