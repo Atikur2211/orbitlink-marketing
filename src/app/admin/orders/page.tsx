@@ -589,7 +589,6 @@ function getScheduledEventMeta(actionType: string) {
   }
 }
 
-
 export default async function AdminOrdersPage() {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
