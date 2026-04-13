@@ -236,112 +236,163 @@ export default async function AdminAccountsPage() {
   );
 
   async function createAccount(formData: FormData) {
-    "use server";
+  "use server";
 
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
 
-    const account_name = String(formData.get("account_name") ?? "").trim();
-    const legal_name = String(formData.get("legal_name") ?? "").trim();
-    const contact_name = String(formData.get("contact_name") ?? "").trim();
-    const contact_email = normalizeEmail(
-      String(formData.get("contact_email") ?? "")
-    );
-    const contact_phone = String(formData.get("contact_phone") ?? "").trim();
+  const account_name = String(formData.get("account_name") ?? "").trim();
+  const legal_name = String(formData.get("legal_name") ?? "").trim();
+  const contact_name = String(formData.get("contact_name") ?? "").trim();
+  const contact_email = normalizeEmail(
+    String(formData.get("contact_email") ?? "")
+  );
+  const contact_phone = String(formData.get("contact_phone") ?? "").trim();
 
-    if (!account_name) return;
+  if (!account_name) return;
 
-    const { data: account, error } = await supabase
-      .from("accounts")
-      .insert({
-        account_name,
-        legal_name: legal_name || null,
-        primary_contact_name: contact_name || null,
-        primary_contact_email: contact_email || null,
-        primary_contact_phone: contact_phone || null,
-        status: "active",
-      })
-      .select(
-        "id, account_name, legal_name, primary_contact_name, primary_contact_email, primary_contact_phone, status"
-      )
-      .single();
+  const { data: account, error } = await supabase
+    .from("accounts")
+    .insert({
+      account_name,
+      legal_name: legal_name || null,
+      primary_contact_name: contact_name || null,
+      primary_contact_email: contact_email || null,
+      primary_contact_phone: contact_phone || null,
+      status: "active",
+    })
+    .select(
+      "id, account_name, legal_name, primary_contact_name, primary_contact_email, primary_contact_phone, status"
+    )
+    .single();
 
-    if (error || !account) {
-      console.error("Failed to create account:", error?.message);
-      return;
-    }
+  if (error || !account) {
+    console.error("Failed to create account:", error?.message);
+    return;
+  }
 
-    const recipientEmail = normalizeEmail(account.primary_contact_email);
+  const recipientEmail = normalizeEmail(account.primary_contact_email);
 
-    if (recipientEmail && isValidEmail(recipientEmail)) {
-      try {
-        const { data, error: resendError } = await resend.emails.send({
-          from: VERIFIED_FROM_EMAIL,
-          to: recipientEmail,
-          cc: [DEFAULT_CC_EMAIL],
-          replyTo: DEFAULT_REPLY_TO,
-          subject: "Orbitlink™ — Customer Account Opened",
-          html: buildWelcomeEmail({
-            account_name: account.account_name,
-            primary_contact_name: account.primary_contact_name,
-          }),
-        });
+  if (recipientEmail && isValidEmail(recipientEmail)) {
+    try {
+      const { data, error: resendError } = await resend.emails.send({
+        from: VERIFIED_FROM_EMAIL,
+        to: recipientEmail,
+        cc: [DEFAULT_CC_EMAIL],
+        replyTo: DEFAULT_REPLY_TO,
+        subject: "Orbitlink™ — Customer Account Opened",
+        html: buildWelcomeEmail({
+          account_name: account.account_name,
+          primary_contact_name: account.primary_contact_name,
+        }),
+      });
 
-        if (resendError) {
-          console.error(
-            "Resend returned an error while sending account welcome email:",
-            JSON.stringify(resendError, null, 2)
-          );
-        } else {
-          console.log(
-            "Account welcome email sent successfully:",
-            JSON.stringify(data, null, 2)
-          );
-        }
-      } catch (emailError) {
-        console.error("Failed to send account welcome email:", emailError);
+      if (resendError) {
+        console.error(
+          "Resend returned an error while sending account welcome email:",
+          JSON.stringify(resendError, null, 2)
+        );
+      } else {
+        console.log(
+          "Account welcome email sent successfully:",
+          JSON.stringify(data, null, 2)
+        );
       }
-    } else {
-      console.warn(
-        "Account created without a valid primary contact email:",
-        account.id,
-        account.primary_contact_email
-      );
+    } catch (emailError) {
+      console.error("Failed to send account welcome email:", emailError);
     }
+  } else {
+    console.warn(
+      "Account created without a valid primary contact email:",
+      account.id,
+      account.primary_contact_email
+    );
+  }
 
+  await supabase.from("lifecycle_events").insert({
+    account_id: account.id,
+    entity_type: "account",
+    entity_id: account.id,
+    event_type: "account_created",
+    event_label: "Account created",
+    notes: `New account created: ${account.account_name}`,
+  });
+
+  await (supabase as any).from("audit_logs").insert({
+    entity_type: "account",
+    entity_id: account.id,
+    action: "create",
+    after_state: {
+      account_name: account.account_name,
+      legal_name: account.legal_name,
+      primary_contact_name: account.primary_contact_name,
+      primary_contact_email: account.primary_contact_email,
+      primary_contact_phone: account.primary_contact_phone,
+      status: account.status,
+    },
+    source_interface: "admin_accounts_page_create",
+  });
+
+  const { data: defaultLocation, error: defaultLocationError } = await supabase
+    .from("locations")
+    .insert({
+      account_id: account.id,
+      location_name: "Primary Site",
+      address_line_1: "Address to be confirmed",
+      city: null,
+      province: null,
+      postal_code: null,
+      contact_name: account.primary_contact_name || null,
+      contact_phone: account.primary_contact_phone || null,
+      status: "pending",
+    })
+    .select(
+      "id, location_name, address_line_1, city, province, postal_code, contact_name, contact_phone, status"
+    )
+    .single();
+
+  if (defaultLocationError || !defaultLocation) {
+    console.error(
+      "Failed to create default location:",
+      defaultLocationError?.message
+    );
+  } else {
     await supabase.from("lifecycle_events").insert({
       account_id: account.id,
-      entity_type: "account",
-      entity_id: account.id,
-      event_type: "account_created",
-      event_label: "Account created",
-      notes: `New account created: ${account.account_name}`,
+      entity_type: "location",
+      entity_id: defaultLocation.id,
+      event_type: "location_created",
+      event_label: "Location created",
+      notes: `Default location created automatically: ${defaultLocation.location_name ?? defaultLocation.address_line_1}`,
     });
 
     await (supabase as any).from("audit_logs").insert({
-      entity_type: "account",
-      entity_id: account.id,
+      entity_type: "location",
+      entity_id: defaultLocation.id,
       action: "create",
       after_state: {
-        account_name: account.account_name,
-        legal_name: account.legal_name,
-        primary_contact_name: account.primary_contact_name,
-        primary_contact_email: account.primary_contact_email,
-        primary_contact_phone: account.primary_contact_phone,
-        status: account.status,
+        location_name: defaultLocation.location_name,
+        address_line_1: defaultLocation.address_line_1,
+        city: defaultLocation.city,
+        province: defaultLocation.province,
+        postal_code: defaultLocation.postal_code,
+        contact_name: defaultLocation.contact_name,
+        contact_phone: defaultLocation.contact_phone,
+        status: defaultLocation.status,
+        auto_created: true,
       },
-      source_interface: "admin_accounts_page_create",
+      source_interface: "admin_accounts_page_auto_location_create",
     });
-
-    revalidatePath("/admin/accounts");
-    revalidatePath("/admin/locations");
-    revalidatePath("/admin/orders");
-    revalidatePath("/admin/dashboard");
-    revalidatePath("/admin/lifecycle");
   }
 
+  revalidatePath("/admin/accounts");
+  revalidatePath("/admin/locations");
+  revalidatePath("/admin/orders");
+  revalidatePath("/admin/dashboard");
+  revalidatePath("/admin/lifecycle");
+}
   async function updateAccountDetails(formData: FormData) {
     "use server";
 
