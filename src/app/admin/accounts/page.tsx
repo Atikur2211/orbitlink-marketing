@@ -29,6 +29,14 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#39;");
 }
 
+function normalizeEmail(value: string | null | undefined) {
+  return (value ?? "").trim().toLowerCase();
+}
+
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
 function buildWelcomeEmail(account: WelcomeEmailPayload) {
   const contactName = escapeHtml(account.primary_contact_name || "there");
   const accountName = escapeHtml(account.account_name);
@@ -77,7 +85,7 @@ function buildWelcomeEmail(account: WelcomeEmailPayload) {
           </div>
 
           <p style="margin:0 0 16px 0;">
-            If you need to update any contact or service details, reply to this email or contact Orbitlink directly.
+            If you need to update any contact or service details, contact Orbitlink directly.
           </p>
 
           <p style="margin:0;">
@@ -166,7 +174,9 @@ export default async function AdminAccountsPage() {
     const account_name = String(formData.get("account_name") ?? "").trim();
     const legal_name = String(formData.get("legal_name") ?? "").trim();
     const contact_name = String(formData.get("contact_name") ?? "").trim();
-    const contact_email = String(formData.get("contact_email") ?? "").trim();
+    const contact_email = normalizeEmail(
+      String(formData.get("contact_email") ?? "")
+    );
     const contact_phone = String(formData.get("contact_phone") ?? "").trim();
 
     if (!account_name) return;
@@ -191,11 +201,15 @@ export default async function AdminAccountsPage() {
       return;
     }
 
-    if (account.primary_contact_email) {
+    const recipientEmail = normalizeEmail(account.primary_contact_email);
+
+    if (recipientEmail && isValidEmail(recipientEmail)) {
       try {
-        await resend.emails.send({
-          from: process.env.INTAKE_FROM_EMAIL || "Orbitlink <noreply@orbitlink.ca>",
-          to: account.primary_contact_email,
+        const emailResult = await resend.emails.send({
+          from:
+            process.env.INTAKE_FROM_EMAIL || "Orbitlink <noreply@orbitlink.ca>",
+          to: recipientEmail,
+          replyTo: process.env.INTAKE_TO_EMAIL || "concierge@orbitlink.ca",
           subject: "Orbitlink™ — Welcome, We’ve Opened Your Account",
           html: buildWelcomeEmail({
             account_name: account.account_name,
@@ -203,10 +217,16 @@ export default async function AdminAccountsPage() {
           }),
         });
 
-        console.log("Welcome email sent:", account.primary_contact_email);
+        console.log("Account welcome email result:", emailResult);
       } catch (emailError) {
         console.error("Failed to send account welcome email:", emailError);
       }
+    } else {
+      console.warn(
+        "Account created without a valid primary contact email:",
+        account.id,
+        account.primary_contact_email
+      );
     }
 
     await supabase.from("lifecycle_events").insert({
@@ -250,7 +270,9 @@ export default async function AdminAccountsPage() {
     const accountName = String(formData.get("account_name") ?? "").trim();
     const legalName = String(formData.get("legal_name") ?? "").trim();
     const contactName = String(formData.get("contact_name") ?? "").trim();
-    const contactEmail = String(formData.get("contact_email") ?? "").trim();
+    const contactEmail = normalizeEmail(
+      String(formData.get("contact_email") ?? "")
+    );
     const contactPhone = String(formData.get("contact_phone") ?? "").trim();
 
     if (!accountId || !accountName) return;
@@ -579,7 +601,7 @@ export default async function AdminAccountsPage() {
               }}
             >
               Creates an account immediately, sets it active, writes lifecycle plus audit history,
-              and sends a branded onboarding email when a primary contact email exists.
+              and sends a branded onboarding email when a valid primary contact email exists.
             </p>
 
             <form action={createAccount} style={{ display: "grid", gap: "12px" }}>
