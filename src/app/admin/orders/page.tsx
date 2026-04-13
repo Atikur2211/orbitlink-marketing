@@ -1,5 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
+import { Resend } from "resend";
 
 type Order = {
   id: string;
@@ -45,6 +46,399 @@ type QuoteOption = {
   account_id: string;
   quote_number: string;
 };
+
+type EmailOrderContext = {
+  primaryContactName: string | null;
+  primaryContactEmail: string | null;
+  accountName: string;
+  orderNumber: string;
+  serviceLocation: string;
+  installTargetDate: string | null;
+  activationTargetDate: string | null;
+  quoteNumber: string | null;
+  notes: string | null;
+};
+
+const resendApiKey = process.env.RESEND_API_KEY;
+
+if (!resendApiKey) {
+  throw new Error("Missing RESEND_API_KEY");
+}
+
+const resend = new Resend(resendApiKey);
+
+const VERIFIED_FROM_EMAIL = "Orbitlink <noreply@orbitlink.ca>";
+const DEFAULT_REPLY_TO = "concierge@orbitlink.ca";
+const DEFAULT_CC_EMAIL = "concierge@orbitlink.ca";
+const EMAIL_LOGO_URL = "https://orbitlink.ca/brand/orbitlink-email-logo.png";
+
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function normalizeEmail(value: string | null | undefined) {
+  return (value ?? "").trim().toLowerCase();
+}
+
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function formatDateLabel(value: string | null) {
+  if (!value) return "To be confirmed";
+  const d = new Date(`${value}T00:00:00`);
+  if (Number.isNaN(d.getTime())) return value;
+  return d.toLocaleDateString("en-CA", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+function getLocationLabel(location: LocationOption | null | undefined) {
+  if (!location) return "—";
+  const name = location.location_name?.trim();
+  const city = location.city?.trim();
+  if (name && city) return `${name} · ${city}`;
+  if (name) return name;
+  if (city) return `${location.address_line_1} · ${city}`;
+  return location.address_line_1;
+}
+
+function buildEmailShell(title: string, intro: string, bodyHtml: string) {
+  const safeTitle = escapeHtml(title);
+  const safeIntro = escapeHtml(intro);
+
+  return `
+  <div style="margin:0;padding:0;background:#eef1f6;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#eef1f6;margin:0;padding:0;width:100%;">
+      <tr>
+        <td align="center" style="padding:18px 10px;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;max-width:680px;width:100%;background:#ffffff;border:1px solid #dbe2ee;border-radius:18px;overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,0.10);">
+
+            <tr>
+              <td
+                align="center"
+                style="
+                  padding:28px 20px 24px 20px;
+                  background:
+                    radial-gradient(circle at top, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 22%, rgba(255,255,255,0) 52%),
+                    linear-gradient(180deg, #071225 0%, #0c2148 52%, #112b5f 100%);
+                  border-bottom:1px solid rgba(212,175,55,0.18);
+                "
+              >
+                <img
+                  src="${EMAIL_LOGO_URL}"
+                  alt="Orbitlink"
+                  width="210"
+                  style="display:block;width:100%;max-width:210px;height:auto;border:0;outline:none;margin:0 auto 16px auto;"
+                />
+
+                <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#d4af37;margin-bottom:8px;">
+                  Orbitlink™
+                </div>
+
+                <div style="font-family:Arial,sans-serif;font-size:28px;line-height:1.18;font-weight:700;color:#ffffff;margin:0 0 8px 0;">
+                  ${safeTitle}
+                </div>
+
+                <div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,0.82);max-width:500px;margin:0 auto;">
+                  ${safeIntro}
+                </div>
+              </td>
+            </tr>
+
+            ${bodyHtml}
+
+            <tr>
+              <td style="padding:0 22px 0 22px;">
+                <div style="height:1px;background:#e7ebf2;"></div>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:22px 22px 24px 22px;background:#fbfcfe;">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                  <tr>
+                    <td align="center" style="padding-bottom:12px;">
+                      <img
+                        src="${EMAIL_LOGO_URL}"
+                        alt="Orbitlink"
+                        width="120"
+                        style="display:block;width:100%;max-width:120px;height:auto;border:0;outline:none;margin:0 auto;"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="font-family:Arial,sans-serif;font-size:14px;line-height:1.75;color:#5d6776;">
+                      <strong style="color:#111827;">Orbitlink™</strong><br />
+                      Business Internet &amp; Network Infrastructure<br />
+                      1-888-867-2480<br />
+                      orbitlink.ca
+                    </td>
+                  </tr>
+                </table>
+
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #e7ebf2;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#7b8492;text-align:left;">
+                  This communication was issued by Orbitlink™ as part of a customer order and service operations workflow. Service availability, network design, provisioning intervals, implementation requirements, and activation timelines may vary by address, building access, carrier facilities, and final qualification outcomes. All services remain subject to applicable terms, policies, and final service acceptance.
+                </div>
+
+                <div style="margin-top:10px;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#7b8492;text-align:left;">
+                  Terms: https://orbitlink.ca/legal/terms &nbsp;|&nbsp; Privacy: https://orbitlink.ca/privacy
+                </div>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+  `;
+}
+
+function buildOrderSummaryCard(ctx: EmailOrderContext) {
+  const accountName = escapeHtml(ctx.accountName);
+  const orderNumber = escapeHtml(ctx.orderNumber);
+  const serviceLocation = escapeHtml(ctx.serviceLocation);
+  const quoteNumber = escapeHtml(ctx.quoteNumber || "Not linked");
+  const installTargetDate = escapeHtml(formatDateLabel(ctx.installTargetDate));
+  const activationTargetDate = escapeHtml(formatDateLabel(ctx.activationTargetDate));
+  const notes = escapeHtml(ctx.notes || "No additional order notes provided.");
+
+  return `
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:22px 0 22px 0;">
+      <tr>
+        <td style="background:#f8f9fc;border:1px solid #dfe5ef;border-radius:14px;padding:18px 18px;">
+          <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#6e7b8f;margin-bottom:6px;">
+            Order Reference
+          </div>
+          <div style="font-family:Arial,sans-serif;font-size:22px;line-height:1.35;font-weight:700;color:#0f172a;word-break:break-word;">
+            ${orderNumber}
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:0 0 22px 0;">
+      <tr>
+        <td style="padding:0 0 10px 0;font-family:Arial,sans-serif;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#6e7b8f;">
+          Order Details
+        </td>
+      </tr>
+      <tr>
+        <td style="background:#ffffff;border:1px solid #e3e8f1;border-radius:14px;padding:0;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+            <tr>
+              <td style="padding:14px 16px;border-bottom:1px solid #e7ebf2;font-family:Arial,sans-serif;font-size:14px;color:#64748b;width:38%;">Account</td>
+              <td style="padding:14px 16px;border-bottom:1px solid #e7ebf2;font-family:Arial,sans-serif;font-size:14px;color:#0f172a;font-weight:600;">${accountName}</td>
+            </tr>
+            <tr>
+              <td style="padding:14px 16px;border-bottom:1px solid #e7ebf2;font-family:Arial,sans-serif;font-size:14px;color:#64748b;">Service Location</td>
+              <td style="padding:14px 16px;border-bottom:1px solid #e7ebf2;font-family:Arial,sans-serif;font-size:14px;color:#0f172a;font-weight:600;">${serviceLocation}</td>
+            </tr>
+            <tr>
+              <td style="padding:14px 16px;border-bottom:1px solid #e7ebf2;font-family:Arial,sans-serif;font-size:14px;color:#64748b;">Quote Reference</td>
+              <td style="padding:14px 16px;border-bottom:1px solid #e7ebf2;font-family:Arial,sans-serif;font-size:14px;color:#0f172a;font-weight:600;">${quoteNumber}</td>
+            </tr>
+            <tr>
+              <td style="padding:14px 16px;border-bottom:1px solid #e7ebf2;font-family:Arial,sans-serif;font-size:14px;color:#64748b;">Install Target</td>
+              <td style="padding:14px 16px;border-bottom:1px solid #e7ebf2;font-family:Arial,sans-serif;font-size:14px;color:#0f172a;font-weight:600;">${installTargetDate}</td>
+            </tr>
+            <tr>
+              <td style="padding:14px 16px;font-family:Arial,sans-serif;font-size:14px;color:#64748b;">Activation Target</td>
+              <td style="padding:14px 16px;font-family:Arial,sans-serif;font-size:14px;color:#0f172a;font-weight:600;">${activationTargetDate}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <div style="margin:0 0 22px 0;padding:16px 18px;background:#f8f9fc;border:1px solid #dfe5ef;border-radius:14px;">
+      <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#6e7b8f;margin-bottom:6px;">
+        Notes
+      </div>
+      <div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.7;color:#0f172a;">
+        ${notes}
+      </div>
+    </div>
+  `;
+}
+
+function buildOrderConfirmationEmail(ctx: EmailOrderContext) {
+  const contactName = escapeHtml(ctx.primaryContactName || "Customer");
+
+  const body = `
+    <tr>
+      <td style="padding:30px 22px 18px 22px;font-family:Arial,sans-serif;color:#17202a;font-size:15px;line-height:1.78;">
+        <p style="margin:0 0 16px 0;">Hi ${contactName},</p>
+
+        <p style="margin:0 0 16px 0;">
+          This is to confirm that Orbitlink™ has opened your service order successfully.
+        </p>
+
+        <p style="margin:0 0 16px 0;">
+          Our operations team is now coordinating the next stage of service delivery, which may include building qualification, carrier coordination, install planning, and activation readiness depending on service type and site conditions.
+        </p>
+
+        ${buildOrderSummaryCard(ctx)}
+
+        <p style="margin:0 0 16px 0;">
+          You will receive additional communication as your order progresses through scheduling, installation, and activation milestones.
+        </p>
+
+        <p style="margin:0;">
+          Regards,<br />
+          <strong>Orbitlink™ Operations</strong>
+        </p>
+      </td>
+    </tr>
+  `;
+
+  return buildEmailShell(
+    "Order Confirmation",
+    "Your order has been entered into Orbitlink operations and is now progressing through coordination and provisioning workflow.",
+    body
+  );
+}
+
+function buildInstallationScheduledEmail(ctx: EmailOrderContext) {
+  const contactName = escapeHtml(ctx.primaryContactName || "Customer");
+  const installDate = escapeHtml(formatDateLabel(ctx.installTargetDate));
+
+  const body = `
+    <tr>
+      <td style="padding:30px 22px 18px 22px;font-family:Arial,sans-serif;color:#17202a;font-size:15px;line-height:1.78;">
+        <p style="margin:0 0 16px 0;">Hi ${contactName},</p>
+
+        <p style="margin:0 0 16px 0;">
+          Your Orbitlink™ order has now moved into the installation scheduled stage.
+        </p>
+
+        <p style="margin:0 0 16px 0;">
+          Our team is coordinating the installation workflow and site readiness requirements for your service location. Please ensure that building access, site contact availability, and any required internal access arrangements are prepared as applicable.
+        </p>
+
+        ${buildOrderSummaryCard(ctx)}
+
+        <div style="margin:0 0 22px 0;padding:16px 18px;background:#fff8e7;border:1px solid #eedca4;border-radius:14px;">
+          <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8b6b14;margin-bottom:6px;">
+            Scheduled Install Window
+          </div>
+          <div style="font-family:Arial,sans-serif;font-size:20px;line-height:1.4;font-weight:700;color:#111827;">
+            ${installDate}
+          </div>
+        </div>
+
+        <p style="margin:0 0 16px 0;">
+          If any site access conditions, contact details, or coordination requirements have changed, please reply to this message so our team can update the order before the scheduled install window.
+        </p>
+
+        <p style="margin:0;">
+          Regards,<br />
+          <strong>Orbitlink™ Operations</strong>
+        </p>
+      </td>
+    </tr>
+  `;
+
+  return buildEmailShell(
+    "Installation Scheduled",
+    "Your Orbitlink service order is now in scheduled installation workflow.",
+    body
+  );
+}
+
+async function sendOrderEmail(
+  subject: string,
+  html: string,
+  recipientEmail: string
+) {
+  const { data, error } = await resend.emails.send({
+    from: VERIFIED_FROM_EMAIL,
+    to: recipientEmail,
+    cc: [DEFAULT_CC_EMAIL],
+    replyTo: DEFAULT_REPLY_TO,
+    subject,
+    html,
+  });
+
+  if (error) {
+    console.error(
+      "Resend returned an error while sending order email:",
+      JSON.stringify(error, null, 2)
+    );
+  } else {
+    console.log(
+      "Order email sent successfully:",
+      JSON.stringify(data, null, 2)
+    );
+  }
+}
+
+async function getOrderEmailContext(
+  supabase: ReturnType<typeof createClient>,
+  accountId: string,
+  locationId: string | null,
+  quoteId: string | null,
+  orderNumber: string,
+  installTargetDate: string | null,
+  activationTargetDate: string | null,
+  notes: string | null
+): Promise<EmailOrderContext | null> {
+  const [{ data: account }, { data: location }, { data: quote }] = await Promise.all([
+    supabase
+      .from("accounts")
+      .select("id, account_name, primary_contact_name, primary_contact_email")
+      .eq("id", accountId)
+      .single(),
+    locationId
+      ? supabase
+          .from("locations")
+          .select("id, location_name, address_line_1, city")
+          .eq("id", locationId)
+          .single()
+      : Promise.resolve({ data: null }),
+    quoteId
+      ? supabase
+          .from("quotes")
+          .select("id, quote_number")
+          .eq("id", quoteId)
+          .single()
+      : Promise.resolve({ data: null }),
+  ]);
+
+  if (!account?.account_name) return null;
+
+  const serviceLocation = getLocationLabel(
+    location
+      ? {
+          id: location.id,
+          account_id: accountId,
+          location_name: location.location_name,
+          address_line_1: location.address_line_1,
+          city: location.city,
+        }
+      : null
+  );
+
+  return {
+    primaryContactName: account.primary_contact_name ?? null,
+    primaryContactEmail: account.primary_contact_email ?? null,
+    accountName: account.account_name,
+    orderNumber,
+    serviceLocation,
+    installTargetDate,
+    activationTargetDate,
+    quoteNumber: quote?.quote_number ?? null,
+    notes,
+  };
+}
 
 function getStatusStyles(status: string | null) {
   switch (status) {
@@ -229,11 +623,16 @@ export default async function AdminOrdersPage() {
 
     if (!orderNumber || !accountId || !locationId) return;
 
-    const { data: location } = await supabase
-      .from("locations")
-      .select("id, location_name, address_line_1, city")
-      .eq("id", locationId)
-      .single();
+    const orderEmailContextBeforeInsert = await getOrderEmailContext(
+      supabase,
+      accountId,
+      locationId,
+      quoteId || null,
+      orderNumber,
+      installTargetDate || null,
+      activationTargetDate || null,
+      notes || null
+    );
 
     const { data: order, error } = await supabase
       .from("orders")
@@ -257,8 +656,29 @@ export default async function AdminOrdersPage() {
       return;
     }
 
-    const locationLabel =
-      location?.location_name || location?.address_line_1 || "selected site";
+    const locationLabel = orderEmailContextBeforeInsert?.serviceLocation || "selected site";
+
+    const recipientEmail = normalizeEmail(
+      orderEmailContextBeforeInsert?.primaryContactEmail
+    );
+
+    if (recipientEmail && isValidEmail(recipientEmail) && orderEmailContextBeforeInsert) {
+      try {
+        await sendOrderEmail(
+          "Orbitlink™ — Order Confirmation",
+          buildOrderConfirmationEmail(orderEmailContextBeforeInsert),
+          recipientEmail
+        );
+      } catch (emailError) {
+        console.error("Failed to send order confirmation email:", emailError);
+      }
+    } else {
+      console.warn(
+        "Order created without a valid account contact email:",
+        accountId,
+        orderEmailContextBeforeInsert?.primaryContactEmail
+      );
+    }
 
     await supabase.from("lifecycle_events").insert({
       account_id: accountId,
@@ -320,7 +740,7 @@ export default async function AdminOrdersPage() {
 
     const { data: location } = await supabase
       .from("locations")
-      .select("id, location_name, address_line_1")
+      .select("id, location_name, address_line_1, city")
       .eq("id", locationId)
       .single();
 
@@ -360,7 +780,15 @@ export default async function AdminOrdersPage() {
     }
 
     const locationLabel =
-      location?.location_name || location?.address_line_1 || "selected site";
+      location
+        ? getLocationLabel({
+            id: location.id,
+            account_id: before.account_id,
+            location_name: location.location_name,
+            address_line_1: location.address_line_1,
+            city: location.city,
+          })
+        : "selected site";
 
     await supabase.from("lifecycle_events").insert({
       account_id: before.account_id,
@@ -403,6 +831,12 @@ export default async function AdminOrdersPage() {
     if (!orderId || !nextStatus) return;
     if (currentStatus === nextStatus) return;
 
+    const { data: before } = await supabase
+      .from("orders")
+      .select("id, order_number, install_target_date, activation_target_date, notes, location_id, quote_id")
+      .eq("id", orderId)
+      .single();
+
     const { error } = await supabase
       .from("orders")
       .update({ status: nextStatus })
@@ -411,6 +845,39 @@ export default async function AdminOrdersPage() {
     if (error) {
       console.error(error);
       return;
+    }
+
+    if (nextStatus === "scheduled" && before) {
+      const emailContext = await getOrderEmailContext(
+        supabase,
+        accountId,
+        before.location_id,
+        before.quote_id,
+        before.order_number,
+        before.install_target_date,
+        before.activation_target_date,
+        before.notes
+      );
+
+      const recipientEmail = normalizeEmail(emailContext?.primaryContactEmail);
+
+      if (recipientEmail && isValidEmail(recipientEmail) && emailContext) {
+        try {
+          await sendOrderEmail(
+            "Orbitlink™ — Installation Scheduled",
+            buildInstallationScheduledEmail(emailContext),
+            recipientEmail
+          );
+        } catch (emailError) {
+          console.error("Failed to send installation scheduled email:", emailError);
+        }
+      } else {
+        console.warn(
+          "Install scheduled without a valid account contact email:",
+          accountId,
+          emailContext?.primaryContactEmail
+        );
+      }
     }
 
     const meta = getEventMeta(nextStatus);
