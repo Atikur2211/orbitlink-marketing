@@ -29,8 +29,6 @@ const resend = new Resend(resendApiKey);
 const VERIFIED_FROM_EMAIL = "Orbitlink <noreply@orbitlink.ca>";
 const DEFAULT_REPLY_TO = "concierge@orbitlink.ca";
 const DEFAULT_CC_EMAIL = "concierge@orbitlink.ca";
-
-// Replace this with your final public hosted premium logo URL on orbitlink.ca
 const EMAIL_LOGO_URL = "https://orbitlink.ca/brand/orbitlink-email-logo.png";
 
 function escapeHtml(value: string) {
@@ -55,100 +53,127 @@ function buildWelcomeEmail(account: WelcomeEmailPayload) {
   const accountName = escapeHtml(account.account_name);
 
   return `
-  <div style="margin:0;padding:0;background:#f3f1ea;">
-    <div style="max-width:720px;margin:0 auto;padding:28px 18px;">
-      <div style="background:#ffffff;border:1px solid #e7decb;border-radius:20px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,0.10);">
-
-        <div style="background:linear-gradient(135deg,#0b0f16 0%,#13213b 55%,#0f172a 100%);padding:30px 34px;border-bottom:1px solid rgba(212,175,55,0.22);">
-          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+  <div style="margin:0;padding:0;background:#eef1f6;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#eef1f6;margin:0;padding:0;width:100%;">
+      <tr>
+        <td align="center" style="padding:18px 10px;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;max-width:680px;width:100%;background:#ffffff;border:1px solid #dbe2ee;border-radius:18px;overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,0.10);">
+            
             <tr>
-              <td style="vertical-align:middle;">
-                <div style="font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#d4af37;margin-bottom:8px;">
+              <td
+                align="center"
+                style="
+                  padding:28px 20px 24px 20px;
+                  background:
+                    radial-gradient(circle at top, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 22%, rgba(255,255,255,0) 52%),
+                    linear-gradient(180deg, #071225 0%, #0c2148 52%, #112b5f 100%);
+                  border-bottom:1px solid rgba(212,175,55,0.18);
+                "
+              >
+                <img
+                  src="${EMAIL_LOGO_URL}"
+                  alt="Orbitlink"
+                  width="210"
+                  style="display:block;width:100%;max-width:210px;height:auto;border:0;outline:none;margin:0 auto 16px auto;"
+                />
+
+                <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#d4af37;margin-bottom:8px;">
                   Orbitlink™
                 </div>
-                <div style="font-family:Arial,sans-serif;font-size:30px;line-height:1.14;font-weight:700;color:#fff7db;">
+
+                <div style="font-family:Arial,sans-serif;font-size:28px;line-height:1.18;font-weight:700;color:#ffffff;margin:0 0 8px 0;">
                   Customer Account Opened
                 </div>
-                <div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,0.76);margin-top:8px;">
+
+                <div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,0.82);max-width:480px;margin:0 auto;">
                   Business Internet &amp; Network Infrastructure
                 </div>
               </td>
-              <td align="right" style="vertical-align:middle;">
-                <img
-                  src="${EMAIL_LOGO_URL}"
-                  alt="Orbitlink"
-                  width="150"
-                  style="display:block;border:0;outline:none;max-width:150px;height:auto;"
-                />
+            </tr>
+
+            <tr>
+              <td style="padding:30px 22px 18px 22px;font-family:Arial,sans-serif;color:#17202a;font-size:15px;line-height:1.78;">
+                <p style="margin:0 0 16px 0;">Hi ${contactName},</p>
+
+                <p style="margin:0 0 16px 0;">
+                  Welcome to <strong>Orbitlink™</strong>.
+                </p>
+
+                <p style="margin:0 0 16px 0;">
+                  Your customer account has been opened successfully in our operations system.
+                </p>
+
+                <p style="margin:0 0 16px 0;">
+                  Our team is now preparing the next stage of your service workflow. Depending on service type and location, this may include address validation, building qualification, network availability confirmation, service design review, order progression, and activation planning.
+                </p>
+
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:22px 0 22px 0;">
+                  <tr>
+                    <td style="background:#f8f9fc;border:1px solid #dfe5ef;border-radius:14px;padding:16px 18px;">
+                      <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#6e7b8f;margin-bottom:6px;">
+                        Account Reference
+                      </div>
+                      <div style="font-family:Arial,sans-serif;font-size:20px;line-height:1.35;font-weight:700;color:#0f172a;word-break:break-word;">
+                        ${accountName}
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="margin:0 0 16px 0;">
+                  If you need to update customer information, service requirements, or location details, please reply to this message and an Orbitlink representative will assist.
+                </p>
+
+                <p style="margin:0;">
+                  Regards,<br />
+                  <strong>Orbitlink™ Operations</strong>
+                </p>
               </td>
             </tr>
-          </table>
-        </div>
 
-        <div style="padding:36px 34px;font-family:Arial,sans-serif;color:#181818;font-size:15px;line-height:1.82;">
-          <p style="margin:0 0 16px 0;">Hi ${contactName},</p>
-
-          <p style="margin:0 0 16px 0;">
-            Welcome to <strong>Orbitlink™</strong>.
-          </p>
-
-          <p style="margin:0 0 16px 0;">
-            Your customer account has been opened successfully in our operations system.
-          </p>
-
-          <p style="margin:0 0 16px 0;">
-            Our team is now preparing the next stage of your service workflow. Depending on service type and location, this may include address validation, building qualification, network availability confirmation, service design review, order progression, and activation planning.
-          </p>
-
-          <div style="margin:24px 0;padding:18px 20px;background:#faf7ef;border:1px solid #eadfb8;border-radius:14px;">
-            <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#8b6b14;margin-bottom:6px;">
-              Account Reference
-            </div>
-            <div style="font-size:20px;font-weight:700;color:#111111;">
-              ${accountName}
-            </div>
-          </div>
-
-          <p style="margin:0 0 16px 0;">
-            If you need to update customer information, service requirements, or location details, please reply to this message and an Orbitlink representative will assist.
-          </p>
-
-          <p style="margin:0;">
-            Regards,<br />
-            <strong>Orbitlink™ Operations</strong>
-          </p>
-        </div>
-
-        <div style="padding:24px 34px;background:#fcfbf7;border-top:1px solid #ece4cf;">
-          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
             <tr>
-              <td style="vertical-align:top;">
-                <img
-                  src="${EMAIL_LOGO_URL}"
-                  alt="Orbitlink"
-                  width="110"
-                  style="display:block;border:0;outline:none;max-width:110px;height:auto;margin-bottom:12px;"
-                />
-                <div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.75;color:#5a5a5a;">
-                  <strong style="color:#111111;">Orbitlink™</strong><br />
-                  Business Internet &amp; Network Infrastructure<br />
-                  1-888-867-2480<br />
-                  orbitlink.ca
+              <td style="padding:0 22px 0 22px;">
+                <div style="height:1px;background:#e7ebf2;"></div>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:22px 22px 24px 22px;background:#fbfcfe;">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                  <tr>
+                    <td align="center" style="padding-bottom:12px;">
+                      <img
+                        src="${EMAIL_LOGO_URL}"
+                        alt="Orbitlink"
+                        width="120"
+                        style="display:block;width:100%;max-width:120px;height:auto;border:0;outline:none;margin:0 auto;"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="font-family:Arial,sans-serif;font-size:14px;line-height:1.75;color:#5d6776;">
+                      <strong style="color:#111827;">Orbitlink™</strong><br />
+                      Business Internet &amp; Network Infrastructure<br />
+                      1-888-867-2480<br />
+                      orbitlink.ca
+                    </td>
+                  </tr>
+                </table>
+
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #e7ebf2;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#7b8492;text-align:left;">
+                  This communication was issued by Orbitlink™ as part of a customer account and service operations workflow. Service availability, network design, provisioning intervals, implementation requirements, and activation timelines may vary by address, building access, carrier facilities, and final qualification outcomes. All services remain subject to applicable terms, policies, and final service acceptance.
+                </div>
+
+                <div style="margin-top:10px;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#7b8492;text-align:left;">
+                  Terms: https://orbitlink.ca/legal/terms &nbsp;|&nbsp; Privacy: https://orbitlink.ca/privacy
                 </div>
               </td>
             </tr>
+
           </table>
-
-          <div style="margin-top:16px;padding-top:16px;border-top:1px solid #ece4cf;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#777777;">
-            This communication was issued by Orbitlink™ as part of a customer account and service operations workflow. Service availability, network design, provisioning intervals, implementation requirements, and activation timelines may vary by address, building access, carrier facilities, and final qualification outcomes. All services remain subject to applicable terms, policies, and final service acceptance.
-          </div>
-
-          <div style="margin-top:10px;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#777777;">
-            Terms: https://orbitlink.ca/legal/terms &nbsp;|&nbsp; Privacy: https://orbitlink.ca/privacy
-          </div>
-        </div>
-      </div>
-    </div>
+        </td>
+      </tr>
+    </table>
   </div>
   `;
 }
