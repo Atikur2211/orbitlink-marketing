@@ -18,7 +18,18 @@ type WelcomeEmailPayload = Pick<
   "account_name" | "primary_contact_name"
 >;
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resendApiKey = process.env.RESEND_API_KEY;
+
+if (!resendApiKey) {
+  throw new Error("Missing RESEND_API_KEY");
+}
+
+const resend = new Resend(resendApiKey);
+
+// Force the verified production sender.
+// This avoids stale env values still pointing to onboarding@resend.dev.
+const VERIFIED_FROM_EMAIL = "Orbitlink <noreply@orbitlink.ca>";
+const DEFAULT_REPLY_TO = process.env.INTAKE_TO_EMAIL || "concierge@orbitlink.ca";
 
 function escapeHtml(value: string) {
   return value
@@ -205,11 +216,10 @@ export default async function AdminAccountsPage() {
 
     if (recipientEmail && isValidEmail(recipientEmail)) {
       try {
-        const emailResult = await resend.emails.send({
-          from:
-            process.env.INTAKE_FROM_EMAIL || "Orbitlink <noreply@orbitlink.ca>",
+        const { data, error: resendError } = await resend.emails.send({
+          from: VERIFIED_FROM_EMAIL,
           to: recipientEmail,
-          replyTo: process.env.INTAKE_TO_EMAIL || "concierge@orbitlink.ca",
+          replyTo: DEFAULT_REPLY_TO,
           subject: "Orbitlink™ — Welcome, We’ve Opened Your Account",
           html: buildWelcomeEmail({
             account_name: account.account_name,
@@ -217,7 +227,17 @@ export default async function AdminAccountsPage() {
           }),
         });
 
-        console.log("Account welcome email result:", emailResult);
+        if (resendError) {
+          console.error(
+            "Resend returned an error while sending account welcome email:",
+            JSON.stringify(resendError, null, 2)
+          );
+        } else {
+          console.log(
+            "Account welcome email sent successfully:",
+            JSON.stringify(data, null, 2)
+          );
+        }
       } catch (emailError) {
         console.error("Failed to send account welcome email:", emailError);
       }
