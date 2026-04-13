@@ -393,6 +393,7 @@ export default async function AdminAccountsPage() {
   revalidatePath("/admin/dashboard");
   revalidatePath("/admin/lifecycle");
 }
+
   async function updateAccountDetails(formData: FormData) {
     "use server";
 
