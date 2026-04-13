@@ -165,7 +165,7 @@ function buildWelcomeEmail(account: WelcomeEmailPayload) {
                 </div>
 
                 <div style="margin-top:10px;font-family:Arial,sans-serif;font-size:12px;line-height:1.7;color:#7b8492;text-align:left;">
-                  Terms: https://orbitlink.ca/legal/terms &nbsp;|&nbsp; Privacy: https://orbitlink.ca/privacy
+                  Terms: https://orbitlink.ca/legal/terms &nbsp;|&nbsp; Privacy: https://orbitlink.ca/legal/privacy
                 </div>
               </td>
             </tr>
