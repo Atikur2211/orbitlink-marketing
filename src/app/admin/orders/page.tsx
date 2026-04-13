@@ -382,7 +382,7 @@ async function sendOrderEmail(
 }
 
 async function getOrderEmailContext(
-  supabase: ReturnType<typeof createClient>,
+  supabase: any,
   accountId: string,
   locationId: string | null,
   quoteId: string | null,
@@ -391,29 +391,54 @@ async function getOrderEmailContext(
   activationTargetDate: string | null,
   notes: string | null
 ): Promise<EmailOrderContext | null> {
-  const [{ data: account }, { data: location }, { data: quote }] = await Promise.all([
-    supabase
-      .from("accounts")
-      .select("id, account_name, primary_contact_name, primary_contact_email")
-      .eq("id", accountId)
-      .single(),
-    locationId
-      ? supabase
-          .from("locations")
-          .select("id, location_name, address_line_1, city")
-          .eq("id", locationId)
-          .single()
-      : Promise.resolve({ data: null }),
-    quoteId
-      ? supabase
-          .from("quotes")
-          .select("id, quote_number")
-          .eq("id", quoteId)
-          .single()
-      : Promise.resolve({ data: null }),
-  ]);
+  const accountResult = await supabase
+    .from("accounts")
+    .select("id, account_name, primary_contact_name, primary_contact_email")
+    .eq("id", accountId)
+    .single();
+
+  const account = accountResult.data as
+    | {
+        id: string;
+        account_name: string;
+        primary_contact_name: string | null;
+        primary_contact_email: string | null;
+      }
+    | null;
 
   if (!account?.account_name) return null;
+
+  const locationResult = locationId
+    ? await supabase
+        .from("locations")
+        .select("id, location_name, address_line_1, city")
+        .eq("id", locationId)
+        .single()
+    : { data: null };
+
+  const location = locationResult.data as
+    | {
+        id: string;
+        location_name: string | null;
+        address_line_1: string;
+        city: string | null;
+      }
+    | null;
+
+  const quoteResult = quoteId
+    ? await supabase
+        .from("quotes")
+        .select("id, quote_number")
+        .eq("id", quoteId)
+        .single()
+    : { data: null };
+
+  const quote = quoteResult.data as
+    | {
+        id: string;
+        quote_number: string;
+      }
+    | null;
 
   const serviceLocation = getLocationLabel(
     location
