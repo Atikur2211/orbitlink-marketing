@@ -1515,9 +1515,11 @@ async function scanOverdueOrderMilestones(
       order.status !== ORDER_STATUS.CANCELLED
     ) {
       const daysOverdue = daysBetween(order.install_target_date, today);
+
       if (
         daysOverdue > 0 &&
-        ![ORDER_STATUS.ACTIVATED, ORDER_STATUS.CANCELLED].includes(order.status)
+        order.status !== ORDER_STATUS.ACTIVATED &&
+        order.status !== ORDER_STATUS.CANCELLED
       ) {
         const severity = getInstallOverdueSeverity(daysOverdue);
         const created = await createNocAlert(supabase, {
@@ -1537,6 +1539,7 @@ async function scanOverdueOrderMilestones(
 
         if (created.created) {
           results.installAlertsCreated += 1;
+
           const incidentId = await autoEscalateAlertToIncident(supabase, {
             alertId: created.alertId,
             accountId: order.account_id ?? null,
@@ -1556,9 +1559,11 @@ async function scanOverdueOrderMilestones(
 
     if (
       order.activation_target_date &&
-      ![ORDER_STATUS.ACTIVATED, ORDER_STATUS.CANCELLED].includes(order.status)
+      order.status !== ORDER_STATUS.ACTIVATED &&
+      order.status !== ORDER_STATUS.CANCELLED
     ) {
       const daysOverdue = daysBetween(order.activation_target_date, today);
+
       if (daysOverdue > 0 && order.status !== ORDER_STATUS.ACTIVATED) {
         const severity = getActivationOverdueSeverity(daysOverdue);
         const created = await createNocAlert(supabase, {
@@ -1578,6 +1583,7 @@ async function scanOverdueOrderMilestones(
 
         if (created.created) {
           results.activationAlertsCreated += 1;
+
           const incidentId = await autoEscalateAlertToIncident(supabase, {
             alertId: created.alertId,
             accountId: order.account_id ?? null,
