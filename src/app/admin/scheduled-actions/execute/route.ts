@@ -454,12 +454,33 @@ export async function GET() {
         executed += 1;
         continue;
       }
+      // 🚫 Prevent downgrade (VERY IMPORTANT)
+      if (
+        orderBefore.status === "activated" &&
+        action.target_status === "scheduled"
+      ) {
+        await supabase.from("lifecycle_events").insert({
+          account_id: action.account_id,
+          entity_type: "order",
+          entity_id: action.entity_id,
+          event_type: "order_status_downgrade_blocked",
+          event_label: "Order status downgrade blocked",
+          notes: `Prevented downgrade from activated to scheduled for order ${orderBefore.order_number}.`,
+        });
+
+        await markExecuted(supabase, action.id);
+        executed += 1;
+        continue;
+      }
+      if (!action.target_status) {
+        throw new Error(`Scheduled action ${action.id} missing target_status`);
+      }
 
       const { error: orderUpdateError } = await supabase
         .from("orders")
         .update({ status: action.target_status })
         .eq("id", action.entity_id);
-
+      
       if (orderUpdateError) {
         throw new Error(
           `Failed updating order ${action.entity_id}: ${orderUpdateError.message}`
@@ -493,16 +514,15 @@ export async function GET() {
         activationTargetDate: orderBefore.activation_target_date,
         reason: action.reason ?? orderBefore.notes ?? null,
       };
-
-      if (ctx.primaryContactEmail) {
-        if (action.target_status === "scheduled") {
+        if (ctx.primaryContactEmail) {
+          if (action.target_status === "scheduled") {
           await safeSend({
             to: ctx.primaryContactEmail,
             subject: "Orbitlink™ — Installation Scheduled",
             html: buildInstallationScheduledEmail(ctx),
           });
         }
-
+      
         if (action.target_status === "activated") {
           await safeSend({
             to: ctx.primaryContactEmail,

@@ -1,5 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
+import type { CSSProperties } from "react";
 
 type ScheduledAction = {
   id: string;
@@ -18,7 +19,7 @@ type ScheduledAction = {
   accounts: { account_name: string }[] | null;
 };
 
-function getStatusStyles(status: string | null): React.CSSProperties {
+function getStatusStyles(status: string | null): CSSProperties {
   switch (status) {
     case "scheduled":
       return {
@@ -28,9 +29,9 @@ function getStatusStyles(status: string | null): React.CSSProperties {
       };
     case "running":
       return {
-        background: "rgba(255, 193, 7, 0.12)",
-        border: "1px solid rgba(255, 193, 7, 0.28)",
-        color: "#ffd666",
+        background: "rgba(255, 99, 71, 0.18)",
+        border: "1px solid rgba(255, 99, 71, 0.35)",
+        color: "#ffb29b",
       };
     case "executed":
       return {
@@ -83,7 +84,7 @@ function getStatusActionLabel(nextStatus: string) {
   }
 }
 
-function getStatusActionStyle(nextStatus: string): React.CSSProperties {
+function getStatusActionStyle(nextStatus: string): CSSProperties {
   if (nextStatus === "cancelled") return actionButtonDanger;
   if (nextStatus === "scheduled") return actionButtonGold;
   return actionButton;
@@ -248,7 +249,8 @@ export default async function AdminScheduledActionsPage() {
       approval_required,
       accounts ( account_name )
     `)
-    .order("effective_date", { ascending: true });
+    .order("status", { ascending: false }) // running first
+    .order("effective_date", { ascending: true })
 
   const actions = (data as ScheduledAction[] | null) ?? [];
 
@@ -427,7 +429,6 @@ export default async function AdminScheduledActionsPage() {
                     <th style={headerCell}>Action</th>
                     <th style={headerCell}>Target Status</th>
                     <th style={headerCell}>Effective Date</th>
-                    <th style={headerCell}>Editable Reason</th>
                     <th style={headerCell}>Status</th>
                     <th style={headerCell}>Approval</th>
                     <th style={headerCell}>Execution / Failure</th>
@@ -474,18 +475,6 @@ export default async function AdminScheduledActionsPage() {
                           <td style={bodyCell}>{action.effective_date}</td>
 
                           <td style={bodyCell}>
-                            <form action={updateScheduledActionDetails}>
-                              <input type="hidden" name="action_id" value={action.id} />
-                              <input
-                                name="reason"
-                                defaultValue={action.reason ?? ""}
-                                placeholder="Reason"
-                                style={textInput}
-                              />
-                            </form>
-                          </td>
-
-                          <td style={bodyCell}>
                             <span
                               style={{
                                 display: "inline-flex",
@@ -501,7 +490,6 @@ export default async function AdminScheduledActionsPage() {
                               {currentStatus}
                             </span>
                           </td>
-
                           <td style={bodyCell}>
                             {action.approval_required ? (
                               <span
@@ -585,7 +573,7 @@ export default async function AdminScheduledActionsPage() {
                     })
                   ) : (
                     <tr>
-                      <td style={bodyCell} colSpan={12}>
+                      <td style={bodyCell} colSpan={11}>
                         No scheduled actions found.
                       </td>
                     </tr>
@@ -600,7 +588,7 @@ export default async function AdminScheduledActionsPage() {
   );
 }
 
-const headerCell: React.CSSProperties = {
+const headerCell: CSSProperties = {
   padding: "14px 16px",
   fontSize: "12px",
   textTransform: "uppercase",
@@ -608,14 +596,14 @@ const headerCell: React.CSSProperties = {
   color: "rgba(255,255,255,0.62)",
 };
 
-const bodyCell: React.CSSProperties = {
+const bodyCell: CSSProperties = {
   padding: "16px",
   fontSize: "14px",
   color: "#f5f5f5",
   verticalAlign: "top",
 };
 
-const actionButton: React.CSSProperties = {
+const actionButton: CSSProperties = {
   background: "rgba(255,255,255,0.06)",
   color: "#f5f5f5",
   border: "1px solid rgba(255,255,255,0.12)",
@@ -625,7 +613,7 @@ const actionButton: React.CSSProperties = {
   cursor: "pointer",
 };
 
-const actionButtonGold: React.CSSProperties = {
+const actionButtonGold: CSSProperties = {
   background: "rgba(212, 175, 55, 0.18)",
   color: "#fff2c4",
   border: "1px solid rgba(212, 175, 55, 0.35)",
@@ -635,7 +623,7 @@ const actionButtonGold: React.CSSProperties = {
   cursor: "pointer",
 };
 
-const actionButtonDanger: React.CSSProperties = {
+const actionButtonDanger: CSSProperties = {
   background: "rgba(255, 99, 71, 0.12)",
   color: "#ffb29b",
   border: "1px solid rgba(255, 99, 71, 0.28)",
@@ -645,7 +633,7 @@ const actionButtonDanger: React.CSSProperties = {
   cursor: "pointer",
 };
 
-const textInput: React.CSSProperties = {
+const textInput: CSSProperties = {
   background: "#111",
   color: "#fff",
   border: "1px solid rgba(255,255,255,0.14)",
