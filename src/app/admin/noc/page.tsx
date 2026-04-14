@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
+import type { CSSProperties } from "react";
 
 export const revalidate = 30;
 
@@ -65,7 +66,7 @@ function getSupabase() {
 
 function badgeStyle(
   kind: "danger" | "warn" | "gold" | "neutral"
-): React.CSSProperties {
+): CSSProperties {
   switch (kind) {
     case "danger":
       return {
@@ -191,7 +192,7 @@ function getSeverityPriority(severity: string) {
   }
 }
 
-function getAlertCardStyle(alert: NocAlert): React.CSSProperties {
+function getAlertCardStyle(alert: NocAlert): CSSProperties {
   if (alert.severity === "critical") {
     return {
       ...rowBox,
@@ -299,6 +300,7 @@ export default async function AdminNocPage() {
       .from("scheduled_actions")
       .select("id, entity_type, action_type, target_status, effective_date, status")
       .in("status", ["scheduled", "queued", "running"])
+      .order("status", { ascending: false }) // running first
       .order("effective_date", { ascending: true })
       .limit(10),
 
@@ -656,6 +658,7 @@ export default async function AdminNocPage() {
                           <button
                             type="submit"
                             style={ackButtonStyle}
+                            disabled={alert.acknowledged}
                           >
                             Acknowledge
                           </button>
@@ -772,7 +775,14 @@ export default async function AdminNocPage() {
                           {formatDate(action.effective_date)}
                         </div>
                       </div>
-                      <span style={{ ...pillBase, ...badgeStyle("warn") }}>
+                      <span
+                        style={{
+                          ...pillBase,
+                          ...(action.status === "running"
+                            ? badgeStyle("danger")
+                            : badgeStyle("warn")),
+                        }}
+                      >
                         {action.status ?? "—"}
                       </span>
                     </Link>
@@ -843,7 +853,7 @@ export default async function AdminNocPage() {
   );
 }
 
-const panelStyle: React.CSSProperties = {
+const panelStyle: CSSProperties = {
   borderRadius: "26px",
   overflow: "hidden",
   border: "1px solid rgba(212, 175, 55, 0.16)",
@@ -851,33 +861,33 @@ const panelStyle: React.CSSProperties = {
   boxShadow: "0 22px 55px rgba(0,0,0,0.32)",
 };
 
-const panelHeader: React.CSSProperties = {
+const panelHeader: CSSProperties = {
   padding: "18px 22px",
   borderBottom: "1px solid rgba(255,255,255,0.08)",
   background:
     "linear-gradient(90deg, rgba(212,175,55,0.08) 0%, rgba(255,255,255,0.02) 100%)",
 };
 
-const panelTitle: React.CSSProperties = {
+const panelTitle: CSSProperties = {
   margin: 0,
   fontSize: "18px",
   fontWeight: 600,
   color: "#fff2c4",
 };
 
-const panelSubtle: React.CSSProperties = {
+const panelSubtle: CSSProperties = {
   marginTop: "6px",
   fontSize: "12px",
   color: "rgba(255,255,255,0.52)",
 };
 
-const panelBody: React.CSSProperties = {
+const panelBody: CSSProperties = {
   padding: "14px",
   display: "grid",
   gap: "10px",
 };
 
-const rowLink: React.CSSProperties = {
+const rowLink: CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
@@ -890,7 +900,7 @@ const rowLink: React.CSSProperties = {
   color: "inherit",
 };
 
-const rowBox: React.CSSProperties = {
+const rowBox: CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
   gap: "14px",
@@ -901,7 +911,7 @@ const rowBox: React.CSSProperties = {
   color: "inherit",
 };
 
-const rowTitle: React.CSSProperties = {
+const rowTitle: CSSProperties = {
   fontSize: "14px",
   fontWeight: 600,
   color: "#fff7db",
@@ -909,13 +919,13 @@ const rowTitle: React.CSSProperties = {
   textTransform: "capitalize",
 };
 
-const rowMeta: React.CSSProperties = {
+const rowMeta: CSSProperties = {
   fontSize: "12px",
   color: "rgba(255,255,255,0.60)",
   lineHeight: 1.5,
 };
 
-const pillBase: React.CSSProperties = {
+const pillBase: CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   padding: "6px 10px",
@@ -926,7 +936,7 @@ const pillBase: React.CSSProperties = {
   whiteSpace: "nowrap",
 };
 
-const emptyState: React.CSSProperties = {
+const emptyState: CSSProperties = {
   borderRadius: "18px",
   padding: "18px",
   border: "1px dashed rgba(255,255,255,0.12)",
@@ -934,7 +944,7 @@ const emptyState: React.CSSProperties = {
   fontSize: "14px",
 };
 
-const ackButtonStyle: React.CSSProperties = {
+const ackButtonStyle: CSSProperties = {
   borderRadius: "999px",
   padding: "8px 12px",
   fontSize: "12px",

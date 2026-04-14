@@ -115,9 +115,7 @@ type JobRunInsert = {
   job_type: string;
   status: string;
   started_at: string;
-  completed_at?: string | null;
   error_message?: string | null;
-  output?: Json | null;
 };
 
 type ExecutionLockRow = {
@@ -632,9 +630,16 @@ async function createJobRun(
   supabase: ReturnType<typeof getSupabase>,
   payload: JobRunInsert
 ) {
+  const insertPayload = {
+    job_type: payload.job_type,
+    status: payload.status,
+    started_at: payload.started_at,
+    error_message: payload.error_message ?? null,
+  };
+
   const { data, error } = await supabase
     .from("job_runs")
-    .insert(payload)
+    .insert(insertPayload)
     .select("id")
     .single();
 
@@ -649,15 +654,13 @@ async function finalizeJobRun(
   supabase: ReturnType<typeof getSupabase>,
   jobRunId: string,
   status: "completed" | "failed",
-  output?: Json | null,
+  _output?: Json | null,
   errorMessage?: string | null
 ) {
   const { error } = await supabase
     .from("job_runs")
     .update({
       status,
-      completed_at: new Date().toISOString(),
-      output: output ?? null,
       error_message: errorMessage ?? null,
     })
     .eq("id", jobRunId);
@@ -1687,6 +1690,29 @@ async function processOrderScheduledAction(
     throw new Error(`Scheduled action ${action.id} missing target_status`);
   }
 
+  if (
+    order.status === ORDER_STATUS.ACTIVATED &&
+    targetStatus === ORDER_STATUS.SCHEDULED
+  ) {
+    await insertLifecycleEvent(supabase, {
+      account_id: order.account_id ?? null,
+      entity_type: "order",
+      entity_id: order.id,
+      event_type: "order_status_downgrade_blocked",
+      event_label: "Order status downgrade blocked",
+      notes: `Prevented downgrade from ${order.status} to ${targetStatus}.`,
+    });
+
+    return {
+      entity_type: "order",
+      entity_id: order.id,
+      order_number: order.order_number,
+      applied_status: order.status,
+      skipped: true,
+      reason: "Prevented downgrade from activated to scheduled",
+    };
+  }
+
   await updateOrderStatus(
     supabase,
     order.id,
@@ -1708,7 +1734,6 @@ async function processOrderScheduledAction(
     applied_status: targetStatus,
   };
 }
-
 async function processAccountScheduledAction(
   supabase: ReturnType<typeof getSupabase>,
   action: ScheduledActionRow
@@ -1886,7 +1911,7 @@ export async function POST() {
     support_escalation_alerts_created: 0,
     support_escalation_incidents_opened: 0,
     errors: [] as string[],
-    action_results: [] as Json[],
+    action_results: [] as Array<Record<string, Json>>,
   };
 
   try {
@@ -1894,7 +1919,6 @@ export async function POST() {
       job_type: "scheduled_actions_run",
       status: "running",
       started_at: startedAt,
-      output: null,
     });
 
     const lockResult = await tryAcquireExecutionLock(supabase, jobRunId);
@@ -1934,7 +1958,7 @@ export async function POST() {
         summary.scheduled_actions_executed += 1;
         summary.action_results.push({
           action_id: action.id,
-          result,
+          result: JSON.parse(JSON.stringify(result)) as Json,
         });
       } catch (err) {
         const message =
