@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
+import { revalidatePath } from "next/cache";
 import type { CSSProperties } from "react";
 
-export const revalidate = 30;
+export const revalidate = 15;
 
 const ESCALATION_MINUTES = 30;
+const LOCK_KEY = "scheduled-actions-run";
 
 type Incident = {
   id: string;
@@ -51,6 +53,12 @@ type NocAlert = {
   acknowledged: boolean;
 };
 
+type ExecutionLock = {
+  lock_key: string;
+  locked_until: string;
+  locked_by: string | null;
+};
+
 function getSupabase() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -64,8 +72,84 @@ function getSupabase() {
   );
 }
 
+function formatUtc(value: string | null | undefined) {
+  if (!value) return "—";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+
+  return date.toLocaleString("en-CA", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+function formatDate(value: string | null | undefined) {
+  if (!value) return "—";
+  const date = new Date(`${value}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return value;
+
+  return date.toLocaleDateString("en-CA", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+function minutesSince(value: string | null | undefined) {
+  if (!value) return 0;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return 0;
+  return Math.max(0, Math.floor((Date.now() - date.getTime()) / 60000));
+}
+
+function getEscalationMeta(alert: NocAlert) {
+  const ageMinutes = minutesSince(alert.created_at);
+  const remaining = ESCALATION_MINUTES - ageMinutes;
+  const escalated =
+    ["critical", "high"].includes(alert.severity) && remaining <= 0;
+
+  return {
+    ageMinutes,
+    remaining: Math.max(0, remaining),
+    escalated,
+  };
+}
+
+function getSeverityPriority(severity: string) {
+  switch (severity) {
+    case "critical":
+      return 4;
+    case "high":
+      return 3;
+    case "medium":
+      return 2;
+    case "low":
+      return 1;
+    default:
+      return 0;
+  }
+}
+
+function getJobStatusPriority(status: string | null | undefined) {
+  switch (status) {
+    case "running":
+      return 4;
+    case "failed":
+      return 3;
+    case "queued":
+      return 2;
+    case "completed":
+      return 1;
+    default:
+      return 0;
+  }
+}
+
 function badgeStyle(
-  kind: "danger" | "warn" | "gold" | "neutral"
+  kind: "danger" | "warn" | "gold" | "neutral" | "ok"
 ): CSSProperties {
   switch (kind) {
     case "danger":
@@ -86,6 +170,12 @@ function badgeStyle(
         border: "1px solid rgba(212, 175, 55, 0.34)",
         color: "#f4d57b",
       };
+    case "ok":
+      return {
+        background: "rgba(52, 199, 89, 0.14)",
+        border: "1px solid rgba(52, 199, 89, 0.28)",
+        color: "#95f0a4",
+      };
     default:
       return {
         background: "rgba(255,255,255,0.05)",
@@ -95,48 +185,25 @@ function badgeStyle(
   }
 }
 
-function formatUtc(value: string) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
+function getAlertCardStyle(alert: NocAlert): CSSProperties {
+  if (alert.severity === "critical") {
+    return {
+      ...rowBox,
+      border: "1px solid rgba(255, 99, 71, 0.42)",
+      background: "rgba(255, 99, 71, 0.06)",
+      boxShadow: "0 0 0 1px rgba(255,99,71,0.08) inset",
+    };
+  }
 
-  return date.toLocaleString("en-CA", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
-}
+  if (alert.severity === "high") {
+    return {
+      ...rowBox,
+      border: "1px solid rgba(255, 193, 7, 0.28)",
+      background: "rgba(255, 193, 7, 0.04)",
+    };
+  }
 
-function formatDate(value: string) {
-  if (!value) return "—";
-  const date = new Date(`${value}T00:00:00`);
-  if (Number.isNaN(date.getTime())) return value;
-
-  return date.toLocaleDateString("en-CA", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}
-
-function minutesSince(value: string) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return 0;
-  return Math.max(0, Math.floor((Date.now() - date.getTime()) / 60000));
-}
-
-function getEscalationMeta(alert: NocAlert) {
-  const ageMinutes = minutesSince(alert.created_at);
-  const remaining = ESCALATION_MINUTES - ageMinutes;
-  const escalated =
-    ["critical", "high"].includes(alert.severity) && remaining <= 0;
-
-  return {
-    ageMinutes,
-    remaining: Math.max(0, remaining),
-    escalated,
-  };
+  return rowBox;
 }
 
 function getAlertEntityHref(alert: NocAlert) {
@@ -175,42 +242,6 @@ function getAlertEntityLabel(alert: NocAlert) {
     default:
       return "Open record";
   }
-}
-
-function getSeverityPriority(severity: string) {
-  switch (severity) {
-    case "critical":
-      return 4;
-    case "high":
-      return 3;
-    case "medium":
-      return 2;
-    case "low":
-      return 1;
-    default:
-      return 0;
-  }
-}
-
-function getAlertCardStyle(alert: NocAlert): CSSProperties {
-  if (alert.severity === "critical") {
-    return {
-      ...rowBox,
-      border: "1px solid rgba(255, 99, 71, 0.42)",
-      background: "rgba(255, 99, 71, 0.06)",
-      boxShadow: "0 0 0 1px rgba(255,99,71,0.08) inset",
-    };
-  }
-
-  if (alert.severity === "high") {
-    return {
-      ...rowBox,
-      border: "1px solid rgba(255, 193, 7, 0.28)",
-      background: "rgba(255, 193, 7, 0.04)",
-    };
-  }
-
-  return rowBox;
 }
 
 async function acknowledgeAlert(formData: FormData) {
@@ -265,7 +296,6 @@ async function acknowledgeAlert(formData: FormData) {
     });
   }
 
-  const { revalidatePath } = await import("next/cache");
   revalidatePath("/admin/noc");
   revalidatePath("/admin/dashboard");
 }
@@ -281,6 +311,9 @@ export default async function AdminNocPage() {
     nocAlertsRes,
     allOpenIncidentsCountRes,
     allActiveAlertsCountRes,
+    successfulJobRes,
+    runningJobRes,
+    executionLockRes,
   ] = await Promise.all([
     (supabase as any)
       .from("incidents")
@@ -300,7 +333,7 @@ export default async function AdminNocPage() {
       .from("scheduled_actions")
       .select("id, entity_type, action_type, target_status, effective_date, status")
       .in("status", ["scheduled", "queued", "running"])
-      .order("status", { ascending: false }) // running first
+      .order("status", { ascending: false })
       .order("effective_date", { ascending: true })
       .limit(10),
 
@@ -336,6 +369,29 @@ export default async function AdminNocPage() {
       .from("noc_alerts")
       .select("id", { count: "exact", head: true })
       .eq("acknowledged", false),
+
+    (supabase as any)
+      .from("job_runs")
+      .select("id, job_type, status, started_at, error_message")
+      .eq("job_type", "scheduled_actions_run")
+      .eq("status", "completed")
+      .order("started_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+
+    (supabase as any)
+      .from("job_runs")
+      .select("id, job_type, status, started_at, error_message")
+      .eq("job_type", "scheduled_actions_run")
+      .order("started_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+
+    (supabase as any)
+      .from("execution_locks")
+      .select("lock_key, locked_until, locked_by")
+      .eq("lock_key", LOCK_KEY)
+      .maybeSingle(),
   ]);
 
   const incidents = (incidentsRes.data as Incident[] | null) ?? [];
@@ -343,6 +399,14 @@ export default async function AdminNocPage() {
   const runningActions = (runningActionsRes.data as ScheduledAction[] | null) ?? [];
   const openTickets = (openTicketsRes.data as Ticket[] | null) ?? [];
   const nocAlerts = (nocAlertsRes.data as NocAlert[] | null) ?? [];
+  const lastSuccessfulJob = (successfulJobRes.data as JobRun | null) ?? null;
+  const latestJob = (runningJobRes.data as JobRun | null) ?? null;
+  const executionLock = (executionLockRes.data as ExecutionLock | null) ?? null;
+
+  const now = Date.now();
+  const lockActive = Boolean(
+    executionLock?.locked_until && new Date(executionLock.locked_until).getTime() > now
+  );
 
   const sortedAlerts = [...nocAlerts].sort((a, b) => {
     const severityDelta = getSeverityPriority(b.severity) - getSeverityPriority(a.severity);
@@ -358,6 +422,9 @@ export default async function AdminNocPage() {
     ["critical", "high"].includes(alert.severity)
   ).length;
 
+  const mediumAlerts = sortedAlerts.filter((alert) => alert.severity === "medium").length;
+  const lowAlerts = sortedAlerts.filter((alert) => alert.severity === "low").length;
+
   const escalatedNowCount = sortedAlerts.filter(
     (alert) => getEscalationMeta(alert).escalated
   ).length;
@@ -372,31 +439,49 @@ export default async function AdminNocPage() {
       ? allOpenIncidentsCountRes.count
       : incidents.length;
 
-  const systemHealthLabel = sortedAlerts.length === 0 ? "Healthy" : "Attention";
+  const runningActionsCount = runningActions.filter((row) => row.status === "running").length;
+  const queuedActionsCount = runningActions.filter((row) => row.status !== "running").length;
+  const highPriorityTicketsCount = openTickets.filter((ticket) =>
+    ["high", "critical"].includes(ticket.priority ?? "")
+  ).length;
+
+  const latestJobHealthy = latestJob?.status === "completed";
+  const systemHealthLabel =
+    criticalUnacknowledgedAlerts > 0 || escalatedNowCount > 0 || !latestJobHealthy
+      ? "Attention"
+      : activeAlertsCount > 0
+        ? "Watch"
+        : "Healthy";
+
   const systemHealthKind =
-    sortedAlerts.length === 0 ? ("gold" as const) : ("danger" as const);
+    systemHealthLabel === "Healthy"
+      ? ("ok" as const)
+      : systemHealthLabel === "Watch"
+        ? ("warn" as const)
+        : ("danger" as const);
 
   const statCards = [
     { label: "System Health", value: systemHealthLabel, kind: systemHealthKind },
-    { label: "Active Alerts", value: activeAlertsCount, kind: "danger" as const },
+    { label: "Active Alerts", value: activeAlertsCount, kind: activeAlertsCount ? "danger" as const : "ok" as const },
     {
       label: "Critical Unacked",
       value: criticalUnacknowledgedAlerts,
-      kind:
-        criticalUnacknowledgedAlerts > 0
-          ? ("danger" as const)
-          : ("neutral" as const),
+      kind: criticalUnacknowledgedAlerts > 0 ? ("danger" as const) : ("ok" as const),
     },
-    { label: "Open Incidents", value: openIncidentsCount, kind: "danger" as const },
     {
-      label: "High / Critical",
-      value: highOrCriticalAlerts,
-      kind: highOrCriticalAlerts > 0 ? ("warn" as const) : ("neutral" as const),
+      label: "Open Incidents",
+      value: openIncidentsCount,
+      kind: openIncidentsCount > 0 ? ("danger" as const) : ("ok" as const),
+    },
+    {
+      label: "Running Actions",
+      value: runningActionsCount,
+      kind: runningActionsCount > 0 ? ("warn" as const) : ("neutral" as const),
     },
     {
       label: "Escalation Overdue",
       value: escalatedNowCount,
-      kind: escalatedNowCount > 0 ? ("danger" as const) : ("neutral" as const),
+      kind: escalatedNowCount > 0 ? ("danger" as const) : ("ok" as const),
     },
   ];
 
@@ -412,126 +497,68 @@ export default async function AdminNocPage() {
         color: "#f5f5f5",
       }}
     >
-      <div style={{ maxWidth: "1500px", margin: "0 auto" }}>
-        <section
-          style={{
-            position: "relative",
-            overflow: "hidden",
-            marginBottom: "28px",
-            padding: "32px",
-            borderRadius: "30px",
-            border: "1px solid rgba(212, 175, 55, 0.18)",
-            background:
-              "linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(255,255,255,0.04) 38%, rgba(255,255,255,0.02) 100%)",
-            boxShadow: "0 28px 70px rgba(0,0,0,0.40)",
-          }}
-        >
+      <div style={{ maxWidth: "1540px", margin: "0 auto" }}>
+        <section style={heroStyle}>
           <div style={{ position: "relative", zIndex: 1 }}>
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "8px 14px",
-                borderRadius: "999px",
-                border: "1px solid rgba(212, 175, 55, 0.22)",
-                background: "rgba(212, 175, 55, 0.08)",
-                fontSize: "12px",
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "#e2c15c",
-                marginBottom: "16px",
-              }}
-            >
-              Orbitlink OS · NOC Console
-            </div>
-
-            <h1
-              style={{
-                fontSize: "40px",
-                lineHeight: 1.08,
-                fontWeight: 700,
-                margin: "0 0 12px 0",
-                color: "#fff7db",
-              }}
-            >
-              Network Operations Console
-            </h1>
-
-            <p
-              style={{
-                fontSize: "15px",
-                color: "rgba(255,255,255,0.74)",
-                margin: 0,
-                maxWidth: "920px",
-                lineHeight: 1.72,
-              }}
-            >
-              Real-time operator view across alerts, incidents, failed automation,
-              active scheduled actions, and open support demand.
+            <div style={heroEyebrow}>Orbitlink OS · NOC Console</div>
+            <h1 style={heroTitle}>Tier-1 Operations Console</h1>
+            <p style={heroText}>
+              Executive operator view across alert pressure, incident posture, automation health,
+              execution lock state, and active service operations.
             </p>
 
-            <div
-              style={{
-                marginTop: "14px",
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                gap: "10px",
-                fontSize: "12px",
-                color: "rgba(255,255,255,0.56)",
-                letterSpacing: "0.04em",
-              }}
-            >
-              <span>ISR revalidate every 30 seconds</span>
+            <div style={heroMetaRow}>
+              <span>ISR every 15 seconds</span>
               <span>·</span>
               <span>last rendered {lastRefreshed}</span>
               <span>·</span>
-              <Link
-                href="/admin/noc"
-                style={{
-                  color: "#f4d57b",
-                  textDecoration: "none",
-                  fontWeight: 600,
-                }}
-              >
+              <Link href="/admin/noc" style={heroRefreshLink}>
                 Refresh now →
               </Link>
             </div>
           </div>
         </section>
 
-        <section
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(6, minmax(0, 1fr))",
-            gap: "16px",
-            marginBottom: "24px",
-          }}
-        >
+        <section style={opsRibbonGrid}>
+          <div style={opsRibbonCard}>
+            <div style={opsRibbonLabel}>Automation Lock</div>
+            <div style={{ ...opsRibbonValue, ...(lockActive ? badgeStyle("warn") : badgeStyle("ok")), background: "transparent", border: "none" }}>
+              {lockActive ? "Active" : "Clear"}
+            </div>
+            <div style={opsRibbonMeta}>
+              {lockActive
+                ? `Held until ${formatUtc(executionLock?.locked_until)}${executionLock?.locked_by ? ` · ${executionLock.locked_by}` : ""}`
+                : "No active executor lock detected."}
+            </div>
+          </div>
+
+          <div style={opsRibbonCard}>
+            <div style={opsRibbonLabel}>Latest Automation Run</div>
+            <div style={{ ...opsRibbonValue, ...(latestJobHealthy ? badgeStyle("ok") : badgeStyle("danger")), background: "transparent", border: "none" }}>
+              {latestJob?.status ?? "unknown"}
+            </div>
+            <div style={opsRibbonMeta}>
+              {latestJob ? `${latestJob.job_type} · ${formatUtc(latestJob.started_at)}` : "No job run data found."}
+            </div>
+          </div>
+
+          <div style={opsRibbonCard}>
+            <div style={opsRibbonLabel}>Last Successful Run</div>
+            <div style={opsRibbonValue}>{lastSuccessfulJob ? formatUtc(lastSuccessfulJob.started_at) : "—"}</div>
+            <div style={opsRibbonMeta}>Most recent completed scheduled-actions executor cycle.</div>
+          </div>
+
+          <div style={opsRibbonCard}>
+            <div style={opsRibbonLabel}>Demand Snapshot</div>
+            <div style={opsRibbonValue}>{openTickets.length} open · {highPriorityTicketsCount} high-priority</div>
+            <div style={opsRibbonMeta}>Support queue requiring active operator attention.</div>
+          </div>
+        </section>
+
+        <section style={statsGrid}>
           {statCards.map((item) => (
-            <div
-              key={item.label}
-              style={{
-                borderRadius: "20px",
-                padding: "20px",
-                border: "1px solid rgba(212, 175, 55, 0.14)",
-                background:
-                  "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%)",
-                boxShadow: "0 12px 32px rgba(0,0,0,0.24)",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: "12px",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.10em",
-                  color: "rgba(255,255,255,0.58)",
-                  marginBottom: "10px",
-                }}
-              >
-                {item.label}
-              </div>
+            <div key={item.label} style={statCardStyle}>
+              <div style={statLabel}>{item.label}</div>
               <div
                 style={{
                   fontSize: typeof item.value === "string" ? "24px" : "32px",
@@ -547,20 +574,70 @@ export default async function AdminNocPage() {
           ))}
         </section>
 
-        <section
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.3fr 1fr",
-            gap: "20px",
-          }}
-        >
+        <section style={topGrid}>
+          <div style={panelStyle}>
+            <div style={panelHeader}>
+              <div>
+                <h2 style={panelTitle}>Severity Distribution</h2>
+                <div style={panelSubtle}>Immediate operational pressure by alert severity</div>
+              </div>
+            </div>
+            <div style={panelBody}>
+              <div style={severityGrid}>
+                <div style={severityCardCritical}>
+                  <div style={severityLabel}>Critical</div>
+                  <div style={severityValue}>{criticalUnacknowledgedAlerts}</div>
+                </div>
+                <div style={severityCardHigh}>
+                  <div style={severityLabel}>High</div>
+                  <div style={severityValue}>{Math.max(0, highOrCriticalAlerts - criticalUnacknowledgedAlerts)}</div>
+                </div>
+                <div style={severityCardNeutral}>
+                  <div style={severityLabel}>Medium</div>
+                  <div style={severityValue}>{mediumAlerts}</div>
+                </div>
+                <div style={severityCardNeutral}>
+                  <div style={severityLabel}>Low</div>
+                  <div style={severityValue}>{lowAlerts}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style={panelStyle}>
+            <div style={panelHeader}>
+              <div>
+                <h2 style={panelTitle}>Queue Pressure</h2>
+                <div style={panelSubtle}>Workflow backlog and operator demand</div>
+              </div>
+            </div>
+            <div style={panelBody}>
+              <div style={miniMetricRow}>
+                <span style={miniMetricLabel}>Running actions</span>
+                <span style={{ ...pillBase, ...badgeStyle(runningActionsCount > 0 ? "warn" : "ok") }}>{runningActionsCount}</span>
+              </div>
+              <div style={miniMetricRow}>
+                <span style={miniMetricLabel}>Queued / scheduled actions</span>
+                <span style={{ ...pillBase, ...badgeStyle(queuedActionsCount > 0 ? "gold" : "neutral") }}>{queuedActionsCount}</span>
+              </div>
+              <div style={miniMetricRow}>
+                <span style={miniMetricLabel}>Open incidents</span>
+                <span style={{ ...pillBase, ...badgeStyle(openIncidentsCount > 0 ? "danger" : "ok") }}>{openIncidentsCount}</span>
+              </div>
+              <div style={miniMetricRow}>
+                <span style={miniMetricLabel}>High-priority tickets</span>
+                <span style={{ ...pillBase, ...badgeStyle(highPriorityTicketsCount > 0 ? "warn" : "ok") }}>{highPriorityTicketsCount}</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section style={mainGrid}>
           <div style={panelStyle}>
             <div style={panelHeader}>
               <div>
                 <h2 style={panelTitle}>Active Network Alerts</h2>
-                <div style={panelSubtle}>
-                  Highest severity first · newest alerts prioritized
-                </div>
+                <div style={panelSubtle}>Highest severity first · newest alerts prioritized</div>
               </div>
             </div>
 
@@ -587,14 +664,7 @@ export default async function AdminNocPage() {
                           Raised {formatUtc(alert.created_at)}
                         </div>
 
-                        <div
-                          style={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            gap: "8px",
-                            marginTop: "10px",
-                          }}
-                        >
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "10px" }}>
                           <span
                             style={{
                               ...pillBase,
@@ -603,7 +673,9 @@ export default async function AdminNocPage() {
                                   ? "danger"
                                   : alert.severity === "high"
                                     ? "warn"
-                                    : "gold"
+                                    : alert.severity === "medium"
+                                      ? "gold"
+                                      : "neutral"
                               ),
                             }}
                           >
@@ -614,9 +686,7 @@ export default async function AdminNocPage() {
                             <span
                               style={{
                                 ...pillBase,
-                                ...(escalation.escalated
-                                  ? badgeStyle("danger")
-                                  : badgeStyle("warn")),
+                                ...(escalation.escalated ? badgeStyle("danger") : badgeStyle("warn")),
                               }}
                             >
                               {escalation.escalated
@@ -636,16 +706,7 @@ export default async function AdminNocPage() {
 
                         {entityHref ? (
                           <div style={{ marginTop: "12px" }}>
-                            <Link
-                              href={entityHref}
-                              style={{
-                                color: "#f4d57b",
-                                textDecoration: "none",
-                                fontSize: "12px",
-                                fontWeight: 600,
-                                letterSpacing: "0.02em",
-                              }}
-                            >
+                            <Link href={entityHref} style={entityLinkStyle}>
                               {entityLabel} →
                             </Link>
                           </div>
@@ -655,11 +716,7 @@ export default async function AdminNocPage() {
                       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                         <form action={acknowledgeAlert}>
                           <input type="hidden" name="alert_id" value={alert.id} />
-                          <button
-                            type="submit"
-                            style={ackButtonStyle}
-                            disabled={alert.acknowledged}
-                          >
+                          <button type="submit" style={ackButtonStyle} disabled={alert.acknowledged}>
                             Acknowledge
                           </button>
                         </form>
@@ -668,9 +725,7 @@ export default async function AdminNocPage() {
                   );
                 })
               ) : (
-                <div style={emptyState}>
-                  System healthy — no active alerts detected.
-                </div>
+                <div style={emptyState}>System healthy — no active alerts detected.</div>
               )}
             </div>
           </div>
@@ -687,11 +742,7 @@ export default async function AdminNocPage() {
               <div style={panelBody}>
                 {incidents.length ? (
                   incidents.map((incident) => (
-                    <Link
-                      key={incident.id}
-                      href={`/admin/incidents/${incident.id}`}
-                      style={rowLink}
-                    >
+                    <Link key={incident.id} href={`/admin/incidents/${incident.id}`} style={rowLink}>
                       <div>
                         <div style={rowTitle}>{incident.title}</div>
                         <div style={rowMeta}>{formatUtc(incident.opened_at)}</div>
@@ -699,9 +750,7 @@ export default async function AdminNocPage() {
                       <span
                         style={{
                           ...pillBase,
-                          ...badgeStyle(
-                            incident.severity === "critical" ? "danger" : "warn"
-                          ),
+                          ...badgeStyle(incident.severity === "critical" ? "danger" : incident.severity === "high" ? "warn" : "gold"),
                         }}
                       >
                         {incident.status}
@@ -717,31 +766,40 @@ export default async function AdminNocPage() {
             <div style={panelStyle}>
               <div style={panelHeader}>
                 <div>
-                  <h2 style={panelTitle}>Failed Job Runs</h2>
-                  <div style={panelSubtle}>Recent background execution failures</div>
+                  <h2 style={panelTitle}>Automation Health</h2>
+                  <div style={panelSubtle}>Latest executor state and failure visibility</div>
                 </div>
               </div>
 
               <div style={panelBody}>
+                {latestJob ? (
+                  <div style={rowBox}>
+                    <div>
+                      <div style={rowTitle}>{latestJob.job_type}</div>
+                      <div style={rowMeta}>Latest run {formatUtc(latestJob.started_at)}</div>
+                      {latestJob.error_message ? (
+                        <div style={{ ...rowMeta, marginTop: "4px", color: "#ffb29b" }}>
+                          {latestJob.error_message}
+                        </div>
+                      ) : null}
+                    </div>
+                    <span style={{ ...pillBase, ...badgeStyle(getJobStatusPriority(latestJob.status) >= 3 ? "danger" : latestJob.status === "completed" ? "ok" : "warn") }}>
+                      {latestJob.status}
+                    </span>
+                  </div>
+                ) : (
+                  <div style={emptyState}>No executor run data available.</div>
+                )}
+
                 {failedJobs.length ? (
-                  failedJobs.map((job) => (
-                    <Link
-                      key={job.id}
-                      href={`/admin/job-runs/${job.id}`}
-                      style={rowLink}
-                    >
+                  failedJobs.slice(0, 5).map((job) => (
+                    <Link key={job.id} href={`/admin/job-runs/${job.id}`} style={rowLink}>
                       <div>
                         <div style={rowTitle}>{job.job_type}</div>
-                        <div style={rowMeta}>
-                          {job.error_message ?? "Execution failed"}
-                        </div>
-                        <div style={{ ...rowMeta, marginTop: "4px" }}>
-                          {formatUtc(job.started_at)}
-                        </div>
+                        <div style={rowMeta}>{job.error_message ?? "Execution failed"}</div>
+                        <div style={{ ...rowMeta, marginTop: "4px" }}>{formatUtc(job.started_at)}</div>
                       </div>
-                      <span style={{ ...pillBase, ...badgeStyle("danger") }}>
-                        failed
-                      </span>
+                      <span style={{ ...pillBase, ...badgeStyle("danger") }}>failed</span>
                     </Link>
                   ))
                 ) : (
@@ -761,26 +819,19 @@ export default async function AdminNocPage() {
               <div style={panelBody}>
                 {runningActions.length ? (
                   runningActions.map((action) => (
-                    <Link
-                      key={action.id}
-                      href="/admin/scheduled-actions"
-                      style={rowLink}
-                    >
+                    <Link key={action.id} href="/admin/scheduled-actions" style={rowLink}>
                       <div>
                         <div style={rowTitle}>
                           {action.entity_type} · {action.action_type}
                         </div>
                         <div style={rowMeta}>
-                          Target {action.target_status ?? "—"} · effective{" "}
-                          {formatDate(action.effective_date)}
+                          Target {action.target_status ?? "—"} · effective {formatDate(action.effective_date)}
                         </div>
                       </div>
                       <span
                         style={{
                           ...pillBase,
-                          ...(action.status === "running"
-                            ? badgeStyle("danger")
-                            : badgeStyle("warn")),
+                          ...(action.status === "running" ? badgeStyle("danger") : badgeStyle("warn")),
                         }}
                       >
                         {action.status ?? "—"}
@@ -804,16 +855,10 @@ export default async function AdminNocPage() {
               <div style={panelBody}>
                 {openTickets.length ? (
                   openTickets.map((ticket) => (
-                    <Link
-                      key={ticket.id}
-                      href="/admin/support"
-                      style={rowLink}
-                    >
+                    <Link key={ticket.id} href="/admin/support" style={rowLink}>
                       <div>
                         <div style={rowTitle}>{ticket.subject ?? "Untitled ticket"}</div>
-                        <div style={rowMeta}>
-                          {ticket.accounts?.[0]?.account_name ?? "Unknown account"}
-                        </div>
+                        <div style={rowMeta}>{ticket.accounts?.[0]?.account_name ?? "Unknown account"}</div>
                         {ticket.opened_at ? (
                           <div style={{ ...rowMeta, marginTop: "4px" }}>
                             Opened {formatUtc(ticket.opened_at)}
@@ -825,11 +870,7 @@ export default async function AdminNocPage() {
                           <span
                             style={{
                               ...pillBase,
-                              ...badgeStyle(
-                                ["critical", "high"].includes(ticket.priority)
-                                  ? "warn"
-                                  : "neutral"
-                              ),
+                              ...badgeStyle(["critical", "high"].includes(ticket.priority) ? "warn" : "neutral"),
                             }}
                           >
                             {ticket.priority}
@@ -852,6 +893,201 @@ export default async function AdminNocPage() {
     </main>
   );
 }
+
+const heroStyle: CSSProperties = {
+  position: "relative",
+  overflow: "hidden",
+  marginBottom: "24px",
+  padding: "32px",
+  borderRadius: "30px",
+  border: "1px solid rgba(212, 175, 55, 0.18)",
+  background:
+    "linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(255,255,255,0.04) 38%, rgba(255,255,255,0.02) 100%)",
+  boxShadow: "0 28px 70px rgba(0,0,0,0.40)",
+};
+
+const heroEyebrow: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "8px",
+  padding: "8px 14px",
+  borderRadius: "999px",
+  border: "1px solid rgba(212, 175, 55, 0.22)",
+  background: "rgba(212, 175, 55, 0.08)",
+  fontSize: "12px",
+  letterSpacing: "0.16em",
+  textTransform: "uppercase",
+  color: "#e2c15c",
+  marginBottom: "16px",
+};
+
+const heroTitle: CSSProperties = {
+  fontSize: "42px",
+  lineHeight: 1.05,
+  fontWeight: 700,
+  margin: "0 0 12px 0",
+  color: "#fff7db",
+};
+
+const heroText: CSSProperties = {
+  fontSize: "15px",
+  color: "rgba(255,255,255,0.74)",
+  margin: 0,
+  maxWidth: "920px",
+  lineHeight: 1.72,
+};
+
+const heroMetaRow: CSSProperties = {
+  marginTop: "14px",
+  display: "flex",
+  flexWrap: "wrap",
+  alignItems: "center",
+  gap: "10px",
+  fontSize: "12px",
+  color: "rgba(255,255,255,0.56)",
+  letterSpacing: "0.04em",
+};
+
+const heroRefreshLink: CSSProperties = {
+  color: "#f4d57b",
+  textDecoration: "none",
+  fontWeight: 600,
+};
+
+const opsRibbonGrid: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+  gap: "16px",
+  marginBottom: "18px",
+};
+
+const opsRibbonCard: CSSProperties = {
+  borderRadius: "22px",
+  padding: "20px",
+  border: "1px solid rgba(212, 175, 55, 0.14)",
+  background: "rgba(255,255,255,0.03)",
+  boxShadow: "0 12px 32px rgba(0,0,0,0.24)",
+};
+
+const opsRibbonLabel: CSSProperties = {
+  fontSize: "12px",
+  textTransform: "uppercase",
+  letterSpacing: "0.10em",
+  color: "rgba(255,255,255,0.58)",
+  marginBottom: "10px",
+};
+
+const opsRibbonValue: CSSProperties = {
+  fontSize: "22px",
+  fontWeight: 700,
+  color: "#fff7db",
+  lineHeight: 1.2,
+};
+
+const opsRibbonMeta: CSSProperties = {
+  marginTop: "8px",
+  fontSize: "12px",
+  color: "rgba(255,255,255,0.60)",
+  lineHeight: 1.5,
+};
+
+const statsGrid: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(6, minmax(0, 1fr))",
+  gap: "16px",
+  marginBottom: "20px",
+};
+
+const statCardStyle: CSSProperties = {
+  borderRadius: "20px",
+  padding: "20px",
+  border: "1px solid rgba(212, 175, 55, 0.14)",
+  background:
+    "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%)",
+  boxShadow: "0 12px 32px rgba(0,0,0,0.24)",
+};
+
+const statLabel: CSSProperties = {
+  fontSize: "12px",
+  textTransform: "uppercase",
+  letterSpacing: "0.10em",
+  color: "rgba(255,255,255,0.58)",
+  marginBottom: "10px",
+};
+
+const topGrid: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "1.2fr 0.8fr",
+  gap: "20px",
+  marginBottom: "20px",
+};
+
+const mainGrid: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "1.3fr 1fr",
+  gap: "20px",
+};
+
+const severityGrid: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+  gap: "12px",
+};
+
+const severityBase: CSSProperties = {
+  borderRadius: "18px",
+  padding: "18px",
+  border: "1px solid rgba(255,255,255,0.10)",
+};
+
+const severityCardCritical: CSSProperties = {
+  ...severityBase,
+  background: "rgba(255,99,71,0.08)",
+  border: "1px solid rgba(255,99,71,0.25)",
+};
+
+const severityCardHigh: CSSProperties = {
+  ...severityBase,
+  background: "rgba(255,193,7,0.08)",
+  border: "1px solid rgba(255,193,7,0.22)",
+};
+
+const severityCardNeutral: CSSProperties = {
+  ...severityBase,
+  background: "rgba(255,255,255,0.03)",
+};
+
+const severityLabel: CSSProperties = {
+  fontSize: "12px",
+  textTransform: "uppercase",
+  letterSpacing: "0.08em",
+  color: "rgba(255,255,255,0.58)",
+  marginBottom: "10px",
+};
+
+const severityValue: CSSProperties = {
+  fontSize: "34px",
+  lineHeight: 1,
+  fontWeight: 700,
+  color: "#fff7db",
+};
+
+const miniMetricRow: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: "12px",
+  borderRadius: "14px",
+  padding: "12px 14px",
+  border: "1px solid rgba(255,255,255,0.08)",
+  background: "rgba(255,255,255,0.03)",
+};
+
+const miniMetricLabel: CSSProperties = {
+  fontSize: "13px",
+  color: "rgba(255,255,255,0.72)",
+  lineHeight: 1.45,
+};
 
 const panelStyle: CSSProperties = {
   borderRadius: "26px",
@@ -953,4 +1189,12 @@ const ackButtonStyle: CSSProperties = {
   color: "#fff2c4",
   background: "rgba(212, 175, 55, 0.16)",
   border: "1px solid rgba(212, 175, 55, 0.32)",
+};
+
+const entityLinkStyle: CSSProperties = {
+  color: "#f4d57b",
+  textDecoration: "none",
+  fontSize: "12px",
+  fontWeight: 600,
+  letterSpacing: "0.02em",
 };

@@ -178,7 +178,7 @@ function ProofCard({
   body: string;
 }) {
   return (
-    <div className="rounded-[20px] border border-white/10 bg-black/20 p-4 sm:rounded-[24px] sm:p-6">
+    <div className="rounded-[20px] border border-white/10 bg-black/20 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#FACC15]/25 hover:bg-white/[0.05] sm:rounded-[24px] sm:p-6">
       <div className="text-sm font-medium text-white/92">{title}</div>
       <p className="mt-2.5 text-sm leading-6 text-white/66">{body}</p>
     </div>
@@ -423,14 +423,15 @@ export default function Home() {
               <span className="block text-white/70">Engineered Properly</span>
             </h1>
 
-            <p className="mt-4 max-w-[42rem] text-[15px] leading-6 text-white/86 sm:text-[1.04rem] sm:leading-7">
-              Fibre, dedicated internet access, managed Wi-Fi, and backup
-              connectivity designed for offices, clinics, warehouses, and
-              multi-site operations across Ontario.
+            <p className="mt-4 max-w-[46rem] text-[15px] leading-6 text-white/86 sm:text-[1.04rem] sm:leading-7">
+              Fibre, dedicated internet access, managed Wi-Fi, and backup connectivity
+              for offices, clinics, warehouses, and multi-site operations across Ontario —
+              reviewed by address, coordinated properly, and supported through a clearer
+              client-facing process.
             </p>
 
             <div className="mt-3 text-[13px] leading-5 text-white/64 sm:text-sm">
-              Address-qualified review. Clear commercial direction. Operator-grade support path.
+              Address-qualified review. Commercially structured guidance. Single point of coordination.
             </div>
 
             <div className="mt-5 flex flex-wrap gap-2">
@@ -438,7 +439,7 @@ export default function Home() {
                 "Business-only service",
                 "Ontario coverage",
                 "Reviewed by address",
-                "Clear next step",
+                "Carrier-aware design",
                 "Structured onboarding",
               ].map((item) => (
                 <span
@@ -460,6 +461,9 @@ export default function Home() {
                 </Link>
                 <div className="text-center text-[11px] text-white/55 sm:text-left sm:text-xs">
                   Business-only review • No obligation • Clear next step
+                </div>
+                <div className="text-center text-[11px] text-white/48 sm:text-left sm:text-xs">
+                  We will tell you if your current provider is already the best fit.
                 </div>
               </div>
 
@@ -591,33 +595,75 @@ export default function Home() {
         <div className="rounded-[26px] border border-white/10 bg-black/22 p-5 sm:rounded-[32px] sm:p-8 lg:p-10">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <SectionEyebrow>HOW IT WORKS</SectionEyebrow>
+              <SectionEyebrow>PROVEN IN ONTARIO</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                A clear path from enquiry to recommendation
+                Real connectivity work across Ontario businesses
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-                Submit your address, business requirements, and timeline. Orbitlink
-                reviews the site, available service paths, and the most suitable next step.
+                Active project work across office environments, redundancy design,
+                and multi-site connectivity planning.
               </p>
             </div>
-            <MiniMetaCard title="PROCESS" value="Simple • Practical • Clear" />
+            <MiniMetaCard title="STATUS" value="Active • In Progress • Expanding" />
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-3 sm:mt-8 sm:gap-4">
+            <ProofCard
+              title="Office Connectivity Review — Mississauga"
+              body="Address review, carrier comparison, and upgrade-path planning for a business environment requiring a clearer route to better day-to-day performance."
+            />
+            <ProofCard
+              title="Backup Connectivity Design — Ontario"
+              body="Separate-path secondary connectivity planning for environments where cleaner failover and reduced dependency on a single access path matter."
+            />
+            <ProofCard
+              title="Multi-Site Planning — GTA"
+              body="Standardized connectivity approach for organizations seeking more consistent sourcing, deployment, and site-by-site decision-making."
+            />
+          </div>
+
+          <div className="mt-5 text-xs text-white/50">
+            Client names, logos, and detailed case studies are published only with approval.
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-7 sm:py-12">
+        <div className="rounded-[26px] border border-white/10 bg-black/22 p-5 sm:rounded-[32px] sm:p-8 lg:p-10">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <SectionEyebrow>HOW DELIVERY WORKS</SectionEyebrow>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                A structured path from review to live service
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                Orbitlink provides a clearer client-facing process from initial site review
+                to carrier validation, onboarding coordination, and ongoing service oversight.
+              </p>
+            </div>
+            <MiniMetaCard title="PROCESS" value="Review • Validate • Coordinate • Support" />
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4 sm:mt-8 sm:gap-4">
             <StepCard
               step="1"
-              title="Submit your business address"
-              desc="Share the location, environment, and what the service needs to support."
+              title="Review the requirement"
+              desc="We assess your address, operating profile, and the level of resilience the site actually needs."
             />
             <StepCard
               step="2"
-              title="We review available options"
-              desc="We assess infrastructure, provider reach, backup requirements, and service fit."
+              title="Validate service options"
+              desc="Available carriers, infrastructure paths, and deployment practicality are reviewed against the location."
             />
             <StepCard
               step="3"
-              title="Receive the right next step"
-              desc="You get clear direction, pricing guidance, or the best route for the site."
+              title="Coordinate onboarding"
+              desc="Ordering, installation readiness, and client-facing coordination are handled through a structured process."
+            />
+            <StepCard
+              step="4"
+              title="Support the live service"
+              desc="Orbitlink remains the structured point of contact for service oversight and escalation guidance."
             />
           </div>
         </div>
@@ -627,30 +673,30 @@ export default function Home() {
         <div className="rounded-[26px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-5 sm:rounded-[32px] sm:p-8 lg:p-10">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <SectionEyebrow>WHY BUSINESSES CHOOSE ORBITLINK</SectionEyebrow>
+              <SectionEyebrow>WHY BUSINESSES MOVE TO ORBITLINK</SectionEyebrow>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Built for real business needs, not generic packages
+                A clearer alternative to traditional telecom buying
               </h2>
               <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-                Orbitlink helps Ontario organizations choose the right service for
-                the site, the workload, and the next stage of growth.
+                Many Ontario businesses are not looking for more options. They are
+                looking for a better process, clearer guidance, and cleaner execution.
               </p>
             </div>
-            <MiniMetaCard title="BUYER SIGNAL" value="Fit • Confidence • Action" />
+            <MiniMetaCard title="BUYER SIGNAL" value="Confidence • Clarity • Control" />
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-3 sm:mt-8 sm:gap-4">
             <ProofCard
-              title="Reviewed by address"
-              body="Availability and service direction are assessed against the real site, infrastructure, and operating requirement."
+              title="Better coordination"
+              body="Orbitlink manages review, sourcing, and onboarding instead of leaving businesses to navigate multiple provider handoffs alone."
             />
             <ProofCard
-              title="Cleaner buying path"
-              body="Serious buyers move from interest to decision without unnecessary friction or confusion."
+              title="Redundancy by design"
+              body="Backup connectivity is planned with attention to path separation and operational fit, not added casually after the fact."
             />
             <ProofCard
-              title="Clear expectations first"
-              body="We focus on fit, realistic next steps, and practical guidance before commitment."
+              title="Clearer guidance"
+              body="Recommendations are based on real site conditions and business requirements, not generic package-led selling."
             />
           </div>
 
@@ -661,6 +707,30 @@ export default function Home() {
             <TrustPill text="Address-based qualification" />
             <TrustPill text="Ontario coverage" />
             <TrustPill text="Clear next-step guidance" />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-10 sm:px-7 sm:pb-12">
+        <div className="rounded-[26px] border border-white/10 bg-white/[0.04] p-5 sm:rounded-[32px] sm:p-8 lg:p-10">
+          <div className="max-w-3xl">
+            <SectionEyebrow>COMMERCIAL CLARITY</SectionEyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+              Structured for real business requirements
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+              Pricing depends on building infrastructure, service class, and deployment requirements.
+            </p>
+          </div>
+
+          <div className="mt-6 space-y-3 text-sm leading-6 text-white/72 sm:text-[15px]">
+            <div>• Business fibre internet is typically scoped based on location and service profile.</div>
+            <div>• Dedicated internet and higher-assurance connectivity are reviewed per project.</div>
+            <div>• Backup connectivity is sized according to continuity requirements, not just speed.</div>
+          </div>
+
+          <div className="mt-5 text-xs text-white/50">
+            Exact pricing is provided after serviceability and deployment review.
           </div>
         </div>
       </section>
@@ -778,6 +848,9 @@ export default function Home() {
               </Link>
               <div className="text-center text-[11px] text-white/55 sm:text-left sm:text-xs">
                 Business-only review • No obligation • Clear next step
+              </div>
+              <div className="text-center text-[11px] text-white/48 sm:text-left sm:text-xs">
+                We will tell you if your current provider is already the best fit.
               </div>
             </div>
 
