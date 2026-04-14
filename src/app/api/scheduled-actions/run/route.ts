@@ -15,6 +15,16 @@ const ESCALATION_MINUTES = 30;
 const LOCK_KEY = "scheduled-actions-run";
 const LOCK_TTL_MINUTES = 10;
 
+const ORDER_STATUS = {
+  SUBMITTED: "submitted",
+  SCHEDULED: "scheduled",
+  INSTALLING: "installing",
+  ACTIVATED: "activated",
+  CANCELLED: "cancelled",
+  PENDING_CARRIER: "pending_carrier",
+  DRAFT: "draft",
+} as const;
+
 type Json =
   | string
   | number
@@ -62,6 +72,7 @@ type OrderContext = {
   install_target_date: string | null;
   activation_target_date: string | null;
   notes: string | null;
+  quote_id?: string | null;
 };
 
 type AccountContext = {
@@ -75,7 +86,7 @@ type AccountContext = {
 
 type LocationContext = {
   id: string;
-  name: string | null;
+  location_name: string | null;
   address_line_1?: string | null;
   address_line_2?: string | null;
   city?: string | null;
@@ -156,7 +167,7 @@ function formatServiceLocation(location: LocationContext | null) {
   if (!location) return "Location on file";
 
   const parts = [
-    location.name,
+    location.location_name,
     location.address_line_1,
     location.address_line_2,
     location.city,
@@ -738,7 +749,7 @@ async function fetchOrderContext(
   const { data, error } = await supabase
     .from("orders")
     .select(
-      "id, order_number, status, account_id, location_id, install_target_date, activation_target_date, notes"
+      "id, order_number, status, account_id, location_id, install_target_date, activation_target_date, notes, quote_id"
     )
     .eq("id", orderId)
     .maybeSingle<OrderContext>();
@@ -780,7 +791,7 @@ async function fetchLocationContext(
   const { data, error } = await supabase
     .from("locations")
     .select(
-      "id, name, address_line_1, address_line_2, city, province, postal_code"
+      "id, location_name, address_line_1, address_line_2, city, province, postal_code"
     )
     .eq("id", locationId)
     .maybeSingle<LocationContext>();
@@ -1050,7 +1061,7 @@ async function sendOrderLifecycleEmails(
 
   const subjectBase = `${order.order_number} · Orbitlink`;
 
-  if (action.target_status === "installation_scheduled") {
+  if (action.target_status === ORDER_STATUS.SCHEDULED) {
     await safeSend({
       to: account.primary_contact_email,
       subject: `${subjectBase} · Installation Scheduled`,
@@ -1058,7 +1069,7 @@ async function sendOrderLifecycleEmails(
     });
   }
 
-  if (action.target_status === "active") {
+  if (action.target_status === ORDER_STATUS.ACTIVATED) {
     await safeSend({
       to: account.primary_contact_email,
       subject: `${subjectBase} · Service Activated`,
@@ -1066,7 +1077,7 @@ async function sendOrderLifecycleEmails(
     });
   }
 
-  if (action.target_status === "cancelled") {
+  if (action.target_status === ORDER_STATUS.CANCELLED) {
     await safeSend({
       to: account.primary_contact_email,
       subject: `${subjectBase} · Order Cancelled`,
@@ -1094,10 +1105,10 @@ async function maybeSendInstallationReminderEmails(
   const { data: orders, error } = await supabase
     .from("orders")
     .select(
-      "id, order_number, status, account_id, location_id, install_target_date, activation_target_date, notes"
+      "id, order_number, status, account_id, location_id, install_target_date, activation_target_date, notes, quote_id"
     )
     .eq("install_target_date", tomorrow)
-    .in("status", ["installation_scheduled", "scheduled", "provisioning"])
+    .in("status", [ORDER_STATUS.SCHEDULED, ORDER_STATUS.INSTALLING])
     .limit(BATCH_LIMIT);
 
   if (error) {
@@ -1482,9 +1493,9 @@ async function scanOverdueOrderMilestones(
   const { data: orders, error } = await supabase
     .from("orders")
     .select(
-      "id, order_number, status, account_id, location_id, install_target_date, activation_target_date, notes"
+      "id, order_number, status, account_id, location_id, install_target_date, activation_target_date, notes, quote_id"
     )
-    .not("status", "in", '("active","cancelled","completed")')
+    .not("status", "in", `("${ORDER_STATUS.ACTIVATED}","${ORDER_STATUS.CANCELLED}")`)
     .limit(BATCH_LIMIT * 4);
 
   if (error) {
@@ -1500,11 +1511,14 @@ async function scanOverdueOrderMilestones(
   for (const order of (orders as OrderContext[] | null) ?? []) {
     if (
       order.install_target_date &&
-      order.status !== "active" &&
-      order.status !== "cancelled"
+      order.status !== ORDER_STATUS.ACTIVATED &&
+      order.status !== ORDER_STATUS.CANCELLED
     ) {
       const daysOverdue = daysBetween(order.install_target_date, today);
-      if (daysOverdue > 0 && !["installation_complete", "active"].includes(order.status)) {
+      if (
+        daysOverdue > 0 &&
+        ![ORDER_STATUS.ACTIVATED, ORDER_STATUS.CANCELLED].includes(order.status)
+      ) {
         const severity = getInstallOverdueSeverity(daysOverdue);
         const created = await createNocAlert(supabase, {
           severity,
@@ -1517,6 +1531,7 @@ async function scanOverdueOrderMilestones(
             order_number: order.order_number,
             install_target_date: order.install_target_date,
             days_overdue: daysOverdue,
+            order_status: order.status,
           },
         });
 
@@ -1541,10 +1556,10 @@ async function scanOverdueOrderMilestones(
 
     if (
       order.activation_target_date &&
-      !["active", "cancelled"].includes(order.status)
+      ![ORDER_STATUS.ACTIVATED, ORDER_STATUS.CANCELLED].includes(order.status)
     ) {
       const daysOverdue = daysBetween(order.activation_target_date, today);
-      if (daysOverdue > 0 && order.status !== "active") {
+      if (daysOverdue > 0 && order.status !== ORDER_STATUS.ACTIVATED) {
         const severity = getActivationOverdueSeverity(daysOverdue);
         const created = await createNocAlert(supabase, {
           severity,
@@ -1557,6 +1572,7 @@ async function scanOverdueOrderMilestones(
             order_number: order.order_number,
             activation_target_date: order.activation_target_date,
             days_overdue: daysOverdue,
+            order_status: order.status,
           },
         });
 
