@@ -510,7 +510,7 @@ export default function ComparePage() {
               Get Availability & Pricing
             </Link>
             <Link
-              href="/See why-orbitlink"
+              href="/why-orbitlink"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
             >
               Why Orbitlink
