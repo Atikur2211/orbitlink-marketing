@@ -238,7 +238,7 @@ function HeroCommandPanel() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Check Availability
+                Get Availability & Pricing
               </Link>
               <Link
                 href="/trust"
@@ -1017,7 +1017,7 @@ function CoverageAndCTA() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Check Availability
+              Get Availability & Pricing
             </Link>
             <Link
               href="/services"

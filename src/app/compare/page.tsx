@@ -299,7 +299,7 @@ export default function ComparePage() {
         "Ontario commercial focus",
       ]}
       actions={[
-        { label: "Check Availability", href: "/contact#intake", variant: "primary" },
+        { label: "Get Availability & Pricing", href: "/contact#intake", variant: "primary" },
         { label: "Why Orbitlink", href: "/why-orbitlink", variant: "secondary" },
       ]}
     >
@@ -352,7 +352,7 @@ export default function ComparePage() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Check Availability
+                Get Availability & Pricing
               </Link>
               <Link
                 href="/why-orbitlink"
@@ -364,7 +364,7 @@ export default function ComparePage() {
                 href="/services"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
-                Explore Services
+                View Solutions
               </Link>
             </div>
           </div>
@@ -507,10 +507,10 @@ export default function ComparePage() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Check Availability
+              Get Availability & Pricing
             </Link>
             <Link
-              href="/why-orbitlink"
+              href="/See why-orbitlink"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
             >
               Why Orbitlink

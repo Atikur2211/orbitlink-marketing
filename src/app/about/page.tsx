@@ -607,7 +607,7 @@ export default function AboutPage() {
             href="/contact#intake"
             className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
           >
-            Check Availability
+            Get Availability & Pricing
           </Link>
         </div>
       </section>

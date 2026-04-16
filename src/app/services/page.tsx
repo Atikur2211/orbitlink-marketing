@@ -703,7 +703,7 @@ function MidPageCTA() {
             NEED HELP CHOOSING?
           </div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-            Not sure which service fits?
+            Get availability and pricing for your business
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
             Start with your address and business need. We can help narrow the right path.
@@ -715,13 +715,13 @@ function MidPageCTA() {
             href="/contact#intake"
             className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
           >
-            Check Availability
+            Get Availability & Pricing
           </Link>
           <Link
             href="/contact#intake"
             className="rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
           >
-            Request Pricing
+            Get Availability & Pricing
           </Link>
         </div>
       </div>
@@ -870,7 +870,7 @@ function FinalCTA() {
             href="/contact#intake"
             className="rounded-2xl bg-[#FACC15] px-4 py-2.5 text-sm font-medium text-black transition hover:bg-[#FDE047]"
           >
-            Check Availability
+            Get Availability & Pricing
           </Link>
           <Link
             href="/locations"
@@ -1106,7 +1106,7 @@ export default function ServicesIndexPage() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Check Business Internet Availability
+                Get Availability & Pricing
               </Link>
 
               <Link
@@ -1126,6 +1126,14 @@ export default function ServicesIndexPage() {
 
             <div className="mt-4 text-xs text-white/55">
               Business-only • Reviewed by address • Clear next step
+            </div>
+
+            <div className="mt-2 text-xs text-white/55">
+              Most businesses receive direction within 1 business day.
+            </div>
+
+            <div className="mt-2 text-xs text-white/60">
+              Takes 60 seconds • No obligation • Business-only
             </div>
           </div>
         </div>
