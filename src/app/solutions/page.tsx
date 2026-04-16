@@ -363,7 +363,7 @@ function SolutionCard({ s }: { s: (typeof SOLUTIONS)[number] }) {
               href={`/contact#intake?solution=${encodeURIComponent(s.name)}`}
               className="rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Check Availability
+              Get Availability & Pricing
             </Link>
 
             <Link
@@ -551,7 +551,15 @@ export default function SolutionsPage() {
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <MetricPill label="START HERE" value="Choose business environment" />
               <MetricPill label="REVIEW" value="Understand likely fit" />
-              <MetricPill label="NEXT STEP" value="Check availability" />
+              <MetricPill label="NEXT STEP" value="Get availability & pricing" />
+            </div>
+
+            <div className="mt-4 text-sm text-white/70">
+              Most businesses receive availability direction within 1 business day.
+            </div>
+
+            <div className="mt-2 text-xs text-white/60">
+              Takes 60 seconds • No obligation • Business-only
             </div>
           </div>
 
@@ -641,7 +649,32 @@ export default function SolutionsPage() {
       <StickyModuleNav modules={modules} watchOffsetTop={72} />
 
       <div className="mt-6 grid gap-5">
-        {SOLUTIONS.map((s) => (
+        {SOLUTIONS.slice(0, 2).map((s) => (
+          <SolutionCard key={s.id} s={s} />
+        ))}
+      </div>
+
+      <Surface className="p-6 sm:p-8 lg:p-10 text-center">
+        <h3 className="text-xl font-medium text-white">
+          Get availability and pricing for your business location
+        </h3>
+
+        <div className="mt-4">
+          <Link
+            href="/contact#intake"
+            className="inline-flex items-center justify-center rounded-xl bg-[#FACC15] px-6 py-3 text-sm font-medium text-black hover:bg-[#FDE047]"
+          >
+            Get Availability & Pricing
+          </Link>
+        </div>
+
+        <div className="mt-2 text-xs text-white/60">
+          Fast response • No obligation • Clear next step
+        </div>
+      </Surface>
+
+      <div className="mt-6 grid gap-5">
+        {SOLUTIONS.slice(2).map((s) => (
           <SolutionCard key={s.id} s={s} />
         ))}
       </div>
@@ -749,14 +782,16 @@ export default function SolutionsPage() {
               next step is to submit the site address, service need, and timing so the
               request can be reviewed properly.
             </p>
+          <div className="mt-2 text-xs text-[#FDE68A]">
+            Priority onboarding available for Ontario business sites this week
           </div>
-
+        </div>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
               href="/contact#intake"
               className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Check Availability
+              Get Availability & Pricing
             </Link>
 
             <Link
