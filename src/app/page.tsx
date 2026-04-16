@@ -21,9 +21,10 @@ const SERVICE_ID = `${CANONICAL_URL}#service`;
 const FAQ_ID = `${CANONICAL_URL}#faq`;
 const BREADCRUMB_ID = `${CANONICAL_URL}#breadcrumb`;
 
+// Keep this WITHOUT "| Orbitlink" because your layout template already adds branding.
 const META_TITLE = "Business Fibre Internet in Ontario";
 const META_DESCRIPTION =
-  "Business fibre internet in Ontario for offices, warehouses, and clinics. Fast, reliable connectivity with expert setup. Check availability.";
+  "Business fibre internet, dedicated internet access, managed Wi-Fi, and backup connectivity for Ontario businesses. Get availability and pricing for your address.";
 
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
@@ -235,6 +236,46 @@ function TrustPill({ text }: { text: string }) {
   );
 }
 
+function ActionButton({
+  href,
+  children,
+  primary = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  primary?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={
+        primary
+          ? "inline-flex min-h-[48px] items-center justify-center rounded-xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047] sm:rounded-2xl"
+          : "inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/15 bg-black/15 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10 sm:rounded-2xl"
+      }
+    >
+      {children}
+    </Link>
+  );
+}
+
+function PhoneButton({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/15 bg-black/15 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10 sm:rounded-2xl"
+    >
+      {children}
+    </a>
+  );
+}
+
 export default function Home() {
   const schemaGraph = {
     "@context": "https://schema.org",
@@ -330,7 +371,7 @@ export default function Home() {
           serviceUrl: `${SITE_URL}/contact#intake`,
         },
         description:
-          "Business fibre internet, dedicated internet access, and managed connectivity solutions for Ontario businesses.",
+          "Business fibre internet, dedicated internet access, managed connectivity solutions, and backup connectivity for Ontario businesses.",
       },
       {
         "@type": "BreadcrumbList",
@@ -411,27 +452,37 @@ export default function Home() {
           <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:56px_56px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[70svh] max-w-7xl items-center px-4 pb-10 pt-20 sm:min-h-[76svh] sm:px-7 sm:pb-14 sm:pt-24 lg:min-h-[80vh] lg:px-10 lg:pb-16 lg:pt-20">
+        <div className="relative mx-auto flex min-h-[70svh] max-w-7xl items-center px-4 pb-10 pt-20 sm:min-h-[76svh] sm:px-7 sm:pb-14 sm:pt-24 lg:min-h-[82vh] lg:px-10 lg:pb-16 lg:pt-20">
           <div className="w-full max-w-4xl">
-            <div className="w-full max-w-[355px] truncate rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:max-w-max sm:text-xs">
+            <div className="w-full max-w-[390px] truncate rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:max-w-max sm:text-xs">
               <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-              Business Fibre • Dedicated Internet • Managed Network Infrastructure
+              Ontario Business Connectivity • Fibre • Dedicated • Managed Infrastructure
             </div>
 
             <h1 className="mt-5 max-w-[11ch] text-[2.15rem] font-semibold leading-[0.94] tracking-tight text-white sm:max-w-[12.5ch] sm:text-[3.2rem] lg:max-w-5xl lg:text-[4.4rem] xl:text-[5.1rem]">
               Business Internet
-              <span className="block text-white/70">Engineered Properly</span>
+              <span className="block text-white/70">Engineered for Reliability</span>
             </h1>
 
-            <p className="mt-4 max-w-[46rem] text-[15px] leading-6 text-white/86 sm:text-[1.04rem] sm:leading-7">
+            <p className="mt-4 max-w-[48rem] text-[15px] leading-6 text-white/86 sm:text-[1.04rem] sm:leading-7">
               Fibre, dedicated internet access, managed Wi-Fi, and backup connectivity
               for offices, clinics, warehouses, and multi-site operations across Ontario —
-              reviewed by address, coordinated properly, and supported through a clearer
-              client-facing process.
+              reviewed by address, designed properly, and coordinated end-to-end.
             </p>
 
-            <div className="mt-3 text-[13px] leading-5 text-white/64 sm:text-sm">
-              Address-qualified review. Commercially structured guidance. Single point of coordination.
+            <div className="mt-3 max-w-[44rem] text-[13px] leading-5 text-white/72 sm:text-sm">
+              Get availability, pricing direction, and the right next step for your building.
+              Most businesses receive next-step guidance within 1 business day.
+            </div>
+
+            <div className="mt-3 text-sm text-white/82">
+              Speak to a Network Advisor:{" "}
+              <a
+                href={`tel:${BRAND_PHONE_E164}`}
+                className="font-medium text-[#FACC15] transition hover:text-[#FDE68A]"
+              >
+                {BRAND_PHONE_DISPLAY}
+              </a>
             </div>
 
             <div className="mt-5 flex flex-wrap gap-2">
@@ -453,33 +504,28 @@ export default function Home() {
 
             <div className="mt-7 grid grid-cols-1 gap-3 sm:flex sm:flex-wrap sm:items-start">
               <div className="flex flex-col gap-2">
-                <Link
-                  href="/contact#intake"
-                  className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047] sm:rounded-2xl"
-                >
-                  Check Business Internet Availability
-                </Link>
+                <ActionButton href="/contact#intake" primary>
+                  Get Availability & Pricing for Your Address
+                </ActionButton>
                 <div className="text-center text-[11px] text-white/55 sm:text-left sm:text-xs">
-                  Business-only review • No obligation • Clear next step
+                  Takes 60 seconds • No obligation • Clear next step
                 </div>
                 <div className="text-center text-[11px] text-white/48 sm:text-left sm:text-xs">
-                  We will tell you if your current provider is already the best fit.
+                  We will tell you if switching actually improves your setup — not just sell you a plan.
                 </div>
               </div>
 
-              <Link
-                href="/contact#intake"
-                className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10 sm:rounded-2xl"
-              >
-                Request Pricing
-              </Link>
+              <PhoneButton href={`tel:${BRAND_PHONE_E164}`}>
+                Speak to a Network Advisor
+              </PhoneButton>
 
-              <Link
-                href="/locations/ontario"
-                className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10 sm:rounded-2xl"
-              >
+              <ActionButton href="/locations/ontario">
                 Ontario Coverage Hub
-              </Link>
+              </ActionButton>
+            </div>
+
+            <div className="mt-4 text-[11px] text-[#FDE68A] sm:text-xs">
+              Limited onboarding capacity this month for Ontario business sites
             </div>
 
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-white/46 sm:text-xs">
@@ -521,6 +567,20 @@ export default function Home() {
               title="Internal network issues"
               body="Coverage, LAN, and Wi-Fi problems that affect staff, devices, and day-to-day operations."
             />
+          </div>
+
+          <div className="mt-10 text-center">
+            <h3 className="text-xl font-medium text-white">
+              Get availability and pricing for your business location
+            </h3>
+            <div className="mt-4">
+              <ActionButton href="/contact#intake" primary>
+                Get Quote in 60 Seconds
+              </ActionButton>
+            </div>
+            <div className="mt-2 text-xs text-white/60">
+              Fast response • Business-only • No obligation
+            </div>
           </div>
         </div>
       </section>
@@ -583,6 +643,20 @@ export default function Home() {
               <div className="text-sm leading-6 text-white/82">
                 Every solution is reviewed against your address, building infrastructure,
                 provider reach, and operating requirements.
+              </div>
+            </div>
+
+            <div className="mt-10 text-center">
+              <h3 className="text-xl font-medium text-white">
+                Get availability and pricing for your business location
+              </h3>
+              <div className="mt-4">
+                <ActionButton href="/contact#intake" primary>
+                  Get Quote in 60 Seconds
+                </ActionButton>
+              </div>
+              <div className="mt-2 text-xs text-white/60">
+                Fast response • Business-only • No obligation
               </div>
             </div>
           </div>
@@ -824,49 +898,28 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-14 sm:px-7 sm:pb-20">
-        <div className="rounded-[26px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-5 sm:rounded-[32px] sm:p-8 lg:p-10">
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <SectionEyebrow>READY TO CHECK YOUR OPTIONS?</SectionEyebrow>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-                Check availability for your business location
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
-                Get availability, pricing direction, and the right next step for your site.
-              </p>
-            </div>
-            <MiniMetaCard title="NEXT STEP" value="Availability • Pricing • Direction" />
+        <div className="rounded-[26px] border border-[#FACC15]/20 bg-[#FACC15]/[0.05] p-5 sm:rounded-[32px] sm:p-8 lg:p-10 text-center">
+          <h2 className="text-2xl font-semibold text-white sm:text-[34px]">
+            Ready to see what’s available at your location?
+          </h2>
+
+          <p className="mt-3 text-white/70 max-w-3xl mx-auto">
+            Tell us your address and requirements. We’ll review your site and provide the
+            best next step based on real availability.
+          </p>
+
+          <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
+            <ActionButton href="/contact#intake" primary>
+              Get Availability & Pricing
+            </ActionButton>
+
+            <PhoneButton href={`tel:${BRAND_PHONE_E164}`}>
+              Call Now
+            </PhoneButton>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:flex sm:flex-wrap">
-            <div className="flex flex-col gap-2">
-              <Link
-                href="/contact#intake"
-                className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047] sm:rounded-2xl"
-              >
-                Check Business Internet Availability
-              </Link>
-              <div className="text-center text-[11px] text-white/55 sm:text-left sm:text-xs">
-                Business-only review • No obligation • Clear next step
-              </div>
-              <div className="text-center text-[11px] text-white/48 sm:text-left sm:text-xs">
-                We will tell you if your current provider is already the best fit.
-              </div>
-            </div>
-
-            <Link
-              href="/contact#intake"
-              className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10 sm:rounded-2xl"
-            >
-              Request Pricing
-            </Link>
-
-            <Link
-              href="/services"
-              className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10 sm:rounded-2xl"
-            >
-              Explore Services
-            </Link>
+          <div className="mt-3 text-xs text-white/60">
+            Priority response for new Ontario business requests this week
           </div>
         </div>
       </section>
