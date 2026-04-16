@@ -24,7 +24,7 @@ const BREADCRUMB_ID = `${CANONICAL_URL}#breadcrumb`;
 // Keep this WITHOUT "| Orbitlink" because your layout template already adds branding.
 const META_TITLE = "Business Fibre Internet in Ontario";
 const META_DESCRIPTION =
-  "Business fibre internet, dedicated internet access, managed Wi-Fi, and backup connectivity for Ontario businesses. Get availability and pricing for your address.";
+  "Business fibre internet, dedicated internet access, managed Wi-Fi and backup connectivity for Ontario businesses. Get availability and pricing for your address.";
 
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
