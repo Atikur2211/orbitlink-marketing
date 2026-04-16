@@ -11,7 +11,6 @@ const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 const PHONE_E164 = "+18888672480";
 const PHONE_DISPLAY = "1-888-867-2480";
 const GENERAL_EMAIL = "concierge@orbitlink.ca";
-const SALES_EMAIL = "sales@orbitlink.ca";
 
 const ORG_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
@@ -22,12 +21,11 @@ const BREADCRUMB_ID = `${PAGE_URL}#breadcrumb`;
 export const metadata: Metadata = {
   title: "Request Received",
   description:
-    "Your Orbitlink business request has been received. Next step guidance for address review, service fit, and pricing direction.",
+    "Your business request has been received. Orbitlink is reviewing your location and service requirements.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Request Received",
-    description:
-      "Your Orbitlink request has been received and is now being reviewed.",
+    description: "Your request has been received and is now being reviewed.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -44,8 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Request Received",
-    description:
-      "Your Orbitlink business request has been received and is being reviewed.",
+    description: "Your request has been received and is being reviewed.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -89,21 +86,6 @@ function MetricPill({
   );
 }
 
-function InfoCard({
-  title,
-  body,
-}: {
-  title: string;
-  body: string;
-}) {
-  return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25 sm:p-6">
-      <div className="text-sm font-medium text-white/90">{title}</div>
-      <p className="mt-3 text-sm leading-6 text-white/65">{body}</p>
-    </div>
-  );
-}
-
 function CTAButton({
   href,
   children,
@@ -113,6 +95,21 @@ function CTAButton({
   children: React.ReactNode;
   primary?: boolean;
 }) {
+  if (href.startsWith("tel:") || href.startsWith("mailto:")) {
+    return (
+      <a
+        href={href}
+        className={
+          primary
+            ? "inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+            : "inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+        }
+      >
+        {children}
+      </a>
+    );
+  }
+
   return (
     <Link
       href={href}
@@ -156,8 +153,7 @@ function buildJsonLd() {
         "@id": WEBPAGE_ID,
         url: PAGE_URL,
         name: "Request Received",
-        description:
-          "Confirmation page for submitted Orbitlink business connectivity requests.",
+        description: "Confirmation page for submitted business connectivity requests.",
         isPartOf: {
           "@id": WEBSITE_ID,
         },
@@ -190,7 +186,7 @@ function buildJsonLd() {
           name: "Ontario",
         },
         description:
-          "Confirmation page for submitted business connectivity enquiries with next-step guidance.",
+          "Confirmation page for submitted business connectivity enquiries.",
       },
       {
         "@type": "BreadcrumbList",
@@ -228,174 +224,54 @@ export default function ContactThankYouPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd()) }}
       />
 
-      <div className="mx-auto max-w-6xl px-5 py-10 sm:px-7 sm:py-12 lg:px-10 lg:py-14">
-        <Surface className="relative overflow-hidden p-6 sm:p-8 lg:p-10">
+      <div className="mx-auto flex min-h-screen max-w-5xl items-center px-5 py-10 sm:px-7 sm:py-12 lg:px-10 lg:py-14">
+        <Surface className="relative w-full overflow-hidden p-6 sm:p-8 lg:p-10">
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute -left-16 top-0 h-40 w-40 rounded-full bg-blue-500/10 blur-3xl" />
             <div className="absolute right-0 top-8 h-40 w-40 rounded-full bg-emerald-500/10 blur-3xl" />
             <div className="absolute bottom-0 left-1/2 h-32 w-[26rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
           </div>
 
-          <div className="relative grid grid-cols-1 gap-8 lg:grid-cols-12">
-            <div className="lg:col-span-8">
-              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/15 bg-emerald-400/[0.06] px-3 py-1 text-[11px] text-emerald-200">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
-                Request received
-              </div>
-
-              <SectionEyebrow>THANK YOU</SectionEyebrow>
-
-              <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[44px] lg:leading-[1.02]">
-                Request received. We’re reviewing your location.
-              </h1>
-
-              <p className="mt-4 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-                Orbitlink is reviewing your address, service requirements, and site fit.
-                You’ll receive availability, pricing direction, or the next step shortly.
-              </p>
-
-              <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <MetricPill label="STATUS" value="Submitted" />
-                <MetricPill label="IN REVIEW" value="Address & service fit" />
-                <MetricPill label="RESPONSE" value="Within 1 business day" />
-              </div>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <a
-                  href={`tel:${PHONE_E164}`}
-                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-                >
-                  Call {PHONE_DISPLAY}
-                </a>
-
-                <CTAButton href="/services">Explore Services</CTAButton>
-                <CTAButton href="/compare">Compare Providers</CTAButton>
-              </div>
+          <div className="relative mx-auto max-w-3xl text-center">
+            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-emerald-400/15 bg-emerald-400/[0.06] px-3 py-1 text-[11px] text-emerald-200">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
+              Request received
             </div>
 
-            <div className="lg:col-span-4">
-              <div className="rounded-[28px] border border-white/10 bg-black/25 p-5 sm:p-6">
-                <SectionEyebrow>WHAT TO EXPECT</SectionEyebrow>
-                <div className="mt-3 text-lg font-semibold text-white">
-                  Clear next step, not a generic reply
-                </div>
-                <p className="mt-3 text-sm leading-6 text-white/64">
-                  Each request is reviewed by address, building context, and business need.
-                </p>
+            <SectionEyebrow>THANK YOU</SectionEyebrow>
 
-                <div className="mt-5 grid gap-3">
-                  <MetricPill label="REVIEW" value="Address and service fit" />
-                  <MetricPill label="FOCUS" value="Business-only requests" />
-                  <MetricPill label="OUTCOME" value="Availability or pricing direction" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </Surface>
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[44px] lg:leading-[1.02]">
+              We’ve received your request.
+            </h1>
 
-        <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
-          <div className="max-w-3xl">
-            <SectionEyebrow>WHAT HAPPENS NEXT</SectionEyebrow>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
-              A simple review path
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
-              Your request moves through a straightforward business review flow.
+            <p className="mt-4 mx-auto max-w-2xl text-sm leading-6 text-white/70 sm:text-[15px]">
+              We’re reviewing your address and service requirements now.
             </p>
-          </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <InfoCard
-              title="1. Address review"
-              body="The service address and building context are checked first to understand the right path."
-            />
-            <InfoCard
-              title="2. Service fit"
-              body="Orbitlink reviews whether fibre, dedicated internet, Wi-Fi, voice, backup, or a multi-service setup fits best."
-            />
-            <InfoCard
-              title="3. Clear reply"
-              body="You receive the next recommended step, whether that is availability, pricing direction, or feasibility guidance."
-            />
-          </div>
-        </Surface>
-
-        <Surface className="mt-4 p-6 sm:mt-6 sm:p-8 lg:p-10">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <div>
-              <SectionEyebrow>HELPFUL NEXT PAGES</SectionEyebrow>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
-                Review the right service fit
-              </h2>
-
-              <div className="mt-6 grid grid-cols-1 gap-3">
-                <InfoCard
-                  title="Business Fibre Internet"
-                  body="Review the primary business connectivity path for offices, clinics, commercial suites, and growing teams."
-                />
-                <InfoCard
-                  title="Dedicated Internet Access"
-                  body="Understand when a more formal business-critical access model may be the better fit."
-                />
-              </div>
-
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <CTAButton href="/services/business-fibre-internet">
-                  Business Fibre
-                </CTAButton>
-                <CTAButton href="/services/dedicated-internet-access">
-                  Dedicated Internet
-                </CTAButton>
-              </div>
+            <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <MetricPill label="STATUS" value="Submitted" />
+              <MetricPill label="REVIEW" value="In progress" />
+              <MetricPill label="RESPONSE" value="~1 business day" />
             </div>
 
-            <div>
-              <SectionEyebrow>DIRECT CONTACT</SectionEyebrow>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
-                Need to speak now?
-              </h2>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
+              <CTAButton href="/" primary>
+                Back to Home
+              </CTAButton>
 
-              <div className="mt-6 grid grid-cols-1 gap-3">
-                <a
-                  href={`tel:${PHONE_E164}`}
-                  className="block rounded-2xl border border-white/10 bg-black/20 p-4 transition hover:bg-black/30"
-                >
-                  <div className="text-sm font-medium text-white/90">
-                    Call {PHONE_DISPLAY}
-                  </div>
-                  <div className="mt-1 text-sm text-white/65">
-                    Business enquiries and availability requests
-                  </div>
-                </a>
+              <CTAButton href={`tel:${PHONE_E164}`}>
+                Call {PHONE_DISPLAY}
+              </CTAButton>
+            </div>
 
-                <a
-                  href={`mailto:${GENERAL_EMAIL}`}
-                  className="block rounded-2xl border border-white/10 bg-black/20 p-4 transition hover:bg-black/30"
-                >
-                  <div className="text-sm font-medium text-white/90">
-                    {GENERAL_EMAIL}
-                  </div>
-                  <div className="mt-1 text-sm text-white/65">
-                    General business connectivity enquiries
-                  </div>
-                </a>
-
-                <a
-                  href={`mailto:${SALES_EMAIL}`}
-                  className="block rounded-2xl border border-white/10 bg-black/20 p-4 transition hover:bg-black/30"
-                >
-                  <div className="text-sm font-medium text-white/90">
-                    {SALES_EMAIL}
-                  </div>
-                  <div className="mt-1 text-sm text-white/65">
-                    Pricing and service review enquiries
-                  </div>
-                </a>
-              </div>
-
-              <p className="mt-4 text-sm leading-6 text-white/55">
-                Hours: Monday to Friday, 9:00 AM to 6:00 PM
-              </p>
+            <div className="mt-4 text-sm text-white/55">
+              Need help now?{" "}
+              <a
+                href={`mailto:${GENERAL_EMAIL}`}
+                className="text-white/80 transition hover:text-white"
+              >
+                {GENERAL_EMAIL}
+              </a>
             </div>
           </div>
         </Surface>
