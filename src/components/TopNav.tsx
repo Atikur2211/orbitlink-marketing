@@ -136,7 +136,7 @@ export default function TopNav() {
               href={INTAKE_HREF}
               className="rounded-xl bg-[#FACC15] px-4 py-2.5 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Check Availability
+              Get Quote
             </Link>
           </div>
         </div>
@@ -239,7 +239,7 @@ export default function TopNav() {
                   <div className="text-[11px] tracking-[0.24em] text-white/50">START HERE</div>
 
                   <div className="mt-2 text-sm font-medium text-white/92">
-                    Check availability for your building
+                    Get pricing and availability for your building
                   </div>
 
                   <p className="mt-2 text-sm leading-6 text-white/62">
@@ -252,7 +252,7 @@ export default function TopNav() {
                       onClick={() => setOpen(false)}
                       className="rounded-2xl bg-[#FACC15] px-4 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
                     >
-                      Check Availability
+                      Get Quote
                     </Link>
 
                     <a

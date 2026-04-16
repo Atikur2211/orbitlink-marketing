@@ -190,7 +190,7 @@ export default function StickyStatusStrip({
                 href="/contact#intake"
                 className="ml-1 rounded-xl border border-[#FACC15]/35 bg-[#FACC15]/10 px-3 py-2 text-[11px] font-medium whitespace-nowrap text-[#FDE68A] transition hover:border-[#FACC15]/50 hover:bg-[#FACC15]/15"
               >
-                Check Availability
+                Get Quote
               </Link>
             </div>
           </div>

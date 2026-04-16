@@ -245,7 +245,7 @@ export default function SiteFooter() {
                 <div className="text-[11px] tracking-[0.26em] text-white/40">START HERE</div>
 
                 <div className="mt-2 text-sm text-white/70">
-                  Check building availability and request pricing for your location.
+                  Get availability and pricing for your business location.
                 </div>
               </div>
 
@@ -253,7 +253,7 @@ export default function SiteFooter() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Send a Business Request
+                Get Quote
               </Link>
             </div>
           </div>

@@ -273,7 +273,7 @@ export default function StickyModuleNav({
             href="/contact#intake"
             className="hidden whitespace-nowrap rounded-full border border-[#FACC15]/35 bg-[#FACC15]/10 px-4 py-2 text-[13px] font-medium text-[#FDE68A] transition hover:border-[#FACC15]/50 hover:bg-[#FACC15]/15 lg:inline"
           >
-            Check Availability
+            Get Quote
           </a>
         </div>
       </div>
