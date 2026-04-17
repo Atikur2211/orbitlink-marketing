@@ -365,7 +365,12 @@ function SolutionCard({ s }: { s: (typeof SOLUTIONS)[number] }) {
             >
               Get Availability & Pricing
             </Link>
-
+            <a
+              href="tel:+18888672480"
+              className="inline-flex items-center justify-center rounded-xl border border-white/15 px-6 py-3 text-sm text-white hover:bg-white/10"
+            >
+              Call Now
+            </a>
             <Link
               href="/services"
               className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
@@ -555,11 +560,27 @@ export default function SolutionsPage() {
             </div>
 
             <div className="mt-4 text-sm text-white/70">
-              Most businesses receive availability direction within 1 business day.
+              Most businesses receive availability and next-step direction within 1 business day.
             </div>
 
             <div className="mt-2 text-xs text-white/60">
               Takes 60 seconds • No obligation • Business-only
+            </div>
+            
+            <div className="mt-6 flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/contact#intake"
+                className="inline-flex items-center justify-center rounded-xl bg-[#FACC15] px-6 py-3 text-sm font-medium text-black hover:bg-[#FDE047]"
+              >
+                Get Availability & Pricing
+              </Link>
+
+              <a
+                href="tel:+18888672480"
+                className="inline-flex items-center justify-center rounded-xl border border-white/15 px-6 py-3 text-sm text-white hover:bg-white/10"
+              >
+                Call Now
+              </a>
             </div>
           </div>
 
@@ -793,6 +814,13 @@ export default function SolutionsPage() {
             >
               Get Availability & Pricing
             </Link>
+           
+            <a
+              href="tel:+18888672480"
+              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+            >
+              Call Now
+            </a>
 
             <Link
               href="/services"
