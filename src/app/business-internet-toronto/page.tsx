@@ -424,14 +424,16 @@ export default function BusinessInternetTorontoPage() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
               >
-                Check Business Internet Availability
+                Get Availability & Pricing
               </Link>
-              <Link
+              
+              <a
                 href={`tel:${BUSINESS.phoneE164}`}
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
               >
-                Call {BUSINESS.phoneDisplay}
-              </Link>
+                Call Now
+              </a>
+     
               <Link
                 href="/trust"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
@@ -442,6 +444,10 @@ export default function BusinessInternetTorontoPage() {
 
             <div className="mt-3 text-sm text-white/60">
               Availability varies by building. Submit your address to confirm options.
+            </div>
+           
+            <div className="mt-2 text-xs text-[#FDE68A]">
+              Priority response for Toronto business requests this week
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -564,7 +570,7 @@ export default function BusinessInternetTorontoPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>CHECK AVAILABILITY</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
-                Check business internet availability for your location
+                Get Availability & Pricing for your location
               </h2>
 
               <div className="mt-3 space-y-4 leading-relaxed text-white/70">
@@ -642,7 +648,7 @@ export default function BusinessInternetTorontoPage() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>REQUEST AVAILABILITY</SectionEyebrow>
               <h2 className="mt-3 text-lg font-semibold tracking-tight">
-                Check business internet availability
+                Get Availability & Pricing
               </h2>
 
               <div className="mt-4 space-y-3 text-sm text-white/70">
@@ -696,8 +702,14 @@ export default function BusinessInternetTorontoPage() {
                     href="/contact#intake"
                     className="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
                   >
-                    Check Business Internet Availability
+                    Get Availability & Pricing
                   </Link>
+                  <a
+                    href="tel:+18888672480"
+                    className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+                  >
+                    Call Now
+                  </a>
                   <Link
                     href="/services"
                     className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10"
@@ -765,8 +777,14 @@ export default function BusinessInternetTorontoPage() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
             >
-              Check Business Internet Availability
+              Get Availability & Pricing
             </Link>
+            <a
+              href="tel:+18888672480"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+            >
+              Call Now
+            </a>
             <Link
               href="/locations/toronto"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
