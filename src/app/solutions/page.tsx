@@ -674,7 +674,7 @@ export default function SolutionsPage() {
           <SolutionCard key={s.id} s={s} />
         ))}
       </div>
-
+      
       <Surface className="p-6 sm:p-8 lg:p-10 text-center">
         <h3 className="text-xl font-medium text-white">
           Get availability and pricing for your business location
