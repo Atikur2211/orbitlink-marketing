@@ -718,10 +718,10 @@ function MidPageCTA() {
             Get Availability & Pricing
           </Link>
           <Link
-            href="/contact#intake"
+            href="tel:+18888672480"
             className="rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
           >
-            Get Availability & Pricing
+            Call Now
           </Link>
         </div>
       </div>
@@ -860,6 +860,9 @@ function FinalCTA() {
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
               Start with your address, timing, and service need. Orbitlink can then review fit, availability, and the best next step.
             </p>
+            <div className="mt-2 text-xs text-[#FDE68A]">
+              Priority onboarding available for Ontario business sites this week
+            </div>
           </div>
 
           <MetricPill label="NEXT STEP" value="Availability • Pricing • Direction" />
@@ -1110,7 +1113,7 @@ export default function ServicesIndexPage() {
               </Link>
 
               <Link
-                href="/contact#intake"
+                href="tel:+18888672480"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
                 Speak to a Network Advisor
@@ -1120,7 +1123,7 @@ export default function ServicesIndexPage() {
                 href="/business-fibre-internet-ontario"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
-                Ontario Fibre Hub
+                Explore Ontario Fibre
               </Link>
             </div>
 

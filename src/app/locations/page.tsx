@@ -674,19 +674,23 @@ export default function LocationsHubPage() {
               >
                 Get Availability & Pricing
               </Link>
-              <Link
-                href="/locations/ontario"
+              <a
+                href="tel:+18888672480"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
-                Ontario Coverage
-              </Link>
+                Call Now
+              </a>
               <Link
                 href="/services"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
                 Explore Services
               </Link>
-            </div>
+              </div>
+              
+              <div className="mt-3 text-xs text-[#FDE68A]">
+                Priority response for Ontario business requests this week
+              </div>
 
             <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
               <MetricPill label="BEST FOR" value="Ontario business locations" />
@@ -795,7 +799,7 @@ export default function LocationsHubPage() {
               href="/locations/ontario"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm text-white transition hover:bg-white/10"
             >
-              View Ontario coverage
+              Explore Ontario Coverage
             </Link>
           </div>
 
