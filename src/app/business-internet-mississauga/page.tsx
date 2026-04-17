@@ -423,25 +423,30 @@ export default function BusinessInternetMississaugaPage() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
               >
-                Check Business Internet Availability
+                Get Availability & Pricing
               </Link>
-              <Link
-                href={`tel:${BUSINESS.phoneE164}`}
+              
+              <a
+                href="tel:+18888672480"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
               >
-                Call {BUSINESS.phoneDisplay}
-              </Link>
+                Call Now
+              </a>
+              
               <Link
-                href="/trust"
+                href="/services"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
               >
-                Trust and Compliance
+                Explore Services
               </Link>
             </div>
 
             <div className="mt-3 text-sm text-white/60">
               Availability varies by building. Submit your address to confirm options.
             </div>
+            <div className="mt-2 text-xs text-[#FDE68A]">
+              Priority response for Mississauga business requests this week
+            </div>             
 
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <MetricCard label="BEST FOR" value="Mississauga business locations" />
@@ -524,6 +529,19 @@ export default function BusinessInternetMississaugaPage() {
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
                 Common Mississauga business environments
               </h2>
+            
+              <div className="mt-8 text-center">
+                <Link
+                  href="/contact#intake"
+                  className="inline-flex items-center justify-center rounded-xl bg-[#FACC15] px-6 py-3 text-sm font-medium text-black hover:bg-[#FDE047]"
+                >
+                  Get Availability & Pricing
+                </Link>
+
+                <div className="mt-2 text-xs text-white/60">
+                  Takes 60 seconds • No obligation • Business-only
+                </div>
+              </div>
 
               <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
                 {fitCards.map((card) => (
@@ -744,8 +762,14 @@ export default function BusinessInternetMississaugaPage() {
               href="/contact#intake"
               className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
             >
-              Check Business Internet Availability
+              Get Availability & Pricing
             </Link>
+            <a
+              href="tel:+18888672480"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+            >
+              Call Now
+            </a>
             <Link
               href="/locations/mississauga"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
