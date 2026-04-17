@@ -474,6 +474,10 @@ export default function Home() {
               Get availability, pricing direction, and the right next step for your building.
               Most businesses receive next-step guidance within 1 business day.
             </div>
+            
+            <div className="mt-2 text-xs text-white/60">
+              Takes 60 seconds • No obligation • Business-only
+            </div>
 
             <div className="mt-3 text-sm text-white/82">
               Speak to a Network Advisor:{" "}
@@ -520,7 +524,7 @@ export default function Home() {
               </PhoneButton>
 
               <ActionButton href="/locations/ontario">
-                Ontario Coverage Hub
+                Explore Ontario Coverage
               </ActionButton>
             </div>
 
@@ -575,7 +579,7 @@ export default function Home() {
             </h3>
             <div className="mt-4">
               <ActionButton href="/contact#intake" primary>
-                Get Quote in 60 Seconds
+                Get Availability & Pricing
               </ActionButton>
             </div>
             <div className="mt-2 text-xs text-white/60">
@@ -652,7 +656,7 @@ export default function Home() {
               </h3>
               <div className="mt-4">
                 <ActionButton href="/contact#intake" primary>
-                  Get Quote in 60 Seconds
+                  Get Availability & Pricing
                 </ActionButton>
               </div>
               <div className="mt-2 text-xs text-white/60">
@@ -670,9 +674,9 @@ export default function Home() {
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <SectionEyebrow>PROVEN IN ONTARIO</SectionEyebrow>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+              <h3 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
                 Real connectivity work across Ontario businesses
-              </h2>
+              </h3>
               <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
                 Active project work across office environments, redundancy design,
                 and multi-site connectivity planning.
@@ -748,9 +752,9 @@ export default function Home() {
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
               <SectionEyebrow>WHY BUSINESSES MOVE TO ORBITLINK</SectionEyebrow>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+              <h3 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
                 A clearer alternative to traditional telecom buying
-              </h2>
+              </h3>
               <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
                 Many Ontario businesses are not looking for more options. They are
                 looking for a better process, clearer guidance, and cleaner execution.
@@ -789,9 +793,9 @@ export default function Home() {
         <div className="rounded-[26px] border border-white/10 bg-white/[0.04] p-5 sm:rounded-[32px] sm:p-8 lg:p-10">
           <div className="max-w-3xl">
             <SectionEyebrow>COMMERCIAL CLARITY</SectionEyebrow>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+            <h3 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
               Structured for real business requirements
-            </h2>
+            </h3>
             <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
               Pricing depends on building infrastructure, service class, and deployment requirements.
             </p>

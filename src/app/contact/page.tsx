@@ -387,6 +387,10 @@ export default function ContactPage() {
           <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
             We check your building, providers, and the best setup for your business.
           </p>
+           
+          <div className="mt-2 text-xs text-white/60">
+            Business-only • No obligation • Reviewed by address
+          </div>
 
           <div className="mt-5 flex flex-wrap gap-2 text-[11px] text-white/62 sm:text-xs">
             {["Offices", "Clinics", "Warehouses", "Multi-site"].map((item) => (
@@ -454,7 +458,7 @@ export default function ContactPage() {
           </h2>
 
           <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
-            Fast path. Clear answer.
+            Fast review. Clear next step.
           </p>
         </div>
 
@@ -568,6 +572,9 @@ export default function ContactPage() {
 
         <div className="mt-3 text-xs text-white/60">
           Fast response • No obligation • Business-only
+        </div>
+        <div className="mt-1 text-xs text-[#FDE68A]">
+          Priority response for Ontario business requests this week
         </div>
       </Section>
     </PageShell>
