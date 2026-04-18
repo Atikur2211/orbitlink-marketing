@@ -10,18 +10,20 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
+const BUSINESS_PHONE_DISPLAY = "1-888-867-2480";
+const BUSINESS_PHONE_E164 = "+18888672480";
 
 export const metadata: Metadata = {
-  title: "Static IP Routing Ontario",
+  title: "Static IP Routing in Ontario",
   description:
-    "Static IP routing for Ontario businesses. Support VPNs, servers, and secure access with predictable connectivity. Check availability by address.",
+    "Static IP routing for Ontario businesses. Support VPNs, servers, fixed endpoints, and secure access with predictable routing and structured delivery. Check availability and request static IP options.",
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: "Static IP Routing Ontario | Orbitlink",
+    title: "Static IP Routing in Ontario | Orbitlink",
     description:
-      "Business static IP routing for VPNs, fixed endpoints, hosted services, and cleaner policy control.",
+      "Business static IP routing for VPNs, fixed endpoints, hosted services, and cleaner policy control for Ontario businesses.",
     url: PAGE_URL,
     siteName: SITE_NAME,
     locale: "en_CA",
@@ -31,15 +33,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink Static IP Routing",
+        alt: "Orbitlink Static IP Routing in Ontario",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Static IP Routing Ontario | Orbitlink",
+    title: "Static IP Routing in Ontario | Orbitlink",
     description:
-      "Business static IP options for VPNs, hosted services, and predictable routing posture.",
+      "Business static IP options for VPNs, hosted services, and predictable routing posture in Ontario.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -175,6 +177,10 @@ const FAQ = [
     q: "Do static IPs matter more with DIA or managed network services?",
     a: "They can. Static routing often becomes more valuable when paired with DIA, managed LAN and Wi-Fi, voice, continuity planning, or broader network policy requirements.",
   },
+  {
+    q: "Is static IP routing better than using dynamic addressing for business infrastructure?",
+    a: "For many business environments, static IP routing is the cleaner fit when VPNs, remote access policies, hosted services, or fixed-endpoint requirements depend on predictable addressing and routing behavior.",
+  },
 ] as const;
 
 function SectionShell({
@@ -210,6 +216,14 @@ function MetricPill({
   );
 }
 
+function TrustPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70">
+      {children}
+    </span>
+  );
+}
+
 function CTAButton({
   href,
   children,
@@ -233,6 +247,17 @@ function CTAButton({
   );
 }
 
+function PhoneCTA({ children }: { children: React.ReactNode }) {
+  return (
+    <a
+      href={`tel:${BUSINESS_PHONE_E164}`}
+      className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10"
+    >
+      {children}
+    </a>
+  );
+}
+
 export default function Page() {
   const schemaGraph = {
     "@context": "https://schema.org",
@@ -241,7 +266,7 @@ export default function Page() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Static IP Routing Ontario",
+        name: "Static IP Routing in Ontario",
         description:
           "Business static IP routing for Ontario organizations. Support VPNs, fixed endpoints, hosted services, and policy-based access with structured onboarding and feasibility-led delivery.",
         isPartOf: {
@@ -333,7 +358,7 @@ export default function Page() {
         <div className="relative mx-auto max-w-6xl px-6 pb-14 pt-16 sm:pb-16 sm:pt-20 lg:px-10 lg:pb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-white/70">
             <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-            Operator Layer
+            Orbitlink Operator Layer
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -341,33 +366,34 @@ export default function Page() {
               <SectionEyebrow>ROUTING & ADDRESSING</SectionEyebrow>
 
               <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.02]">
-                Static IP Routing
+                Static IP Routing in Ontario
                 <span className="block text-white/62">
-                  for businesses that need predictable addressing and cleaner policy control.
+                  For businesses that need predictable addressing and cleaner policy control
                 </span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/70 sm:text-lg">
-                Static addressing supports site-to-site VPNs, hosted services, fixed endpoints,
-                remote access controls, and more predictable policy-based network operations.
-                Orbitlink provides static IP options where feasible through a disciplined,
-                service-aligned delivery posture.
+                Static IP routing in Ontario supports site-to-site VPNs, hosted services,
+                fixed endpoints, remote access controls, and more predictable policy-based
+                network operations. Orbitlink provides static IP options where feasible
+                through a disciplined, service-aligned delivery posture.
               </p>
 
               <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
-                The goal is not just to assign an address. It is to align addressing with the
-                business use case, the access service, and the wider network model so deployment
-                stays cleaner and easier to manage.
+                The goal is not just to assign an address. It is to align addressing with
+                the business use case, the access service, and the wider network model so
+                deployment stays cleaner and easier to manage.
+              </p>
+
+              <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
+                This service is commonly used by Ontario businesses that need cleaner VPN
+                posture, more reliable remote access policy, hosted service reachability,
+                and a more predictable routing foundation across their network environment.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {ASSURANCE_ITEMS.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70"
-                  >
-                    {item}
-                  </span>
+                  <TrustPill key={item}>{item}</TrustPill>
                 ))}
               </div>
 
@@ -375,9 +401,18 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Request Static IP Options
                 </CTAButton>
+                <PhoneCTA>Call Now</PhoneCTA>
                 <CTAButton href="/services/dedicated-internet-access">
                   Pair with DIA
                 </CTAButton>
+              </div>
+
+              <div className="mt-3 text-xs text-[#FDE68A]">
+                Priority response for Ontario business requests this week
+              </div>
+
+              <div className="mt-2 text-xs text-white/55">
+                No obligation • Feasibility-led review • Clear next step provided
               </div>
             </div>
 
@@ -408,6 +443,13 @@ export default function Page() {
                     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/80">
                       3. Move into structured delivery
                     </div>
+                  </div>
+
+                  <div className="mt-5 flex flex-col gap-3">
+                    <CTAButton href="/contact#intake" primary>
+                      Request Static IP Options
+                    </CTAButton>
+                    <PhoneCTA>Call Now</PhoneCTA>
                   </div>
                 </div>
               </SectionShell>
@@ -579,14 +621,9 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Request Static IP Options
                 </CTAButton>
+                <PhoneCTA>Call Now</PhoneCTA>
                 <CTAButton href="/services/dedicated-internet-access">
-                  Dedicated Internet
-                </CTAButton>
-                <CTAButton href="/services/business-fibre-internet">
-                  Business Fibre
-                </CTAButton>
-                <CTAButton href="/trust">
-                  Trust & Delivery Posture
+                  Pair with DIA
                 </CTAButton>
               </div>
             </SectionShell>
@@ -612,11 +649,12 @@ export default function Page() {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <CTAButton href="/services">
-                Explore Services
-              </CTAButton>
               <CTAButton href="/contact#intake" primary>
                 Request Static IP Options
+              </CTAButton>
+              <PhoneCTA>Call Now</PhoneCTA>
+              <CTAButton href="/services/dedicated-internet-access">
+                Pair with DIA
               </CTAButton>
             </div>
           </SectionShell>

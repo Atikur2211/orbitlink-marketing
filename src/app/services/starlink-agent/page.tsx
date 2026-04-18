@@ -8,16 +8,18 @@ const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE = `${SITE_URL}/twitter-image`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
+const BUSINESS_PHONE_DISPLAY = "1-888-867-2480";
+const BUSINESS_PHONE_E164 = "+18888672480";
 
 export const metadata: Metadata = {
-  title: "Starlink Access Coordination Ontario",
+  title: "Starlink Access Coordination in Ontario",
   description:
-    "Starlink internet coordination for Ontario businesses where fibre is unavailable, delayed, or impractical.",
+    "Starlink internet coordination for Ontario businesses where fibre is unavailable, delayed, or impractical. Review feasibility, use-case fit, and deployment expectations.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Starlink Access Coordination Ontario | Orbitlink",
+    title: "Starlink Access Coordination in Ontario | Orbitlink",
     description:
-      "Satellite connectivity coordination for business sites where terrestrial connectivity is constrained, delayed, or impractical.",
+      "Satellite connectivity coordination for Ontario business sites where terrestrial connectivity is constrained, delayed, or impractical.",
     url: PAGE_URL,
     siteName: SITE_NAME,
     locale: "en_CA",
@@ -27,15 +29,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Orbitlink Starlink Access",
+        alt: "Orbitlink Starlink Access Coordination in Ontario",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Starlink Access Coordination | Orbitlink",
+    title: "Starlink Access Coordination in Ontario | Orbitlink",
     description:
-      "Satellite connectivity coordination for business sites where terrestrial options are limited or impractical.",
+      "Satellite connectivity coordination for Ontario business sites where terrestrial options are limited, delayed, or impractical.",
     images: [TWITTER_IMAGE],
   },
 };
@@ -122,6 +124,10 @@ const FAQ = [
     q: "Can Starlink be paired with other Orbitlink services?",
     a: "Yes. Depending on the use case, it may align with continuity planning, managed network design, or other business connectivity discussions where appropriate.",
   },
+  {
+    q: "Is Starlink best treated as a default business internet service?",
+    a: "Usually no. It is generally best treated as a constrained-location option, temporary path, remote-access solution, or continuity-oriented service rather than the default answer where strong terrestrial access is available.",
+  },
 ] as const;
 
 function SectionShell({
@@ -157,6 +163,14 @@ function MetricPill({
   );
 }
 
+function TrustPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70">
+      {children}
+    </span>
+  );
+}
+
 function CTAButton({
   href,
   children,
@@ -180,6 +194,17 @@ function CTAButton({
   );
 }
 
+function PhoneCTA({ children }: { children: React.ReactNode }) {
+  return (
+    <a
+      href={`tel:${BUSINESS_PHONE_E164}`}
+      className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+    >
+      {children}
+    </a>
+  );
+}
+
 function jsonLd() {
   return {
     "@context": "https://schema.org",
@@ -188,7 +213,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Starlink Access Coordination Ontario",
+        name: "Starlink Access Coordination in Ontario",
         description:
           "Starlink internet coordination for Ontario businesses where fibre is unavailable, delayed, or impractical.",
         isPartOf: {
@@ -262,7 +287,7 @@ export default function Page() {
         <div className="relative mx-auto max-w-6xl px-6 pb-14 pt-16 sm:pb-16 sm:pt-20 lg:px-10 lg:pb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-white/70">
             <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-            Agent Services
+            Orbitlink Agent Services
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -270,45 +295,29 @@ export default function Page() {
               <SectionEyebrow>SATELLITE ACCESS COORDINATION</SectionEyebrow>
 
               <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.02]">
-                Starlink Access Coordination
+                Starlink Access Coordination in Ontario
                 <span className="block text-white/62">
-                  for sites where terrestrial connectivity is limited, delayed, or impractical.
+                  For sites where terrestrial connectivity is limited, delayed, or impractical
                 </span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-lg leading-relaxed text-white/70">
-                Orbitlink can assist organizations with Starlink procurement and onboarding through
-                an agent or reseller model. This is generally used where terrestrial infrastructure
-                such as fibre or dedicated internet access cannot be deployed within the required
-                timeline, or where satellite is being evaluated as a continuity-oriented option.
+                Orbitlink can assist Ontario organizations with Starlink procurement and onboarding
+                through an agent or reseller model. This is generally used where terrestrial
+                infrastructure such as fibre or dedicated internet access cannot be deployed within
+                the required timeline, or where satellite is being evaluated as a continuity-oriented option.
               </p>
 
               <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
                 The goal is not to present satellite as a universal replacement for terrestrial
                 service. It is to clarify where Starlink genuinely fits, where it does not, and how
-                it should be introduced within a cleaner business connectivity strategy. Compare it
-                against{" "}
-                <Link
-                  href="/services/business-fibre-internet"
-                  className="underline underline-offset-4 hover:text-white"
-                >
-                  business fibre
-                </Link>
-                ,{" "}
-                <Link
-                  href="/services/dedicated-internet-access"
-                  className="underline underline-offset-4 hover:text-white"
-                >
-                  dedicated internet access
-                </Link>
-                , and{" "}
-                <Link
-                  href="/services/lte-5g-continuity"
-                  className="underline underline-offset-4 hover:text-white"
-                >
-                  LTE / 5G continuity
-                </Link>
-                .
+                it should be introduced within a cleaner business connectivity strategy.
+              </p>
+
+              <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
+                This service is commonly used by Ontario businesses that need a realistic option
+                for remote sites, temporary operations, constrained deployment scenarios, or a
+                continuity-oriented secondary path where terrestrial service remains primary.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -319,12 +328,7 @@ export default function Page() {
                   "Continuity scenarios",
                   "Business fit first",
                 ].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70"
-                  >
-                    {item}
-                  </span>
+                  <TrustPill key={item}>{item}</TrustPill>
                 ))}
               </div>
 
@@ -332,10 +336,18 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Discuss Feasibility
                 </CTAButton>
-
+                <PhoneCTA>Call Now</PhoneCTA>
                 <CTAButton href="/services/business-fibre-internet">
                   Review Terrestrial Options
                 </CTAButton>
+              </div>
+
+              <div className="mt-3 text-xs text-[#FDE68A]">
+                Priority response for Ontario business requests this week
+              </div>
+
+              <div className="mt-2 text-xs text-white/55">
+                No obligation • Site-based review • Clear next step provided
               </div>
             </div>
 
@@ -367,6 +379,13 @@ export default function Page() {
                     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/80">
                       3. Move into structured coordination
                     </div>
+                  </div>
+
+                  <div className="mt-5 flex flex-col gap-3">
+                    <CTAButton href="/contact#intake" primary>
+                      Discuss Feasibility
+                    </CTAButton>
+                    <PhoneCTA>Call Now</PhoneCTA>
                   </div>
                 </div>
               </SectionShell>
@@ -404,7 +423,6 @@ export default function Page() {
                   className="rounded-[24px] border border-white/10 bg-black/20 p-6"
                 >
                   <h3 className="text-lg font-semibold">{item.title}</h3>
-
                   <p className="mt-3 text-sm leading-relaxed text-white/70">
                     {item.desc}
                   </p>
@@ -465,8 +483,7 @@ export default function Page() {
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
                   Larger providers often signal maturity through service lifecycle clarity. This
-                  section gives Orbitlink that same trust signal in language buyers can understand
-                  quickly.
+                  section gives Orbitlink that same trust signal in language buyers can understand quickly.
                 </p>
               </div>
 
@@ -548,11 +565,12 @@ export default function Page() {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <CTAButton href="/services">
-                Explore Services
-              </CTAButton>
               <CTAButton href="/contact#intake" primary>
                 Discuss Feasibility
+              </CTAButton>
+              <PhoneCTA>Call Now</PhoneCTA>
+              <CTAButton href="/services/business-fibre-internet">
+                Review Terrestrial Options
               </CTAButton>
             </div>
           </SectionShell>

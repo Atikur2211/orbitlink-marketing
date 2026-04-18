@@ -10,18 +10,20 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
+const BUSINESS_PHONE_DISPLAY = "1-888-867-2480";
+const BUSINESS_PHONE_E164 = "+18888672480";
 
 export const metadata: Metadata = {
-  title: "VoIP & Cloud Voice Ontario",
+  title: "VoIP & Cloud Voice in Ontario",
   description:
-    "Business VoIP and cloud voice for Ontario organizations. Reliable calling, number porting, and call routing. Check availability by address.",
+    "Business VoIP and cloud voice for Ontario organizations. Reliable calling, number porting, call routing, and cleaner business communications deployment. Check availability and request voice options.",
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: "VoIP & Cloud Voice Ontario | Orbitlink",
+    title: "VoIP & Cloud Voice in Ontario | Orbitlink",
     description:
-      "Business cloud voice, number porting coordination, and call routing with structured onboarding and cleaner delivery.",
+      "Business cloud voice, number porting coordination, and call routing with structured onboarding and cleaner delivery for Ontario businesses.",
     url: PAGE_URL,
     siteName: SITE_NAME,
     locale: "en_CA",
@@ -31,15 +33,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink VoIP & Cloud Voice",
+        alt: "Orbitlink VoIP & Cloud Voice in Ontario",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "VoIP & Cloud Voice Ontario | Orbitlink",
+    title: "VoIP & Cloud Voice in Ontario | Orbitlink",
     description:
-      "Business cloud voice and VoIP with structured onboarding, number porting support, and cleaner delivery posture.",
+      "Business cloud voice and VoIP for Ontario organizations with structured onboarding, number porting support, and cleaner delivery posture.",
     images: [TWITTER_IMAGE_URL],
   },
   robots: {
@@ -175,6 +177,10 @@ const FAQ = [
     q: "Who should consider business cloud voice?",
     a: "Organizations with multiple users, call routing needs, porting requirements, remote or hybrid teams, or businesses replacing legacy telephony should usually consider it.",
   },
+  {
+    q: "Is business cloud voice better than keeping a legacy phone system?",
+    a: "For many organizations, cloud voice is the cleaner long-term fit because it supports more flexible routing, easier user changes, and a better-aligned communications operating model than older legacy telephony systems.",
+  },
 ] as const;
 
 function SectionShell({
@@ -210,6 +216,14 @@ function MetricPill({
   );
 }
 
+function TrustPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70">
+      {children}
+    </span>
+  );
+}
+
 function CTAButton({
   href,
   children,
@@ -233,6 +247,17 @@ function CTAButton({
   );
 }
 
+function PhoneCTA({ children }: { children: React.ReactNode }) {
+  return (
+    <a
+      href={`tel:${BUSINESS_PHONE_E164}`}
+      className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10"
+    >
+      {children}
+    </a>
+  );
+}
+
 export default function Page() {
   const schemaGraph = {
     "@context": "https://schema.org",
@@ -241,7 +266,7 @@ export default function Page() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "VoIP & Cloud Voice Ontario",
+        name: "VoIP & Cloud Voice in Ontario",
         description:
           "Business VoIP and cloud voice for Ontario organizations. Structured onboarding, number porting support, call routing, endpoint readiness, and a cleaner delivery posture.",
         isPartOf: {
@@ -273,7 +298,7 @@ export default function Page() {
         },
         url: PAGE_URL,
         description:
-          "Business VoIP and cloud voice with structured onboarding, number porting support, business call routing, and cleaner delivery posture.",
+          "Business VoIP and cloud voice with structured onboarding, number porting support, business call routing, and cleaner delivery posture for Ontario businesses.",
       },
       {
         "@type": "BreadcrumbList",
@@ -333,7 +358,7 @@ export default function Page() {
         <div className="relative mx-auto max-w-6xl px-6 pb-14 pt-16 sm:pb-16 sm:pt-20 lg:px-10 lg:pb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-white/70">
             <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-            AUREX Voice
+            Orbitlink Voice
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -341,32 +366,33 @@ export default function Page() {
               <SectionEyebrow>BUSINESS COMMUNICATIONS</SectionEyebrow>
 
               <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.02]">
-                VoIP & Cloud Voice
+                VoIP & Cloud Voice in Ontario
                 <span className="block text-white/62">
-                  for businesses that need cleaner communications and transition control.
+                  For businesses that need cleaner communications and transition control
                 </span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/70 sm:text-lg">
-                Modern business voice is more than dial tone. Orbitlink supports cloud voice
-                deployments with structured onboarding, number porting coordination, professional
-                routing logic, and a calm operator-grade delivery posture for modern organizations.
+                Business VoIP and cloud voice in Ontario is more than dial tone. Orbitlink supports
+                cloud voice deployments with structured onboarding, number porting coordination,
+                professional routing logic, and a calm operator-grade delivery posture for modern organizations.
               </p>
 
               <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
-                The goal is not just to turn on service. It is to align users, numbers, call
-                routing, endpoint readiness, and business operations so communications feel stable,
-                predictable, and easier to manage.
+                The goal is not just to turn on service. It is to align users, numbers, call routing,
+                endpoint readiness, and business operations so communications feel stable, predictable,
+                and easier to manage.
+              </p>
+
+              <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
+                This service is commonly used by Ontario businesses that need a cleaner transition
+                away from legacy telephony, better call routing control, and a more professional
+                communications operating model.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {ASSURANCE_ITEMS.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70"
-                  >
-                    {item}
-                  </span>
+                  <TrustPill key={item}>{item}</TrustPill>
                 ))}
               </div>
 
@@ -374,9 +400,18 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Request Voice Options
                 </CTAButton>
+                <PhoneCTA>Call Now</PhoneCTA>
                 <CTAButton href="/services/business-fibre-internet">
                   Pair with Business Fibre
                 </CTAButton>
+              </div>
+
+              <div className="mt-3 text-xs text-[#FDE68A]">
+                Priority response for Ontario business requests this week
+              </div>
+
+              <div className="mt-2 text-xs text-white/55">
+                No obligation • Business-ready review • Clear next step provided
               </div>
             </div>
 
@@ -393,8 +428,8 @@ export default function Page() {
                     Business communications with cleaner deployment discipline
                   </div>
                   <p className="mt-3 text-sm leading-6 text-white/65">
-                    Voice deployments are introduced through structured scoping, transition
-                    planning, and business-ready call routing rather than improvised setup.
+                    Voice deployments are introduced through structured scoping, transition planning,
+                    and business-ready call routing rather than improvised setup.
                   </p>
 
                   <div className="mt-5 grid gap-3">
@@ -407,6 +442,13 @@ export default function Page() {
                     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/80">
                       3. Move into structured onboarding
                     </div>
+                  </div>
+
+                  <div className="mt-5 flex flex-col gap-3">
+                    <CTAButton href="/contact#intake" primary>
+                      Request Voice Options
+                    </CTAButton>
+                    <PhoneCTA>Call Now</PhoneCTA>
                   </div>
                 </div>
               </SectionShell>
@@ -431,9 +473,9 @@ export default function Page() {
                   Voice designed as part of a broader operating stack
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
-                  Orbitlink voice fits into a wider business communications and connectivity
-                  posture. The objective is not just activation, but a cleaner long-term operating
-                  model across access, routing, endpoints, and support.
+                  Orbitlink voice fits into a wider business communications and connectivity posture.
+                  The objective is not just activation, but a cleaner long-term operating model across
+                  access, routing, endpoints, and support.
                 </p>
               </div>
 
@@ -579,14 +621,9 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Request Voice Options
                 </CTAButton>
+                <PhoneCTA>Call Now</PhoneCTA>
                 <CTAButton href="/services/business-fibre-internet">
-                  Business Fibre
-                </CTAButton>
-                <CTAButton href="/services/managed-lan-wifi">
-                  Managed LAN/Wi-Fi
-                </CTAButton>
-                <CTAButton href="/trust">
-                  Trust & Delivery Posture
+                  Pair with Business Fibre
                 </CTAButton>
               </div>
             </SectionShell>
@@ -612,11 +649,12 @@ export default function Page() {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <CTAButton href="/services">
-                Explore Services
-              </CTAButton>
               <CTAButton href="/contact#intake" primary>
                 Request Voice Options
+              </CTAButton>
+              <PhoneCTA>Call Now</PhoneCTA>
+              <CTAButton href="/services/business-fibre-internet">
+                Pair with Business Fibre
               </CTAButton>
             </div>
           </SectionShell>

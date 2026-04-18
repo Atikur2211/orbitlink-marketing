@@ -8,14 +8,16 @@ const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
+const BUSINESS_PHONE_DISPLAY = "1-888-867-2480";
+const BUSINESS_PHONE_E164 = "+18888672480";
 
 export const metadata: Metadata = {
-  title: "Colocation & Infrastructure Services Ontario",
+  title: "Colocation & Infrastructure Services in Ontario",
   description:
-    "Colocation and infrastructure services in Ontario. Rack space, cross-connects, and network deployment support for business environments.",
+    "Colocation and infrastructure services in Ontario. Rack space, cross-connects, and network deployment support for business environments. Discuss facility requirements and deployment planning.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Colocation & Infrastructure Services Ontario | Orbitlink",
+    title: "Colocation & Infrastructure Services in Ontario | Orbitlink",
     description:
       "Colocation, cross-connect coordination, and network infrastructure support for Ontario business environments.",
     url: PAGE_URL,
@@ -27,15 +29,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink Colocation & Infrastructure Services",
+        alt: "Orbitlink Colocation & Infrastructure Services in Ontario",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Colocation & Infrastructure Services Ontario | Orbitlink",
+    title: "Colocation & Infrastructure Services in Ontario | Orbitlink",
     description:
-      "Colocation guidance, cross-connect coordination, and infrastructure support for business environments.",
+      "Colocation guidance, cross-connect coordination, and infrastructure support for Ontario business environments.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -131,6 +133,10 @@ const FAQ = [
     q: "Does availability depend on the facility and environment?",
     a: "Yes. Infrastructure feasibility depends on building constraints, access process, carrier pathways, facility rules, equipment role, and the wider deployment scope.",
   },
+  {
+    q: "Is colocation planning different from standard connectivity buying?",
+    a: "Yes. Colocation and infrastructure work usually requires more coordination around facility rules, handoff models, rack posture, and deployment sequencing than a standard access order.",
+  },
 ] as const;
 
 function SectionShell({
@@ -166,6 +172,14 @@ function MetricPill({
   );
 }
 
+function TrustPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70">
+      {children}
+    </span>
+  );
+}
+
 function CTAButton({
   href,
   children,
@@ -189,6 +203,17 @@ function CTAButton({
   );
 }
 
+function PhoneCTA({ children }: { children: React.ReactNode }) {
+  return (
+    <a
+      href={`tel:${BUSINESS_PHONE_E164}`}
+      className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10"
+    >
+      {children}
+    </a>
+  );
+}
+
 function jsonLd() {
   return {
     "@context": "https://schema.org",
@@ -197,7 +222,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Colocation & Infrastructure Services Ontario",
+        name: "Colocation & Infrastructure Services in Ontario",
         description:
           "Colocation and infrastructure services in Ontario. Rack space, cross-connects, and network deployment support for business environments.",
         isPartOf: {
@@ -270,7 +295,7 @@ export default function Page() {
         <div className="relative mx-auto max-w-6xl px-6 pb-14 pt-16 sm:pb-16 sm:pt-20 lg:px-10 lg:pb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-white/70">
             <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-            Infrastructure
+            Orbitlink Infrastructure
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -278,45 +303,30 @@ export default function Page() {
               <SectionEyebrow>EDGE & INTERCONNECT</SectionEyebrow>
 
               <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.02]">
-                Colocation & Infrastructure Services
+                Colocation & Infrastructure Services in Ontario
                 <span className="block text-white/62">
-                  for businesses planning beyond standard access delivery.
+                  For businesses planning beyond standard access delivery
                 </span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/70 sm:text-lg">
-                Orbitlink supports infrastructure-aligned deployments for businesses that need
-                cleaner network placement, handoff coordination, and operator-grade delivery
-                posture. This includes colocation-oriented planning, cross-connect guidance, and
+                Colocation and infrastructure services in Ontario support businesses that need
+                cleaner network placement, handoff coordination, and operator-grade delivery posture.
+                Orbitlink helps with colocation-oriented planning, cross-connect guidance, and
                 structured execution for environments where equipment placement and network access
                 must be handled with discipline.
               </p>
 
               <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
-                This service often aligns with{" "}
-                <Link
-                  href="/services/dedicated-internet-access"
-                  className="underline underline-offset-4 hover:text-white"
-                >
-                  Dedicated Internet Access
-                </Link>
-                ,{" "}
-                <Link
-                  href="/services/static-ip-routing"
-                  className="underline underline-offset-4 hover:text-white"
-                >
-                  static IP routing
-                </Link>
-                , and broader{" "}
-                <Link
-                  href="/network"
-                  className="underline underline-offset-4 hover:text-white"
-                >
-                  network planning
-                </Link>
-                . The goal is not just to place hardware. It is to align facility constraints,
+                The goal is not just to place hardware. It is to align facility constraints,
                 carrier touchpoints, rack posture, and handoff assumptions so the deployment path
                 is clearer before implementation begins.
+              </p>
+
+              <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
+                This service is commonly used by Ontario businesses that are planning edge
+                environments, cross-connect pathways, interconnect-oriented deployments, and
+                infrastructure expansion where standard internet buying is not enough.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -327,12 +337,7 @@ export default function Page() {
                   "Structured deployment posture",
                   "Business-safe infrastructure design",
                 ].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70"
-                  >
-                    {item}
-                  </span>
+                  <TrustPill key={item}>{item}</TrustPill>
                 ))}
               </div>
 
@@ -340,9 +345,18 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Discuss Requirements
                 </CTAButton>
+                <PhoneCTA>Call Now</PhoneCTA>
                 <CTAButton href="/services/dedicated-internet-access">
                   Pair with Dedicated Internet
                 </CTAButton>
+              </div>
+
+              <div className="mt-3 text-xs text-[#FDE68A]">
+                Priority response for Ontario business requests this week
+              </div>
+
+              <div className="mt-2 text-xs text-white/55">
+                No obligation • Facility-led review • Clear next step provided
               </div>
             </div>
 
@@ -374,6 +388,13 @@ export default function Page() {
                       </div>
                     ))}
                   </div>
+
+                  <div className="mt-5 flex flex-col gap-3">
+                    <CTAButton href="/contact#intake" primary>
+                      Discuss Requirements
+                    </CTAButton>
+                    <PhoneCTA>Call Now</PhoneCTA>
+                  </div>
                 </div>
               </SectionShell>
             </div>
@@ -398,9 +419,9 @@ export default function Page() {
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
                   Colocation and infrastructure coordination involve more moving parts than standard
-                  access delivery. That is why the work must be handled through a disciplined
-                  posture: clear scope, clearer responsibilities, realistic feasibility, and a
-                  documented path from planning to deployment.
+                  access delivery. That is why the work must be handled through a disciplined posture:
+                  clear scope, clearer responsibilities, realistic feasibility, and a documented path
+                  from planning to deployment.
                 </p>
               </div>
 
@@ -457,10 +478,9 @@ export default function Page() {
                   Practical coordination for environments where network placement matters
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
-                  Good infrastructure planning reduces friction before hardware arrives. It
-                  clarifies where equipment lives, how handoff occurs, how interconnect pathways
-                  are handled, and what the operational expectations are once the environment goes
-                  live.
+                  Good infrastructure planning reduces friction before hardware arrives. It clarifies
+                  where equipment lives, how handoff occurs, how interconnect pathways are handled,
+                  and what the operational expectations are once the environment goes live.
                 </p>
               </div>
 
@@ -590,9 +610,7 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Discuss Requirements
                 </CTAButton>
-                <CTAButton href="/trust">
-                  Review Trust Posture
-                </CTAButton>
+                <PhoneCTA>Call Now</PhoneCTA>
               </div>
             </SectionShell>
           </div>
@@ -617,11 +635,12 @@ export default function Page() {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <CTAButton href="/services">
-                Explore Services
-              </CTAButton>
               <CTAButton href="/contact#intake" primary>
                 Discuss Requirements
+              </CTAButton>
+              <PhoneCTA>Call Now</PhoneCTA>
+              <CTAButton href="/services/dedicated-internet-access">
+                Pair with Dedicated Internet
               </CTAButton>
             </div>
           </SectionShell>

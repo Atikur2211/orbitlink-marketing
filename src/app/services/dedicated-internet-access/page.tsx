@@ -8,16 +8,18 @@ const PAGE_PATH = "/services/dedicated-internet-access";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
+const BUSINESS_PHONE_DISPLAY = "1-888-867-2480";
+const BUSINESS_PHONE_E164 = "+18888672480";
 
 export const metadata: Metadata = {
-  title: "Dedicated Internet Access Ontario",
+  title: "Dedicated Internet Access in Ontario",
   description:
-    "Dedicated internet access for Ontario organizations. Reliable uptime, predictable performance, and static IP options. Check availability.",
+    "Dedicated Internet Access for Ontario businesses that need stronger uptime, more predictable performance, and a more formal service model. Check availability and pricing for your address.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Dedicated Internet Access Ontario | Orbitlink",
+    title: "Dedicated Internet Access in Ontario | Orbitlink",
     description:
-      "Dedicated business internet for Ontario offices, healthcare, logistics, warehouses, and multi-site operations. Check availability by address.",
+      "Dedicated business internet for Ontario offices, healthcare, logistics, warehouses, and multi-site operations. Check availability and pricing.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -27,15 +29,15 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "Dedicated Internet Access Ontario | Orbitlink",
+        alt: "Dedicated Internet Access in Ontario | Orbitlink",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dedicated Internet Access Ontario | Orbitlink",
+    title: "Dedicated Internet Access in Ontario | Orbitlink",
     description:
-      "Dedicated business internet for Ontario organizations that need stronger uptime and a more formal service model.",
+      "Dedicated business internet for Ontario organizations that need stronger uptime, predictable performance, and a more formal service model.",
     images: [`${SITE_URL}/opengraph-image`],
   },
 };
@@ -73,6 +75,10 @@ const FAQ = [
     q: "What types of businesses usually buy DIA?",
     a: "DIA is often a fit for head offices, healthcare environments, logistics operations, warehouses, multi-site organizations, and other business-critical sites that need stronger internet reliability.",
   },
+  {
+    q: "Is DIA better than standard business broadband for critical operations?",
+    a: "For sites where uptime and service expectations matter more, DIA is often the stronger fit because it is positioned for more critical business use than standard business broadband.",
+  },
 ] as const;
 
 function jsonLd() {
@@ -83,7 +89,7 @@ function jsonLd() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Dedicated Internet Access Ontario",
+        name: "Dedicated Internet Access in Ontario",
         description:
           "Dedicated Internet Access for Ontario businesses that need stronger uptime, more predictable performance, static IP options, and a more formal service model. Check availability by address.",
         isPartOf: {
@@ -120,7 +126,7 @@ function jsonLd() {
       {
         "@type": "Service",
         "@id": `${PAGE_URL}#service`,
-        name: "Dedicated Internet Access (DIA)",
+        name: "Dedicated Internet Access",
         url: PAGE_URL,
         provider: {
           "@id": ORG_ID,
@@ -293,6 +299,17 @@ function CTAButton({
   );
 }
 
+function PhoneCTA({ children }: { children: ReactNode }) {
+  return (
+    <a
+      href={`tel:${BUSINESS_PHONE_E164}`}
+      className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+    >
+      {children}
+    </a>
+  );
+}
+
 export default function Page() {
   return (
     <main className="min-h-screen bg-[#0B0F14] text-white">
@@ -310,22 +327,13 @@ export default function Page() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_30%)]" />
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-5 pb-14 pt-14 sm:px-7 sm:pb-16 lg:px-10 lg:pb-20">
+        <div className="relative mx-auto max-w-6xl px-5 pb-14 pt-14 sm:px-7 sm:pb-16 sm:pt-20 lg:px-10 lg:pb-20">
           <div className="max-w-6xl">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-                <span className="h-2 w-2 rounded-full bg-[#FACC15]" />
-                <span className="text-sm tracking-wide text-white/65">AUREX Internet</span>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-2 text-xs text-white/55">
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-                  Dedicated business internet
-                </span>
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-                  Critical operations fit
-                </span>
-              </div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+              <span className="h-2 w-2 rounded-full bg-[#FACC15]" />
+              <span className="text-sm tracking-wide text-white/65">
+                Orbitlink Dedicated Internet
+              </span>
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-12">
@@ -333,22 +341,22 @@ export default function Page() {
                 <SectionEyebrow>BUSINESS-CRITICAL INTERNET</SectionEyebrow>
 
                 <h1 className="mt-4 text-[2.3rem] font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.4rem] lg:leading-[0.98]">
-                  Dedicated Internet Access
+                  Dedicated Internet Access in Ontario
                   <span className="block text-white/62">
-                    for Ontario businesses that need a stronger internet service model
+                    For businesses that need a stronger internet service model
                   </span>
                 </h1>
 
                 <p className="mt-6 max-w-3xl text-base leading-7 text-white/72 sm:text-lg">
-                  Dedicated Internet Access is for Ontario businesses that need stronger uptime,
+                  Dedicated Internet Access in Ontario is for businesses that need stronger uptime,
                   more predictable performance, and a more formal dedicated business internet model
                   for critical operations.
                 </p>
 
                 <p className="mt-4 max-w-3xl text-base leading-7 text-white/65">
-                  This is often the right fit for head offices, healthcare, logistics,
-                  warehouses, multi-site operations, voice-heavy environments, and other sites
-                  where downtime carries a bigger business impact.
+                  This is often the right fit for head offices, healthcare, logistics, warehouses,
+                  multi-site operations, voice-heavy environments, and other sites where downtime
+                  carries a bigger business impact.
                 </p>
 
                 <p className="mt-4 max-w-3xl text-base leading-7 text-white/65">
@@ -357,10 +365,16 @@ export default function Page() {
                   for environments where that risk needs to be reduced.
                 </p>
 
+                <p className="mt-4 max-w-3xl text-base leading-7 text-white/65">
+                  This service is commonly used as the primary dedicated business internet connection
+                  for Ontario organizations that need stronger service expectations around reliability,
+                  performance, and operational continuity.
+                </p>
+
                 <div className="mt-7 flex flex-wrap gap-2">
                   {[
-                    "Check availability by address",
-                    "Dedicated business internet",
+                    "Availability checked by address",
+                    "Dedicated business internet (not standard broadband)",
                     "Built for critical operations",
                     "Static IP and routing options",
                     "Ontario business-focused provider",
@@ -373,17 +387,21 @@ export default function Page() {
                   <CTAButton href="/contact#intake" primary>
                     Check DIA Availability
                   </CTAButton>
-
-                  <CTAButton href="/contact#intake">
-                    Get Pricing
-                  </CTAButton>
-
+                  <PhoneCTA>Call Now</PhoneCTA>
                   <CTAButton href="/services/business-fibre-internet">
-                    Compare with Business Fibre
+                    Compare DIA vs Business Fibre
                   </CTAButton>
                 </div>
 
-                <div className="mt-3 text-sm text-white/58">
+                <div className="mt-3 text-xs text-[#FDE68A]">
+                  Priority response for Ontario business requests this week
+                </div>
+
+                <div className="mt-2 text-xs text-white/55">
+                  No obligation • Address-based review • Clear next step provided
+                </div>
+
+                <div className="mt-2 text-sm text-white/58">
                   Availability depends on building infrastructure and upstream access. Submit your
                   address to confirm feasibility.
                 </div>
@@ -408,9 +426,8 @@ export default function Page() {
                       Better for organizations where downtime matters more
                     </div>
                     <p className="mt-3 text-sm leading-6 text-white/64">
-                      Usually the stronger fit for healthcare, head offices, logistics,
-                      warehouses, cloud-heavy sites, voice-dependent teams, and multi-site
-                      business environments.
+                      Usually the stronger fit for healthcare, head offices, logistics, warehouses,
+                      cloud-heavy sites, voice-dependent teams, and multi-site business environments.
                     </p>
 
                     <div className="mt-5 grid gap-3">
@@ -419,10 +436,11 @@ export default function Page() {
                       <MetricPill label="STEP 3" value="Move to pricing and installation" />
                     </div>
 
-                    <div className="mt-5">
+                    <div className="mt-5 flex flex-col gap-3">
                       <CTAButton href="/contact#intake" primary>
-                        Start DIA Availability Check
+                        Check DIA Availability
                       </CTAButton>
+                      <PhoneCTA>Call Now</PhoneCTA>
                     </div>
                   </div>
                 </SectionShell>
@@ -437,8 +455,8 @@ export default function Page() {
                   </div>
                   <p className="mt-2 text-sm leading-6 text-white/66">
                     Dedicated internet should be evaluated with clarity around business impact,
-                    building fit, and operational need. This page is structured to help serious buyers
-                    understand when DIA is the right answer.
+                    building fit, and operational need. This page is structured to help serious
+                    buyers understand when DIA is the right answer.
                   </p>
                 </div>
 
@@ -571,22 +589,52 @@ export default function Page() {
             </div>
           </SectionShell>
 
-          <SectionShell className="p-6 sm:p-7">
-            <SectionEyebrow>BUSINESS FIBRE VS DIA</SectionEyebrow>
-            <h2 className="mt-3 text-lg font-semibold tracking-tight">
-              When to choose Business Fibre instead
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-white/70">
-              If your organization needs strong everyday business internet for offices, clinics,
-              or commercial suites, and does not need the more formal dedicated internet model,
-              Business Fibre is often the better starting point.
-            </p>
-            <Link
-              href="/services/business-fibre-internet"
-              className="mt-4 inline-flex w-full items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white/85 transition hover:bg-white/10 sm:w-auto"
-            >
-              View Business Fibre →
-            </Link>
+          <SectionShell className="p-6 sm:p-7 md:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>DIA VS BUSINESS FIBRE</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+                  Dedicated Internet Access vs Business Fibre
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                  This comparison helps Ontario businesses understand when Dedicated Internet Access
+                  is the stronger fit and when Business Fibre is the better starting point.
+                </p>
+              </div>
+
+              <MetricPill label="BUYER CLARITY" value="Choose the right service sooner" />
+            </div>
+
+            <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+                <div className="text-sm font-medium text-white/90">Choose DIA when</div>
+                <ul className="mt-4 space-y-2 text-sm text-white/70">
+                  <li>• Downtime has a bigger business impact</li>
+                  <li>• Voice, cloud, VPN, or multi-site operations depend on stable access</li>
+                  <li>• Stronger service expectations are required</li>
+                  <li>• Standard business broadband is not enough for the environment</li>
+                </ul>
+              </div>
+
+              <div className="rounded-[26px] border border-white/10 bg-black/20 p-5">
+                <div className="text-sm font-medium text-white/90">Choose Business Fibre when</div>
+                <ul className="mt-4 space-y-2 text-sm text-white/70">
+                  <li>• The site needs strong everyday business internet</li>
+                  <li>• Offices and commercial suites need reliability and good value</li>
+                  <li>• The environment does not require the more formal DIA model</li>
+                  <li>• The business wants a strong primary connection with upgrade flexibility</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <CTAButton href="/services/business-fibre-internet">
+                View Business Fibre
+              </CTAButton>
+              <CTAButton href="/contact#intake" primary>
+                Check DIA Availability
+              </CTAButton>
+            </div>
           </SectionShell>
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -606,10 +654,10 @@ export default function Page() {
                   Mississauga Service Area
                 </Link>
                 <Link
-                  href="/internet-near-me"
+                  href="/locations/toronto"
                   className="inline-flex w-full items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white/85 transition hover:bg-white/10"
                 >
-                  Internet Near Me
+                  Toronto Service Area
                 </Link>
               </div>
             </SectionShell>
@@ -621,23 +669,17 @@ export default function Page() {
                 uptime expectations, voice or network requirements, and whether static IPs
                 or managed services are needed.
               </p>
-              <Link
-                href="/contact#intake"
-                className="mt-4 inline-flex w-full items-center justify-center rounded-2xl bg-[#FACC15] px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-[#FDE047]"
-              >
-                Check DIA Availability
-              </Link>
-              <a
-                href="tel:+18888672480"
-                className="mt-3 inline-flex w-full items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white/85 transition hover:bg-white/10"
-              >
-                Call 1-888-867-2480
-              </a>
+              <div className="mt-4 flex flex-col gap-3">
+                <CTAButton href="/contact#intake" primary>
+                  Check DIA Availability
+                </CTAButton>
+                <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
+              </div>
             </SectionShell>
           </div>
         </div>
 
-        <SectionShell className="mt-6 p-6 sm:p-7">
+        <SectionShell className="mt-6 p-6 sm:p-7 md:p-8">
           <SectionEyebrow>FAQ</SectionEyebrow>
           <h2 className="mt-3 text-lg font-semibold text-white sm:text-xl">
             Dedicated Internet Access FAQs
@@ -653,18 +695,13 @@ export default function Page() {
           </div>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/contact#intake"
-              className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-semibold text-black transition hover:bg-[#FDE047]"
-            >
+            <CTAButton href="/contact#intake" primary>
               Check DIA Availability
-            </Link>
-            <Link
-              href="/locations"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
-            >
-              Browse Locations
-            </Link>
+            </CTAButton>
+            <PhoneCTA>Call Now</PhoneCTA>
+            <CTAButton href="/services/business-fibre-internet">
+              Compare DIA vs Business Fibre
+            </CTAButton>
           </div>
         </SectionShell>
       </section>

@@ -9,16 +9,18 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
+const BUSINESS_PHONE_DISPLAY = "1-888-867-2480";
+const BUSINESS_PHONE_E164 = "+18888672480";
 
 export const metadata: Metadata = {
-  title: "Managed LAN & Enterprise Wi-Fi",
+  title: "Managed LAN & Enterprise Wi-Fi in Ontario",
   description:
-    "Managed LAN and enterprise Wi-Fi for Ontario organizations. Improve coverage, performance, and secure network access. Check availability.",
+    "Managed LAN and enterprise Wi-Fi for Ontario businesses. Improve coverage, segmentation, device performance, and internal network reliability. Check availability and request network design.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Managed LAN & Enterprise Wi-Fi | Orbitlink",
+    title: "Managed LAN & Enterprise Wi-Fi in Ontario | Orbitlink",
     description:
-      "Managed LAN and enterprise Wi-Fi with segmentation, coverage planning, guest networking, and structured business support.",
+      "Managed LAN and enterprise Wi-Fi for Ontario business environments with segmentation, coverage planning, guest access, and structured support.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -28,15 +30,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink Managed LAN & Enterprise Wi-Fi",
+        alt: "Orbitlink Managed LAN & Enterprise Wi-Fi in Ontario",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Managed LAN & Enterprise Wi-Fi | Orbitlink",
+    title: "Managed LAN & Enterprise Wi-Fi in Ontario | Orbitlink",
     description:
-      "Managed LAN and enterprise Wi-Fi for business sites that need cleaner internal network performance and support clarity.",
+      "Managed LAN and enterprise Wi-Fi for Ontario business sites that need cleaner internal network performance and support clarity.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -141,6 +143,10 @@ const FAQ = [
     q: "Do you offer this in Mississauga and Ontario?",
     a: "Yes. Orbitlink supports managed LAN and enterprise Wi-Fi discussions in Mississauga and other Ontario business markets, subject to site scope and service alignment.",
   },
+  {
+    q: "Is managed enterprise Wi-Fi better than using retail routers for business?",
+    a: "In most business environments, managed LAN and enterprise Wi-Fi provides cleaner coverage, better segmentation, stronger device handling, and a more professional support posture than unmanaged retail networking gear.",
+  },
 ] as const;
 
 function SectionShell({
@@ -176,6 +182,14 @@ function MetricPill({
   );
 }
 
+function TrustPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/68">
+      {children}
+    </span>
+  );
+}
+
 function CTAButton({
   href,
   children,
@@ -199,6 +213,17 @@ function CTAButton({
   );
 }
 
+function PhoneCTA({ children }: { children: React.ReactNode }) {
+  return (
+    <a
+      href={`tel:${BUSINESS_PHONE_E164}`}
+      className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10"
+    >
+      {children}
+    </a>
+  );
+}
+
 export default function Page() {
   const schemaGraph = {
     "@context": "https://schema.org",
@@ -207,7 +232,7 @@ export default function Page() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Managed LAN & Enterprise Wi-Fi",
+        name: "Managed LAN & Enterprise Wi-Fi in Ontario",
         description:
           "Managed LAN and enterprise Wi-Fi for Ontario business environments. Segmentation, guest access, coverage planning, cleaner internal networking, and structured support for offices, commercial suites, and multi-tenant sites.",
         isPartOf: {
@@ -239,7 +264,7 @@ export default function Page() {
         },
         url: PAGE_URL,
         description:
-          "Managed LAN and enterprise Wi-Fi for business environments, including segmentation, guest networking, coverage planning, and structured support posture.",
+          "Managed LAN and enterprise Wi-Fi for Ontario business environments, including segmentation, guest networking, coverage planning, and structured support posture.",
       },
       {
         "@type": "BreadcrumbList",
@@ -299,7 +324,7 @@ export default function Page() {
         <div className="relative mx-auto max-w-6xl px-6 pb-14 pt-16 sm:pb-16 sm:pt-20 lg:px-10 lg:pb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-white/70">
             <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-            Managed Network
+            Orbitlink Managed Network
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -307,23 +332,30 @@ export default function Page() {
               <SectionEyebrow>INTERNAL NETWORK LAYER</SectionEyebrow>
 
               <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.02]">
-                Managed LAN & Enterprise Wi-Fi
+                Managed LAN & Enterprise Wi-Fi in Ontario
                 <span className="block text-white/62">
-                  for businesses that need cleaner internal network performance.
+                  For businesses that need cleaner internal network performance
                 </span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/70 sm:text-lg">
-                This service is built for business environments that need more than consumer-grade
-                routers and inconsistent Wi-Fi. Orbitlink designs the internal network layer for
-                offices, commercial suites, multi-tenant floors, and operational environments where
-                segmentation, coverage quality, device behavior, and support clarity matter.
+                Managed LAN and enterprise Wi-Fi in Ontario is built for business environments
+                that need more than consumer-grade routers and inconsistent Wi-Fi. Orbitlink
+                designs the internal network layer for offices, commercial suites, multi-tenant
+                floors, and operational environments where segmentation, coverage quality, device
+                behavior, and support clarity matter.
               </p>
 
               <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
-                Buyers often start with internet access, but internal LAN and Wi-Fi quality is what
-                employees, guests, and devices actually experience. A stronger internal network
-                turns connectivity into something cleaner, more stable, and easier to support.
+                Buyers often start with internet access, but internal LAN and Wi-Fi quality is
+                what employees, guests, and devices actually experience. A stronger internal
+                network turns connectivity into something cleaner, more stable, and easier to support.
+              </p>
+
+              <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
+                This service is commonly used by Ontario businesses that need better coverage,
+                guest and staff separation, stronger device handling, and a more professional
+                internal network support posture.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -334,12 +366,7 @@ export default function Page() {
                   "Cleaner support model",
                   "Business-grade internal networking",
                 ].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70"
-                  >
-                    {item}
-                  </span>
+                  <TrustPill key={item}>{item}</TrustPill>
                 ))}
               </div>
 
@@ -347,9 +374,18 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Request Network Design
                 </CTAButton>
+                <PhoneCTA>Call Now</PhoneCTA>
                 <CTAButton href="/services/business-fibre-internet">
                   Pair with Business Fibre
                 </CTAButton>
+              </div>
+
+              <div className="mt-3 text-xs text-[#FDE68A]">
+                Priority response for Ontario business requests this week
+              </div>
+
+              <div className="mt-2 text-xs text-white/55">
+                No obligation • Site-based review • Clear next step provided
               </div>
             </div>
 
@@ -381,6 +417,13 @@ export default function Page() {
                       </div>
                     ))}
                   </div>
+
+                  <div className="mt-5 flex flex-col gap-3">
+                    <CTAButton href="/contact#intake" primary>
+                      Request Network Design
+                    </CTAButton>
+                    <PhoneCTA>Call Now</PhoneCTA>
+                  </div>
                 </div>
               </SectionShell>
             </div>
@@ -401,7 +444,7 @@ export default function Page() {
               <div className="max-w-3xl">
                 <SectionEyebrow>OPERATIONAL VALUE</SectionEyebrow>
                 <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
-                  Stable internal networking is part of the customer experience
+                  Stable internal networking is part of the business experience
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
                   Buyers often focus first on internet access, but internal LAN and Wi-Fi quality
@@ -563,9 +606,7 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Request Network Design
                 </CTAButton>
-                <CTAButton href="/trust">
-                  Review Trust Posture
-                </CTAButton>
+                <PhoneCTA>Call Now</PhoneCTA>
               </div>
             </SectionShell>
           </div>
@@ -590,11 +631,12 @@ export default function Page() {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <CTAButton href="/services">
-                Explore Services
-              </CTAButton>
               <CTAButton href="/contact#intake" primary>
                 Request Network Design
+              </CTAButton>
+              <PhoneCTA>Call Now</PhoneCTA>
+              <CTAButton href="/services/business-fibre-internet">
+                Pair with Business Fibre
               </CTAButton>
             </div>
           </SectionShell>

@@ -9,16 +9,18 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
+const BUSINESS_PHONE_DISPLAY = "1-888-867-2480";
+const BUSINESS_PHONE_E164 = "+18888672480";
 
 export const metadata: Metadata = {
-  title: "IoT Connectivity & Secure Uplinks Ontario",
+  title: "IoT Connectivity & Secure Uplinks in Ontario",
   description:
-    "IoT connectivity for Ontario businesses. Secure uplinks for sensors, gateways, and devices with reliable performance. Check availability by address.",
+    "IoT connectivity for Ontario businesses. Secure uplinks for sensors, gateways, and devices with segmentation, monitoring-ready design, and cleaner operational control. Check availability and discuss your use case.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "IoT Connectivity & Secure Uplinks Ontario | Orbitlink",
+    title: "IoT Connectivity & Secure Uplinks in Ontario | Orbitlink",
     description:
-      "IoT connectivity for sensors, gateways, and managed devices with secure uplinks, segmentation posture, and monitoring-ready deployment.",
+      "IoT connectivity for sensors, gateways, and managed devices with secure uplinks, segmentation posture, and monitoring-ready deployment for Ontario businesses.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -28,15 +30,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink IoT Connectivity & Secure Uplinks",
+        alt: "Orbitlink IoT Connectivity & Secure Uplinks in Ontario",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "IoT Connectivity & Secure Uplinks Ontario | Orbitlink",
+    title: "IoT Connectivity & Secure Uplinks in Ontario | Orbitlink",
     description:
-      "Secure uplink design for sensors, gateways, and managed devices with an operator-grade business posture.",
+      "Secure uplink design for sensors, gateways, and managed devices with an operator-grade business posture in Ontario.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -132,6 +134,10 @@ const FAQ = [
     q: "Does Orbitlink review site feasibility before recommending an uplink pattern?",
     a: "Yes. Orbitlink considers location, device role, density, power conditions, physical layout, and operational requirements before recommending the design approach.",
   },
+  {
+    q: "Is secure IoT uplink design better than placing devices on a shared office network?",
+    a: "For many business environments, yes. A dedicated IoT posture usually provides cleaner segmentation, better control, and lower operational risk than leaving device fleets mixed into the main office network.",
+  },
 ] as const;
 
 function SectionShell({
@@ -167,6 +173,14 @@ function MetricPill({
   );
 }
 
+function TrustPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70">
+      {children}
+    </span>
+  );
+}
+
 function CTAButton({
   href,
   children,
@@ -190,6 +204,17 @@ function CTAButton({
   );
 }
 
+function PhoneCTA({ children }: { children: React.ReactNode }) {
+  return (
+    <a
+      href={`tel:${BUSINESS_PHONE_E164}`}
+      className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10"
+    >
+      {children}
+    </a>
+  );
+}
+
 export default function Page() {
   const schemaGraph = {
     "@context": "https://schema.org",
@@ -198,7 +223,7 @@ export default function Page() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "IoT Connectivity & Secure Uplinks Ontario",
+        name: "IoT Connectivity & Secure Uplinks in Ontario",
         description:
           "IoT connectivity and secure uplinks for Ontario businesses. Segmentation, monitoring-ready design, secure device boundaries, and cleaner deployment posture.",
         isPartOf: {
@@ -289,7 +314,7 @@ export default function Page() {
         <div className="relative mx-auto max-w-6xl px-6 pb-14 pt-16 sm:pb-16 sm:pt-20 lg:px-10 lg:pb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-white/70">
             <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-            AUREX Smart
+            Orbitlink IoT
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -297,22 +322,28 @@ export default function Page() {
               <SectionEyebrow>DEVICE CONNECTIVITY LAYER</SectionEyebrow>
 
               <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.02]">
-                IoT Connectivity & Secure Uplinks
+                IoT Connectivity & Secure Uplinks in Ontario
                 <span className="block text-white/62">
-                  for businesses that need cleaner device boundaries and safer network behavior.
+                  For businesses that need cleaner device boundaries and safer network behavior
                 </span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/70 sm:text-lg">
-                IoT connectivity should be secure by design, not improvised after deployment.
+                IoT connectivity in Ontario should be secure by design, not improvised after deployment.
                 Orbitlink supports uplink patterns for sensors, gateways, and managed devices with
-                an operator-grade posture built around segmentation, clean handoff, monitoring
-                readiness, and business-safe implementation.
+                an operator-grade posture built around segmentation, clean handoff, monitoring readiness,
+                and business-safe implementation.
               </p>
 
               <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
                 The goal is not just to connect devices. It is to place them in the right network
                 context so they can operate without weakening the rest of the business environment.
+              </p>
+
+              <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
+                This service is commonly used by Ontario businesses that need cleaner boundaries
+                for sensors, gateways, telemetry systems, remote equipment, and other connected
+                devices that should not sit on the same trust boundary as general office traffic.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -323,12 +354,7 @@ export default function Page() {
                   "Gateway and sensor support",
                   "Business-safe connectivity",
                 ].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70"
-                  >
-                    {item}
-                  </span>
+                  <TrustPill key={item}>{item}</TrustPill>
                 ))}
               </div>
 
@@ -336,9 +362,18 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Discuss Your IoT Use Case
                 </CTAButton>
+                <PhoneCTA>Call Now</PhoneCTA>
                 <CTAButton href="/services/managed-lan-wifi">
                   Pair with Managed LAN & Wi-Fi
                 </CTAButton>
+              </div>
+
+              <div className="mt-3 text-xs text-[#FDE68A]">
+                Priority response for Ontario business requests this week
+              </div>
+
+              <div className="mt-2 text-xs text-white/55">
+                No obligation • Site-based review • Clear next step provided
               </div>
             </div>
 
@@ -369,6 +404,13 @@ export default function Page() {
                         {item}
                       </div>
                     ))}
+                  </div>
+
+                  <div className="mt-5 flex flex-col gap-3">
+                    <CTAButton href="/contact#intake" primary>
+                      Discuss Your IoT Use Case
+                    </CTAButton>
+                    <PhoneCTA>Call Now</PhoneCTA>
                   </div>
                 </div>
               </SectionShell>
@@ -583,9 +625,7 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Discuss Your IoT Use Case
                 </CTAButton>
-                <CTAButton href="/trust">
-                  Review Trust Posture
-                </CTAButton>
+                <PhoneCTA>Call Now</PhoneCTA>
               </div>
             </SectionShell>
           </div>
@@ -610,11 +650,12 @@ export default function Page() {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <CTAButton href="/services">
-                Explore Services
-              </CTAButton>
               <CTAButton href="/contact#intake" primary>
                 Discuss Your IoT Use Case
+              </CTAButton>
+              <PhoneCTA>Call Now</PhoneCTA>
+              <CTAButton href="/services/managed-lan-wifi">
+                Pair with Managed LAN & Wi-Fi
               </CTAButton>
             </div>
           </SectionShell>

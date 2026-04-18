@@ -9,16 +9,18 @@ const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 const ORG_ID = `${SITE_URL}/#org`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
+const BUSINESS_PHONE_DISPLAY = "1-888-867-2480";
+const BUSINESS_PHONE_E164 = "+18888672480";
 
 export const metadata: Metadata = {
-  title: "LTE / 5G Continuity Architecture Ontario",
+  title: "LTE / 5G Continuity Architecture in Ontario",
   description:
-    "LTE and 5G backup connectivity for Ontario businesses. Reduce downtime with automatic failover and continuity support. Check availability by address.",
+    "LTE and 5G backup connectivity for Ontario businesses. Reduce downtime with structured failover, traffic prioritization, and continuity planning. Check availability and request continuity design.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "LTE / 5G Continuity Architecture Ontario | Orbitlink",
+    title: "LTE / 5G Continuity Architecture in Ontario | Orbitlink",
     description:
-      "Business continuity using LTE/5G failover with structured recovery and resilience planning.",
+      "Business continuity using LTE/5G failover with structured recovery, traffic prioritization, and resilience planning for Ontario businesses.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -28,15 +30,15 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink LTE / 5G Continuity",
+        alt: "Orbitlink LTE / 5G Continuity Architecture in Ontario",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "LTE / 5G Continuity | Orbitlink",
+    title: "LTE / 5G Continuity Architecture in Ontario | Orbitlink",
     description:
-      "Structured LTE/5G failover and continuity architecture for business resilience.",
+      "Structured LTE/5G failover and continuity architecture for Ontario business resilience.",
     images: [TWITTER_IMAGE_URL],
   },
 };
@@ -141,6 +143,10 @@ const FAQ = [
     q: "Do you offer this in Mississauga and Ontario?",
     a: "Yes. Orbitlink supports continuity planning for Mississauga and other Ontario business markets, subject to site scope, carrier feasibility, and service alignment.",
   },
+  {
+    q: "Is LTE / 5G continuity better than relying on a single wired circuit?",
+    a: "For businesses where downtime has a bigger operational impact, continuity architecture is often the stronger posture because it reduces reliance on one access path and creates a cleaner recovery model.",
+  },
 ] as const;
 
 function SectionShell({
@@ -176,6 +182,14 @@ function MetricPill({
   );
 }
 
+function TrustPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-2xl border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/68">
+      {children}
+    </span>
+  );
+}
+
 function CTAButton({
   href,
   children,
@@ -199,6 +213,17 @@ function CTAButton({
   );
 }
 
+function PhoneCTA({ children }: { children: React.ReactNode }) {
+  return (
+    <a
+      href={`tel:${BUSINESS_PHONE_E164}`}
+      className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10"
+    >
+      {children}
+    </a>
+  );
+}
+
 export default function Page() {
   const schemaGraph = {
     "@context": "https://schema.org",
@@ -207,7 +232,7 @@ export default function Page() {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "LTE / 5G Continuity Architecture Ontario",
+        name: "LTE / 5G Continuity Architecture in Ontario",
         description:
           "LTE and 5G continuity for Ontario businesses. Structured failover, traffic prioritization, and resilience planning. Check availability by address.",
         isPartOf: {
@@ -239,7 +264,7 @@ export default function Page() {
         },
         url: PAGE_URL,
         description:
-          "Business continuity design using LTE and 5G failover with traffic prioritization and recovery planning.",
+          "Business continuity design using LTE and 5G failover with traffic prioritization and recovery planning for Ontario businesses.",
       },
       {
         "@type": "BreadcrumbList",
@@ -299,7 +324,7 @@ export default function Page() {
         <div className="relative mx-auto max-w-6xl px-6 pb-14 pt-16 sm:pb-16 sm:pt-20 lg:px-10 lg:pb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-white/70">
             <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-            Continuity
+            Orbitlink Continuity
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -307,23 +332,30 @@ export default function Page() {
               <SectionEyebrow>BUSINESS RESILIENCE LAYER</SectionEyebrow>
 
               <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl lg:leading-[1.02]">
-                LTE / 5G Continuity Architecture
+                LTE / 5G Continuity Architecture in Ontario
                 <span className="block text-white/62">
-                  for businesses that cannot let one circuit define all uptime.
+                  For businesses that cannot let one circuit define all uptime
                 </span>
               </h1>
 
               <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/70 sm:text-lg">
-                Continuity is not a backup gadget. It is an operating decision. Orbitlink designs
-                LTE and 5G failover posture for businesses that need critical services to remain
-                reachable when primary access is disrupted, with clearer prioritization, cleaner
-                recovery expectations, and a more disciplined resilience model.
+                LTE / 5G continuity architecture in Ontario is not a backup gadget. It is an
+                operating decision. Orbitlink designs LTE and 5G failover posture for businesses
+                that need critical services to remain reachable when primary access is disrupted,
+                with clearer prioritization, cleaner recovery expectations, and a more disciplined
+                resilience model.
               </p>
 
               <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
                 The right continuity design depends on business priorities, site conditions, and
                 carrier behavior. That is why Orbitlink positions this as a scoped continuity
                 architecture rather than a one-size-fits-all backup device.
+              </p>
+
+              <p className="mt-4 max-w-3xl text-[15px] leading-7 text-white/62">
+                This service is commonly used by Ontario businesses that need a secondary-path
+                strategy for payments, voice, cloud applications, communications, and other
+                business-critical functions when a wired circuit goes down.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -334,12 +366,7 @@ export default function Page() {
                   "Carrier feasibility review",
                   "Business resilience model",
                 ].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70"
-                  >
-                    {item}
-                  </span>
+                  <TrustPill key={item}>{item}</TrustPill>
                 ))}
               </div>
 
@@ -347,9 +374,18 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Evaluate Continuity
                 </CTAButton>
+                <PhoneCTA>Call Now</PhoneCTA>
                 <CTAButton href="/services/business-fibre-internet">
                   Pair with Primary Access
                 </CTAButton>
+              </div>
+
+              <div className="mt-3 text-xs text-[#FDE68A]">
+                Priority response for Ontario business requests this week
+              </div>
+
+              <div className="mt-2 text-xs text-white/55">
+                No obligation • Site-based review • Clear next step provided
               </div>
             </div>
 
@@ -381,6 +417,13 @@ export default function Page() {
                       </div>
                     ))}
                   </div>
+
+                  <div className="mt-5 flex flex-col gap-3">
+                    <CTAButton href="/contact#intake" primary>
+                      Evaluate Continuity
+                    </CTAButton>
+                    <PhoneCTA>Call Now</PhoneCTA>
+                  </div>
                 </div>
               </SectionShell>
             </div>
@@ -406,8 +449,7 @@ export default function Page() {
                 <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
                   A real continuity posture starts with business priorities: what traffic must stay
                   alive, what recovery behavior is acceptable, and what the site can realistically
-                  support. That is what separates continuity design from a simple backup modem
-                  approach.
+                  support. That is what separates continuity design from a simple backup modem approach.
                 </p>
               </div>
 
@@ -462,8 +504,7 @@ export default function Page() {
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
                   Larger providers often signal maturity through lifecycle clarity. This section
-                  gives Orbitlink that same trust signal in simpler language buyers can understand
-                  quickly.
+                  gives Orbitlink that same trust signal in simpler language buyers can understand quickly.
                 </p>
               </div>
 
@@ -489,9 +530,9 @@ export default function Page() {
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
                   Continuity architecture should preserve the services that matter most to the site.
-                  That may include cloud platforms, line-of-business systems, payments, voice
-                  paths, remote access, or basic communications. The right design depends on the
-                  business model, not just the access technology.
+                  That may include cloud platforms, line-of-business systems, payments, voice paths,
+                  remote access, or basic communications. The right design depends on the business model,
+                  not just the access technology.
                 </p>
               </div>
 
@@ -528,8 +569,7 @@ export default function Page() {
                 <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
                   Continuity becomes more valuable when paired with the primary access strategy and
                   the rest of the site architecture. That includes broadband or DIA selection,
-                  internal network posture, static addressing requirements, and operational
-                  escalation expectations.
+                  internal network posture, static addressing requirements, and operational escalation expectations.
                 </p>
               </div>
 
@@ -600,9 +640,7 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Evaluate Continuity
                 </CTAButton>
-                <CTAButton href="/trust">
-                  Review Trust Posture
-                </CTAButton>
+                <PhoneCTA>Call Now</PhoneCTA>
               </div>
             </SectionShell>
           </div>
@@ -627,11 +665,12 @@ export default function Page() {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <CTAButton href="/services">
-                Explore Services
-              </CTAButton>
               <CTAButton href="/contact#intake" primary>
                 Evaluate Continuity
+              </CTAButton>
+              <PhoneCTA>Call Now</PhoneCTA>
+              <CTAButton href="/services/business-fibre-internet">
+                Pair with Primary Access
               </CTAButton>
             </div>
           </SectionShell>
