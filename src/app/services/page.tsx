@@ -1112,18 +1112,18 @@ export default function ServicesIndexPage() {
                 Get Availability & Pricing
               </Link>
 
-              <Link
+              <a
                 href="tel:+18888672480"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
                 Speak to a Network Advisor
-              </Link>
+              </a>
 
               <Link
-                href="/business-fibre-internet-ontario"
+                href="/services/business-fibre-internet"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
-                Explore Ontario Fibre
+                View Business Fibre Services
               </Link>
             </div>
 
