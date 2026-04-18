@@ -16,7 +16,7 @@ const BUSINESS_PHONE_E164 = "+18888672480";
 export const metadata: Metadata = {
   title: "Static IP Routing in Ontario",
   description:
-    "Static IP routing for Ontario businesses. Support VPNs, servers, fixed endpoints, and secure access with predictable routing and structured delivery. Check availability and request static IP options.",
+    "Static IP routing for Ontario businesses. Support VPNs, servers, and secure access with predictable routing. Check availability and request options.",
   alternates: {
     canonical: PAGE_URL,
   },

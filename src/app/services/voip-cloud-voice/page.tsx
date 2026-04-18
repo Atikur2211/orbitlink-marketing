@@ -16,7 +16,7 @@ const BUSINESS_PHONE_E164 = "+18888672480";
 export const metadata: Metadata = {
   title: "VoIP & Cloud Voice in Ontario",
   description:
-    "Business VoIP and cloud voice for Ontario organizations. Reliable calling, number porting, call routing, and cleaner business communications deployment. Check availability and request voice options.",
+    "Business VoIP and cloud voice for Ontario companies. Reliable calling, routing, and number porting. Check availability and request voice options.",
   alternates: {
     canonical: PAGE_URL,
   },

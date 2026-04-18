@@ -14,7 +14,7 @@ const BUSINESS_PHONE_E164 = "+18888672480";
 export const metadata: Metadata = {
   title: "Dedicated Internet Access in Ontario",
   description:
-    "Dedicated Internet Access for Ontario businesses that need stronger uptime, more predictable performance, and a more formal service model. Check availability and pricing for your address.",
+    "Dedicated internet access for Ontario businesses needing guaranteed uptime, stable performance, and SLA-backed service. Check availability and pricing.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Dedicated Internet Access in Ontario | Orbitlink",

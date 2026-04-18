@@ -14,7 +14,7 @@ const BUSINESS_PHONE_E164 = "+18888672480";
 export const metadata: Metadata = {
   title: "Colocation & Infrastructure Services in Ontario",
   description:
-    "Colocation and infrastructure services in Ontario. Rack space, cross-connects, and network deployment support for business environments. Discuss facility requirements and deployment planning.",
+    "Colocation and infrastructure services in Ontario. Rack space, cross-connects, and deployment support. Discuss requirements and availability.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Colocation & Infrastructure Services in Ontario | Orbitlink",

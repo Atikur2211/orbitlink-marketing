@@ -14,7 +14,7 @@ const BUSINESS_PHONE_E164 = "+18888672480";
 export const metadata: Metadata = {
   title: "Starlink Access Coordination in Ontario",
   description:
-    "Starlink internet coordination for Ontario businesses where fibre is unavailable, delayed, or impractical. Review feasibility, use-case fit, and deployment expectations.",
+    "Starlink internet coordination for Ontario businesses in remote or limited areas. Review feasibility and deployment options.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Starlink Access Coordination in Ontario | Orbitlink",

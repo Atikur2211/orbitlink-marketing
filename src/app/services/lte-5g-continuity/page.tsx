@@ -15,7 +15,7 @@ const BUSINESS_PHONE_E164 = "+18888672480";
 export const metadata: Metadata = {
   title: "LTE / 5G Continuity Architecture in Ontario",
   description:
-    "LTE and 5G backup connectivity for Ontario businesses. Reduce downtime with structured failover, traffic prioritization, and continuity planning. Check availability and request continuity design.",
+    "LTE and 5G backup internet for Ontario businesses. Reduce downtime with failover and continuity design. Check availability and request setup.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "LTE / 5G Continuity Architecture in Ontario | Orbitlink",

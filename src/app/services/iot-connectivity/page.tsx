@@ -15,7 +15,7 @@ const BUSINESS_PHONE_E164 = "+18888672480";
 export const metadata: Metadata = {
   title: "IoT Connectivity & Secure Uplinks in Ontario",
   description:
-    "IoT connectivity for Ontario businesses. Secure uplinks for sensors, gateways, and devices with segmentation, monitoring-ready design, and cleaner operational control. Check availability and discuss your use case.",
+    "IoT connectivity for Ontario businesses. Secure uplinks for devices with segmentation and monitoring-ready design. Discuss your use case.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "IoT Connectivity & Secure Uplinks in Ontario | Orbitlink",

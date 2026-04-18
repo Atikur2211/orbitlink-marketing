@@ -15,7 +15,7 @@ const BUSINESS_PHONE_E164 = "+18888672480";
 export const metadata: Metadata = {
   title: "Managed LAN & Enterprise Wi-Fi in Ontario",
   description:
-    "Managed LAN and enterprise Wi-Fi for Ontario businesses. Improve coverage, segmentation, device performance, and internal network reliability. Check availability and request network design.",
+    "Managed LAN and enterprise Wi-Fi for Ontario businesses. Improve coverage, segmentation, and network reliability. Request design and availability.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Managed LAN & Enterprise Wi-Fi in Ontario | Orbitlink",
