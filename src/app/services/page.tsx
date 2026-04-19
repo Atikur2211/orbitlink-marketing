@@ -1089,7 +1089,7 @@ export default function ServicesIndexPage() {
           <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[50svh] max-w-7xl items-center px-5 pb-8 pt-20 sm:min-h-[46svh] sm:pb-10 sm:pt-18 lg:min-h-[44svh] lg:px-10 lg:pb-12 lg:pt-16">
+        <div className="relative mx-auto flex min-h-[62svh] max-w-7xl items-center px-5 pb-10 pt-24 sm:min-h-[58svh] sm:pb-12 sm:pt-22 lg:min-h-[56svh] lg:px-10 lg:pb-14 lg:pt-20">
           <div className="w-full max-w-[46rem]">
             <Breadcrumbs />
 
