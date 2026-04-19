@@ -7,6 +7,7 @@ const staticPages = [
   "/",
   "/about",
   "/business-fibre-internet-ontario",
+  "/business-internet-ontario",
   "/business-internet-brampton",
   "/business-internet-milton",
   "/business-internet-mississauga",

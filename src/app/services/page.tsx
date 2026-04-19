@@ -391,7 +391,7 @@ function GroupBlock({
 
 function Breadcrumbs() {
   return (
-    <nav aria-label="Breadcrumb" className="mb-5">
+    <nav aria-label="Breadcrumb" className="mb-4">
       <div className="flex flex-wrap items-center gap-2 text-sm text-white/52">
         <Link href="/" className="transition hover:text-white">
           Home
@@ -1089,7 +1089,7 @@ export default function ServicesIndexPage() {
           <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[62svh] max-w-7xl items-center px-5 pb-10 pt-24 sm:min-h-[58svh] sm:pb-12 sm:pt-22 lg:min-h-[56svh] lg:px-10 lg:pb-14 lg:pt-20">
+        <div className="relative mx-auto flex min-h-[40svh] max-w-7xl items-center px-5 pb-6 pt-16 sm:min-h-[38svh] sm:pb-8 sm:pt-16 lg:min-h-[36svh] lg:px-10 lg:pb-10 lg:pt-14">
           <div className="w-full max-w-[46rem]">
             <Breadcrumbs />
 
@@ -1098,24 +1098,24 @@ export default function ServicesIndexPage() {
               Ontario Business Connectivity Services
             </div>
 
-            <h1 className="mt-5 max-w-4xl text-[2rem] font-semibold leading-[0.98] tracking-tight text-white sm:text-[3rem] lg:text-[4rem]">
+            <h1 className="mt-4 max-w-4xl text-[1.75rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[2.35rem] lg:text-[3.1rem]">
               Business connectivity services in Ontario
               <span className="block text-white/62">
                 fibre, dedicated internet, managed networking, backup, voice, and infrastructure
               </span>
             </h1>
 
-            <p className="mt-4 max-w-2xl text-[14px] leading-7 text-white/80 sm:text-[15px]">
+            <p className="mt-3 max-w-2xl text-[13px] leading-6 text-white/80 sm:text-[14px]">
               Explore business fibre, dedicated internet, managed Wi-Fi, backup connectivity,
               voice, routing, and infrastructure services. Start with what your business needs,
               then check availability and pricing.
             </p>
 
-            <div className="mt-3 text-sm text-white/70">
+            <div className="mt-2 text-[13px] text-white/70 sm:text-sm">
               Built for Ontario offices, clinics, warehouses, and growing business operations.
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2">
               {[
                 "Office and clinic environments",
                 "Warehouse and industrial",
@@ -1132,7 +1132,7 @@ export default function ServicesIndexPage() {
               ))}
             </div>
 
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <div className="mt-5 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
               <Link
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
@@ -1155,7 +1155,7 @@ export default function ServicesIndexPage() {
               </Link>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-4">
               <div className="inline-flex flex-wrap items-center gap-2 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-[11px] text-white/66 sm:text-xs">
                 <span className="rounded-full bg-white/10 px-2.5 py-1 text-white/78">
                   Business-only intake
