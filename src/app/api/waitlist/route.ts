@@ -4,6 +4,11 @@ import { Resend } from "resend";
 
 import { SERVICE_CATALOG } from "@/lib/siteStatus";
 import { findMatchingSubmission, upsertSubmission } from "@/lib/intake-store";
+import {
+  buildCustomerConfirmationEmail,
+  buildInternalLeadNotificationEmail,
+  getInternalLeadRecipients,
+} from "@/lib/lead-emails";
 
 export const runtime = "nodejs";
 
@@ -100,19 +105,12 @@ function buildRedirect(reqUrl: string, path: string, params: Record<string, stri
   return url;
 }
 
-function escapeHtml(s: string) {
-  return s
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
 function normalizeModuleName(input?: string, intent?: Intent): string | undefined {
   if (!input) return undefined;
+
   const raw = input.trim();
   if (!raw) return undefined;
+
   if (intent === "future-careers-pipeline") return raw;
 
   const lowered = raw.toLowerCase();
@@ -123,19 +121,6 @@ function normalizeModuleName(input?: string, intent?: Intent): string | undefine
   }
 
   return raw;
-}
-
-function formatModuleLabel(moduleName?: string) {
-  if (!moduleName) return "N/A";
-
-  const lowered = moduleName.toLowerCase();
-  const match = SERVICE_CATALOG.find(
-    (service) =>
-      service.name.toLowerCase() === lowered ||
-      service.publicLabel.toLowerCase() === lowered
-  );
-
-  return match?.publicLabel || moduleName;
 }
 
 function deriveRegionTag(location?: string) {
@@ -185,123 +170,6 @@ function buildTags(args: {
   );
 }
 
-async function notifyOps(sub: Submission, isUpdate: boolean) {
-  if (!resend) return;
-
-  const to = process.env.INTAKE_TO_EMAIL || "sales@orbitlink.ca";
-  const from = process.env.INTAKE_FROM_EMAIL || "Orbitlink <onboarding@resend.dev>";
-  const cc = process.env.INTAKE_CC_EMAIL || "concierge@orbitlink.ca";
-
-  const subject = isUpdate
-    ? `Orbitlink Lead Update — ${sub.company || sub.email} — ${formatModuleLabel(sub.module)}`
-    : `Orbitlink New Lead — ${sub.company || sub.email} — ${formatModuleLabel(sub.module)}`;
-
-  const html = `
-    <div style="font-family:Arial,Helvetica,sans-serif;line-height:1.6;color:#111;">
-      <h2>${escapeHtml(isUpdate ? "Orbitlink Lead Update" : "Orbitlink New Lead")}</h2>
-      <table style="border-collapse:collapse;">
-        <tr><td style="padding:6px 10px;color:#666;">Name</td><td style="padding:6px 10px;">${escapeHtml(sub.fullName || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Email</td><td style="padding:6px 10px;">${escapeHtml(sub.email)}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Company</td><td style="padding:6px 10px;">${escapeHtml(sub.company || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Address</td><td style="padding:6px 10px;">${escapeHtml(sub.location || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Service</td><td style="padding:6px 10px;">${escapeHtml(formatModuleLabel(sub.module))}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Timeline</td><td style="padding:6px 10px;">${escapeHtml(sub.timeline || "N/A")}</td></tr>
-        <tr><td style="padding:6px 10px;color:#666;">Sites</td><td style="padding:6px 10px;">${escapeHtml(sub.sites || "N/A")}</td></tr>
-      </table>
-
-      <h3 style="margin-top:18px;">Project Details</h3>
-      <div style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:10px;">
-        ${escapeHtml(sub.notes || "(none)")}
-      </div>
-    </div>
-  `;
-
-  const text = [
-    isUpdate ? "Orbitlink Lead Update" : "Orbitlink New Lead",
-    `Name: ${sub.fullName || "N/A"}`,
-    `Email: ${sub.email}`,
-    `Company: ${sub.company || "N/A"}`,
-    `Address: ${sub.location || "N/A"}`,
-    `Service: ${formatModuleLabel(sub.module)}`,
-    `Timeline: ${sub.timeline || "N/A"}`,
-    `Sites: ${sub.sites || "N/A"}`,
-    "",
-    "Project Details:",
-    sub.notes || "(none)",
-  ].join("\n");
-
-  await resend.emails.send({
-    to,
-    cc,
-    from,
-    subject,
-    html,
-    text,
-    replyTo: sub.email,
-  });
-}
-
-async function sendUserConfirmation(sub: Submission) {
-  if (!resend || !sub.email) return;
-
-  const from = process.env.INTAKE_FROM_EMAIL || "Orbitlink <onboarding@resend.dev>";
-  const subject = "Orbitlink request received — next step";
-
-  const greeting = sub.fullName ? `Hi ${sub.fullName},` : "Hi,";
-
-  const text = [
-    greeting,
-    "",
-    "Thank you for contacting Orbitlink.",
-    "",
-    "We’ve received your request and will review the address, service need, and business context before replying with the next recommended step.",
-    "",
-    `Service requested: ${formatModuleLabel(sub.module)}`,
-    `Address: ${sub.location || "N/A"}`,
-    "",
-    "Typical response time is within 1 business day.",
-    "",
-    "If your request is time-sensitive, call 1-888-867-2480.",
-    "",
-    "Best regards,",
-    "Orbitlink",
-    "Business Connectivity",
-    "concierge@orbitlink.ca",
-  ].join("\n");
-
-  const html = `
-    <div style="font-family:Arial,Helvetica,sans-serif;line-height:1.6;color:#111;">
-      <p>${escapeHtml(greeting)}</p>
-      <p>Thank you for contacting Orbitlink.</p>
-      <p>
-        We’ve received your request and will review the address, service need, and business context
-        before replying with the next recommended step.
-      </p>
-      <p>
-        <strong>Service requested:</strong> ${escapeHtml(formatModuleLabel(sub.module))}<br />
-        <strong>Address:</strong> ${escapeHtml(sub.location || "N/A")}
-      </p>
-      <p>Typical response time is within 1 business day.</p>
-      <p>If your request is time-sensitive, call <a href="tel:+18888672480">1-888-867-2480</a>.</p>
-      <p>
-        Best regards,<br />
-        Orbitlink<br />
-        Business Connectivity<br />
-        <a href="mailto:concierge@orbitlink.ca">concierge@orbitlink.ca</a>
-      </p>
-    </div>
-  `;
-
-  await resend.emails.send({
-    to: sub.email,
-    from,
-    subject,
-    text,
-    html,
-    replyTo: "concierge@orbitlink.ca",
-  });
-}
-
 export async function POST(req: Request) {
   try {
     const form = await req.formData();
@@ -325,7 +193,10 @@ export async function POST(req: Request) {
     const company = clean(form.get("company"), 160) || undefined;
     const role = clean(form.get("role"), 80) || undefined;
     const location = clean(form.get("location"), 180) || undefined;
-    const moduleName = normalizeModuleName(clean(form.get("module"), 120) || undefined, intent);
+    const moduleName = normalizeModuleName(
+      clean(form.get("module"), 120) || undefined,
+      intent
+    );
     const timeline = clean(form.get("timeline"), 80) || undefined;
     const sites = clean(form.get("sites"), 80) || undefined;
     const notes = clean(form.get("notes"), 1200) || undefined;
@@ -345,6 +216,7 @@ export async function POST(req: Request) {
       "";
 
     const now = new Date().toISOString();
+
     const existing = await findMatchingSubmission({
       email,
       intent,
@@ -399,14 +271,39 @@ export async function POST(req: Request) {
 
     const saved = await upsertSubmission(submission);
 
-    await Promise.allSettled([
-      notifyOps(saved, Boolean(existing)),
-      !existing ? sendUserConfirmation(saved) : Promise.resolve(),
-    ]);
+    if (resend) {
+      const internalRecipients = getInternalLeadRecipients();
+      const internalEmail = buildInternalLeadNotificationEmail(saved, Boolean(existing));
+      const customerEmail = buildCustomerConfirmationEmail(saved);
+
+      await Promise.allSettled([
+        resend.emails.send({
+          to: internalRecipients.to,
+          cc: internalRecipients.cc,
+          from: process.env.INTAKE_FROM_EMAIL || "Orbitlink <onboarding@resend.dev>",
+          subject: internalEmail.subject,
+          html: internalEmail.html,
+          text: internalEmail.text,
+          replyTo: saved.email,
+        }),
+
+        !existing
+          ? resend.emails.send({
+              to: saved.email,
+              from: process.env.INTAKE_FROM_EMAIL || "Orbitlink <onboarding@resend.dev>",
+              subject: customerEmail.subject,
+              html: customerEmail.html,
+              text: customerEmail.text,
+              replyTo: "concierge@orbitlink.ca",
+            })
+          : Promise.resolve(),
+      ]);
+    }
 
     return NextResponse.redirect(buildSuccessRedirect(req.url), 303);
   } catch (error) {
     console.error("waitlist POST error", error);
+
     return NextResponse.redirect(
       buildRedirect(req.url, "/contact", { error: "server" }),
       303
