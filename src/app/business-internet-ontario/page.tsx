@@ -1,7 +1,10 @@
+import TopNav from "@/components/TopNav";
+import SiteFooter from "@/components/SiteFooter";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import type { ReactNode } from "react";
+import Script from "next/script";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
@@ -309,12 +312,18 @@ function jsonLd() {
 
 export default function BusinessInternetOntarioPage() {
   return (
-    <div className="relative overflow-hidden">
-      <script
+    <>
+      <TopNav />
+
+      <Script
+        id="ld-json"
         type="application/ld+json"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
       />
-
+      
+      <main className="relative overflow-hidden bg-[#07090D] text-white">
+      
       <section className="relative overflow-hidden border-b border-white/10">
         <div className="absolute inset-0">
           <Image
@@ -658,6 +667,8 @@ export default function BusinessInternetOntarioPage() {
           </Surface>
         </div>
       </section>
-    </div>
+      </main>
+    <SiteFooter />
+  </>
   );
 }
