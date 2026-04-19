@@ -460,7 +460,7 @@ export default function ContactPage() {
             </div>
 
             <p className="mt-4 text-xs leading-5 text-white/50">
-              Business requests only. Full address and service type help speed up review.
+              Business requests only. Full address and service type help speed up review. Most Ontario business requests receive direction within 1 business day.
             </p>
           </div>
         </div>
