@@ -452,7 +452,7 @@ export default function Home() {
           <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(to_right,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:56px_56px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[70svh] max-w-7xl items-center px-4 pb-10 pt-20 sm:min-h-[76svh] sm:px-7 sm:pb-14 sm:pt-24 lg:min-h-[82vh] lg:px-10 lg:pb-16 lg:pt-20">
+        <div className="relative mx-auto flex min-h-[56svh] max-w-7xl items-center px-4 pb-8 pt-18 sm:min-h-[60svh] sm:px-7 sm:pb-10 sm:pt-20 lg:min-h-[64vh] lg:px-10 lg:pb-12 lg:pt-18">
           <div className="w-full max-w-4xl">
             <div className="w-full max-w-[390px] truncate rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] text-white/78 backdrop-blur sm:max-w-max sm:text-xs">
               <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
