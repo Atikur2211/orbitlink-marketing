@@ -1082,14 +1082,14 @@ export default function ServicesIndexPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[78%_center] sm:object-[72%_center] lg:object-center"
+            className="object-cover object-[74%_center] scale-[0.92] sm:object-[68%_center] sm:scale-[0.9] lg:object-center lg:scale-[0.88]"
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,7,12,0.46)_0%,rgba(4,7,12,0.66)_36%,rgba(4,7,12,0.90)_78%,rgba(4,7,12,0.98)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,7,12,0.95)_0%,rgba(4,7,12,0.62)_34%,rgba(4,7,12,0.18)_66%,rgba(4,7,12,0.84)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(250,204,21,0.07),transparent_24%),radial-gradient(circle_at_82%_18%,rgba(6,182,212,0.09),transparent_22%)]" />
           <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[62svh] max-w-7xl items-center px-5 pb-10 pt-24 sm:min-h-[58svh] sm:pb-12 sm:pt-22 lg:min-h-[56svh] lg:px-10 lg:pb-14 lg:pt-20">
+        <div className="relative mx-auto flex min-h-[50svh] max-w-7xl items-center px-5 pb-8 pt-22 sm:min-h-[46svh] sm:pb-10 sm:pt-20 lg:min-h-[44svh] lg:px-10 lg:pb-12 lg:pt-18">
           <div className="w-full max-w-[46rem]">
             <Breadcrumbs />
 
