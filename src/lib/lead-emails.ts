@@ -14,7 +14,7 @@ const BRAND_NAME = "Orbitlink";
 const BRAND_MARK = "Orbitlink™";
 const SITE_URL = "https://orbitlink.ca";
 const LOGO_URL = "https://orbitlink.ca/brand/orbitlink-email-logo.png";
-const PHONE_DISPLAY = "1-888-867-2480";
+const SUPPORT_PHONE = "1-888-867-2480";
 const GENERAL_EMAIL = "concierge@orbitlink.ca";
 const SALES_EMAIL = "concierge@orbitlink.ca";
 
@@ -90,7 +90,10 @@ function prettyService(value?: string) {
     "starlink agent": "Starlink Agent",
   };
 
-  return map[key] || prettyValue(value);
+  // Important:
+  // If the module is unknown, do NOT echo raw internal labels like "AUREX Internet".
+  // Use a clean fallback instead.
+  return map[key] || "Service Request";
 }
 
 function detailsTable(rows: Array<[string, string]>) {
@@ -98,8 +101,8 @@ function detailsTable(rows: Array<[string, string]>) {
     .map(
       ([label, value]) => `
         <tr>
-          <td style="padding:8px 0;color:#8ea0b8;width:170px;vertical-align:top;">${escapeHtml(label)}</td>
-          <td style="padding:8px 0;color:#e5edf7;vertical-align:top;">${escapeHtml(value)}</td>
+          <td style="padding:7px 0;color:#8ea0b8;width:165px;vertical-align:top;">${escapeHtml(label)}</td>
+          <td style="padding:7px 0;color:#e5edf7;vertical-align:top;">${escapeHtml(value)}</td>
         </tr>
       `
     )
@@ -112,9 +115,38 @@ function detailsTable(rows: Array<[string, string]>) {
   `;
 }
 
+function signatureBlock() {
+  return `
+    <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.08);font-family:Arial,Helvetica,sans-serif;">
+      <div style="font-size:15px;line-height:1.7;color:#e5edf7;font-weight:700;">
+        Orbitlink Concierge Team
+      </div>
+      <div style="font-size:14px;line-height:1.7;color:#d1d9e6;">
+        Business Support &amp; Service Coordination
+      </div>
+      <div style="font-size:14px;line-height:1.7;color:#d1d9e6;">
+        ${BRAND_MARK} · TIRAV Technologies Inc.
+      </div>
+      <div style="font-size:14px;line-height:1.7;color:#d1d9e6;">
+        Fibre Internet · Network Infrastructure · Support
+      </div>
+      <div style="font-size:14px;line-height:1.7;color:#d1d9e6;">
+        Support ${escapeHtml(SUPPORT_PHONE)}
+      </div>
+      <div style="font-size:14px;line-height:1.7;color:#d1d9e6;">
+        <a href="mailto:${GENERAL_EMAIL}" style="color:#d9e5f6;text-decoration:none;">${GENERAL_EMAIL}</a>
+        &nbsp; | &nbsp;
+        <a href="${SITE_URL}" style="color:#d9e5f6;text-decoration:none;">orbitlink.ca</a>
+      </div>
+      <div style="margin-top:8px;font-size:13px;line-height:1.7;color:#f6dd8f;">
+        Service requests &amp; availability →
+      </div>
+    </div>
+  `;
+}
+
 function wrapBrandEmail(args: {
   preheader: string;
-  eyebrow: string;
   title: string;
   intro?: string;
   bodyHtml: string;
@@ -122,7 +154,6 @@ function wrapBrandEmail(args: {
 }) {
   const {
     preheader,
-    eyebrow,
     title,
     intro,
     bodyHtml,
@@ -138,27 +169,15 @@ function wrapBrandEmail(args: {
     <div style="max-width:680px;margin:0 auto;padding:24px 16px;">
       <div style="border:1px solid rgba(255,255,255,0.08);border-radius:24px;overflow:hidden;background:#0f172a;box-shadow:0 20px 60px rgba(0,0,0,0.35);">
         
-        <div style="padding:24px 28px 22px 28px;background:linear-gradient(135deg,#081b3a 0%,#0f274f 58%,#0b1e3f 100%);border-bottom:1px solid rgba(255,255,255,0.08);">
+        <div style="padding:26px 28px 22px 28px;background:linear-gradient(135deg,#081b3a 0%,#0f274f 58%,#0b1e3f 100%);border-bottom:1px solid rgba(255,255,255,0.08);">
           <img
             src="${LOGO_URL}"
             width="150"
             alt="${escapeHtml(BRAND_NAME)}"
-            style="display:block;margin:0 0 14px 0;border:0;outline:none;text-decoration:none;"
+            style="display:block;margin:0 0 16px 0;border:0;outline:none;text-decoration:none;"
           />
 
-          <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.4;letter-spacing:0.18em;text-transform:uppercase;color:#c6d4e7;">
-            ${escapeHtml(BRAND_NAME)}
-          </div>
-
-          <div style="margin-top:6px;font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:700;line-height:1.2;color:#ffffff;">
-            ${escapeHtml(BRAND_MARK)}
-          </div>
-
-          <div style="margin-top:18px;font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.4;letter-spacing:0.16em;text-transform:uppercase;color:#f6dd8f;">
-            ${escapeHtml(eyebrow)}
-          </div>
-
-          <div style="margin-top:8px;font-family:Arial,Helvetica,sans-serif;font-size:28px;font-weight:700;line-height:1.2;color:#ffffff;">
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:28px;font-weight:700;line-height:1.2;color:#ffffff;">
             ${escapeHtml(title)}
           </div>
 
@@ -174,15 +193,7 @@ function wrapBrandEmail(args: {
         </div>
 
         <div style="padding:22px 28px;border-top:1px solid rgba(255,255,255,0.08);background:#0a1220;">
-          <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.7;color:#96a8bf;">
-            <strong style="color:#e7edf7;">${escapeHtml(BRAND_NAME)}</strong><br />
-            ${escapeHtml(BRAND_MARK)}<br />
-            Business Internet &amp; Network Infrastructure<br />
-            ${escapeHtml(PHONE_DISPLAY)}<br />
-            <a href="${SITE_URL}" style="color:#d9e5f6;text-decoration:none;">orbitlink.ca</a>
-          </div>
-
-          <div style="margin-top:16px;font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.7;color:#7f90a6;">
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.7;color:#7f90a6;">
             ${escapeHtml(footerNote)}
           </div>
 
@@ -213,11 +224,11 @@ export function buildCustomerConfirmationEmail(lead: LeadRequest) {
     ["Service", service],
     ["Service Location", location],
     ["Timeline", prettyTimeline(lead.timeline)],
+    ...(lead.sites ? [["Sites", prettySites(lead.sites)] as [string, string]] : []),
   ]);
 
   const html = wrapBrandEmail({
     preheader: "Your Orbitlink request has been received.",
-    eyebrow: BRAND_MARK,
     title: "Request Received",
     intro: "Your Orbitlink business service enquiry has been received and is now under review.",
     bodyHtml: `
@@ -250,9 +261,10 @@ export function buildCustomerConfirmationEmail(lead: LeadRequest) {
         </p>
 
         <p style="margin:18px 0 0;font-size:15px;line-height:1.7;color:#d1d9e6;">
-          Regards,<br />
-          ${escapeHtml(BRAND_MARK)} Operations
+          Regards,
         </p>
+
+        ${signatureBlock()}
       </div>
     `,
   });
@@ -271,14 +283,19 @@ export function buildCustomerConfirmationEmail(lead: LeadRequest) {
     `Service: ${service}`,
     `Service Location: ${location}`,
     `Timeline: ${prettyTimeline(lead.timeline)}`,
+    ...(lead.sites ? [`Sites: ${prettySites(lead.sites)}`] : []),
     "",
     "Typical response time is within 1 business day.",
     "",
     "If you require support, clarification, or want to add context to the request, please reply to this email and our team will assist.",
     "",
-    `${BRAND_MARK} Operations`,
-    PHONE_DISPLAY,
-    SITE_URL,
+    "Orbitlink Concierge Team",
+    "Business Support & Service Coordination",
+    `${BRAND_MARK} · TIRAV Technologies Inc.`,
+    "Fibre Internet · Network Infrastructure · Support",
+    `Support ${SUPPORT_PHONE}`,
+    `${GENERAL_EMAIL} | ${SITE_URL}`,
+    "Service requests & availability",
   ].join("\n");
 
   return { subject, html, text };
@@ -288,24 +305,26 @@ export function buildInternalLeadNotificationEmail(
   lead: LeadRequest,
   isUpdate = false
 ) {
+  const company = prettyValue(lead.company);
+  const service = prettyService(lead.module);
+
   const subject = isUpdate
-    ? `${BRAND_NAME} Lead Update · ${prettyValue(lead.company)} · ${prettyService(lead.module)}`
-    : `${BRAND_NAME} New Lead · ${prettyValue(lead.company)} · ${prettyService(lead.module)}`;
+    ? `${BRAND_NAME} Lead Update · ${company} · ${service}`
+    : `${BRAND_NAME} New Lead · ${company} · ${service}`;
 
   const bodyRows: Array<[string, string]> = [
     ["Name", prettyValue(lead.fullName)],
     ["Email", prettyValue(lead.email)],
-    ["Company", prettyValue(lead.company)],
+    ["Company", company],
     ["Role", prettyRole(lead.role)],
     ["Address", prettyValue(lead.location)],
-    ["Service", prettyService(lead.module)],
+    ["Service", service],
     ["Timeline", prettyTimeline(lead.timeline)],
     ["Sites", prettySites(lead.sites)],
   ];
 
   const html = wrapBrandEmail({
     preheader: isUpdate ? "An existing lead was updated." : "A new lead has been submitted.",
-    eyebrow: BRAND_NAME,
     title: isUpdate ? "Lead Updated" : "New Lead",
     intro: isUpdate
       ? "An existing Orbitlink lead record has been updated through the intake workflow."
@@ -333,6 +352,8 @@ export function buildInternalLeadNotificationEmail(
         <p style="margin:18px 0 0;font-size:15px;line-height:1.7;color:#d1d9e6;">
           Reply directly to this message to respond to the lead.
         </p>
+
+        ${signatureBlock()}
       </div>
     `,
   });
@@ -342,15 +363,23 @@ export function buildInternalLeadNotificationEmail(
     "",
     `Name: ${prettyValue(lead.fullName)}`,
     `Email: ${prettyValue(lead.email)}`,
-    `Company: ${prettyValue(lead.company)}`,
+    `Company: ${company}`,
     `Role: ${prettyRole(lead.role)}`,
     `Address: ${prettyValue(lead.location)}`,
-    `Service: ${prettyService(lead.module)}`,
+    `Service: ${service}`,
     `Timeline: ${prettyTimeline(lead.timeline)}`,
     `Sites: ${prettySites(lead.sites)}`,
     "",
     "Project Details:",
     prettyValue(lead.notes),
+    "",
+    "Orbitlink Concierge Team",
+    "Business Support & Service Coordination",
+    `${BRAND_MARK} · TIRAV Technologies Inc.`,
+    "Fibre Internet · Network Infrastructure · Support",
+    `Support ${SUPPORT_PHONE}`,
+    `${GENERAL_EMAIL} | ${SITE_URL}`,
+    "Service requests & availability",
   ].join("\n");
 
   return { subject, html, text };
