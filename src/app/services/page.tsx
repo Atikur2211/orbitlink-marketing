@@ -1121,7 +1121,6 @@ export default function ServicesIndexPage() {
                 "Warehouse and industrial",
                 "Multi-site operations",
                 "Critical connectivity",
-                "Business-only review",
               ].map((item) => (
                 <span
                   key={item}
