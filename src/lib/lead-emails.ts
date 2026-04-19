@@ -13,6 +13,7 @@ export type LeadRequest = {
 const BRAND_NAME = "Orbitlink";
 const BRAND_MARK = "Orbitlink™";
 const SITE_URL = "https://orbitlink.ca";
+const CONTACT_URL = "https://orbitlink.ca/contact";
 const LOGO_URL = "https://orbitlink.ca/brand/orbitlink-email-logo.png";
 const SUPPORT_PHONE = "1-888-867-2480";
 const GENERAL_EMAIL = "concierge@orbitlink.ca";
@@ -90,9 +91,6 @@ function prettyService(value?: string) {
     "starlink agent": "Starlink Agent",
   };
 
-  // Important:
-  // If the module is unknown, do NOT echo raw internal labels like "AUREX Internet".
-  // Use a clean fallback instead.
   return map[key] || "Service Request";
 }
 
@@ -117,29 +115,28 @@ function detailsTable(rows: Array<[string, string]>) {
 
 function signatureBlock() {
   return `
-    <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.08);font-family:Arial,Helvetica,sans-serif;">
+    <div style="margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);font-family:Arial,Helvetica,sans-serif;">
       <div style="font-size:15px;line-height:1.7;color:#e5edf7;font-weight:700;">
         Orbitlink Concierge Team
       </div>
-      <div style="font-size:14px;line-height:1.7;color:#d1d9e6;">
+      <div style="font-size:13px;line-height:1.7;color:#d1d9e6;">
         Business Support &amp; Service Coordination
       </div>
-      <div style="font-size:14px;line-height:1.7;color:#d1d9e6;">
+      <div style="font-size:13px;line-height:1.7;color:#d1d9e6;">
         ${BRAND_MARK} · TIRAV Technologies Inc.
       </div>
-      <div style="font-size:14px;line-height:1.7;color:#d1d9e6;">
-        Fibre Internet · Network Infrastructure · Support
-      </div>
-      <div style="font-size:14px;line-height:1.7;color:#d1d9e6;">
+      <div style="font-size:13px;line-height:1.7;color:#d1d9e6;">
         Support ${escapeHtml(SUPPORT_PHONE)}
       </div>
-      <div style="font-size:14px;line-height:1.7;color:#d1d9e6;">
+      <div style="font-size:13px;line-height:1.7;color:#d1d9e6;">
         <a href="mailto:${GENERAL_EMAIL}" style="color:#d9e5f6;text-decoration:none;">${GENERAL_EMAIL}</a>
         &nbsp; | &nbsp;
         <a href="${SITE_URL}" style="color:#d9e5f6;text-decoration:none;">orbitlink.ca</a>
       </div>
-      <div style="margin-top:8px;font-size:13px;line-height:1.7;color:#f6dd8f;">
-        Service requests &amp; availability →
+      <div style="margin-top:8px;font-size:13px;line-height:1.7;">
+        <a href="${CONTACT_URL}" style="color:#f6dd8f;text-decoration:none;font-weight:600;">
+          Service requests &amp; availability →
+        </a>
       </div>
     </div>
   `;
@@ -169,15 +166,15 @@ function wrapBrandEmail(args: {
     <div style="max-width:680px;margin:0 auto;padding:24px 16px;">
       <div style="border:1px solid rgba(255,255,255,0.08);border-radius:24px;overflow:hidden;background:#0f172a;box-shadow:0 20px 60px rgba(0,0,0,0.35);">
         
-        <div style="padding:26px 28px 22px 28px;background:linear-gradient(135deg,#081b3a 0%,#0f274f 58%,#0b1e3f 100%);border-bottom:1px solid rgba(255,255,255,0.08);">
+        <div style="padding:24px 28px 20px 28px;background:linear-gradient(135deg,#081b3a 0%,#0f274f 58%,#0b1e3f 100%);border-bottom:1px solid rgba(255,255,255,0.08);">
           <img
             src="${LOGO_URL}"
-            width="150"
+            width="140"
             alt="${escapeHtml(BRAND_NAME)}"
-            style="display:block;margin:0 0 16px 0;border:0;outline:none;text-decoration:none;"
+            style="display:block;margin:0 0 14px 0;border:0;outline:none;text-decoration:none;"
           />
 
-          <div style="font-family:Arial,Helvetica,sans-serif;font-size:28px;font-weight:700;line-height:1.2;color:#ffffff;">
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:30px;font-weight:700;line-height:1.15;color:#ffffff;">
             ${escapeHtml(title)}
           </div>
 
@@ -292,10 +289,9 @@ export function buildCustomerConfirmationEmail(lead: LeadRequest) {
     "Orbitlink Concierge Team",
     "Business Support & Service Coordination",
     `${BRAND_MARK} · TIRAV Technologies Inc.`,
-    "Fibre Internet · Network Infrastructure · Support",
     `Support ${SUPPORT_PHONE}`,
     `${GENERAL_EMAIL} | ${SITE_URL}`,
-    "Service requests & availability",
+    `Service requests & availability: ${CONTACT_URL}`,
   ].join("\n");
 
   return { subject, html, text };
@@ -376,10 +372,9 @@ export function buildInternalLeadNotificationEmail(
     "Orbitlink Concierge Team",
     "Business Support & Service Coordination",
     `${BRAND_MARK} · TIRAV Technologies Inc.`,
-    "Fibre Internet · Network Infrastructure · Support",
     `Support ${SUPPORT_PHONE}`,
     `${GENERAL_EMAIL} | ${SITE_URL}`,
-    "Service requests & availability",
+    `Service requests & availability: ${CONTACT_URL}`,
   ].join("\n");
 
   return { subject, html, text };
