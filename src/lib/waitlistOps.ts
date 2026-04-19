@@ -1,5 +1,3 @@
-// src/lib/waitlistOps.ts
-
 export type WaitlistRecord = {
   id?: string;
   createdAt?: string;
@@ -20,7 +18,8 @@ export type WaitlistRecord = {
   sites?: string;
   notes?: string;
 
-  // ✅ OPS fields (internal)
+  // OPS fields
+  reviewStatus?: "new" | "reviewed" | "archived";
   reviewedAt?: string;
   reviewedBy?: string;
   reviewNote?: string;
@@ -44,11 +43,16 @@ function cleanEmail(v: unknown): string {
   return typeof v === "string" ? v.trim().toLowerCase() : "";
 }
 
+function normalizeStatus(
+  v?: string
+): "new" | "reviewed" | "archived" | undefined {
+  if (v === "new" || v === "reviewed" || v === "archived") return v;
+  return undefined;
+}
+
 /**
  * Normalize unknown input into a stable WaitlistRecord.
- * - No `any`
- * - Defensive parsing
- * - Rejects missing/invalid email
+ * Supports both camelCase and snake_case inputs.
  */
 export function normalizeRecord(x: unknown): WaitlistRecord | null {
   if (!isRecord(x)) return null;
@@ -56,18 +60,51 @@ export function normalizeRecord(x: unknown): WaitlistRecord | null {
   const email = cleanEmail(x.email);
   if (!email) return null;
 
-  const createdAt = asString(x.createdAt) ?? asString(x.ts) ?? undefined;
+  const createdAt =
+    asString(x.createdAt) ??
+    asString(x.created_at) ??
+    asString(x.ts) ??
+    undefined;
+
+  const updatedAt =
+    asString(x.updatedAt) ??
+    asString(x.updated_at) ??
+    undefined;
+
+  const reviewStatus = normalizeStatus(
+    asString(x.reviewStatus) ?? asString(x.review_status)
+  );
+
+  const reviewedAt =
+    asString(x.reviewedAt) ??
+    asString(x.reviewed_at) ??
+    undefined;
+
+  const reviewedBy =
+    asString(x.reviewedBy) ??
+    asString(x.reviewed_by) ??
+    undefined;
+
+  const reviewNote =
+    asString(x.reviewNote) ??
+    asString(x.review_note) ??
+    undefined;
+
+  const lastContactedAt =
+    asString(x.lastContactedAt) ??
+    asString(x.last_contacted_at) ??
+    undefined;
 
   return {
     id: asString(x.id),
     createdAt,
-    updatedAt: asString(x.updatedAt),
+    updatedAt,
 
     source: asString(x.source),
     intent: asString(x.intent),
 
     email,
-    fullName: asString(x.fullName),
+    fullName: asString(x.fullName) ?? asString(x.full_name),
     company: asString(x.company),
     role: asString(x.role),
     location: asString(x.location),
@@ -77,29 +114,36 @@ export function normalizeRecord(x: unknown): WaitlistRecord | null {
     sites: asString(x.sites),
     notes: asString(x.notes),
 
-    reviewedAt: asString(x.reviewedAt),
-    reviewedBy: asString(x.reviewedBy),
-    reviewNote: asString(x.reviewNote),
-    lastContactedAt: asString(x.lastContactedAt),
+    reviewStatus,
+    reviewedAt,
+    reviewedBy,
+    reviewNote,
+    lastContactedAt,
 
     ts: asString(x.ts),
   };
 }
 
+export function inferReviewStatus(
+  r: WaitlistRecord
+): "new" | "reviewed" | "archived" {
+  if (r.reviewStatus === "archived") return "archived";
+  if (r.reviewStatus === "reviewed") return "reviewed";
+  if (r.reviewedAt || r.reviewNote) return "reviewed";
+  return "new";
+}
+
 export function scoreRecord(r: WaitlistRecord): number {
   let s = 0;
 
-  // Intent
   if (r.intent === "availability_pricing") s += 35;
   if (r.intent === "verification-pack") s += 45;
   if (r.intent === "early-access") s += 20;
 
-  // Source
   if (r.source === "contact") s += 20;
   if (r.source === "trust") s += 10;
   if (r.source === "solutions") s += 8;
 
-  // Role
   if (r.role === "business_owner") s += 22;
   if (r.role === "business_buyer") s += 24;
   if (r.role === "it_network") s += 20;
@@ -107,13 +151,11 @@ export function scoreRecord(r: WaitlistRecord): number {
   if (r.role === "property_management") s += 16;
   if (r.role === "partner_vendor") s += 8;
 
-  // Legacy role support
   if (r.role === "auditor") s += 30;
   if (r.role === "enterprise") s += 24;
   if (r.role === "isp") s += 16;
   if (r.role === "partner") s += 8;
 
-  // Completeness
   if (r.company) s += 10;
   if (r.fullName) s += 8;
   if (r.location) s += 14;
@@ -122,17 +164,14 @@ export function scoreRecord(r: WaitlistRecord): number {
   if (r.sites) s += 6;
   if (r.volume) s += 4;
 
-  // Timeline urgency
   if (r.timeline === "asap") s += 10;
   if (r.timeline === "within_30_days") s += 8;
   if (r.timeline === "within_60_90_days") s += 5;
 
-  // Multi-site potential
   if (r.sites === "2_5") s += 4;
   if (r.sites === "6_20") s += 8;
   if (r.sites === "20_plus") s += 12;
 
-  // Notes quality
   const n = (r.notes || "").trim();
   if (n.length >= 40) s += 6;
   if (n.length >= 140) s += 6;
@@ -160,9 +199,9 @@ export function formatShortDate(ts?: string) {
 }
 
 export function uniqSorted(values: (string | undefined)[]) {
-  return Array.from(new Set(values.map((v) => (v || "").trim()).filter(Boolean))).sort((a, b) =>
-    a.localeCompare(b)
-  );
+  return Array.from(
+    new Set(values.map((v) => (v || "").trim()).filter(Boolean))
+  ).sort((a, b) => a.localeCompare(b));
 }
 
 export function makeMailtoSubject(r: WaitlistRecord) {

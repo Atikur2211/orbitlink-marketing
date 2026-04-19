@@ -4,6 +4,7 @@ import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
+const LEGAL_NAME = "TIRAV Technologies Inc.";
 const PAGE_PATH = "/services/business-fibre-internet";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
@@ -254,7 +255,9 @@ function SectionShell({
   className?: string;
 }) {
   return (
-    <div className={`rounded-[30px] border border-white/10 bg-white/[0.035] ${className}`}>
+    <div
+      className={`rounded-[30px] border border-white/10 bg-white/[0.035] backdrop-blur-sm ${className}`}
+    >
       {children}
     </div>
   );
@@ -397,7 +400,7 @@ export default function Page() {
                   <CTAButton href="/contact#intake" primary>
                     Get Availability & Pricing
                   </CTAButton>
-                  <PhoneCTA>Call Now</PhoneCTA>
+                  <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
                   <CTAButton href="/services/dedicated-internet-access">
                     Compare Fibre vs Dedicated
                   </CTAButton>
@@ -450,7 +453,7 @@ export default function Page() {
                       <CTAButton href="/contact#intake" primary>
                         Get Availability & Pricing
                       </CTAButton>
-                      <PhoneCTA>Call Now</PhoneCTA>
+                      <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
                     </div>
                   </div>
                 </SectionShell>
@@ -473,7 +476,7 @@ export default function Page() {
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:min-w-[540px]">
                   <TrustPill>Business-first service path</TrustPill>
                   <TrustPill>Availability checked per address</TrustPill>
-                  <TrustPill>Operated by TIRAV Technologies Inc.</TrustPill>
+                  <TrustPill>Operated by {LEGAL_NAME}</TrustPill>
                   <TrustPill>Ontario-focused commercial coverage</TrustPill>
                 </div>
               </div>
@@ -484,6 +487,34 @@ export default function Page() {
 
       <section className="mx-auto max-w-6xl px-5 py-12 sm:px-7 sm:py-14 lg:px-10 lg:py-16">
         <div className="space-y-4 sm:space-y-6">
+          <SectionShell className="p-6 md:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>BUYER FLOW</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+                  Need a broader starting point before choosing fibre?
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/70">
+                  Some buyers start here already knowing fibre is the right fit. Others are still comparing fibre, dedicated internet access, and continuity options.
+                </p>
+                <p className="mt-3 text-sm leading-6 text-white/65">
+                  If you are still deciding, start with the Ontario comparison page first and then come back to this service page once the service model is clear.
+                </p>
+                <p className="mt-4 text-sm leading-7 text-white/75">
+                  <Link
+                    href="/business-internet-ontario"
+                    className="underline decoration-white/30 underline-offset-4 hover:text-white"
+                  >
+                    Compare business internet options in Ontario
+                  </Link>{" "}
+                  to review fibre, dedicated internet, and backup connectivity in one place.
+                </p>
+              </div>
+
+              <MetricPill label="FLOW" value="Compare → Choose → Deploy" />
+            </div>
+          </SectionShell>
+
           <SectionShell className="p-6 md:p-8">
             <SectionEyebrow>WHY BUSINESSES BUY THIS</SectionEyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight">
@@ -635,7 +666,7 @@ export default function Page() {
               <CTAButton href="/contact#intake" primary>
                 Get Availability & Pricing
               </CTAButton>
-              <PhoneCTA>Call Now</PhoneCTA>
+              <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
             </div>
           </SectionShell>
 
@@ -688,6 +719,37 @@ export default function Page() {
             </div>
           </SectionShell>
 
+          <SectionShell className="p-6 md:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>COMPARISON PATH</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+                  Still comparing options?
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/70">
+                  Many Ontario buyers review fibre, dedicated internet access, and backup connectivity before choosing a final service path.
+                </p>
+                <p className="mt-3 text-sm leading-6 text-white/65">
+                  That is normal for offices, clinics, warehouses, and commercial locations where uptime, scale, and future upgrades all matter.
+                </p>
+              </div>
+
+              <MetricPill label="INTERNAL LOOP" value="Closed and crawlable" />
+            </div>
+
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <CTAButton href="/business-internet-ontario">
+                Compare All Business Internet Options
+              </CTAButton>
+              <CTAButton href="/services/dedicated-internet-access">
+                View Dedicated Internet
+              </CTAButton>
+              <CTAButton href="/contact#intake" primary>
+                Get Availability & Pricing
+              </CTAButton>
+            </div>
+          </SectionShell>
+
           <p className="text-xs text-white/55">
             Availability, install method, and optional features vary by building infrastructure,
             serviceability, and access design. Orbitlink confirms fit per address and avoids
@@ -717,7 +779,7 @@ export default function Page() {
             <CTAButton href="/contact#intake" primary>
               Get Availability & Pricing
             </CTAButton>
-            <PhoneCTA>Call Now</PhoneCTA>
+            <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
             <CTAButton href="/services/dedicated-internet-access">
               Compare Fibre vs Dedicated
             </CTAButton>

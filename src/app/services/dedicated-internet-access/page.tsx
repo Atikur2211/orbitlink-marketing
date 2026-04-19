@@ -4,6 +4,7 @@ import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
+const LEGAL_NAME = "TIRAV Technologies Inc.";
 const PAGE_PATH = "/services/dedicated-internet-access";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const ORG_ID = `${SITE_URL}/#org`;
@@ -14,7 +15,7 @@ const BUSINESS_PHONE_E164 = "+18888672480";
 export const metadata: Metadata = {
   title: "Dedicated Internet Access in Ontario",
   description:
-    "Dedicated internet access for Ontario businesses needing guaranteed uptime, stable performance, and SLA-backed service. Check availability and pricing.",
+    "Dedicated internet access for Ontario businesses needing stronger uptime, predictable performance, and a more formal service model.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Dedicated Internet Access in Ontario | Orbitlink",
@@ -144,7 +145,6 @@ function jsonLd() {
           "@type": "ServiceChannel",
           serviceUrl: `${SITE_URL}/contact#intake`,
         },
-        termsOfService: `${SITE_URL}/legal/terms`,
       },
       {
         "@type": "FAQPage",
@@ -243,7 +243,7 @@ function SectionShell({
   className?: string;
 }) {
   return (
-    <div className={`rounded-[30px] border border-white/10 bg-white/[0.04] ${className}`}>
+    <div className={`rounded-[30px] border border-white/10 bg-white/[0.04] backdrop-blur-sm ${className}`}>
       {children}
     </div>
   );
@@ -387,7 +387,7 @@ export default function Page() {
                   <CTAButton href="/contact#intake" primary>
                     Check DIA Availability
                   </CTAButton>
-                  <PhoneCTA>Call Now</PhoneCTA>
+                  <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
                   <CTAButton href="/services/business-fibre-internet">
                     Compare DIA vs Business Fibre
                   </CTAButton>
@@ -440,7 +440,7 @@ export default function Page() {
                       <CTAButton href="/contact#intake" primary>
                         Check DIA Availability
                       </CTAButton>
-                      <PhoneCTA>Call Now</PhoneCTA>
+                      <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
                     </div>
                   </div>
                 </SectionShell>
@@ -464,7 +464,7 @@ export default function Page() {
                   <TrustPill>Business-only service path</TrustPill>
                   <TrustPill>Availability checked per address</TrustPill>
                   <TrustPill>Ontario commercial focus</TrustPill>
-                  <TrustPill>Operated by TIRAV Technologies Inc.</TrustPill>
+                  <TrustPill>Operated by {LEGAL_NAME}</TrustPill>
                 </div>
               </div>
             </div>
@@ -480,6 +480,36 @@ export default function Page() {
 
       <section className="mx-auto max-w-6xl px-5 py-12 sm:px-7 sm:py-14 lg:px-10 lg:py-16">
         <div className="space-y-4 sm:space-y-6">
+          <SectionShell className="p-6 sm:p-7">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>BUYER FLOW</SectionEyebrow>
+                <h2 className="mt-3 text-xl font-semibold tracking-tight text-white">
+                  Need a broader starting point before choosing DIA?
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
+                  Some buyers come here already knowing they need a higher-assurance access model.
+                  Others are still comparing dedicated internet, business fibre, and continuity options.
+                </p>
+                <p className="mt-3 text-sm leading-6 text-white/65 sm:text-[15px]">
+                  If you are still evaluating service paths, use the Ontario comparison page first
+                  and then return here once the service model is clear.
+                </p>
+                <p className="mt-4 text-sm leading-7 text-white/75">
+                  <Link
+                    href="/business-internet-ontario"
+                    className="underline decoration-white/30 underline-offset-4 hover:text-white"
+                  >
+                    Compare business internet options in Ontario
+                  </Link>{" "}
+                  to review fibre, dedicated internet, and backup connectivity in one place.
+                </p>
+              </div>
+
+              <MetricPill label="FLOW" value="Compare → Choose → Deploy" />
+            </div>
+          </SectionShell>
+
           <SectionShell className="p-6 sm:p-7">
             <SectionEyebrow>WHY BUSINESSES BUY DIA</SectionEyebrow>
 
@@ -677,6 +707,37 @@ export default function Page() {
               </div>
             </SectionShell>
           </div>
+
+          <SectionShell className="p-6 sm:p-7 md:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>COMPARISON PATH</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+                  Still comparing options?
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/70">
+                  Many Ontario buyers review dedicated internet, business fibre, and backup connectivity before choosing a final service path.
+                </p>
+                <p className="mt-3 text-sm leading-6 text-white/65">
+                  That is normal for healthcare, logistics, warehouses, offices, and multi-site operations where uptime, resilience, and future growth all matter.
+                </p>
+              </div>
+
+              <MetricPill label="INTERNAL LOOP" value="Closed and crawlable" />
+            </div>
+
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <CTAButton href="/business-internet-ontario">
+                Compare All Business Internet Options
+              </CTAButton>
+              <CTAButton href="/services/business-fibre-internet">
+                View Business Fibre
+              </CTAButton>
+              <CTAButton href="/contact#intake" primary>
+                Check DIA Availability
+              </CTAButton>
+            </div>
+          </SectionShell>
         </div>
 
         <SectionShell className="mt-6 p-6 sm:p-7 md:p-8">
@@ -698,7 +759,7 @@ export default function Page() {
             <CTAButton href="/contact#intake" primary>
               Check DIA Availability
             </CTAButton>
-            <PhoneCTA>Call Now</PhoneCTA>
+            <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
             <CTAButton href="/services/business-fibre-internet">
               Compare DIA vs Business Fibre
             </CTAButton>

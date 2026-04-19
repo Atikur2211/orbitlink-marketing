@@ -353,8 +353,8 @@ export default function ContactPage() {
     <PageShell
       eyebrow="GET AVAILABILITY"
       title="Get Internet Options for Your Business Location"
-      subtitle="Tell us your address. We’ll show what’s available, pricing, and the best setup."
-      pills={["Business-only service", "Ontario coverage", "Fast response"]}
+      subtitle="Tell us your address. We’ll review availability, likely service fit, and the best next step for your business."
+      pills={["Business-only service", "Ontario coverage", "Address-first review"]}
       actions={[
         { label: "Get Availability & Pricing", href: "#intake", variant: "primary" },
         {
@@ -385,11 +385,27 @@ export default function ContactPage() {
           </h2>
 
           <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
-            We check your building, providers, and the best setup for your business.
+            We review building fit, likely providers, and the best commercial setup for your location.
           </p>
-           
-          <div className="mt-2 text-xs text-white/60">
-            Business-only • No obligation • Reviewed by address
+
+          <div className="mt-5 inline-flex flex-wrap items-center gap-2 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-[11px] text-white/66 sm:text-xs">
+            <span className="rounded-full bg-white/10 px-2.5 py-1 text-white/80">
+              Business-only intake
+            </span>
+            <span className="rounded-full bg-white/10 px-2.5 py-1 text-white/80">
+              Address-based review
+            </span>
+            <span className="rounded-full bg-white/10 px-2.5 py-1 text-white/80">
+              Clear next step
+            </span>
+          </div>
+
+          <div className="mt-3 text-sm text-white/56">
+            Most Ontario business requests receive direction within 1 business day.
+          </div>
+
+          <div className="mt-1 text-sm text-white/50">
+            Quick intake • No obligation • Commercial service review
           </div>
 
           <div className="mt-5 flex flex-wrap gap-2 text-[11px] text-white/62 sm:text-xs">
@@ -404,7 +420,7 @@ export default function ContactPage() {
           </div>
 
           <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <MetricPill label="TIME" value="~1 business day" />
+            <MetricPill label="REVIEW" value="~1 business day" />
             <MetricPill label="FOCUS" value="Availability + pricing" />
             <MetricPill label="RESULT" value="Clear next step" />
           </div>
@@ -417,17 +433,18 @@ export default function ContactPage() {
             <SectionEyebrow>SUBMIT REQUEST</SectionEyebrow>
 
             <h2 className="mt-3 text-[1.55rem] font-semibold tracking-tight text-white sm:text-[2rem]">
-              Takes 60 seconds
+              Fast business intake
             </h2>
 
             <p className="mt-3 text-sm leading-6 text-white/68">
-              Enter your address and what you need. We’ll review and respond with the best option.
+              Enter your address and service need. We’ll review the site and respond with the strongest next step.
             </p>
 
             <ul className="mt-5 space-y-2 text-sm text-white/68">
               <li>• Full business address</li>
               <li>• Service type</li>
-              <li>• Install timeline</li>
+              <li>• Install timing</li>
+              <li>• Notes or technical requirements</li>
             </ul>
           </div>
 
@@ -451,6 +468,31 @@ export default function ContactPage() {
 
       <Section className="mt-4">
         <div className="max-w-3xl">
+          <SectionEyebrow>BUYER FLOW</SectionEyebrow>
+
+          <h2 className="mt-3 text-[1.8rem] font-semibold tracking-tight text-white sm:text-3xl">
+            Need a broader starting point first?
+          </h2>
+
+          <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
+            If you are still deciding between fibre, dedicated internet, backup, voice, or managed networking,
+            start with the Ontario guide first and then return here when you are ready to submit your request.
+          </p>
+
+          <p className="mt-4 text-sm leading-7 text-white/75">
+            <Link
+              href="/business-internet-ontario"
+              className="underline decoration-white/30 underline-offset-4 hover:text-white"
+            >
+              Compare business internet options in Ontario
+            </Link>{" "}
+            before sending your intake.
+          </p>
+        </div>
+      </Section>
+
+      <Section className="mt-4">
+        <div className="max-w-3xl">
           <SectionEyebrow>WHAT HAPPENS NEXT</SectionEyebrow>
 
           <h2 className="mt-3 text-[1.8rem] font-semibold tracking-tight text-white sm:text-3xl">
@@ -458,22 +500,22 @@ export default function ContactPage() {
           </h2>
 
           <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
-            Fast review. Clear next step.
+            Fast review. Clear direction. Commercial next step.
           </p>
         </div>
 
         <div className="mt-6 grid gap-3 md:grid-cols-3">
           <InfoCard
-            title="1. We check your address"
-            body="Building, providers, and service options."
+            title="1. We review the address"
+            body="Building fit, likely providers, and service options."
           />
           <InfoCard
-            title="2. We match the right setup"
-            body="Fibre, dedicated, or backup."
+            title="2. We match the right path"
+            body="Fibre, dedicated, backup, voice, or managed networking."
           />
           <InfoCard
             title="3. You get a clear answer"
-            body="Pricing and next step."
+            body="Availability, pricing direction, and the best next step."
           />
         </div>
       </Section>
@@ -551,7 +593,7 @@ export default function ContactPage() {
         </h2>
 
         <p className="mt-3 mx-auto max-w-3xl text-sm leading-6 text-white/72 sm:text-[15px]">
-          Submit your address. We’ll tell you what’s available and the best next step.
+          Submit your address. We’ll review likely service fit, availability, and the best next step for your location.
         </p>
 
         <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap sm:justify-center">
@@ -566,7 +608,7 @@ export default function ContactPage() {
             href={`tel:${PHONE_E164}`}
             className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
           >
-            Call Now
+            Call {PHONE_DISPLAY}
           </a>
         </div>
 

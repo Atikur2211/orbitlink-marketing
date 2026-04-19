@@ -25,9 +25,9 @@ const PAGE_DESCRIPTION =
 
 type ServiceGroup =
   | "Connectivity"
-  | "Managed Network"
+  | "Managed Networking"
   | "Continuity"
-  | "Voice"
+  | "Business Voice"
   | "Infrastructure";
 
 type ServiceItem = {
@@ -119,7 +119,7 @@ const SERVICES: readonly ServiceItem[] = [
     href: "/services/managed-lan-wifi",
     bullets: ["Managed Wi-Fi", "LAN support", "Segmentation"],
     tag: "MANAGED NETWORK",
-    group: "Managed Network",
+    group: "Managed Networking",
     bestFit:
       "Best for businesses where internal Wi-Fi and network quality affect staff, devices, and operations.",
     typicalFit: "Office floor • Clinic • Warehouse • Multi-room spaces",
@@ -155,7 +155,7 @@ const SERVICES: readonly ServiceItem[] = [
     href: "/services/voip-cloud-voice",
     bullets: ["Cloud voice", "Number porting", "Call routing"],
     tag: "VOICE",
-    group: "Voice",
+    group: "Business Voice",
     bestFit:
       "Best for teams that want business voice aligned with how they work and answer calls.",
     typicalFit: "Front desk • Office teams • Multi-user business calling",
@@ -207,11 +207,11 @@ const GROUPS: readonly GroupItem[] = [
     id: "connectivity",
   },
   {
-    title: "Managed Network",
+    title: "Managed Networking",
     eyebrow: "INTERNAL NETWORK",
     description:
       "Managed LAN and Wi-Fi services for businesses that need better internal stability and support.",
-    id: "managed-network",
+    id: "managed-networking",
   },
   {
     title: "Continuity",
@@ -221,11 +221,11 @@ const GROUPS: readonly GroupItem[] = [
     id: "continuity",
   },
   {
-    title: "Voice",
+    title: "Business Voice",
     eyebrow: "COMMUNICATIONS",
     description:
       "Business voice services for teams that need professional call handling and flexible routing.",
-    id: "voice",
+    id: "business-voice",
   },
   {
     title: "Infrastructure",
@@ -433,6 +433,38 @@ function JumpNav() {
             FAQ
           </a>
         </div>
+      </div>
+    </Surface>
+  );
+}
+
+function BuyerFlowStrip() {
+  return (
+    <Surface className="p-5 sm:p-8 lg:p-10">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+        <div className="max-w-3xl">
+          <div className="text-[10px] tracking-[0.30em] text-white/42 sm:text-[11px]">
+            BUYER FLOW
+          </div>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+            Need a broader starting point first?
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+            If you are still deciding between fibre, dedicated internet, backup, and managed network services,
+            start with the Ontario guide before choosing a service page.
+          </p>
+          <p className="mt-4 text-sm leading-7 text-white/75">
+            <Link
+              href="/business-internet-ontario"
+              className="underline decoration-white/30 underline-offset-4 hover:text-white"
+            >
+              Compare business internet options in Ontario
+            </Link>{" "}
+            to choose the right service model first.
+          </p>
+        </div>
+
+        <MetricPill label="FLOW" value="Compare → Choose → Deploy" />
       </div>
     </Surface>
   );
@@ -721,7 +753,7 @@ function MidPageCTA() {
             href="tel:+18888672480"
             className="rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm text-white transition hover:bg-white/10"
           >
-            Call Now
+            Speak to a Network Advisor
           </Link>
         </div>
       </div>
@@ -882,16 +914,10 @@ function FinalCTA() {
             View Locations
           </Link>
           <Link
-            href="/solutions"
+            href="/business-internet-ontario"
             className="rounded-2xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm text-white/82 transition hover:bg-white/10"
           >
-            View Solutions
-          </Link>
-          <Link
-            href="/network"
-            className="rounded-2xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm text-white/82 transition hover:bg-white/10"
-          >
-            View Network
+            Compare Internet Options
           </Link>
         </div>
 
@@ -1073,8 +1099,10 @@ export default function ServicesIndexPage() {
             </div>
 
             <h1 className="mt-5 max-w-4xl text-[2rem] font-semibold leading-[0.98] tracking-tight text-white sm:text-[3rem] lg:text-[4rem]">
-              Business fibre internet, dedicated internet, and managed network services
-              <span className="block text-white/62">for Ontario businesses</span>
+              Business connectivity services in Ontario
+              <span className="block text-white/62">
+                fibre, dedicated internet, managed networking, backup, voice, and infrastructure
+              </span>
             </h1>
 
             <p className="mt-4 max-w-2xl text-[14px] leading-7 text-white/80 sm:text-[15px]">
@@ -1084,7 +1112,7 @@ export default function ServicesIndexPage() {
             </p>
 
             <div className="mt-3 text-sm text-white/70">
-              Used by Ontario offices, clinics, warehouses, and growing businesses.
+              Built for Ontario offices, clinics, warehouses, and growing business operations.
             </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
@@ -1123,20 +1151,30 @@ export default function ServicesIndexPage() {
                 href="/services/business-fibre-internet"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
-                View Business Fibre Services
+                View Business Fibre
               </Link>
             </div>
 
-            <div className="mt-4 text-xs text-white/55">
-              Business-only • Reviewed by address • Clear next step
-            </div>
+            <div className="mt-6">
+              <div className="inline-flex flex-wrap items-center gap-2 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-[11px] text-white/66 sm:text-xs">
+                <span className="rounded-full bg-white/10 px-2.5 py-1 text-white/78">
+                  Business-only intake
+                </span>
+                <span className="rounded-full bg-white/10 px-2.5 py-1 text-white/78">
+                  Address-based review
+                </span>
+                <span className="rounded-full bg-white/10 px-2.5 py-1 text-white/78">
+                  Clear commercial next step
+                </span>
+              </div>
 
-            <div className="mt-2 text-xs text-white/55">
-              Most businesses receive direction within 1 business day.
-            </div>
+              <div className="mt-3 text-sm text-white/58">
+                Most Ontario business requests receive direction within 1 business day.
+              </div>
 
-            <div className="mt-2 text-xs text-white/60">
-              Takes 60 seconds • No obligation • Business-only
+              <div className="mt-1 text-sm text-white/50">
+                Quick intake • No obligation • Commercial service review
+              </div>
             </div>
           </div>
         </div>
@@ -1147,6 +1185,7 @@ export default function ServicesIndexPage() {
 
         <div className="relative space-y-5 sm:space-y-6">
           <StartHereStrip />
+          <BuyerFlowStrip />
           <JumpNav />
           <AudienceStrip />
           <QuickStartStrip />

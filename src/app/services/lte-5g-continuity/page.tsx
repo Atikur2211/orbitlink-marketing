@@ -3,6 +3,7 @@ import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
+const LEGAL_NAME = "TIRAV Technologies Inc.";
 const PAGE_PATH = "/services/lte-5g-continuity";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
@@ -15,7 +16,7 @@ const BUSINESS_PHONE_E164 = "+18888672480";
 export const metadata: Metadata = {
   title: "LTE / 5G Continuity Architecture in Ontario",
   description:
-    "LTE and 5G backup internet for Ontario businesses. Reduce downtime with failover and continuity design. Check availability and request setup.",
+    "LTE and 5G backup internet for Ontario businesses. Reduce downtime with failover and continuity design.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "LTE / 5G Continuity Architecture in Ontario | Orbitlink",
@@ -157,7 +158,7 @@ function SectionShell({
   className?: string;
 }) {
   return (
-    <div className={`rounded-[30px] border border-white/10 bg-white/[0.04] ${className}`}>
+    <div className={`rounded-[30px] border border-white/10 bg-white/[0.04] backdrop-blur-sm ${className}`}>
       {children}
     </div>
   );
@@ -374,7 +375,7 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Evaluate Continuity
                 </CTAButton>
-                <PhoneCTA>Call Now</PhoneCTA>
+                <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
                 <CTAButton href="/services/business-fibre-internet">
                   Pair with Primary Access
                 </CTAButton>
@@ -422,7 +423,7 @@ export default function Page() {
                     <CTAButton href="/contact#intake" primary>
                       Evaluate Continuity
                     </CTAButton>
-                    <PhoneCTA>Call Now</PhoneCTA>
+                    <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
                   </div>
                 </div>
               </SectionShell>
@@ -439,6 +440,37 @@ export default function Page() {
 
       <section className="mx-auto max-w-6xl px-6 py-12 sm:py-14 lg:px-10">
         <div className="space-y-4 sm:space-y-6">
+          <SectionShell className="p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>BUYER FLOW</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
+                  Need a broader starting point before defining continuity?
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
+                  Some buyers come here already knowing they need a secondary-path resilience model.
+                  Others are still comparing primary access, dedicated internet, continuity,
+                  internal networking, and voice requirements together.
+                </p>
+                <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                  If the broader service path is still being defined, use the Ontario comparison page
+                  first and then return here once the resilience layer fits the wider architecture.
+                </p>
+                <p className="mt-4 text-sm leading-7 text-white/75">
+                  <Link
+                    href="/business-internet-ontario"
+                    className="underline decoration-white/30 underline-offset-4 hover:text-white"
+                  >
+                    Compare business internet options in Ontario
+                  </Link>{" "}
+                  before finalizing the continuity design.
+                </p>
+              </div>
+
+              <MetricPill label="FLOW" value="Compare → Scope → Protect" />
+            </div>
+          </SectionShell>
+
           <SectionShell className="p-6 sm:p-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
@@ -640,10 +672,43 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Evaluate Continuity
                 </CTAButton>
-                <PhoneCTA>Call Now</PhoneCTA>
+                <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
               </div>
             </SectionShell>
           </div>
+
+          <SectionShell className="p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>COMPARISON PATH</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+                  Still comparing the wider service stack?
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/70">
+                  Many Ontario buyers review primary access, dedicated internet, continuity,
+                  internal networking, and voice together before finalizing the site architecture.
+                </p>
+                <p className="mt-3 text-sm leading-6 text-white/65">
+                  That is normal for offices, commercial sites, retail operations, and multi-site
+                  environments where resilience needs to match the full business connectivity model.
+                </p>
+              </div>
+
+              <MetricPill label="INTERNAL LOOP" value="Closed and crawlable" />
+            </div>
+
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <CTAButton href="/business-internet-ontario">
+                Compare All Business Internet Options
+              </CTAButton>
+              <CTAButton href="/services/business-fibre-internet">
+                View Business Fibre
+              </CTAButton>
+              <CTAButton href="/contact#intake" primary>
+                Evaluate Continuity
+              </CTAButton>
+            </div>
+          </SectionShell>
 
           <SectionShell className="p-6 sm:p-8">
             <SectionEyebrow>FAQ</SectionEyebrow>
@@ -668,7 +733,7 @@ export default function Page() {
               <CTAButton href="/contact#intake" primary>
                 Evaluate Continuity
               </CTAButton>
-              <PhoneCTA>Call Now</PhoneCTA>
+              <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
               <CTAButton href="/services/business-fibre-internet">
                 Pair with Primary Access
               </CTAButton>

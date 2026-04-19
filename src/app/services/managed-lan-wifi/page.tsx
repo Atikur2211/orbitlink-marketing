@@ -3,6 +3,7 @@ import Link from "next/link";
 
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
+const LEGAL_NAME = "TIRAV Technologies Inc.";
 const PAGE_PATH = "/services/managed-lan-wifi";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
@@ -15,7 +16,7 @@ const BUSINESS_PHONE_E164 = "+18888672480";
 export const metadata: Metadata = {
   title: "Managed LAN & Enterprise Wi-Fi in Ontario",
   description:
-    "Managed LAN and enterprise Wi-Fi for Ontario businesses. Improve coverage, segmentation, and network reliability. Request design and availability.",
+    "Managed LAN and enterprise Wi-Fi for Ontario businesses. Improve coverage, segmentation, and internal network reliability.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Managed LAN & Enterprise Wi-Fi in Ontario | Orbitlink",
@@ -74,7 +75,7 @@ const BUYER_SIGNALS = [
 const BUSINESS_OUTCOMES = [
   {
     title: "Cleaner user experience",
-    body: "A stronger internal network reduces the feeling that every issue is “the internet” when the problem is actually local Wi-Fi or switching.",
+    body: "A stronger internal network reduces the feeling that every issue is 'the internet' when the problem is actually local Wi-Fi or switching.",
   },
   {
     title: "Better service separation",
@@ -157,7 +158,7 @@ function SectionShell({
   className?: string;
 }) {
   return (
-    <div className={`rounded-[30px] border border-white/10 bg-white/[0.04] ${className}`}>
+    <div className={`rounded-[30px] border border-white/10 bg-white/[0.04] backdrop-blur-sm ${className}`}>
       {children}
     </div>
   );
@@ -374,7 +375,7 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Request Network Design
                 </CTAButton>
-                <PhoneCTA>Call Now</PhoneCTA>
+                <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
                 <CTAButton href="/services/business-fibre-internet">
                   Pair with Business Fibre
                 </CTAButton>
@@ -422,7 +423,7 @@ export default function Page() {
                     <CTAButton href="/contact#intake" primary>
                       Request Network Design
                     </CTAButton>
-                    <PhoneCTA>Call Now</PhoneCTA>
+                    <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
                   </div>
                 </div>
               </SectionShell>
@@ -439,6 +440,37 @@ export default function Page() {
 
       <section className="mx-auto max-w-6xl px-6 py-12 sm:py-14 lg:px-10">
         <div className="space-y-4 sm:space-y-6">
+          <SectionShell className="p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>BUYER FLOW</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[32px]">
+                  Need a broader starting point before designing the internal network?
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
+                  Some buyers reach this page already knowing they need a cleaner internal network layer.
+                  Others are still structuring the full site stack including access, resilience, voice,
+                  static addressing, and internal Wi-Fi design.
+                </p>
+                <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                  If the broader service path is still being defined, use the Ontario comparison page first
+                  and then return here once the internet and network model is clearer.
+                </p>
+                <p className="mt-4 text-sm leading-7 text-white/75">
+                  <Link
+                    href="/business-internet-ontario"
+                    className="underline decoration-white/30 underline-offset-4 hover:text-white"
+                  >
+                    Compare business internet options in Ontario
+                  </Link>{" "}
+                  before finalizing the internal network layer.
+                </p>
+              </div>
+
+              <MetricPill label="FLOW" value="Compare → Design → Deploy" />
+            </div>
+          </SectionShell>
+
           <SectionShell className="p-6 sm:p-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
@@ -606,10 +638,41 @@ export default function Page() {
                 <CTAButton href="/contact#intake" primary>
                   Request Network Design
                 </CTAButton>
-                <PhoneCTA>Call Now</PhoneCTA>
+                <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
               </div>
             </SectionShell>
           </div>
+
+          <SectionShell className="p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <SectionEyebrow>COMPARISON PATH</SectionEyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+                  Still comparing the wider service stack?
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-white/70">
+                  Many Ontario buyers review access, continuity, static addressing, voice, and internal Wi-Fi design together before choosing the final architecture.
+                </p>
+                <p className="mt-3 text-sm leading-6 text-white/65">
+                  That is normal for offices, suites, and operational sites where the internal network layer needs to match the rest of the business connectivity model.
+                </p>
+              </div>
+
+              <MetricPill label="INTERNAL LOOP" value="Closed and crawlable" />
+            </div>
+
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <CTAButton href="/business-internet-ontario">
+                Compare All Business Internet Options
+              </CTAButton>
+              <CTAButton href="/services/business-fibre-internet">
+                View Business Fibre
+              </CTAButton>
+              <CTAButton href="/contact#intake" primary>
+                Request Network Design
+              </CTAButton>
+            </div>
+          </SectionShell>
 
           <SectionShell className="p-6 sm:p-8">
             <SectionEyebrow>FAQ</SectionEyebrow>
@@ -634,7 +697,7 @@ export default function Page() {
               <CTAButton href="/contact#intake" primary>
                 Request Network Design
               </CTAButton>
-              <PhoneCTA>Call Now</PhoneCTA>
+              <PhoneCTA>Call {BUSINESS_PHONE_DISPLAY}</PhoneCTA>
               <CTAButton href="/services/business-fibre-internet">
                 Pair with Business Fibre
               </CTAButton>

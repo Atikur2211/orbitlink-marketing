@@ -150,9 +150,9 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
       />
 
       <SectionTitle
-        eyebrow="REQUEST DETAILS"
-        title="Tell us what you need"
-        desc="Add your business address, service need, and timing. We review the request and guide the next step clearly."
+        eyebrow="BUSINESS INTAKE"
+        title="Check availability for your business location"
+        desc="Submit your address and service need. Orbitlink reviews availability, service fit, and provides the clearest next step for your business."
       />
 
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
@@ -164,7 +164,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
         />
         <InfoPanel
           eyebrow="RESPONSE TIME"
-          title="Usually within 1 business day (often faster)"
+          title="Usually within 1 business day"
           text="Response time depends on the address, service type, and detail provided."
           tone="positive"
         />
@@ -174,6 +174,16 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
           text="Your request is reviewed without commitment. Orbitlink focuses on clarity first, then the right next step."
           tone="neutral"
         />
+      </div>
+
+      <div className="rounded-[24px] border border-white/10 bg-black/25 p-4">
+        <div className="text-[11px] tracking-[0.22em] text-white/55">
+          WHY SUBMIT THIS
+        </div>
+        <p className="mt-2 text-sm leading-6 text-white/70">
+          Most businesses submit this to confirm what is actually available at their address,
+          understand realistic pricing, and avoid choosing the wrong service before installation.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -323,7 +333,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
       </div>
 
       <div className="rounded-[24px] border border-white/10 bg-black/20 p-4">
-        <div className="text-[11px] tracking-[0.22em] text-white/55">HELPFUL DETAILS</div>
+        <div className="text-[11px] tracking-[0.22em] text-white/55">OPTIONAL BUT HELPFUL</div>
         <p className="mt-2 text-sm leading-6 text-white/65">
           Static IPs, managed Wi-Fi, voice, backup connectivity, install window, building details,
           landlord coordination, multi-site needs, or any service combination that matters to the location.
@@ -331,11 +341,15 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
       </div>
 
       <div className="grid gap-3 pt-1">
+        <div className="text-xs text-white/60 text-center">
+          Most Ontario business requests receive a response within 1 business day
+        </div>
+
         <button
           type="submit"
           className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
         >
-          Check Availability & Get Next Step
+          Check Availability for My Business
         </button>
 
         <a
@@ -346,7 +360,7 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
         </a>
 
         <p className="text-center text-xs text-white/50">
-          Business-only requests • No obligation • Reviewed by address
+          No obligation • No sales pressure • Business-only review
         </p>
 
         <div className="text-xs text-white/55 text-center">
