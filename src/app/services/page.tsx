@@ -1168,7 +1168,7 @@ export default function ServicesIndexPage() {
               </div>
 
               <div className="mt-3 text-sm text-white/58">
-                Most Ontario business requests receive direction within 1 business day.
+                Ontario business requests receive direction within 1 business day.
               </div>
 
               <div className="mt-1 text-sm text-white/50">
