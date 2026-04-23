@@ -63,6 +63,17 @@ export const metadata: Metadata = {
       "Business internet in Milton with fibre, dedicated internet, managed Wi-Fi, and backup connectivity.",
     images: [TWITTER_IMAGE_URL],
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 const FAQ = [
@@ -232,13 +243,14 @@ export default function MiltonLocationPage() {
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
-                Orbitlink supports Milton businesses with fibre, dedicated internet,
-                managed Wi-Fi, voice, static IPs, and backup connectivity. Availability is
-                checked by address, building, and service fit before the next step is confirmed.
+                Orbitlink delivers business fibre, dedicated internet access, managed Wi-Fi,
+                voice, static IPs, and backup connectivity for Milton warehouse,
+                industrial, logistics, and mixed office-floor environments. Every location is
+                reviewed by address, building infrastructure, and service fit before the next step is confirmed.
               </p>
 
               <div className="mt-3 text-sm text-white/70">
-                Built for warehouses, industrial sites, logistics operations, offices, and mixed business environments.
+                Designed for warehouses, logistics operations, industrial sites, offices, and uptime-sensitive business environments.
               </div>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -252,19 +264,41 @@ export default function MiltonLocationPage() {
                 ))}
               </div>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
+              <div className="mt-8 grid grid-cols-1 gap-3 sm:flex sm:flex-wrap sm:items-start">
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href="/contact#intake"
+                    className="inline-flex min-h-[48px] items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-[#FDE047]"
+                  >
+                    Get Availability & Pricing for Your Milton Location
+                  </Link>
+
+                  <div className="text-center text-[11px] text-white/55 sm:text-left sm:text-xs">
+                    Takes 60 seconds • No obligation • Clear next step
+                  </div>
+
+                  <div className="text-center text-[11px] text-white/48 sm:text-left sm:text-xs">
+                    We will tell you if switching actually improves your setup — not just sell you a plan.
+                  </div>
+                </div>
+
+                <a
+                  href={`tel:${BUSINESS.phoneE164}`}
+                  className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
                 >
-                  Check Availability
-                </Link>
+                  Speak to a Network Advisor
+                </a>
+
                 <Link
-                  href="/services/business-fibre-internet"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
+                  href="/locations/ontario"
+                  className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border border-white/15 bg-black/15 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
                 >
-                  Explore Fibre Service
+                  Explore Ontario Coverage
                 </Link>
+              </div>
+
+              <div className="mt-4 text-xs text-[#FDE68A]">
+                Limited onboarding capacity this month for Milton business and industrial sites
               </div>
 
               <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -469,9 +503,9 @@ export default function MiltonLocationPage() {
               <div className="mt-4 flex flex-col gap-2">
                 <Link
                   href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
+                  className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-4 py-2 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
-                  Check Availability
+                  Get Availability & Pricing
                 </Link>
                 <Link
                   href="/trust"
@@ -547,9 +581,9 @@ export default function MiltonLocationPage() {
             </Link>
             <Link
               href="/contact#intake"
-              className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:bg-white/90"
+              className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
             >
-              Check Availability
+              Get Availability & Pricing
             </Link>
           </div>
         </div>
