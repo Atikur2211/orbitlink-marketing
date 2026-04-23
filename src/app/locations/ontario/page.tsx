@@ -24,14 +24,14 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Ontario Business Internet Coverage",
+  title: "Business Internet Ontario (Fibre, Dedicated, Business Connectivity)",
   description:
-    "Business internet coverage across Ontario for fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Availability is checked by address.",
+    "Business internet in Ontario including fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability and pricing by address.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Ontario Business Internet Coverage | Orbitlink",
+    title: "Business Internet Ontario",
     description:
-      "Business internet coverage across Ontario with fibre, dedicated internet, managed networking, and address-based availability.",
+      "Business internet in Ontario with fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability by address.",
     url: PAGE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -41,16 +41,27 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: "Orbitlink Ontario business internet coverage",
+        alt: "Business Internet Ontario",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ontario Business Internet Coverage | Orbitlink",
+    title: "Business Internet Ontario",
     description:
-      "Explore Orbitlink business internet coverage across Ontario for fibre, dedicated internet, managed Wi-Fi, and backup connectivity.",
+      "Business internet in Ontario with fibre, dedicated internet, managed Wi-Fi, and backup connectivity.",
     images: [TWITTER_IMAGE_URL],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -64,6 +75,29 @@ type City = {
   tags: readonly string[];
   signal: string;
 };
+
+const MONEY_PAGES = [
+  {
+    title: "Business Internet Toronto",
+    href: "/business-internet-toronto",
+    desc: "High-intent business internet page for Toronto offices, clinics, commercial sites, and multi-user environments.",
+  },
+  {
+    title: "Business Internet Mississauga",
+    href: "/business-internet-mississauga",
+    desc: "High-intent page for Mississauga offices, commercial buildings, and growing business operations.",
+  },
+  {
+    title: "Business Internet Brampton",
+    href: "/business-internet-brampton",
+    desc: "Commercial and industrial-focused page for Brampton business internet demand.",
+  },
+  {
+    title: "Business Internet Milton",
+    href: "/business-internet-milton",
+    desc: "Business internet page for Milton warehouse, industrial, and logistics demand.",
+  },
+] as const;
 
 const CITIES: readonly City[] = [
   {
@@ -283,6 +317,10 @@ const FAQ = [
     q: "Do you support managed networking in Ontario?",
     a: "Yes. Orbitlink supports managed LAN and business Wi-Fi, including segmentation, guest networking, and coverage planning.",
   },
+  {
+    q: "Can I check pricing before moving forward?",
+    a: "Yes. Qualified requests can move into availability review, service direction, and pricing guidance based on the building, serviceability, and business requirements.",
+  },
 ] as const;
 
 const PROOF_POINTS = [
@@ -326,6 +364,16 @@ const SERVICE_MODULES = [
     body: "Backup planning for outages and continuity-sensitive business operations.",
   },
   {
+    title: "VoIP & Cloud Voice",
+    href: "/services/voip-cloud-voice",
+    body: "Business voice for routing, portability, and professional call handling.",
+  },
+  {
+    title: "Static IP Routing",
+    href: "/services/static-ip-routing",
+    body: "Fixed addressing for VPNs, firewalls, hosted systems, and remote access.",
+  },
+  {
     title: "Colocation & Infrastructure Services",
     href: "/services/colocation-infrastructure",
     body: "Rack planning, cross-connect coordination, and infrastructure-aligned delivery posture.",
@@ -342,18 +390,53 @@ function jsonLd() {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
+        name: BUSINESS.name,
+        legalName: BUSINESS.legalName,
+        url: SITE_URL,
+        email: BUSINESS.email,
+        telephone: BUSINESS.phoneE164,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: BUSINESS.address.street,
+          addressLocality: BUSINESS.address.city,
+          addressRegion: BUSINESS.address.region,
+          postalCode: BUSINESS.address.postal,
+          addressCountry: BUSINESS.address.country,
+        },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Ontario",
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: {
+          "@id": `${SITE_URL}/#organization`,
+        },
+        inLanguage: "en-CA",
+      },
+      {
         "@type": "WebPage",
         "@id": `${PAGE_URL}#webpage`,
         url: PAGE_URL,
-        name: "Ontario Business Internet Coverage",
+        name: "Business Internet Ontario",
         description:
-          "Business internet coverage across Ontario for fibre, dedicated internet, managed Wi-Fi, voice, and backup connectivity. Availability is checked by address.",
+          "Business internet in Ontario including fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability and pricing by address.",
         isPartOf: {
-          "@type": "WebSite",
           "@id": `${SITE_URL}/#website`,
-          url: SITE_URL,
-          name: SITE_NAME,
         },
+        about: {
+          "@id": `${SITE_URL}/#organization`,
+        },
+        breadcrumb: {
+          "@id": `${PAGE_URL}#breadcrumb`,
+        },
+        inLanguage: "en-CA",
       },
       {
         "@type": "BreadcrumbList",
@@ -363,6 +446,17 @@ function jsonLd() {
           { "@type": "ListItem", position: 2, name: "Locations", item: `${SITE_URL}/locations` },
           { "@type": "ListItem", position: 3, name: "Ontario", item: PAGE_URL },
         ],
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${PAGE_URL}#money-pages`,
+        name: "Top Ontario business internet pages",
+        itemListElement: MONEY_PAGES.map((page, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: page.title,
+          url: `${SITE_URL}${page.href}`,
+        })),
       },
       {
         "@type": "ItemList",
@@ -392,13 +486,7 @@ function SectionEyebrow({ children }: { children: React.ReactNode }) {
   return <div className="text-[11px] tracking-[0.30em] text-white/42">{children}</div>;
 }
 
-function MetricPill({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
+function MetricPill({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
       <div className="text-[11px] tracking-[0.22em] text-white/45">{label}</div>
@@ -494,17 +582,19 @@ export default function OntarioHubPage() {
               </div>
 
               <h1 className="mt-4 text-[2.5rem] font-semibold tracking-tight text-white sm:text-6xl lg:text-[5rem] lg:leading-[0.98]">
-                Ontario business
-                <span className="block text-white/62">internet coverage</span>
+                Business internet
+                <span className="block text-white/62">across Ontario</span>
               </h1>
 
               <p className="mt-6 max-w-3xl text-[15px] leading-7 text-white/66 sm:text-lg">
-                Browse the right city, choose the right service, and move into address-based
-                availability for your business location.
+                Business internet in Ontario for offices, clinics, warehouses, industrial sites,
+                and growing organizations. Explore city pages, compare service paths, and move
+                into address-based availability and pricing for your business location.
               </p>
 
               <div className="mt-3 text-sm text-white/70">
-                Built for Ontario offices, clinics, warehouses, industrial sites, and growing businesses.
+                Built for Ontario business connectivity, managed networking, voice, static IP
+                needs, and backup internet planning.
               </div>
 
               <div className="mt-7 flex flex-wrap gap-2">
@@ -528,7 +618,7 @@ export default function OntarioHubPage() {
                   href="/contact#intake"
                   className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
                 >
-                  Check Availability
+                  Check Availability & Pricing
                 </Link>
                 <Link
                   href="/services"
@@ -563,10 +653,26 @@ export default function OntarioHubPage() {
 
                 <div className="mt-5 grid gap-3">
                   {[
-                    { step: "01", title: "Choose the city", body: "Start with the market that matches your site or expansion target." },
-                    { step: "02", title: "Choose the service", body: "Match the need to fibre, dedicated internet, managed networking, or backup." },
-                    { step: "03", title: "Check availability", body: "Orbitlink reviews serviceability, building conditions, and fit." },
-                    { step: "04", title: "Get the next step", body: "Qualified requests move into availability, pricing, and the best path forward." },
+                    {
+                      step: "01",
+                      title: "Choose the city",
+                      body: "Start with the market that matches your site or expansion target.",
+                    },
+                    {
+                      step: "02",
+                      title: "Choose the service",
+                      body: "Match the need to fibre, dedicated internet, managed networking, or backup.",
+                    },
+                    {
+                      step: "03",
+                      title: "Check availability",
+                      body: "Orbitlink reviews serviceability, building conditions, and fit.",
+                    },
+                    {
+                      step: "04",
+                      title: "Get pricing direction",
+                      body: "Qualified requests move into availability, pricing, and the best path forward.",
+                    },
                   ].map((item) => (
                     <div key={item.step} className="rounded-[24px] border border-white/10 bg-black/20 p-5">
                       <div className="flex items-center gap-3">
@@ -587,6 +693,33 @@ export default function OntarioHubPage() {
 
       <section className="relative mx-auto max-w-6xl px-5 py-10 sm:px-7 sm:py-12">
         <div className="relative space-y-6">
+          <Surface className="p-6 sm:p-8">
+            <div className="max-w-3xl">
+              <SectionEyebrow>TOP BUSINESS INTERNET LOCATIONS IN ONTARIO</SectionEyebrow>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+                High-demand Ontario business markets
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
+                These are the strongest commercial and operational markets for high-intent
+                Orbitlink business internet demand.
+              </p>
+            </div>
+
+            <div className="mt-7 grid grid-cols-1 gap-3 md:grid-cols-2">
+              {MONEY_PAGES.map((page) => (
+                <Link
+                  key={page.href}
+                  href={page.href}
+                  className="rounded-[26px] border border-white/10 bg-black/20 p-5 transition hover:bg-white/[0.06]"
+                >
+                  <div className="text-sm font-medium text-white/90">{page.title}</div>
+                  <p className="mt-3 text-sm leading-6 text-white/63">{page.desc}</p>
+                  <div className="mt-3 text-xs text-white/55">Open page →</div>
+                </Link>
+              ))}
+            </div>
+          </Surface>
+
           <Surface className="p-6 sm:p-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
@@ -631,6 +764,11 @@ export default function OntarioHubPage() {
             </div>
 
             <div className="mt-7 grid grid-cols-1 gap-2 text-sm text-white/70 sm:grid-cols-2 lg:grid-cols-3">
+              <Link href="/business-fibre-internet-ontario" className="underline hover:text-white">Business fibre internet Ontario</Link>
+              <Link href="/business-internet-toronto" className="underline hover:text-white">Business internet Toronto</Link>
+              <Link href="/business-internet-mississauga" className="underline hover:text-white">Business internet Mississauga</Link>
+              <Link href="/business-internet-brampton" className="underline hover:text-white">Business internet Brampton</Link>
+              <Link href="/business-internet-milton" className="underline hover:text-white">Business internet Milton</Link>
               <Link href="/locations/barrie" className="underline hover:text-white">Business internet in Barrie</Link>
               <Link href="/locations/north-york" className="underline hover:text-white">Business internet in North York</Link>
               <Link href="/locations/niagara-st-catharines" className="underline hover:text-white">Business internet in Niagara / St. Catharines</Link>
@@ -641,7 +779,6 @@ export default function OntarioHubPage() {
               <Link href="/services/colocation-infrastructure" className="underline hover:text-white">Colocation & infrastructure services</Link>
               <Link href="/services/starlink-agent" className="underline hover:text-white">Starlink access coordination</Link>
               <Link href="/why-orbitlink" className="underline hover:text-white">Why Orbitlink</Link>
-              <Link href="/internet-near-me" className="underline hover:text-white">Business internet near me</Link>
             </div>
           </Surface>
 
@@ -728,7 +865,7 @@ export default function OntarioHubPage() {
               Local anchor, province-wide coverage discovery
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-white/64">
-              Orbitlink’s business presence is anchored in Mississauga and focused on Ontario business internet, managed networking, voice, and backup connectivity.
+              Orbitlink’s business presence is anchored in Mississauga and focused on Ontario business internet, managed networking, voice, static IP routing, and backup connectivity.
             </p>
 
             <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
@@ -769,7 +906,7 @@ export default function OntarioHubPage() {
                 href="/contact#intake"
                 className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
               >
-                Check Availability
+                Check Availability & Pricing
               </Link>
               <Link
                 href="/services"

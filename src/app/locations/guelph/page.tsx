@@ -24,9 +24,9 @@ const BUSINESS = {
 } as const;
 
 const CITY_NAME = "Guelph";
-const PAGE_TITLE = "Business Internet in Guelph, ON";
+const PAGE_TITLE = "Business Internet Guelph, ON | Fibre & Dedicated Access";
 const PAGE_DESCRIPTION =
-  "Business internet in Guelph with fibre, dedicated internet access, managed LAN and Wi-Fi, static IPs, voice, and backup connectivity. Availability is checked by address.";
+  "Business internet in Guelph with fibre, dedicated access, managed Wi-Fi, static IPs, voice, and backup connectivity. Check availability by address.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
