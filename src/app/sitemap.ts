@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 
 const BASE_URL = "https://orbitlink.ca";
-const now = new Date();
 
 const staticPages = [
   "/",
@@ -71,77 +70,18 @@ const locationPages = [
   "windsor",
 ] as const;
 
-function pagePriority(path: string): number {
-  if (path === "/") return 1.0;
-
-  if (
-    path === "/services" ||
-    path === "/locations" ||
-    path === "/business-fibre-internet-ontario" ||
-    path === "/business-internet-ontario" ||
-    path === "/contact" ||
-    path === "/solutions"
-  ) {
-    return 0.95;
-  }
-
-  if (path.startsWith("/business-internet-")) return 0.9;
-  if (path.startsWith("/services/")) return 0.9;
-  if (path.startsWith("/locations/")) return 0.85;
-  if (path.startsWith("/legal")) return 0.5;
-
-  return 0.8;
-}
-
-function changeFrequencyFor(
-  path: string
-): MetadataRoute.Sitemap[number]["changeFrequency"] {
-  if (path.startsWith("/legal")) return "yearly";
-
-  if (
-    path === "/" ||
-    path === "/services" ||
-    path === "/locations" ||
-    path === "/business-fibre-internet-ontario" ||
-    path === "/business-internet-ontario" ||
-    path.startsWith("/services/") ||
-    path.startsWith("/locations/")
-  ) {
-    return "weekly";
-  }
-
-  if (path.startsWith("/business-internet-")) return "monthly";
-
-  return "monthly";
-}
-
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticEntries = staticPages.map((path) => ({
     url: `${BASE_URL}${path}`,
-    lastModified: now,
-    changeFrequency: changeFrequencyFor(path),
-    priority: pagePriority(path),
   }));
 
-  const serviceEntries = servicePages.map((slug) => {
-    const path = `/services/${slug}`;
-    return {
-      url: `${BASE_URL}${path}`,
-      lastModified: now,
-      changeFrequency: changeFrequencyFor(path),
-      priority: pagePriority(path),
-    };
-  });
+  const serviceEntries = servicePages.map((slug) => ({
+    url: `${BASE_URL}/services/${slug}`,
+  }));
 
-  const locationEntries = locationPages.map((slug) => {
-    const path = `/locations/${slug}`;
-    return {
-      url: `${BASE_URL}${path}`,
-      lastModified: now,
-      changeFrequency: changeFrequencyFor(path),
-      priority: pagePriority(path),
-    };
-  });
+  const locationEntries = locationPages.map((slug) => ({
+    url: `${BASE_URL}/locations/${slug}`,
+  }));
 
   return [...staticEntries, ...serviceEntries, ...locationEntries];
 }
