@@ -34,7 +34,7 @@ const BUSINESS = {
   },
 } as const;
 
-const PAGE_TITLE = "Business Internet in Toronto, ON";
+const PAGE_TITLE = "Business Internet Toronto | Fibre & Dedicated Access";
 const PAGE_DESCRIPTION =
   "Business internet in Toronto for offices, clinics, and commercial spaces. Fibre, dedicated connectivity, and managed Wi-Fi. Check availability.";
 
@@ -448,6 +448,16 @@ export default function BusinessInternetTorontoPage() {
            
             <div className="mt-2 text-xs text-[#FDE68A]">
               Priority response for Toronto business requests this week
+            </div>
+
+            <div className="mt-6 text-sm text-white/70">
+              Explore related business internet options:
+              <div className="mt-2 flex flex-wrap gap-3">
+                <Link href="/business-internet-ontario" className="underline">Business Internet Ontario</Link>
+                <Link href="/business-internet-mississauga" className="underline">Business Internet Mississauga</Link>
+                <Link href="/business-internet-brampton" className="underline">Business Internet Brampton</Link>
+                <Link href="/services/dedicated-internet-access" className="underline">Dedicated Internet Access</Link>
+              </div>
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">

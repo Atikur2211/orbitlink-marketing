@@ -35,7 +35,7 @@ const BUSINESS = {
   },
 } as const;
 
-const PAGE_TITLE = "Business Fibre Internet in Ontario";
+const PAGE_TITLE = "Business Fibre Internet Ontario | Symmetric & Reliable";
 const PAGE_DESCRIPTION =
   "Business fibre internet in Ontario for offices, warehouses, and clinics. Reliable connectivity with expert setup. Check availability.";
 
@@ -453,7 +453,7 @@ export default function BusinessFibreInternetOntarioPage() {
         <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
             <h1 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-              Business Fibre Internet in Ontario
+              Business Fibre Internet in Ontario for Offices, Warehouses, and Commercial Sites
               <span className="block text-white/60">
                 Built for real operations across offices, warehouses, and commercial sites
               </span>
@@ -511,6 +511,16 @@ export default function BusinessFibreInternetOntarioPage() {
 
             <div className="mt-3 text-sm text-white/60">
               Availability varies by building. Check your address to confirm options.
+            </div>
+
+            <div className="mt-6 text-sm text-white/70">
+              Explore related business internet options:
+              <div className="mt-2 flex flex-wrap gap-3">
+                <Link href="/business-internet-ontario" className="underline">Business Internet Ontario</Link>
+                <Link href="/business-internet-toronto" className="underline">Business Internet Toronto</Link>
+                <Link href="/business-internet-mississauga" className="underline">Business Internet Mississauga</Link>
+                <Link href="/services/dedicated-internet-access" className="underline">Dedicated Internet Access</Link>
+              </div>
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">

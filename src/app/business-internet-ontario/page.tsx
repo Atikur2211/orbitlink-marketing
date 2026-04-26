@@ -416,6 +416,16 @@ export default function BusinessInternetOntarioPage() {
             <div className="mt-4 text-xs text-white/55">
               Business-only • Reviewed by address • Clear next step
             </div>
+
+            <div className="mt-6 text-sm text-white/70">
+              Explore related business internet options:
+              <div className="mt-2 flex flex-wrap gap-3">
+                <Link href="/business-internet-toronto" className="underline">Business Internet Toronto</Link>
+                <Link href="/business-internet-mississauga" className="underline">Business Internet Mississauga</Link>
+                <Link href="/business-internet-brampton" className="underline">Business Internet Brampton</Link>
+                <Link href="/services/dedicated-internet-access" className="underline">Dedicated Internet Access</Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
