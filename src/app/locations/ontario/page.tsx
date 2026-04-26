@@ -24,7 +24,7 @@ const BUSINESS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Business Internet Ontario (Fibre, Dedicated, Business Connectivity)",
+  title: "Business Internet in Ontario | Fibre & Dedicated",
   description:
     "Business internet in Ontario including fibre, dedicated internet, managed Wi-Fi, and backup connectivity. Check availability and pricing by address.",
   alternates: { canonical: PAGE_URL },
