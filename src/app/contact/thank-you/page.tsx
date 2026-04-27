@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import TrackedLink from "@/components/TrackedLink";
+import ThankYouTracker from "@/components/ThankYouTracker";
+
 const SITE_URL = "https://orbitlink.ca";
 const SITE_NAME = "Orbitlink";
 const LEGAL_NAME = "TIRAV Technologies Inc. o/a Orbitlink";
@@ -8,6 +11,7 @@ const PAGE_PATH = "/contact/thank-you";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
+
 const PHONE_E164 = "+18888672480";
 const PHONE_DISPLAY = "1-888-867-2480";
 const GENERAL_EMAIL = "concierge@orbitlink.ca";
@@ -60,7 +64,7 @@ function Surface({
 }) {
   return (
     <section
-      className={`rounded-[32px] border border-white/10 bg-white/[0.045] ${className}`}
+      className={`rounded-[32px] border border-white/10 bg-white/[0.045] shadow-[0_30px_100px_rgba(0,0,0,0.28)] ${className}`}
     >
       {children}
     </section>
@@ -68,59 +72,21 @@ function Surface({
 }
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
-  return <div className="text-[11px] tracking-[0.28em] text-white/55">{children}</div>;
-}
-
-function MetricPill({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-      <div className="text-[10px] tracking-[0.18em] text-white/50">{label}</div>
-      <div className="mt-1 text-sm text-white/82">{value}</div>
+    <div className="text-[11px] font-medium uppercase tracking-[0.28em] text-white/55">
+      {children}
     </div>
   );
 }
 
-function CTAButton({
-  href,
-  children,
-  primary = false,
-}: {
-  href: string;
-  children: React.ReactNode;
-  primary?: boolean;
-}) {
-  if (href.startsWith("tel:") || href.startsWith("mailto:")) {
-    return (
-      <a
-        href={href}
-        className={
-          primary
-            ? "inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-            : "inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-        }
-      >
-        {children}
-      </a>
-    );
-  }
-
+function MetricPill({ label, value }: { label: string; value: string }) {
   return (
-    <Link
-      href={href}
-      className={
-        primary
-          ? "inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-          : "inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-      }
-    >
-      {children}
-    </Link>
+    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">
+        {label}
+      </div>
+      <div className="mt-1 text-sm text-white/82">{value}</div>
+    </div>
   );
 }
 
@@ -143,9 +109,7 @@ function buildJsonLd() {
         "@id": WEBSITE_ID,
         url: SITE_URL,
         name: SITE_NAME,
-        publisher: {
-          "@id": ORG_ID,
-        },
+        publisher: { "@id": ORG_ID },
         inLanguage: "en-CA",
       },
       {
@@ -153,16 +117,11 @@ function buildJsonLd() {
         "@id": WEBPAGE_ID,
         url: PAGE_URL,
         name: "Request Received",
-        description: "Confirmation page for submitted business connectivity requests.",
-        isPartOf: {
-          "@id": WEBSITE_ID,
-        },
-        about: {
-          "@id": ORG_ID,
-        },
-        breadcrumb: {
-          "@id": BREADCRUMB_ID,
-        },
+        description:
+          "Confirmation page for submitted business connectivity requests.",
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": ORG_ID },
+        breadcrumb: { "@id": BREADCRUMB_ID },
         primaryImageOfPage: {
           "@type": "ImageObject",
           url: OG_IMAGE_URL,
@@ -173,9 +132,7 @@ function buildJsonLd() {
         "@type": "Service",
         "@id": SERVICE_ID,
         name: "Business Request Confirmation",
-        provider: {
-          "@id": ORG_ID,
-        },
+        provider: { "@id": ORG_ID },
         url: PAGE_URL,
         audience: {
           "@type": "Audience",
@@ -219,6 +176,8 @@ function buildJsonLd() {
 export default function ContactThankYouPage() {
   return (
     <main className="min-h-screen bg-[#0B0F14] text-white">
+      <ThankYouTracker />
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd()) }}
@@ -230,6 +189,7 @@ export default function ContactThankYouPage() {
             <div className="absolute -left-16 top-0 h-40 w-40 rounded-full bg-blue-500/10 blur-3xl" />
             <div className="absolute right-0 top-8 h-40 w-40 rounded-full bg-emerald-500/10 blur-3xl" />
             <div className="absolute bottom-0 left-1/2 h-32 w-[26rem] -translate-x-1/2 rounded-full bg-[#FACC15]/10 blur-3xl" />
+            <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:72px_72px]" />
           </div>
 
           <div className="relative mx-auto max-w-3xl text-center">
@@ -238,14 +198,18 @@ export default function ContactThankYouPage() {
               Request received
             </div>
 
-            <SectionEyebrow>THANK YOU</SectionEyebrow>
+            <div className="mt-5">
+              <SectionEyebrow>THANK YOU</SectionEyebrow>
+            </div>
 
             <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[44px] lg:leading-[1.02]">
               We’ve received your request.
             </h1>
 
-            <p className="mt-4 mx-auto max-w-2xl text-sm leading-6 text-white/70 sm:text-[15px]">
-              We’re reviewing your address and service requirements now.
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-white/70 sm:text-[15px]">
+              We’re reviewing your address and service requirements. If the
+              request includes enough detail, we’ll respond with the clearest
+              availability, pricing direction, or next step.
             </p>
 
             <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -254,24 +218,84 @@ export default function ContactThankYouPage() {
               <MetricPill label="RESPONSE" value="~1 business day" />
             </div>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
-              <CTAButton href="/" primary>
-                Back to Home
-              </CTAButton>
+            <div className="mt-8 rounded-[24px] border border-white/10 bg-black/20 p-5 text-left">
+              <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/55">
+                What happens next
+              </div>
 
-              <CTAButton href={`tel:${PHONE_E164}`}>
+              <div className="mt-4 grid gap-3 text-sm leading-6 text-white/68 sm:grid-cols-3">
+                <div>
+                  <div className="font-medium text-white/90">1. Site review</div>
+                  <p className="mt-1">
+                    We check address fit, likely service paths, and next-step
+                    requirements.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="font-medium text-white/90">2. Service fit</div>
+                  <p className="mt-1">
+                    We map the request to fibre, DIA, managed network, voice, or
+                    backup options.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="font-medium text-white/90">3. Clear reply</div>
+                  <p className="mt-1">
+                    You receive availability direction, pricing guidance, or the
+                    cleanest next action.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
+              <Link
+                href="/"
+                className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+              >
+                Back to Home
+              </Link>
+
+              <TrackedLink
+                href={`tel:${PHONE_E164}`}
+                eventName="phone_click"
+                location="thank_you_page"
+                cta="post_submit_call"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
                 Call {PHONE_DISPLAY}
-              </CTAButton>
+              </TrackedLink>
+
+              <TrackedLink
+                href={`mailto:${GENERAL_EMAIL}`}
+                eventName="email_click"
+                location="thank_you_page"
+                cta="post_submit_email"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+              >
+                Email concierge
+              </TrackedLink>
             </div>
 
             <div className="mt-4 text-sm text-white/55">
               Need help now?{" "}
-              <a
+              <TrackedLink
                 href={`mailto:${GENERAL_EMAIL}`}
+                eventName="email_click"
+                location="thank_you_page"
+                cta="inline_concierge_email"
                 className="text-white/80 transition hover:text-white"
               >
                 {GENERAL_EMAIL}
-              </a>
+              </TrackedLink>
+            </div>
+
+            <div className="mt-6 text-xs leading-5 text-white/45">
+              Orbitlink reviews business connectivity requests for Ontario
+              organizations. This confirmation page is not indexed by search
+              engines.
             </div>
           </div>
         </Surface>
