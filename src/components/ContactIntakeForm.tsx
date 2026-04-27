@@ -1,12 +1,11 @@
 "use client";
 
-import { useMemo } from "react";
-
-declare global {
-  interface Window {
-    gtag?: (command: string, ...args: unknown[]) => void;
-  }
-}
+import { useMemo, useState } from "react";
+import TrackedLink from "@/components/TrackedLink";
+import {
+  trackFormStart,
+  trackFormSubmit,
+} from "@/lib/analytics";
 
 function FieldHint({ children }: { children: React.ReactNode }) {
   return <p className="text-xs leading-5 text-white/50">{children}</p>;
@@ -40,7 +39,9 @@ function SectionTitle({
 }) {
   return (
     <div>
-      <div className="text-[11px] tracking-[0.24em] text-white/50">{eyebrow}</div>
+      <div className="text-[11px] tracking-[0.24em] text-white/50">
+        {eyebrow}
+      </div>
       <h3 className="mt-2 text-base font-semibold text-white">{title}</h3>
       {desc ? <p className="mt-2 text-sm leading-6 text-white/62">{desc}</p> : null}
     </div>
@@ -74,7 +75,9 @@ function InfoPanel({
 
   return (
     <div className={`rounded-[24px] border p-4 ${toneClass}`}>
-      <div className={`text-[11px] tracking-[0.22em] ${eyebrowClass}`}>{eyebrow}</div>
+      <div className={`text-[11px] tracking-[0.22em] ${eyebrowClass}`}>
+        {eyebrow}
+      </div>
       <div className="mt-2 text-sm font-medium text-white/88">{title}</div>
       <p className="mt-2 text-sm leading-6 text-white/72">{text}</p>
     </div>
@@ -113,7 +116,14 @@ function textareaClassName() {
   return "w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40 focus:bg-black/30";
 }
 
-export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: string[] }) {
+export default function ContactIntakeForm({
+  moduleOptions,
+}: {
+  moduleOptions: string[];
+}) {
+  const [hasStarted, setHasStarted] = useState(false);
+  const [selectedService, setSelectedService] = useState("");
+
   const options = useMemo(
     () =>
       moduleOptions.map((value) => ({
@@ -125,19 +135,33 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
 
   const fieldClassName = inputClassName();
 
+  function handleFormStart() {
+    if (hasStarted) return;
+
+    setHasStarted(true);
+
+    trackFormStart({
+      location: "contact_page",
+      form: "contact_intake",
+      serviceType: selectedService || undefined,
+    });
+  }
+
+  function handleSubmit() {
+    trackFormSubmit({
+      location: "contact_page",
+      form: "contact_intake",
+      serviceType: selectedService || undefined,
+    });
+  }
+
   return (
     <form
       className="mt-4 grid gap-5"
       action="/api/waitlist"
       method="post"
-      onSubmit={() => {
-        window.gtag?.("event", "availability_form_submit", {
-          page: window.location.pathname,
-          location: "contact_page",
-          intent: "availability_pricing",
-          form_name: "contact_intake",
-        });
-      }}
+      onFocus={handleFormStart}
+      onSubmit={handleSubmit}
     >
       <input type="hidden" name="source" value="contact" />
       <input type="hidden" name="intent" value="availability_pricing" />
@@ -174,7 +198,6 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
           eyebrow="NO OBLIGATION"
           title="Business review first"
           text="Your request is reviewed without commitment. Orbitlink focuses on clarity first, then the right next step."
-          tone="neutral"
         />
       </div>
 
@@ -183,8 +206,9 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
           WHY SUBMIT THIS
         </div>
         <p className="mt-2 text-sm leading-6 text-white/70">
-          Most businesses submit this to confirm what is actually available at their address,
-          understand realistic pricing, and avoid choosing the wrong service before installation.
+          Most businesses submit this to confirm what is actually available at
+          their address, understand realistic pricing, and avoid choosing the
+          wrong service before installation.
         </p>
       </div>
 
@@ -268,7 +292,14 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
 
         <div className="grid gap-2">
           <FieldLabel htmlFor="module">Service needed</FieldLabel>
-          <select id="module" name="module" required defaultValue="" className={fieldClassName}>
+          <select
+            id="module"
+            name="module"
+            required
+            defaultValue=""
+            className={fieldClassName}
+            onChange={(event) => setSelectedService(event.target.value)}
+          >
             <option value="" disabled>
               Select a service
             </option>
@@ -278,7 +309,9 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
               </option>
             ))}
           </select>
-          <FieldHint>Choose the main service first. You can mention additional services below.</FieldHint>
+          <FieldHint>
+            Choose the main service first. You can mention additional services below.
+          </FieldHint>
         </div>
       </div>
 
@@ -329,21 +362,24 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
           className={textareaClassName()}
         />
         <FieldHint>
-          Mention fibre, Wi-Fi, voice, backup, static IPs, timing, landlord coordination,
-          or anything important for the site.
+          Mention fibre, Wi-Fi, voice, backup, static IPs, timing, landlord
+          coordination, or anything important for the site.
         </FieldHint>
       </div>
 
       <div className="rounded-[24px] border border-white/10 bg-black/20 p-4">
-        <div className="text-[11px] tracking-[0.22em] text-white/55">OPTIONAL BUT HELPFUL</div>
+        <div className="text-[11px] tracking-[0.22em] text-white/55">
+          OPTIONAL BUT HELPFUL
+        </div>
         <p className="mt-2 text-sm leading-6 text-white/65">
-          Static IPs, managed Wi-Fi, voice, backup connectivity, install window, building details,
-          landlord coordination, multi-site needs, or any service combination that matters to the location.
+          Static IPs, managed Wi-Fi, voice, backup connectivity, install window,
+          building details, landlord coordination, multi-site needs, or any
+          service combination that matters to the location.
         </p>
       </div>
 
       <div className="grid gap-3 pt-1">
-        <div className="text-xs text-white/60 text-center">
+        <div className="text-center text-xs text-white/60">
           Most Ontario business requests receive a response within 1 business day
         </div>
 
@@ -354,25 +390,31 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
           Check Availability for My Business
         </button>
 
-        <a
+        <TrackedLink
           href="tel:+18888672480"
-          className="text-center rounded-2xl border border-white/15 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+          eventName="phone_click"
+          location="contact_form"
+          cta="form_phone_cta"
+          className="rounded-2xl border border-white/15 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
         >
           Or call 1-888-867-2480
-        </a>
+        </TrackedLink>
 
         <p className="text-center text-xs text-white/50">
           No obligation • No sales pressure • Business-only review
         </p>
 
-        <div className="text-xs text-white/55 text-center">
+        <div className="text-center text-xs text-white/55">
           Prefer email?{" "}
-          <a
+          <TrackedLink
             href="mailto:concierge@orbitlink.ca"
+            eventName="email_click"
+            location="contact_form"
+            cta="form_concierge_email"
             className="text-white/80 transition hover:text-white"
           >
             concierge@orbitlink.ca
-          </a>
+          </TrackedLink>
         </div>
       </div>
     </form>
