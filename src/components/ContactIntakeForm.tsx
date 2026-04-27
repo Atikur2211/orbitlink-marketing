@@ -131,9 +131,11 @@ export default function ContactIntakeForm({ moduleOptions }: { moduleOptions: st
       action="/api/waitlist"
       method="post"
       onSubmit={() => {
-        window.gtag?.("event", "lead_submit", {
+        window.gtag?.("event", "availability_form_submit", {
+          page: window.location.pathname,
           location: "contact_page",
           intent: "availability_pricing",
+          form_name: "contact_intake",
         });
       }}
     >
