@@ -1,10 +1,25 @@
+"use client";
+
+declare global {
+  interface Window {
+    gtag?: (command: string, ...args: unknown[]) => void;
+  }
+}
+
+type EventParams = Record<string, unknown>;
+
 export const trackEvent = (
   action: string,
-  params: Record<string, any> = {}
+  params: EventParams = {}
 ) => {
-  if (typeof window === "undefined") return;
+  try {
+    if (typeof window === "undefined") return;
 
-  if (window.gtag) {
-    window.gtag("event", action, params);
+    window.gtag?.("event", action, {
+      page: window.location.pathname,
+      ...params,
+    });
+  } catch {
+    // never break UX
   }
 };

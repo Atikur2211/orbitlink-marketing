@@ -1,3 +1,4 @@
+import TrackedLink from "@/components/TrackedLink";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -13,8 +14,10 @@ const LEGAL_NAME = "TIRAV Technologies Inc. o/a Orbitlink";
 const PAGE_URL = `${SITE_URL}/contact`;
 const OG_IMAGE_URL = `${SITE_URL}/opengraph-image`;
 const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
+
 const PHONE_E164 = "+18888672480";
 const PHONE_DISPLAY = "1-888-867-2480";
+
 const GENERAL_EMAIL = "concierge@orbitlink.ca";
 const SALES_EMAIL = "sales@orbitlink.ca";
 const SUPPORT_EMAIL = "support@orbitlink.ca";
@@ -83,7 +86,7 @@ function Section({
   return (
     <section
       id={id}
-      className={`rounded-[28px] border border-white/10 bg-white/[0.045] p-5 sm:rounded-[32px] sm:p-8 lg:p-10 ${className}`}
+      className={`rounded-[28px] border border-white/10 bg-white/[0.045] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.18)] sm:rounded-[32px] sm:p-8 lg:p-10 ${className}`}
     >
       {children}
     </section>
@@ -92,19 +95,13 @@ function Section({
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-[10px] tracking-[0.26em] text-white/55 sm:text-[11px]">
+    <div className="text-[10px] font-medium uppercase tracking-[0.26em] text-white/55 sm:text-[11px]">
       {children}
     </div>
   );
 }
 
-function InfoCard({
-  title,
-  body,
-}: {
-  title: string;
-  body: string;
-}) {
+function InfoCard({ title, body }: { title: string; body: string }) {
   return (
     <div className="rounded-[22px] border border-white/10 bg-black/20 p-4 transition-all duration-300 hover:border-white/15 hover:bg-black/25 sm:p-5">
       <div className="text-sm font-medium text-white/92">{title}</div>
@@ -113,16 +110,12 @@ function InfoCard({
   );
 }
 
-function MetricPill({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
+function MetricPill({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-      <div className="text-[11px] tracking-[0.22em] text-white/50">{label}</div>
+      <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/50">
+        {label}
+      </div>
       <div className="mt-1 text-sm text-white/82">{value}</div>
     </div>
   );
@@ -132,19 +125,30 @@ function ContactMethod({
   href,
   title,
   body,
+  cta,
 }: {
   href: string;
   title: string;
   body: string;
+  cta?: string;
 }) {
+  const eventName = href.startsWith("mailto:")
+    ? "email_click"
+    : href.startsWith("tel:")
+      ? "phone_click"
+      : "contact_link_click";
+
   return (
-    <a
+    <TrackedLink
       href={href}
+      eventName={eventName}
+      location="contact_page"
+      cta={cta}
       className="block rounded-[22px] border border-white/10 bg-black/20 p-4 transition-all duration-300 hover:border-white/15 hover:bg-white/5 sm:p-5"
     >
       <div className="text-sm font-medium text-white">{title}</div>
       <div className="mt-1 text-sm leading-6 text-white/65">{body}</div>
-    </a>
+    </TrackedLink>
   );
 }
 
@@ -223,9 +227,7 @@ function buildJsonLd(moduleOptions: string[]) {
         "@id": WEBSITE_ID,
         url: SITE_URL,
         name: SITE_NAME,
-        publisher: {
-          "@id": ORG_ID,
-        },
+        publisher: { "@id": ORG_ID },
         inLanguage: "en-CA",
       },
       {
@@ -234,15 +236,9 @@ function buildJsonLd(moduleOptions: string[]) {
         url: PAGE_URL,
         name: PAGE_TITLE,
         description: PAGE_DESCRIPTION,
-        isPartOf: {
-          "@id": WEBSITE_ID,
-        },
-        about: {
-          "@id": ORG_ID,
-        },
-        breadcrumb: {
-          "@id": BREADCRUMB_ID,
-        },
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": ORG_ID },
+        breadcrumb: { "@id": BREADCRUMB_ID },
         primaryImageOfPage: {
           "@type": "ImageObject",
           url: OG_IMAGE_URL,
@@ -253,9 +249,7 @@ function buildJsonLd(moduleOptions: string[]) {
         "@type": "Service",
         "@id": SERVICE_ID,
         name: "Availability & Pricing Intake",
-        provider: {
-          "@id": ORG_ID,
-        },
+        provider: { "@id": ORG_ID },
         url: PAGE_URL,
         audience: {
           "@type": "Audience",
@@ -309,8 +303,7 @@ function buildJsonLd(moduleOptions: string[]) {
             name: "What should I include?",
             acceptedAnswer: {
               "@type": "Answer",
-              text:
-                "Your address, service type, and timeline help us review your request faster.",
+              text: "Your address, service type, and timeline help us review your request faster.",
             },
           },
           {
@@ -318,8 +311,7 @@ function buildJsonLd(moduleOptions: string[]) {
             name: "How fast is the review?",
             acceptedAnswer: {
               "@type": "Answer",
-              text:
-                "Most clearer requests are reviewed faster, especially when the full address and scope are included.",
+              text: "Most clearer requests are reviewed faster, especially when the full address and scope are included.",
             },
           },
           {
@@ -327,8 +319,7 @@ function buildJsonLd(moduleOptions: string[]) {
             name: "Is this for residential service?",
             acceptedAnswer: {
               "@type": "Answer",
-              text:
-                "No. This intake path is built mainly for business internet, networking, dedicated connectivity, and business voice.",
+              text: "No. This intake path is built mainly for business internet, networking, dedicated connectivity, and business voice.",
             },
           },
           {
@@ -336,8 +327,7 @@ function buildJsonLd(moduleOptions: string[]) {
             name: "What happens after I submit?",
             acceptedAnswer: {
               "@type": "Answer",
-              text:
-                "We review the address, fit, and likely service path, then send the clearest next step.",
+              text: "We review the address, fit, and likely service path, then send the clearest next step.",
             },
           },
         ],
@@ -356,7 +346,11 @@ export default function ContactPage() {
       subtitle="Tell us your address. We’ll review availability, likely service fit, and the best next step for your business."
       pills={["Business-only service", "Ontario coverage", "Address-first review"]}
       actions={[
-        { label: "Get Availability & Pricing", href: "#intake", variant: "primary" },
+        {
+          label: "Get Availability & Pricing",
+          href: "#intake",
+          variant: "primary",
+        },
         {
           label: `Call ${PHONE_DISPLAY}`,
           href: `tel:${PHONE_E164}`,
@@ -366,7 +360,9 @@ export default function ContactPage() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(moduleOptions)) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildJsonLd(moduleOptions)),
+        }}
       />
 
       <Section className="relative overflow-hidden">
@@ -385,7 +381,8 @@ export default function ContactPage() {
           </h2>
 
           <p className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
-            We review building fit, likely providers, and the best commercial setup for your location.
+            We review building fit, likely providers, and the best commercial
+            setup for your location.
           </p>
 
           <div className="mt-5 inline-flex flex-wrap items-center gap-2 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-[11px] text-white/66 sm:text-xs">
@@ -401,7 +398,8 @@ export default function ContactPage() {
           </div>
 
           <div className="mt-3 text-sm text-white/56">
-            Most Ontario business requests receive direction within 1 business day.
+            Most Ontario business requests receive direction within 1 business
+            day.
           </div>
 
           <div className="mt-1 text-sm text-white/50">
@@ -437,7 +435,8 @@ export default function ContactPage() {
             </h2>
 
             <p className="mt-3 text-sm leading-6 text-white/68">
-              Enter your address and service need. We’ll review the site and respond with the strongest next step.
+              Enter your address and service need. We’ll review the site and
+              respond with the strongest next step.
             </p>
 
             <ul className="mt-5 space-y-2 text-sm text-white/68">
@@ -471,8 +470,9 @@ export default function ContactPage() {
           </h2>
 
           <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
-            If you are still deciding between fibre, dedicated internet, backup, voice, or managed networking,
-            start with the Ontario guide first and then return here when you are ready to submit your request.
+            If you are still deciding between fibre, dedicated internet, backup,
+            voice, or managed networking, start with the Ontario guide first and
+            then return here when you are ready to submit your request.
           </p>
 
           <p className="mt-4 text-sm leading-7 text-white/75">
@@ -526,7 +526,8 @@ export default function ContactPage() {
             </h2>
 
             <p className="mt-3 text-sm leading-6 text-white/68 sm:text-[15px]">
-              Call or email for quick answers about availability, pricing, or service options.
+              Call or email for quick answers about availability, pricing, or
+              service options.
             </p>
           </div>
 
@@ -536,16 +537,19 @@ export default function ContactPage() {
                 href={`tel:${PHONE_E164}`}
                 title={`Call ${PHONE_DISPLAY}`}
                 body="Business enquiries, pricing, and availability."
+                cta="direct_phone"
               />
               <ContactMethod
                 href={`mailto:${GENERAL_EMAIL}`}
                 title={GENERAL_EMAIL}
                 body="General business connectivity enquiries."
+                cta="direct_concierge_email"
               />
               <ContactMethod
                 href={`mailto:${SALES_EMAIL}`}
                 title={SALES_EMAIL}
                 body="Sales discussions and commercial follow-up."
+                cta="direct_sales_email"
               />
             </div>
           </div>
@@ -588,29 +592,37 @@ export default function ContactPage() {
           Get availability and pricing for your business
         </h2>
 
-        <p className="mt-3 mx-auto max-w-3xl text-sm leading-6 text-white/72 sm:text-[15px]">
-          Submit your address. We’ll review likely service fit, availability, and the best next step for your location.
+        <p className="mx-auto mt-3 max-w-3xl text-sm leading-6 text-white/72 sm:text-[15px]">
+          Submit your address. We’ll review likely service fit, availability,
+          and the best next step for your location.
         </p>
 
         <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap sm:justify-center">
-          <a
+          <TrackedLink
             href="#intake"
+            eventName="quote_cta_click"
+            location="contact_page"
+            cta="get_availability_pricing"
             className="inline-flex min-h-[48px] items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
           >
             Get Availability & Pricing
-          </a>
+          </TrackedLink>
 
-          <a
+          <TrackedLink
             href={`tel:${PHONE_E164}`}
+            eventName="phone_click"
+            location="contact_page"
+            cta="final_phone_cta"
             className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
           >
             Call {PHONE_DISPLAY}
-          </a>
+          </TrackedLink>
         </div>
 
         <div className="mt-3 text-xs text-white/60">
           Fast response • No obligation • Business-only
         </div>
+
         <div className="mt-1 text-xs text-[#FDE68A]">
           Priority response for Ontario business requests this week
         </div>
