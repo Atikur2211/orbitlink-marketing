@@ -416,6 +416,13 @@ export default function ContactIntakeForm({
               Back
             </button>
 
+            {/* Persist previous step data */}
+            <input type="hidden" name="email" value={email} />
+            <input type="hidden" name="fullName" value={fullName} />
+            <input type="hidden" name="company" value={company} />
+            <input type="hidden" name="location" value={businessAddress} />
+            <input type="hidden" name="city" value={city} />
+
             <button
               type="submit"
               className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047] sm:w-1/2"
