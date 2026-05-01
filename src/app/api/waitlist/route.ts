@@ -201,7 +201,7 @@ export async function POST(req: Request) {
     const sites = clean(form.get("sites"), 80) || undefined;
     const notes = clean(form.get("notes"), 1200) || undefined;
 
-    if (!fullName || !company || !location || !moduleName) {
+    if (!fullName || !company || !location) {
       return NextResponse.redirect(
         buildRedirect(req.url, "/contact", { error: "missing_fields" }),
         303
