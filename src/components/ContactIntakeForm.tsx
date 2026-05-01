@@ -2,10 +2,7 @@
 
 import { useMemo, useState } from "react";
 import TrackedLink from "@/components/TrackedLink";
-import {
-  trackFormStart,
-  trackFormSubmit,
-} from "@/lib/analytics";
+import { trackFormStart, trackFormSubmit } from "@/lib/analytics";
 
 function FieldHint({ children }: { children: React.ReactNode }) {
   return <p className="text-xs leading-5 text-white/50">{children}</p>;
@@ -25,62 +22,6 @@ function FieldLabel({
       {children}
       {optional ? <span className="ml-1 text-white/45">(optional)</span> : null}
     </label>
-  );
-}
-
-function SectionTitle({
-  eyebrow,
-  title,
-  desc,
-}: {
-  eyebrow: string;
-  title: string;
-  desc?: string;
-}) {
-  return (
-    <div>
-      <div className="text-[11px] tracking-[0.24em] text-white/50">
-        {eyebrow}
-      </div>
-      <h3 className="mt-2 text-base font-semibold text-white">{title}</h3>
-      {desc ? <p className="mt-2 text-sm leading-6 text-white/62">{desc}</p> : null}
-    </div>
-  );
-}
-
-function InfoPanel({
-  eyebrow,
-  title,
-  text,
-  tone = "neutral",
-}: {
-  eyebrow: string;
-  title: string;
-  text: string;
-  tone?: "neutral" | "accent" | "positive";
-}) {
-  const toneClass =
-    tone === "accent"
-      ? "border-[#FACC15]/15 bg-[#FACC15]/[0.06]"
-      : tone === "positive"
-        ? "border-emerald-400/15 bg-emerald-400/[0.06]"
-        : "border-white/10 bg-black/20";
-
-  const eyebrowClass =
-    tone === "accent"
-      ? "text-[#FDE68A]"
-      : tone === "positive"
-        ? "text-emerald-200"
-        : "text-white/55";
-
-  return (
-    <div className={`rounded-[24px] border p-4 ${toneClass}`}>
-      <div className={`text-[11px] tracking-[0.22em] ${eyebrowClass}`}>
-        {eyebrow}
-      </div>
-      <div className="mt-2 text-sm font-medium text-white/88">{title}</div>
-      <p className="mt-2 text-sm leading-6 text-white/72">{text}</p>
-    </div>
   );
 }
 
@@ -108,12 +49,34 @@ function normalizeServiceLabel(name: string) {
   return labelMap[key] ?? name;
 }
 
-function inputClassName() {
-  return "w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40 focus:bg-black/30";
-}
+const inputClassName =
+  "w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40 focus:bg-black/30";
 
-function textareaClassName() {
-  return "w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40 focus:bg-black/30";
+const textareaClassName =
+  "w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/35 outline-none transition focus:border-[#FACC15]/40 focus:bg-black/30";
+
+function StepBadge({ step }: { step: number }) {
+  return (
+    <div className="mb-5">
+      <div className="flex items-center justify-between text-xs text-white/55">
+        <span>Step {step} of 3</span>
+        <span>
+          {step === 1
+            ? "Address"
+            : step === 2
+              ? "Contact"
+              : "Service need"}
+        </span>
+      </div>
+
+      <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+        <div
+          className="h-full rounded-full bg-[#FACC15] transition-all"
+          style={{ width: `${(step / 3) * 100}%` }}
+        />
+      </div>
+    </div>
+  );
 }
 
 export default function ContactIntakeForm({
@@ -121,8 +84,15 @@ export default function ContactIntakeForm({
 }: {
   moduleOptions: string[];
 }) {
+  const [step, setStep] = useState(1);
   const [hasStarted, setHasStarted] = useState(false);
   const [selectedService, setSelectedService] = useState("");
+
+  const [businessAddress, setBusinessAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
 
   const options = useMemo(
     () =>
@@ -133,34 +103,43 @@ export default function ContactIntakeForm({
     [moduleOptions]
   );
 
-  const fieldClassName = inputClassName();
-
-  function handleFormStart() {
+  function startTracking() {
     if (hasStarted) return;
 
     setHasStarted(true);
 
     trackFormStart({
       location: "contact_page",
-      form: "contact_intake",
+      form: "contact_intake_multistep",
       serviceType: selectedService || undefined,
     });
+  }
+
+  function goToStep(nextStep: number) {
+    startTracking();
+    setStep(nextStep);
   }
 
   function handleSubmit() {
     trackFormSubmit({
       location: "contact_page",
-      form: "contact_intake",
+      form: "contact_intake_multistep",
       serviceType: selectedService || undefined,
     });
   }
+
+  const canContinueStep1 = businessAddress.trim().length >= 5;
+  const canContinueStep2 =
+    fullName.trim().length >= 2 &&
+    email.trim().includes("@") &&
+    company.trim().length >= 2;
 
   return (
     <form
       className="mt-4 grid gap-5"
       action="/api/waitlist"
       method="post"
-      onFocus={handleFormStart}
+      onFocus={startTracking}
       onSubmit={handleSubmit}
     >
       <input type="hidden" name="source" value="contact" />
@@ -175,248 +154,300 @@ export default function ContactIntakeForm({
         className="hidden"
       />
 
-      <SectionTitle
-        eyebrow="BUSINESS INTAKE"
-        title="Check availability for your business location"
-        desc="Submit your address and service need. Orbitlink reviews availability, service fit, and provides the clearest next step for your business."
-      />
+      <StepBadge step={step} />
 
-      <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
-        <InfoPanel
-          eyebrow="WHAT YOU GET"
-          title="Availability, pricing direction, and service recommendation"
-          text="We review your address and service need, then reply with availability, pricing direction, or the best next step for the site."
-          tone="accent"
-        />
-        <InfoPanel
-          eyebrow="RESPONSE TIME"
-          title="Usually within 1 business day"
-          text="Response time depends on the address, service type, and detail provided."
-          tone="positive"
-        />
-        <InfoPanel
-          eyebrow="NO OBLIGATION"
-          title="Business review first"
-          text="Your request is reviewed without commitment. Orbitlink focuses on clarity first, then the right next step."
-        />
-      </div>
+      {step === 1 ? (
+        <div className="grid gap-5">
+          <div>
+            <div className="text-[11px] tracking-[0.24em] text-[#FDE68A]">
+              START WITH ADDRESS
+            </div>
 
-      <div className="rounded-[24px] border border-white/10 bg-black/25 p-4">
-        <div className="text-[11px] tracking-[0.22em] text-white/55">
-          WHY SUBMIT THIS
-        </div>
-        <p className="mt-2 text-sm leading-6 text-white/70">
-          Most businesses submit this to confirm what is actually available at
-          their address, understand realistic pricing, and avoid choosing the
-          wrong service before installation.
-        </p>
-      </div>
+            <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">
+              What business address should we check?
+            </h3>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <div className="grid gap-2">
-          <FieldLabel htmlFor="fullName">Full name</FieldLabel>
-          <input
-            id="fullName"
-            name="fullName"
-            type="text"
-            required
-            autoComplete="name"
-            placeholder="Your full name"
-            className={fieldClassName}
-          />
-        </div>
+            <p className="mt-2 text-sm leading-6 text-white/62">
+              Start with the location. We’ll review what is actually available
+              before asking for the full project details.
+            </p>
+          </div>
 
-        <div className="grid gap-2">
-          <FieldLabel htmlFor="email">Work email</FieldLabel>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            placeholder="name@company.com"
-            className={fieldClassName}
-          />
-          <FieldHint>Work email is preferred for business requests.</FieldHint>
-        </div>
-      </div>
+          <div className="grid gap-2">
+            <FieldLabel htmlFor="location">Business address</FieldLabel>
+            <input
+              id="location"
+              name="location"
+              type="text"
+              required
+              autoComplete="street-address"
+              placeholder="Street address, city, province"
+              value={businessAddress}
+              onChange={(event) => setBusinessAddress(event.target.value)}
+              className={inputClassName}
+            />
+            <FieldHint>
+              Use the exact service address for the best availability review.
+            </FieldHint>
+          </div>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <div className="grid gap-2">
-          <FieldLabel htmlFor="company">Company name</FieldLabel>
-          <input
-            id="company"
-            name="company"
-            type="text"
-            required
-            autoComplete="organization"
-            placeholder="Your company name"
-            className={fieldClassName}
-          />
-        </div>
+          <div className="grid gap-2">
+            <FieldLabel htmlFor="city" optional>
+              City
+            </FieldLabel>
+            <input
+              id="city"
+              name="city"
+              type="text"
+              autoComplete="address-level2"
+              placeholder="Toronto, Mississauga, Brampton..."
+              value={city}
+              onChange={(event) => setCity(event.target.value)}
+              className={inputClassName}
+            />
+          </div>
 
-        <div className="grid gap-2">
-          <FieldLabel htmlFor="role" optional>
-            Your role
-          </FieldLabel>
-          <select id="role" name="role" defaultValue="" className={fieldClassName}>
-            <option value="" disabled>
-              Select your role
-            </option>
-            <option value="business_owner">Owner / leadership</option>
-            <option value="business_buyer">Buyer / procurement</option>
-            <option value="it_network">IT / network lead</option>
-            <option value="operations_facilities">Operations / facilities</option>
-            <option value="property_management">Property management</option>
-            <option value="partner_vendor">Partner / vendor</option>
-            <option value="other">Other</option>
-          </select>
-          <FieldHint>Optional, but helpful for routing the request properly.</FieldHint>
-        </div>
-      </div>
+          <div className="rounded-[22px] border border-white/10 bg-black/20 p-4 text-sm leading-6 text-white/65">
+            No obligation. No sales pressure. This starts with an address-based
+            business connectivity review.
+          </div>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <div className="grid gap-2">
-          <FieldLabel htmlFor="location">Business address</FieldLabel>
-          <input
-            id="location"
-            name="location"
-            type="text"
-            required
-            autoComplete="street-address"
-            placeholder="Street address, city, province"
-            className={fieldClassName}
-          />
-          <FieldHint>Use the exact service address for the best review.</FieldHint>
-        </div>
-
-        <div className="grid gap-2">
-          <FieldLabel htmlFor="module">Service needed</FieldLabel>
-          <select
-            id="module"
-            name="module"
-            required
-            defaultValue=""
-            className={fieldClassName}
-            onChange={(event) => setSelectedService(event.target.value)}
+          <button
+            type="button"
+            disabled={!canContinueStep1}
+            onClick={() => goToStep(2)}
+            className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047] disabled:cursor-not-allowed disabled:opacity-45"
           >
-            <option value="" disabled>
-              Select a service
-            </option>
-            {options.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          <FieldHint>
-            Choose the main service first. You can mention additional services below.
-          </FieldHint>
+            Next — Check This Address
+          </button>
         </div>
-      </div>
+      ) : null}
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <div className="grid gap-2">
-          <FieldLabel htmlFor="timeline" optional>
-            Timeline
-          </FieldLabel>
-          <select id="timeline" name="timeline" defaultValue="" className={fieldClassName}>
-            <option value="" disabled>
-              Select timeline
-            </option>
-            <option value="asap">As soon as possible</option>
-            <option value="within_30_days">Within 30 days</option>
-            <option value="within_60_90_days">Within 60–90 days</option>
-            <option value="planning_stage">Planning stage</option>
-            <option value="not_sure">Not sure yet</option>
-          </select>
-          <FieldHint>Helps us understand urgency.</FieldHint>
+      {step === 2 ? (
+        <div className="grid gap-5">
+          <div>
+            <div className="text-[11px] tracking-[0.24em] text-[#FDE68A]">
+              CONTACT DETAILS
+            </div>
+
+            <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">
+              Who should we send the result to?
+            </h3>
+
+            <p className="mt-2 text-sm leading-6 text-white/62">
+              Add your contact details so we can respond with availability,
+              pricing direction, or the best next step.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="grid gap-2">
+              <FieldLabel htmlFor="fullName">Full name</FieldLabel>
+              <input
+                id="fullName"
+                name="fullName"
+                type="text"
+                required
+                autoComplete="name"
+                placeholder="Your full name"
+                value={fullName}
+                onChange={(event) => setFullName(event.target.value)}
+                className={inputClassName}
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <FieldLabel htmlFor="email">Work email</FieldLabel>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                autoComplete="email"
+                placeholder="name@company.com"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                className={inputClassName}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="grid gap-2">
+              <FieldLabel htmlFor="company">Company name</FieldLabel>
+              <input
+                id="company"
+                name="company"
+                type="text"
+                required
+                autoComplete="organization"
+                placeholder="Your company name"
+                value={company}
+                onChange={(event) => setCompany(event.target.value)}
+                className={inputClassName}
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <FieldLabel htmlFor="phone" optional>
+                Phone
+              </FieldLabel>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                autoComplete="tel"
+                placeholder="Business phone"
+                className={inputClassName}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => setStep(1)}
+              className="rounded-2xl border border-white/15 px-5 py-3 text-sm text-white transition hover:bg-white/10 sm:w-1/2"
+            >
+              Back
+            </button>
+
+            <button
+              type="button"
+              disabled={!canContinueStep2}
+              onClick={() => goToStep(3)}
+              className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047] disabled:cursor-not-allowed disabled:opacity-45 sm:w-1/2"
+            >
+              Next — Service Need
+            </button>
+          </div>
         </div>
+      ) : null}
 
-        <div className="grid gap-2">
-          <FieldLabel htmlFor="sites" optional>
-            Number of sites
-          </FieldLabel>
-          <select id="sites" name="sites" defaultValue="" className={fieldClassName}>
-            <option value="" disabled>
-              Select number of sites
-            </option>
-            <option value="1">1 site</option>
-            <option value="2_5">2–5 sites</option>
-            <option value="6_20">6–20 sites</option>
-            <option value="20_plus">20+ sites</option>
-          </select>
-          <FieldHint>Add this for multi-site requests.</FieldHint>
-        </div>
-      </div>
+      {step === 3 ? (
+        <div className="grid gap-5">
+          <div>
+            <div className="text-[11px] tracking-[0.24em] text-[#FDE68A]">
+              SERVICE NEED
+            </div>
 
-      <div className="grid gap-2">
-        <FieldLabel htmlFor="notes" optional>
-          Project details
-        </FieldLabel>
-        <textarea
-          id="notes"
-          name="notes"
-          rows={5}
-          placeholder="Example: 20-user office, need fibre + Wi-Fi, current provider Bell, moving in 30 days, may need static IPs and backup internet."
-          className={textareaClassName()}
-        />
-        <FieldHint>
-          Mention fibre, Wi-Fi, voice, backup, static IPs, timing, landlord
-          coordination, or anything important for the site.
-        </FieldHint>
-      </div>
+            <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">
+              What do you need for this location?
+            </h3>
 
-      <div className="rounded-[24px] border border-white/10 bg-black/20 p-4">
-        <div className="text-[11px] tracking-[0.22em] text-white/55">
-          OPTIONAL BUT HELPFUL
-        </div>
-        <p className="mt-2 text-sm leading-6 text-white/65">
-          Static IPs, managed Wi-Fi, voice, backup connectivity, install window,
-          building details, landlord coordination, multi-site needs, or any
-          service combination that matters to the location.
-        </p>
-      </div>
+            <p className="mt-2 text-sm leading-6 text-white/62">
+              Choose the main service. You can add any technical notes or timing
+              details below.
+            </p>
+          </div>
 
-      <div className="grid gap-3 pt-1">
-        <div className="text-center text-xs text-white/60">
-          Most Ontario business requests receive a response within 1 business day
-        </div>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="grid gap-2">
+              <FieldLabel htmlFor="module">Service needed</FieldLabel>
+              <select
+                id="module"
+                name="module"
+                required
+                defaultValue=""
+                className={inputClassName}
+                onChange={(event) => setSelectedService(event.target.value)}
+              >
+                <option value="" disabled>
+                  Select a service
+                </option>
+                {options.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <button
-          type="submit"
-          className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-        >
-          Check Availability for My Business
-        </button>
+            <div className="grid gap-2">
+              <FieldLabel htmlFor="timeline" optional>
+                Timeline
+              </FieldLabel>
+              <select
+                id="timeline"
+                name="timeline"
+                defaultValue=""
+                className={inputClassName}
+              >
+                <option value="" disabled>
+                  Select timeline
+                </option>
+                <option value="asap">As soon as possible</option>
+                <option value="within_30_days">Within 30 days</option>
+                <option value="within_60_90_days">Within 60–90 days</option>
+                <option value="planning_stage">Planning stage</option>
+                <option value="not_sure">Not sure yet</option>
+              </select>
+            </div>
+          </div>
 
-        <TrackedLink
-          href="tel:+18888672480"
-          eventName="phone_click"
-          location="contact_form"
-          cta="form_phone_cta"
-          className="rounded-2xl border border-white/15 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
-        >
-          Or call 1-888-867-2480
-        </TrackedLink>
+          <div className="grid gap-2">
+            <FieldLabel htmlFor="notes" optional>
+              Project details
+            </FieldLabel>
+            <textarea
+              id="notes"
+              name="notes"
+              rows={4}
+              placeholder="Example: office move, unstable Bell connection, need fibre + managed Wi-Fi, static IPs, or backup internet."
+              className={textareaClassName}
+            />
+            <FieldHint>
+              Mention fibre, Wi-Fi, voice, static IPs, backup, install window,
+              or landlord coordination if relevant.
+            </FieldHint>
+          </div>
 
-        <p className="text-center text-xs text-white/50">
-          No obligation • No sales pressure • Business-only review
-        </p>
+          <div className="rounded-[22px] border border-[#FACC15]/15 bg-[#FACC15]/[0.06] p-4 text-sm leading-6 text-white/72">
+            You’ll receive availability direction, pricing guidance, or the
+            clearest next step for the site.
+          </div>
 
-        <div className="text-center text-xs text-white/55">
-          Prefer email?{" "}
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => setStep(2)}
+              className="rounded-2xl border border-white/15 px-5 py-3 text-sm text-white transition hover:bg-white/10 sm:w-1/2"
+            >
+              Back
+            </button>
+
+            <button
+              type="submit"
+              className="rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047] sm:w-1/2"
+            >
+              Check Availability & Pricing
+            </button>
+          </div>
+
+          <div className="text-center text-xs text-white/55">
+            Prefer email?{" "}
+            <TrackedLink
+              href="mailto:concierge@orbitlink.ca"
+              eventName="email_click"
+              location="contact_form"
+              cta="form_concierge_email"
+              className="text-white/80 transition hover:text-white"
+            >
+              concierge@orbitlink.ca
+            </TrackedLink>
+          </div>
+
           <TrackedLink
-            href="mailto:concierge@orbitlink.ca"
-            eventName="email_click"
+            href="tel:+18888672480"
+            eventName="phone_click"
             location="contact_form"
-            cta="form_concierge_email"
-            className="text-white/80 transition hover:text-white"
+            cta="form_phone_cta"
+            className="rounded-2xl border border-white/15 px-5 py-3 text-center text-sm text-white transition hover:bg-white/10"
           >
-            concierge@orbitlink.ca
+            Or call 1-888-867-2480
           </TrackedLink>
         </div>
-      </div>
+      ) : null}
     </form>
   );
 }
