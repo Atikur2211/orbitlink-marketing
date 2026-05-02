@@ -447,10 +447,10 @@ export default function BusinessInternetBramptonPage() {
                 Call {BUSINESS.phoneDisplay}
               </Link>
               <Link
-                href="/trust"
+                href="/services"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white/85 transition hover:bg-white/10"
               >
-                Trust and Compliance
+                Explore Services
               </Link>
             </div>
 
@@ -570,7 +570,34 @@ export default function BusinessInternetBramptonPage() {
                 ))}
               </div>
             </div>
+            
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>SERVING BRAMPTON BUSINESSES</SectionEyebrow>
 
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Built for Brampton industrial and logistics environments
+              </h2>
+
+              <p className="mt-3 text-sm leading-relaxed text-white/70">
+                Brampton is one of Ontario’s strongest industrial and logistics markets, with
+                warehouse operations, distribution centers, manufacturing sites, and business
+                parks requiring stable, uptime-focused connectivity. Orbitlink reviews building
+                fit, infrastructure constraints, and available service paths by address to match
+                the right connectivity setup before deployment.
+              </p>
+
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white/80">
+                  Warehouses and distribution centers
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white/80">
+                  Industrial and manufacturing facilities
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white/80">
+                  Logistics and operations-heavy sites
+                </div>
+              </div>
+            </div>
             <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
               <SectionEyebrow>CHECK AVAILABILITY</SectionEyebrow>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">

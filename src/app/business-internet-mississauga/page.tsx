@@ -539,19 +539,6 @@ export default function BusinessInternetMississaugaPage() {
               <h2 className="mt-3 text-xl font-semibold tracking-tight">
                 Common Mississauga business environments
               </h2>
-            
-              <div className="mt-8 text-center">
-                <Link
-                  href="/contact#intake"
-                  className="inline-flex items-center justify-center rounded-xl bg-[#FACC15] px-6 py-3 text-sm font-medium text-black hover:bg-[#FDE047]"
-                >
-                  Get Availability & Pricing
-                </Link>
-
-                <div className="mt-2 text-xs text-white/60">
-                  Takes 60 seconds • No obligation • Business-only
-                </div>
-              </div>
 
               <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
                 {fitCards.map((card) => (
@@ -565,6 +552,33 @@ export default function BusinessInternetMississaugaPage() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+            
+            <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6 md:p-8">
+              <SectionEyebrow>SERVING MISSISSAUGA BUSINESSES</SectionEyebrow>
+
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">
+                Built for Mississauga office, industrial, and logistics environments
+              </h2>
+
+              <p className="mt-3 text-sm leading-relaxed text-white/70">
+                Mississauga business environments range from office towers and commercial
+                suites to industrial parks, warehouses, and logistics corridors. Orbitlink
+                reviews building fit, infrastructure constraints, and available service paths
+                by address to match the right connectivity setup before deployment.
+              </p>
+
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white/80">
+                  Office and commercial suites
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white/80">
+                  Warehouses and logistics operations
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white/80">
+                  Industrial parks and multi-use sites
+                </div>
               </div>
             </div>
 
