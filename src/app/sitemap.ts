@@ -11,6 +11,7 @@ const staticPages = [
   "/business-internet-milton",
   "/business-internet-mississauga",
   "/business-internet-toronto",
+  "/business-internet-vaughan",
   "/compare",
   "/contact",
   "/internet-near-me",
