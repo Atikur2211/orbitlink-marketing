@@ -30,7 +30,7 @@ const BREADCRUMB_ID = `${PAGE_URL}#breadcrumb`;
 
 const PAGE_TITLE = "Check Business Internet Availability & Pricing";
 const PAGE_DESCRIPTION =
-  "Check business internet availability and pricing for your Ontario location. Fibre, dedicated internet, managed Wi-Fi, voice, static IPs, and backup connectivity.";
+  "Check business internet availability and pricing in Ontario. Fibre, dedicated internet, and managed connectivity for business locations.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
