@@ -550,6 +550,57 @@ export default function BusinessInternetOntarioPage() {
               ))}
             </div>
           </Surface>
+          
+          <Surface className="border-[#FACC15]/15 bg-[#FACC15]/[0.055] p-5 sm:p-8 lg:p-10">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
+              <div className="lg:col-span-7">
+                <SectionEyebrow>STILL COMPARING PROVIDERS?</SectionEyebrow>
+
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
+                  Compare how business internet is evaluated and delivered before choosing a provider.
+                </h2>
+
+                <p className="mt-3 text-sm leading-6 text-white/72 sm:text-[15px]">
+                  If you are comparing Orbitlink with a large telecom provider or another ISP,
+                  review how the buying experience, service fit, and next-step process differ.
+                </p>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <TrustPill text="Clearer buying path" />
+                  <TrustPill text="Address-first review" />
+                  <TrustPill text="Business-only guidance" />
+                </div>
+              </div>
+
+              <div className="lg:col-span-5">
+                <div className="grid gap-3">
+                  <Link
+                    href="/compare"
+                    className="block rounded-[22px] border border-white/10 bg-black/25 p-5 transition hover:border-[#FACC15]/25 hover:bg-black/35"
+                  >
+                    <div className="text-sm font-medium text-white">
+                      Compare Provider Models
+                    </div>
+                    <p className="mt-2 text-sm leading-6 text-white/64">
+                      Compare Orbitlink with large telecom providers and smaller ISPs.
+                    </p>
+                  </Link>
+
+                  <Link
+                    href="/why-orbitlink"
+                    className="block rounded-[22px] border border-white/10 bg-black/25 p-5 transition hover:border-[#FACC15]/25 hover:bg-black/35"
+                  >
+                    <div className="text-sm font-medium text-white">
+                      Why Orbitlink
+                    </div>
+                    <p className="mt-2 text-sm leading-6 text-white/64">
+                      See why Ontario businesses use Orbitlink for clearer service review.
+                    </p>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </Surface>
 
           <Surface className="p-5 sm:p-8 lg:p-10">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">

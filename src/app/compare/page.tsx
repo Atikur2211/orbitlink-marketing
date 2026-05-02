@@ -300,7 +300,7 @@ export default function ComparePage() {
       ]}
       actions={[
         { label: "Get Availability & Pricing", href: "/contact#intake", variant: "primary" },
-        { label: "Why Orbitlink", href: "/why-orbitlink", variant: "secondary" },
+        { label: "View Services", href: "/services", variant: "secondary" },
       ]}
     >
       <script
@@ -355,16 +355,10 @@ export default function ComparePage() {
                 Get Availability & Pricing
               </Link>
               <Link
-                href="/why-orbitlink"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-              >
-                Why Orbitlink
-              </Link>
-              <Link
                 href="/services"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
               >
-                View Solutions
+                View Services
               </Link>
             </div>
           </div>
@@ -502,20 +496,21 @@ export default function ComparePage() {
             </p>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/contact#intake"
-              className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
-            >
-              Get Availability & Pricing
-            </Link>
-            <Link
-              href="/why-orbitlink"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
-            >
-              Why Orbitlink
-            </Link>
-          </div>
+         <div className="flex flex-col gap-3 sm:flex-row">
+           <Link
+             href="/contact#intake"
+             className="inline-flex items-center justify-center rounded-2xl bg-[#FACC15] px-5 py-3 text-sm font-medium text-black transition hover:bg-[#FDE047]"
+           >
+             Get Availability & Pricing
+           </Link>
+
+           <Link
+             href="/services"
+             className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm text-white transition hover:bg-white/10"
+           >
+             View Services
+           </Link>
+         </div>
         </div>
       </Surface>
     </PageShell>
