@@ -138,6 +138,11 @@ const businessPages = [
     href: "/business-internet-toronto",
   },
   {
+    title: "Business Internet Vaughan",
+    desc: "Business landing page for Vaughan office, commercial, retail, and multi-tenant environments.",
+    href: "/business-internet-vaughan",
+  },
+  {
     title: "Business Internet Brampton",
     desc: "Commercial and industrial-focused business landing page for Brampton demand.",
     href: "/business-internet-brampton",
@@ -874,10 +879,10 @@ export default function BusinessFibreInternetOntarioPage() {
                   Milton
                 </Link>
                 <Link
-                  href="/locations/windsor"
+                  href="/business-internet-vaughan"
                   className="underline underline-offset-4 text-white/80 hover:text-white"
                 >
-                  Windsor
+                  Vaughan
                 </Link>
               </div>
             </div>
