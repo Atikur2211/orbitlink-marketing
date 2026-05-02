@@ -723,6 +723,7 @@ export default function LocationsHubPage() {
             <li><Link href="/services/starlink-agent" className="underline hover:text-white">Starlink access coordination</Link></li>
             <li><Link href="/why-orbitlink" className="underline hover:text-white">Why Orbitlink</Link></li>
             <li><Link href="/internet-near-me" className="underline hover:text-white">Business internet near me</Link></li>
+            <li><Link href="/business-internet-vaughan" className="underline hover:text-white">Business internet in Vaughan</Link></li>
           </ul>
         </div>
       </section>
