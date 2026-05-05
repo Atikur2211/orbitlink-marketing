@@ -1,3 +1,5 @@
+// src/app/legal/acceptable-use/page.tsx
+
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 
@@ -8,14 +10,14 @@ const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 export const metadata: Metadata = {
   title: "Acceptable Use Policy",
   description:
-    "Orbitlink acceptable use policy outlining permitted and prohibited use of services, including security, abuse prevention, and service integrity.",
+    "Orbitlink acceptable use policy outlining permitted and prohibited use of services, including security, network integrity, abuse prevention, and enforcement.",
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
     title: "Acceptable Use Policy | Orbitlink",
     description:
-      "Orbitlink acceptable use policy outlining permitted and prohibited use of services, including security, abuse prevention, and service integrity.",
+      "Orbitlink acceptable use policy covering service integrity, abuse prevention, prohibited activities, and customer responsibilities.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -25,7 +27,7 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "Orbitlink acceptable use policy",
+        alt: "Orbitlink Acceptable Use Policy",
       },
     ],
   },
@@ -38,42 +40,62 @@ export const metadata: Metadata = {
   },
 };
 
-function Item({
+function Section({
+  label,
   title,
   children,
 }: {
+  label: string;
   title: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 transition-all duration-300 hover:border-white/15 hover:bg-black/25">
-      <div className="text-sm font-medium text-white/90">{title}</div>
-      <div className="mt-2 text-sm leading-6 text-white/65">{children}</div>
-    </div>
+    <section className="rounded-[28px] border border-white/10 bg-white/[0.045] p-6 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.05] sm:p-7">
+      <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-3 py-1 text-[10px] text-white/60 sm:text-[11px]">
+        <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
+        {label}
+      </div>
+
+      <h2 className="mt-4 text-lg font-semibold text-white/90 sm:text-xl">
+        {title}
+      </h2>
+
+      <div className="mt-3 space-y-3 text-sm leading-6 text-white/70 sm:text-[15px]">
+        {children}
+      </div>
+    </section>
   );
 }
 
-function Signal({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
+function Signal({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-      <div className="text-[11px] tracking-[0.22em] text-white/55">{label}</div>
+      <div className="text-[11px] tracking-[0.22em] text-white/55">
+        {label}
+      </div>
       <div className="mt-1 text-sm text-white/80">{value}</div>
     </div>
   );
 }
 
+function BulletList({ items }: { items: string[] }) {
+  return (
+    <ul className="list-disc space-y-2 pl-5">
+      {items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
+}
+
 export default function AcceptableUsePage() {
+  const lastUpdated = "May 2026";
+
   return (
     <PageShell
       eyebrow="LEGAL"
       title="Acceptable Use Policy"
-      subtitle="A simple policy designed to protect customers, business operations, and service integrity."
+      subtitle="Rules for responsible use of Orbitlink services, designed to protect customers, network integrity, and business operations."
     >
       <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
         <div className="pointer-events-none absolute inset-0">
@@ -84,95 +106,274 @@ export default function AcceptableUsePage() {
         </div>
 
         <div className="relative">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[10px] text-[#FDE68A] sm:text-[11px]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-            Service integrity and abuse prevention
+          <div className="flex flex-col gap-4 rounded-[24px] border border-white/10 bg-black/20 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[10px] text-[#FDE68A] sm:text-[11px]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
+              Service integrity and abuse prevention
+            </div>
+
+            <div className="text-xs text-white/55">
+              Last updated:{" "}
+              <span className="text-white/80">{lastUpdated}</span>
+            </div>
           </div>
 
-          <h2 className="mt-5 text-xl font-semibold tracking-tight text-white sm:text-2xl lg:text-[32px]">
-            Misuse is not permitted
+          <h2 className="mt-6 text-xl font-semibold tracking-tight text-white sm:text-2xl lg:text-[32px]">
+            Responsible use of Orbitlink services
           </h2>
 
           <p className="mt-4 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-            Orbitlink’s site and services may not be used to harm others, interfere with
-            business operations, attempt unauthorized access, distribute malicious content,
-            or submit false or misleading requests. Access or service may be restricted,
-            suspended, or denied where misuse, abuse, or fraud risk is identified.
+            This Acceptable Use Policy defines acceptable and prohibited uses of
+            services provided by Orbitlink™ (TIRAV Technologies Inc.). It forms
+            part of the Orbitlink Service Agreement and supports service
+            integrity, network protection, security, and compliance.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <Signal label="POLICY MODE" value="Business-first and protective" />
-            <Signal label="PRIMARY PURPOSE" value="Service integrity and safety" />
-            <Signal label="ENFORCEMENT" value="Restriction or suspension when required" />
+            <Signal label="POLICY MODE" value="Carrier-grade protection" />
+            <Signal label="PRIMARY PURPOSE" value="Network integrity" />
+            <Signal label="ENFORCEMENT" value="Action when misuse occurs" />
           </div>
 
-          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-            <Item title="Unauthorized access">
-              Attempts to probe, scan, test, exploit, or access systems, accounts, services,
-              or data without authorization are prohibited.
-            </Item>
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:gap-5">
+            <Section label="1" title="Purpose">
+              <p>
+                This Acceptable Use Policy (“AUP”) defines acceptable and
+                prohibited uses of services provided by Orbitlink™ (TIRAV
+                Technologies Inc.) (“Orbitlink”).
+              </p>
+              <p>
+                This AUP forms part of and is incorporated into the Orbitlink
+                Service Agreement.
+              </p>
+              <p>
+                For the purposes of this AUP, “Services” means the
+                telecommunications services provided by Orbitlink.
+              </p>
+            </Section>
 
-            <Item title="Abuse and disruption">
-              Activities intended to disrupt service, degrade performance, overload systems,
-              interfere with other users, or harass individuals are prohibited.
-            </Item>
+            <Section label="2" title="Scope">
+              <p>
+                This AUP applies to all customers, users, and any third parties
+                accessing or using Orbitlink services (“Customer”).
+              </p>
+              <p>
+                Customers are responsible for all use of Services under their
+                account, including use by employees, contractors, guests, or
+                third parties.
+              </p>
+              <p>
+                Customer remains fully responsible for any use of the Services by
+                third parties using its account or network, whether authorized or
+                unauthorized.
+              </p>
+            </Section>
 
-            <Item title="Fraud and deception">
-              Submitting false identity information, impersonation, misleading business claims,
-              or deceptive commercial requests is prohibited.
-            </Item>
+            <Section label="3" title="General Use Requirements">
+              <p>Customers must:</p>
+              <BulletList
+                items={[
+                  "use Services in compliance with all applicable laws and regulations in Canada",
+                  "ensure use does not harm, degrade, or disrupt networks or services",
+                  "maintain appropriate security controls over their systems and access credentials",
+                  "cooperate with Orbitlink in investigating suspected violations",
+                ]}
+              />
+            </Section>
 
-            <Item title="Malicious content">
-              Uploading, transmitting, or linking to malware, harmful code, phishing material,
-              or other payloads designed to compromise systems or devices is prohibited.
-            </Item>
+            <Section label="4" title="Prohibited Activities">
+              <p>
+                Customers may not use Orbitlink services to engage in, promote,
+                or facilitate prohibited activities.
+              </p>
 
-            <Item title="Improper use of network or service resources">
-              Use of the site or services in a way that creates unreasonable operational risk,
-              bypasses intended controls, or undermines service integrity is prohibited.
-            </Item>
+              <div>
+                <h3 className="font-semibold text-white/85">
+                  4.1 Illegal Activity
+                </h3>
+                <BulletList
+                  items={[
+                    "any activity that violates applicable laws or regulations",
+                    "fraud, identity theft, or financial abuse",
+                    "distribution of illegal content",
+                  ]}
+                />
+              </div>
 
-            <Item title="Illegal or harmful activity">
-              Use connected to unlawful conduct, harmful activity, or actions that expose
-              Orbitlink, customers, or partners to avoidable risk is prohibited.
-            </Item>
-          </div>
+              <div>
+                <h3 className="font-semibold text-white/85">
+                  4.2 Network Abuse
+                </h3>
+                <BulletList
+                  items={[
+                    "actions that interfere with or disrupt network performance",
+                    "excessive or abnormal usage that degrades service for others",
+                    "denial-of-service (DoS/DDoS) attacks",
+                    "unauthorized scanning, probing, or penetration testing",
+                  ]}
+                />
+              </div>
 
-          <div className="mt-8 rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
-            <div className="text-[11px] tracking-[0.22em] text-white/55">
-              ENFORCEMENT POSTURE
-            </div>
-            <p className="mt-3 text-sm leading-6 text-white/70">
-              Orbitlink may investigate misuse, reject requests, restrict access, suspend
-              service interactions, or take other appropriate protective action where abuse,
-              fraud, unauthorized activity, or operational risk is reasonably suspected.
-            </p>
-            <p className="mt-3 text-sm leading-6 text-white/62">
-              This policy supports customer protection, service continuity, and the integrity
-              of Orbitlink’s operating environment.
-            </p>
-          </div>
+              <div>
+                <h3 className="font-semibold text-white/85">
+                  4.3 Security Violations
+                </h3>
+                <BulletList
+                  items={[
+                    "unauthorized access to systems, networks, or data",
+                    "attempting to bypass authentication or security controls",
+                    "introducing malware, ransomware, or malicious code",
+                  ]}
+                />
+              </div>
 
-          <div className="mt-6 rounded-[24px] border border-white/10 bg-black/20 p-5 sm:p-6">
-            <div className="text-[11px] tracking-[0.22em] text-white/55">
-              QUESTIONS OR REVIEW REQUESTS
-            </div>
-            <p className="mt-3 text-sm leading-6 text-white/70">
-              If you believe access was restricted incorrectly, or you need clarification
-              regarding this policy, contact:
-            </p>
+              <div>
+                <h3 className="font-semibold text-white/85">
+                  4.4 Spam and Messaging Abuse
+                </h3>
+                <BulletList
+                  items={[
+                    "sending unsolicited bulk email or spam",
+                    "operating open mail relays or bulk messaging systems",
+                    "distributing phishing or deceptive communications",
+                  ]}
+                />
+              </div>
 
-            <a
-              className="mt-3 inline-flex text-sm text-white/85 transition hover:text-white underline underline-offset-4"
-              href="mailto:concierge@orbitlink.ca"
-            >
-              concierge@orbitlink.ca
-            </a>
+              <div>
+                <h3 className="font-semibold text-white/85">
+                  4.5 Intellectual Property Violations
+                </h3>
+                <BulletList
+                  items={[
+                    "infringement of copyrights, trademarks, or other rights",
+                    "unauthorized distribution of protected content",
+                  ]}
+                />
+              </div>
 
-            <p className="mt-4 text-xs leading-5 text-white/52">
-              Orbitlink is a brand of TIRAV Technologies Inc. This policy may be updated as
-              services, legal requirements, and operational controls evolve.
-            </p>
+              <div>
+                <h3 className="font-semibold text-white/85">
+                  4.6 Harmful or Abusive Conduct
+                </h3>
+                <BulletList
+                  items={[
+                    "harassment, threats, or abuse",
+                    "distribution of harmful or offensive material where unlawful",
+                    "activities that create legal or reputational risk for Orbitlink",
+                  ]}
+                />
+              </div>
+            </Section>
+
+            <Section label="5" title="Network Integrity and Fair Use">
+              <p>
+                Orbitlink reserves the right to take action where Customer usage:
+              </p>
+              <BulletList
+                items={[
+                  "materially impacts network stability or performance",
+                  "creates risk to infrastructure or other customers",
+                  "exceeds reasonable or expected usage patterns as determined by Orbitlink acting reasonably",
+                ]}
+              />
+            </Section>
+
+            <Section label="6" title="Customer Responsibilities">
+              <p>Customers are responsible for:</p>
+              <BulletList
+                items={[
+                  "securing their internal networks and devices",
+                  "preventing unauthorized access or misuse",
+                  "monitoring usage under their account",
+                  "ensuring compliance by all users of their Services",
+                ]}
+              />
+            </Section>
+
+            <Section label="7" title="Enforcement and Remedies">
+              <p>
+                Orbitlink may, at its sole discretion and without liability to
+                Customer:
+              </p>
+              <BulletList
+                items={[
+                  "suspend or restrict Services",
+                  "block traffic or access",
+                  "investigate suspected violations",
+                  "terminate Services for serious or repeated violations",
+                ]}
+              />
+
+              <p>Orbitlink may take immediate action where necessary to:</p>
+              <BulletList
+                items={[
+                  "protect network integrity",
+                  "comply with legal obligations",
+                  "prevent harm or disruption",
+                ]}
+              />
+
+              <p>
+                Orbitlink may disclose information related to Customer use of the
+                Services where required by law, regulation, or lawful request
+                from governmental or regulatory authorities.
+              </p>
+
+              <p>
+                Orbitlink shall not be liable for any damages, losses, or
+                consequences arising from actions taken in good faith to enforce
+                this AUP.
+              </p>
+            </Section>
+
+            <Section label="8" title="Reporting Violations">
+              <p>Customers must promptly report any:</p>
+              <BulletList
+                items={[
+                  "suspected security incidents",
+                  "unauthorized access",
+                  "abuse or misuse of Services",
+                ]}
+              />
+              <p>
+                Reports can be submitted to{" "}
+                <a
+                  className="text-[#FDE68A] underline underline-offset-4 transition hover:text-[#FACC15]"
+                  href="mailto:abuse@orbitlink.ca"
+                >
+                  abuse@orbitlink.ca
+                </a>
+                .
+              </p>
+            </Section>
+
+            <Section label="9" title="Changes to This Policy">
+              <p>Orbitlink may update this AUP from time to time.</p>
+              <p>
+                Updates will be effective upon posting or reasonable notice to
+                Customers.
+              </p>
+            </Section>
+
+            <Section label="10" title="Relationship to Agreement">
+              <p>
+                This AUP is incorporated into the Orbitlink Service Agreement.
+              </p>
+              <p>
+                In the event of conflict, the terms of the Service Agreement will
+                prevail.
+              </p>
+            </Section>
+
+            <Section label="11" title="No Obligation to Monitor">
+              <p>
+                Orbitlink is not obligated to monitor Customer use of the
+                Services. However, Orbitlink reserves the right to monitor,
+                investigate, or take action where it reasonably believes a
+                violation of this AUP has occurred.
+              </p>
+            </Section>
           </div>
         </div>
       </div>

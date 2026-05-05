@@ -1,4 +1,7 @@
+// src/app/legal/cookies/page.tsx
+
 import type { Metadata } from "next";
+import Link from "next/link";
 import PageShell from "@/components/PageShell";
 
 const SITE_URL = "https://orbitlink.ca";
@@ -8,14 +11,14 @@ const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 export const metadata: Metadata = {
   title: "Cookies & Analytics",
   description:
-    "Orbitlink cookies and analytics policy explaining how cookies are used, visitor controls, and site measurement practices.",
+    "Orbitlink cookies and analytics policy explaining how cookies are used, visitor controls, limited analytics, and privacy alignment.",
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
     title: "Cookies & Analytics | Orbitlink",
     description:
-      "Orbitlink cookies and analytics policy explaining how cookies are used, visitor controls, and site measurement practices.",
+      "Orbitlink cookies and analytics policy explaining cookie use, visitor controls, limited analytics, and privacy alignment.",
     url: PAGE_URL,
     type: "website",
     siteName: "Orbitlink",
@@ -33,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Cookies & Analytics | Orbitlink",
     description:
-      "Orbitlink cookies and analytics policy explaining how cookies are used, visitor controls, and site measurement practices.",
+      "Orbitlink cookies and analytics policy explaining cookie use, visitor controls, and limited analytics.",
     images: [`${SITE_URL}/twitter-image`],
   },
 };
@@ -58,34 +61,32 @@ function Section({
         {title}
       </h2>
 
-      <div className="mt-3 text-sm leading-6 text-white/70 sm:text-[15px]">
+      <div className="mt-3 space-y-3 text-sm leading-6 text-white/70 sm:text-[15px]">
         {children}
       </div>
     </section>
   );
 }
 
-function Signal({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
+function Signal({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-      <div className="text-[11px] tracking-[0.22em] text-white/55">{label}</div>
+      <div className="text-[11px] tracking-[0.22em] text-white/55">
+        {label}
+      </div>
       <div className="mt-1 text-sm text-white/80">{value}</div>
     </div>
   );
 }
 
 export default function CookiesPage() {
+  const lastUpdated = "May 2026";
+
   return (
     <PageShell
       eyebrow="LEGAL"
       title="Cookies & Analytics"
-      subtitle="A transparent summary of how Orbitlink uses cookies and what visitors should expect from basic site analytics."
+      subtitle="A transparent summary of how Orbitlink uses cookies, limited analytics, and visitor controls."
     >
       <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:p-10">
         <div className="pointer-events-none absolute inset-0">
@@ -96,19 +97,27 @@ export default function CookiesPage() {
         </div>
 
         <div className="relative">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[10px] text-[#FDE68A] sm:text-[11px]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
-            Transparent cookie and measurement summary
+          <div className="flex flex-col gap-4 rounded-[24px] border border-white/10 bg-black/20 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#FACC15]/15 bg-[#FACC15]/[0.06] px-3 py-1 text-[10px] text-[#FDE68A] sm:text-[11px]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FACC15]" />
+              Transparent cookie and measurement summary
+            </div>
+
+            <div className="text-xs text-white/55">
+              Last updated:{" "}
+              <span className="text-white/80">{lastUpdated}</span>
+            </div>
           </div>
 
-          <h2 className="mt-5 text-xl font-semibold tracking-tight text-white sm:text-2xl lg:text-[32px]">
+          <h2 className="mt-6 text-xl font-semibold tracking-tight text-white sm:text-2xl lg:text-[32px]">
             Clear, minimal, and business-readable
           </h2>
 
           <p className="mt-4 max-w-3xl text-sm leading-6 text-white/70 sm:text-[15px]">
-            Orbitlink aims to use website technologies in a straightforward and measured way.
-            This page explains what cookies are, how they may be used on the site, and what
-            visitors can expect from any future analytics or measurement tooling.
+            Orbitlink aims to use website technologies in a straightforward and
+            measured way. This page explains what cookies are, how they may be
+            used on the site, how analytics may support site improvement, and
+            how visitors can manage cookie settings.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -120,36 +129,70 @@ export default function CookiesPage() {
           <div className="mt-8 grid grid-cols-1 gap-4 sm:gap-5">
             <Section label="1" title="What cookies are">
               <p>
-                Cookies are small files stored on your device that help websites function,
-                remember certain preferences, and support a more consistent browsing experience.
+                Cookies are small files stored on your device that help websites
+                function, remember certain preferences, and support a more
+                consistent browsing experience.
               </p>
             </Section>
 
             <Section label="2" title="How Orbitlink uses cookies">
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Essential site functionality such as security and session behaviour.</li>
-                <li>Operational stability where limited technical behaviour helps the site function properly.</li>
-                <li>Optional aggregate measurement or analytics if enabled.</li>
+              <ul className="list-disc space-y-2 pl-5">
+                <li>
+                  Essential site functionality, including security and session
+                  behaviour.
+                </li>
+                <li>
+                  Operational stability where limited technical behaviour helps
+                  the site function properly.
+                </li>
+                <li>
+                  Optional aggregate measurement or analytics where enabled.
+                </li>
               </ul>
             </Section>
 
-            <Section label="3" title="Analytics and measurement">
+            <Section label="3" title="Analytics and limited measurement">
               <p>
-                Orbitlink may use basic analytics tools to understand high-level site activity,
-                including page usage and interaction trends, to improve site performance.
+                Orbitlink may use basic analytics tools to understand high-level
+                site activity, including page usage and interaction trends, to
+                improve site performance and user experience.
+              </p>
+
+              <p>
+                Orbitlink does not use cookies for behavioral profiling, targeted
+                advertising, or the sale of personal information.
+              </p>
+
+              <p>
+                For more information on how personal information is collected,
+                used, disclosed, retained, and protected, please refer to the{" "}
+                <Link
+                  href="/legal/privacy"
+                  className="text-[#FDE68A] underline underline-offset-4 transition hover:text-[#FACC15]"
+                >
+                  Orbitlink Privacy Policy
+                </Link>
+                .
               </p>
             </Section>
 
             <Section label="4" title="Your control">
               <p>
-                You can control or restrict cookies through your browser settings. Disabling
-                certain cookies may affect how parts of the site function.
+                You can control or restrict cookies through your browser
+                settings. Disabling certain cookies may affect how parts of the
+                site function.
+              </p>
+
+              <p>
+                Most browsers allow you to block or delete cookies. Refer to your
+                browser’s help documentation for details.
               </p>
             </Section>
 
             <Section label="5" title="Updates to this page">
               <p>
-                This page may be updated as Orbitlink’s platform, tools, or requirements evolve.
+                This page may be updated as Orbitlink’s platform, tools, legal
+                requirements, or operational controls evolve.
               </p>
             </Section>
           </div>
@@ -158,20 +201,22 @@ export default function CookiesPage() {
             <div className="text-[11px] tracking-[0.22em] text-white/55">
               QUESTIONS
             </div>
+
             <p className="mt-3 text-sm leading-6 text-white/70">
-              Questions about cookies, analytics, or site behaviour can be directed to:
+              Questions about cookies, analytics, privacy, or site behaviour can
+              be directed to:
             </p>
 
             <a
-              className="mt-3 inline-flex text-sm text-white/85 transition hover:text-white underline underline-offset-4"
-              href="mailto:concierge@orbitlink.ca"
+              className="mt-3 inline-flex text-sm text-white/85 underline underline-offset-4 transition hover:text-white"
+              href="mailto:privacy@orbitlink.ca"
             >
-              concierge@orbitlink.ca
+              privacy@orbitlink.ca
             </a>
 
             <p className="mt-4 text-xs leading-5 text-white/52">
-              Orbitlink is a brand of TIRAV Technologies Inc. This page may be updated as
-              site tooling and operational requirements evolve.
+              Orbitlink is a brand of TIRAV Technologies Inc. This page may be
+              updated as site tooling and operational requirements evolve.
             </p>
           </div>
         </div>
