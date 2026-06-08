@@ -22,7 +22,8 @@ const FAQ_ID = `${CANONICAL_URL}#faq`;
 const BREADCRUMB_ID = `${CANONICAL_URL}#breadcrumb`;
 
 // Keep this WITHOUT "| Orbitlink" because your layout template already adds branding.
-const META_TITLE = "Business Fibre Internet in Ontario";
+const META_TITLE =
+  "Business Connectivity & Fibre Internet for Ontario Organizations";
 const META_DESCRIPTION =
   "Business fibre internet, dedicated internet access, managed Wi-Fi and backup connectivity for Ontario businesses. Get availability and pricing for your address.";
 
@@ -459,15 +460,22 @@ export default function Home() {
               Ontario Business Connectivity • Fibre • Dedicated • Managed Infrastructure
             </div>
 
-            <h1 className="mt-5 max-w-[11ch] text-[2.15rem] font-semibold leading-[0.94] tracking-tight text-white sm:max-w-[12.5ch] sm:text-[3.2rem] lg:max-w-5xl lg:text-[4.4rem] xl:text-[5.1rem]">
-              Business Internet
-              <span className="block text-white/70">Engineered for Reliability</span>
+            <h1 className="mt-5 max-w-5xl text-[2.15rem] font-semibold leading-[0.94] tracking-tight text-white sm:text-[3.2rem] lg:text-[4.6rem] xl:text-[5.2rem]">
+              Business Connectivity
+              <span className="block text-white/72">
+                Built for Ontario Organizations
+              </span>
             </h1>
 
-            <p className="mt-4 max-w-[48rem] text-[15px] leading-6 text-white/86 sm:text-[1.04rem] sm:leading-7">
-              Fibre, dedicated internet access, managed Wi-Fi, and backup connectivity
-              for offices, clinics, warehouses, and multi-site operations across Ontario —
-              reviewed by address, designed properly, and coordinated end-to-end.
+            <p className="mt-5 max-w-3xl text-[15px] leading-7 text-white/86 sm:text-[1.05rem]">
+              Reliable connectivity starts with better infrastructure decisions.
+            </p>
+
+            <p className="mt-3 max-w-4xl text-[15px] leading-7 text-white/72">
+              Orbitlink™ helps organizations review, design, deploy, and manage
+              business connectivity environments across Ontario.
+              From fibre internet and dedicated internet access to managed networks,
+              LTE/5G continuity, and multi-site infrastructure.
             </p>
 
             <div className="mt-3 max-w-[44rem] text-[13px] leading-5 text-white/72 sm:text-sm">
@@ -545,50 +553,136 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-7 sm:py-12">
-        <div className="rounded-[26px] border border-white/10 bg-white/[0.04] p-5 sm:rounded-[32px] sm:p-8 lg:p-10">
-          <div className="max-w-3xl">
-            <SectionEyebrow>START HERE</SectionEyebrow>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-[34px]">
-              Choose the right setup for your business
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-white/64 sm:text-[15px]">
-              Start with how your site operates. That makes the right internet,
-              backup, and internal network path much clearer.
-            </p>
+      <section className="mx-auto max-w-6xl px-4 py-14 sm:px-7">
+        <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-8">
+
+          <SectionEyebrow>
+            BUSINESS CONNECTIVITY REVIEW
+          </SectionEyebrow>
+
+          <h2 className="mt-3 text-3xl font-semibold text-white">
+            Start With a Connectivity Review
+          </h2>
+
+          <p className="mt-4 max-w-3xl text-white/70">
+            Before changing providers, review the environment.
+            Orbitlink evaluates infrastructure, availability,
+            continuity requirements, and operational fit.
+          </p>
+
+          <div className="mt-8 grid md:grid-cols-2 gap-4">
+            <TrustPill text="Current provider assessment" />
+            <TrustPill text="Building availability review" />
+            <TrustPill text="Wi-Fi & LAN evaluation" />
+            <TrustPill text="Backup connectivity review" />
+            <TrustPill text="Upgrade recommendations" />
+            <TrustPill text="Future scalability planning" />
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-3 sm:mt-8 sm:gap-4">
-            <FitCard
-              title="Offices and clinics"
-              body="Stable connectivity, managed Wi-Fi, and a cleaner fit for professional business environments."
-            />
-            <FitCard
-              title="Critical operations"
-              body="Dedicated internet access and continuity planning for uptime-sensitive environments."
-            />
-            <FitCard
-              title="Internal network issues"
-              body="Coverage, LAN, and Wi-Fi problems that affect staff, devices, and day-to-day operations."
-            />
+          <div className="mt-8">
+            <ActionButton href="/contact#intake" primary>
+              Request a Connectivity Review
+            </ActionButton>
           </div>
 
-          <div className="mt-10 text-center">
-            <h3 className="text-xl font-medium text-white">
-              Get availability and pricing for your business location
-            </h3>
-            <div className="mt-4">
-              <ActionButton href="/contact#intake" primary>
-                Get Availability & Pricing
-              </ActionButton>
-            </div>
-            <div className="mt-2 text-xs text-white/60">
-              Fast response • Business-only • No obligation
-            </div>
-          </div>
         </div>
       </section>
+      
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-7">
 
+        <SectionEyebrow>
+          WHY ORBITLINK
+        </SectionEyebrow>
+
+        <h2 className="mt-3 text-3xl font-semibold text-white">
+          Connectivity Is Infrastructure
+        </h2>
+
+        <div className="mt-8 overflow-hidden rounded-[32px] border border-white/10">
+
+          <div className="grid md:grid-cols-2">
+
+            <div className="border-r border-white/10 p-8">
+              <div className="text-lg font-medium text-white">
+                Traditional Telecom
+              </div>
+
+              <ul className="mt-4 space-y-3 text-white/65">
+                <li>• Sells packages</li>
+                <li>• Speed-first approach</li>
+                <li>• Single provider focus</li>
+                <li>• Reactive support</li>
+                <li>• Transactional relationship</li>
+              </ul>
+            </div>
+
+            <div className="p-8">
+              <div className="text-lg font-medium text-[#FACC15]">
+                Orbitlink
+              </div>
+
+              <ul className="mt-4 space-y-3 text-white/80">
+                <li>• Reviews requirements first</li>
+                <li>• Reliability-first design</li>
+                <li>• Multi-provider ecosystem</li>
+                <li>• Infrastructure planning</li>
+                <li>• Long-term operational support</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-7">
+
+        <SectionEyebrow>
+          WHO WE HELP
+        </SectionEyebrow>
+
+        <h2 className="mt-3 text-3xl font-semibold text-white">
+          Designed for Ontario Organizations
+        </h2>
+
+        <div className="mt-8 grid md:grid-cols-3 gap-4">
+
+          <FitCard
+            title="Professional Offices"
+            body="Legal, accounting, consulting, engineering and corporate environments."
+          />
+
+          <FitCard
+            title="Medical & Healthcare"
+            body="Clinics, specialists, and healthcare organizations."
+          />
+
+          <FitCard
+            title="Warehousing & Logistics"
+            body="Connectivity supporting operational environments."
+          />
+
+          <FitCard
+            title="Manufacturing"
+            body="Reliable infrastructure for production environments."
+          />
+
+          <FitCard
+            title="Commercial Facilities"
+            body="Scalable connectivity for business operations."
+          />
+
+          <FitCard
+            title="Multi-Location Organizations"
+            body="Standardized connectivity across multiple sites."
+          />
+
+        </div>
+
+      </section>
+
+      
       <section className="mx-auto max-w-6xl px-4 pb-10 sm:px-7 sm:pb-12">
         <div className="relative overflow-hidden rounded-[26px] border border-white/10 bg-black/22 p-5 sm:rounded-[32px] sm:p-8 lg:p-10">
           <div className="pointer-events-none absolute inset-0">
@@ -780,11 +874,12 @@ export default function Home() {
 
           <div className="mt-5 flex flex-wrap gap-2 sm:mt-6">
             <TrustPill text={`Operated by ${LEGAL_NAME}`} />
-            <TrustPill text="CRTC-registered provider" />
-            <TrustPill text="Business-only review" />
-            <TrustPill text="Address-based qualification" />
-            <TrustPill text="Ontario coverage" />
-            <TrustPill text="Clear next-step guidance" />
+            <TrustPill text="CRTC-Registered" />
+            <TrustPill text="Multi-Provider Ecosystem" />
+            <TrustPill text="Carrier-Aware Design" />
+            <TrustPill text="Infrastructure-Led Approach" />
+            <TrustPill text="Ontario Coverage" />
+            <TrustPill text="Business-Only Services" />
           </div>
         </div>
       </section>
@@ -863,6 +958,47 @@ export default function Home() {
             for province-wide business connectivity planning.
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-7">
+
+        <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-8">
+
+          <SectionEyebrow>
+            MEET THE FOUNDER
+          </SectionEyebrow>
+
+          <h2 className="mt-3 text-3xl font-semibold text-white">
+            Built Around Better Infrastructure Decisions
+          </h2>
+
+          <p className="mt-5 max-w-4xl text-white/70 leading-7">
+            Orbitlink was founded to help Ontario organizations make
+            better connectivity decisions.
+          </p>
+
+          <p className="mt-4 max-w-4xl text-white/70 leading-7">
+            Too often businesses are sold internet services before
+            their operational requirements are properly understood.
+            Orbitlink exists to review, design, deploy, and manage
+            connectivity environments built around reliability,
+            scalability, and long-term operational fit.
+          </p>
+
+          <div className="mt-6 text-white">
+            Atikur Rahaman
+          </div>
+
+          <div className="text-white/55">
+            Founder & Director
+          </div>
+
+          <div className="mt-4 text-white/65 text-sm">
+           9+ years in telecommunications, connectivity, and business technology environments.
+          </div>
+
+        </div>
+
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-10 sm:px-7 sm:pb-12">
