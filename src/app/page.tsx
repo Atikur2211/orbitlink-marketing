@@ -517,7 +517,7 @@ export default function Home() {
             <div className="mt-7 grid grid-cols-1 gap-3 sm:flex sm:flex-wrap sm:items-start">
               <div className="flex flex-col gap-2">
                 <ActionButton href="/contact#intake" primary>
-                  Get Availability & Pricing for Your Address
+                  Get Availability & Pricing
                 </ActionButton>
                 <div className="text-center text-[11px] text-white/55 sm:text-left sm:text-xs">
                   Takes 60 seconds • No obligation • Clear next step
@@ -537,7 +537,7 @@ export default function Home() {
             </div>
 
             <div className="mt-4 text-[11px] text-[#FDE68A] sm:text-xs">
-              Limited onboarding capacity this month for Ontario business sites
+              New business requests reviewed within 1 business day.
             </div>
 
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-white/46 sm:text-xs">
